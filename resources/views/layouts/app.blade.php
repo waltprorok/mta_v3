@@ -49,6 +49,7 @@
 </head>
 
 <body>
+@include('partials.alerts')
 <!-- Header -->
 <header>
     <!-- Nav -->
@@ -108,13 +109,15 @@
     <!-- /Nav -->
 
 </header>
+
 <!-- /Header -->
 <div class="container">
     <div class="sm-padding"></div>
 </div>
-<div class="container">
-    @include('partials.alerts')
-</div>
+{{--<div class="container">--}}
+{{--    @include('partials.alerts')--}}
+{{--</div>--}}
+
 @yield('content')
 
 <!-- Footer -->
@@ -156,9 +159,10 @@
             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-6 col-6 ">
                 <div class="footer-widget ">
                     <h3 class="footer-title">Subscribe Newsletter</h3>
-                    <form>
+                    <form method="post" action="{{ route('newsletter') }}">
+                        @csrf
                         <div class="newsletter-form">
-                            <input class="form-control" placeholder="Enter Your Email address" type="text">
+                            <input class="form-control" name="email" placeholder="Enter Your Email address" type="text">
                             <button class="btn btn-default btn-sm" type="submit">Go</button>
                         </div>
                     </form>
