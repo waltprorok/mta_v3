@@ -77,7 +77,7 @@
                 <div class="dropdown-menu dropdown-menu-right">
                     {{--<div class="dropdown-header">Account</div>--}}
 
-                    <a href="#" class="dropdown-item">
+                    <a href="{{ route('account') }}" class="dropdown-item">
                         {{--{{ route('account') }}--}}
                         <i class="fa fa-calculator"></i>Account
                     </a>
