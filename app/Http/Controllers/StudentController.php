@@ -1,0 +1,167 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Teacher;
+use Auth;
+use App\Student;
+use App\Lesson;
+use Illuminate\Http\Request;
+
+
+class StudentController extends Controller
+{
+    protected $studentLimit = 10;
+    protected $waitlistLimit = 10;
+    protected $leadLimit = 10;
+    protected $inactiveLimit = 10;
+
+    public function index()
+    {
+        $teacher = Teacher::where('teacher_id', Auth::id())->first();
+
+        if ($teacher == null) {
+            return redirect('teacher')->with('success', 'Please fill out your studio settings first before entering students.');
+        }
+
+        $students = Student::with('teacher')
+            ->latestFirst()
+            ->where('teacher_id', Auth::id())
+            ->where('status', 'Active')
+            ->paginate($this->studentLimit);
+
+        return view('webapp.student.index')->with('students', $students);
+    }
+
+    public function waitlist()
+    {
+        $waitlists = Student::with('teacher')
+            ->latestFirst()
+            ->where('teacher_id', Auth::id())
+            ->where('status', 'Waitlist')
+            ->paginate($this->waitlistLimit);
+
+        return view('webapp.student.waitlist')->with('waitlists', $waitlists);
+    }
+
+    public function leads()
+    {
+        $leads = Student::with('teacher')
+            ->latestFirst()
+            ->where('teacher_id', Auth::id())
+            ->where('status', 'Lead')
+            ->paginate($this->leadLimit);
+
+        return view('webapp.student.leads')->with('leads', $leads);
+    }
+
+    public function inactive()
+    {
+        $inactives = Student::with('teacher')
+            ->latestFirst()
+            ->where('teacher_id', Auth::id())
+            ->where('status', 'Inactive')
+            ->paginate($this->inactiveLimit);
+
+        return view('webapp.student.inactive')->with('inactives', $inactives);
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'teacher_id' => 'required',
+            'first_name' => 'string|max:100',
+            'last_name' => 'string|max:100',
+            'email' => 'string|max:100',
+            'status' => 'string|max:100',
+        ]);
+
+        $email_exists = Student::where('email', $request->get('email'))->where('teacher_id', Auth::id())->first();
+
+        if ($email_exists) {
+            return redirect()->back()->with('error', 'The email address is already in use.');
+        } else {
+            $student = new Student([
+                'teacher_id' => $request->get('teacher_id'),
+                'first_name' => $request->get('first_name'),
+                'last_name' => $request->get('last_name'),
+                'email' => $request->get('email'),
+                'status' => $request->get('status'),
+            ]);
+            $student->save();
+            return redirect()->route('student.index')->with('success', 'The student was added successfully.');
+        }
+
+    }
+
+    public function edit($id)
+    {
+        $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
+        return view('webapp.student.edit')->with('students', $students);
+    }
+
+    public function update(Request $request)
+    {
+        $student = Student::where('id', $request->get('student_id'))->first();
+        $student->update($request->all());
+
+        return redirect()->back()->with('success', 'You successfully updated the student.');
+    }
+
+    public function schedule($id)
+    {
+        $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
+        return view('webapp.student.schedule')->with('students', $students);
+    }
+
+    public function scheduleSave(Request $request)
+    {
+        $this->validate($request, [
+            'student_id' => 'required|string',
+            'title' => 'required|string',
+            'start_date' => 'required|string',
+        ]);
+
+        $lesson = new Lesson();
+        $lesson->student_id = $request->get('student_id');
+        $lesson->teacher_id = Auth::id();
+        $lesson->title = $request->get('title');
+        $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
+        $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
+        $lesson->save();
+        return redirect()->back()->with('success', 'Student has been schedule');
+    }
+
+    public function scheduleEdit($student_id, $id)
+    {
+        $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->get();
+        return view('webapp.student.scheduleEdit')->with('lessons', $lessons);
+    }
+
+    public function scheduleUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required|string',
+            'start_date' => 'required|string'
+        ]);
+
+        $lesson = Lesson::where('student_id', $request->get('student_id'))->where('id', $request->get('id'))->first();
+        $lesson->id = $request->get('id');
+        $lesson->student_id = $request->get('student_id');
+        $lesson->teacher_id = Auth::id();
+        $lesson->title = $request->get('title');
+        $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
+        $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
+        $lesson->update();
+        return redirect()->back()->with('success', 'You successfully updated the student\'s lesson.');
+    }
+
+    public function destroy($id)
+    {
+        $lesson = Lesson::find($id);
+        $lesson->delete();
+        return redirect(route('student.index'))->with('success', 'The scheduled lesson has been removed.');
+
+    }
+
+}

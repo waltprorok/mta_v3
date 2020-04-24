@@ -1,0 +1,150 @@
+@extends('layouts.webapp')
+@section('title', 'Schedule Student')
+@section('content')
+
+    <div class="col-12">
+
+        <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
+        </button>
+
+        <h2>Edit Student Schedule</h2>
+
+        @foreach ($lessons as $lesson)
+            @include('partials.studentTabs', $data = ['id' => $lesson->student_id])
+            <div class="card">
+                <div class="card-body">
+                    @if(count($lessons) <= 0)
+                        <div class="text-center">
+                            <p>That student record does not exist.</p>
+                        </div>
+                    @else
+                        <form class="form-horizontal" method="post" action="{{ route('student.schedule.update') }}">
+                            @csrf
+                            @method('PUT')
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
+                                        <label for="Title" class="control-label">Title</label>
+                                        <input type="text" class="form-control" autocomplete="off" name="title"
+                                               value="{{ $lesson->title }}">
+                                        @if ($errors->has('title'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('title') }}</strong></span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
+                                        <label for="Title" class="control-label">Start Date</label>
+                                        <input class="date form-control" autocomplete="off" type="text" id="lessonDate"
+                                               name="start_date"
+                                               value="{{ date('Y-m-d', strtotime($lesson->start_date)) }}">
+                                        @if ($errors->has('start_date'))
+                                            <span class="help-block"><strong>{{ $errors->first('start_date') }}</strong></span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="form-group{{ $errors->has('start_time') ? ' has-error' : '' }}">
+                                        <label for="start_time" class="control-label">Start Time</label>
+                                        <select class="form-control" id="start_time" name="start_time">
+                                            <option value="{{ date('H:i:s', strtotime($lesson->start_date)) }}">{{ date('h:i', strtotime($lesson->start_date)) }}</option>
+                                            <option value="09:00:00">9:00</option>
+                                            <option value="09:30:00">9:30</option>
+                                            <option value="10:00:00">10:00</option>
+                                            <option value="10:30:00">10:30</option>
+                                            <option value="11:00:00">11:00</option>
+                                            <option value="11:30:00">11:30</option>
+                                            <option value="12:00:00">12:00</option>
+                                        </select>
+
+                                        @if ($errors->has('start_time'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('start_time') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="form-group{{ $errors->has('end_time') ? ' has-error' : '' }}">
+                                        <label for="end_time" class="control-label">End Time</label>
+                                        <select class="form-control" id="end_time" name="end_time">
+                                            <option value="{{ date('H:i:s', strtotime($lesson->end_date)) }}">{{ date('h:i', strtotime($lesson->end_date)) }}</option>
+                                            <option value="09:00:00">9:00</option>
+                                            <option value="09:30:00">9:30</option>
+                                            <option value="10:00:00">10:00</option>
+                                            <option value="10:30:00">10:30</option>
+                                            <option value="11:00:00">11:00</option>
+                                            <option value="11:30:00">11:30</option>
+                                            <option value="12:00:00">12:00</option>
+                                        </select>
+
+                                        @if ($errors->has('end_time'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('end_time') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input id="id" type="hidden" class="form-control" name="id"
+                                   value="{{ $lesson->id }}">
+                            <input id="student_id" type="hidden" class="form-control" name="student_id"
+                                   value="{{ $lesson->student_id }}">
+
+                            <div class="pull-left">
+                                <button type="submit" class="btn btn-primary">
+                                    Update
+                                </button>
+                                <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                            </div>
+
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-danger pull-left" data-toggle="modal"
+                                        data-target="#myDeleteModal">Delete
+                                </button>
+                            </div>
+
+                        </form>
+                    @endif
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+    @include('partials.addStudent')
+
+    <!-- Modal -->
+    <div class="modal fade" id="myDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Delete Lesson?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this scheduled lesson?</p>
+                </div>
+
+                <div class="modal-footer">
+                    <form action="{{ route('student.schedule.delete', $lesson->id) }}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                        &nbsp;<button type="submit" class="btn btn-danger pull-right">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Modal -->
+@endsection

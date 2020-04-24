@@ -1,0 +1,398 @@
+@extends('layouts.webapp')
+@section('title', 'Edit Student')
+@section('content')
+
+    <div class="col-12">
+
+        <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
+        </button>
+
+        <h2>Edit Student</h2>
+
+        @foreach ($students as $student)
+            @include('partials.studentTabs', $data = ['id' => $student->id])
+            <div class="card">
+                <div class="card-body">
+                    @if(count($students) <= 0)
+                        <div class="text-center">
+                            <p>That student record does not exist.</p>
+                        </div>
+                    @else
+                        <form class="form-horizontal" method="POST" action="{{ route('student.update') }}">
+                            @csrf
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
+                                        <label for="first_name" class="control-label">First Name</label>
+                                        <input id="first_name" type="text" class="form-control"
+                                               name="first_name" value="{{ $student->first_name }}">
+
+                                        @if ($errors->has('first_name'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('first_name') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
+                                        <label for="last_name" class="control-label">Last Name</label>
+                                        <input id="last_name" type="text" class="form-control"
+                                               name="last_name" value="{{ $student->last_name }}">
+
+                                        @if ($errors->has('last_name'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('last_name') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+                                        <label for="status" class="control-label">Status</label>
+                                        <select class="form-control" id="status" name="status">
+                                            @if ($student->status)
+                                                <option value="{{ $student->status }}">{{ $student->status }}</option>
+                                            @else
+                                                <option value="" selected="selected">Select a Status</option>
+                                            @endif
+                                            <option value="Active">Active</option>
+                                            <option value="Lead">Lead</option>
+                                            <option value="Waitlist">Waitlist</option>
+                                            <option value="Inactive">Inactive</option>
+                                        </select>
+
+                                        @if ($errors->has('status'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('status') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('instrument') ? ' has-error' : '' }}">
+                                        <label for="instrument" class="control-label">Instrument</label>
+                                        <select class="form-control" id="instrument" name="instrument">
+                                            @if ($student->instrument)
+                                                <option value="{{ $student->instrument }}">{{ $student->instrument }}</option>
+                                            @else
+                                                <option value="" selected="selected">Select an instrument
+                                                </option>
+                                            @endif
+                                            <option value="Guitar">Guitar</option>
+                                            <option value="Bass">Bass</option>
+                                            <option value="Drums">Drums</option>
+                                        </select>
+
+                                        @if ($errors->has('instrument'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('instrument') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                        <label for="email" class="control-label">Email</label>
+                                        <input id="email" type="email" class="form-control" name="email"
+                                               value="{{ $student->email }}">
+
+                                        @if ($errors->has('email'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                                        <label for="phone" class="control-label">Phone</label>
+                                        <input id="phone" type="tel" class="form-control" name="phone"
+                                               value="{{ $student->phone }}">
+
+                                        @if ($errors->has('phone'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('phone') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('date_of_birth') ? ' has-error' : '' }}">
+                                        <label for="date_of_birth" class="control-label">Birthday</label>
+                                        <input type="text" class="form-control"
+                                               name="date_of_birth" id="dateofbirth" autocomplete="off"
+                                               value="{{ $student->date_of_birth }}">
+
+                                        @if ($errors->has('date_of_birth'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('date_of_birth') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+                                        <label for="address" class="control-label">Address</label>
+                                        <input id="address" type="text" class="form-control" name="address"
+                                               value="{{ $student->address }}">
+
+                                        @if ($errors->has('address'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('address') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('address_2') ? ' has-error' : '' }}">
+                                        <label for="address_2" class="control-label">Apt / Suite</label>
+                                        <input id="address_2" type="text" class="form-control"
+                                               name="address_2" value="{{ $student->address_2 }}">
+
+                                        @if ($errors->has('address_2'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('address_2') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
+                                        <label for="city" class="control-label">City</label>
+                                        <input id="city" type="text" class="form-control" name="city"
+                                               value="{{ $student->city }}">
+
+                                        @if ($errors->has('city'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('city') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
+                                        <label for="state" class="control-label">State</label>
+                                        <select class="form-control" id="state" name="state">
+                                            @if ($student->state)
+                                                <option value="{{ $student->state }}">{{ $student->state }}</option>
+                                            @else
+                                                <option value="" selected="selected">Select a State</option>
+                                            @endif
+                                            <option value="AL">Alabama</option>
+                                            <option value="AK">Alaska</option>
+                                            <option value="AZ">Arizona</option>
+                                            <option value="AR">Arkansas</option>
+                                            <option value="CA">California</option>
+                                            <option value="CO">Colorado</option>
+                                            <option value="CT">Connecticut</option>
+                                            <option value="DE">Delaware</option>
+                                            <option value="DC">District Of Columbia</option>
+                                            <option value="FL">Florida</option>
+                                            <option value="GA">Georgia</option>
+                                            <option value="HI">Hawaii</option>
+                                            <option value="ID">Idaho</option>
+                                            <option value="IL">Illinois</option>
+                                            <option value="IN">Indiana</option>
+                                            <option value="IA">Iowa</option>
+                                            <option value="KS">Kansas</option>
+                                            <option value="KY">Kentucky</option>
+                                            <option value="LA">Louisiana</option>
+                                            <option value="ME">Maine</option>
+                                            <option value="MD">Maryland</option>
+                                            <option value="MA">Massachusetts</option>
+                                            <option value="MI">Michigan</option>
+                                            <option value="MN">Minnesota</option>
+                                            <option value="MS">Mississippi</option>
+                                            <option value="MO">Missouri</option>
+                                            <option value="MT">Montana</option>
+                                            <option value="NE">Nebraska</option>
+                                            <option value="NV">Nevada</option>
+                                            <option value="NH">New Hampshire</option>
+                                            <option value="NJ">New Jersey</option>
+                                            <option value="NM">New Mexico</option>
+                                            <option value="NY">New York</option>
+                                            <option value="NC">North Carolina</option>
+                                            <option value="ND">North Dakota</option>
+                                            <option value="OH">Ohio</option>
+                                            <option value="OK">Oklahoma</option>
+                                            <option value="OR">Oregon</option>
+                                            <option value="PA">Pennsylvania</option>
+                                            <option value="RI">Rhode Island</option>
+                                            <option value="SC">South Carolina</option>
+                                            <option value="SD">South Dakota</option>
+                                            <option value="TN">Tennessee</option>
+                                            <option value="TX">Texas</option>
+                                            <option value="UT">Utah</option>
+                                            <option value="VT">Vermont</option>
+                                            <option value="VA">Virginia</option>
+                                            <option value="WA">Washington</option>
+                                            <option value="WV">West Virginia</option>
+                                            <option value="WI">Wisconsin</option>
+                                            <option value="WY">Wyoming</option>
+                                        </select>
+
+                                        @if ($errors->has('state'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('state') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group{{ $errors->has('zip') ? ' has-error' : '' }}">
+                                        <label for="zip" class="control-label">Zip</label>
+                                        <input id="zip" type="text" class="form-control" name="zip"
+                                               value="{{ $student->zip }}">
+
+                                        @if ($errors->has('zip'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('zip') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pull-left">
+                                <button type="submit" class="btn btn-primary">Update Student</button>
+                                <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                            </div>
+                            <input id="student_id" type="hidden" class="form-control" name="student_id"
+                                   value="{{ $student->id }}">
+
+                            @endif
+                        </form>
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal" id="addStudentModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form class="form-horizontal" method="POST" action="{{ route('student.save') }}">
+                @csrf
+                <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title">New Student</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <input id="teacher_id" type="hidden" class="form-control" name="teacher_id"
+                               value="{{ Auth::user()->id }}">
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
+                                    <label for="first_name" class="control-label">First Name</label>
+                                    <input id="first_name" type="text" class="form-control" name="first_name"
+                                           value="{{ old('first_name') }}">
+
+                                    @if ($errors->has('first_name'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('first_name') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
+                                    <label for="last_name" class="control-label">Last Name</label>
+                                    <input id="last_name" type="text" class="form-control" name="last_name"
+                                           value="{{ old('last_name') }}">
+
+                                    @if ($errors->has('last_name'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('last_name') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                    <label for="email" class="control-label">Email</label>
+                                    <input id="email" type="text" class="form-control" name="email"
+                                           value="{{ old('email') }}">
+
+                                    @if ($errors->has('email'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+                                    <label for="status" class="control-label">Status: </label>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" checked name="status"
+                                                   value="Active">Active
+                                        </label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="status" value="Lead">Lead
+                                        </label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="status"
+                                                   value="Waitlist">Waitlist
+                                        </label>
+                                    </div>
+
+                                    @if ($errors->has('status'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('status') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+@endsection
