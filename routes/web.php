@@ -15,12 +15,13 @@ Auth::routes();
 
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/pricing', 'HomeController@pricing')->name('pricing');
-Route::get('/blog', 'HomeController@blog')->name('blog');
-Route::get('/contact', 'HomeController@contact')->name('contact');
-Route::post('/contact', 'HomeController@sendContact');
-Route::get('/privacy', 'HomeController@privacy')->name('privacy');
-Route::get('/terms', 'HomeController@terms')->name('terms');
+Route::get('pricing', 'HomeController@pricing')->name('pricing');
+Route::get('blog', 'HomeController@blog')->name('blog');
+Route::get('contact', 'HomeController@contact')->name('contact');
+Route::post('contact', 'HomeController@sendContact');
+Route::get('privacy', 'HomeController@privacy')->name('privacy');
+Route::get('terms', 'HomeController@terms')->name('terms');
+Route::post('newsletter','NewsletterController@store')->name('newsletter');
 
 Route::group(['middleware' => ['auth']], function () {
 
