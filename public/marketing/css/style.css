@@ -1509,7 +1509,7 @@ header {
 }
 
 .footer-title {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 600;
     margin-bottom: 1.5rem;
     color: #fff;
@@ -1805,7 +1805,8 @@ header {
 }
 
 .panel-title {
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .panel-title > a {

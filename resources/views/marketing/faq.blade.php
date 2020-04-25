@@ -39,7 +39,7 @@
                                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
                                        aria-expanded="true" aria-controls="collapseTwo">
                                         <i class="more-less glyphicon glyphicon-plus"></i>
-                                        What does Music Teacher's Aid do?
+                                        What is the second question?
                                     </a>
                                 </h4>
                             </div>
