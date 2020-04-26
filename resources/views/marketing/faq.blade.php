@@ -39,16 +39,17 @@
                                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
                                        aria-expanded="true" aria-controls="collapseTwo">
                                         <i class="more-less glyphicon glyphicon-plus"></i>
-                                        What is the second question?
+                                        Can I cancel my subscription?
                                     </a>
                                 </h4>
                             </div>
                             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
                                  aria-labelledby="headingTwo">
                                 <div class="panel-body">
-                                    Music Teachers Aid is software that aids private music teachers.
-                                    The software keeps track of students, lesson, payments, gives feedback to
-                                    parents, and automates transactions.
+                                    Yes of course you can cancel at anytime, though we hope you don't ever have to. The
+                                    subscription process grants 30 days per payment cycle. If you
+                                    signed on the 1st of the month and you cancel on the 15th your subscription is valid
+                                    to the 30th of that month.
                                 </div>
                             </div>
                         </div>
