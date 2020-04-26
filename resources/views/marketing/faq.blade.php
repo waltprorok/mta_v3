@@ -43,22 +43,44 @@
                                     </a>
                                 </h4>
                             </div>
+
                             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
                                  aria-labelledby="headingTwo">
                                 <div class="panel-body">
                                     Yes of course you can cancel at anytime, though we hope you don't ever have to. The
-                                    subscription process grants 30 days per payment cycle. If you
-                                    signed on the 1st of the month and you cancel on the 15th your subscription is valid
-                                    to the 30th of that month.
+                                    subscription process grants 30 days per payment cycle. If you signed on the 1st of
+                                    the month and you cancel on the 15th your subscription is valid to the 30th of that
+                                    month. We grant a FREE 30 day trial period to test out the software.
                                 </div>
                             </div>
                         </div>
 
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                       href="#collapseThree"
+                                       aria-expanded="true" aria-controls="collapseThree">
+                                        <i class="more-less glyphicon glyphicon-plus"></i>
+                                        Why do I need software to run my music studio?
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
+                                 aria-labelledby="headingThree">
+                                <div class="panel-body">
+                                    This is a great question. Two words, administrative work. Keeping tracking of
+                                    students, scheduling, rescheduling, and getting paid is the bottom line. We want
+                                    that experience to be as pleasant as possible for you the instructor and the
+                                    student.  We want to help take your level of professionalism up a notch.
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
 @endsection

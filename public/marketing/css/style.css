@@ -1794,6 +1794,7 @@ header {
     border-radius: 0;
     box-shadow: none;
     border-color: #EEEEEE;
+    margin-bottom: 12px;
 }
 
 .panel-default > .panel-heading {
