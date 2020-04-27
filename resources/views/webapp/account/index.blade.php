@@ -12,7 +12,7 @@
                         <h5 class="mb-0">Billing</h5>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-md-6">
                             <div class="card-body">
                                 <label for="card-element">Amount</label>
                                 @foreach($plans as $plan)
@@ -28,7 +28,7 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6">
                             <div class="card-body">
                                 <p>Your <b>FREE</b> account is available until <b>{{ date('M d, Y', strtotime(Auth::user()->trial_ends_at )) }}</b></p>
                                 <ul class="list-group">

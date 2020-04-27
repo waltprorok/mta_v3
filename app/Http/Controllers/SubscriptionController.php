@@ -48,7 +48,7 @@ class SubscriptionController extends Controller
         $subscription = $user->subscription('premium');
         $subscription->cancel();
 
-        return redirect()->back()->with('warning', 'Your account has been cancelled');
+        return redirect()->back()->with('warning', 'Your subscription account has been cancelled');
     }
 
     public function resume()
@@ -57,7 +57,7 @@ class SubscriptionController extends Controller
         $subscription = $user->subscription('premium');
         $subscription->resume();
 
-        return redirect()->back()->with('success', 'Your account has been reinstated');
+        return redirect()->back()->with('success', 'Your subscription account has been reinstated');
     }
 
     public function creditCard() {
@@ -68,7 +68,7 @@ class SubscriptionController extends Controller
         $user = Auth::user();
         $ccToken = $request->input('stripeToken');
         $user->updateCard($ccToken);
-        return redirect()->back()->with(['success' => 'Credit card updated.']);
+        return redirect()->back()->with(['success' => 'Credit card updated successfully.']);
     }
 
     public function pdfDownload($invoiceId)

@@ -20,11 +20,6 @@ class Blog extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
     public function getImageUrlAttribute($value)
     {
         $imageUrl = "";
@@ -57,7 +52,6 @@ class Blog extends Model
     {
         return is_null($this->released_on) ? '' :  date('h:i A', strtotime($this->released_on));
     }
-
 
     public function getBodyHtmlAttribute($value)
     {

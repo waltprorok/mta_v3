@@ -51,6 +51,11 @@ class HomeController extends Controller
         return view('marketing.blog');
     }
 
+    public function faq()
+    {
+        return view('marketing.faq');
+    }
+
     public function dashboard()
     {
         return view('webapp.index');
