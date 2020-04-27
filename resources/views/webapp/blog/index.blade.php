@@ -6,7 +6,7 @@
 
     <div class="col-12">
 
-        <a href="{{ route('admin.blog.create') }}" class="btn btn-outline-primary float-right"><i
+        <a href="{{ route('admin.blog.create') }}" class="btn btn-primary float-right"><i
                     class="fa fa-plus"></i> Create Post</a>
 
         <h2>Blog Posts</h2>
@@ -79,10 +79,10 @@
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $('#dtBlogIndex').DataTable();
-            $('.dataTables_length').addClass('bs-select');
-        });
+        // $(document).ready(function () {
+        //     $('#dtBlogIndex').DataTable();
+        //     $('.dataTables_length').addClass('bs-select');
+        // });
     </script>
 
 @endsection
