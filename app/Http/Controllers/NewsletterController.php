@@ -9,12 +9,16 @@ class NewsletterController extends Controller
 {
     public function store(Request $request)
     {
-        if ( ! Newsletter::isSubscribed($request->email) )
-        {
-            Newsletter::subscribePending($request->email);
-            return redirect('/')->with('success', 'Thanks For Subscribing to the News Letter');
+        if (empty($request->input('email'))) {
+            return back();
+        } else {
+            if (!Newsletter::isSubscribed($request->email)) {
+                Newsletter::subscribePending($request->email);
+                return back()->with('success', 'Thanks For Subscribing to the News Letter');
+            }
+            return back()->with('error', 'Sorry! You have already subscribed ');
         }
-        return redirect('/')->with('error', 'Sorry! You have already subscribed ');
+
 
     }
 }

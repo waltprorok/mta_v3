@@ -68,7 +68,7 @@
 
     ///////////////////////////
     // Disable Register Button
-    $("#terms").click(function() {
+    $("#terms").click(function () {
         var checked_status = this.checked;
         if (checked_status == true) {
             $("#signup").removeAttr("disabled");
@@ -136,5 +136,15 @@
             });
         }
     });
+
+    function toggleIcon(e) {
+        $(e.target)
+            .prev('.panel-heading')
+            .find(".more-less")
+            .toggleClass('glyphicon-plus glyphicon-minus');
+    }
+
+    $('.panel-group').on('hidden.bs.collapse', toggleIcon);
+    $('.panel-group').on('shown.bs.collapse', toggleIcon);
 
 })(jQuery);

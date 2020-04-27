@@ -20,6 +20,7 @@ Route::get('blog', 'HomeController@blog')->name('blog');
 Route::get('contact', 'HomeController@contact')->name('contact');
 Route::post('contact', 'HomeController@sendContact');
 Route::get('privacy', 'HomeController@privacy')->name('privacy');
+Route::get('faq', 'HomeController@faq')->name('faq');
 Route::get('terms', 'HomeController@terms')->name('terms');
 Route::post('newsletter','NewsletterController@store')->name('newsletter');
 

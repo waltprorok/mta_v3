@@ -5,12 +5,6 @@
     <div id="contact" class="section md-padding">
         <div class="container">
             <div class="row">
-                @if (session('status'))
-                    <div class="alert alert-success">
-                        {{ session('status') }}
-                    </div>
-                @endif
-
                 <div class="section-header text-center">
                     <h2 class="title">Contact Us</h2>
                     <h3>Have a question? Contact us at Music Teacher's Aid.</h3>

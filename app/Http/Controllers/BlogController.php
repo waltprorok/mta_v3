@@ -28,7 +28,7 @@ class BlogController extends Controller
         $blogs = Blog::with('author')
             ->latestFirst()
             ->published()
-            ->paginate($this->blogLimit);
+            ->paginate($this->blogLimit)->onEachSide(3);
 
         return view('blog.index', compact('blogs'));
     }

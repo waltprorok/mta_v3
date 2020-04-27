@@ -78,7 +78,7 @@
                 <li><a href="{{ url('/#features') }}">Features</a></li>
                 <li><a href="{{ url('/#testimonials') }}">Testimonials</a></li>
                 <li><a href="{{ route('blog.index') }}">Blog</a></li>
-                <li><a href="{{ route('pricing') }}">Pricing</a></li>
+                <li class="active"><a href="{{ route('pricing') }}">Pricing</a></li>
                 @guest
                     <li><a href="{{ route('login') }}">Login</a></li>
                 @else
@@ -141,7 +141,7 @@
                     <ul class="list-unstyled">
                         <li><a href="{{ route('blog.index') }}">Blog</a></li>
                         <li><a href="{{ route('contact') }}">Contact us</a></li>
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="{{ route('faq') }}">FAQ</a></li>
                     </ul>
                 </div>
             </div>
@@ -177,16 +177,6 @@
                     <a href="{{ route('home') }}"><img src="/marketing/img/logo-alt1.png" alt="logo"></a>
                 </div>
                 <!-- /footer logo -->
-                <!-- footer follow -->
-{{--                <ul class="footer-follow">--}}
-{{--                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>--}}
-{{--                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>--}}
-{{--                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>--}}
-{{--                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>--}}
-{{--                    <li><a href="#"><i class="fa fa-youtube"></i></a></li>--}}
-{{--                </ul>--}}
-                <!-- /footer follow -->
-
                 <!-- footer copyright -->
                 <div class="footer-copyright">
                     <p>Copyright © {{ now()->year }}. All Rights Reserved. Designed by
