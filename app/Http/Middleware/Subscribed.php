@@ -18,8 +18,8 @@ class Subscribed
     public function handle($request, Closure $next)
     {
         if ($request->user() and !$request->user()
-                ->subscribed('premium')
-                ->where('ends_at', '<=', Carbon::now())) {
+                ->subscribed('premium'))
+        {
             return redirect('/account');
         }
 
