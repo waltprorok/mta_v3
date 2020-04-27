@@ -72,7 +72,7 @@
                                     This is a great question. Two words, administrative work. Keeping tracking of
                                     students, scheduling, rescheduling, and getting paid is the bottom line. We want
                                     that experience to be as pleasant as possible for you the instructor and the
-                                    student.  We want to help take your level of professionalism up a notch.
+                                    student. We want to help take your level of professionalism up a notch.
                                 </div>
                             </div>
 

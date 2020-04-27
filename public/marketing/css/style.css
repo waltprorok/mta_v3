@@ -1798,7 +1798,7 @@ header {
 }
 
 .panel-default > .panel-heading {
-    padding: 0;
+    /*padding: 0;*/
     border-radius: 0;
     color: #212121;
     background-color: #FAFAFA;
@@ -1812,7 +1812,7 @@ header {
 
 .panel-title > a {
     display: block;
-    padding: 15px;
+    padding: 6px;
     text-decoration: none;
 }
 
