@@ -144,6 +144,11 @@ ul, ol {
     padding-bottom: 70px;
 }
 
+.lg-padding {
+    padding-top: 160px;
+    padding-bottom: 160px;
+}
+
 /* --  background section  -- */
 
 .bg-grey {
