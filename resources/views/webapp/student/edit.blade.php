@@ -133,8 +133,8 @@
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('date_of_birth') ? ' has-error' : '' }}">
                                         <label for="date_of_birth" class="control-label">Birthday</label>
-                                        <input type="text" class="form-control"
-                                               name="date_of_birth" id="dateofbirth" autocomplete="off"
+                                        <input type="text" class="form-control" name="date_of_birth"
+                                               id="dateofbirth" autocomplete="off"
                                                value="{{ $student->date_of_birth }}">
 
                                         @if ($errors->has('date_of_birth'))

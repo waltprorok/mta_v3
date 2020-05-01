@@ -30,12 +30,12 @@
                         </div>
                         <div class="col-md-6">
                             <div class="card-body">
-                                <p>Your <b>FREE</b> account is available until <b>{{ date('M d, Y', strtotime(Auth::user()->trial_ends_at )) }}</b></p>
+{{--                                <p>Your <b>FREE</b> account is available until <b>{{ date('M d, Y', strtotime(Auth::user()->trial_ends_at )) }}</b></p>--}}
                                 <ul class="list-group">
-                                    <li>Enter Information</li>
-                                    <li>Credit Card Number</li>
-                                    <li>Month, Year, CSV and Zip Code</li>
-                                    <li>Trusted Secure Payment</li>
+                                    <li class="list-group-item active">Your <b>FREE</b> account is available until <b>{{ date('M d, Y', strtotime(Auth::user()->trial_ends_at )) }}</b></li>
+                                    <li class="list-group-item"> <i class="fa fa-credit-card" style="padding-right: 10px;" aria-hidden="true"></i>Credit Card Number</li>
+                                    <li class="list-group-item"> <i class="fa fa-keyboard-o" style="padding-right: 10px;" aria-hidden="true"></i>Month, Year, CVC and Zip Code</li>
+                                    <li class="list-group-item"> <i class="fa fa-lock" style="padding-right: 16px;" aria-hidden="true"></i>Trusted Secure Payment</li>
                                 </ul>
                             </div>
                         </div>
