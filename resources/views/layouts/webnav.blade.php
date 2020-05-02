@@ -58,14 +58,13 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('calendar.index') }}"
-                       class="nav-link {{ Route::currentRouteName() == 'calendar.index' ? 'active' : '' }}">
+                    <a href="{{ route('calendar.index') }}" class="nav-link {{ Route::currentRouteName() == 'calendar.index' ? 'active' : '' }}">
                         <i class="fa fa-calendar"></i> Calendar
                     </a>
                 </li>
 
                 <li class="nav-item nav-dropdown">
-                    <a href="#" class="nav-link nav-dropdown-toggle" {{ Route::currentRouteName() == '#' ? 'active' : '' }}>
+                    <a href="#" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == '#' ? 'active' : '' }}">
                         <i class="fa fa-credit-card"></i> Billing <i class="fa fa-caret-left"></i>
                     </a>
 
@@ -134,7 +133,7 @@
                 </li>
 
                 <li class="nav-item nav-dropdown">
-                    <a href="#" class="nav-link nav-dropdown-toggle" {{ Route::currentRouteName() == 'reports.all' ? 'active' : '' }}>
+                    <a href="#" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == 'reports.all' ? 'active' : '' }}">
                         <i class="fa fa-pie-chart"></i> Reports <i class="fa fa-caret-left"></i>
                     </a>
 

@@ -72,7 +72,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('reports')->group(function () {
-        Route::get('/', 'ReportController@allReports')->name('reports.all');
+        Route::get('/', 'ReportController@all')->name('reports.all');
     });
 
     // middleware guard for just admin user in dashboard

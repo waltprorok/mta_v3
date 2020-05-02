@@ -11,6 +11,7 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header bg-light">Bar Charts</div>
+
                             <div class="card-body">
                                 <canvas id="bar-chart" width="100%" height="50"></canvas>
                             </div>
@@ -20,6 +21,7 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header bg-light">Line Charts</div>
+
                             <div class="card-body">
                                 <canvas id="line-chart" width="100%" height="50"></canvas>
                             </div>

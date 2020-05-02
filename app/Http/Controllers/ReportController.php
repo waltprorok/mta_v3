@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    public function allReports()
+    public function all()
     {
         return view('webapp.reports.all');
     }

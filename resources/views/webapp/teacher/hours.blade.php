@@ -8,9 +8,9 @@
         @include('partials.teacherTabs')
         <div class="card">
             <div class="card-body">
-                <p>Business Hours</p>
+                <h5>Business Hours</h5>
                 <table class="table">
-                    <thead>
+                    <thead class="thead">
                     <tr>
                         <th>Day of the Week</th>
                         <th>Active</th>
@@ -37,7 +37,7 @@
                                     <option>10:00 am</option>
                                     <option>10:30 am</option>
                                     <option>11:00 am</option>
-                                    <option>11:00 am</option>
+                                    <option>11:30 am</option>
                                     <option>12:00 pm</option>
                                     <option>12:30 pm</option>
                                     <option>1:00 pm</option>
@@ -71,7 +71,7 @@
                                     <option>10:00 am</option>
                                     <option>10:30 am</option>
                                     <option>11:00 am</option>
-                                    <option>11:00 am</option>
+                                    <option>11:30 am</option>
                                     <option>12:00 pm</option>
                                     <option>12:30 pm</option>
                                     <option>1:00 pm</option>
@@ -114,7 +114,7 @@
                                     <option>10:00 am</option>
                                     <option>10:30 am</option>
                                     <option>11:00 am</option>
-                                    <option>11:00 am</option>
+                                    <option>11:30 am</option>
                                     <option>12:00 pm</option>
                                     <option>12:30 pm</option>
                                     <option>1:00 pm</option>
@@ -148,7 +148,7 @@
                                     <option>10:00 am</option>
                                     <option>10:30 am</option>
                                     <option>11:00 am</option>
-                                    <option>11:00 am</option>
+                                    <option>11:30 am</option>
                                     <option>12:00 pm</option>
                                     <option>12:30 pm</option>
                                     <option>1:00 pm</option>
@@ -191,7 +191,7 @@
                                     <option>10:00 am</option>
                                     <option>10:30 am</option>
                                     <option>11:00 am</option>
-                                    <option>11:00 am</option>
+                                    <option>11:30 am</option>
                                     <option>12:00 pm</option>
                                     <option>12:30 pm</option>
                                     <option>1:00 pm</option>
@@ -225,7 +225,7 @@
                                     <option>10:00 am</option>
                                     <option>10:30 am</option>
                                     <option>11:00 am</option>
-                                    <option>11:00 am</option>
+                                    <option>11:30 am</option>
                                     <option>12:00 pm</option>
                                     <option>12:30 pm</option>
                                     <option>1:00 pm</option>
@@ -268,7 +268,7 @@
                                     <option>10:00 am</option>
                                     <option>10:30 am</option>
                                     <option>11:00 am</option>
-                                    <option>11:00 am</option>
+                                    <option>11:30 am</option>
                                     <option>12:00 pm</option>
                                     <option>12:30 pm</option>
                                     <option>1:00 pm</option>
@@ -302,7 +302,7 @@
                                     <option>10:00 am</option>
                                     <option>10:30 am</option>
                                     <option>11:00 am</option>
-                                    <option>11:00 am</option>
+                                    <option>11:30 am</option>
                                     <option>12:00 pm</option>
                                     <option>12:30 pm</option>
                                     <option>1:00 pm</option>
@@ -345,7 +345,7 @@
                                     <option>10:00 am</option>
                                     <option>10:30 am</option>
                                     <option>11:00 am</option>
-                                    <option>11:00 am</option>
+                                    <option>11:30 am</option>
                                     <option>12:00 pm</option>
                                     <option>12:30 pm</option>
                                     <option>1:00 pm</option>
@@ -379,7 +379,7 @@
                                     <option>10:00 am</option>
                                     <option>10:30 am</option>
                                     <option>11:00 am</option>
-                                    <option>11:00 am</option>
+                                    <option>11:30 am</option>
                                     <option>12:00 pm</option>
                                     <option>12:30 pm</option>
                                     <option>1:00 pm</option>
@@ -422,7 +422,7 @@
                                     <option>10:00 am</option>
                                     <option>10:30 am</option>
                                     <option>11:00 am</option>
-                                    <option>11:00 am</option>
+                                    <option>11:30 am</option>
                                     <option>12:00 pm</option>
                                     <option>12:30 pm</option>
                                     <option>1:00 pm</option>
@@ -456,7 +456,7 @@
                                     <option>10:00 am</option>
                                     <option>10:30 am</option>
                                     <option>11:00 am</option>
-                                    <option>11:00 am</option>
+                                    <option>11:30 am</option>
                                     <option>12:00 pm</option>
                                     <option>12:30 pm</option>
                                     <option>1:00 pm</option>
@@ -499,7 +499,7 @@
                                     <option>10:00 am</option>
                                     <option>10:30 am</option>
                                     <option>11:00 am</option>
-                                    <option>11:00 am</option>
+                                    <option>11:30 am</option>
                                     <option>12:00 pm</option>
                                     <option>12:30 pm</option>
                                     <option>1:00 pm</option>
@@ -533,7 +533,7 @@
                                     <option>10:00 am</option>
                                     <option>10:30 am</option>
                                     <option>11:00 am</option>
-                                    <option>11:00 am</option>
+                                    <option>11:30 am</option>
                                     <option>12:00 pm</option>
                                     <option>12:30 pm</option>
                                     <option>1:00 pm</option>

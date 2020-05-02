@@ -11,40 +11,43 @@
 
         <h2>Blog Posts</h2>
         <div class="card">
-            <table class="table table-responsive-md" id="dtBlogIndex">
-                <thead class="thead">
-                <tr>
-                    <th scope="col">Image</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Slug</th>
-                    <th scope="col">Released On</th>
-                    <th scope="col">Created At</th>
-                    <th scope="col">Updated At</th>
-                    <th scope="col">Functions</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($blogs as $blog)
+            <div class="card-body">
+                <table class="table table-responsive-md" id="dtBlogIndex">
+                    <thead class="thead">
                     <tr>
-                        <td><img width="40" src="{{ $blog->image_url }}" alt="{{ $blog->image }}"></td>
-                        <td>{{ $blog->title }}</td>
-                        <td>{{ $blog->slug }}</td>
-                        <td>{{ $blog->released_on }}</td>
-                        <td>{{ $blog->created_at }}</td>
-                        <td>{{ $blog->updated_at }}</td>
-                        <th scope="row text-center">
-                            <span class="align-baseline"><a href="{{ route('admin.blog.edit', $blog->id )}}" class="btn btn-outline-primary" role="button" title="edit">
+                        <th scope="col">Image</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Slug</th>
+                        <th scope="col">Released On</th>
+                        <th scope="col">Created At</th>
+                        <th scope="col">Updated At</th>
+                        <th scope="col">Functions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($blogs as $blog)
+                        <tr>
+                            <td><img width="40" src="{{ $blog->image_url }}" alt="{{ $blog->image }}"></td>
+                            <td>{{ $blog->title }}</td>
+                            <td>{{ $blog->slug }}</td>
+                            <td>{{ $blog->released_on }}</td>
+                            <td>{{ $blog->created_at }}</td>
+                            <td>{{ $blog->updated_at }}</td>
+                            <th scope="row text-center">
+                            <span class="align-baseline"><a href="{{ route('admin.blog.edit', $blog->id )}}"
+                                                            class="btn btn-outline-primary" role="button" title="edit">
                                 <i class="fa fa-edit"></i></a>
                             <a href="{{ route('blog.show', $blog->slug) }}" target="_blank" class="btn btn-outline-dark"
                                role="button" title="view"><i class="fa fa-chrome" aria-hidden="true"></i></a>
                             <button type="button" class="btn btn-outline-danger" title="delete" data-toggle="modal"
                                     data-target="#myDeleteModal"><i class="fa fa-trash-o" aria-hidden="true"></i>
                             </button></span>
-                        </th>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+                            </th>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
