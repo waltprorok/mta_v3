@@ -5,8 +5,8 @@
     <div class="col-md-12">
         <h2>Invoices</h2>
         <div class="card">
-            <table class="table" id="myTable">
-                <thead class="thead-dark">
+            <table class="table table-striped">
+                <thead class="thead">
                 <tr>
                     <th>Date</th>
                     <th>Amount</th>

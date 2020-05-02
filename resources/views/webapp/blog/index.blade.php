@@ -33,16 +33,12 @@
                             <td>{{ $blog->released_on }}</td>
                             <td>{{ $blog->created_at }}</td>
                             <td>{{ $blog->updated_at }}</td>
-                            <th scope="row text-center">
-                            <span class="align-baseline"><a href="{{ route('admin.blog.edit', $blog->id )}}"
-                                                            class="btn btn-outline-primary" role="button" title="edit">
-                                <i class="fa fa-edit"></i></a>
-                            <a href="{{ route('blog.show', $blog->slug) }}" target="_blank" class="btn btn-outline-dark"
-                               role="button" title="view"><i class="fa fa-chrome" aria-hidden="true"></i></a>
-                            <button type="button" class="btn btn-outline-danger" title="delete" data-toggle="modal"
-                                    data-target="#myDeleteModal"><i class="fa fa-trash-o" aria-hidden="true"></i>
+                            <td class="text-nowrap">
+                            <span class="align-baseline"><a href="{{ route('admin.blog.edit', $blog->id )}}" class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
+                            <a href="{{ route('blog.show', $blog->slug) }}" target="_blank" class="btn btn-outline-dark" role="button" title="view"><i class="fa fa-chrome" aria-hidden="true"></i></a>
+                            <button type="button" class="btn btn-outline-danger" title="delete" data-toggle="modal" data-target="#myDeleteModal"><i class="fa fa-trash-o" aria-hidden="true"></i>
                             </button></span>
-                            </th>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
