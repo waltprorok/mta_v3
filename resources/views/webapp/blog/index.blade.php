@@ -12,7 +12,7 @@
         <h2>Blog Posts</h2>
         <div class="card">
             <div class="card-body">
-                <table class="table table-responsive-md" id="dtBlogIndex">
+                <table class="table" id="dtBlogIndex">
                     <thead class="thead">
                     <tr>
                         <th scope="col">Image</th>
@@ -49,43 +49,42 @@
                 </table>
             </div>
         </div>
-    </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Delete Blog?</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Delete Blog?</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                    </div>
 
-                <div class="modal-body">
-                    <p>Are you sure you want to delete this blog article?</p>
-                </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this blog article?</p>
+                    </div>
 
-                <div class="modal-footer">
-                    <form action="{{ route('admin.blog.destroy', $blog->id) }}" method="POST">
-                        @method('DELETE')
-                        @csrf
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-                        &nbsp;<button type="submit" class="btn btn-danger pull-right">Delete</button>
-                    </form>
+                    <div class="modal-footer">
+                        <form action="{{ route('admin.blog.destroy', $blog->id) }}" method="POST">
+                            @method('DELETE')
+                            @csrf
+                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                            &nbsp;<button type="submit" class="btn btn-danger pull-right">Delete</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- End of Modal -->
+        <!-- End of Modal -->
 
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
-    <script>
-        // $(document).ready(function () {
-        //     $('#dtBlogIndex').DataTable();
-        //     $('.dataTables_length').addClass('bs-select');
-        // });
-    </script>
+        <script>
+            $(document).ready(function () {
+                $('#dtBlogIndex').DataTable();
+                $('.dataTables_length').addClass('bs-select');
+            });
+        </script>
 
 @endsection
