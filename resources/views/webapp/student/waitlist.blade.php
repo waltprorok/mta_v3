@@ -11,8 +11,8 @@
         <h2>Students</h2>
         @include('partials.studentListTabs')
         <div class="card">
-            <table class="table table-responsive-md" id="#studentTable">
-                <thead class="thead-dark">
+            <table class="table" id="#studentTable">
+                <thead class="thead">
                 <tr>
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
