@@ -20,8 +20,7 @@
                     </li>
                 @endif
                 <li class="nav-item nav-dropdown ">
-                    <a href="#"
-                       class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == 'student.index' ? 'active' : '' }}">
+                    <a href="#" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == 'student.index' ? 'active' : '' }}">
                         <i class="fa fa-users"></i> Students <i class="fa fa-caret-left"></i>
                     </a>
 
@@ -66,8 +65,7 @@
                 </li>
 
                 <li class="nav-item nav-dropdown">
-                    <a href="#"
-                       class="nav-link nav-dropdown-toggle" {{ Route::currentRouteName() == '#' ? 'active' : '' }}>
+                    <a href="#" class="nav-link nav-dropdown-toggle" {{ Route::currentRouteName() == '#' ? 'active' : '' }}>
                         <i class="fa fa-credit-card"></i> Billing <i class="fa fa-caret-left"></i>
                     </a>
 
@@ -136,14 +134,13 @@
                 </li>
 
                 <li class="nav-item nav-dropdown">
-                    <a href="#"
-                       class="nav-link nav-dropdown-toggle" {{ Route::currentRouteName() == '#' ? 'active' : '' }}>
+                    <a href="#" class="nav-link nav-dropdown-toggle" {{ Route::currentRouteName() == 'reports.all' ? 'active' : '' }}>
                         <i class="fa fa-pie-chart"></i> Reports <i class="fa fa-caret-left"></i>
                     </a>
 
                     <ul class="nav-dropdown-items">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('reports.all') }}" class="nav-link">
                                 <i class="fa fa-area-chart"></i> All Reports
                             </a>
                         </li>

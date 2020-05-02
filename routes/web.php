@@ -22,7 +22,7 @@ Route::post('contact', 'HomeController@sendContact');
 Route::get('privacy', 'HomeController@privacy')->name('privacy');
 Route::get('faq', 'HomeController@faq')->name('faq');
 Route::get('terms', 'HomeController@terms')->name('terms');
-Route::post('newsletter','NewsletterController@store')->name('newsletter');
+Route::post('newsletter', 'NewsletterController@store')->name('newsletter');
 
 Route::group(['middleware' => ['auth']], function () {
 
@@ -69,6 +69,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('calendar')->group(function () {
         Route::get('/', 'LessonController@index')->name('calendar.index');
+    });
+
+    Route::prefix('reports')->group(function () {
+        Route::get('/', 'ReportController@allReports')->name('reports.all');
     });
 
     // middleware guard for just admin user in dashboard
