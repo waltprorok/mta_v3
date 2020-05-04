@@ -1,11 +1,12 @@
 @extends('layouts.webapp')
-@section('title', 'Studio Settings')
+@section('title', 'Studio Password')
 @section('content')
 
     <div class="col-12">
         <h2>Studio Settings</h2>
         @include('partials.teacherTabs')
         <div class="card">
+            <div class="card-header bg-light">Update Password</div>
             <div class="card-body">
                 <form class="form-horizontal" method="POST" action="{{ route('pw.studioPW') }}">
                     @csrf

@@ -4,15 +4,13 @@
 
     <div class="col-12">
         <h2>Account</h2>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header bg-light">
-                        Account Information
-                    </div>
-                    <div class="card-body">
-
+        <div class="card">
+            <div class="card-header bg-light">
+                Account Information
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
                         <ul class="list-group">
                             <li class="list-group-item"><i class="fa fa-credit-card"
                                                            aria-hidden="true"
@@ -41,32 +39,33 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- The Modal -->
-        <div class="modal" id="cancelSubscription">
-            <div class="modal-dialog">
-                <div class="modal-content">
+    <!-- The Modal -->
+    <div class="modal" id="cancelSubscription">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Cancel Subscription</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        By click the <b>Cancel Subscription Button</b> you are here by confirming your account will be
-                        cancelled. Don't worry you can always resume your subscription if you change your mind.
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <a class="btn btn-danger" href="{{ route('subscription.cancel') }}">Cancel Subscription</a>
-                    </div>
-
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Cancel Subscription</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    By click the <b>Cancel Subscription Button</b> you are here by confirming your account will be
+                    cancelled. Don't worry you can always resume your subscription if you change your mind.
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a class="btn btn-danger" href="{{ route('subscription.cancel') }}">Cancel Subscription</a>
+                </div>
+
             </div>
         </div>
+    </div>
 
 @endsection

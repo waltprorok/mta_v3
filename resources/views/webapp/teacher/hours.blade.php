@@ -1,5 +1,5 @@
 @extends('layouts.webapp')
-@section('title', 'Studio Settings')
+@section('title', 'Studio Business Hours')
 @section('content')
 
 
@@ -7,8 +7,8 @@
         <h2>Studio Settings</h2>
         @include('partials.teacherTabs')
         <div class="card">
+            <div class="card-header bg-light">Business Hours</div>
             <div class="card-body">
-                <h5>Business Hours</h5>
                 <table class="table">
                     <thead class="thead">
                     <tr>

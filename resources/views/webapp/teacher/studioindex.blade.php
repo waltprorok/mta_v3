@@ -6,6 +6,9 @@
         <h2>Studio Settings</h2>
         @include('partials.teacherTabs')
         <div class="card">
+            <div class="card-header bg-light">
+                Studio Information
+            </div>
             <div class="card-body">
                 <form class="form-horizontal" method="POST" action="{{ route('save.studioSettings') }}"
                       enctype="multipart/form-data">
