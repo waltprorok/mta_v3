@@ -1,5 +1,5 @@
 @extends('layouts.webapp')
-@section('title', 'Studio Business Hours')
+@section('title', 'Business Hours')
 @section('content')
 
 

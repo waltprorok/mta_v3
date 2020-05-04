@@ -1,5 +1,5 @@
 @extends('layouts.webapp')
-@section('title', 'Studio Settings')
+@section('title', 'Studio Information')
 @section('content')
 
     <div class="col-12">
