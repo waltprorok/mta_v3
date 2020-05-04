@@ -1,5 +1,5 @@
 @extends('layouts.webapp')
-@section('title', 'Password Update')
+@section('title', 'Update Password')
 @section('content')
 
     <div class="col-12">
