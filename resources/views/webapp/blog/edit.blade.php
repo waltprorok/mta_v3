@@ -6,8 +6,7 @@
         <h2>Edit Blog Post</h2>
         <div class="card">
             <div class="card-body">
-                <form method="POST" action="{{ route('admin.blog.update', $update->id) }}"
-                      enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.blog.update', $update->id) }}" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
                     <div class="row">
