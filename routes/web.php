@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('password-post', 'TeacherController@changePassword')->name('pw.studioPW');
         Route::get('payment', 'TeacherController@payment')->name('teacher.payment');
         Route::get('hours', 'TeacherController@hours')->name('teacher.hours');
+        Route::get('hours/view', 'TeacherController@hoursView')->name('teacher.hoursView');
         Route::post('hours', 'TeacherController@hoursSave')->name('teacher.hoursSave');
     });
 

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Auth;
 use File;
-use Illuminate\Support\Facades\Input;
 use Storage;
 use App\Teacher;
 use App\BusinessHours;
@@ -76,7 +75,7 @@ class TeacherController extends Controller
     {
         $teacherId = Auth::id();
         $settings = Teacher::where('teacher_id', $teacherId)->get();
-        return view('webapp.teacher.studiosettings', compact('settings'));
+        return view('webapp.teacher.studiosettings', compact('settings', $settings));
     }
 
     public function update(Request $request)
@@ -167,8 +166,18 @@ class TeacherController extends Controller
 
     public function hours()
     {
+        $hours = BusinessHours::where('teacher_id', Auth::id())->get();
+        if ($hours == null) {
+            return view('webapp.teacher.hours');
+        } else {
+            return redirect()->route('teacher.hoursView');
+        }
+    }
 
-        return view('webapp.teacher.hours');
+    public function hoursView()
+    {
+        $hours = BusinessHours::where('teacher_id', Auth::id())->get();
+        return view('webapp.teacher.hoursView', compact('hours', $hours));
     }
 
     public function hoursSave(Request $request)
