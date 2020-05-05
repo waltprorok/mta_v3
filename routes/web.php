@@ -51,6 +51,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('hours', 'TeacherController@hours')->name('teacher.hours');
         Route::get('hours/view', 'TeacherController@hoursView')->name('teacher.hoursView');
         Route::post('hours', 'TeacherController@hoursSave')->name('teacher.hoursSave');
+        Route::put('hours/update', 'TeacherController@hoursUpdate')->name('teacher.hoursUpdate');
     });
 
 

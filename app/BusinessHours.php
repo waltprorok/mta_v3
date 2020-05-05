@@ -12,4 +12,14 @@ class BusinessHours extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getHourOpenTimeAttribute($value)
+    {
+        return is_null($this->open_time) ? '' :  date('g:i a', strtotime($this->open_time));
+    }
+
+    public function getHourCloseTimeAttribute($value)
+    {
+        return is_null($this->close_time) ? '' :  date('g:i a', strtotime($this->close_time));
+    }
 }

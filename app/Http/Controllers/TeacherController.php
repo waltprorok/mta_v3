@@ -73,8 +73,7 @@ class TeacherController extends Controller
 
     public function edit()
     {
-        $teacherId = Auth::id();
-        $settings = Teacher::where('teacher_id', $teacherId)->get();
+        $settings = Teacher::where('teacher_id', Auth::id())->get();
         return view('webapp.teacher.studiosettings', compact('settings', $settings));
     }
 
@@ -94,10 +93,9 @@ class TeacherController extends Controller
             'phone' => 'required|string|max:50',
             'logo' => 'image|max:3200',
         ]);
-        $teacherId = Auth::user()->id;
         $phonef = preg_replace('/\D+/', '', $request->get('phone'));
 
-        $teacher = Teacher::where('teacher_id', '=', $teacherId)->first();
+        $teacher = Teacher::where('teacher_id', '=', Auth::id())->first();
         $teacher->teacher_id = $request->teacher_id;
         $teacher->studio_name = $request->studio_name;
         $teacher->first_name = $request->first_name;
@@ -166,7 +164,7 @@ class TeacherController extends Controller
 
     public function hours()
     {
-        $hours = BusinessHours::where('teacher_id', Auth::id())->get();
+        $hours = BusinessHours::where('teacher_id', Auth::id())->first();
         if ($hours == null) {
             return view('webapp.teacher.hours');
         } else {
@@ -178,6 +176,28 @@ class TeacherController extends Controller
     {
         $hours = BusinessHours::where('teacher_id', Auth::id())->get();
         return view('webapp.teacher.hoursView', compact('hours', $hours));
+    }
+
+    public function hoursUpdate(Request $request)
+    {
+        $input = $request->all();
+        foreach ($input['rows'] as $index => $value) {
+
+            if (!isset($value['active'])) {
+                $active = 0;
+            } else {
+                $active = $value['active'];
+            }
+            $hours = BusinessHours::where('teacher_id', '=', Auth::id())->where('day', '=', $value['day'])->first();
+            $hours->teacher_id = Auth::id();
+            $hours->day = $value['day'];
+            $hours->active = $active;
+            $hours->open_time = $value['open_time'];
+            $hours->close_time = $value['close_time'];
+            $hours->save();
+        }
+
+        return redirect()->back()->with('success', 'Business hours updated successfully!');
     }
 
     public function hoursSave(Request $request)
