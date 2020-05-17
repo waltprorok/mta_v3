@@ -19,8 +19,8 @@ class CreateLessonsTable extends Migration
             $table->foreign('student_id')->references('id')->on('students')->onDelete('restrict');
             $table->integer('teacher_id')->unsigned();
             $table->string('title');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->datetime('start_date');
+            $table->datetime('end_date');
             $table->timestamps();
         });
     }
