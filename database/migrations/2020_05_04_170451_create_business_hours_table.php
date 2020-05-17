@@ -19,8 +19,8 @@ class CreateBusinessHoursTable extends Migration
             $table->foreign('teacher_id')->references('id')->on('users')->onDelete('restrict');
             $table->integer('day')->nullable();
             $table->tinyInteger('active')->default('0');
-            $table->timestamp('open_time');
-            $table->timestamp('close_time');
+            $table->timestamp('open_time')->default('0');
+            $table->timestamp('close_time')->default('0');
             $table->timestamps();
         });
     }
