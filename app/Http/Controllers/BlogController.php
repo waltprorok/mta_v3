@@ -16,7 +16,6 @@ use Illuminate\View\View;
 class BlogController extends Controller
 {
     protected $blogLimit = 3;
-    protected $adminLimit = 10;
 
     /**
      * Display a listing of the resource.
@@ -42,7 +41,7 @@ class BlogController extends Controller
         $blogs = Blog::with('author')
             ->latestFirst()
             ->published()
-            ->simplePaginate($this->adminLimit);
+            ->get();
 
         return view('webapp.blog.index', compact('blogs'));
     }
