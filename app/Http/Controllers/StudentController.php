@@ -129,7 +129,7 @@ class StudentController extends Controller
         $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
         $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
         $lesson->save();
-        return redirect()->back()->with('success', 'Student has been schedule');
+        return redirect()->back()->with('success', ' The student has been scheduled successfully.');
     }
 
     public function scheduleEdit($student_id, $id)
