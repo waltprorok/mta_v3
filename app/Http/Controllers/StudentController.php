@@ -21,7 +21,7 @@ class StudentController extends Controller
         $teacher = Teacher::where('teacher_id', Auth::id())->first();
 
         if ($teacher == null) {
-            return redirect('teacher')->with('success', 'Please fill out your studio settings first before entering students.');
+            return redirect('teacher')->with('info', 'Please fill out your studio settings first before entering students.');
         }
 
         $students = Student::with('teacher')

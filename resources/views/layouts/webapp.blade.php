@@ -70,15 +70,12 @@
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                    aria-expanded="false">
                     <i class="fa fa-user fa-lg" aria-hidden="true"></i>
-                    {{--<img src="{{ asset('webapp/imgs/avatar-1.png') }}" class="avatar avatar-sm" alt="logo">--}}
                     <span class="small ml-1 d-md-down-none"></span>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right">
-                    <div class="dropdown-header">{{ Auth::user()->first_name }} {{Auth::user()->last_name }}</div>
-
+                    <div class="dropdown-header">Account Settings</div>
                     <a href="{{ route('account') }}" class="dropdown-item">
-                        {{--{{ route('account') }}--}}
                         <i class="fa fa-calculator"></i>Account
                     </a>
 

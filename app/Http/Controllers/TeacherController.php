@@ -18,7 +18,7 @@ class TeacherController extends Controller
     {
         $teacher = Teacher::where('teacher_id', Auth::id())->first();
         if ($teacher == null) {
-            return view('webapp.teacher.studioindex')->with('success', 'Please fill out your studio settings.');
+            return view('webapp.teacher.studioindex')->with('info', 'Please fill out your studio settings.');
         } else {
             return redirect()->route('teacher.editSettings');
         }
