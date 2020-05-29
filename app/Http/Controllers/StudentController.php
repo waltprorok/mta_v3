@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BusinessHours;
 use App\Teacher;
 use Auth;
 use App\Student;
