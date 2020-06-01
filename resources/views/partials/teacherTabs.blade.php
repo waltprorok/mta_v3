@@ -10,10 +10,6 @@
                href="{{ route('teacher.studioIndex') }}">Studio</a>
         </li>
     @endif
-    <li class="nav-item">
-        <a class="nav-link {{ Route::currentRouteName() == 'teacher.payment' ? 'active' : '' }}"
-           href="{{ route('teacher.payment') }}">Payment</a>
-    </li>
     @if(Route::currentRouteName() == 'teacher.hours')
         <li class="nav-item">
             <a class="nav-link {{ Route::currentRouteName() == 'teacher.hours' ? 'active' : '' }}"
@@ -25,4 +21,8 @@
                href="{{ route('teacher.hours') }}">Hours</a>
         </li>
     @endif
+        <li class="nav-item">
+            <a class="nav-link {{ Route::currentRouteName() == 'teacher.payment' ? 'active' : '' }}"
+               href="{{ route('teacher.payment') }}">Payment</a>
+        </li>
 </ul>
