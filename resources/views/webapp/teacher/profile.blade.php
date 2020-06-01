@@ -64,7 +64,7 @@
 
                     <div class="row mt-5">
                         <div class="col-md-4 mb-4">
-                            <div>Access Credentials</div>
+                            <div>Update Password</div>
                             <div class="text-muted small">Leave credentials fields empty if you don't wish to change the
                                 password.
                             </div>
