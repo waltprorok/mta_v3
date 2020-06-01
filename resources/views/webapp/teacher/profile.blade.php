@@ -29,7 +29,9 @@
                                         @endif
                                     </div>
                                 </div>
+                            </div>
 
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('last_name') ? 'has-error' : '' }}">
                                         <label for="last_name" class="control-label">Last Name</label>
@@ -72,7 +74,7 @@
 
                         <div class="col-md-8">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('current_password') ? 'has-error' : '' }}">
                                         <label for="current_password" class="control-label">Current Password</label>
                                         <input name="current_password" type="password" class="form-control">
@@ -83,8 +85,10 @@
                                         @endif
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('new_password') ? 'has-error' : '' }}">
                                         <label for="new_password" class="control-label">New Password</label>
                                         <input name="new_password" type="password" class="form-control">
@@ -95,8 +99,10 @@
                                         @endif
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('new_password_confirmation') ? 'has-error' : '' }}">
                                         <label for="new_password_confirmation" class="control-label">Confirm New
                                             Password</label>
