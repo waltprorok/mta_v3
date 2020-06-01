@@ -77,6 +77,11 @@
                     <a href="{{ route('account') }}" class="dropdown-item">
                         <i class="fa fa-calculator"></i>Account
                     </a>
+
+                    <a href="{{ route('teacher.profile') }}" class="dropdown-item">
+                        <i class="fa fa-user" aria-hidden="true"></i>Profile
+                    </a>
+
                     <a href="{{ route('teacher.studioIndex') }}" class="dropdown-item">
                         <i class="fa fa-wrench"></i>Settings
                     </a>
@@ -87,7 +92,7 @@
 
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="fa fa-lock"></i> Logout
+                        <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf

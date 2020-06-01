@@ -11,10 +11,6 @@
         </li>
     @endif
     <li class="nav-item">
-        <a class="nav-link {{ Route::currentRouteName() == 'pw.teacher' ? 'active' : '' }}" id="password"
-           href="{{ route('pw.teacher') }}">Password</a>
-    </li>
-    <li class="nav-item">
         <a class="nav-link {{ Route::currentRouteName() == 'teacher.payment' ? 'active' : '' }}"
            href="{{ route('teacher.payment') }}">Payment</a>
     </li>

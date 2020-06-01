@@ -121,6 +121,11 @@ class TeacherController extends Controller
         return redirect()->back()->with('success', 'You successfully updated your settings');
     }
 
+    public function profile()
+    {
+        return view('webapp.teacher.profile');
+    }
+
     public function showChangePasswordForm()
     {
         return view('webapp.teacher.studiopw');
@@ -130,7 +135,7 @@ class TeacherController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function changePassword(Request $request)
+    public function updateProfile(Request $request)
     {
         $request->validate([
             'first_name' => 'required',
@@ -146,21 +151,17 @@ class TeacherController extends Controller
 
         if ($request['current_password'] != "") {
             if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
-                // The passwords matches
                 return redirect()->back()->with('error', 'Your current password does not match with the password you provided. Please try again.');
             }
 
             if (strcmp($request->get('current_password'), $request->get('new_password')) == 0) {
-                // Current password and new password are same
                 return redirect()->back()->with('error', 'New Password cannot be same as your current password. Please choose a different password.');
             }
-
             $request->validate([
                 'current_password' => 'required',
                 'new_password' => 'required|string|min:6|confirmed',
             ]);
 
-            // Change Password
             $user->password = bcrypt($request->get('new_password'));
             $user->save();
 

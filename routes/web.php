@@ -45,8 +45,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('edit', 'TeacherController@edit')->name('teacher.editSettings');
         Route::put('update', 'TeacherController@update')->name('teacher.studioUpdate');
         Route::post('store', 'TeacherController@store')->name('save.studioSettings');
-        Route::get('password', 'TeacherController@showChangePasswordForm')->name('pw.teacher');
-        Route::post('password-post', 'TeacherController@changePassword')->name('pw.studioPW');
+        Route::get('profile', 'TeacherController@profile')->name('teacher.profile');
+        Route::post('updateProfile', 'TeacherController@updateProfile')->name('teacher.updateProfile');
         Route::get('payment', 'TeacherController@payment')->name('teacher.payment');
         Route::get('hours', 'TeacherController@hours')->name('teacher.hours');
         Route::post('hours', 'TeacherController@hoursSave')->name('teacher.hoursSave');
