@@ -30,7 +30,6 @@
                         </div>
                         <div class="col-md-6">
                             <div class="card-body">
-{{--                                <p>Your <b>FREE</b> account is available until <b>{{ date('M d, Y', strtotime(Auth::user()->trial_ends_at )) }}</b></p>--}}
                                 <ul class="list-group">
                                     <li class="list-group-item active">Your <b>FREE</b> account is available until <b>{{ date('M d, Y', strtotime(Auth::user()->trial_ends_at )) }}</b></li>
                                     <li class="list-group-item"> <i class="fa fa-credit-card" style="padding-right: 10px;" aria-hidden="true"></i>Credit Card Number</li>

@@ -74,11 +74,9 @@
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right">
-                    <div class="dropdown-header">Account Settings</div>
                     <a href="{{ route('account') }}" class="dropdown-item">
                         <i class="fa fa-calculator"></i>Account
                     </a>
-
                     <a href="{{ route('teacher.studioIndex') }}" class="dropdown-item">
                         <i class="fa fa-wrench"></i>Settings
                     </a>
