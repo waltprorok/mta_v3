@@ -3,11 +3,12 @@
 @section('content')
 
     <div class="col-12">
-        <h2>Profile</h2>
+        <h2>Account</h2>
+        @include('partials.accountTabs')
         <div class="card">
             <div class="card-header bg-light">Update Profile Information</div>
             <div class="card-body">
-                <form class="form-horizontal" method="POST" action="{{ route('teacher.updateProfile') }}">
+                <form class="form-horizontal" method="POST" action="{{ route('account.updateProfile') }}">
                     @csrf
                     <div class="row mb-5">
                         <div class="col-md-4 mb-4">

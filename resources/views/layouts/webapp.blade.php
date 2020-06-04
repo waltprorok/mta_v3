@@ -74,12 +74,8 @@
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a href="{{ route('account') }}" class="dropdown-item">
+                    <a href="{{ route('account.profile') }}" class="dropdown-item">
                         <i class="fa fa-calculator"></i>Account
-                    </a>
-
-                    <a href="{{ route('teacher.profile') }}" class="dropdown-item">
-                        <i class="fa fa-user" aria-hidden="true"></i>Profile
                     </a>
 
                     <a href="{{ route('teacher.studioIndex') }}" class="dropdown-item">
@@ -87,12 +83,12 @@
                     </a>
 
                     <a href="#" class="dropdown-item">
-                        <i class="fa fa-life-ring"></i> Support
+                        <i class="fa fa-life-ring"></i>Support
                     </a>
 
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf

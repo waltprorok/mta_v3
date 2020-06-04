@@ -4,38 +4,31 @@
 
     <div class="col-12">
         <h2>Account</h2>
+        @include('partials.accountTabs')
         <div class="card">
-            <div class="card-header bg-light">
-                Account Information
-            </div>
+            <div class="card-header bg-light">Subscription Information</div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
                         <ul class="list-group">
-                            <li class="list-group-item"><i class="fa fa-credit-card" aria-hidden="true"
-                                                           style="padding-right: 12px;"></i> {{ Auth::user()->card_brand }}
+                            <li class="list-group-item"><i class="fa fa-credit-card" aria-hidden="true" style="padding-right: 12px;"></i>{{ Auth::user()->card_brand }}
                                 <span class="float-right">**** **** **** {{ Auth::user()->card_last_four }}</span></li>
-                            <li class="list-group-item"><i class="fa fa-download" aria-hidden="true"
-                                                           style="padding-right: 12px;"></i> <a
-                                        href="{{ route('subscription.invoices') }}">Download Invoices</a></li>
-                            <li class="list-group-item"><i class="fa fa-keyboard-o" aria-hidden="true"
-                                                           style="padding-right: 12px;"></i> <a
-                                        href="{{ route('subscription.card') }}">Updated Credit Card</a></li>
+                            <li class="list-group-item"><i class="fa fa-download" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.invoices') }}">Download Invoices</a></li>
+                            <li class="list-group-item"><i class="fa fa-keyboard-o" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.card') }}">Updated Credit Card</a></li>
                             @if (Auth::user()->subscription('premium')->cancelled())
-                                <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"
-                                                               style="padding-right: 12px;"></i> <a
-                                            href="{{ route('subscription.resume') }}">Resume Subscription</a>
+                                <li class="list-group-item"><i class="fa fa-check" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.resume') }}">Resume Subscription</a>
                                 </li>
                             @else
                                 <li class="list-group-item">
-                                    <i class="fa fa-ban" aria-hidden="true" style="padding-right: 14px;"></i>
-                                    <a href="#" data-toggle="modal" data-target="#cancelSubscription">Cancel
-                                        Subscription</a>
+                                    <i class="fa fa-ban" aria-hidden="true" style="padding-right: 14px;"></i><a href="#" data-toggle="modal" data-target="#cancelSubscription">Cancel Subscription</a>
                                 </li>
                             @endif
                         </ul>
                     </div>
                 </div>
+            </div>
+            <div class="card-body">
+                <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a>
             </div>
         </div>
     </div>

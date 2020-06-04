@@ -2,17 +2,14 @@
 @section('title', 'Account')
 @section('content')
 
-
     <div class="col-12">
         <h2>Credit Card</h2>
+        @include('partials.accountTabs')
         <div class="card">
             <form action="{{ route('subscription.updateCard') }}" method="POST" id="payment-form">
                 @csrf
                 <div class="form-group">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0">Update Credit Card</h5>
-                    </div>
-
+                    <div class="card-header bg-light">Update Credit Card</div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card-body">
@@ -24,7 +21,6 @@
                         </div>
                         <div class="col-md-6">
                             <div class="card-body">
-{{--                                <label for="card-element">Update Current Credit Card on File</label>--}}
                                 <ul class="list-group">
                                     <li class="list-group-item active">Update Current Credit Card on File</li>
                                     <li class="list-group-item"><i class="fa fa-credit-card" style="padding-right: 10px;" aria-hidden="true"></i> Credit Card Number</li>
@@ -40,6 +36,7 @@
                     <div class="form-group">
                         <div class="col-md-6">
                             <button type="submit" class="btn btn-primary">Update Card</button>
+                            <a href="{{ URL::previous() }}" class="btn btn-outline-dark">Back</a>
                         </div>
                     </div>
                 </div>

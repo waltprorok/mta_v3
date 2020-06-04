@@ -168,7 +168,7 @@ class TeacherController extends Controller
             return redirect()->back()->with('success', 'Password changed successfully!');
         }
 
-        return back();
+        return redirect()->back()->with('success', 'Profile updated successfully!');
     }
 
     public function payment()
