@@ -121,56 +121,6 @@ class TeacherController extends Controller
         return redirect()->back()->with('success', 'You successfully updated your settings');
     }
 
-    public function profile()
-    {
-        return view('webapp.teacher.profile');
-    }
-
-    public function showChangePasswordForm()
-    {
-        return view('webapp.teacher.studiopw');
-    }
-
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
-    public function updateProfile(Request $request)
-    {
-        $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required',
-        ]);
-
-        $user = Auth::user();
-        $user->first_name = $request['first_name'];
-        $user->last_name = $request['last_name'];
-        $user->email = $request['email'];
-        $user->save();
-
-        if ($request['current_password'] != "") {
-            if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
-                return redirect()->back()->with('error', 'Your current password does not match with the password you provided. Please try again.');
-            }
-
-            if (strcmp($request->get('current_password'), $request->get('new_password')) == 0) {
-                return redirect()->back()->with('error', 'New Password cannot be same as your current password. Please choose a different password.');
-            }
-            $request->validate([
-                'current_password' => 'required',
-                'new_password' => 'required|string|min:6|confirmed',
-            ]);
-
-            $user->password = bcrypt($request->get('new_password'));
-            $user->save();
-
-            return redirect()->back()->with('success', 'Password changed successfully!');
-        }
-
-        return redirect()->back()->with('success', 'Profile updated successfully!');
-    }
-
     public function payment()
     {
         return view('webapp.teacher.payment');

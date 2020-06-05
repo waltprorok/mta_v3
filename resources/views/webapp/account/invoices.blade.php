@@ -3,9 +3,9 @@
 @section('content')
 
     <div class="col-md-12">
-        <h2>Download Invoices</h2>
+        <h2>Invoices</h2>
         @include('partials.accountTabs')
-        <div class="card-header bg-light">Credit Card Invoices</div>
+        <div class="card-header bg-light">Download Invoices</div>
         <div class="card">
             <table class="table table-striped">
                 <thead class="thead">

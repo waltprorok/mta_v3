@@ -38,8 +38,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('subscription/updated-card', 'SubscriptionController@updateCreditCard')->name('subscription.updateCard');
         Route::get('subscription/cancel', 'SubscriptionController@cancel')->name('subscription.cancel');
         Route::get('subscription/resume', 'SubscriptionController@resume')->name('subscription.resume');
-        Route::get('profile', 'TeacherController@profile')->name('account.profile');
-        Route::post('updateProfile', 'TeacherController@updateProfile')->name('account.updateProfile');
+        Route::get('profile', 'SubscriptionController@profile')->name('account.profile');
+        Route::post('updateProfile', 'SubscriptionController@updateProfile')->name('account.updateProfile');
     });
 
     Route::prefix('teacher')->group(function () {

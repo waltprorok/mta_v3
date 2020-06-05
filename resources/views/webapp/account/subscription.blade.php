@@ -6,7 +6,7 @@
         <h2>Account</h2>
         @include('partials.accountTabs')
         <div class="card">
-            <div class="card-header bg-light">Subscription Information</div>
+            <div class="card-header bg-light">Subscription Details</div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
