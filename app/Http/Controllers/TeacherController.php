@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TeacherStoreSettings;
 use Auth;
 use File;
 use Storage;
@@ -29,21 +30,8 @@ class TeacherController extends Controller
      * @return RedirectResponse
      * @throws ValidationException
      */
-    public function store(Request $request)
+    public function store(TeacherStoreSettings $request)
     {
-        $this->validate($request, [
-            'teacher_id' => 'required',
-            'studio_name' => 'required|string|max:255',
-            'first_name' => 'required|string|max:100',
-            'last_name' => 'required|string|max:100',
-            'address' => 'required|string|max:255',
-            'city' => 'required|string|max:100',
-            'state' => 'required|string|max:50',
-            'zip' => 'required|integer',
-            'email' => 'required|string|email|max:255',
-            'phone' => 'required|string|max:50',
-            'logo' => 'image|max:3200',
-        ]);
 
         $phonef = preg_replace('/\D+/', '', $request->get('phone'));
 
@@ -77,24 +65,9 @@ class TeacherController extends Controller
         return view('webapp.teacher.studiosettings', compact('settings', $settings));
     }
 
-    public function update(Request $request)
+    public function update(TeacherStoreSettings $request)
     {
-        $this->validate($request, [
-            'teacher_id' => 'required',
-            'studio_name' => 'required|string|max:255',
-            'first_name' => 'required|string|max:100',
-            'last_name' => 'required|string|max:100',
-            'address' => 'required|string|max:255',
-            'address_2' => 'max:120',
-            'city' => 'required|string|max:100',
-            'state' => 'required|string|max:50',
-            'zip' => 'required|integer',
-            'email' => 'required|string|email|max:255',
-            'phone' => 'required|string|max:50',
-            'logo' => 'image|max:3200',
-        ]);
         $phonef = preg_replace('/\D+/', '', $request->get('phone'));
-
         $teacher = Teacher::where('teacher_id', '=', Auth::id())->first();
         $teacher->teacher_id = $request->teacher_id;
         $teacher->studio_name = $request->studio_name;
