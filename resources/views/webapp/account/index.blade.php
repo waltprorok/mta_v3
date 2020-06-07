@@ -4,13 +4,12 @@
 
     <div class="col-12">
         <h2>Account</h2>
+        @include('partials.accountTabs')
         <div class="card">
             <form action="{{ route('subscription.create') }}" method="post" id="payment-form">
                 @csrf
                 <div class="form-group">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0">Billing</h5>
-                    </div>
+                    <div class="card-header bg-light">Credit Card Billing</div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card-body">
@@ -30,12 +29,15 @@
                         </div>
                         <div class="col-md-6">
                             <div class="card-body">
-                                <p>Your <b>FREE</b> account is available until <b>{{ date('M d, Y', strtotime(Auth::user()->trial_ends_at )) }}</b></p>
                                 <ul class="list-group">
-                                    <li>Enter Information</li>
-                                    <li>Credit Card Number</li>
-                                    <li>Month, Year, CSV and Zip Code</li>
-                                    <li>Trusted Secure Payment</li>
+                                    @if (Auth::user()->trial_ends_at < Carbon\Carbon::now())
+                                        <li class="list-group-item" style="background-color: red; color: white;">Your <b>FREE</b> Trial Ended <b>{{ date('M d, Y', strtotime(Auth::user()->trial_ends_at )) }}</b></li>
+                                    @else
+                                        <li class="list-group-item active">Your <b>FREE</b> account is available until <b>{{ date('M d, Y', strtotime(Auth::user()->trial_ends_at )) }}</b></li>
+                                    @endif
+                                    <li class="list-group-item"> <i class="fa fa-credit-card" style="padding-right: 10px;" aria-hidden="true"></i>Credit Card Number</li>
+                                    <li class="list-group-item"> <i class="fa fa-keyboard-o" style="padding-right: 10px;" aria-hidden="true"></i>Month, Year, CVC and Zip Code</li>
+                                    <li class="list-group-item"> <i class="fa fa-lock" style="padding-right: 16px;" aria-hidden="true"></i>Trusted Secure Payment</li>
                                 </ul>
                             </div>
                         </div>
@@ -43,7 +45,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-6">
-                        <button class="btn btn-primary" type="submit">Subscribe</button>
+                        <button class="btn btn-primary" type="submit">Sign Up!</button>
                         <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
                     </div>
                 </div>

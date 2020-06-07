@@ -22,22 +22,24 @@ Route::post('contact', 'HomeController@sendContact');
 Route::get('privacy', 'HomeController@privacy')->name('privacy');
 Route::get('faq', 'HomeController@faq')->name('faq');
 Route::get('terms', 'HomeController@terms')->name('terms');
-Route::post('newsletter','NewsletterController@store')->name('newsletter');
+Route::post('newsletter', 'NewsletterController@store')->name('newsletter');
 
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
 
     Route::prefix('account')->group(function () {
-        Route::get('/', 'SubscriptionController@index')->name('account');
-        Route::get('invoice', 'SubscriptionController@invoices')->name('subscription.invoices');
-        Route::get('invoices/{invoice}', 'SubscriptionController@pdfDownload')->name('subscription.invoice');
-        Route::get('subscribed', 'SubscriptionController@subscribed')->name('subscribed');
-        Route::post('subscription', 'SubscriptionController@create')->name('subscription.create');
-        Route::get('card', 'SubscriptionController@creditCard')->name('subscription.card');
-        Route::post('update-card', 'SubscriptionController@updateCreditCard')->name('subscription.updateCard');
-        Route::get('cancel', 'SubscriptionController@cancel')->name('subscription.cancel');
-        Route::get('resume', 'SubscriptionController@resume')->name('subscription.resume');
+        Route::get('subscription', 'SubscriptionController@index')->name('account.subscription');
+        Route::get('subscription/invoices', 'SubscriptionController@invoices')->name('subscription.invoices');
+        Route::get('subscription/invoices/{invoice}', 'SubscriptionController@pdfDownload')->name('subscription.invoice');
+        Route::get('subscription/subscribed', 'SubscriptionController@subscribed')->name('subscribed');
+        Route::post('subscription/subscription', 'SubscriptionController@create')->name('subscription.create');
+        Route::get('subscription/update-card', 'SubscriptionController@creditCard')->name('subscription.card');
+        Route::post('subscription/updated-card', 'SubscriptionController@updateCreditCard')->name('subscription.updateCard');
+        Route::get('subscription/cancel', 'SubscriptionController@cancel')->name('subscription.cancel');
+        Route::get('subscription/resume', 'SubscriptionController@resume')->name('subscription.resume');
+        Route::get('profile', 'SubscriptionController@profile')->name('account.profile');
+        Route::post('updateProfile', 'SubscriptionController@updateProfile')->name('account.updateProfile');
     });
 
     Route::prefix('teacher')->group(function () {
@@ -45,10 +47,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('edit', 'TeacherController@edit')->name('teacher.editSettings');
         Route::put('update', 'TeacherController@update')->name('teacher.studioUpdate');
         Route::post('store', 'TeacherController@store')->name('save.studioSettings');
-        Route::get('password', 'TeacherController@showChangePasswordForm')->name('pw.teacher');
-        Route::post('password-post', 'TeacherController@changePassword')->name('pw.studioPW');
         Route::get('payment', 'TeacherController@payment')->name('teacher.payment');
-        Route::get('schedule', 'TeacherController@hours')->name('teacher.hours');
+        Route::get('hours', 'TeacherController@hours')->name('teacher.hours');
+        Route::post('hours', 'TeacherController@hoursSave')->name('teacher.hoursSave');
+        Route::get('hours/view', 'TeacherController@hoursView')->name('teacher.hoursView');
+        Route::put('hours/update', 'TeacherController@hoursUpdate')->name('teacher.hoursUpdate');
     });
 
 
@@ -69,6 +72,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('calendar')->group(function () {
         Route::get('/', 'LessonController@index')->name('calendar.index');
+    });
+
+    Route::prefix('reports')->group(function () {
+        Route::get('/', 'ReportController@all')->name('reports.all');
     });
 
     // middleware guard for just admin user in dashboard

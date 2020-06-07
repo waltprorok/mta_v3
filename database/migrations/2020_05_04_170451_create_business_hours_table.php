@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLessonsTable extends Migration
+class CreateBusinessHoursTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateLessonsTable extends Migration
      */
     public function up()
     {
-        Schema::create('lessons', function (Blueprint $table) {
+        Schema::create('business_hours', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('student_id')->unsigned();
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('restrict');
             $table->integer('teacher_id')->unsigned();
-            $table->string('title');
-            $table->datetime('start_date');
-            $table->datetime('end_date');
+            $table->foreign('teacher_id')->references('id')->on('users')->onDelete('restrict');
+            $table->integer('day')->nullable();
+            $table->tinyInteger('active')->default('0');
+            $table->time('open_time')->nullable();
+            $table->time('close_time')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateLessonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lessons');
+        Schema::dropIfExists('business_hours');
     }
 }

@@ -43,5 +43,4 @@ $(document).ready(function () {
         $('[name="slug"]').val(title);
     });
 
-
 });

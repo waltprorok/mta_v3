@@ -16,29 +16,30 @@ class BlogTableDataSeeder extends Seeder
             [
                 'id' => '1',
                 'author_id' => '1',
-                'title' => 'The Coding Process',
-                'slug' => 'mta-coding-process',
-                'body' => 'MTA takes great pride the code that runs the web application. Each feature is thought out and tested before going to our experienced developer. 
-                
-Once the developer has coded and tested the new feature we then put it in the had of our testing team. There the team goes over how the new feature works before we release it.',
-                'image' => 'MTA_20200221_120217.jpeg',
-                'released_on' => '2020-01-07 09:00:00',
-                'created_at' => '2019-07-01 09:00:00',
-                'updated_at' => '2019-07-01 09:00:00',
-            ],
-            [
-                'id' => '2',
-                'author_id' => '1',
                 'title' => 'MTA Loves Laravel',
                 'slug' => 'mta-loves-laravel',
                 'body' => 'MTA love the magic that Laravel provides right out of the box. Modern toolkit. Pinch of magic. 
                 
 An amazing ORM, painless routing, powerful queue library, and simple authentication give you the tools you need for modern, maintainable PHP. We sweat the small stuff to help you deliver amazing applications.',
                 'image' => 'MTA_20200221_120201.jpg',
-                'released_on' => '2019-12-02 09:00:00',
-                'created_at' => '2019-08-01 09:00:00',
-                'updated_at' => '2019-08-01 09:00:00',
+                'released_on' => '2020-01-01 09:00:00',
+                'created_at' => '2020-01-01 09:00:00',
+                'updated_at' => '2020-01-01 09:00:00',
             ],
+            [
+                'id' => '2',
+                'author_id' => '1',
+                'title' => 'The Coding Process',
+                'slug' => 'mta-coding-process',
+                'body' => 'MTA takes great pride the code that runs the web application. Each feature is thought out and tested before going to our experienced developer. 
+                
+Once the developer has coded and tested the new feature we then put it in the had of our testing team. There the team goes over how the new feature works before we release it.',
+                'image' => 'MTA_20200221_120217.jpeg',
+                'released_on' => '2020-02-03 09:00:00',
+                'created_at' => '2020-02-01 09:00:00',
+                'updated_at' => '2020-02-01 09:00:00',
+            ],
+
             [
                 'id' => '3',
                 'author_id' => '1',
@@ -58,9 +59,20 @@ With MusicTeachersAid we aid in all of those areas. Once the initial students an
 
 We are currently building out the product and will be available in the near future.',
                 'image' => 'MTA_20200221_120252.jpeg',
-                'released_on' => '2020-02-01 09:00:00',
-                'created_at' => '2019-09-01 09:00:00',
-                'updated_at' => '2019-09-01 09:00:00',
+                'released_on' => '2020-03-01 09:00:00',
+                'created_at' => '2020-03-01 09:00:00',
+                'updated_at' => '2020-03-01 09:00:00',
+            ],
+            [
+                'id' => '4',
+                'author_id' => '1',
+                'title' => 'Scheduling Students',
+                'slug' => 'scheduling-students',
+                'body' => 'Having a great calendar for scheduling your students is very important. Most students are repeatedly going to keep coming back each week. We want to make this experience the best it can be.',
+                'image' => 'MTA_20200527_060533.jpg',
+                'released_on' => '2020-04-01 09:00:00',
+                'created_at' => '2020-04-01 09:00:00',
+                'updated_at' => '2020-04-01 09:00:00',
             ],
         ]);
     }

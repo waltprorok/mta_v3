@@ -9,7 +9,7 @@
             <!-- Row -->
             <div class="row">
                 <div class="section-header text-center">
-                    <h2 class="title">Welcome to our Blog</h2>
+                    <h2 class="title">Music Teachers Aid Blog</h2>
                 </div>
                 @foreach($blogs as $blog)
                     <div class="col-md-4">
