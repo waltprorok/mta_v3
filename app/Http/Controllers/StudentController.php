@@ -85,7 +85,6 @@ class StudentController extends Controller
             $student->save();
             return redirect()->route('student.index')->with('success', 'The student was added successfully.');
         }
-
     }
 
     public function edit($id)
