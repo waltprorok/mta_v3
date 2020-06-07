@@ -2,7 +2,7 @@
 @section('title', '404')
 @section('content')
 
-    <div id="pricing" class="section md-padding">
+    <div id="pricing" class="section lg-padding">
         <!-- Container -->
         <div class="container">
             <!-- Row -->

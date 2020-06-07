@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TeacherStoreSettings;
 use Auth;
 use File;
 use Storage;
 use App\Teacher;
+use App\BusinessHours;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class TeacherController extends Controller
@@ -17,7 +18,7 @@ class TeacherController extends Controller
     {
         $teacher = Teacher::where('teacher_id', Auth::id())->first();
         if ($teacher == null) {
-            return view('webapp.teacher.studioindex')->with('success', 'Please fill out your studio settings.');
+            return view('webapp.teacher.studioindex')->with('info', 'Please fill out your studio settings.');
         } else {
             return redirect()->route('teacher.editSettings');
         }
@@ -28,21 +29,8 @@ class TeacherController extends Controller
      * @return RedirectResponse
      * @throws ValidationException
      */
-    public function store(Request $request)
+    public function store(TeacherStoreSettings $request)
     {
-        $this->validate($request, [
-            'teacher_id' => 'required',
-            'studio_name' => 'required|string|max:255',
-            'first_name' => 'required|string|max:100',
-            'last_name' => 'required|string|max:100',
-            'address' => 'required|string|max:255',
-            'city' => 'required|string|max:100',
-            'state' => 'required|string|max:50',
-            'zip' => 'required|integer',
-            'email' => 'required|string|email|max:255',
-            'phone' => 'required|string|max:50',
-            'logo' => 'image|max:3200',
-        ]);
 
         $phonef = preg_replace('/\D+/', '', $request->get('phone'));
 
@@ -72,31 +60,14 @@ class TeacherController extends Controller
 
     public function edit()
     {
-        $teacherId = Auth::id();
-        $settings = Teacher::where('teacher_id', $teacherId)->get();
-        return view('webapp.teacher.studiosettings', compact('settings'));
+        $settings = Teacher::where('teacher_id', Auth::id())->get();
+        return view('webapp.teacher.studiosettings', compact('settings', $settings));
     }
 
-    public function update(Request $request)
+    public function update(TeacherStoreSettings $request)
     {
-        $this->validate($request, [
-            'teacher_id' => 'required',
-            'studio_name' => 'required|string|max:255',
-            'first_name' => 'required|string|max:100',
-            'last_name' => 'required|string|max:100',
-            'address' => 'required|string|max:255',
-            'address_2' => 'max:120',
-            'city' => 'required|string|max:100',
-            'state' => 'required|string|max:50',
-            'zip' => 'required|integer',
-            'email' => 'required|string|email|max:255',
-            'phone' => 'required|string|max:50',
-            'logo' => 'image|max:3200',
-        ]);
-        $teacherId = Auth::user()->id;
         $phonef = preg_replace('/\D+/', '', $request->get('phone'));
-
-        $teacher = Teacher::where('teacher_id', '=', $teacherId)->first();
+        $teacher = Teacher::where('teacher_id', '=', Auth::id())->first();
         $teacher->teacher_id = $request->teacher_id;
         $teacher->studio_name = $request->studio_name;
         $teacher->first_name = $request->first_name;
@@ -122,42 +93,6 @@ class TeacherController extends Controller
         return redirect()->back()->with('success', 'You successfully updated your settings');
     }
 
-    public function showChangePasswordForm()
-    {
-        return view('webapp.teacher.studiopw');
-    }
-
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
-    public function changePassword(Request $request)
-    {
-        if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
-            // The passwords matches
-            return redirect()->back()->with('error',
-                'Your current password does not match with the password you provided. Please try again.');
-        }
-
-        if (strcmp($request->get('current-password'), $request->get('new-password')) == 0) {
-            // Current password and new password are same
-            return redirect()->back()->with('error',
-                'New Password cannot be same as your current password. Please choose a different password.');
-        }
-
-        $request->validate([
-            'current-password' => 'required',
-            'new-password' => 'required|string|min:6|confirmed',
-        ]);
-
-        // Change Password
-        $user = Auth::user();
-        $user->password = bcrypt($request->get('new-password'));
-        $user->save();
-
-        return redirect()->back()->with('success', 'Password changed successfully!');
-    }
-
     public function payment()
     {
         return view('webapp.teacher.payment');
@@ -165,7 +100,63 @@ class TeacherController extends Controller
 
     public function hours()
     {
-        return view('webapp.teacher.hours');
+        $hours = BusinessHours::where('teacher_id', Auth::id())->first();
+        if ($hours == null) {
+            return view('webapp.teacher.hours');
+        } else {
+            return redirect()->route('teacher.hoursView');
+        }
+    }
+
+    public function hoursView()
+    {
+        $hours = BusinessHours::where('teacher_id', Auth::id())->get();
+        return view('webapp.teacher.hoursView', compact('hours', $hours));
+    }
+
+    public function hoursUpdate(Request $request)
+    {
+        $input = $request->all();
+        foreach ($input['rows'] as $index => $value) {
+
+            if (!isset($value['active'])) {
+                $active = 0;
+            } else {
+                $active = $value['active'];
+            }
+            $hours = BusinessHours::where('teacher_id', '=', Auth::id())->where('day', '=', $value['day'])->first();
+            $hours->teacher_id = Auth::id();
+            $hours->day = $value['day'];
+            $hours->active = $active;
+            $hours->open_time = $value['open_time'];
+            $hours->close_time = $value['close_time'];
+            $hours->save();
+        }
+
+        return redirect()->back()->with('success', 'Business hours updated successfully!');
+    }
+
+    public function hoursSave(Request $request)
+    {
+        $input = $request->all();
+        foreach ($input['rows'] as $index => $value) {
+
+            if (!isset($value['active'])) {
+                $active = 0;
+            } else {
+                $active = $value['active'];
+            }
+            $items = new BusinessHours([
+                'teacher_id' => Auth::id(),
+                'day' => $value['day'],
+                'active' => $active,
+                'open_time' => $value['open_time'],
+                'close_time' => $value['close_time'],
+            ]);
+            $items->save();
+        }
+
+        return redirect()->back()->with('success', 'Business hours saved successfully!');
     }
 
 }

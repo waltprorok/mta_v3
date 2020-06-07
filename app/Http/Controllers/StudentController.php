@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\BusinessHours;
+use App\Http\Requests\StoreStudent;
 use App\Teacher;
 use Auth;
 use App\Student;
@@ -21,7 +23,7 @@ class StudentController extends Controller
         $teacher = Teacher::where('teacher_id', Auth::id())->first();
 
         if ($teacher == null) {
-            return redirect('teacher')->with('success', 'Please fill out your studio settings first before entering students.');
+            return redirect('teacher')->with('info', 'Please fill out your studio settings first before entering students.');
         }
 
         $students = Student::with('teacher')
@@ -66,32 +68,23 @@ class StudentController extends Controller
         return view('webapp.student.inactive')->with('inactives', $inactives);
     }
 
-    public function store(Request $request)
+    public function store(StoreStudent $request)
     {
-        $this->validate($request, [
-            'teacher_id' => 'required',
-            'first_name' => 'string|max:100',
-            'last_name' => 'string|max:100',
-            'email' => 'string|max:100',
-            'status' => 'string|max:100',
-        ]);
-
         $email_exists = Student::where('email', $request->get('email'))->where('teacher_id', Auth::id())->first();
-
         if ($email_exists) {
             return redirect()->back()->with('error', 'The email address is already in use.');
         } else {
             $student = new Student([
-                'teacher_id' => $request->get('teacher_id'),
+                'teacher_id' => Auth::id(),
                 'first_name' => $request->get('first_name'),
                 'last_name' => $request->get('last_name'),
                 'email' => $request->get('email'),
+                'phone' => $request->get('phone'),
                 'status' => $request->get('status'),
             ]);
             $student->save();
             return redirect()->route('student.index')->with('success', 'The student was added successfully.');
         }
-
     }
 
     public function edit($id)
@@ -129,7 +122,7 @@ class StudentController extends Controller
         $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
         $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
         $lesson->save();
-        return redirect()->back()->with('success', 'Student has been schedule');
+        return redirect()->back()->with('success', ' The student has been scheduled successfully.');
     }
 
     public function scheduleEdit($student_id, $id)

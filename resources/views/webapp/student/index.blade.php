@@ -11,8 +11,8 @@
         <h2>Students</h2>
         @include('partials.studentListTabs')
         <div class="card">
-            <table class="table table-responsive-md" id="#studentTable">
-                <thead class="thead-dark">
+            <table class="table" id="#studentTable">
+                <thead class="thead">
                 <tr>
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
@@ -39,7 +39,8 @@
                             <td>{{ $student->status }}</td>
                             <th scope="row">
                                 <a href="{{ route('student.edit', $student->id)}}"
-                                   class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
+                                   class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i>
+                                </a>
                             </th>
                         </tr>
                     @endforeach

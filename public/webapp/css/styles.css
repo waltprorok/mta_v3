@@ -9061,7 +9061,7 @@ a.text-dark:focus, a.text-dark:hover {
 .page-header .navbar-nav .dropdown-menu .dropdown-header {
     padding: .6rem 1rem;
     background: #f8f9fa;
-    text-align: left;
+    text-align: center;
     font-weight: bold;
     border-bottom: 1px solid #dee2e6
 }

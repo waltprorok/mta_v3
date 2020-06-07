@@ -70,15 +70,11 @@
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                    aria-expanded="false">
                     <i class="fa fa-user fa-lg" aria-hidden="true"></i>
-                    {{--<img src="{{ asset('webapp/imgs/avatar-1.png') }}" class="avatar avatar-sm" alt="logo">--}}
                     <span class="small ml-1 d-md-down-none"></span>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right">
-                    <div class="dropdown-header">{{ Auth::user()->first_name }} {{Auth::user()->last_name }}</div>
-
-                    <a href="{{ route('account') }}" class="dropdown-item">
-                        {{--{{ route('account') }}--}}
+                    <a href="{{ route('account.profile') }}" class="dropdown-item">
                         <i class="fa fa-calculator"></i>Account
                     </a>
 
@@ -87,12 +83,12 @@
                     </a>
 
                     <a href="#" class="dropdown-item">
-                        <i class="fa fa-life-ring"></i> Support
+                        <i class="fa fa-life-ring"></i>Support
                     </a>
 
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="fa fa-lock"></i> Logout
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf

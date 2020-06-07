@@ -12,15 +12,11 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <input id="teacher_id" type="hidden" class="form-control" name="teacher_id"
-                           value="{{ Auth::user()->id }}">
-
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
                                 <label for="first_name" class="control-label">First Name</label>
-                                <input id="first_name" type="text" class="form-control" name="first_name"
-                                       value="{{ old('first_name') }}">
+                                <input id="first_name" type="text" class="form-control" name="first_name" value="{{ old('first_name') }}">
 
                                 @if ($errors->has('first_name'))
                                     <span class="help-block">
@@ -30,12 +26,12 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
                                 <label for="last_name" class="control-label">Last Name</label>
-                                <input id="last_name" type="text" class="form-control" name="last_name"
-                                       value="{{ old('last_name') }}">
+                                <input id="last_name" type="text" class="form-control" name="last_name" value="{{ old('last_name') }}">
 
                                 @if ($errors->has('last_name'))
                                     <span class="help-block">
@@ -45,12 +41,27 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                                <label for="phone" class="control-label">Phone</label>
+                                <input id="text" type="text" class="form-control" name="phone" value="{{ old('phone') }}">
+
+                                @if ($errors->has('phone'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('phone') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email" class="control-label">Email</label>
-                                <input id="email" type="text" class="form-control" name="email"
-                                       value="{{ old('email') }}">
+                                <input id="email" type="text" class="form-control" name="email" value="{{ old('email') }}">
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
