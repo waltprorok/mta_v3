@@ -50,11 +50,23 @@
                                     </span>
                             @endif
                         </div>
+
+                        <div class="form-group {{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+                            {!! app('captcha')->display() !!}
+                            @if ($errors->has('g-recaptcha-response'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+
                         <button class="main-btn" type="submit">Send message</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    {!! NoCaptcha::renderJs() !!}
 
 @endsection

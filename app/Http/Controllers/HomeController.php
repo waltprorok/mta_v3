@@ -73,6 +73,7 @@ class HomeController extends Controller
             'email' => 'required|email',
             'subject' => 'required|min:3',
             'message' => 'required|min:3',
+            'g-recaptcha-response' => 'required|captcha',
         ]);
 
         Mail::to('waltprorok@gmail.com')->send(new ContactForm($request));
