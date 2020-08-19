@@ -71,6 +71,7 @@
                             platform identification number for your profile, your profile name, and profile image.</p>
 
                         <h3>Link to third party sites</h3>
+
                         <p>The MusicTeachersAid sites may have links to third party websites whose privacy policies may
                             differ from those of MusicTeachersAid. Please be aware that third party websites are not
                             within our control. They are not covered by this Privacy Policy. If you have any questions
@@ -78,6 +79,7 @@
                             policy.</p>
 
                         <h3>Security</h3>
+
                         <p>MusicTeachersAid is committed to protecting the Personal Information it receives. However, no
                             method of transmission over the internet is 100% secure. As a result, we cannot guarantee
                             the security of your Personal Information. However, we use a combination of online and
@@ -91,6 +93,7 @@
                             both password protect and limit access to all Personal Information.</p>
 
                         <h3>How long do we keep your personal information?</h3>
+
                         <p>You may delete your content at any time following the instructions on the MusicTeachersAid
                             site. You may also cancel your account at any time. Once cancelled, the Personal Information
                             we maintain and any other data will be wiped clean. The sole exception is information
@@ -98,6 +101,7 @@
                             service provider.</p>
 
                         <h3>Cookies</h3>
+
                         <p>MusicTeachersAid uses tracking technologies such as cookies, scripts and tags to collect and
                             store information when you visit our site or use our Services. Cookies are small text files
                             placed on the web browser of your computers, smart phones, tablets, and other mobile
@@ -120,6 +124,7 @@
                             and is anonymous.</p>
 
                         <h3>Consent</h3>
+
                         <p>MusicTeachersAid requires your “freely given, specific, informed and unambiguous consent” to
                             receive and process your Personal Information in the manner described in this Privacy
                             Policy. By establishing an account with MusicTeachersAid, or by using the Services, you
@@ -129,6 +134,7 @@
                             who do not use our Services.</p>
 
                         <h3>Children's policy</h3>
+
                         <p>MusicTeachersAid understands that children require particular protection because they are
                             less aware of the risks involved with the collecting and processing of Personal Information.
                             Since the safety and privacy of children is important to MusicTeachersAid, our Services may
@@ -151,6 +157,7 @@
                             further access to MusicTeachersAid Services.</p>
 
                         <h3>General data protection regulations</h3>
+
                         <p>The General Data Protection Regulation (“GDPR”) is a comprehensive update to existing
                             European Union privacy laws and is effective as of May 25, 2018. The GDPR applies to
                             companies in the United States and elsewhere that process Personal Information for customers
@@ -174,11 +181,13 @@
                         </ul>
 
                         <h3>Controller</h3>
+
                         <p>MusicTeachersAid processes Personal Information both as a processor and a controller as
                             defined in the GDPR. You may contact the Controller by email at
                             controller@MusicTeachersAid.com.</p>
 
                         <h3>Data protection officer</h3>
+
                         <p>MusicTeachersAid has appointed a Data Protection Officer to coordinate regulatory, contract
                             and legal matters. You may contact our Data Protection Officer by email at
                             dpo@MusicTeachersAid.com, or write to us at the following address:</p>

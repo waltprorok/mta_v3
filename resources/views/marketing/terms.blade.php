@@ -44,9 +44,8 @@
                                 Subscribers.
                             </li>
                             <li class="list-group-item">Nothing in this Agreement should be construed as granting, by
-                                implication or otherwise,
-                                any license or right to use the MusicTeachersAid Site, Software or any content that may
-                                be made available other than as provided herein.
+                                implication or otherwise, any license or right to use the MusicTeachersAid Site, Software
+                                or any content that may be made available other than as provided herein.
                             </li>
                             <li class="list-group-item">You must maintain an active account with MusicTeachersAid in
                                 your name. There is no cost
@@ -146,9 +145,8 @@
                             name and email address. This information may be subject to the European Union (“EU”) General
                             Data Protection Regulation. You are responsible for maintaining the security of your account
                             login information and for any activities or actions occurring in your account. You must also
-                            comply with the Terms of this Agreement.
-                            The following additional terms and conditions apply to the creation, maintenance and use of
-                            your account:
+                            comply with the Terms of this Agreement. The following additional terms and conditions apply
+                            to the creation, maintenance and use of your account:
                         </p>
 
                         <ul class="list-group">
