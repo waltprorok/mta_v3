@@ -11,6 +11,7 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading">Terms of Service</div>
+
                     <div class="panel-body">
                         <p>ATTENTION: BY ESTABLISHING AN ACCOUNT, GAINING ACCESS TO OR USING THE MUSICTEACHERSAID
                             SERVICES, YOU AGREE AND AFFIRM THAT YOU HAVE READ, UNDERSTAND AND ACCEPT THESE TERMS. PLEASE
@@ -182,6 +183,7 @@
                         </ul>
 
                         <h3>Updates and Modifications</h3>
+
                         <p>MusicTeachersAid reserves the right, at its sole discretion and for any reason, to modify,
                             discontinue or terminate the Services, or to modify or replace any part of this Agreement,
                             at any time and without prior notice. It is your responsibility to check the
@@ -200,6 +202,7 @@
                             of the Site or Services, without notice to you or penalty to us.</p>
 
                         <h3>Payment Terms for Services</h3>
+
                         <p>The Fees or charges for using the Services are posted on the Site and are incorporated in
                             this Agreement. MusicTeachersAid has the right to change the Fees or charges at any time and
                             without separate notice to you. There is no charge for the Free Plan. As a Subscriber to the
@@ -233,6 +236,7 @@
                             terms by reference.</p>
 
                         <h3>Downgrade or Cancellation of Services</h3>
+
                         <p>You may downgrade from your Premium Plan account to a Free Plan account at any time. This
                             downgrade will take effect at the end of your current billing cycle and your Subscription
                             will not be automatically renewed. You may elect to delete your account and related data at
@@ -249,6 +253,7 @@
                             Services.</p>
 
                         <h3>Privacy Policy</h3>
+
                         <p>You acknowledge and agree that you have reviewed, understand, and agree to be bound by all of
                             the terms and provisions of the MusicTeachersAid Privacy Policy as it appears on the
                             Site.</p>
@@ -315,6 +320,7 @@
                             using such ideas.</p>
 
                         <h3>MusicTeachersAid Rights</h3>
+
                         <p>In addition to all other rights herein, MusicTeachersAid reserves the following rights: (1)
                             to suspend or terminate the Services of anyone who violates the Terms of Service; (2) to
                             change or alter the Site, the form and nature of the Site or any Services provided through
@@ -332,6 +338,7 @@
                             these rights.</p>
 
                         <h3>Prohibited Uses of the Site and Services</h3>
+
                         <p>You are solely responsible for ensuring that materials transmitted, posted, stored,
                             distributed, displayed or presented using the Site or the Services comply with the Terms of
                             Service and all applicable laws and regulations. MusicTeachersAid does not have any
@@ -397,6 +404,7 @@
                             materials.</p>
 
                         <h3>Rights of Others</h3>
+
                         <p>It is understood and agreed that you may not use, or in any manner cause others to use, the
                             MusicTeachersAid Site or the Services on any Devices for unintended or unauthorized
                             purposes. You agree that:</p>
@@ -584,6 +592,7 @@
                         </p>
 
                         <h3>Account Terms</h3>
+
                         <p>1. You must provide your legal name, a valid email address, and any other information
                             requested in order to complete the signup process.</p>
 
