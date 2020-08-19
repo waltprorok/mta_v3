@@ -16,8 +16,7 @@
                             <li class="list-group-item"><i class="fa fa-download" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.invoices') }}">Download Invoices</a></li>
                             <li class="list-group-item"><i class="fa fa-keyboard-o" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.card') }}">Updated Credit Card</a></li>
                             @if (Auth::user()->subscription('premium')->cancelled())
-                                <li class="list-group-item"><i class="fa fa-check" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.resume') }}">Resume Subscription</a>
-                                </li>
+                                <li class="list-group-item"><i class="fa fa-check" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.resume') }}">Resume Subscription</a></li>
                             @else
                                 <li class="list-group-item">
                                     <i class="fa fa-ban" aria-hidden="true" style="padding-right: 14px;"></i><a href="#" data-toggle="modal" data-target="#cancelSubscription">Cancel Subscription</a>
