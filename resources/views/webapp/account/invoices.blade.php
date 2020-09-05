@@ -20,7 +20,7 @@
                     <tr>
                         <td>{{ $invoice->date()->toFormattedDateString() }}</td>
                         <td>{{ $invoice->total() }}</td>
-                        <td><a href="/account/subscription/invoices/{{ $invoice->id }}" class="btn btn-sm btn-outline-primary">Download</a></td>
+                        <td><a href="{{ route('subscription.invoice', $invoice->id) }}" class="btn btn-sm btn-outline-primary">Download</a></td>
                     </tr>
                 @endforeach
                 </tbody>
