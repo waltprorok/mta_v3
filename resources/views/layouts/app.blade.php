@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description"
-          content="Music Teachers Aid is an automated studio for music teachers. Start your 30-day free trial today!">
+    <meta name="description" content="Music Teachers Aid is an automated studio for music teachers. Start your 30-day free trial today!">
     <meta name="author" content="Walter Prorok">
     <meta name="keywords" content="music teacher software, music teacher web app, automated music teacher studio">
     <meta name="google-site-verification" content="IV3PI1a4frdf1GVIKurcc_lOg6awG8gqqOoRkWrugDI"/>
