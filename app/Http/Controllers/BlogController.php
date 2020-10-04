@@ -63,7 +63,7 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+                $this->validate($request, [
             'author_id' => 'required',
             'title' => 'required|string|max:100',
             'slug' => 'required|string|max:100',
