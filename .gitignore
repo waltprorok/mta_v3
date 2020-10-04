@@ -12,3 +12,4 @@ yarn-error.log
 .env
 /database/database.sqlite
 composer.lock
+mta.code-workspace

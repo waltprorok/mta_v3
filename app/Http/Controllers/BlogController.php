@@ -15,7 +15,7 @@ use Illuminate\View\View;
 
 class BlogController extends Controller
 {
-    protected $blogLimit = 3;
+    protected $blogLimit = 6;
 
     /**
      * Display a listing of the resource.
@@ -63,7 +63,7 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+                $this->validate($request, [
             'author_id' => 'required',
             'title' => 'required|string|max:100',
             'slug' => 'required|string|max:100',

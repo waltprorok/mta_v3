@@ -11,7 +11,7 @@
                 <div class="section-header text-center">
                     <h2 class="title">Music Teachers Aid Blog</h2>
                 </div>
-                @foreach($blogs as $blog)
+                @foreach ($blogs as $blog)
                     <div class="col-md-4">
                         <div class="thumbnail">
                             @if ($blog->image_url)
@@ -32,7 +32,8 @@
                                         {!! \Illuminate\Support\Str::limit($blog->body_html, 110) !!}
                                     </p>
                                     <p class="text-right">
-                                        <a href="{{ route('blog.show', $blog->slug) }}" class="btn btn-default">Read More</a>
+                                        <a href="{{ route('blog.show', $blog->slug) }}" class="btn btn-default">Read
+                                            More</a>
                                     </p>
                                 </div>
                             </div>
