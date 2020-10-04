@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\BusinessHours;
 use App\Http\Requests\StoreStudent;
+use App\Notifications\LessonConfirmation;
 use App\Teacher;
 use Auth;
 use App\Student;
 use App\Lesson;
 use Illuminate\Http\Request;
+use Nexmo\Laravel\Facade\Nexmo;
 
 
 class StudentController extends Controller
@@ -121,6 +123,7 @@ class StudentController extends Controller
         $lesson->title = $request->get('title');
         $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
         $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
+        $lesson->student->notify(new LessonConfirmation);
         $lesson->save();
         return redirect()->back()->with('success', ' The student has been scheduled successfully.');
     }

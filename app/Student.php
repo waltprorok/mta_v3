@@ -3,9 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Student extends Model
 {
+    use Notifiable;
+
+    public function routeNotificationForNexmo($notification)
+    {
+        return $this->phone;
+    }
+
     protected $table = 'students';
 
     protected $fillable = [
