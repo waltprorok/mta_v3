@@ -12,14 +12,18 @@ class LessonConfirmation extends Notification
 {
     use Queueable;
 
+    public $name;
+    public $date;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($name, $date)
     {
-        //
+        $this->name = $name;
+        $this->date = $date;
     }
 
     /**
@@ -53,7 +57,7 @@ class LessonConfirmation extends Notification
      */
     public function toNexmo($notifiable)
     {
-        return (new NexmoMessage)->content('You have a music lesson scheduled.');
+        return (new NexmoMessage)->content("$this->name you have a music lesson scheduled for $this->date.");
     }
 
     /**

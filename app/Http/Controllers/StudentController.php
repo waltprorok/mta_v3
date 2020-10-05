@@ -73,7 +73,7 @@ class StudentController extends Controller
     public function store(StoreStudent $request)
     {
         $email_exists = Student::where('email', $request->get('email'))->where('teacher_id', Auth::id())->first();
-        if ($email_exists) {
+        if ($email_exists && !null) {
             return redirect()->back()->with('error', 'The email address is already in use.');
         } else {
             $student = new Student([
@@ -81,7 +81,7 @@ class StudentController extends Controller
                 'first_name' => $request->get('first_name'),
                 'last_name' => $request->get('last_name'),
                 'email' => $request->get('email'),
-                'phone' => $request->get('phone'),
+                'phone' => '1' . $request->get('phone'),
                 'status' => $request->get('status'),
             ]);
             $student->save();
@@ -123,7 +123,7 @@ class StudentController extends Controller
         $lesson->title = $request->get('title');
         $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
         $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
-        $lesson->student->notify(new LessonConfirmation);
+        $lesson->student->notify(new LessonConfirmation($lesson->student->first_name, $lesson->start_date));
         $lesson->save();
         return redirect()->back()->with('success', ' The student has been scheduled successfully.');
     }
