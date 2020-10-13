@@ -29,7 +29,7 @@ $(document).ready(function () {
      * Format Phone Number
      */
     $('#phone').val(function (i, text) {
-        text = text.replace(/(\d{1})(\d{3})(\d{3})(\d{4})/, "$1-$2-$3-$4");
+        text = text.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
         return text;
     });
 

@@ -25,7 +25,7 @@ class StudentController extends Controller
         $teacher = Teacher::where('teacher_id', Auth::id())->first();
 
         if ($teacher == null) {
-            return redirect('teacher')->with('info', 'Please fill out your studio settings first before entering students.');
+            return redirect('teacher')->with('info', 'Please fill out your Studio Settings first before entering students.');
         }
 
         $students = Student::with('teacher')
@@ -76,12 +76,13 @@ class StudentController extends Controller
         if ($email_exists && !null) {
             return redirect()->back()->with('error', 'The email address is already in use.');
         } else {
+            $phone = preg_replace('/\D/', '', $request->get('phone'));
             $student = new Student([
                 'teacher_id' => Auth::id(),
                 'first_name' => $request->get('first_name'),
                 'last_name' => $request->get('last_name'),
                 'email' => $request->get('email'),
-                'phone' => '1' . $request->get('phone'),
+                'phone' => $phone,
                 'status' => $request->get('status'),
             ]);
             $student->save();

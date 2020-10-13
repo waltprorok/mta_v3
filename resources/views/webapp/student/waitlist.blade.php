@@ -16,8 +16,8 @@
                 <tr>
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
-                    <th scope="col">Email</th>
                     <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Instrument</th>
                     <th scope="col">Status</th>
                     <th scope="col">Update</th>
@@ -33,8 +33,8 @@
                         <tr>
                             <td>{{ $waitlist->first_name }}</td>
                             <td>{{ $waitlist->last_name }}</td>
+                            <td>{{ $waitlist->phoneNumber }}</td>
                             <td>{{ $waitlist->email }}</td>
-                            <td>{{ $waitlist->phone }}</td>
                             <td>{{ $waitlist->instrument }}</td>
                             <td>{{ $waitlist->status }}</td>
                             <th scope="row">

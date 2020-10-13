@@ -16,8 +16,8 @@
                 <tr>
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
-                    <th scope="col">Email</th>
                     <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Instrument</th>
                     <th scope="col">Status</th>
                     <th scope="col">Update</th>
@@ -33,8 +33,8 @@
                         <tr>
                             <td>{{ $student->first_name }}</td>
                             <td>{{ $student->last_name }}</td>
+                            <td>{{ $student->phoneNumber }}</td>
                             <td>{{ $student->email }}</td>
-                            <td>{{ $student->phone }}</td>
                             <td>{{ $student->instrument }}</td>
                             <td>{{ $student->status }}</td>
                             <th scope="row">
