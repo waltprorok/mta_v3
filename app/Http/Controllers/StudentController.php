@@ -98,8 +98,22 @@ class StudentController extends Controller
 
     public function update(Request $request)
     {
+        $phone = preg_replace('/\D/', '', $request->get('phone'));
+
         $student = Student::where('id', $request->get('student_id'))->first();
-        $student->update($request->all());
+        $student->first_name = $request->get('first_name');
+        $student->last_name = $request->get('last_name');
+        $student->email = $request->get('email');
+        $student->phone = $phone;
+        $student->date_of_birth = $request->get('date_of_birth');
+        $student->address = $request->get('address');
+        $student->address_2 = $request->get('address_2');
+        $student->city = $request->get('city');
+        $student->state = $request->get('state');
+        $student->zip = $request->get('zip');
+        $student->instrument = $request->get('instrument');
+        $student->status = $request->get('status');
+        $student->save();
 
         return redirect()->back()->with('success', 'You successfully updated the student.');
     }
