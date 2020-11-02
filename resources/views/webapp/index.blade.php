@@ -38,7 +38,7 @@
                 <div class="card p-4">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <span class="h4 d-block font-weight-normal mb-2">1</span>
+                            <span class="h4 d-block font-weight-normal mb-2">{{ Auth::user()->lessons->whereBetween('start_date', [\Carbon\Carbon::now()->startOfWeek(), \Carbon\Carbon::now()->endOfWeek()])->count() }}</span>
                             <span class="font-weight-light">Lessons This Week</span>
                         </div>
 

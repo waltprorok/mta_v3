@@ -15,7 +15,7 @@ use Illuminate\View\View;
 
 class BlogController extends Controller
 {
-    protected $blogLimit = 6;
+    protected $blogLimit = 3;
 
     /**
      * Display a listing of the resource.
@@ -27,7 +27,8 @@ class BlogController extends Controller
         $blogs = Blog::with('author')
             ->latestFirst()
             ->published()
-            ->paginate($this->blogLimit)->onEachSide(3);
+            ->paginate($this->blogLimit)
+            ->onEachSide(3);
 
         return view('blog.index', compact('blogs'));
     }

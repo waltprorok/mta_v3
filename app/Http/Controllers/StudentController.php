@@ -109,7 +109,7 @@ class StudentController extends Controller
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         return view('webapp.student.schedule')->with('students', $students);
     }
-
+    
     public function scheduleSave(Request $request)
     {
         $this->validate($request, [
