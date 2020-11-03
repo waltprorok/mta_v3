@@ -33,7 +33,7 @@
                         <tr>
                             <td>{{ $inactive->first_name }}</td>
                             <td>{{ $inactive->last_name }}</td>
-                            <td>{{ $inactive->phoneNumber }}</td>
+                            <td>{{ $inactive->phone_number }}</td>
                             <td>{{ $inactive->email }}</td>
                             <td>{{ $inactive->instrument }}</td>
                             <td>{{ $inactive->status }}</td>

@@ -33,7 +33,7 @@
                         <tr>
                             <td>{{ $waitlist->first_name }}</td>
                             <td>{{ $waitlist->last_name }}</td>
-                            <td>{{ $waitlist->phoneNumber }}</td>
+                            <td>{{ $waitlist->phone_number }}</td>
                             <td>{{ $waitlist->email }}</td>
                             <td>{{ $waitlist->instrument }}</td>
                             <td>{{ $waitlist->status }}</td>

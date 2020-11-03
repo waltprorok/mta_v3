@@ -33,14 +33,12 @@
                         <tr>
                             <td>{{ $student->first_name }}</td>
                             <td>{{ $student->last_name }}</td>
-                            <td>{{ $student->phoneNumber }}</td>
+                            <td>{{ $student->phone_number }}</td>
                             <td>{{ $student->email }}</td>
                             <td>{{ $student->instrument }}</td>
                             <td>{{ $student->status }}</td>
                             <th scope="row">
-                                <a href="{{ route('student.edit', $student->id)}}"
-                                   class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i>
-                                </a>
+                                <a href="{{ route('student.edit', $student->id)}}" class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
                             </th>
                         </tr>
                     @endforeach

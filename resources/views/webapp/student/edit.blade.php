@@ -103,8 +103,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                         <label for="email" class="control-label">Email</label>
-                                        <input id="email" type="email" class="form-control" name="email"
-                                               value="{{ $student->email }}">
+                                        <input id="email" type="email" class="form-control" name="email" value="{{ $student->email }}">
 
                                         @if ($errors->has('email'))
                                             <span class="help-block">
@@ -117,9 +116,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                                         <label for="phone" class="control-label">Phone</label>
-                                        <input id="phone" type="tel" class="form-control" name="phone"
-                                               value="{{ $student->phone }}">
-
+                                        <input type="tel" class="form-control" name="phone" value="{{ $student->phone_number }}">
                                         @if ($errors->has('phone'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('phone') }}</strong>

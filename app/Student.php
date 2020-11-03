@@ -9,9 +9,13 @@ class Student extends Model
 {
     use Notifiable;
 
+    /**
+     * @param $notification
+     * @return string
+     */
     public function routeNotificationForNexmo($notification)
     {
-        return $this->phone;
+        return '+1' . $this->phone;
     }
 
     protected $table = 'students';
@@ -58,8 +62,7 @@ class Student extends Model
 
     public function getPhoneNumberAttribute()
     {
-        if ($this->phone != null)
-        {
+        if ($this->phone != null) {
             $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
             preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
             return "{$matches[1]}-{$matches[2]}-{$matches[3]}";
