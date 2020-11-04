@@ -43,4 +43,9 @@ $(document).ready(function () {
         $('[name="slug"]').val(title);
     });
 
+    $('#btnEdit').click(function () {
+        /*Clear textarea using id */
+        $('#dateofbirth').val('');
+    });
+
 });
