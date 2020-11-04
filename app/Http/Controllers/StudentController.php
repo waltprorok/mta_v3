@@ -121,6 +121,12 @@ class StudentController extends Controller
 
     }
 
+    public function profile($id)
+    {
+        $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
+        return view('webapp.student.profile')->with('students', $students);
+    }
+
     public function schedule($id)
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();

@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('students')->group(function () {
         Route::get('/', 'StudentController@index')->name('student.index');
+        Route::get('/{id}/profile', 'StudentController@profile')->name('student.profile');
         Route::get('/waitlist', 'StudentController@waitlist')->name('student.waitlist');
         Route::get('/leads', 'StudentController@leads')->name('student.leads');
         Route::get('/inactive', 'StudentController@inactive')->name('student.inactive');

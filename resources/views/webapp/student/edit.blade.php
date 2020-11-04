@@ -134,7 +134,7 @@
                                         <label for="date_of_birth" class="control-label">Birthday</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" name="date_of_birth"
-                                                   id="dateofbirth" autocomplete="off"
+                                                   id="dateOfBirth" autocomplete="off"
                                                    value="{{ $student->date_of_birth }}">
                                             <span class="input-group-btn">
                                                 <button type="button" title="edit" class="btn btn-primary" id="btnEdit"><i class="fa fa-edit"></i></button>

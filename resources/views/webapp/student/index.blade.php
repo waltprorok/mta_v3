@@ -39,6 +39,7 @@
                             <td>{{ $student->status }}</td>
                             <th scope="row">
                                 <a href="{{ route('student.edit', $student->id)}}" class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
+                                <a href="{{ route('student.profile', $student->id)}}" class="btn btn-outline-success" role="button" title="profile"><i class="fa fa-paperclip"></i></a>
                             </th>
                         </tr>
                     @endforeach
