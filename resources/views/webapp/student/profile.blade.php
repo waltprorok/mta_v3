@@ -17,13 +17,22 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
-                                     class="rounded-circle" width="150">
+                                @if($student->photo != null)
+                                    <img src="/storage/student/{{ $student->photo }}" alt="{{ $student->photo }}"
+                                         class="rounded-circle" width="150">
+                                @else
+                                    <img src="{{ asset('webapp/imgs/avatar.jpeg') }}" alt="stock-avatar"
+                                         class="rounded-circle" width="150">
+                                @endif
                                 <div class="mt-3">
                                     <h4>{{ $student->first_name }}&nbsp;{{ $student->last_name }}</h4>
-                                    <p class="text-secondary mb-1">{{ $student->instrument }}</p>
-                                    <p class="text-muted font-size-sm">{{ $student->city }}
-                                        &#44;&nbsp;{{ $student->state }}</p>
+                                    @if($student->instrument != null)
+                                        <p class="text-secondary mb-1">{{ $student->instrument }}</p>
+                                    @endif
+                                    @if($student->city != null)
+                                        <p class="text-muted font-size-sm">{{ $student->city }}
+                                            &#44;&nbsp;{{ $student->state }}</p>
+                                    @endif
                                     <button class="btn btn-primary">Follow</button>
                                     <button class="btn btn-outline-primary">Message</button>
                                 </div>
@@ -141,11 +150,11 @@
                                     <h6 class="mb-0">Address</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    @if($student->address_2 == null)
-                                        {{ $student->address }}<br/>{{ $student->city }}&#44;&nbsp;{{ $student->state }}
-                                    @else
-                                        {{ $student->address }}&nbsp;{{ $student->address_2 }}<br/>{{ $student->city }}
-                                        &#44;&nbsp;{{ $student->state }}
+                                    @if($student->address != null)
+                                        {{ $student->address }}&nbsp;{{ $student->city }}&#44;&nbsp;{{ $student->state }}
+                                    @endif
+                                    @if($student->address_2 != null)
+                                        {{ $student->address }}&nbsp;{{ $student->address_2 }}&nbsp;{{ $student->city }}&#44;&nbsp;{{ $student->state }}
                                     @endif
                                 </div>
                             </div>
@@ -224,5 +233,7 @@
     </div>
 
     @endforeach
+
+    @include('partials.addStudent')
 
 @endsection

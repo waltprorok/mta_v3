@@ -77,8 +77,8 @@
 
                             <div class="col-sm-6">
                                 <div class="form-group{{ $errors->has('address_2') ? ' has-error' : '' }}">
-                                    <label for="address_2" class="control-label">Apt / Suite</label>
-                                    <input id="address_2" type="text" class="form-control"
+                                    <label for="address_2" class="control-label">Address 2</label>
+                                    <input id="address_2" type="text" class="form-control" placeholder="Apt 34, Suite 123, Building H"
                                            name="address_2" value="{{ $setting->address_2 }}">
 
                                     @if ($errors->has('address_2'))
@@ -205,7 +205,7 @@
                                 <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                                     <label for="phone" class="control-label">Phone</label>
                                     <input id="phone" type="text" class="form-control" name="phone"
-                                           value="{{ $setting->phone }}">
+                                           value="{{ $setting->phone_number }}">
 
                                     @if ($errors->has('phone'))
                                         <span class="help-block">
@@ -217,8 +217,7 @@
                         </div>
 
                         <div class="row">
-                            @if (empty($setting->logo))
-                            @else
+                            @if ($setting->logo != null)
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="logo" class="control-label">Current Logo</label>

@@ -31,7 +31,6 @@ class TeacherController extends Controller
      */
     public function store(TeacherStoreSettings $request)
     {
-
         $phonef = preg_replace('/\D+/', '', $request->get('phone'));
 
         $studio = new Teacher([
@@ -88,6 +87,7 @@ class TeacherController extends Controller
         } else {
             $teacher->save();
         }
+
         $teacher->save();
 
         return redirect()->back()->with('success', 'You successfully updated your settings');

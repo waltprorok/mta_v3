@@ -20,8 +20,8 @@ class PlanTableDataSeeder extends Seeder
                 'stripe_plan' => 'plan_ESlBP8bL5WeV0I',
                 'cost' => '9.95',
                 'description' => null,
-                'created_at' => '2019-09-01 00:00:01',
-                'updated_at' => '2019-09-01 00:00:01',
+                'created_at' => '2020-11-01 00:00:01',
+                'updated_at' => '2020-11-01 00:00:01',
             ],
 //            [
 //                'id' => '2',
@@ -30,8 +30,8 @@ class PlanTableDataSeeder extends Seeder
 //                'stripe_plan' => 'prod_GOf0DIfXMKrACE',
 //                'cost' => '99.95',
 //                'description' => null,
-//                'created_at' => '2019-09-01 00:00:01',
-//                'updated_at' => '2019-09-01 00:00:01',
+//                'created_at' => '2020-11-01 00:00:01',
+//                'updated_at' => '2020-11-01 00:00:01',
 //            ]
         ]);
     }

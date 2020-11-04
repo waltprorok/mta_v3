@@ -19,7 +19,7 @@
                             <p>That student record does not exist.</p>
                         </div>
                     @else
-                        <form class="form-horizontal" method="POST" action="{{ route('student.update') }}">
+                        <form class="form-horizontal" method="POST" action="{{ route('student.update') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-6">
@@ -167,8 +167,8 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('address_2') ? ' has-error' : '' }}">
-                                        <label for="address_2" class="control-label">Type In: Apt, Suite, Building</label>
-                                        <input id="address_2" type="text" class="form-control"
+                                        <label for="address_2" class="control-label">Address 2</label>
+                                        <input id="address_2" type="text" class="form-control" placeholder="Apt 34, Suite 123, Building H"
                                                name="address_2" value="{{ $student->address_2 }}">
 
                                         @if ($errors->has('address_2'))
@@ -275,6 +275,24 @@
                                         <strong>{{ $errors->first('zip') }}</strong>
                                     </span>
                                         @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                @if ($student->photo != null)
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="photo" class="control-label">Profile Picture</label>
+                                            <img class="form-control text-center"
+                                                 src="/storage/student/{{ $student->photo }}" alt="{{ $student->photo }}">
+                                        </div>
+                                    </div>
+                                @endif
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label for="photo" class="control-label">Update Picture</label>
+                                        <input id="photo" type="file" class="form-control" name="photo">
                                     </div>
                                 </div>
                             </div>

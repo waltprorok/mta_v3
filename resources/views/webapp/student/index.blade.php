@@ -11,7 +11,7 @@
         <h2>Students</h2>
         @include('partials.studentListTabs')
         <div class="card">
-            <table class="table" id="#studentTable">
+            <table class="table table-striped" id="#studentTable">
                 <thead class="thead">
                 <tr>
                     <th scope="col">First Name</th>

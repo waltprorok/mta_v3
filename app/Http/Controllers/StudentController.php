@@ -7,6 +7,8 @@ use App\Http\Requests\StoreStudent;
 use App\Notifications\LessonConfirmation;
 use App\Teacher;
 use Auth;
+use File;
+use Storage;
 use App\Student;
 use App\Lesson;
 use Illuminate\Http\Request;
@@ -86,6 +88,13 @@ class StudentController extends Controller
                 'phone' => $phone,
                 'status' => $request->get('status'),
             ]);
+
+            if ($request->hasFile('photo')) {
+                $file = $request->file('photo');
+                $fileName = date('Ymd_hms') . "." . $file->getClientOriginalExtension();
+                Storage::disk('student')->put($fileName, File::get($file));
+                $student->photo = $fileName;
+            }
             $student->save();
 
             return redirect()->route('student.index')->with('success', 'The student was added successfully.');
@@ -115,10 +124,19 @@ class StudentController extends Controller
         $student->zip = $request->get('zip');
         $student->instrument = $request->get('instrument');
         $student->status = $request->get('status');
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $fileName = date('Ymd_hms') . "." . $file->getClientOriginalExtension();
+            Storage::disk('student')->put($fileName, File::get($file));
+            $student->photo = $fileName;
+        } else {
+            $student->save();
+        }
+
         $student->save();
 
         return redirect()->back()->with('success', 'You successfully updated the student.');
-
     }
 
     public function profile($id)

@@ -34,6 +34,7 @@ class Student extends Model
         'zip',
         'instrument',
         'status',
+        'photo',
     ];
 
     protected $hidden = [
