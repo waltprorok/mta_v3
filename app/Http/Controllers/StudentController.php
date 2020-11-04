@@ -73,6 +73,7 @@ class StudentController extends Controller
     public function store(StoreStudent $request)
     {
         $email_exists = Student::where('email', $request->get('email'))->where('teacher_id', Auth::id())->first();
+
         if ($email_exists && !null) {
             return redirect()->back()->with('error', 'The email address is already in use.');
         } else {
@@ -86,6 +87,7 @@ class StudentController extends Controller
                 'status' => $request->get('status'),
             ]);
             $student->save();
+
             return redirect()->route('student.index')->with('success', 'The student was added successfully.');
         }
     }
@@ -116,6 +118,7 @@ class StudentController extends Controller
         $student->save();
 
         return redirect()->back()->with('success', 'You successfully updated the student.');
+
     }
 
     public function schedule($id)
@@ -123,7 +126,7 @@ class StudentController extends Controller
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         return view('webapp.student.schedule')->with('students', $students);
     }
-    
+
     public function scheduleSave(Request $request)
     {
         $this->validate($request, [
