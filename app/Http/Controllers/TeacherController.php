@@ -67,16 +67,16 @@ class TeacherController extends Controller
     {
         $phonef = preg_replace('/\D+/', '', $request->get('phone'));
         $teacher = Teacher::where('teacher_id', '=', Auth::id())->first();
-        $teacher->teacher_id = $request->teacher_id;
-        $teacher->studio_name = $request->studio_name;
-        $teacher->first_name = $request->first_name;
-        $teacher->last_name = $request->last_name;
-        $teacher->address = $request->address;
-        $teacher->address_2 = $request->address_2;
-        $teacher->city = $request->city;
-        $teacher->state = $request->state;
-        $teacher->zip = $request->zip;
-        $teacher->email = $request->email;
+        $teacher->teacher_id = $request->get('teacher_id');
+        $teacher->studio_name = $request->get('studio_name');
+        $teacher->first_name = $request->get('first_name');
+        $teacher->last_name = $request->get('last_name');
+        $teacher->address = $request->get('address');
+        $teacher->address_2 = $request->get('address_2');
+        $teacher->city = $request->get('city');
+        $teacher->state = $request->get('state');
+        $teacher->zip = $request->get('zip');
+        $teacher->email = $request->get('email');
         $teacher->phone = $phonef;
 
         if ($request->hasFile('logo')) {
