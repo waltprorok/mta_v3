@@ -108,13 +108,13 @@
 
     //////////////////////////
     // Hide Nav Bar
-    $('document').ready(function () {
-        if ($('#hideNavBar').length) {
-            $('#nav').hide();
-        } else {
-            $('#nav').show();
-        }
-    });
+    // $('document').ready(function () {
+    //     if ($('#hideNavBar').length) {
+    //         $('#nav').hide();
+    //     } else {
+    //         $('#nav').show();
+    //     }
+    // });
 
     //////////////////////////
     // Show Nav Bar
@@ -126,6 +126,8 @@
         } else if ($('#contact').length) {
             $('#nav').addClass('fixed-nav');
         } else if ($('#terms').length) {
+            $('#nav').addClass('fixed-nav');
+        } else if ($('#fixedNavBar').length) {
             $('#nav').addClass('fixed-nav');
         }
         if ($('#blog').length) {

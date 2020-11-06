@@ -2,7 +2,7 @@
 @section('title', 'Reset Password')
 @section('content')
 
-    <div id="hideNavBar" class="container md-padding">
+    <div id="fixedNavBar" class="container md-padding">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <a href="{{ route('home') }}">
