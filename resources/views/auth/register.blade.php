@@ -2,16 +2,15 @@
 @section('title', 'Register')
 @section('content')
 
-    <div id="fixedNavBar" class="container md-padding">
+    <div id="fixedNavBar" class="container reg-padding">
         <div class="row">
             <div class="col-lg-10 col-lg-offset-1">
-                <a href="{{ route('home') }}">
-                    <img class="img-responsive center-block" src="{{ asset('marketing/img/logo1.png') }}"
-                         alt="sign-in-logo"/>
-                </a>
+                <div class="section-header text-center">
+                    <h2 class="title">Create an Account</h2>
+                </div>
                 <p class="text-center">Already a member? <a href="{{ route('login') }}"><u>Sign In</u></a></p>
                 <div class="panel panel-default">
-                    <div class="panel-heading">Register as a New User</div>
+                    <br />
                     <div class="panel-body">
                         <form class="form-horizontal" method="POST" action="{{ route('register') }}">
                             @csrf
@@ -126,7 +125,7 @@
                         <p>You can cancel at any time from the "Account" page after you login. There are no
                             cancellation fees or other hidden charges. Everything is month to month.</p>
                         <p><b>What types of payment do you accept?</b></p>
-                        <p>We accept all major credit cards (Visa, Mastercard, Amex, Discover)</p>
+                        <p>We accept all major credit cards (Visa, Mastercard, Amex, Discover).</p>
                     </div>
                 </div>
             </div>

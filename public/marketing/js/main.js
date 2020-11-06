@@ -119,6 +119,11 @@
             $('#nav').addClass('fixed-nav');
         } else if ($('#fixedNavBar').length) {
             $('#nav').addClass('fixed-nav');
+            $(window).on('scroll', function () {
+                var wScroll = $(this).scrollTop();
+                // Back To Top Appear
+                wScroll > 400 ? $('#back-to-top').fadeIn() : $('#back-to-top').fadeOut();
+            });
         }
         if ($('#blog').length) {
             $(window).on('scroll', function () {

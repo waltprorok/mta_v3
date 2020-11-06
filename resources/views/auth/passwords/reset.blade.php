@@ -4,24 +4,21 @@
 
     <div id="fixedNavBar" class="container reg-padding">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <a href="{{ route('home') }}">
-                    <img class="img-responsive center-block" src="{{ asset('marketing/img/logo1.png') }}"
-                         alt="sign-in-logo"/>
-                </a>
+            <div class="col-md-6 col-md-offset-3">
+                <div class="section-header text-center">
+                    <h2 class="title">Reset Your Password</h2>
+                </div>
                 <div class="panel panel-default">
-                    <div class="panel-heading">Reset Your Password</div>
+                    <br />
                     <div class="panel-body">
                         <form class="form-horizontal" method="POST" action="{{ route('password.request') }}">
                             @csrf
                             <input type="hidden" name="token" value="{{ $token }}">
-
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                                <div class="col-md-6">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <label for="email" class="control-label">E-Mail Address</label>
                                     <input id="email" type="email" class="form-control" name="email"
-                                           value="{{ $email or old('email') }}" autofocus>
+                                           value="{{ $email }}" autofocus>
 
                                     @if ($errors->has('email'))
                                         <span class="help-block">
@@ -32,9 +29,8 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label for="password" class="col-md-4 control-label">Password</label>
-
-                                <div class="col-md-6">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <label for="password" class="control-label">Password</label>
                                     <input id="password" type="password" class="form-control" name="password">
 
                                     @if ($errors->has('password'))
@@ -46,8 +42,8 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-                                <div class="col-md-6">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <label for="password-confirm" class="control-label">Confirm Password</label>
                                     <input id="password-confirm" type="password" class="form-control"
                                            name="password_confirmation">
 
@@ -60,8 +56,8 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <button type="submit" class="btn btn-primary btn-block">
                                         Reset Password
                                     </button>
                                 </div>
