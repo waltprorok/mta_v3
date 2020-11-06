@@ -83,7 +83,7 @@
                             <div class="panel-heading" role="tab" id="headingFour">
                                 <h4 class="panel-title">
                                     <a role="button" data-toggle="collapse" data-parent="#accordion"
-                                       href="#collapseThree"
+                                       href="#collapseFour"
                                        aria-expanded="true" aria-controls="collapseFour">
                                         <i class="more-less glyphicon glyphicon-plus"></i>
                                         Why do I need software to run my music studio?
