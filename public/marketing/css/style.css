@@ -1545,6 +1545,10 @@ header {
     color: #fff;
 }
 
+.newsletter-form input {
+    height: 36px;
+}
+
 .newsletter-form input::-webkit-input-placeholder {
     color: #fff !important;
 }
