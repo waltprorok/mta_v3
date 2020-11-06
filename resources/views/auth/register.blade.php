@@ -126,7 +126,7 @@
                         <p>You can cancel at any time from the "Account" page after you login. There are no
                             cancellation fees or other hidden charges. Everything is month to month.</p>
                         <p><b>What types of payment do you accept?</b></p>
-                        <p>We accept all major credit cards (Visa, Mastercard, Amex, etc.) as well as Paypal.</p>
+                        <p>We accept all major credit cards (Visa, Mastercard, Amex, Discover)</p>
                     </div>
                 </div>
             </div>
