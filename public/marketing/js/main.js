@@ -107,16 +107,6 @@
     });
 
     //////////////////////////
-    // Hide Nav Bar
-    // $('document').ready(function () {
-    //     if ($('#hideNavBar').length) {
-    //         $('#nav').hide();
-    //     } else {
-    //         $('#nav').show();
-    //     }
-    // });
-
-    //////////////////////////
     // Show Nav Bar
     $('document').ready(function () {
         if ($('#blog').length) {
