@@ -3,6 +3,12 @@
 @section('content')
 
     <div class="col-12">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('account.profile') }}">Profile</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('account.subscription') }}">Subscription</a></li>
+        </ul>
+
         <h2>Credit Card</h2>
         @include('partials.accountTabs')
         <div class="card">

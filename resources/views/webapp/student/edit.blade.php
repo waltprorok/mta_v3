@@ -3,6 +3,12 @@
 @section('content')
 
     <div class="col-12">
+        @foreach ($students as $student)
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('student.edit', $student->id) }}">Edit</a></li>
+        </ul>
 
         <button type="button" class="btn btn-primary float-right" data-toggle="modal"
                 data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
@@ -10,7 +16,7 @@
 
         <h2>Edit Student</h2>
 
-        @foreach ($students as $student)
+
             @include('partials.studentTabs', $data = ['id' => $student->id])
             <div class="card">
                 <div class="card-body">

@@ -3,7 +3,13 @@
 @section('content')
 
     <div class="col-12">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('teacher.studioUpdate') }}">Studio</a></li>
+        </ul>
+
         <h2>Studio Settings</h2>
+
         @include('partials.teacherTabs')
         <div class="card">
             <div class="card-header bg-light">
