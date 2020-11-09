@@ -3,11 +3,7 @@
 @section('content')
 
     <div class="col-12">
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="index.html#blog">Category</a></li>
-            <li class="breadcrumb-item active">Page</li>
-        </ul>
+
         <div class="row">
             <div class="col-md-3">
                 <div class="card p-4">
