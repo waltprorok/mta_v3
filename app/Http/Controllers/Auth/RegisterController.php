@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Teacher;
 use Carbon\Carbon;
-use App\Mail\WelcomeMail;
+use App\Mail\WelcomeEmail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -86,7 +86,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
         ]);
 
-        Mail::to($data['email'])->send(new WelcomeMail($user));
+        Mail::to($data['email'])->send(new WelcomeEmail($user));
         return $user;
     }
 
