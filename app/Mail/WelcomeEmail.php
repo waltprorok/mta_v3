@@ -12,10 +12,10 @@ class WelcomeEmail extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+
     /**
-     * Create a new message instance.
-     * @param user
-     * @return void
+     * WelcomeEmail constructor.
+     * @param $user
      */
     public function __construct($user)
     {
@@ -24,11 +24,10 @@ class WelcomeEmail extends Mailable
 
     /**
      * Build the message.
-     *
      * @return $this
      */
     public function build()
     {
-        return $this->markdown('emails.welcome.welcome');
+        return $this->markdown('emails.welcome');
     }
 }

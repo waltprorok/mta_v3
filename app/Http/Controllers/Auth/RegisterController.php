@@ -87,6 +87,7 @@ class RegisterController extends Controller
         ]);
 
         Mail::to($data['email'])->send(new WelcomeEmail($user));
+
         return $user;
     }
 
