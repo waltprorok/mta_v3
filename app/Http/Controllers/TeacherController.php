@@ -93,6 +93,12 @@ class TeacherController extends Controller
         return redirect()->back()->with('success', 'You successfully updated your settings');
     }
 
+    public function profile()
+    {
+        $teachers = Teacher::where('teacher_id', Auth::id())->get();
+        return view('webapp.teacher.profile')->with('teachers', $teachers);
+    }
+
     public function payment()
     {
         return view('webapp.teacher.payment');

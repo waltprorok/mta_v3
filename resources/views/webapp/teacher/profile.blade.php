@@ -3,38 +3,38 @@
 @section('content')
 
     <div class="col-12">
-        @foreach ($students as $student)
+        @foreach ($teachers as $teacher)
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('student.profile', $student->id) }}">Profile</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('teacher.editSettings') }}">Settings</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('teacher.profile') }}">Profile</a></li>
         </ul>
 
         <button type="button" class="btn btn-primary float-right" data-toggle="modal"
                 data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
         </button>
 
-        <h2>Student Profile</h2>
+        <h2>Teacher Profile</h2>
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                @if($student->photo != null)
-                                    <img src="/storage/student/{{ $student->photo }}" alt="{{ $student->photo }}"
+                                @if($teacher->photo != null)
+                                    <img src="/storage/student/{{ $teacher->photo }}" alt="{{ $teacher->photo }}"
                                          class="rounded-circle" width="150">
                                 @else
                                     <img src="{{ asset('webapp/imgs/avatar.jpeg') }}" alt="stock-avatar"
                                          class="rounded-circle" width="150">
                                 @endif
                                 <div class="mt-3">
-                                    <h4>{{ $student->first_name }}&nbsp;{{ $student->last_name }}</h4>
-                                    @if($student->instrument != null)
-                                        <p class="text-secondary mb-1">{{ $student->instrument }}</p>
+                                    <h4>{{ $teacher->first_name }}&nbsp;{{ $teacher->last_name }}</h4>
+                                    @if($teacher->instrument != null)
+                                        <p class="text-secondary mb-1">{{ $teacher->instrument }}</p>
                                     @endif
-                                    @if($student->city != null)
-                                        <p class="text-muted font-size-sm">{{ $student->city }}
-                                            &#44;&nbsp;{{ $student->state }}</p>
+                                    @if($teacher->city != null)
+                                        <p class="text-muted font-size-sm">{{ $teacher->city }}
+                                            &#44;&nbsp;{{ $teacher->state }}</p>
                                     @endif
                                     <button class="btn btn-primary">Follow</button>
                                     <button class="btn btn-outline-primary">Message</button>
@@ -117,7 +117,7 @@
                                     <h6 class="mb-0">Full Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{ $student->first_name }}&nbsp;{{ $student->last_name }}
+                                    {{ $teacher->first_name }}&nbsp;{{ $teacher->last_name }}
                                 </div>
                             </div>
                             <hr>
@@ -126,7 +126,7 @@
                                     <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{ $student->email }}
+                                    {{ $teacher->email }}
                                 </div>
                             </div>
                             <hr>
@@ -135,7 +135,7 @@
                                     <h6 class="mb-0">Phone</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{ $student->phone_number }}
+                                    {{ $teacher->phone_number }}
                                 </div>
                             </div>
                             <hr>
@@ -144,7 +144,7 @@
                                     <h6 class="mb-0">Mobile</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{ $student->phone_number }}
+                                    {{ $teacher->phone_number }}
                                 </div>
                             </div>
                             <hr>
@@ -153,10 +153,10 @@
                                     <h6 class="mb-0">Address</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    @if($student->address_2 != null)
-                                        {{ $student->address }}&nbsp;{{ $student->address_2 }}&nbsp;{{ $student->city }}&#44;&nbsp;{{ $student->state }}
+                                    @if($teacher->address_2 != null)
+                                        {{ $teacher->address }}&nbsp;{{ $teacher->address_2 }}&nbsp;{{ $teacher->city }}&#44;&nbsp;{{ $teacher->state }}
                                     @else
-                                        {{ $student->address }}&nbsp;{{ $student->city }}&#44;&nbsp;{{ $student->state }}
+                                        {{ $teacher->address }}&nbsp;{{ $teacher->city }}&#44;&nbsp;{{ $teacher->state }}
                                     @endif
                                 </div>
                             </div>
