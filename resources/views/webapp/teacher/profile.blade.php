@@ -20,8 +20,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                @if($teacher->photo != null)
-                                    <img src="/storage/student/{{ $teacher->photo }}" alt="{{ $teacher->photo }}"
+                                @if($teacher->logo != null)
+                                    <img src="/storage/teacher/{{ $teacher->logo }}" alt="{{ $teacher->logo }}"
                                          class="rounded-circle" width="150">
                                 @else
                                     <img src="{{ asset('webapp/imgs/avatar.jpeg') }}" alt="stock-avatar"
