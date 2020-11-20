@@ -22,9 +22,9 @@
                             <div class="d-flex flex-column align-items-center text-center">
                                 @if($teacher->logo != null)
                                     <img src="/storage/teacher/{{ $teacher->logo }}" alt="{{ $teacher->logo }}"
-                                         class="rounded-circle" width="150">
+                                         class="rounded" width="150">
                                 @else
-                                    <img src="{{ asset('webapp/imgs/avatar.jpeg') }}" alt="stock-avatar"
+                                    <img src="{{ asset('webapp/imgs/teacher-avatar.png') }}" alt="stock-avatar"
                                          class="rounded-circle" width="150">
                                 @endif
                                 <div class="mt-3">
