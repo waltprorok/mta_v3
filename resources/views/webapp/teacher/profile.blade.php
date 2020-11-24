@@ -10,17 +10,13 @@
             <li class="breadcrumb-item active"><a href="{{ route('teacher.profile') }}">Profile</a></li>
         </ul>
 
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal"
-                data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
-        </button>
-
         <h2>Teacher Profile</h2>
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                @if($teacher->logo != null)
+                                @if($teacher->logo == null)
                                     <img src="/storage/teacher/{{ $teacher->logo }}" alt="{{ $teacher->logo }}"
                                          class="rounded" width="150">
                                 @else
@@ -29,9 +25,6 @@
                                 @endif
                                 <div class="mt-3">
                                     <h4>{{ $teacher->first_name }}&nbsp;{{ $teacher->last_name }}</h4>
-                                    @if($teacher->instrument != null)
-                                        <p class="text-secondary mb-1">{{ $teacher->instrument }}</p>
-                                    @endif
                                     @if($teacher->city != null)
                                         <p class="text-muted font-size-sm">{{ $teacher->city }}
                                             &#44;&nbsp;{{ $teacher->state }}</p>

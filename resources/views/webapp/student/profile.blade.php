@@ -10,10 +10,6 @@
             <li class="breadcrumb-item active"><a href="{{ route('student.profile', $student->id) }}">Profile</a></li>
         </ul>
 
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal"
-                data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
-        </button>
-
         <h2>Student Profile</h2>
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3">
