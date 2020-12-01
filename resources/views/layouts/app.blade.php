@@ -48,7 +48,7 @@
 </head>
 
 <body>
-@include('partials.alerts')
+{{--@include('partials.alerts')--}}
 <!-- Header -->
 <header>
     <!-- Nav -->
@@ -113,9 +113,9 @@
 <div class="container">
     <div class="sm-padding"></div>
 </div>
-{{--<div class="container">--}}
-{{--    @include('partials.alerts')--}}
-{{--</div>--}}
+<div class="container">
+    @include('partials.alerts')
+</div>
 
 @yield('content')
 
@@ -157,7 +157,7 @@
             </div>
             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-6 col-6 ">
                 <div class="footer-widget ">
-                    <h3 class="footer-title">Subscribe to Our Newsletter</h3>
+                    <h3 class="footer-title">Subscribe to Our News Letter</h3>
                     <form method="post" action="{{ route('newsletter') }}">
                         @csrf
                         <div class="newsletter-form input-group">
