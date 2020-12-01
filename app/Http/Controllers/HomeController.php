@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Contact;
+use App\Http\Requests\StoreContactSubmission;
 use App\Mail\ContactForm;
 use Illuminate\Http\Request;
 use App\Plan;
@@ -66,17 +68,19 @@ class HomeController extends Controller
         return view('marketing.contact');
     }
 
-    public function sendContact(Request $request)
+    public function sendContact(StoreContactSubmission $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email',
-            'subject' => 'required|min:3',
-            'message' => 'required|min:3',
-            'g-recaptcha-response' => 'required|captcha',
-        ]);
+        $contact = new Contact([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'subject' => $request->get('subject'),
+            'message' => $request->get('message'),
+            ]);
+
+        $contact->save();
 
         Mail::to('waltprorok@gmail.com')->send(new ContactForm($request));
+
         return redirect()->route('contact')->with('success', 'The contact form was sent successfully');
     }
 
