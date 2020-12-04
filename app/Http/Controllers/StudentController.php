@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\BusinessHours;
+use App\Http\Requests\StoreScheduleAppt;
 use App\Http\Requests\StoreStudent;
 use App\Notifications\LessonConfirmation;
 use App\Teacher;
@@ -142,23 +143,20 @@ class StudentController extends Controller
     public function profile($id)
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
+
         return view('webapp.student.profile')->with('students', $students);
     }
 
     public function schedule($id)
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
-        return view('webapp.student.schedule')->with('students', $students);
+        $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
+
+        return view('webapp.student.schedule')->with('students', $students, 'businessHours', $businessHours);
     }
 
-    public function scheduleSave(Request $request)
+    public function scheduleSave(StoreScheduleAppt $request)
     {
-        $this->validate($request, [
-            'student_id' => 'required|string',
-            'title' => 'required|string',
-            'start_date' => 'required|string',
-        ]);
-
         $lesson = new Lesson();
         $lesson->student_id = $request->get('student_id');
         $lesson->teacher_id = Auth::id();
@@ -167,12 +165,14 @@ class StudentController extends Controller
         $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
         $lesson->student->notify(new LessonConfirmation($lesson->student->first_name, $lesson->start_date));
         $lesson->save();
+
         return redirect()->back()->with('success', ' The student has been scheduled successfully.');
     }
 
     public function scheduleEdit($student_id, $id)
     {
         $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->get();
+
         return view('webapp.student.scheduleEdit')->with('lessons', $lessons);
     }
 
@@ -191,6 +191,7 @@ class StudentController extends Controller
         $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
         $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
         $lesson->update();
+
         return redirect()->back()->with('success', 'You successfully updated the student\'s lesson.');
     }
 
@@ -198,6 +199,7 @@ class StudentController extends Controller
     {
         $lesson = Lesson::find($id);
         $lesson->delete();
+
         return redirect(route('student.index'))->with('success', 'The scheduled lesson has been removed.');
 
     }

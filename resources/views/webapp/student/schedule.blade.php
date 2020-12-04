@@ -14,8 +14,6 @@
         </button>
 
         <h2>Schedule Student</h2>
-
-
             @include('partials.studentTabs', $data = ['id' => $student->id])
             <div class="card">
                 <div class="card-body">
@@ -59,6 +57,9 @@
                                         <label for="start_time" class="control-label">Start Time</label>
                                         <select class="form-control" id="start_time" name="start_time">
                                             <option value="{{ old('start_time') }}">{{ old('start_time') }}</option>
+{{--                                            @foreach($businessHours as $businessHour)--}}
+{{--                                            <option value="09:00:00">{{ $businessHour->open_time }}</option>--}}
+{{--                                            @endforeach--}}
                                             <option value="09:00:00">9:00</option>
                                             <option value="09:30:00">9:30</option>
                                             <option value="10:00:00">10:00</option>
