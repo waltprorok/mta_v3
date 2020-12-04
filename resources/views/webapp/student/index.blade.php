@@ -24,7 +24,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">Instrument</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Update</th>
+                    <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -42,8 +42,8 @@
                             <td>{{ $student->instrument }}</td>
                             <td>{{ $student->status }}</td>
                             <th scope="row">
-                                <a href="{{ route('student.edit', $student->id)}}" class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
-                                <a href="{{ route('student.profile', $student->id)}}" class="btn btn-outline-success" role="button" title="profile"><i class="fa fa-paperclip"></i></a>
+                                <a href="{{ route('student.edit', $student->id)}}" class="btn btn-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
+                                <a href="{{ route('student.profile', $student->id)}}" class="btn btn-success" role="button" title="profile"><i class="fa fa-user"></i></a>
                             </th>
                         </tr>
                     @endforeach

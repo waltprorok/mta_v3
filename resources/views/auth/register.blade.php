@@ -122,7 +122,7 @@
                             service and decide to continue using it. Once you submit your payment info, your card will
                             be charged at that time, and the free period will end.</p>
                         <p><b>How do I cancel my account?</b></p>
-                        <p>You can cancel at any time from the "Account" page after you login. There are no
+                        <p>You can cancel at any time from the "Account->Subscription" page after you login. There are no
                             cancellation fees or other hidden charges. Everything is month to month.</p>
                         <p><b>What types of payment do you accept?</b></p>
                         <p>We accept all major credit cards (Visa, Mastercard, Amex, Discover).</p>
