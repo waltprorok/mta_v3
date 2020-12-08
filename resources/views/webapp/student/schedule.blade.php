@@ -20,7 +20,7 @@
                 <div class="card-body">
                     @if(count($students) <= 0)
                         <div class="text-center">
-                            <p>That student record does not exist</p>
+                            <p>That student record does not exist.</p>
                         </div>
                     @else
                         <form class="form-horizontal" method="post" action="{{ route('student.schedule.save') }}">
