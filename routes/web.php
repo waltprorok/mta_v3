@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('edit', 'TeacherController@edit')->name('teacher.editSettings');
         Route::put('update', 'TeacherController@update')->name('teacher.studioUpdate');
         Route::post('store', 'TeacherController@store')->name('save.studioSettings');
+        Route::get('/profile', 'TeacherController@profile')->name('teacher.profile');
         Route::get('payment', 'TeacherController@payment')->name('teacher.payment');
         Route::get('hours', 'TeacherController@hours')->name('teacher.hours');
         Route::post('hours', 'TeacherController@hoursSave')->name('teacher.hoursSave');
@@ -57,6 +58,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('students')->group(function () {
         Route::get('/', 'StudentController@index')->name('student.index');
+        Route::get('/{id}/profile', 'StudentController@profile')->name('student.profile');
         Route::get('/waitlist', 'StudentController@waitlist')->name('student.waitlist');
         Route::get('/leads', 'StudentController@leads')->name('student.leads');
         Route::get('/inactive', 'StudentController@inactive')->name('student.inactive');

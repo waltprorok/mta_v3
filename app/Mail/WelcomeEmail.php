@@ -7,17 +7,15 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class WelcomeMail extends Mailable
+class WelcomeEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-
     public $user;
+
     /**
-     * Create a new message instance.
-     *
-     * @param user
-     * @return void
+     * WelcomeEmail constructor.
+     * @param $user
      */
     public function __construct($user)
     {
@@ -26,11 +24,10 @@ class WelcomeMail extends Mailable
 
     /**
      * Build the message.
-     *
      * @return $this
      */
     public function build()
     {
-        return $this->view('emails.welcome');
+        return $this->markdown('emails.welcome');
     }
 }

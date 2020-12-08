@@ -3,6 +3,12 @@
 @section('content')
 
     <div class="col-12">
+        @foreach ($students as $student)
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('student.edit', $student->id) }}">Edit</a></li>
+        </ul>
 
         <button type="button" class="btn btn-primary float-right" data-toggle="modal"
                 data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
@@ -10,7 +16,7 @@
 
         <h2>Edit Student</h2>
 
-        @foreach ($students as $student)
+
             @include('partials.studentTabs', $data = ['id' => $student->id])
             <div class="card">
                 <div class="card-body">
@@ -19,7 +25,7 @@
                             <p>That student record does not exist.</p>
                         </div>
                     @else
-                        <form class="form-horizontal" method="POST" action="{{ route('student.update') }}">
+                        <form class="form-horizontal" method="POST" action="{{ route('student.update') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-6">
@@ -117,9 +123,8 @@
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                                         <label for="phone" class="control-label">Phone</label>
-                                        <input id="phone" type="tel" class="form-control" name="phone"
-                                               value="{{ $student->phone }}">
-
+                                        <input type="tel" class="form-control" name="phone"
+                                               value="{{ $student->phone_number }}">
                                         @if ($errors->has('phone'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('phone') }}</strong>
@@ -133,9 +138,14 @@
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('date_of_birth') ? ' has-error' : '' }}">
                                         <label for="date_of_birth" class="control-label">Birthday</label>
-                                        <input type="text" class="form-control" name="date_of_birth"
-                                               id="dateofbirth" autocomplete="off"
-                                               value="{{ $student->date_of_birth }}">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="date_of_birth"
+                                                   id="dateOfBirth" autocomplete="off"
+                                                   value="{{ $student->date_of_birth }}">
+                                            <span class="input-group-btn">
+                                                <button type="button" title="edit" class="btn btn-primary" id="btnEdit"><i class="fa fa-edit"></i></button>
+                                            </span>
+                                        </div>
 
                                         @if ($errors->has('date_of_birth'))
                                             <span class="help-block">
@@ -163,8 +173,8 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('address_2') ? ' has-error' : '' }}">
-                                        <label for="address_2" class="control-label">Apt / Suite</label>
-                                        <input id="address_2" type="text" class="form-control"
+                                        <label for="address_2" class="control-label">Address 2</label>
+                                        <input id="address_2" type="text" class="form-control" placeholder="Apt 34, Suite 123, Building H"
                                                name="address_2" value="{{ $student->address_2 }}">
 
                                         @if ($errors->has('address_2'))
@@ -208,7 +218,6 @@
                                             <option value="CO">Colorado</option>
                                             <option value="CT">Connecticut</option>
                                             <option value="DE">Delaware</option>
-                                            <option value="DC">District Of Columbia</option>
                                             <option value="FL">Florida</option>
                                             <option value="GA">Georgia</option>
                                             <option value="HI">Hawaii</option>
@@ -276,6 +285,24 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                @if ($student->photo != null)
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="photo" class="control-label">Profile Picture</label>
+                                            <img class="form-control text-center"
+                                                 src="/storage/student/{{ $student->photo }}" alt="{{ $student->photo }}">
+                                        </div>
+                                    </div>
+                                @endif
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label for="photo" class="control-label">Update Picture</label>
+                                        <input id="photo" type="file" class="form-control" name="photo">
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="pull-left">
                                 <button type="submit" class="btn btn-primary">Update Student</button>
                                 <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancel</a>
@@ -290,109 +317,6 @@
         @endforeach
     </div>
 
-    <!-- The Modal -->
-    <div class="modal" id="addStudentModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form class="form-horizontal" method="POST" action="{{ route('student.save') }}">
-                @csrf
-                <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h5 class="modal-title">New Student</h5>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <input id="teacher_id" type="hidden" class="form-control" name="teacher_id"
-                               value="{{ Auth::user()->id }}">
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
-                                    <label for="first_name" class="control-label">First Name</label>
-                                    <input id="first_name" type="text" class="form-control" name="first_name"
-                                           value="{{ old('first_name') }}">
-
-                                    @if ($errors->has('first_name'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('first_name') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
-                                    <label for="last_name" class="control-label">Last Name</label>
-                                    <input id="last_name" type="text" class="form-control" name="last_name"
-                                           value="{{ old('last_name') }}">
-
-                                    @if ($errors->has('last_name'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('last_name') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                    <label for="email" class="control-label">Email</label>
-                                    <input id="email" type="text" class="form-control" name="email"
-                                           value="{{ old('email') }}">
-
-                                    @if ($errors->has('email'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
-                                    <label for="status" class="control-label">Status: </label>
-                                    <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" checked name="status"
-                                                   value="Active">Active
-                                        </label>
-                                    </div>
-                                    <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="status" value="Lead">Lead
-                                        </label>
-                                    </div>
-                                    <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="status"
-                                                   value="Waitlist">Waitlist
-                                        </label>
-                                    </div>
-
-                                    @if ($errors->has('status'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('status') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Create</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    @include('partials.addStudent')
 
 @endsection

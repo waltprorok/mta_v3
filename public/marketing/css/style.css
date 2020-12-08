@@ -140,7 +140,7 @@ ul, ol {
 }
 
 .md-padding {
-    padding-top: 70px;
+    padding-top: 80px;
     padding-bottom: 70px;
 }
 
@@ -1543,6 +1543,10 @@ header {
 
 .newsletter-form .form-control:focus {
     color: #fff;
+}
+
+.newsletter-form input {
+    height: 36px;
 }
 
 .newsletter-form input::-webkit-input-placeholder {

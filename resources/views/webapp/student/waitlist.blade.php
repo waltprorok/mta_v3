@@ -3,6 +3,11 @@
 @section('content')
 
     <div class="col-12">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('student.waitlist') }}">Waitlist</a></li>
+        </ul>
 
         <button type="button" class="btn btn-primary float-right" data-toggle="modal"
                 data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
@@ -11,13 +16,13 @@
         <h2>Students</h2>
         @include('partials.studentListTabs')
         <div class="card">
-            <table class="table" id="#studentTable">
+            <table class="table table-striped" id="#studentTable">
                 <thead class="thead">
                 <tr>
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
-                    <th scope="col">Email</th>
                     <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Instrument</th>
                     <th scope="col">Status</th>
                     <th scope="col">Update</th>
@@ -33,8 +38,8 @@
                         <tr>
                             <td>{{ $waitlist->first_name }}</td>
                             <td>{{ $waitlist->last_name }}</td>
+                            <td>{{ $waitlist->phone_number }}</td>
                             <td>{{ $waitlist->email }}</td>
-                            <td>{{ $waitlist->phone }}</td>
                             <td>{{ $waitlist->instrument }}</td>
                             <td>{{ $waitlist->status }}</td>
                             <th scope="row">

@@ -14,9 +14,9 @@ class NewsletterController extends Controller
         } else {
             if (!Newsletter::isSubscribed($request->email)) {
                 Newsletter::subscribePending($request->email);
-                return back()->with('success', 'Thanks For Subscribing to the News Letter');
+                return back()->with('success', 'Thank You For Subscribing to the News Letter');
             }
-            return back()->with('error', 'Sorry! You have already subscribed ');
+            return back()->with('error', 'Sorry! You have already subscribed');
         }
 
 

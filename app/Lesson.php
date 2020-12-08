@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lesson extends Model
 {
-    protected $fillable = ['teacher_id', 'title', 'start_date', 'end_date'];
+    protected $fillable = [
+        'teacher_id',
+        'title',
+        'start_date',
+        'end_date'];
 
     public function student()
     {

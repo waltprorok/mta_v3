@@ -36,11 +36,25 @@ $(document).ready(function () {
     /**
      * Create Slug Tag
      */
-    $('[name="title"]').keyup(function(){
+    $('[name="title"]').keyup(function () {
         var title = $(this).val();
         title = title.toLowerCase();
-        title = title.replace(/[^a-zA-Z0-9]+/g,'-');
+        title = title.replace(/[^a-zA-Z0-9]+/g, '-');
         $('[name="slug"]').val(title);
+    });
+
+    $('#btnEdit').click(function () {
+        /*Clear textarea using id */
+        $('#dateOfBirth').val("");
+        $('#dateOfBirth').attr('value', '');
+        $("#dateOfBirth").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "yy-mm-dd",
+            timeFormat: "00:00:00",
+            yearRange: "-70:+00",
+            todayHighlight: true,
+        });
     });
 
 });

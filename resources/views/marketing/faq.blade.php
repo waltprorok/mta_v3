@@ -39,13 +39,37 @@
                                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
                                        aria-expanded="true" aria-controls="collapseTwo">
                                         <i class="more-less glyphicon glyphicon-plus"></i>
-                                        Can I cancel my subscription?
+                                        Payment Questions?
                                     </a>
                                 </h4>
                             </div>
 
                             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
                                  aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                    <p><b>Do I have to give my credit card information to use the 30-Day free trial?</b></p>
+                                    <p>Definitely not. We only expect you to submit your card info once you've tried the
+                                        service and decide to continue using it. Once you submit your payment info, your card will
+                                        be charged at that time, and the free period will end.</p>
+                                    <p><b>What types of payment do you accept?</b></p>
+                                    <p>We accept all major credit cards (Visa, Mastercard, Amex, Discover)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"
+                                       aria-expanded="true" aria-controls="collapseThree">
+                                        <i class="more-less glyphicon glyphicon-plus"></i>
+                                        Can I cancel my subscription?
+                                    </a>
+                                </h4>
+                            </div>
+
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
+                                 aria-labelledby="headingThree">
                                 <div class="panel-body">
                                     Yes of course you can cancel at anytime, though we hope you don't ever have to. The
                                     subscription process grants 30 days per payment cycle. If you signed on the 1st of
@@ -56,18 +80,18 @@
                         </div>
 
                         <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingThree">
+                            <div class="panel-heading" role="tab" id="headingFour">
                                 <h4 class="panel-title">
                                     <a role="button" data-toggle="collapse" data-parent="#accordion"
-                                       href="#collapseThree"
-                                       aria-expanded="true" aria-controls="collapseThree">
+                                       href="#collapseFour"
+                                       aria-expanded="true" aria-controls="collapseFour">
                                         <i class="more-less glyphicon glyphicon-plus"></i>
                                         Why do I need software to run my music studio?
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
-                                 aria-labelledby="headingThree">
+                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
+                                 aria-labelledby="headingFour">
                                 <div class="panel-body">
                                     This is a great question. Two words, administrative work. Keeping tracking of
                                     students, scheduling, rescheduling, and getting paid is the bottom line. We want

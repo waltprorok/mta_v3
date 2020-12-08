@@ -12,6 +12,7 @@ use App\Plan;
 
 class SubscriptionController extends Controller
 {
+    protected $receiptLimit = 5;
 
     public function index()
     {
@@ -76,6 +77,7 @@ class SubscriptionController extends Controller
     public function pdfDownload($invoiceId)
     {
         $user = Auth::user();
+
         return $user->downloadInvoice($invoiceId, [
             'vendor' => 'Music Teachers Aid',
             'product'=> 'Premium Subscription'
@@ -86,6 +88,7 @@ class SubscriptionController extends Controller
     {
         $user = Auth::user();
         $invoices = $user->invoices();
+
         return view('webapp.account.invoices', compact('invoices'));
     }
 

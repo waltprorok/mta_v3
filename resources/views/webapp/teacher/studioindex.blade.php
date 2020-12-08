@@ -3,7 +3,13 @@
 @section('content')
 
     <div class="col-12">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('teacher.studioIndex') }}">Studio</a></li>
+        </ul>
+
         <h2>Studio Settings</h2>
+
         @include('partials.teacherTabs')
         <div class="card">
             <div class="card-header bg-light">
@@ -76,8 +82,8 @@
 
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('address_2') ? ' has-error' : '' }}">
-                                <label for="address_2" class="control-label">Apt / Suite</label>
-                                <input id="address_2" type="text" class="form-control"
+                                <label for="address_2" class="control-label">Address 2</label>
+                                <input id="address_2" type="text" class="form-control" placeholder="Apt 34, Suite 123, Building H"
                                        name="address_2" value="{{ old('address_2') }}">
                                 @if ($errors->has('address_2'))
                                     <span class="help-block">

@@ -4524,10 +4524,9 @@ tbody.collapse.show {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    padding: .75rem 1rem;
+    padding: .15rem;
     margin-bottom: 1rem;
     list-style: none;
-    background-color: #e9ecef
 }
 
 .breadcrumb-item + .breadcrumb-item:before {
@@ -4543,8 +4542,8 @@ tbody.collapse.show {
     text-decoration: none
 }
 
-.breadcrumb-item.active {
-    color: #999
+.breadcrumb-item.active a {
+    color: #128ef2
 }
 
 .pagination {

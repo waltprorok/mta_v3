@@ -2,24 +2,21 @@
 @section('title', 'Log In')
 @section('content')
 
-    <div id="hideNavBar" class="container reg-padding">
+    <div id="fixedNavBar" class="container reg-padding">
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2">
-                <a href="{{ route('home') }}">
-                    <img class="img-responsive center-block" src="{{ asset('marketing/img/logo1.png') }}"
-                         alt="sign-in-logo"/>
-                </a>
+                <div class="section-header text-center">
+                    <h2 class="title">Sign Into Your Account</h2>
+                </div>
                 <p class="text-center">Not a member yet? <a href="{{ route('pricing') }}"><u>Click here</u></a> to join our
                     community.</p>
                 <div class="panel panel-default">
-                    <div class="panel-heading">Sign Into Your Account</div>
-
+                    <br />
                     <div class="panel-body">
                         <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
+                                <label for="email" class="col-md-4 control-label">Email Address</label>
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control" name="email"
                                            value="{{ old('email') }}" autofocus>

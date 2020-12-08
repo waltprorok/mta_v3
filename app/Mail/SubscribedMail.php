@@ -11,7 +11,6 @@ class SubscribedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-
     public $user;
     /**
      * Create a new message instance.
@@ -26,11 +25,10 @@ class SubscribedMail extends Mailable
 
     /**
      * Build the message.
-     *
      * @return $this
      */
     public function build()
     {
-        return $this->view('emails.subscribed');
+        return $this->markdown('emails.subscribed');
     }
 }

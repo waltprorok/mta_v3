@@ -14,6 +14,7 @@
         "graham-campbell/markdown": "^10.3",
         "laravel/cashier": "^9.0.1",
         "laravel/framework": "5.8.*",
+        "laravel/nexmo-notification-channel": "^2.4",
         "laravel/tinker": "~1.0",
         "maddhatter/laravel-fullcalendar": "^1.3",
         "spatie/laravel-newsletter": "^4.8"

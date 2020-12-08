@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\BusinessHours;
+use App\Http\Requests\StoreScheduleAppt;
 use App\Http\Requests\StoreStudent;
+use App\Notifications\LessonConfirmation;
 use App\Teacher;
 use Auth;
+use File;
+use Storage;
 use App\Student;
 use App\Lesson;
 use Illuminate\Http\Request;
+use Nexmo\Laravel\Facade\Nexmo;
 
 
 class StudentController extends Controller
@@ -23,7 +28,7 @@ class StudentController extends Controller
         $teacher = Teacher::where('teacher_id', Auth::id())->first();
 
         if ($teacher == null) {
-            return redirect('teacher')->with('info', 'Please fill out your studio settings first before entering students.');
+            return redirect('teacher')->with('info', 'Please fill out your Studio Settings first before entering students.');
         }
 
         $students = Student::with('teacher')
@@ -71,18 +76,28 @@ class StudentController extends Controller
     public function store(StoreStudent $request)
     {
         $email_exists = Student::where('email', $request->get('email'))->where('teacher_id', Auth::id())->first();
-        if ($email_exists) {
+
+        if ($email_exists && !null) {
             return redirect()->back()->with('error', 'The email address is already in use.');
         } else {
+            $phone = preg_replace('/\D/', '', $request->get('phone'));
             $student = new Student([
                 'teacher_id' => Auth::id(),
                 'first_name' => $request->get('first_name'),
                 'last_name' => $request->get('last_name'),
                 'email' => $request->get('email'),
-                'phone' => $request->get('phone'),
+                'phone' => $phone,
                 'status' => $request->get('status'),
             ]);
+
+            if ($request->hasFile('photo')) {
+                $file = $request->file('photo');
+                $fileName = date('Ymd_hms') . "." . $file->getClientOriginalExtension();
+                Storage::disk('student')->put($fileName, File::get($file));
+                $student->photo = $fileName;
+            }
             $student->save();
+
             return redirect()->route('student.index')->with('success', 'The student was added successfully.');
         }
     }
@@ -95,39 +110,69 @@ class StudentController extends Controller
 
     public function update(Request $request)
     {
+        $phone = preg_replace('/\D/', '', $request->get('phone'));
+
         $student = Student::where('id', $request->get('student_id'))->first();
-        $student->update($request->all());
+        $student->first_name = $request->get('first_name');
+        $student->last_name = $request->get('last_name');
+        $student->email = $request->get('email');
+        $student->phone = $phone;
+        $student->date_of_birth = $request->get('date_of_birth');
+        $student->address = $request->get('address');
+        $student->address_2 = $request->get('address_2');
+        $student->city = $request->get('city');
+        $student->state = $request->get('state');
+        $student->zip = $request->get('zip');
+        $student->instrument = $request->get('instrument');
+        $student->status = $request->get('status');
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $fileName = date('Ymd_hms') . "." . $file->getClientOriginalExtension();
+            Storage::disk('student')->put($fileName, File::get($file));
+            $student->photo = $fileName;
+        } else {
+            $student->save();
+        }
+
+        $student->save();
 
         return redirect()->back()->with('success', 'You successfully updated the student.');
+    }
+
+    public function profile($id)
+    {
+        $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
+
+        return view('webapp.student.profile')->with('students', $students);
     }
 
     public function schedule($id)
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
-        return view('webapp.student.schedule')->with('students', $students);
+        $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
+
+        return view('webapp.student.schedule')->with('students', $students, 'businessHours', $businessHours);
     }
 
-    public function scheduleSave(Request $request)
+    public function scheduleSave(StoreScheduleAppt $request)
     {
-        $this->validate($request, [
-            'student_id' => 'required|string',
-            'title' => 'required|string',
-            'start_date' => 'required|string',
-        ]);
-
         $lesson = new Lesson();
         $lesson->student_id = $request->get('student_id');
         $lesson->teacher_id = Auth::id();
         $lesson->title = $request->get('title');
         $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
         $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
+        $lesson->student->notify(new LessonConfirmation($lesson->student->first_name, $lesson->start_date));
         $lesson->save();
+
         return redirect()->back()->with('success', ' The student has been scheduled successfully.');
     }
 
     public function scheduleEdit($student_id, $id)
     {
         $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->get();
+
         return view('webapp.student.scheduleEdit')->with('lessons', $lessons);
     }
 
@@ -146,6 +191,7 @@ class StudentController extends Controller
         $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
         $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
         $lesson->update();
+
         return redirect()->back()->with('success', 'You successfully updated the student\'s lesson.');
     }
 
@@ -153,6 +199,7 @@ class StudentController extends Controller
     {
         $lesson = Lesson::find($id);
         $lesson->delete();
+
         return redirect(route('student.index'))->with('success', 'The scheduled lesson has been removed.');
 
     }
