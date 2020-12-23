@@ -243,6 +243,7 @@
 
                             <button type="submit" class="btn btn-primary">Save Settings</button>
                             <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+                            <a href="{{ route('teacher.profile') }}" class="btn btn-outline-secondary">Profile</a>
 
                     @endforeach
                     <input id="teacher_id" type="hidden" class="form-control" name="teacher_id"
