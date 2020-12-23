@@ -16,7 +16,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                @if($teacher->logo == null)
+                                @if($teacher->logo != null)
                                     <img src="/storage/teacher/{{ $teacher->logo }}" alt="{{ $teacher->logo }}"
                                          class="rounded" width="150">
                                 @else
