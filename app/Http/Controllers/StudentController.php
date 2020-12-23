@@ -163,7 +163,7 @@ class StudentController extends Controller
         $lesson->title = $request->get('title');
         $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
         $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
-        $lesson->student->notify(new LessonConfirmation($lesson->student->first_name, $lesson->start_date));
+        // $lesson->student->notify(new LessonConfirmation($lesson->student->first_name, $lesson->start_date));
         $lesson->save();
 
         return redirect()->back()->with('success', ' The student has been scheduled successfully.');
