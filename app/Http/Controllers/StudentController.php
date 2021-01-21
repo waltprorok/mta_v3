@@ -8,6 +8,7 @@ use App\Http\Requests\StoreStudent;
 use App\Notifications\LessonConfirmation;
 use App\Teacher;
 use Auth;
+use Carbon\Carbon;
 use File;
 use Storage;
 use App\Student;
@@ -157,14 +158,19 @@ class StudentController extends Controller
 
     public function scheduleSave(StoreScheduleAppt $request)
     {
-        $lesson = new Lesson();
-        $lesson->student_id = $request->get('student_id');
-        $lesson->teacher_id = Auth::id();
-        $lesson->title = $request->get('title');
-        $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
-        $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
-        // $lesson->student->notify(new LessonConfirmation($lesson->student->first_name, $lesson->start_date));
-        $lesson->save();
+        $begin = Carbon::parse($request->get('start_date'));
+
+        $end = Carbon::parse($request->get('start_date'))->addDays(365);
+
+        for ($i = $begin; $i <= $end; $i->modify('+7 day')) {
+            $lessons = new Lesson();
+            $lessons->student_id = $request->get('student_id');
+            $lessons->teacher_id = Auth::id();
+            $lessons->title = $request->get('title');
+            $lessons->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
+            $lessons->end_date = $i->format('Y-m-d') . ' ' . $request->get('end_time');
+            $lessons->save();
+        }
 
         return redirect()->back()->with('success', ' The student has been scheduled successfully.');
     }
