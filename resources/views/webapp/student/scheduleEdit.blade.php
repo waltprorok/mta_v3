@@ -92,25 +92,6 @@
                                         @endif
                                     </div>
                                 </div>
-
-                                <div class="col-sm-3">
-                                    <div class="form-group{{ $errors->has('recurrence') ? ' has-error' : '' }}">
-                                        <label for="end_time" class="control-label">Recurrence</label>
-                                        <select class="form-control" id="recurrence" name="recurrence">
-                                            <option value="{{ old('recurrence') }}">{{ old('recurrence') }}</option>
-                                            <option value="1">One Time</option>
-                                            <option value="21">One Month</option>
-                                            <option value="365">One Year</option>
-                                        </select>
-
-                                        @if ($errors->has('recurrence'))
-                                            <span class="help-block">
-                                            <strong>{{ $errors->first('recurrence') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-
                             </div>
 
                             <input id="id" type="hidden" class="form-control" name="id"

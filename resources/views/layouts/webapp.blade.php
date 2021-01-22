@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- CSRF Token -->
@@ -53,17 +54,31 @@
 
         <ul class="navbar-nav ml-auto">
             <li class="nav-item d-md-down-none">
-                <a href="#">
+                <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false">
                     <i class="fa fa-bell"></i>
                     <span class="badge badge-pill badge-danger">5</span>
+                    <span class="small ml-1 d-md-down-none"></span>
                 </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="{{ route('account.profile') }}" class="dropdown-item">
+                        <i class="fa fa-sticky-note"></i>Notifications
+                    </a>
+                </div>
             </li>
 
-            <li class="nav-item d-md-down-none">
-                <a href="#">
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false">
                     <i class="fa fa-envelope-open"></i>
                     <span class="badge badge-pill badge-danger">5</span>
+                    <span class="small ml-1 d-md-down-none"></span>
                 </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="{{ route('account.profile') }}" class="dropdown-item">
+                        <i class="fa fa-envelope"></i>You Got Mail
+                    </a>
+                </div>
             </li>
 
             <li class="nav-item dropdown">
