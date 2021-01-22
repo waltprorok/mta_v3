@@ -182,7 +182,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <p>Are you sure you want to delete all scheduled lessons?</p>
+                    <p>Are you sure you want to delete all the remaining scheduled lessons?</p>
                 </div>
 
                 <div class="modal-footer">
