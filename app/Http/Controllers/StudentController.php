@@ -10,6 +10,7 @@ use App\Teacher;
 use Auth;
 use Carbon\Carbon;
 use File;
+use Illuminate\Support\Facades\DB;
 use Storage;
 use App\Student;
 use App\Lesson;
@@ -164,13 +165,13 @@ class StudentController extends Controller
         $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
 
         for ($i = $begin; $i <= $end; $i->modify('+7 day')) {
-            $lessons = new Lesson();
-            $lessons->student_id = $request->get('student_id');
-            $lessons->teacher_id = Auth::id();
-            $lessons->title = $request->get('title');
-            $lessons->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
-            $lessons->end_date = $i->format('Y-m-d') . ' ' . $request->get('end_time');
-            $lessons->save();
+            $lesson = new Lesson();
+            $lesson->student_id = $request->get('student_id');
+            $lesson->teacher_id = Auth::id();
+            $lesson->title = $request->get('title');
+            $lesson->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
+            $lesson->end_date = $i->format('Y-m-d') . ' ' . $request->get('end_time');
+            $lesson->save();
         }
 
         return redirect()->back()->with('success', ' The student has been scheduled successfully.');
@@ -190,7 +191,7 @@ class StudentController extends Controller
             'start_date' => 'required|string'
         ]);
 
-        $lesson = Lesson::where('student_id', $request->get('student_id'))->where('id', $request->get('id'))->first();
+        $lesson = Lesson::where('student_id', $request->get('student_id'))->where('teacher_id', Auth::id())->where('id', $request->get('id'))->first();
         $lesson->id = $request->get('id');
         $lesson->student_id = $request->get('student_id');
         $lesson->teacher_id = Auth::id();
@@ -208,7 +209,14 @@ class StudentController extends Controller
         $lesson->delete();
 
         return redirect(route('student.index'))->with('success', 'The scheduled lesson has been removed.');
+    }
 
+    public function destroyAll($id)
+    {
+        $studentId = Lesson::find($id);
+        Lesson::where('student_id', $studentId->student_id)->where('teacher_id', Auth::id())->whereDate('start_date', '>=', date('Y-m-d'))->delete();
+
+        return redirect(route('student.index'))->with('success', 'The scheduled lesson has been removed.');
     }
 
 }

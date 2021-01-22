@@ -70,6 +70,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/schedule/update', 'StudentController@scheduleUpdate')->name('student.schedule.update');
         Route::get('/schedule/{student_id}/edit/{id}', 'StudentController@scheduleEdit')->name('student.schedule.edit');
         Route::delete('/schedule/{id}', 'StudentController@destroy')->name('student.schedule.delete');
+        Route::delete('/schedule/delete/{id}', 'StudentController@destroyAll')->name('student.schedule.deleteAll');
     });
 
     Route::prefix('calendar')->group(function () {
