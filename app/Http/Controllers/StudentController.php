@@ -159,8 +159,9 @@ class StudentController extends Controller
     public function scheduleSave(StoreScheduleAppt $request)
     {
         $begin = Carbon::parse($request->get('start_date'));
+        $recurrence = (int)$request->get('recurrence');
 
-        $end = Carbon::parse($request->get('start_date'))->addDays(365);
+        $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
 
         for ($i = $begin; $i <= $end; $i->modify('+7 day')) {
             $lessons = new Lesson();
