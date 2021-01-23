@@ -113,7 +113,7 @@ class StudentController extends Controller
 
     public function lessons()
     {
-        $lessons = Lesson::where('teacher_id', Auth::id())->paginate($this->lessonsLimit);;
+        $lessons = Lesson::where('teacher_id', Auth::id())->whereDate('start_date', '>=', date('Y-m-d'))->paginate($this->lessonsLimit);;
         return view('webapp.student.lessons')->with('lessons', $lessons);
     }
 
