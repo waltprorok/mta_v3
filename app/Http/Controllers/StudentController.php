@@ -24,6 +24,7 @@ class StudentController extends Controller
     protected $waitlistLimit = 10;
     protected $leadLimit = 10;
     protected $inactiveLimit = 10;
+    protected $lessonsLimit = 30;
 
     public function index()
     {
@@ -108,6 +109,12 @@ class StudentController extends Controller
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         return view('webapp.student.edit')->with('students', $students);
+    }
+
+    public function lessons()
+    {
+        $lessons = Lesson::where('teacher_id', Auth::id())->paginate($this->lessonsLimit);;
+        return view('webapp.student.lessons')->with('lessons', $lessons);
     }
 
     public function update(Request $request)

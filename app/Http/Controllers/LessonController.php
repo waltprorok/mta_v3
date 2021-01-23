@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Student;
-use App\Teacher;
 use Auth;
-use Illuminate\Http\Request;
 use Calendar;
 use App\Lesson;
 
@@ -38,7 +35,7 @@ class LessonController extends Controller
                 'firstDay' => 0,
                 'editable'    => false,
                 'selectable'  => true,
-                'defaultView' => 'agendaWeek',
+                'defaultView' => 'month',
                 'minTime' => '08:00:00',
                 'maxTime' => '22:00:00'
             ]);

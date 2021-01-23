@@ -32,6 +32,12 @@
                         </li>
 
                         <li class="nav-item">
+                            <a href="{{ route('student.lessons') }}" class="nav-link">
+                                <i class="fa fa-music" aria-hidden="true"></i> Lessons
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Practice Log
                             </a>

@@ -71,6 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/schedule/{student_id}/edit/{id}', 'StudentController@scheduleEdit')->name('student.schedule.edit');
         Route::delete('/schedule/{id}', 'StudentController@destroy')->name('student.schedule.delete');
         Route::delete('/schedule/delete/{id}', 'StudentController@destroyAll')->name('student.schedule.deleteAll');
+        Route::get('/lessons', 'StudentController@lessons')->name('student.lessons');
     });
 
     Route::prefix('calendar')->group(function () {
