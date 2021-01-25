@@ -33,7 +33,7 @@
                 @else
                     @foreach($lessons as $lesson)
                         <tr>
-                            <td>{{ $lesson->id }}</td>
+                            <td><input type="checkbox" class="select-all checkbox" name="select-all" value="{{ $lesson->id }}"/></td>
                             <td>{{ $lesson->title }}</td>
                             <td>{{ $lesson->start_date }}</td>
                             <td>{{ $lesson->end_date }}</td>

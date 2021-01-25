@@ -113,7 +113,7 @@ class StudentController extends Controller
 
     public function lessons()
     {
-        $lessons = Lesson::where('teacher_id', Auth::id())->whereDate('start_date', '>=', date('Y-m-d'))->paginate($this->lessonsLimit);;
+        $lessons = Lesson::where('teacher_id', Auth::id())->whereDate('start_date', '>=', date('Y-m-d'))->paginate($this->lessonsLimit);
         return view('webapp.student.lessons')->with('lessons', $lessons);
     }
 
@@ -176,6 +176,7 @@ class StudentController extends Controller
             $lesson->student_id = $request->get('student_id');
             $lesson->teacher_id = Auth::id();
             $lesson->title = $request->get('title');
+            $lesson->color = $request->get('color');
             $lesson->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
             $lesson->end_date = $i->format('Y-m-d') . ' ' . $request->get('end_time');
             $lesson->save();
@@ -203,6 +204,7 @@ class StudentController extends Controller
         $lesson->student_id = $request->get('student_id');
         $lesson->teacher_id = Auth::id();
         $lesson->title = $request->get('title');
+        $lesson->color = $request->get('color');
         $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
         $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
         $lesson->update();

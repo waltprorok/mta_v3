@@ -23,7 +23,7 @@ class LessonController extends Controller
                     new \DateTime($value->end_date),
                     $value->id,
                     [
-                        'color' => '#0066ff',
+                        'color' => $value->color,
                         'url' => 'students/schedule/'. $value->student_id . '/edit/' . $value->id
                     ]
                 );
