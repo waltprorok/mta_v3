@@ -78,16 +78,13 @@
 
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('end_time') ? ' has-error' : '' }}">
-                                        <label for="end_time" class="control-label">End Time</label>
+                                        <label for="end_time" class="control-label">Duration</label>
                                         <select class="form-control" id="end_time" name="end_time">
                                             <option value="{{ old('end_time') }}">{{ old('end_time') }}</option>
-                                            <option value="09:00:00">9:00</option>
-                                            <option value="09:30:00">9:30</option>
-                                            <option value="10:00:00">10:00</option>
-                                            <option value="10:30:00">10:30</option>
-                                            <option value="11:00:00">11:00</option>
-                                            <option value="11:30:00">11:30</option>
-                                            <option value="12:00:00">12:00</option>
+                                            <option value="15">15 minutes</option>
+                                            <option value="30">30 minutes</option>
+                                            <option value="45">45 minutes</option>
+                                            <option value="60">60 minutes</option>
                                         </select>
 
                                         @if ($errors->has('end_time'))

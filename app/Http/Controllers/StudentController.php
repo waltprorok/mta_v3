@@ -167,6 +167,7 @@ class StudentController extends Controller
     public function scheduleSave(StoreScheduleAppt $request)
     {
         $begin = Carbon::parse($request->get('start_date'));
+        $duration = date('h:i:s', strtotime($request->get('start_time') . ' +'.$request->get('end_time'). ' minutes'));
         $recurrence = (int)$request->get('recurrence');
 
         $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
@@ -178,7 +179,7 @@ class StudentController extends Controller
             $lesson->title = $request->get('title');
             $lesson->color = $request->get('color');
             $lesson->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
-            $lesson->end_date = $i->format('Y-m-d') . ' ' . $request->get('end_time');
+            $lesson->end_date = $i->format('Y-m-d') . ' ' . $duration;
             $lesson->save();
         }
 
