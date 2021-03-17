@@ -94,6 +94,31 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group{{ $errors->has('color') ? ' has-error' : '' }}">
+                                        <label for="end_time" class="control-label">Color</label>
+                                        <select class="form-control" id="color" name="color">
+                                            <option value="{{ $lesson->color }}" style="background-color: {{ $lesson->color }}; color: white;">Current Color</option>
+                                            <option value="#5499C7" style="background-color: #5499C7; color: white;">Blue</option>
+                                            <option value="#CD6155" style="background-color: #CD6155; color: white;">Red</option>
+                                            <option value="#A569BD" style="background-color: #A569BD; color: white;">Purple</option>
+                                            <option value="#52BE80" style="background-color: #52BE80; color: white;">Green</option>
+                                            <option value="#F4D03F" style="background-color: #F4D03F; color: white;">Yellow</option>
+                                            <option value="#E59866" style="background-color: #E59866; color: white;">Orange</option>
+                                            <option value="#85929E" style="background-color: #85929E; color: white;">Grey</option>
+                                        </select>
+
+                                        @if ($errors->has('color'))
+                                            <span class="help-block">
+                                            <strong>{{ $errors->first('color') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                            </div>
+
                             <input id="id" type="hidden" class="form-control" name="id"
                                    value="{{ $lesson->id }}">
                             <input id="student_id" type="hidden" class="form-control" name="student_id"
@@ -107,8 +132,12 @@
                             </div>
 
                             <div class="pull-right">
-                                <button type="button" class="btn btn-danger pull-left" data-toggle="modal"
+                                <button type="button" class="btn btn-danger" data-toggle="modal"
                                         data-target="#myDeleteModal">Delete
+                                </button>
+
+                                <button type="button" class="btn btn-danger-outline" data-toggle="modal"
+                                        data-target="#myDeleteModalAll">Delete All
                                 </button>
                             </div>
 
@@ -141,6 +170,33 @@
                         @csrf
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
                         &nbsp;<button type="submit" class="btn btn-danger pull-right">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Modal -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="myDeleteModalAll" tabindex="-1" role="dialog" aria-labelledby="myModalLabelAll">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabelAll">Delete all the Remaining Lesson?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <p>Are you sure you want to delete all the remaining scheduled lessons?</p>
+                </div>
+
+                <div class="modal-footer">
+                    <form action="{{ route('student.schedule.deleteAll', $lesson->id) }}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                        &nbsp;<button type="submit" class="btn btn-danger pull-right">Delete All</button>
                     </form>
                 </div>
             </div>

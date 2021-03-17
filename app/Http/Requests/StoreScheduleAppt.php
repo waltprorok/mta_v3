@@ -28,7 +28,8 @@ class StoreScheduleAppt extends FormRequest
             'title' => 'required|string',
             'start_date' => 'required|string',
             'start_time' => 'required|string',
-            'end_time' => 'required|string'
+            'end_time' => 'required|string',
+            'recurrence' => 'required|string'
         ];
     }
 }

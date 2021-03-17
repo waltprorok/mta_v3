@@ -145,13 +145,14 @@ class TeacherController extends Controller
     public function hoursSave(Request $request)
     {
         $input = $request->all();
-        foreach ($input['rows'] as $index => $value) {
 
+        foreach ($input['rows'] as $index => $value) {
             if (!isset($value['active'])) {
                 $active = 0;
             } else {
                 $active = $value['active'];
             }
+
             $items = new BusinessHours([
                 'teacher_id' => Auth::id(),
                 'day' => $value['day'],
@@ -159,6 +160,7 @@ class TeacherController extends Controller
                 'open_time' => $value['open_time'],
                 'close_time' => $value['close_time'],
             ]);
+
             $items->save();
         }
 

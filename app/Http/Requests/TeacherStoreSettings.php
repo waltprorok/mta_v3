@@ -35,7 +35,7 @@ class TeacherStoreSettings extends FormRequest
             'zip' => 'required|integer',
             'email' => 'required|string|email|max:255',
             'phone' => 'required|string|max:50',
-            'logo' => 'image|max:3200',
+            'logo' => 'mimes:jpeg,jpg,png|max:3400'
         ];
     }
 }
