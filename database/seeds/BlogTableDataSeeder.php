@@ -58,7 +58,7 @@ Have you every used excel spreadsheets, a notebook or just keep all your student
 With MusicTeachersAid we aid in all of those areas. Once the initial students and basic set up is complete MTA goes to work with text/email reminders, payment process, automatic payments each month, and reporting.
 
 We are currently building out the product and will be available in the near future.',
-                'image' => 'MTA_20200221_120252.jpeg',
+                'image' => 'MTA_20210317_110314.jpeg',
                 'released_on' => '2020-03-01 09:00:00',
                 'created_at' => '2020-03-01 09:00:00',
                 'updated_at' => '2020-03-01 09:00:00',
