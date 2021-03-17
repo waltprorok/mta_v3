@@ -133,7 +133,7 @@ class BlogController extends Controller
             'title' => 'required|string|max:100',
             'slug' => 'required|string|max:100',
             'body' => 'required',
-            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+//            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'released_on' => 'required',
         ]);
 
