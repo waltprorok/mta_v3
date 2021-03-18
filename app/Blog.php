@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use GrahamCampbell\Markdown\Facades\Markdown;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Blog extends Model
@@ -15,12 +16,14 @@ class Blog extends Model
 
     public $value;
 
+    use SoftDeletes;
+
     public function author()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function getImageUrlAttribute($value)
+    public function getImageUrlAttribute($value): string
     {
         $imageUrl = "";
 
@@ -33,7 +36,7 @@ class Blog extends Model
         return $imageUrl;
     }
 
-    public function getDateForHumanAttribute($value)
+    public function getDateForHumanAttribute($value): string
     {
         return is_null($this->released_on) ? '' : $this->released_on->diffForHumans();
     }
