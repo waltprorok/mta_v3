@@ -27,8 +27,10 @@
                         </div>
                     @endif
                     <div class="blog-content">
+                        <br />
                         <h4>{{ $blog->title }}</h4>
                         <p>{!! $blog->body_html !!}</p>
+                        <br />
                     </div>
                 </div>
             </main>
