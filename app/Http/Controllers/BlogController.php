@@ -15,7 +15,7 @@ use Illuminate\View\View;
 
 class BlogController extends Controller
 {
-    protected $blogLimit = 3;
+    protected $blogLimit = 6;
 
     /**
      * Display a listing of the resource.
@@ -131,7 +131,7 @@ class BlogController extends Controller
             'title' => 'required|string|max:100',
             'slug' => 'required|string|max:100',
             'body' => 'required',
-            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+//            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'released_on' => 'required',
         ]);
 
