@@ -69,7 +69,7 @@ class BlogController extends Controller
             'title' => 'required|string|max:100',
             'slug' => 'required|string|max:100',
             'body' => 'required',
-            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'image' => 'mimes:jpg,png,jpeg,gif,svg|max:2048',
             'released_on' => 'required',
         ]);
 
@@ -115,6 +115,7 @@ class BlogController extends Controller
     public function edit($id)
     {
         $update = Blog::findOrFail($id);
+
         return view('webapp.blog.edit')->with('update', $update);
     }
 
@@ -131,7 +132,7 @@ class BlogController extends Controller
             'title' => 'required|string|max:100',
             'slug' => 'required|string|max:100',
             'body' => 'required',
-//            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'image' => 'mimes:jpg,png,jpeg,gif,svg|max:2048',
             'released_on' => 'required',
         ]);
 
