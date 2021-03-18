@@ -23,6 +23,7 @@ class CreateBlogsTable extends Migration
             $table->string('image')->nullable();
             $table->datetime('released_on');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
