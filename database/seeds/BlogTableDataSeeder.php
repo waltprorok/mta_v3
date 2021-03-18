@@ -20,11 +20,13 @@ class BlogTableDataSeeder extends Seeder
                 'slug' => 'mta-loves-laravel',
                 'body' => 'MTA love the magic that Laravel provides right out of the box. Modern toolkit. Pinch of magic. 
                 
-An amazing ORM, painless routing, powerful queue library, and simple authentication give you the tools you need for modern, maintainable PHP. We sweat the small stuff to help you deliver amazing applications.',
+An amazing ORM, painless routing, powerful queue library, and simple authentication give you the tools you need for modern, maintainable PHP. We sweat the small stuff to help you deliver amazing applications.
+
+For the security and basic peace of mind we went with an Amazing Framework that keeps getting better with every release.',
                 'image' => 'MTA_20200221_120201.jpg',
-                'released_on' => '2020-01-01 09:00:00',
-                'created_at' => '2020-01-01 09:00:00',
-                'updated_at' => '2020-01-01 09:00:00',
+                'released_on' => '2020-12-02 09:00:00',
+                'created_at' => '2020-12-02 09:00:00',
+                'updated_at' => '2020-12-02 09:00:00',
             ],
             [
                 'id' => '2',
@@ -33,11 +35,13 @@ An amazing ORM, painless routing, powerful queue library, and simple authenticat
                 'slug' => 'mta-coding-process',
                 'body' => 'MTA takes great pride the code that runs the web application. Each feature is thought out and tested before going to our experienced developer. 
                 
-Once the developer has coded and tested the new feature we then put it in the had of our testing team. There the team goes over how the new feature works before we release it.',
+Once the developer has coded and tested the new feature we then put it in the had of our testing team. There the team goes over how the new feature works before we release it.
+
+We are always open to new ideas but put a lot of time and effort into refining are special sauce.  Making the experience as great as it can be for you and your users.',
                 'image' => 'MTA_20200221_120217.jpeg',
-                'released_on' => '2020-02-03 09:00:00',
-                'created_at' => '2020-02-01 09:00:00',
-                'updated_at' => '2020-02-01 09:00:00',
+                'released_on' => '2021-01-06 09:00:00',
+                'created_at' => '2021-01-06 09:00:00',
+                'updated_at' => '2021-01-06 09:00:00',
             ],
 
             [
@@ -59,20 +63,31 @@ With MusicTeachersAid we aid in all of those areas. Once the initial students an
 
 We are currently building out the product and will be available in the near future.',
                 'image' => 'MTA_20210317_110314.jpeg',
-                'released_on' => '2020-03-01 09:00:00',
-                'created_at' => '2020-03-01 09:00:00',
-                'updated_at' => '2020-03-01 09:00:00',
+                'released_on' => '2021-02-03 09:00:00',
+                'created_at' => '2021-02-03 09:00:00',
+                'updated_at' => '2021-02-03 09:00:00',
             ],
             [
                 'id' => '4',
                 'author_id' => '1',
                 'title' => 'Scheduling Students',
                 'slug' => 'scheduling-students',
-                'body' => 'Having a great calendar for scheduling your students is very important. Most students are repeatedly going to keep coming back each week. We want to make this experience the best it can be.',
+                'body' => 'Having a great calendar for scheduling your students is very important. Most students are repeatedly going to keep coming back each week. We want to make this experience the best it can be.
+                
+Scheduling a one time lesson or a whole year\'s worth is made easy.  Whether the lesson is 15 minutes or an hour we have you covered.  Color code the lesson to help certain students stand out on your calendar.
+
+    ---
+
+##### Smart Scheduling Calendar
+
+We have come up with a smart calendar that will automatically notify the next student on your make-up list that it is open to a make up lesson that is not within their normal scheduled time.  The student is then able to accept or decline.  If the student declines the next one on the list is notified until the open lesson is filled.
+
+Let the application do the boring mundane tasks that we as teachers don\'t really like to do but is part of running a successful business.  With automation we can cut out hours spent calling or emailing students trying to fit their schedule with your schedule and it all becomes a difficult puzzle.
+                ',
                 'image' => 'MTA_20200527_060533.jpg',
-                'released_on' => '2020-04-01 09:00:00',
-                'created_at' => '2020-04-01 09:00:00',
-                'updated_at' => '2020-04-01 09:00:00',
+                'released_on' => '2021-03-17 09:00:00',
+                'created_at' => '2021-03-17 09:00:00',
+                'updated_at' => '2021-03-17 09:00:00',
             ],
         ]);
     }

@@ -64,7 +64,7 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-                $this->validate($request, [
+        $this->validate($request, [
             'author_id' => 'required',
             'title' => 'required|string|max:100',
             'slug' => 'required|string|max:100',
@@ -72,8 +72,6 @@ class BlogController extends Controller
             'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'released_on' => 'required',
         ]);
-
-//        $blog = new Blog($request->all());
 
         $blog = new Blog();
         $blog->author_id = $request->get('author_id');
