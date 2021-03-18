@@ -76,7 +76,7 @@ We are currently building out the product and will be available in the near futu
                 
 Scheduling a one time lesson or a whole year\'s worth is made easy.  Whether the lesson is 15 minutes or an hour we have you covered.  Color code the lesson to help certain students stand out on your calendar.
 
-    ---
+---
 
 ##### Smart Scheduling Calendar
 
