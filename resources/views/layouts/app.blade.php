@@ -129,7 +129,7 @@
                 <div class="footer-widget ">
                     <div class="footer-title">Company</div>
                     <ul class="list-unstyled">
-{{--                        <li><a href="{{ route('contact') }}">Contact Us</a></li>--}}
+                        <li><a href="{{ route('contact') }}">Contact Us</a></li>
                         <li><a href="{{ route('terms') }}">Terms of Service</a></li>
                         <li><a href="{{ route('privacy') }}">Privacy Policy</a></li>
                     </ul>
@@ -140,7 +140,6 @@
                     <div class="footer-title">Quick Links</div>
                     <ul class="list-unstyled">
                         <li><a href="{{ route('blog.index') }}">Blog</a></li>
-                        <li><a href="{{ route('contact') }}">Contact us</a></li>
                         <li><a href="{{ route('faq') }}">FAQ</a></li>
                     </ul>
                 </div>

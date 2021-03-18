@@ -32,8 +32,7 @@
                                         {!! \Illuminate\Support\Str::limit($blog->body_html, 110) !!}
                                     </p>
                                     <p class="text-right">
-                                        <a href="{{ route('blog.show', $blog->slug) }}" class="btn btn-default">Read
-                                            More</a>
+                                        <a href="{{ route('blog.show', $blog->slug) }}" class="btn btn-default">Read More</a>
                                     </p>
                                 </div>
                             </div>
