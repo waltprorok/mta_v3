@@ -180,6 +180,7 @@ class StudentController extends Controller
             $lesson->color = $request->get('color');
             $lesson->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
             $lesson->end_date = $i->format('Y-m-d') . ' ' . $duration;
+            $lesson->interval = $request->get('end_time');
             $lesson->save();
         }
 
