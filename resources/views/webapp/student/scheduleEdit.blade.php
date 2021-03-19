@@ -132,7 +132,7 @@
                                 <button type="submit" name="action" value="update" class="btn btn-primary">
                                     Update
                                 </button>
-                                <button type="submit" name="action" value="updateAll" class="btn btn-primary">
+                                <button type="submit" name="action" value="updateAll" class="btn btn-warning">
                                     Update All
                                 </button>
                                 <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancel</a>
@@ -176,7 +176,7 @@
                         @method('DELETE')
                         @csrf
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-                        &nbsp;<button type="submit" class="btn btn-danger pull-right">Delete</button>
+                        &nbsp;<button type="submit" name="action" value="delete" class="btn btn-danger pull-right">Delete</button>
                     </form>
                 </div>
             </div>
@@ -203,7 +203,7 @@
                         @method('DELETE')
                         @csrf
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-                        &nbsp;<button type="submit" class="btn btn-danger pull-right">Delete All</button>
+                        &nbsp;<button type="submit" name="action" value="updateAll" class="btn btn-danger pull-right">Delete All</button>
                     </form>
                 </div>
             </div>

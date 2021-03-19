@@ -206,7 +206,7 @@ class StudentController extends Controller
         return $interval = $start_datetime->diff($end_datetime)->format('%i');
     }
 
-    public function scheduleUpdateStore(Request $request)
+    public function scheduleUpdateStore(Request $request, $id)
     {
         if ($request->input('action') == 'update') {
             $this->scheduleUpdate($request);
@@ -215,6 +215,14 @@ class StudentController extends Controller
         if ($request->input('action') == 'updateAll') {
             $this->scheduleUpdateAll($request);
             return redirect()->back()->with('success', 'You successfully updated the student\'s lessons.');
+        }
+        if ($request->input('action') == 'delete') {
+            $this->destroy($id);
+            return redirect(route('student.index'))->with('success', 'The scheduled lesson has been removed.');
+        }
+        if ($request->input('action') == 'deleteAll') {
+            $this->deleteAll($id);
+            return redirect(route('student.index'))->with('success', 'The scheduled lesson has been removed.');
         }
     }
 
