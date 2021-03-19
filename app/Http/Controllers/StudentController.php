@@ -9,6 +9,7 @@ use App\Notifications\LessonConfirmation;
 use App\Teacher;
 use Auth;
 use Carbon\Carbon;
+use DateTime;
 use File;
 use Illuminate\Support\Facades\DB;
 use Storage;
@@ -161,7 +162,7 @@ class StudentController extends Controller
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
 
-        return view('webapp.student.schedule')->with('students', $students, 'businessHours', $businessHours);
+        return view('webapp.student.schedule')->with('students', $students)->with('businessHours', $businessHours);
     }
 
     public function scheduleSave(StoreScheduleAppt $request)
@@ -194,6 +195,17 @@ class StudentController extends Controller
         return view('webapp.student.scheduleEdit')->with('lessons', $lessons);
     }
 
+    /**
+     * @param Request $request
+     * @return string
+     */
+    public function interval(Request $request)
+    {
+        $start_datetime = new Carbon($request->get('start_time'));
+        $end_datetime = new Carbon($request->get('end_time'));
+        return $interval = $start_datetime->diff($end_datetime)->format('%i');
+    }
+
     public function scheduleUpdate(Request $request)
     {
         $this->validate($request, [
@@ -209,6 +221,7 @@ class StudentController extends Controller
         $lesson->color = $request->get('color');
         $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
         $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
+        $lesson->interval = (int)$this->interval($request);
         $lesson->update();
 
         return redirect()->back()->with('success', 'You successfully updated the student\'s lesson.');

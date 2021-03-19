@@ -23,6 +23,7 @@ class CreateLessonsTable extends Migration
             $table->datetime('start_date');
             $table->datetime('end_date');
             $table->integer('interval');
+            $table->integer('complete')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -57,7 +57,7 @@
                                         <select class="form-control" id="start_time" name="start_time">
                                             <option value="{{ old('start_time') }}">{{ old('start_time') }}</option>
 {{--                                            @foreach($businessHours as $businessHour)--}}
-{{--                                            <option value="09:00:00">{{ $businessHour->open_time }}</option>--}}
+{{--                                            <option value="09:00:00">{{ Carbon\Carbon::createFromTimestamp(strtotime($businessHour->open_time))->format('h:i')  }}</option>--}}
 {{--                                            @endforeach--}}
                                             <option value="09:00:00">9:00</option>
                                             <option value="09:30:00">9:30</option>
