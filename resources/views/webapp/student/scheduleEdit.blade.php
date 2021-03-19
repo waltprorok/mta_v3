@@ -121,12 +121,19 @@
 
                             <input id="id" type="hidden" class="form-control" name="id"
                                    value="{{ $lesson->id }}">
+
                             <input id="student_id" type="hidden" class="form-control" name="student_id"
                                    value="{{ $lesson->student_id }}">
 
+                            <input id="interval" type="hidden" class="form-control" name="interval"
+                                   value="{{ $lesson->interval }}">
+
                             <div class="pull-left">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" name="action" value="update" class="btn btn-primary">
                                     Update
+                                </button>
+                                <button type="submit" name="action" value="updateAll" class="btn btn-primary">
+                                    Update All
                                 </button>
                                 <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancel</a>
                             </div>

@@ -206,6 +206,18 @@ class StudentController extends Controller
         return $interval = $start_datetime->diff($end_datetime)->format('%i');
     }
 
+    public function scheduleUpdateStore(Request $request)
+    {
+        if ($request->input('action') == 'update') {
+            $this->scheduleUpdate($request);
+            return redirect()->back()->with('success', 'You successfully updated the student\'s lesson.');
+        }
+        if ($request->input('action') == 'updateAll') {
+            $this->scheduleUpdateAll($request);
+            return redirect()->back()->with('success', 'You successfully updated the student\'s lessons.');
+        }
+    }
+
     public function scheduleUpdate(Request $request)
     {
         $this->validate($request, [
@@ -225,6 +237,33 @@ class StudentController extends Controller
         $lesson->update();
 
         return redirect()->back()->with('success', 'You successfully updated the student\'s lesson.');
+    }
+
+    public function scheduleUpdateAll(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required|string',
+            'start_date' => 'required|string'
+        ]);
+
+        $begin = Carbon::parse($request->get('start_date'));
+
+        $lessons = Lesson::all()->where('student_id', $request->get('student_id'))->where('teacher_id', Auth::id());
+
+        foreach ($lessons as $lesson) {
+            $lesson->id = $lesson->id;
+            $lesson->student_id = $request->get('student_id');
+            $lesson->teacher_id = Auth::id();
+            $lesson->title = $request->get('title');
+            $lesson->color = $request->get('color');
+            $lesson->start_date = $begin->format('Y-m-d') . ' ' . $request->get('start_time');
+            $lesson->end_date = $begin->format('Y-m-d') . ' ' . $request->get('end_time');
+            $lesson->interval = $request->get('interval');
+            $lesson->update();
+            $begin = $begin->modify('+7 day');
+        }
+
+        return redirect()->back()->with('success', 'You successfully updated the student\'s lessons.');
     }
 
     public function destroy($id)
