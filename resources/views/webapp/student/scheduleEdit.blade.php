@@ -203,7 +203,7 @@
                         @method('DELETE')
                         @csrf
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-                        &nbsp;<button type="submit" name="action" value="updateAll" class="btn btn-danger pull-right">Delete All</button>
+                        &nbsp;<button type="submit" name="action" value="deleteAll" class="btn btn-danger pull-right">Delete All</button>
                     </form>
                 </div>
             </div>

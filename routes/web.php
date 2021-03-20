@@ -69,8 +69,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/schedule/add', 'StudentController@scheduleSave')->name('student.schedule.save');
         Route::put('/schedule/update', 'StudentController@scheduleUpdateStore')->name('student.schedule.update');
         Route::get('/schedule/{student_id}/edit/{id}', 'StudentController@scheduleEdit')->name('student.schedule.edit');
-        Route::delete('/schedule/{id}', 'StudentController@destroy')->name('student.schedule.delete');
-        Route::delete('/schedule/delete/{id}', 'StudentController@destroyAll')->name('student.schedule.deleteAll');
+        Route::delete('/schedule/{id}', 'StudentController@scheduledLessonDelete')->name('student.schedule.delete');
+        Route::delete('/schedule/delete/{id}', 'StudentController@scheduledLessonDelete')->name('student.schedule.deleteAll');
         Route::get('/lessons', 'StudentController@lessons')->name('student.lessons');
     });
 

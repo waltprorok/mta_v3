@@ -206,7 +206,7 @@ class StudentController extends Controller
         return $interval = $start_datetime->diff($end_datetime)->format('%i');
     }
 
-    public function scheduleUpdateStore(Request $request, $id)
+    public function scheduleUpdateStore(Request $request)
     {
         if ($request->input('action') == 'update') {
             $this->scheduleUpdate($request);
@@ -216,13 +216,17 @@ class StudentController extends Controller
             $this->scheduleUpdateAll($request);
             return redirect()->back()->with('success', 'You successfully updated the student\'s lessons.');
         }
+    }
+
+    public function scheduledLessonDelete(Request $request, $id)
+    {
         if ($request->input('action') == 'delete') {
             $this->destroy($id);
-            return redirect(route('student.index'))->with('success', 'The scheduled lesson has been removed.');
+            return redirect(route('student.index'))->with('success', 'The scheduled lesson has been deleted.');
         }
         if ($request->input('action') == 'deleteAll') {
-            $this->deleteAll($id);
-            return redirect(route('student.index'))->with('success', 'The scheduled lesson has been removed.');
+            $this->destroyAll($id);
+            return redirect(route('student.index'))->with('success', 'The scheduled lessons have been deleted.');
         }
     }
 
@@ -243,8 +247,6 @@ class StudentController extends Controller
         $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
         $lesson->interval = (int)$this->interval($request);
         $lesson->update();
-
-        return redirect()->back()->with('success', 'You successfully updated the student\'s lesson.');
     }
 
     public function scheduleUpdateAll(Request $request)
@@ -270,24 +272,18 @@ class StudentController extends Controller
             $lesson->update();
             $begin = $begin->modify('+7 day');
         }
-
-        return redirect()->back()->with('success', 'You successfully updated the student\'s lessons.');
     }
 
     public function destroy($id)
     {
         $lesson = Lesson::find($id);
         $lesson->delete();
-
-        return redirect(route('student.index'))->with('success', 'The scheduled lesson has been removed.');
     }
 
     public function destroyAll($id)
     {
         $studentId = Lesson::find($id);
         Lesson::where('student_id', $studentId->student_id)->where('teacher_id', Auth::id())->whereDate('start_date', '>=', date('Y-m-d'))->delete();
-
-        return redirect(route('student.index'))->with('success', 'The scheduled lesson has been removed.');
     }
 
 }
