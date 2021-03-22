@@ -162,15 +162,6 @@ class StudentController extends Controller
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
 
-//        $allTimes = [];
-//        foreach ($businessHours as $businessHour) {
-////            array_push($allTimes, strtotime($businessHours)->toTimeString()); //add the 00:00 time before looping
-//            for ($i = $businessHour->open_time; $i <= $businessHour->close_time; $i++) { //95 loops will give you everything from 00:00 to 23:45
-//                Carbon::createFromTimestamp(strtotime($businessHour->open_time))->format('h:i')->modify('+15 minutes'); // add 0, 15, 30, 45, 60, etc...
-//                array_push($allTimes, $businessHour->toTimeString());
-//            }
-//        }
-//        dd($allTimes);
         return view('webapp.student.schedule')->with('students', $students)->with('businessHours', $businessHours);
     }
 
@@ -179,7 +170,6 @@ class StudentController extends Controller
         $begin = Carbon::parse($request->get('start_date'));
         $duration = date('h:i:s', strtotime($request->get('start_time') . ' +'.$request->get('end_time'). ' minutes'));
         $recurrence = (int)$request->get('recurrence');
-
         $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
 
         for ($i = $begin; $i <= $end; $i->modify('+7 day')) {

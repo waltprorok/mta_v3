@@ -56,20 +56,6 @@
                                         <label for="start_time" class="control-label">Start Time</label>
                                         <select class="form-control" id="start_time" name="start_time">
                                             <option value="{{ old('start_time') }}">{{ old('start_time') }}</option>
-{{--                                            @foreach($businessHours as $businessHour)--}}
-{{--                                                @if($businessHour->active == true)--}}
-{{--                                                    @for($i = (int)$businessHour->open_time;  $i <= (int)$businessHour->close_time; $i = $i + 15*60)--}}
-{{--                                                        <option value="09:00:00">{{ Carbon\Carbon::createFromTimestamp(strtotime($i))->format('h:i') }}</option>--}}
-{{--                                                    @endfor--}}
-{{--                                                @endif--}}
-{{--                                            @endforeach--}}
-                                            <option value="09:00:00">9:00</option>
-                                            <option value="09:30:00">9:30</option>
-                                            <option value="10:00:00">10:00</option>
-                                            <option value="10:30:00">10:30</option>
-                                            <option value="11:00:00">11:00</option>
-                                            <option value="11:30:00">11:30</option>
-                                            <option value="12:00:00">12:00</option>
                                         </select>
 
                                         @if ($errors->has('start_time'))
