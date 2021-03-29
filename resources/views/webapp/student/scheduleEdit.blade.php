@@ -121,12 +121,19 @@
 
                             <input id="id" type="hidden" class="form-control" name="id"
                                    value="{{ $lesson->id }}">
+
                             <input id="student_id" type="hidden" class="form-control" name="student_id"
                                    value="{{ $lesson->student_id }}">
 
+                            <input id="interval" type="hidden" class="form-control" name="interval"
+                                   value="{{ $lesson->interval }}">
+
                             <div class="pull-left">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" name="action" value="update" class="btn btn-primary">
                                     Update
+                                </button>
+                                <button type="submit" name="action" value="updateAll" class="btn btn-warning">
+                                    Update All
                                 </button>
                                 <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancel</a>
                             </div>
@@ -169,7 +176,7 @@
                         @method('DELETE')
                         @csrf
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-                        &nbsp;<button type="submit" class="btn btn-danger pull-right">Delete</button>
+                        &nbsp;<button type="submit" name="action" value="delete" class="btn btn-danger pull-right">Delete</button>
                     </form>
                 </div>
             </div>
@@ -182,7 +189,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabelAll">Delete all the Remaining Lesson?</h4>
+                    <h4 class="modal-title" id="myModalLabelAll">Delete all the Remaining Lessons?</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
                 </div>
@@ -196,11 +203,12 @@
                         @method('DELETE')
                         @csrf
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-                        &nbsp;<button type="submit" class="btn btn-danger pull-right">Delete All</button>
+                        &nbsp;<button type="submit" name="action" value="deleteAll" class="btn btn-danger pull-right">Delete All</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
     <!-- End of Modal -->
+
 @endsection

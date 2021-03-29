@@ -29,6 +29,7 @@ class CreateTeachersTable extends Migration
             $table->string('phone')->nullable();
             $table->string('logo')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

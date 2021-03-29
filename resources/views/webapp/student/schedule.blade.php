@@ -7,7 +7,7 @@
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('student.edit', $student->id) }}">Edit</a></li>
+{{--            <li class="breadcrumb-item"><a href="{{ route('student.edit', $student->id) }}">Edit</a></li>--}}
             <li class="breadcrumb-item active"><a href="{{ route('student.schedule', $student->id) }}">Schedule</a></li>
         </ul>
         <button type="button" class="btn btn-primary float-right" data-toggle="modal"
@@ -56,16 +56,9 @@
                                         <label for="start_time" class="control-label">Start Time</label>
                                         <select class="form-control" id="start_time" name="start_time">
                                             <option value="{{ old('start_time') }}">{{ old('start_time') }}</option>
-{{--                                            @foreach($businessHours as $businessHour)--}}
-{{--                                            <option value="09:00:00">{{ $businessHour->open_time }}</option>--}}
-{{--                                            @endforeach--}}
-                                            <option value="09:00:00">9:00</option>
-                                            <option value="09:30:00">9:30</option>
-                                            <option value="10:00:00">10:00</option>
-                                            <option value="10:30:00">10:30</option>
-                                            <option value="11:00:00">11:00</option>
-                                            <option value="11:30:00">11:30</option>
-                                            <option value="12:00:00">12:00</option>
+                                            @foreach($allTimes as $allTime)
+                                                <option value="{{ Carbon\Carbon::parse($allTime)->format('h:i') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
+                                            @endforeach
                                         </select>
 
                                         @if ($errors->has('start_time'))

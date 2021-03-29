@@ -13,6 +13,7 @@
         </ul>
 
         <h2>Calendar</h2>
+
         <div class="card">
             <div class="card-body">
 
@@ -21,6 +22,7 @@
                 {!! $calendar->script() !!}
 
             </div>
+        </div>
     </div>
 
 @endsection

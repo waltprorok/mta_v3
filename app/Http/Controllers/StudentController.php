@@ -9,6 +9,7 @@ use App\Notifications\LessonConfirmation;
 use App\Teacher;
 use Auth;
 use Carbon\Carbon;
+use DateTime;
 use File;
 use Illuminate\Support\Facades\DB;
 use Storage;
@@ -161,7 +162,23 @@ class StudentController extends Controller
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
 
-        return view('webapp.student.schedule')->with('students', $students, 'businessHours', $businessHours);
+
+        foreach ($businessHours as $businessHour) {
+            if ($businessHour->active == 1) {
+
+            }
+        }
+
+        $today = Carbon::parse('today 8am'); // 2017-04-01 08:00
+        $allTimes = [];
+        array_push($allTimes, $today->toTimeString()); //add the 00:00 time before looping
+
+        for ($i = 0; $i <= 55; $i ++){ //95 loops will give you everything from 00:00 to 23:45
+            $today->addMinutes(15); // add 0, 15, 30, 45, 60, etc...
+            array_push($allTimes, $today->toTimeString()); // inserts the time into the array like 00:00:00, 00:15:00, 00:30:00, etc.
+        }
+
+        return view('webapp.student.schedule')->with('students', $students)->with('businessHours', $businessHours)->with('allTimes', $allTimes);
     }
 
     public function scheduleSave(StoreScheduleAppt $request)
@@ -169,7 +186,6 @@ class StudentController extends Controller
         $begin = Carbon::parse($request->get('start_date'));
         $duration = date('h:i:s', strtotime($request->get('start_time') . ' +'.$request->get('end_time'). ' minutes'));
         $recurrence = (int)$request->get('recurrence');
-
         $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
 
         for ($i = $begin; $i <= $end; $i->modify('+7 day')) {
@@ -180,6 +196,7 @@ class StudentController extends Controller
             $lesson->color = $request->get('color');
             $lesson->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
             $lesson->end_date = $i->format('Y-m-d') . ' ' . $duration;
+            $lesson->interval = $request->get('end_time');
             $lesson->save();
         }
 
@@ -191,6 +208,41 @@ class StudentController extends Controller
         $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->get();
 
         return view('webapp.student.scheduleEdit')->with('lessons', $lessons);
+    }
+
+    /**
+     * @param Request $request
+     * @return string
+     */
+    public function interval(Request $request)
+    {
+        $start_datetime = new Carbon($request->get('start_time'));
+        $end_datetime = new Carbon($request->get('end_time'));
+        return $interval = $start_datetime->diff($end_datetime)->format('%i');
+    }
+
+    public function scheduleUpdateStore(Request $request)
+    {
+        if ($request->input('action') == 'update') {
+            $this->scheduleUpdate($request);
+            return redirect()->back()->with('success', 'You successfully updated the student\'s lesson.');
+        }
+        if ($request->input('action') == 'updateAll') {
+            $this->scheduleUpdateAll($request);
+            return redirect()->back()->with('success', 'You successfully updated the student\'s lessons.');
+        }
+    }
+
+    public function scheduledLessonDelete(Request $request, $id)
+    {
+        if ($request->input('action') == 'delete') {
+            $this->destroy($id);
+            return redirect(route('student.index'))->with('success', 'The scheduled lesson has been deleted.');
+        }
+        if ($request->input('action') == 'deleteAll') {
+            $this->destroyAll($id);
+            return redirect(route('student.index'))->with('success', 'The scheduled lessons have been deleted.');
+        }
     }
 
     public function scheduleUpdate(Request $request)
@@ -208,25 +260,45 @@ class StudentController extends Controller
         $lesson->color = $request->get('color');
         $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
         $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
+        $lesson->interval = (int)$this->interval($request);
         $lesson->update();
+    }
 
-        return redirect()->back()->with('success', 'You successfully updated the student\'s lesson.');
+    public function scheduleUpdateAll(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required|string',
+            'start_date' => 'required|string'
+        ]);
+
+        $begin = Carbon::parse($request->get('start_date'));
+
+        $lessons = Lesson::all()->where('student_id', $request->get('student_id'))->where('teacher_id', Auth::id());
+
+        foreach ($lessons as $lesson) {
+            $lesson->id = $lesson->id;
+            $lesson->student_id = $request->get('student_id');
+            $lesson->teacher_id = Auth::id();
+            $lesson->title = $request->get('title');
+            $lesson->color = $request->get('color');
+            $lesson->start_date = $begin->format('Y-m-d') . ' ' . $request->get('start_time');
+            $lesson->end_date = $begin->format('Y-m-d') . ' ' . $request->get('end_time');
+            $lesson->interval = $request->get('interval');
+            $lesson->update();
+            $begin = $begin->modify('+7 day');
+        }
     }
 
     public function destroy($id)
     {
         $lesson = Lesson::find($id);
         $lesson->delete();
-
-        return redirect(route('student.index'))->with('success', 'The scheduled lesson has been removed.');
     }
 
     public function destroyAll($id)
     {
         $studentId = Lesson::find($id);
         Lesson::where('student_id', $studentId->student_id)->where('teacher_id', Auth::id())->whereDate('start_date', '>=', date('Y-m-d'))->delete();
-
-        return redirect(route('student.index'))->with('success', 'The scheduled lesson has been removed.');
     }
 
 }
