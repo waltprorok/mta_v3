@@ -32,12 +32,12 @@ class LessonController extends Controller
 
         $calendar = Calendar::addEvents($lessons)
             ->setOptions([
-                'firstDay' => 0,
+                'firstDay'    => 1,
                 'editable'    => false,
                 'selectable'  => true,
                 'defaultView' => 'month',
-                'minTime' => '08:00:00',
-                'maxTime' => '22:00:00'
+                'minTime'     => '08:00:00',
+                'maxTime'     => '22:00:00',
             ]);
 
         return view('webapp.calendar.index', compact('calendar'));

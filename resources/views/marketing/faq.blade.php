@@ -99,12 +99,11 @@
                                     student. We want to help take your level of professionalism up a notch.
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+    </div>
 
 @endsection
