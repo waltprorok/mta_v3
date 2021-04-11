@@ -169,11 +169,11 @@ class StudentController extends Controller
             }
         }
 
-        $today = Carbon::parse('today 8am'); // 2017-04-01 08:00
+        $today = Carbon::parse('today 8am'); // 2021-04-01 08:00
         $allTimes = [];
-        array_push($allTimes, $today->toTimeString()); //add the 00:00 time before looping
+        array_push($allTimes, $today->toTimeString()); // add the 00:00 time before looping
 
-        for ($i = 0; $i <= 55; $i ++){ //95 loops will give you everything from 00:00 to 23:45
+        for ($i = 0; $i <= 55; $i ++){ // 55 loops will give you everything from 00:00 to 23:45
             $today->addMinutes(15); // add 0, 15, 30, 45, 60, etc...
             array_push($allTimes, $today->toTimeString()); // inserts the time into the array like 00:00:00, 00:15:00, 00:30:00, etc.
         }
