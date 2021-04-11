@@ -161,21 +161,49 @@ class StudentController extends Controller
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
+        $day = date('l');
+        $allTimes = [];
 
-
-        foreach ($businessHours as $businessHour) {
-            if ($businessHour->active == 1) {
-
-            }
+        switch ($day) {
+            case "Monday":
+                $today = 0;
+                break;
+            case "Tuesday":
+                $today = 1;
+                break;
+            case "Wednesday":
+                $today = 2;
+                break;
+            case "Thursday":
+                $today = 3;
+                break;
+            case "Friday":
+                $today = 4;
+                break;
+            case "Saturday":
+                $today = 5;
+                break;
+            case "Sunday":
+                $today = 6;
+                break;
         }
 
-        $today = Carbon::parse('today 8am'); // 2021-04-01 08:00
-        $allTimes = [];
-        array_push($allTimes, $today->toTimeString()); // add the 00:00 time before looping
+        $amount = -30;
 
-        for ($i = 0; $i <= 55; $i ++){ // 55 loops will give you everything from 00:00 to 23:45
-            $today->addMinutes(15); // add 0, 15, 30, 45, 60, etc...
-            array_push($allTimes, $today->toTimeString()); // inserts the time into the array like 00:00:00, 00:15:00, 00:30:00, etc.
+        foreach ($businessHours as $businessHour) {
+            if ($businessHour->open_time <= $businessHour->close_time && $today == $businessHour->day) {
+                $diff = Carbon::parse($businessHour->open_time)->diff(Carbon::parse($businessHour->close_time));
+                $amount = $amount + ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
+            }
+            if ($businessHour->active == 1 && $today == $businessHour->day) {
+                $openingTime = Carbon::parse($businessHour->open_time);
+                array_push($allTimes, $openingTime->toTimeString());
+
+                for ($i = 0; $i <= ($amount / 15); $i++) {
+                    $thisOpeningTime = $openingTime->addMinutes(15);
+                    array_push($allTimes, $thisOpeningTime->toTimeString());
+                }
+            }
         }
 
         return view('webapp.student.schedule')->with('students', $students)->with('businessHours', $businessHours)->with('allTimes', $allTimes);
