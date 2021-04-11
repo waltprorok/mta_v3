@@ -2,6 +2,7 @@
 @section('title', 'Schedule Student')
 @section('content')
 
+
     <div class="col-12">
         @foreach ($students as $student)
         <ul class="breadcrumb">

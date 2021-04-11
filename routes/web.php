@@ -72,6 +72,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('/schedule/{id}', 'StudentController@scheduledLessonDelete')->name('student.schedule.delete');
         Route::delete('/schedule/delete/{id}', 'StudentController@scheduledLessonDelete')->name('student.schedule.deleteAll');
         Route::get('/lessons', 'StudentController@lessons')->name('student.lessons');
+        Route::post('/process_date', 'StudentController@ajaxTime');
     });
 
     Route::prefix('calendar')->group(function () {

@@ -25,6 +25,8 @@ class StudentController extends Controller
     protected $inactiveLimit = 10;
     protected $lessonsLimit = 30;
 
+    public $selectedDate;
+
     public function index()
     {
         $teacher = Teacher::where('teacher_id', Auth::id())->first();
@@ -155,11 +157,23 @@ class StudentController extends Controller
         return view('webapp.student.profile')->with('students', $students);
     }
 
-    public function schedule($id)
+    public function ajaxTime(Request $request) {
+        $this->selectedDate = Carbon::createFromTimestamp($request->date)->format('l');
+        // after date is selected inject into the schedule function
+    }
+
+    public function schedule(Request $request, $id)
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
-        $day = date('l');
+        if($this->selectedDate != null) {
+            $day = $this->selectedDate;
+            dd($day);
+        } else {
+            $day = date('l');
+        };
+
+
         $allTimes = [];
 
         switch ($day) {
