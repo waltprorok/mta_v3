@@ -65,7 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/save', 'StudentController@store')->name('student.save');
         Route::post('/update', 'StudentController@update')->name('student.update');
         Route::get('/{id}/edit', 'StudentController@edit')->name('student.edit');
-        Route::get('/{id}/schedule', 'StudentController@schedule')->name('student.schedule');
+        Route::get('/{id}/schedule/{day?}', 'StudentController@schedule')->name('student.schedule');
         Route::post('/schedule/add', 'StudentController@scheduleSave')->name('student.schedule.save');
         Route::put('/schedule/update', 'StudentController@scheduleUpdateStore')->name('student.schedule.update');
         Route::get('/schedule/{student_id}/edit/{id}', 'StudentController@scheduleEdit')->name('student.schedule.edit');

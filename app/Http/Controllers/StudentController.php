@@ -157,22 +157,17 @@ class StudentController extends Controller
         return view('webapp.student.profile')->with('students', $students);
     }
 
-    public function ajaxTime(Request $request) {
-        $this->selectedDate = Carbon::createFromTimestamp($request->date)->format('l');
-        // after date is selected inject into the schedule function
-    }
-
-    public function schedule(Request $request, $id)
+    public function schedule($id, $day = null)
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
-        if($this->selectedDate != null) {
-            $day = $this->selectedDate;
-            dd($day);
-        } else {
-            $day = date('l');
-        };
+        $startDate = $day;
 
+        if ($day == null) {
+            $day = date('l');
+        } else {
+            $day = Carbon::parse($day)->format('l');
+        };
 
         $allTimes = [];
 
@@ -218,7 +213,7 @@ class StudentController extends Controller
             }
         }
 
-        return view('webapp.student.schedule')->with('students', $students)->with('businessHours', $businessHours)->with('allTimes', $allTimes);
+        return view('webapp.student.schedule')->with('students', $students)->with('businessHours', $businessHours)->with('allTimes', $allTimes)->with('startDate', $startDate);
     }
 
     public function scheduleSave(StoreScheduleAppt $request)

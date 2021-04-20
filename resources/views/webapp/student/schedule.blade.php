@@ -44,7 +44,7 @@
                                     <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
                                         <label for="Title" class="control-label">Start Date</label>
                                         <input class="date form-control" autocomplete="off" type="text" id="lessonDate"
-                                               name="start_date" value="{{ old('start_date') }}">
+                                               name="start_date" value="{{ $startDate }}">
                                         @if ($errors->has('start_date'))
                                             <span class="help-block"><strong>{{ $errors->first('start_date') }}</strong></span>
                                         @endif
