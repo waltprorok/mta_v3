@@ -40,9 +40,11 @@
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
                                         <label for="Title" class="control-label">Start Date</label>
-                                        <input class="date form-control" autocomplete="off" type="text" id="lessonDate"
-                                               name="start_date"
-                                               value="{{ date('Y-m-d', strtotime($lesson->start_date)) }}">
+                                        @if($startDate)
+                                            <input class="date form-control" autocomplete="off" type="text" id="editLessonDate" name="start_date" value="{{ $startDate }}">
+                                        @else
+                                            <input class="date form-control" autocomplete="off" type="text" id="editLessonDate" name="start_date" value="{{ date('Y-m-d', strtotime($lesson->start_date)) }}">
+                                        @endif
                                         @if ($errors->has('start_date'))
                                             <span class="help-block"><strong>{{ $errors->first('start_date') }}</strong></span>
                                         @endif
@@ -53,14 +55,13 @@
                                     <div class="form-group{{ $errors->has('start_time') ? ' has-error' : '' }}">
                                         <label for="start_time" class="control-label">Start Time</label>
                                         <select class="form-control" id="start_time" name="start_time">
-                                            <option value="{{ date('H:i:s', strtotime($lesson->start_date)) }}">{{ date('h:i', strtotime($lesson->start_date)) }}</option>
-                                            <option value="09:00:00">9:00</option>
-                                            <option value="09:30:00">9:30</option>
-                                            <option value="10:00:00">10:00</option>
-                                            <option value="10:30:00">10:30</option>
-                                            <option value="11:00:00">11:00</option>
-                                            <option value="11:30:00">11:30</option>
-                                            <option value="12:00:00">12:00</option>
+                                            <option value="{{ date('H:i:s', strtotime($lesson->start_date)) }}">{{ date('h:i A', strtotime($lesson->start_date)) }}</option>
+                                            @if(old('start_time'))
+                                                <option value="{{ old('start_time') }}">{{ old('start_time') }}</option>
+                                            @endif
+                                            @foreach($allTimes as $allTime)
+                                                <option value="{{ Carbon\Carbon::parse($allTime)->format('H:i') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
+                                            @endforeach
                                         </select>
 
                                         @if ($errors->has('start_time'))
@@ -75,14 +76,14 @@
                                     <div class="form-group{{ $errors->has('end_time') ? ' has-error' : '' }}">
                                         <label for="end_time" class="control-label">End Time</label>
                                         <select class="form-control" id="end_time" name="end_time">
-                                            <option value="{{ date('H:i:s', strtotime($lesson->end_date)) }}">{{ date('h:i', strtotime($lesson->end_date)) }}</option>
-                                            <option value="09:00:00">9:00</option>
-                                            <option value="09:30:00">9:30</option>
-                                            <option value="10:00:00">10:00</option>
-                                            <option value="10:30:00">10:30</option>
-                                            <option value="11:00:00">11:00</option>
-                                            <option value="11:30:00">11:30</option>
-                                            <option value="12:00:00">12:00</option>
+                                            <option value="{{ date('H:i:s', strtotime($lesson->end_date)) }}">{{ date('h:i A', strtotime($lesson->end_date)) }}</option>
+                                                @if(old('end_time'))
+                                            <option value="{{ old('end_time') }}">{{ old('end_time') }}</option>
+                                            @endif
+                                            @foreach($allTimes as $allTime)
+                                                <option value="{{ Carbon\Carbon::parse($allTime)->format('H:i') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
+                                            @endforeach
+                                        </select>
                                         </select>
 
                                         @if ($errors->has('end_time'))
@@ -116,7 +117,6 @@
                                         @endif
                                     </div>
                                 </div>
-
                             </div>
 
                             <input id="id" type="hidden" class="form-control" name="id"

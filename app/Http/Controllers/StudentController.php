@@ -161,6 +161,8 @@ class StudentController extends Controller
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
+        $lessons = Lesson::where('student_id', $id)->where('teacher_id', Auth::id())->get();
+//        dd($lessons);
         $startDate = $day;
 
         if ($day == null) {
@@ -219,7 +221,7 @@ class StudentController extends Controller
     public function scheduleSave(StoreScheduleAppt $request)
     {
         $begin = Carbon::parse($request->get('start_date'));
-        $duration = date('h:i:s', strtotime($request->get('start_time') . ' +'.$request->get('end_time'). ' minutes'));
+        $duration = date('H:i:s', strtotime($request->get('start_time') . ' +' . $request->get('end_time') . ' minutes'));
         $recurrence = (int)$request->get('recurrence');
         $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
 
@@ -238,11 +240,64 @@ class StudentController extends Controller
         return redirect()->back()->with('success', ' The student has been scheduled successfully.');
     }
 
-    public function scheduleEdit($student_id, $id)
+    public function scheduleEdit($student_id, $id, $day = null)
     {
+//        $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
+        $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
         $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->get();
+        $startDate = $day;
 
-        return view('webapp.student.scheduleEdit')->with('lessons', $lessons);
+        if ($day == null) {
+            $day = date('l');
+        } else {
+            $day = Carbon::parse($day)->format('l');
+        };
+
+        $allTimes = [];
+
+        switch ($day) {
+            case "Monday":
+                $today = 0;
+                break;
+            case "Tuesday":
+                $today = 1;
+                break;
+            case "Wednesday":
+                $today = 2;
+                break;
+            case "Thursday":
+                $today = 3;
+                break;
+            case "Friday":
+                $today = 4;
+                break;
+            case "Saturday":
+                $today = 5;
+                break;
+            case "Sunday":
+                $today = 6;
+                break;
+        }
+
+        $amount = -30;
+
+        foreach ($businessHours as $businessHour) {
+            if ($businessHour->open_time <= $businessHour->close_time && $today == $businessHour->day) {
+                $diff = Carbon::parse($businessHour->open_time)->diff(Carbon::parse($businessHour->close_time));
+                $amount = $amount + ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
+            }
+            if ($businessHour->active == 1 && $today == $businessHour->day) {
+                $openingTime = Carbon::parse($businessHour->open_time);
+                array_push($allTimes, $openingTime->toTimeString());
+
+                for ($i = 0; $i <= ($amount / 15); $i++) {
+                    $thisOpeningTime = $openingTime->addMinutes(15);
+                    array_push($allTimes, $thisOpeningTime->toTimeString());
+                }
+            }
+        }
+
+        return view('webapp.student.scheduleEdit')->with('lessons', $lessons)->with('businessHours', $businessHours)->with('allTimes', $allTimes)->with('startDate', $startDate);
     }
 
     /**
