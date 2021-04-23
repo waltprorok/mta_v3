@@ -161,7 +161,7 @@ class StudentController extends Controller
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
-        $lessons = Lesson::select('start_date', 'end_date')->where('student_id', $id)->where('teacher_id', Auth::id())->get()->toArray();
+        $lessons = Lesson::select('start_date', 'end_date')->where('teacher_id', Auth::id())->get()->toArray();
         $startDate = $day;
 
         if ($day == null) {
@@ -215,39 +215,25 @@ class StudentController extends Controller
             }
         }
 
-//        dd($allTimes);
-
         foreach ($lessons as $key => $lesson) {
             $lessonDay = date('l', strtotime($lesson['start_date']));
             $lessonStart = $lesson['start_date'];
             $lessonStartTime = date('H:i:s', strtotime($lesson['start_date']));
             $lessonEndTime = date('H:i:s', strtotime($lesson['end_date']));
 
-//            dd($lessonEndTime);
             if ($lessonDay == $day && $lessonStart >= Carbon::today()) {
-//                dd($lessonStartTime, $allTimes);
-                if (in_array($lessonStartTime, $allTimes)) {
-//                    $diff = strtotime($lessonStart) - strtotime($lessonEnd);
-//                    dd($diff, strtotime($lessonStart), strtotime($lessonEnd));
-                    unset($allTimes[$key]);
-//                    dd($allTimes);
-//                    dd('time is already booked');
-                }
+                // remove time for a lesson that is already booked from all times
+                foreach ($allTimes as $allTimeKey => $allTime) {
+                    if ($allTime == $lessonStartTime) {
+                        unset($allTimes[$allTimeKey]);
+                    }
 
-                if (in_array($lessonEndTime, $allTimes)) {
-                    $keyIncremented = $key + 1;
-//                    $diff = strtotime($lessonStart) - strtotime($lessonEnd);
-//                    dd($diff, strtotime($lessonStart), strtotime($lessonEnd));
-                    unset($allTimes[$keyIncremented]);
-
-//                    dd('time is already booked');
+                    if ($allTime == $lessonEndTime) {
+                        $allTimeKey = $allTimeKey - 1;
+                        unset($allTimes[$allTimeKey]);
+                    }
                 }
-//                dd($key, $allTimes);
-            } else {
-//                dd('student lesson is not on this day');
             }
-
-//            dd($lessonDay, $lessonStart, $lessonEnd);
         }
 
         return view('webapp.student.schedule')->with('students', $students)->with('businessHours', $businessHours)->with('allTimes', $allTimes)->with('startDate', $startDate);
