@@ -55,10 +55,14 @@
                                     <div class="form-group{{ $errors->has('start_time') ? ' has-error' : '' }}">
                                         <label for="start_time" class="control-label">Start Time</label>
                                         <select class="form-control" id="start_time" name="start_time">
-                                            <option value="{{ old('start_time') }}">{{ old('start_time') }}</option>
-                                            @foreach($allTimes as $allTime)
-                                                <option value="{{ Carbon\Carbon::parse($allTime)->format('H:i') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
-                                            @endforeach
+                                            <option value="{{ old('start_time') }}">{{ Carbon\Carbon::parse(old('start_time'))->format('h:i A') }}</option>
+                                            @if(count($allTimes) <= 0)
+                                                <option>No availability</option>
+                                            @else
+                                                @foreach($allTimes as $allTime)
+                                                    <option value="{{ Carbon\Carbon::parse($allTime)->format('H:i') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
 
                                         @if ($errors->has('start_time'))

@@ -161,7 +161,7 @@ class StudentController extends Controller
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
-        $lessons = Lesson::select('start_date', 'end_date')->where('teacher_id', Auth::id())->get()->toArray();
+        $lessons = Lesson::select('student_id', 'start_date', 'end_date')->where('teacher_id', Auth::id())->get()->toArray();
         $startDate = $day;
 
         if ($day == null) {
@@ -215,13 +215,13 @@ class StudentController extends Controller
             }
         }
 
-        foreach ($lessons as $key => $lesson) {
+        foreach ($lessons as $lesson) {
             $lessonDay = date('l', strtotime($lesson['start_date']));
-            $lessonStart = $lesson['start_date'];
+            $lessonStartDate = $lesson['start_date'];
             $lessonStartTime = date('H:i:s', strtotime($lesson['start_date']));
             $lessonEndTime = date('H:i:s', strtotime($lesson['end_date']));
 
-            if ($lessonDay == $day && $lessonStart >= Carbon::today()) {
+            if ($lessonDay == $day && $lessonStartDate >= Carbon::today()) {
                 // remove time for a lesson that is already booked from all times
                 foreach ($allTimes as $allTimeKey => $allTime) {
                     if ($allTime == $lessonStartTime) {
@@ -236,7 +236,11 @@ class StudentController extends Controller
             }
         }
 
-        return view('webapp.student.schedule')->with('students', $students)->with('businessHours', $businessHours)->with('allTimes', $allTimes)->with('startDate', $startDate);
+        return view('webapp.student.schedule')
+            ->with('students', $students)
+            ->with('businessHours', $businessHours)
+            ->with('allTimes', $allTimes)
+            ->with('startDate', $startDate);
     }
 
     public function scheduleSave(StoreScheduleAppt $request)
