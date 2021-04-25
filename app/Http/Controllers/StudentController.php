@@ -215,11 +215,18 @@ class StudentController extends Controller
             }
         }
 
+        $studentScheduled = false;
+
         foreach ($lessons as $lesson) {
             $lessonDay = date('l', strtotime($lesson['start_date']));
             $lessonStartDate = $lesson['start_date'];
             $lessonStartTime = date('H:i:s', strtotime($lesson['start_date']));
             $lessonEndTime = date('H:i:s', strtotime($lesson['end_date']));
+
+            if ($lesson['student_id'] == $id) {
+                $studentScheduled = true;
+                continue;
+            }
 
             if ($lessonDay == $day && $lessonStartDate >= Carbon::today()) {
                 // remove time for a lesson that is already booked from all times
@@ -240,7 +247,8 @@ class StudentController extends Controller
             ->with('students', $students)
             ->with('businessHours', $businessHours)
             ->with('allTimes', $allTimes)
-            ->with('startDate', $startDate);
+            ->with('startDate', $startDate)
+            ->with('studentScheduled', $studentScheduled);
     }
 
     public function scheduleSave(StoreScheduleAppt $request)

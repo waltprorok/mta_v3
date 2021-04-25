@@ -13,7 +13,12 @@
         <button type="button" class="btn btn-primary float-right" data-toggle="modal"
                 data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
         </button>
-
+        @if($studentScheduled)
+            <div class="alert alert-primary alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                The student is already scheduled.
+            </div>
+        @endif
         <h2>Schedule Student</h2>
             @include('partials.studentTabs', $data = ['id' => $student->id])
             <div class="card">
@@ -60,7 +65,7 @@
                                                 <option>No availability</option>
                                             @else
                                                 @foreach($allTimes as $allTime)
-                                                    <option value="{{ Carbon\Carbon::parse($allTime)->format('H:i') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
+                                                    <option value="{{ Carbon\Carbon::parse($allTime)->format('H:i:s') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
