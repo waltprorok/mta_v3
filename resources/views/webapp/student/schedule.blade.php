@@ -143,9 +143,11 @@
                                    value="{{ $student->id }}">
 
                             <div class="pull-left">
-                                <button type="submit" class="btn btn-primary">
-                                    Schedule
-                                </button>
+                                @if(count($allTimes) > 1)
+                                    <button type="submit" class="btn btn-primary">
+                                        Schedule
+                                    </button>
+                                @endif
                                 <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancel</a>
                             </div>
 

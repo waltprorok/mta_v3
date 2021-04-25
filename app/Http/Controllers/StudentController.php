@@ -323,7 +323,7 @@ class StudentController extends Controller
                 $openingTime = Carbon::parse($businessHour->open_time);
                 array_push($allTimes, $openingTime->toTimeString());
 
-                for ($i = 0; $i <= ($amount / 15); $i++) {
+                for ($i = 0; $i <= ($amount / 14); $i++) {
                     $thisOpeningTime = $openingTime->addMinutes(15);
                     array_push($allTimes, $thisOpeningTime->toTimeString());
                 }

@@ -57,11 +57,15 @@
                                         <select class="form-control" id="start_time" name="start_time">
                                             <option value="{{ date('H:i:s', strtotime($lesson->start_date)) }}">{{ date('h:i A', strtotime($lesson->start_date)) }}</option>
                                             @if(old('start_time'))
-                                                <option value="{{ old('start_time') }}">{{ old('start_time') }}</option>
+                                                <option value="{{ old('start_time') }}">{{ Carbon\Carbon::parse(old('start_time'))->format('h:i A') }}</option>
                                             @endif
-                                            @foreach($allTimes as $allTime)
-                                                <option value="{{ Carbon\Carbon::parse($allTime)->format('H:i') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
-                                            @endforeach
+                                            @if(count($allTimes) <= 0)
+                                                <option>No availability</option>
+                                            @else
+                                                @foreach($allTimes as $allTime)
+                                                    <option value="{{ Carbon\Carbon::parse($allTime)->format('H:i:s') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
 
                                         @if ($errors->has('start_time'))
@@ -77,13 +81,14 @@
                                         <label for="end_time" class="control-label">End Time</label>
                                         <select class="form-control" id="end_time" name="end_time">
                                             <option value="{{ date('H:i:s', strtotime($lesson->end_date)) }}">{{ date('h:i A', strtotime($lesson->end_date)) }}</option>
-                                                @if(old('end_time'))
-                                            <option value="{{ old('end_time') }}">{{ old('end_time') }}</option>
+{{--                                            <option value="{{ old('end_time') }}">{{ Carbon\Carbon::parse(old('end_time'))->format('h:i A') }}</option>--}}
+                                            @if(count($allTimes) <= 0)
+                                                <option>No availability</option>
+                                            @else
+                                                @foreach($allTimes as $allTime)
+                                                    <option value="{{ Carbon\Carbon::parse($allTime)->format('H:i:s') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
+                                                @endforeach
                                             @endif
-                                            @foreach($allTimes as $allTime)
-                                                <option value="{{ Carbon\Carbon::parse($allTime)->format('H:i') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
-                                            @endforeach
-                                        </select>
                                         </select>
 
                                         @if ($errors->has('end_time'))
@@ -129,12 +134,14 @@
                                    value="{{ $lesson->interval }}">
 
                             <div class="pull-left">
-                                <button type="submit" name="action" value="update" class="btn btn-primary">
-                                    Update
-                                </button>
-                                <button type="submit" name="action" value="updateAll" class="btn btn-warning">
-                                    Update All
-                                </button>
+                                @if(count($allTimes) > 1)
+                                    <button type="submit" name="action" value="update" class="btn btn-primary">
+                                        Update
+                                    </button>
+                                    <button type="submit" name="action" value="updateAll" class="btn btn-warning">
+                                        Update All
+                                    </button>
+                                @endif
                                 <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancel</a>
                             </div>
 

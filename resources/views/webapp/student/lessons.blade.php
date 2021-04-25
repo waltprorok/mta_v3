@@ -35,8 +35,8 @@
                         <tr>
                             <td><input type="checkbox" class="select-all checkbox" name="select-all" value="{{ $lesson->id }}"/></td>
                             <td>{{ $lesson->title }}</td>
-                            <td>{{ $lesson->start_date }}</td>
-                            <td>{{ $lesson->end_date }}</td>
+                            <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('m-d-Y h:i A') }}</td>
+                            <td>{{ Carbon\Carbon::parse($lesson->end_date)->format('m-d-Y h:i A') }}</td>
                             <td><a href="{{ route('student.schedule.edit', [$lesson->student_id, $lesson->id])}}" class="btn btn-primary" role="button" title="edit"><i class="fa fa-edit"></i></a></td>
                         </tr>
                     @endforeach
