@@ -157,21 +157,12 @@ class StudentController extends Controller
         return view('webapp.student.profile')->with('students', $students);
     }
 
-    public function schedule($id, $day = null)
+    /**
+     * @param $day
+     * @return int
+     */
+    public function dayOfWeek($day) : int
     {
-        $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
-        $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
-        $lessons = Lesson::select('student_id', 'start_date', 'end_date')->where('teacher_id', Auth::id())->get()->toArray();
-        $startDate = $day;
-
-        if ($day == null) {
-            $day = date('l');
-        } else {
-            $day = Carbon::parse($day)->format('l');
-        };
-
-        $allTimes = [];
-
         switch ($day) {
             case "Monday":
                 $today = 0;
@@ -196,15 +187,35 @@ class StudentController extends Controller
                 break;
         }
 
+        return $today;
+    }
+
+    public function schedule($id, $day = null)
+    {
+        $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
+        $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
+        $lessons = Lesson::select('student_id', 'start_date', 'end_date')->where('teacher_id', Auth::id())->get()->toArray();
+        $startDate = $day;
+
+        if ($day == null) {
+            $day = date('l');
+        } else {
+            $day = Carbon::parse($day)->format('l');
+        };
+
+        $allTimes = [];
+
+        $thisDay = $this->dayOfWeek($day);
+
         $amount = -30;
 
         foreach ($businessHours as $businessHour) {
-            if ($businessHour->open_time <= $businessHour->close_time && $today == $businessHour->day) {
+            if ($businessHour->open_time <= $businessHour->close_time && $thisDay == $businessHour->day) {
                 $diff = Carbon::parse($businessHour->open_time)->diff(Carbon::parse($businessHour->close_time));
                 $amount = $amount + ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
             }
 
-            if ($businessHour->active == 1 && $today == $businessHour->day) {
+            if ($businessHour->active == 1 && $thisDay == $businessHour->day) {
                 $openingTime = Carbon::parse($businessHour->open_time);
                 array_push($allTimes, $openingTime->toTimeString());
 
@@ -288,38 +299,16 @@ class StudentController extends Controller
 
         $allTimes = [];
 
-        switch ($day) {
-            case "Monday":
-                $today = 0;
-                break;
-            case "Tuesday":
-                $today = 1;
-                break;
-            case "Wednesday":
-                $today = 2;
-                break;
-            case "Thursday":
-                $today = 3;
-                break;
-            case "Friday":
-                $today = 4;
-                break;
-            case "Saturday":
-                $today = 5;
-                break;
-            case "Sunday":
-                $today = 6;
-                break;
-        }
+        $thisDay = $this->dayOfWeek($day);
 
         $amount = -30;
 
         foreach ($businessHours as $businessHour) {
-            if ($businessHour->open_time <= $businessHour->close_time && $today == $businessHour->day) {
+            if ($businessHour->open_time <= $businessHour->close_time && $thisDay == $businessHour->day) {
                 $diff = Carbon::parse($businessHour->open_time)->diff(Carbon::parse($businessHour->close_time));
                 $amount = $amount + ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
             }
-            if ($businessHour->active == 1 && $today == $businessHour->day) {
+            if ($businessHour->active == 1 && $thisDay == $businessHour->day) {
                 $openingTime = Carbon::parse($businessHour->open_time);
                 array_push($allTimes, $openingTime->toTimeString());
 
