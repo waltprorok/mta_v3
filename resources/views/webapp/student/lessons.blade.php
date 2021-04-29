@@ -3,6 +3,7 @@
 @section('content')
 
     <div class="col-12">
+        <h3>Lessons</h3>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
@@ -13,7 +14,6 @@
                 data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
         </button>
 
-        <h2>Lessons</h2>
         <div class="card">
             <table class="table table-striped" id="#studentTable">
                 <thead class="thead">

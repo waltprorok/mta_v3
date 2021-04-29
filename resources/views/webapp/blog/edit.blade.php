@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="col-12">
-        <h2>Edit Blog Post</h2>
+        <h3>Edit Blog Post</h3>
         <div class="card">
             <div class="card-body">
                 <form method="POST" action="{{ route('admin.blog.update', $update->id) }}" enctype="multipart/form-data">

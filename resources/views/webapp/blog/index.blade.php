@@ -9,7 +9,7 @@
         <a href="{{ route('admin.blog.create') }}" class="btn btn-primary float-right"><i
                     class="fa fa-plus"></i> Create Post</a>
 
-        <h2>Blog Posts</h2>
+        <h3>Blog Posts</h3>
         <div class="card">
             <div class="card-body">
                 <table class="table" id="dtBlogIndex">

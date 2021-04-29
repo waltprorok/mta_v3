@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="col-12">
-        <h2>Create Blog</h2>
+        <h3>Create Blog</h3>
         <div class="card">
             <div class="card-body">
                 <form method="POST" action="{{ route('admin.blog.save') }}" enctype="multipart/form-data">

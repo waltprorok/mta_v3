@@ -3,6 +3,7 @@
 @section('content')
 
     <div class="col-12">
+        <h3>Teacher Profile</h3>
         @foreach ($teachers as $teacher)
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
@@ -10,7 +11,6 @@
             <li class="breadcrumb-item active"><a href="{{ route('teacher.profile') }}">Profile</a></li>
         </ul>
 
-        <h2>Teacher Profile</h2>
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3">
                     <div class="card">

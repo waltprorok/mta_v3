@@ -3,13 +3,13 @@
 @section('content')
 
     <div class="col-md-12">
+        <h3>Invoices</h3>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ route('account.profile') }}">Profile</a></li>
             <li class="breadcrumb-item active"><a href="{{ route('account.subscription') }}">Subscription</a></li>
         </ul>
 
-        <h2>Invoices</h2>
         @include('partials.accountTabs')
         <div class="card-header bg-light">Download Invoices</div>
         <div class="card">

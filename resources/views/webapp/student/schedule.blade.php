@@ -3,23 +3,25 @@
 @section('content')
 
     <div class="col-12">
+        <h3>Schedule Student</h3>
         @foreach ($students as $student)
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
-{{--            <li class="breadcrumb-item"><a href="{{ route('student.edit', $student->id) }}">Edit</a></li>--}}
             <li class="breadcrumb-item active"><a href="{{ route('student.schedule', $student->id) }}">Schedule</a></li>
         </ul>
+
         <button type="button" class="btn btn-primary float-right" data-toggle="modal"
                 data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
         </button>
+
         @if($studentScheduled)
             <div class="alert alert-primary alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 The student is already scheduled.
             </div>
         @endif
-        <h2>Schedule Student</h2>
+
             @include('partials.studentTabs', $data = ['id' => $student->id])
             <div class="card">
                 <div class="card-body">
