@@ -14,11 +14,11 @@
         </ul>
 
         <div class="card">
-            <div class="card-body">
+            <div class="card-body"
 
-                {!! $calendar->calendar() !!}
+                    {!! $calendar->calendar() !!}
 
-                {!! $calendar->script() !!}
+                    {!! $calendar->script() !!}
 
             </div>
         </div>
