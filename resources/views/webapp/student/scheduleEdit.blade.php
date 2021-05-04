@@ -3,6 +3,9 @@
 @section('content')
 
     <div class="col-12">
+        <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
+        </button>
         <h4>Edit Student Schedule</h4>
         @foreach ($lessons as $lesson)
         <ul class="breadcrumb">
@@ -11,12 +14,6 @@
             <li class="breadcrumb-item"><a href="{{ route('calendar.index') }}">Calendar</a></li>
             <li class="breadcrumb-item active"><a href="{{ route('student.schedule.edit', [$lesson->student_id, $lesson->id]) }}">Edit</a></li>
         </ul>
-
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal"
-                data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
-        </button>
-
-
             @include('partials.studentTabs', $data = ['id' => $lesson->student_id])
             <div class="card">
                 <div class="card-body">

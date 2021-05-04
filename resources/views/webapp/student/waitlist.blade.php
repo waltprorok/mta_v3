@@ -3,17 +3,15 @@
 @section('content')
 
     <div class="col-12">
+        <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
+        </button>
         <h4>Students</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
             <li class="breadcrumb-item active"><a href="{{ route('student.waitlist') }}">Waitlist</a></li>
         </ul>
-
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal"
-                data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
-        </button>
-
         @include('partials.studentListTabs')
         <div class="card">
             <table class="table table-striped" id="#studentTable">
