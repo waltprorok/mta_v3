@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="col-12">
-        <h3>Teacher Profile</h3>
+        <h4>Teacher Profile</h4>
         @foreach ($teachers as $teacher)
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>

@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="col-12">
-        <h3>All Reports</h3>
+        <h4>All Reports</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item active"><a href="{{ route('reports.all') }}">Reports</a></li>

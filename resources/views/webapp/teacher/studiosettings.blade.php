@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="col-12">
-        <h3>Studio Settings</h3>
+        <h4>Studio Settings</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item active"><a href="{{ route('teacher.studioIndex') }}">Studio</a></li>

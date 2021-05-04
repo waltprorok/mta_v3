@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="col-md-12">
-        <h3>Invoices</h3>
+        <h4>Invoices</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ route('account.profile') }}">Profile</a></li>
