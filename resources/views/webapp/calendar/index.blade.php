@@ -7,19 +7,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css"/>
 
     <div class="col-12">
+        <h4>Calendar</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item active"><a href="{{ route('calendar.index') }}">Calendar</a></li>
         </ul>
 
-        <h2>Calendar</h2>
-
         <div class="card">
-            <div class="card-body">
+            <div class="card-body"
 
-                {!! $calendar->calendar() !!}
+                    {!! $calendar->calendar() !!}
 
-                {!! $calendar->script() !!}
+                    {!! $calendar->script() !!}
 
             </div>
         </div>

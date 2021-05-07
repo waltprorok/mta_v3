@@ -5,11 +5,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
 
     <div class="col-12">
-
         <a href="{{ route('admin.blog.create') }}" class="btn btn-primary float-right"><i
                     class="fa fa-plus"></i> Create Post</a>
-
-        <h2>Blog Posts</h2>
+        <h4>Blog Posts</h4>
         <div class="card">
             <div class="card-body">
                 <table class="table" id="dtBlogIndex">

@@ -30,7 +30,30 @@ $(document).ready(function () {
             timeFormat: "00:00:00",
             yearRange: "-05:+05",
             todayHighlight: true,
-        });
+            locale: 'en',
+        }).change('changeDate',function () {
+            var url = window.location.pathname.split('/');
+            var studentId = url[2]
+            window.location.href='/students/' + studentId + '/schedule/'+ $('#lessonDate').val();
+        })
+
+        $("#editLessonDate").datepicker({
+            changeMonth: false,
+            changeYear: false,
+            hideIfNoPrevNext: true,
+            showOtherMonths: false,
+            showStatus: true,
+            dateFormat: "yy-mm-dd",
+            timeFormat: "00:00:00",
+            yearRange: "-05:+05",
+            todayHighlight: true,
+            locale: 'en',
+        }).change('changeDate',function () {
+            var url = window.location.pathname.split('/');
+            var studentId = url[3];
+            var lessonId = url[5];
+            window.location.href='/students/schedule/' + studentId + '/edit/'+ lessonId + '/' + $('#editLessonDate').val();
+        })
 
         $("#datepicker2").datepicker({
             changeMonth: true,
