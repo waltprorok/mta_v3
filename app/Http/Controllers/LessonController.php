@@ -35,9 +35,10 @@ class LessonController extends Controller
                 'firstDay'    => 1,
                 'editable'    => false,
                 'selectable'  => true,
-                'defaultView' => 'month',
+                'defaultView' => 'listWeek', // 'month' for full calendar
                 'minTime'     => '08:00:00',
                 'maxTime'     => '22:00:00',
+                'fixedWeekCount' => false,
             ]);
 
         return view('webapp.calendar.index', compact('calendar'));

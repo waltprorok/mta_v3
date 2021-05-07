@@ -3,18 +3,23 @@
 @section('content')
 
     <div class="col-12">
+        <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
+        </button>
+        <h4>Schedule Student</h4>
         @foreach ($students as $student)
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
-{{--            <li class="breadcrumb-item"><a href="{{ route('student.edit', $student->id) }}">Edit</a></li>--}}
             <li class="breadcrumb-item active"><a href="{{ route('student.schedule', $student->id) }}">Schedule</a></li>
         </ul>
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal"
-                data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
-        </button>
+        @if($studentScheduled)
+            <div class="alert alert-primary alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                The student is already scheduled.
+            </div>
+        @endif
 
-        <h2>Schedule Student</h2>
             @include('partials.studentTabs', $data = ['id' => $student->id])
             <div class="card">
                 <div class="card-body">
@@ -44,7 +49,7 @@
                                     <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
                                         <label for="Title" class="control-label">Start Date</label>
                                         <input class="date form-control" autocomplete="off" type="text" id="lessonDate"
-                                               name="start_date" value="{{ old('start_date') }}">
+                                               name="start_date" value="{{ $startDate }}">
                                         @if ($errors->has('start_date'))
                                             <span class="help-block"><strong>{{ $errors->first('start_date') }}</strong></span>
                                         @endif
@@ -55,10 +60,14 @@
                                     <div class="form-group{{ $errors->has('start_time') ? ' has-error' : '' }}">
                                         <label for="start_time" class="control-label">Start Time</label>
                                         <select class="form-control" id="start_time" name="start_time">
-                                            <option value="{{ old('start_time') }}">{{ old('start_time') }}</option>
-                                            @foreach($allTimes as $allTime)
-                                                <option value="{{ Carbon\Carbon::parse($allTime)->format('h:i') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
-                                            @endforeach
+                                            <option value="{{ old('start_time') }}">{{ Carbon\Carbon::parse(old('start_time'))->format('h:i A') }}</option>
+                                            @if(count($allTimes) <= 0)
+                                                <option>No availability</option>
+                                            @else
+                                                @foreach($allTimes as $allTime)
+                                                    <option value="{{ Carbon\Carbon::parse($allTime)->format('H:i:s') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
 
                                         @if ($errors->has('start_time'))
@@ -87,8 +96,6 @@
                                         @endif
                                     </div>
                                 </div>
-
-
                             </div>
 
                             <div class="row">
@@ -136,9 +143,11 @@
                                    value="{{ $student->id }}">
 
                             <div class="pull-left">
-                                <button type="submit" class="btn btn-primary">
-                                    Schedule
-                                </button>
+                                @if(count($allTimes) > 1)
+                                    <button type="submit" class="btn btn-primary">
+                                        Schedule
+                                    </button>
+                                @endif
                                 <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancel</a>
                             </div>
 
