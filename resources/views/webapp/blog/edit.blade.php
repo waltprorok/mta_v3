@@ -120,8 +120,6 @@
                         </div>
                     </div>
 
-                    <input type="hidden" name="author_id" value="{{ Auth::user()->id }}">
-
                     <div class="pull-left">
                         <button type="submit" class="btn btn-primary">Update</button>
                         <a href="{{ route('admin.blog.list') }}" class="btn btn-outline-secondary">Cancel</a>

@@ -987,13 +987,15 @@ __webpack_require__(12);
 
 window.Vue = __webpack_require__(35);
 
+var axios = __webpack_require__(3);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', __webpack_require__(54));
+Vue.component('contacts', __webpack_require__(39));
 
 var app = new Vue({
   el: '#app'
@@ -44886,7 +44888,53 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(5)))
 
 /***/ }),
-/* 39 */,
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(40)
+/* script */
+var __vue_script__ = __webpack_require__(41)
+/* template */
+var __vue_template__ = __webpack_require__(42)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Contacts.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-36bb780a", Component.options)
+  } else {
+    hotAPI.reload("data-v-36bb780a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
 /* 40 */
 /***/ (function(module, exports) {
 
@@ -44996,72 +45044,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 41 */,
-/* 42 */,
-/* 43 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(40)
-/* script */
-var __vue_script__ = __webpack_require__(55)
-/* template */
-var __vue_template__ = __webpack_require__(56)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Example.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-650f2efa", Component.options)
-  } else {
-    hotAPI.reload("data-v-650f2efa", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 55 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45082,43 +45065,192 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            edit: false,
+            list: [],
+            contact: {
+                id: '',
+                name: '',
+                email: '',
+                subject: '',
+                message: ''
+            }
+        };
+    },
     mounted: function mounted() {
-        console.log('Component mounted.');
+        console.log('Contacts Component Loaded...');
+        this.fetchContactList();
+    },
+    methods: {
+        fetchContactList: function fetchContactList() {
+            var _this = this;
+
+            console.log('fetching contacts...');
+            axios.get('api/contacts').then(function (response) {
+                console.log(response.data);
+                _this.list = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        // createContact: function () {
+        //     console.log('creating contact...');
+        //     let self = this;
+        //     let params = Object.assign({}, self.contact);
+        //     axios.post('api/contact/store', params)
+        //         .then(function () {
+        //             self.contact.name = '';
+        //             self.contact.email = '';
+        //             self.contact.phone = '';
+        //             self.edit = false;
+        //             self.fetchContactList();
+        //         })
+        //         .catch(function (error) {
+        //             console.log(error);
+        //         });
+        // },
+        // showContact: function (id) {
+        //     let self = this;
+        //     axios.get('api/contact/' + id)
+        //         .then(function (response) {
+        //             self.contact.id = response.data.id;
+        //             self.contact.name = response.data.name;
+        //             self.contact.email = response.data.email;
+        //             self.contact.phone = response.data.phone;
+        //         })
+        //     self.edit = true;
+        // },
+        // updateContact: function (id) {
+        //     console.log('updating contact ' + id + '...');
+        //     let self = this;
+        //     let params = Object.assign({}, self.contact);
+        //     axios.patch('api/contact/' + id, params)
+        //         .then(function () {
+        //             self.contact.name = '';
+        //             self.contact.email = '';
+        //             self.contact.phone = '';
+        //             self.edit = false;
+        //             self.fetchContactList();
+        //         })
+        //         .catch(function (error) {
+        //             self.contact.name = '';
+        //             self.contact.email = '';
+        //             self.contact.phone = '';
+        //             self.edit = false;
+        //             self.fetchContactList();
+        //             console.log(error);
+        //         });
+        // },
+        deleteContact: function deleteContact(id) {
+            var self = this;
+            var params = Object.assign({}, self.contact);
+            axios.delete('api/contact/' + id, params).then(function () {
+                self.fetchContactList();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
     }
 });
 
 /***/ }),
-/* 56 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("table", { staticClass: "table" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.list, function(contact) {
+          return _c("tr", [
+            _c("td", [_vm._v(_vm._s(contact.name))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(contact.email))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(contact.subject))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(contact.message))]),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default btn-xs",
+                  on: {
+                    click: function($event) {
+                      return _vm.showContact(contact.id)
+                    }
+                  }
+                },
+                [_vm._v("Edit")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-danger btn-xs",
+                  on: {
+                    click: function($event) {
+                      return _vm.deleteContact(contact.id)
+                    }
+                  }
+                },
+                [_vm._v("Delete")]
+              )
+            ])
+          ])
+        }),
+        0
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
-          _c("div", { staticClass: "panel panel-default" }, [
-            _c("div", { staticClass: "panel-heading" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "panel-body" }, [
-              _vm._v(
-                "\n                    I'm an example component!\n                "
-              )
-            ])
-          ])
-        ])
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Email")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Subject")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Message")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Edit")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Remove")])
       ])
     ])
   }
@@ -45128,9 +45260,15 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-650f2efa", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-36bb780a", module.exports)
   }
 }
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
