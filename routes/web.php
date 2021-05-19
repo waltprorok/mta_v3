@@ -75,6 +75,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/process_date', 'StudentController@ajaxTime');
     });
 
+    Route::prefix('contacts')->group(function () {
+        Route::get('/', function () {
+            return view('webapp.contact.index');
+        })->name('webapp.contact.index');
+
+    });
+
     Route::prefix('calendar')->group(function () {
         Route::get('/', 'LessonController@index')->name('calendar.index');
     });

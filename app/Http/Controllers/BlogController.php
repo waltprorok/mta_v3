@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Blog;
-use Auth;
-use File;
-use Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -60,12 +60,11 @@ class BlogController extends Controller
     /**
      * @param Request $request
      * @return RedirectResponse
-     * @throws ValidationException
+      * @throws ValidationException
      */
     public function store(Request $request)
     {
         $this->validate($request, [
-            'author_id' => 'required',
             'title' => 'required|string|max:100',
             'slug' => 'required|string|max:100',
             'body' => 'required',
@@ -74,7 +73,7 @@ class BlogController extends Controller
         ]);
 
         $blog = new Blog();
-        $blog->author_id = $request->get('author_id');
+        $blog->author_id = Auth::id();
         $blog->title = $request->get('title');
         $blog->slug = $request->get('slug');
         $blog->body = $request->get('body');
@@ -128,7 +127,6 @@ class BlogController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'author_id' => 'required',
             'title' => 'required|string|max:100',
             'slug' => 'required|string|max:100',
             'body' => 'required',
@@ -137,7 +135,7 @@ class BlogController extends Controller
         ]);
 
         $editBlog = Blog::findOrFail($id);
-        $editBlog->author_id = $request->get('author_id');
+        $editBlog->author_id = Auth::id();
         $editBlog->title = $request->get('title');
         $editBlog->slug = $request->get('slug');
         $editBlog->body = $request->get('body');

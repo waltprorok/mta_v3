@@ -4,6 +4,7 @@
 
     <div class="col-12">
         <h4>Edit Blog Post</h4>
+        <br>
         <div class="card">
             <div class="card-body">
                 <form method="POST" action="{{ route('admin.blog.update', $update->id) }}" enctype="multipart/form-data">
@@ -118,8 +119,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <input type="hidden" name="author_id" value="{{ Auth::user()->id }}">
 
                     <div class="pull-left">
                         <button type="submit" class="btn btn-primary">Update</button>

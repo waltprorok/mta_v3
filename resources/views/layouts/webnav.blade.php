@@ -18,6 +18,13 @@
                             <i class="fa fa-newspaper-o"></i> Blog
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('webapp.contact.index') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'webapp.contact.index' ? 'active' : '' }}">
+                            <i class="fa fa-compress"></i> Contact Us
+                        </a>
+                    </li>
                 @endif
                 <li class="nav-item nav-dropdown ">
                     <a href="#" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == 'student.index' ? 'active' : '' }}">

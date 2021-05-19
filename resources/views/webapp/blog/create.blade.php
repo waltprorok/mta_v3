@@ -3,7 +3,8 @@
 @section('content')
 
     <div class="col-12">
-        <h4>Create Blog</h4>
+        <h4>Create Blog Post</h4>
+        <br>
         <div class="card">
             <div class="card-body">
                 <form method="POST" action="{{ route('admin.blog.save') }}" enctype="multipart/form-data">
@@ -40,7 +41,8 @@
                         <div class="col-sm-3">
                             <div class="form-group{{ $errors->has('released_on') ? ' has-error' : '' }}">
                                 <label for="released_on" class="control-label">Release Date</label>
-                                <input type="text" class="form-control" name="released_on" id="blogRelease" autocomplete="off">
+                                <input type="text" class="form-control" name="released_on" id="blogRelease"
+                                       autocomplete="off">
 
                                 @if ($errors->has('released_on'))
                                     <span class="help-block">
@@ -90,8 +92,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <input type="hidden" name="author_id" value="{{ Auth::user()->id }}">
 
                     <button type="submit" class="btn btn-primary">Save</button>
                     <a href="{{ route('admin.blog.list') }}" class="btn btn-outline-secondary">Cancel</a>
