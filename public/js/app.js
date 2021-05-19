@@ -45082,6 +45082,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -45098,69 +45125,63 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     mounted: function mounted() {
-        console.log('Contacts Component Loaded...');
         this.fetchContactList();
     },
     methods: {
         fetchContactList: function fetchContactList() {
             var _this = this;
 
-            console.log('fetching contacts...');
             axios.get('api/contacts').then(function (response) {
-                console.log(response.data);
                 _this.list = response.data;
             }).catch(function (error) {
                 console.log(error);
             });
         },
-        // createContact: function () {
-        //     console.log('creating contact...');
-        //     let self = this;
-        //     let params = Object.assign({}, self.contact);
-        //     axios.post('api/contact/store', params)
-        //         .then(function () {
-        //             self.contact.name = '';
-        //             self.contact.email = '';
-        //             self.contact.phone = '';
-        //             self.edit = false;
-        //             self.fetchContactList();
-        //         })
-        //         .catch(function (error) {
-        //             console.log(error);
-        //         });
-        // },
-        // showContact: function (id) {
-        //     let self = this;
-        //     axios.get('api/contact/' + id)
-        //         .then(function (response) {
-        //             self.contact.id = response.data.id;
-        //             self.contact.name = response.data.name;
-        //             self.contact.email = response.data.email;
-        //             self.contact.phone = response.data.phone;
-        //         })
-        //     self.edit = true;
-        // },
-        // updateContact: function (id) {
-        //     console.log('updating contact ' + id + '...');
-        //     let self = this;
-        //     let params = Object.assign({}, self.contact);
-        //     axios.patch('api/contact/' + id, params)
-        //         .then(function () {
-        //             self.contact.name = '';
-        //             self.contact.email = '';
-        //             self.contact.phone = '';
-        //             self.edit = false;
-        //             self.fetchContactList();
-        //         })
-        //         .catch(function (error) {
-        //             self.contact.name = '';
-        //             self.contact.email = '';
-        //             self.contact.phone = '';
-        //             self.edit = false;
-        //             self.fetchContactList();
-        //             console.log(error);
-        //         });
-        // },
+        createContact: function createContact() {
+            var self = this;
+            var params = Object.assign({}, self.contact);
+            axios.post('api/contact/store', params).then(function () {
+                self.contact.name = '';
+                self.contact.email = '';
+                self.contact.subject = '';
+                self.contact.message = '';
+                self.edit = false;
+                self.fetchContactList();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        showContact: function showContact(id) {
+            var self = this;
+            axios.get('api/contact/' + id).then(function (response) {
+                self.contact.id = response.data.id;
+                self.contact.name = response.data.name;
+                self.contact.email = response.data.email;
+                self.contact.subject = response.data.subject;
+                self.contact.message = response.data.message;
+            });
+            self.edit = true;
+        },
+        updateContact: function updateContact(id) {
+            var self = this;
+            var params = Object.assign({}, self.contact);
+            axios.patch('api/contact/' + id, params).then(function () {
+                self.contact.name = '';
+                self.contact.email = '';
+                self.contact.subject = '';
+                self.contact.message = '';
+                self.edit = false;
+                self.fetchContactList();
+            }).catch(function (error) {
+                self.contact.name = '';
+                self.contact.email = '';
+                self.contact.subject = '';
+                self.contact.message = '';
+                self.edit = false;
+                self.fetchContactList();
+                console.log(error);
+            });
+        },
         deleteContact: function deleteContact(id) {
             var self = this;
             var params = Object.assign({}, self.contact);
@@ -45181,7 +45202,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "card" }, [
     _c("table", { staticClass: "table" }, [
       _vm._m(0),
       _vm._v(" "),
@@ -45201,22 +45222,7 @@ var render = function() {
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-default btn-xs",
-                  on: {
-                    click: function($event) {
-                      return _vm.showContact(contact.id)
-                    }
-                  }
-                },
-                [_vm._v("Edit")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-danger btn-xs",
+                  staticClass: "btn btn-danger btn-sm",
                   on: {
                     click: function($event) {
                       return _vm.deleteContact(contact.id)
@@ -45238,19 +45244,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
+    return _c("thead", { staticClass: "thead-dark" }, [
       _c("tr", [
-        _c("th", [_vm._v("Name")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Email")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Email")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Subject")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Subject")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Message")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Message")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Edit")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Remove")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Remove")])
       ])
     ])
   }
