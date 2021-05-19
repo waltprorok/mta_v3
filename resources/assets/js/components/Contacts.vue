@@ -36,6 +36,7 @@
                 <th scope="col">Email</th>
                 <th scope="col">Subject</th>
                 <th scope="col">Message</th>
+                <th scope="col">Created</th>
 <!--                <th scope="col">Edit</th>-->
                 <th scope="col">Remove</th>
             </tr>
@@ -46,6 +47,7 @@
                 <td>{{ contact.email }}</td> <!-- TODO: Make an anchor tag to open a new page to send a response email -->
                 <td>{{ contact.subject }}</td>
                 <td>{{ contact.message }}</td>
+                <td>{{ contact.created_at }}</td>
 <!--                <td>-->
 <!--                    <button @click="showContact(contact.id)" class="btn btn-default btn-xs">Edit</button>-->
 <!--                </td>-->
@@ -70,6 +72,7 @@ export default {
                 email: '',
                 subject: '',
                 message: '',
+                created_at: '',
             }
         }
     },

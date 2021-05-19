@@ -45109,6 +45109,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -45120,7 +45122,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 name: '',
                 email: '',
                 subject: '',
-                message: ''
+                message: '',
+                created_at: ''
             }
         };
     },
@@ -45218,6 +45221,8 @@ var render = function() {
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(contact.message))]),
             _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(contact.created_at))]),
+            _vm._v(" "),
             _c("td", [
               _c(
                 "button",
@@ -45253,6 +45258,8 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Subject")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Message")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Created")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Remove")])
       ])
