@@ -47,7 +47,8 @@
                 <td>{{ contact.email }}</td> <!-- TODO: Make an anchor tag to open a new page to send a response email -->
                 <td>{{ contact.subject }}</td>
                 <td>{{ contact.message }}</td>
-                <td>{{ contact.created_at }}</td>
+                <td>{{ contact.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a')
+                    }}</td>
 <!--                <td>-->
 <!--                    <button @click="showContact(contact.id)" class="btn btn-default btn-xs">Edit</button>-->
 <!--                </td>-->
@@ -61,6 +62,7 @@
 </template>
 
 <script>
+
 export default {
     data: function () {
         return {
