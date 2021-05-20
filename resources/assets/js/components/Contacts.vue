@@ -1,33 +1,33 @@
 <template>
     <div class="card">
-<!--        <div class="form-control">-->
-<!--            <h4>Edit Contact</h4>-->
-<!--            <br/>-->
-<!--            <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">-->
-<!--                <div class="form-group">-->
-<!--                    <label>Name</label>-->
-<!--                    <input v-model="contact.name" type="text" name="name" class="form-control">-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <label>Email</label>-->
-<!--                    <input v-model="contact.email" type="text" name="email" class="form-control">-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <label>Subject</label>-->
-<!--                    <input v-model="contact.subject" type="text" name="subject" class="form-control">-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <label>Message</label>-->
-<!--                    <textarea v-model="contact.message" name="message" class="form-control"></textarea>-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <button v-show="!edit" type="submit" class="btn btn-primary">New Contact</button>-->
-<!--                    <button v-show="edit" type="submit" class="btn btn-primary">Update Contact</button>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
+        <div class="form-control">
+            <h4>Edit Contact</h4>
+            <br/>
+            <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input v-model="contact.name" type="text" name="name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input v-model="contact.email" type="text" name="email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input v-model="contact.subject" type="text" name="subject" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea v-model="contact.message" name="message" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <button v-show="!edit" type="submit" class="btn btn-primary">New Contact</button>
+                    <button v-show="edit" type="submit" class="btn btn-primary">Update Contact</button>
+                </div>
+            </form>
+        </div>
 
-<!--        <br/>-->
+        <br/>
 
         <table class="table">
             <thead class="thead-dark">
