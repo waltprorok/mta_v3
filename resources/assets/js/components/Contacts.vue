@@ -44,7 +44,7 @@
             <tbody>
             <tr v-for="contact in list">
                 <td>{{ contact.name }}</td>
-                <td>{{ contact.email }}</td> <!-- TODO: Make an anchor tag to open a new page to send a response email -->
+                <td><a v-bind:href="'mailto:' + contact.email">{{ contact.email }}</a></td> <!-- TODO: Make an anchor tag to open a new page to send a response email -->
                 <td>{{ contact.subject }}</td>
                 <td>{{ contact.message }}</td>
                 <td>{{ contact.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a')

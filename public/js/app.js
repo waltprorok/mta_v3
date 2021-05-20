@@ -45767,7 +45767,11 @@ var render = function() {
           return _c("tr", [
             _c("td", [_vm._v(_vm._s(contact.name))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(contact.email))]),
+            _c("td", [
+              _c("a", { attrs: { href: "mailto:" + contact.email } }, [
+                _vm._v(_vm._s(contact.email))
+              ])
+            ]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(contact.subject))]),
             _vm._v(" "),
