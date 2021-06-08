@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['middleware' => 'api'], function () {
+
     // Fetch contact us by the latest first
     Route::get('contacts', 'ContactController@index');
 
@@ -43,10 +44,7 @@ Route::group(['middleware' => 'api'], function () {
         ]);
     });
 
-    // Delete Contact
-    Route::delete('contact/{id}', function ($id) {
-        return Contact::destroy($id);
-    });
+    Route::delete('contact/{contact}', 'ContactController@delete');
 
 
 });

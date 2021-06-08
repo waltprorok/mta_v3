@@ -13,7 +13,7 @@
 
 Auth::routes();
 
-
+// Routes for fronted marketing
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('pricing', 'HomeController@pricing')->name('pricing');
 Route::get('blog', 'HomeController@blog')->name('blog');
@@ -24,6 +24,14 @@ Route::get('faq', 'HomeController@faq')->name('faq');
 Route::get('terms', 'HomeController@terms')->name('terms');
 Route::post('newsletter', 'NewsletterController@store')->name('newsletter');
 
+// Routes for frontend blog
+Route::prefix('blog')->group(function () {
+    Route::get('/', 'BlogController@index')->name('blog.index');
+    Route::get('/{blog}', 'BlogController@show')->name('blog.show');
+
+});
+
+// Routes for authorized users
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
@@ -76,9 +84,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('contacts')->group(function () {
-        Route::get('/', function () {
-            return view('webapp.contact.index');
-        })->name('webapp.contact.index');
+        Route::get('/', 'ContactController@indexBlade')->name('webapp.contact.index');
 
     });
 
@@ -101,12 +107,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::delete('/blog/{id}', 'BlogController@destroy')->name('admin.blog.destroy');
         });
     });
-
-});
-
-Route::prefix('blog')->group(function () {
-    Route::get('/', 'BlogController@index')->name('blog.index');
-    Route::get('/{blog}', 'BlogController@show')->name('blog.show');
 
 });
 
