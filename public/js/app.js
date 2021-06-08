@@ -45802,7 +45802,12 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Delete")]
+                [
+                  _c("i", {
+                    staticClass: "fa fa-trash",
+                    attrs: { "aria-hidden": "true" }
+                  })
+                ]
               )
             ])
           ])

@@ -53,7 +53,7 @@
 <!--                    <button @click="showContact(contact.id)" class="btn btn-default btn-xs">Edit</button>-->
 <!--                </td>-->
                 <td>
-                    <button @click="deleteContact(contact.id)" class="btn btn-danger btn-sm">Delete</button>
+                    <button @click="deleteContact(contact.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 </td>
             </tr>
             </tbody>

@@ -15,10 +15,8 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['middleware' => 'api'], function () {
-    // Fetch contact us
-    Route::get('contacts', function () {
-        return Contact::latest()->orderBy('created_at', 'desc')->get();
-    });
+    // Fetch contact us by the latest first
+    Route::get('contacts', 'ContactController@index');
 
     // Get Single Contact
     Route::get('contact/{id}', function ($id) {
@@ -35,9 +33,8 @@ Route::group(['middleware' => 'api'], function () {
         ]);
     });
 
-
     // Update Contact
-    Route::patch('contact/{id}', function(Request $request, $id) {
+    Route::patch('contact/{id}', function (Request $request, $id) {
         Contact::findOrFail($id)->update([
             'name' => $request->input(['name']),
             'email' => $request->input(['email']),
