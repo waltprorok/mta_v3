@@ -11,6 +11,12 @@ window.Vue = require('vue');
 
 let axios = require('axios');
 
+import Vue from 'vue';
+import VueFilterDateParse from '@vuejs-community/vue-filter-date-parse';
+import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
+
+Vue.use(VueFilterDateParse);
+Vue.use(VueFilterDateFormat);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
