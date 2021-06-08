@@ -1,33 +1,33 @@
 <template>
     <div class="card">
-<!--        <div class="form-control">-->
-<!--            <h4>Edit Contact</h4>-->
-<!--            <br/>-->
-<!--            <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">-->
-<!--                <div class="form-group">-->
-<!--                    <label>Name</label>-->
-<!--                    <input v-model="contact.name" type="text" name="name" class="form-control">-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <label>Email</label>-->
-<!--                    <input v-model="contact.email" type="text" name="email" class="form-control">-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <label>Subject</label>-->
-<!--                    <input v-model="contact.subject" type="text" name="subject" class="form-control">-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <label>Message</label>-->
-<!--                    <textarea v-model="contact.message" name="message" class="form-control"></textarea>-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <button v-show="!edit" type="submit" class="btn btn-primary">New Contact</button>-->
-<!--                    <button v-show="edit" type="submit" class="btn btn-primary">Update Contact</button>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
+        <div class="form-control">
+            <h4>Edit Contact</h4>
+            <br/>
+            <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input v-model="contact.name" type="text" name="name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input v-model="contact.email" type="text" name="email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input v-model="contact.subject" type="text" name="subject" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea v-model="contact.message" name="message" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <button v-show="!edit" type="submit" class="btn btn-primary">New Contact</button>
+                    <button v-show="edit" type="submit" class="btn btn-primary">Update Contact</button>
+                </div>
+            </form>
+        </div>
 
-<!--        <br/>-->
+        <br/>
 
         <table class="table">
             <thead class="thead-dark">
@@ -36,6 +36,7 @@
                 <th scope="col">Email</th>
                 <th scope="col">Subject</th>
                 <th scope="col">Message</th>
+                <th scope="col">Created</th>
 <!--                <th scope="col">Edit</th>-->
                 <th scope="col">Remove</th>
             </tr>
@@ -43,14 +44,16 @@
             <tbody>
             <tr v-for="contact in list">
                 <td>{{ contact.name }}</td>
-                <td>{{ contact.email }}</td> <!-- TODO: Make an anchor tag to open a new page to send a response email -->
+                <td><a v-bind:href="'mailto:' + contact.email">{{ contact.email }}</a></td> <!-- TODO: Make an anchor tag to open a new page to send a response email -->
                 <td>{{ contact.subject }}</td>
                 <td>{{ contact.message }}</td>
+                <td>{{ contact.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a')
+                    }}</td>
 <!--                <td>-->
 <!--                    <button @click="showContact(contact.id)" class="btn btn-default btn-xs">Edit</button>-->
 <!--                </td>-->
                 <td>
-                    <button @click="deleteContact(contact.id)" class="btn btn-danger btn-sm">Delete</button>
+                    <button @click="deleteContact(contact.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 </td>
             </tr>
             </tbody>
@@ -59,6 +62,7 @@
 </template>
 
 <script>
+
 export default {
     data: function () {
         return {
@@ -70,6 +74,7 @@ export default {
                 email: '',
                 subject: '',
                 message: '',
+                created_at: '',
             }
         }
     },
