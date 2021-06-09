@@ -26,7 +26,7 @@
                         </a>
                     </li>
                 @endif
-                <li class="nav-item nav-dropdown ">
+                <li class="nav-item nav-dropdown">
                     <a href="#" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == 'student.index' ? 'active' : '' }}">
                         <i class="fa fa-users"></i> Students <i class="fa fa-caret-left"></i>
                     </a>

@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Contact;
 use App\Http\Requests\StoreContactSubmission;
 use App\Mail\ContactForm;
-use Illuminate\Http\Request;
 use App\Plan;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
 
@@ -83,6 +83,5 @@ class HomeController extends Controller
 
         return redirect()->route('contact')->with('success', 'The contact form was sent successfully');
     }
-
 
 }

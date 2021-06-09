@@ -37,9 +37,9 @@
                             <div class="card-body">
                                 <ul class="list-group">
                                     @if (Auth::user()->trial_ends_at < Carbon\Carbon::now())
-                                        <li class="list-group-item" style="background-color: red; color: white;">Your <b>FREE</b> Trial Ended <b>{{ date('M d, Y', strtotime(Auth::user()->trial_ends_at )) }}</b></li>
+                                        <li class="list-group-item" style="background-color: red; color: white;">Your <b>FREE</b> Trial Ended <b>{{ date('F d, Y', strtotime(Auth::user()->trial_ends_at )) }}</b></li>
                                     @else
-                                        <li class="list-group-item active">Your <b>FREE</b> account is available until <b>{{ date('M d, Y', strtotime(Auth::user()->trial_ends_at )) }}</b></li>
+                                        <li class="list-group-item active">Your <b>FREE</b> account is available until <b>{{ date('F d, Y', strtotime(Auth::user()->trial_ends_at )) }}</b></li>
                                     @endif
                                     <li class="list-group-item"> <i class="fa fa-credit-card" style="padding-right: 10px;" aria-hidden="true"></i>Credit Card Number</li>
                                     <li class="list-group-item"> <i class="fa fa-keyboard-o" style="padding-right: 10px;" aria-hidden="true"></i>Month, Year, CVC and Zip Code</li>

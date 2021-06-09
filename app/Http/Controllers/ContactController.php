@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Contact;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+
     public function indexBlade()
     {
         return view('webapp.contact.index');
@@ -19,6 +21,38 @@ class ContactController extends Controller
     public function index()
     {
         return Contact::latest()->orderBy('created_at', 'desc')->get();
+    }
+
+    /**
+     * @param Contact $contact
+     * @return Contact
+     */
+    public function show(Contact $contact): Contact
+    {
+        return $contact;
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function store(Request $request): JsonResponse
+    {
+        $contact = Contact::create($request->all());
+
+        return response()->json($contact, 201);
+    }
+
+    /**
+     * @param Request $request
+     * @param Contact $contact
+     * @return JsonResponse
+     */
+    public function update(Request $request, Contact $contact): JsonResponse
+    {
+        $contact->update($request->all());
+
+        return response()->json($contact, 200);
     }
 
     /**

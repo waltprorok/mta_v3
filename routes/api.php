@@ -1,6 +1,5 @@
 <?php
 
-use App\Contact;
 use Illuminate\Http\Request;
 
 /*
@@ -16,36 +15,13 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => 'api'], function () {
 
-    // Fetch contact us by the latest first
-    Route::get('contacts', 'ContactController@index');
-
-    // Get Single Contact
-    Route::get('contact/{id}', function ($id) {
-        return Contact::findOrFail($id);
+    Route::prefix('contact')->group(function () {
+        Route::get('/', 'ContactController@index');
+        Route::get('/{contact}', 'ContactController@show');
+        Route::post('/store', 'ContactController@store');
+        Route::patch('/{contact}', 'ContactController@update');
+        Route::delete('/{contact}', 'ContactController@delete');
     });
-
-    // Add Contact
-    Route::post('contact/store', function (Request $request) {
-        return Contact::create([
-            'name' => $request->input(['name']),
-            'email' => $request->input(['email']),
-            'subject' => $request->input(['subject']),
-            'message' => $request->input(['message']),
-        ]);
-    });
-
-    // Update Contact
-    Route::patch('contact/{id}', function (Request $request, $id) {
-        Contact::findOrFail($id)->update([
-            'name' => $request->input(['name']),
-            'email' => $request->input(['email']),
-            'subject' => $request->input(['subject']),
-            'message' => $request->input(['message']),
-        ]);
-    });
-
-    Route::delete('contact/{contact}', 'ContactController@delete');
-
 
 });
 

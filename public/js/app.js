@@ -45500,6 +45500,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -45524,7 +45528,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         fetchContactList: function fetchContactList() {
             var _this = this;
 
-            axios.get('api/contacts').then(function (response) {
+            axios.get('api/contact').then(function (response) {
                 _this.list = response.data;
             }).catch(function (error) {
                 console.log(error);
@@ -45787,7 +45791,22 @@ var render = function() {
                     ),
                     "MM-DD-YYYY hh:mm a"
                   )
-                )
+                ) + "\n            "
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default btn-xs",
+                  on: {
+                    click: function($event) {
+                      return _vm.showContact(contact.id)
+                    }
+                  }
+                },
+                [_vm._v("Edit")]
               )
             ]),
             _vm._v(" "),
@@ -45833,6 +45852,8 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Message")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Created")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Edit")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Remove")])
       ])

@@ -84,7 +84,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('contacts')->group(function () {
-        Route::get('/', 'ContactController@indexBlade')->name('webapp.contact.indexBlade');
+        Route::get('/', 'ContactController@indexBlade')->name('webapp.contact.index');
 
     });
 
