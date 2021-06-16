@@ -45499,11 +45499,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -45795,26 +45790,26 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("td", [
+            _c("td", { staticClass: "text-nowrap" }, [
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-default btn-xs",
+                  staticClass: "btn btn-outline-primary btn-sm",
+                  attrs: { title: "edit" },
                   on: {
                     click: function($event) {
                       return _vm.showContact(contact.id)
                     }
                   }
                 },
-                [_vm._v("Edit")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", [
+                [_c("i", { staticClass: "fa fa-edit" })]
+              ),
+              _vm._v(" "),
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-danger btn-sm",
+                  staticClass: "btn btn-outline-danger btn-sm",
+                  attrs: { title: "click to delete" },
                   on: {
                     click: function($event) {
                       return _vm.deleteContact(contact.id)
@@ -45853,9 +45848,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Created")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Edit")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Remove")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Actions")])
       ])
     ])
   }
