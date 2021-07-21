@@ -37,23 +37,22 @@
                 <th scope="col">Subject</th>
                 <th scope="col">Message</th>
                 <th scope="col">Created</th>
-<!--                <th scope="col">Edit</th>-->
-                <th scope="col">Remove</th>
+                <th scope="col">Actions</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="contact in list">
                 <td>{{ contact.name }}</td>
-                <td><a v-bind:href="'mailto:' + contact.email">{{ contact.email }}</a></td> <!-- TODO: Make an anchor tag to open a new page to send a response email -->
+                <td><a v-bind:href="'mailto:' + contact.email">{{ contact.email }}</a></td>
+                <!-- TODO: Make an anchor tag to open a new page to send a response email -->
                 <td>{{ contact.subject }}</td>
                 <td>{{ contact.message }}</td>
-                <td>{{ contact.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a')
-                    }}</td>
-<!--                <td>-->
-<!--                    <button @click="showContact(contact.id)" class="btn btn-default btn-xs">Edit</button>-->
-<!--                </td>-->
-                <td>
-                    <button @click="deleteContact(contact.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                <td>{{ contact.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}
+                </td>
+                <td class="text-nowrap">
+                    <button @click="showContact(contact.id)" class="btn btn-outline-primary btn-sm" title="edit"><i class="fa fa-edit"></i></button>
+                    <button @click="deleteContact(contact.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
                 </td>
             </tr>
             </tbody>
@@ -83,7 +82,7 @@ export default {
     },
     methods: {
         fetchContactList: function () {
-            axios.get('api/contacts')
+            axios.get('api/contact')
                 .then((response) => {
                     this.list = response.data;
                 }).catch((error) => {
