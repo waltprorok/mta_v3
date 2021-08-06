@@ -5,16 +5,14 @@ namespace App\Http\Controllers;
 use App\BusinessHours;
 use App\Http\Requests\StoreScheduleAppt;
 use App\Http\Requests\StoreStudent;
-use App\Notifications\LessonConfirmation;
+use App\Lesson;
+use App\Student;
 use App\Teacher;
 use Auth;
 use Carbon\Carbon;
 use File;
-use Storage;
-use App\Student;
-use App\Lesson;
 use Illuminate\Http\Request;
-use Nexmo\Laravel\Facade\Nexmo;
+use Storage;
 
 
 class StudentController extends Controller
