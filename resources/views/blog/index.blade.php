@@ -12,7 +12,7 @@
                     <h2 class="title">Music Teachers Aid Blog</h2>
                 </div>
                 @foreach ($blogs as $blog)
-                    <div class="col-md-4 pull-left">
+                    <div class="col-md-4">
                         <div class="thumbnail">
                             @if ($blog->image_url)
                                 <a href="{{ route('blog.show', $blog->slug) }}">
