@@ -3,7 +3,7 @@
 @section('content')
 
     <!-- Blog -->
-    <div id="blog" class="reg-padding">
+    <div id="blog" class="section reg-padding">
         <!-- Container -->
         <div class="container">
             <!-- Row -->
@@ -12,29 +12,31 @@
                     <h2 class="title">Music Teachers Aid Blog</h2>
                 </div>
                 @foreach ($blogs as $blog)
-                    <div class="col-md-4 pull-left">
-                        <div class="thumbnail">
+                    <div class="col-md-4">
+                        <div class="blog thumbnail">
                             @if ($blog->image_url)
-                                <a href="{{ route('blog.show', $blog->slug) }}">
-                                    <img src="{{ $blog->image_url }}" alt="{{ $blog->image }}">
-                                </a>
-                            @endif
-                            <div class="caption">
-                                <h3>{{ $blog->title }}</h3>
-                                <div class="blog-content">
-                                    <ul class="blog-meta">
-                                        <li>
-                                            <small><b>{{ $blog->author->first_name . ' ' . $blog->author->last_name }}</b></small>
-                                        </li>
-                                        <li><small>{{ $blog->date_time }}</small></li>
-                                    </ul>
-                                    <p>
-                                        {!! \Illuminate\Support\Str::limit($blog->body_html, 110) !!}
-                                    </p>
-                                    <p class="text-right">
-                                        <a href="{{ route('blog.show', $blog->slug) }}" class="btn btn-default">Read More</a>
-                                    </p>
+                                <div class="blog-img">
+                                    <a href="{{ route('blog.show', $blog->slug) }}">
+                                        <img src="{{ $blog->image_url }}" alt="{{ $blog->image }}">
+                                    </a>
                                 </div>
+                            @endif
+                            <div class="blog-content">
+                                <h3>{{ $blog->title }}</h3>
+                                <ul class="blog-meta">
+                                    <li>
+                                        <i class="fa fa-user"></i>{{ $blog->author->first_name . ' ' . $blog->author->last_name }}
+                                    </li>
+                                    <li><i class="fa fa-clock-o"></i>{{ $blog->date_time }}</li>
+                                </ul>
+
+                                <p>
+                                    <small>{!! \Illuminate\Support\Str::limit($blog->body_html, 130) !!}</small>
+                                </p>
+                                <p class="text-right">
+                                    <a href="{{ route('blog.show', $blog->slug) }}" class="btn btn-default">Read
+                                        More</a>
+                                </p>
                             </div>
                         </div>
                     </div>
