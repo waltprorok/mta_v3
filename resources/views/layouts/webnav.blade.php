@@ -22,14 +22,21 @@
                     <li class="nav-item">
                         <a href="{{ route('webapp.admin.students') }}"
                            class="nav-link {{ Route::currentRouteName() == 'webapp.admin.students' ? 'active' : '' }}">
-                            <i class="fa fa-users"></i> Students
+                            <i class="fa fa-graduation-cap"></i> Students
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a href="{{ route('webapp.admin.teachers') }}"
                            class="nav-link {{ Route::currentRouteName() == 'webapp.admin.teachers' ? 'active' : '' }}">
-                            <i class="fa fa-graduation-cap"></i> Teachers
+                            <i class="fa fa-book"></i> Teachers
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('webapp.admin.users') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'webapp.admin.users' ? 'active' : '' }}">
+                            <i class="fa fa-users"></i> Users
                         </a>
                     </li>
                 @endif

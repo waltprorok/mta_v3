@@ -86,6 +86,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('admin')->group(function () {
        Route::get('teachers', 'TeacherController@adminTeachers')->name('webapp.admin.teachers');
        Route::get('students', 'StudentController@adminStudents')->name('webapp.admin.students');
+       Route::get('users', 'UserController@adminUsers')->name('webapp.admin.users');
     });
 
     Route::prefix('contacts')->group(function () {
