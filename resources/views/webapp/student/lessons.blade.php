@@ -26,7 +26,7 @@
                 <tbody>
                 @if(count($lessons) == null)
                     <tr>
-                        <td>No active students at this time.</td>
+                        <td>No lessons have been scheduled at this time.</td>
                     </tr>
                 @else
                     @foreach($lessons as $lesson)
