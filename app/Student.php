@@ -61,6 +61,9 @@ class Student extends Model
         return $query->orderBy('first_name', 'asc');
     }
 
+    /**
+     * @return string|void
+     */
     public function getPhoneNumberAttribute()
     {
         if ($this->phone != null) {
