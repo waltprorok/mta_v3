@@ -119,18 +119,14 @@
                                         </select>
 
                                         @if ($errors->has('color'))
-                                            <span class="help-block">
-                                            <strong>{{ $errors->first('color') }}</strong>
-                                        </span>
+                                            <span class="help-block"><strong>{{ $errors->first('color') }}</strong></span>
                                         @endif
                                     </div>
                                 </div>
                             </div>
 
                             <input id="id" type="hidden" class="form-control" name="id" value="{{ $lesson->id }}">
-
                             <input id="student_id" type="hidden" class="form-control" name="student_id" value="{{ $lesson->student_id }}">
-
                             <input id="interval" type="hidden" class="form-control" name="interval" value="{{ $lesson->interval }}">
 
                             <div class="pull-left">
