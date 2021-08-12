@@ -127,14 +127,11 @@
                                 </div>
                             </div>
 
-                            <input id="id" type="hidden" class="form-control" name="id"
-                                   value="{{ $lesson->id }}">
+                            <input id="id" type="hidden" class="form-control" name="id" value="{{ $lesson->id }}">
 
-                            <input id="student_id" type="hidden" class="form-control" name="student_id"
-                                   value="{{ $lesson->student_id }}">
+                            <input id="student_id" type="hidden" class="form-control" name="student_id" value="{{ $lesson->student_id }}">
 
-                            <input id="interval" type="hidden" class="form-control" name="interval"
-                                   value="{{ $lesson->interval }}">
+                            <input id="interval" type="hidden" class="form-control" name="interval" value="{{ $lesson->interval }}">
 
                             <div class="pull-left">
                                 @if(count($allTimes) > 1)
@@ -149,13 +146,8 @@
                             </div>
 
                             <div class="pull-right">
-                                <button type="button" class="btn btn-danger" data-toggle="modal"
-                                        data-target="#myDeleteModal">Delete
-                                </button>
-
-                                <button type="button" class="btn btn-danger-outline" data-toggle="modal"
-                                        data-target="#myDeleteModalAll">Delete All
-                                </button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myDeleteModal">Delete</button>
+                                <button type="button" class="btn btn-danger-outline" data-toggle="modal" data-target="#myDeleteModalAll">Delete All</button>
                             </div>
 
                         </form>

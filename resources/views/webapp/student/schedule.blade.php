@@ -90,9 +90,7 @@
                                         </select>
 
                                         @if ($errors->has('end_time'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('end_time') }}</strong>
-                                    </span>
+                                            <span class="help-block"><strong>{{ $errors->first('end_time') }}</strong></span>
                                         @endif
                                     </div>
                                 </div>
@@ -144,9 +142,7 @@
 
                             <div class="pull-left">
                                 @if(count($allTimes) > 1)
-                                    <button type="submit" class="btn btn-primary">
-                                        Schedule
-                                    </button>
+                                    <button type="submit" class="btn btn-primary">Schedule</button>
                                 @endif
                                 <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancel</a>
                             </div>

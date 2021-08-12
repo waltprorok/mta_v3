@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 
 class Subscribed
 {
@@ -17,10 +16,9 @@ class Subscribed
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() and !$request->user()
-                ->subscribed('premium'))
+        if ($request->user() && ! $request->user()->subscribed('premium'))
         {
-            return redirect('/account');
+            return redirect('/account/subscription')->with('info', 'Please subscribe to enjoy all the benefits of Music Teachers Aid.');
         }
 
         return $next($request);

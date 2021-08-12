@@ -5,20 +5,20 @@
             <br/>
             <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">
                 <div class="form-group">
-                    <label>Name</label>
-                    <input v-model="contact.name" type="text" name="name" class="form-control">
+                    <label for="name">Name</label>
+                    <input id="name" v-model="contact.name" type="text" name="name" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label>Email</label>
-                    <input v-model="contact.email" type="text" name="email" class="form-control">
+                    <label for="email">Email</label>
+                    <input id="email" v-model="contact.email" type="text" name="email" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label>Subject</label>
-                    <input v-model="contact.subject" type="text" name="subject" class="form-control">
+                    <label for="subject">Subject</label>
+                    <input id="subject" v-model="contact.subject" type="text" name="subject" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label>Message</label>
-                    <textarea v-model="contact.message" name="message" class="form-control"></textarea>
+                    <label for="message">Message</label>
+                    <textarea id="message" v-model="contact.message" name="message" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
                     <button v-show="!edit" type="submit" class="btn btn-primary">New Contact</button>
@@ -50,8 +50,10 @@
                 <td>{{ contact.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}
                 </td>
                 <td class="text-nowrap">
-                    <button @click="showContact(contact.id)" class="btn btn-outline-primary btn-sm" title="edit"><i class="fa fa-edit"></i></button>
-                    <button @click="deleteContact(contact.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i>
+                    <button @click="showContact(contact.id)" class="btn btn-outline-primary btn-sm" title="edit"><i
+                        class="fa fa-edit"></i></button>
+                    <button @click="deleteContact(contact.id)" class="btn btn-outline-danger btn-sm"
+                            title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i>
                     </button>
                 </td>
             </tr>
@@ -63,18 +65,18 @@
 <script>
 
 export default {
-    data: function () {
+    data() {
         return {
             edit: false,
             list: [],
             contact: {
-                id: '',
-                name: '',
-                email: '',
-                subject: '',
-                message: '',
-                created_at: '',
-            }
+                id: null,
+                name: null,
+                email: null,
+                subject: null,
+                message: null,
+                created_at: null,
+            },
         }
     },
     mounted: function () {
@@ -150,7 +152,7 @@ export default {
                     console.log(error);
                 });
         },
-    }
+    },
 }
 </script>
 

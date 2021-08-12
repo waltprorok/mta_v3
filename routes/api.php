@@ -22,7 +22,6 @@ Route::group(['middleware' => 'api'], function () {
         Route::patch('/{contact}', 'ContactController@update');
         Route::delete('/{contact}', 'ContactController@delete');
     });
-
 });
 
 

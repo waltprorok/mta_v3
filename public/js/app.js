@@ -45499,6 +45499,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -45507,15 +45509,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             edit: false,
             list: [],
             contact: {
-                id: '',
-                name: '',
-                email: '',
-                subject: '',
-                message: '',
-                created_at: ''
+                id: null,
+                name: null,
+                email: null,
+                subject: null,
+                message: null,
+                created_at: null
             }
         };
     },
+
     mounted: function mounted() {
         this.fetchContactList();
     },
@@ -45613,7 +45616,7 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Name")]),
+            _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -45625,7 +45628,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text", name: "name" },
+              attrs: { id: "name", type: "text", name: "name" },
               domProps: { value: _vm.contact.name },
               on: {
                 input: function($event) {
@@ -45639,7 +45642,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Email")]),
+            _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -45651,7 +45654,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text", name: "email" },
+              attrs: { id: "email", type: "text", name: "email" },
               domProps: { value: _vm.contact.email },
               on: {
                 input: function($event) {
@@ -45665,7 +45668,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Subject")]),
+            _c("label", { attrs: { for: "subject" } }, [_vm._v("Subject")]),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -45677,7 +45680,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text", name: "subject" },
+              attrs: { id: "subject", type: "text", name: "subject" },
               domProps: { value: _vm.contact.subject },
               on: {
                 input: function($event) {
@@ -45691,7 +45694,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Message")]),
+            _c("label", { attrs: { for: "message" } }, [_vm._v("Message")]),
             _vm._v(" "),
             _c("textarea", {
               directives: [
@@ -45703,7 +45706,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { name: "message" },
+              attrs: { id: "message", name: "message" },
               domProps: { value: _vm.contact.message },
               on: {
                 input: function($event) {

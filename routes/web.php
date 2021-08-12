@@ -117,7 +117,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 // middleware guard for subscribed users
 Route::group(['middleware' => ['subscribed']], function () {
-
+// Example of single route with middleware
+// Route::get('/', 'LessonController@index')->name('calendar.index')->middleware('subscribed');
 });
 
 

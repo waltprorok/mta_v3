@@ -33,7 +33,9 @@
                 </div>
             </div>
             <div class="card-body">
-                <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a>
+                @if (Route::currentRouteName() != 'account.subscription')
+                    <a href="{{ route('account.subscription') }}" class="btn btn-primary">Back</a>
+                @endif
             </div>
         </div>
     </div>
