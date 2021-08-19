@@ -1,34 +1,50 @@
 <template>
     <div class="card">
-        <div class="form-control">
-            <h4>Edit Contact</h4>
-            <br/>
-            <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">
-                <div class="form-group">
-                    <label>Name</label>
-                    <input v-model="contact.name" type="text" name="name" class="form-control">
+        <button type="button" class="btn btn-default" @click="showForm = true" v-show="!showForm">Add Contact</button>
+        <div v-if="showForm">
+            <transition name="modal">
+                <div class="modal-mask">
+                    <div class="modal-wrapper">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" v-show="edit">Edit Contact Record</h5>
+                                    <h5 class="modal-title" v-show="!edit">Add Contact Record</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" @click="showForm = false">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">
+                                        <div class="form-group">
+                                            <label for="name">Name</label>
+                                            <input id="name" v-model="contact.name" type="text" name="name" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input id="email" v-model="contact.email" type="text" name="email" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="subject">Subject</label>
+                                            <input id="subject" v-model="contact.subject" type="text" name="subject" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message">Message</label>
+                                            <textarea id="message" v-model="contact.message" name="message" class="form-control" rows="10"></textarea>
+                                        </div>
+                                        <div class="form-group pull-right">
+                                            <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>
+                                            <button v-show="!edit" type="submit" class="btn btn-primary">Save</button>
+                                            <button v-show="edit" type="submit" class="btn btn-primary">Update</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input v-model="contact.email" type="text" name="email" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Subject</label>
-                    <input v-model="contact.subject" type="text" name="subject" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Message</label>
-                    <textarea v-model="contact.message" name="message" class="form-control"></textarea>
-                </div>
-                <div class="form-group">
-                    <button v-show="!edit" type="submit" class="btn btn-primary">New Contact</button>
-                    <button v-show="edit" type="submit" class="btn btn-primary">Update Contact</button>
-                </div>
-            </form>
+            </transition>
         </div>
-
-        <br/>
-
         <table class="table">
             <thead class="thead-dark">
             <tr>
@@ -47,40 +63,79 @@
                 <!-- TODO: Make an anchor tag to open a new page to send a response email -->
                 <td>{{ contact.subject }}</td>
                 <td>{{ contact.message }}</td>
-                <td>{{ contact.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}
-                </td>
+                <td>{{ contact.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
                 <td class="text-nowrap">
                     <button @click="showContact(contact.id)" class="btn btn-outline-primary btn-sm" title="edit"><i class="fa fa-edit"></i></button>
-                    <button @click="deleteContact(contact.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i>
-                    </button>
+                    <button @click="showModalDelete(contact.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 </td>
             </tr>
             </tbody>
         </table>
+        <div v-if="showModal">
+            <transition name="modal">
+                <div class="modal-mask">
+                    <div class="modal-wrapper">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Delete Contact Us Record</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" @click="showModal = false">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Do you want to delete this contact us record?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" @click="showModal = false">Cancel</button>
+                                    <button type="button" @click="deleteContact(id)" class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+        </div>
     </div>
 </template>
 
 <script>
 
 export default {
-    data: function () {
+    data() {
         return {
             edit: false,
+            showForm: false,
+            showModal: false,
             list: [],
             contact: {
-                id: '',
-                name: '',
-                email: '',
-                subject: '',
-                message: '',
-                created_at: '',
-            }
+                id: null,
+                name: null,
+                email: null,
+                subject: null,
+                message: null,
+                created_at: null,
+            },
         }
     },
     mounted: function () {
         this.fetchContactList();
     },
     methods: {
+        cancelForm: function () {
+            let self = this;
+            self.showForm = false;
+            self.contact.name = null;
+            self.contact.email = null;
+            self.contact.subject = null;
+            self.contact.message = null;
+            self.edit = false;
+        },
+        showModalDelete: function (id) {
+            let self = this;
+            self.showModal = true;
+            self.id = id;
+        },
         fetchContactList: function () {
             axios.get('api/contact')
                 .then((response) => {
@@ -94,12 +149,13 @@ export default {
             let params = Object.assign({}, self.contact);
             axios.post('api/contact/store', params)
                 .then(function () {
-                    self.contact.name = '';
-                    self.contact.email = '';
-                    self.contact.subject = '';
-                    self.contact.message = '';
+                    self.contact.name = null;
+                    self.contact.email = null;
+                    self.contact.subject = null;
+                    self.contact.message = null;
                     self.edit = false;
-                    self.fetchContactList();
+                    self.showForm = false,
+                        self.fetchContactList();
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -107,6 +163,7 @@ export default {
         },
         showContact: function (id) {
             let self = this;
+            self.showForm = true;
             axios.get('api/contact/' + id)
                 .then(function (response) {
                     self.contact.id = response.data.id;
@@ -121,7 +178,7 @@ export default {
             let self = this;
             let params = Object.assign({}, self.contact);
             axios.patch('api/contact/' + id, params)
-                .then(function () {
+                .then(function (response) {
                     self.contact.name = '';
                     self.contact.email = '';
                     self.contact.subject = '';
@@ -138,19 +195,40 @@ export default {
                     self.fetchContactList();
                     console.log(error);
                 });
+            self.showForm = false;
         },
         deleteContact: function (id) {
             let self = this;
             let params = Object.assign({}, self.contact);
             axios.delete('api/contact/' + id, params)
                 .then(function () {
+                    self.showModal = false;
                     self.fetchContactList();
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
         },
-    }
+    },
 }
 </script>
 
+<style>
+.modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: brightness(25%);
+    backdrop-filter: contrast(55%);
+    display: table;
+    transition: opacity .8s ease;
+}
+
+.modal-wrapper {
+    display: table-cell;
+    vertical-align: top;
+}
+</style>

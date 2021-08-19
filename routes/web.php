@@ -83,9 +83,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/process_date', 'StudentController@ajaxTime');
     });
 
+    Route::prefix('admin')->group(function () {
+       Route::get('teachers', 'TeacherController@adminTeachers')->name('webapp.admin.teachers');
+       Route::get('students', 'StudentController@adminStudents')->name('webapp.admin.students');
+       Route::get('users', 'UserController@adminUsers')->name('webapp.admin.users');
+    });
+
     Route::prefix('contacts')->group(function () {
         Route::get('/', 'ContactController@indexBlade')->name('webapp.contact.index');
-
     });
 
     Route::prefix('calendar')->group(function () {
@@ -112,7 +117,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 // middleware guard for subscribed users
 Route::group(['middleware' => ['subscribed']], function () {
-
+// Example of single route with middleware
+// Route::get('/', 'LessonController@index')->name('calendar.index')->middleware('subscribed');
 });
 
 

@@ -25,6 +25,12 @@ class StudentController extends Controller
 
     public $selectedDate;
 
+    public function adminStudents()
+    {
+        $students = Student::all();
+        return view('webapp.student.adminStudents', compact('students', $students));
+    }
+
     public function index()
     {
         $teacher = Teacher::where('teacher_id', Auth::id())->first();

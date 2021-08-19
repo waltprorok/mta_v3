@@ -2,8 +2,10 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
@@ -47,6 +49,16 @@ class User extends Authenticatable
     public function lessons()
     {
         return $this->hasMany(Lesson::class, 'teacher_id', 'id');
+    }
+
+    public static function activeStudentCount()
+    {
+        return Auth::user()->students->where('status', '==', 'Active')->count();
+    }
+
+    public static function lessonsThisWeek()
+    {
+        return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
     }
 
 }

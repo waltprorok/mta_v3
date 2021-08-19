@@ -28,9 +28,8 @@
                             <div class="row">
                                 <div class="col-sm-9">
                                     <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                                        <label for="Title" class="control-label">Title</label>
-                                        <input type="text" class="form-control" autocomplete="off" name="title"
-                                               value="{{ $lesson->title }}">
+                                        <label for="name" class="control-label">Name</label>
+                                        <input type="text" class="form-control" autocomplete="off" name="title" value="{{ $lesson->title }}">
                                         @if ($errors->has('title'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('title') }}</strong></span>
@@ -44,9 +43,9 @@
                                     <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
                                         <label for="Title" class="control-label">Start Date</label>
                                         @if($startDate)
-                                            <input class="date form-control" autocomplete="off" type="text" id="editLessonDate" name="start_date" value="{{ $startDate }}">
+                                            <input class="date form-control" title="Please select a date" autocomplete="off" type="text" id="editLessonDate" name="start_date" value="{{ $startDate }}">
                                         @else
-                                            <input class="date form-control" autocomplete="off" type="text" id="editLessonDate" name="start_date" value="{{ date('Y-m-d', strtotime($lesson->start_date)) }}">
+                                            <input class="date form-control" title="Please select a date" autocomplete="off" type="text" id="editLessonDate" name="start_date" value="{{ date('Y-m-d', strtotime($lesson->start_date)) }}">
                                         @endif
                                         @if ($errors->has('start_date'))
                                             <span class="help-block"><strong>{{ $errors->first('start_date') }}</strong></span>
@@ -119,22 +118,15 @@
                                         </select>
 
                                         @if ($errors->has('color'))
-                                            <span class="help-block">
-                                            <strong>{{ $errors->first('color') }}</strong>
-                                        </span>
+                                            <span class="help-block"><strong>{{ $errors->first('color') }}</strong></span>
                                         @endif
                                     </div>
                                 </div>
                             </div>
 
-                            <input id="id" type="hidden" class="form-control" name="id"
-                                   value="{{ $lesson->id }}">
-
-                            <input id="student_id" type="hidden" class="form-control" name="student_id"
-                                   value="{{ $lesson->student_id }}">
-
-                            <input id="interval" type="hidden" class="form-control" name="interval"
-                                   value="{{ $lesson->interval }}">
+                            <input id="id" type="hidden" class="form-control" name="id" value="{{ $lesson->id }}">
+                            <input id="student_id" type="hidden" class="form-control" name="student_id" value="{{ $lesson->student_id }}">
+                            <input id="interval" type="hidden" class="form-control" name="interval" value="{{ $lesson->interval }}">
 
                             <div class="pull-left">
                                 @if(count($allTimes) > 1)
@@ -149,13 +141,8 @@
                             </div>
 
                             <div class="pull-right">
-                                <button type="button" class="btn btn-danger" data-toggle="modal"
-                                        data-target="#myDeleteModal">Delete
-                                </button>
-
-                                <button type="button" class="btn btn-danger-outline" data-toggle="modal"
-                                        data-target="#myDeleteModalAll">Delete All
-                                </button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myDeleteModal">Delete</button>
+                                <button type="button" class="btn btn-danger-outline" data-toggle="modal" data-target="#myDeleteModalAll">Delete All</button>
                             </div>
 
                         </form>

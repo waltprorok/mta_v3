@@ -2,18 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\BusinessHours;
 use App\Http\Requests\TeacherStoreSettings;
+use App\Teacher;
 use Auth;
 use File;
-use Storage;
-use App\Teacher;
-use App\BusinessHours;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Storage;
 
 class TeacherController extends Controller
 {
+    public function adminTeachers()
+    {
+        $teachers = Teacher::all();
+        return view('webapp.teacher.adminTeachers', compact('teachers', $teachers));
+    }
+
     public function index()
     {
         $teacher = Teacher::where('teacher_id', Auth::id())->first();

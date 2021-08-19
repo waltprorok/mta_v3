@@ -259,9 +259,7 @@
                                         </select>
 
                                         @if ($errors->has('state'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('state') }}</strong>
-                                    </span>
+                                            <span class="help-block"><strong>{{ $errors->first('state') }}</strong></span>
                                         @endif
                                     </div>
                                 </div>
@@ -269,13 +267,10 @@
                                 <div class="col-sm-4">
                                     <div class="form-group{{ $errors->has('zip') ? ' has-error' : '' }}">
                                         <label for="zip" class="control-label">Zip</label>
-                                        <input id="zip" type="text" class="form-control" name="zip"
-                                               value="{{ $student->zip }}">
+                                        <input id="zip" type="text" class="form-control" name="zip" value="{{ $student->zip }}">
 
                                         @if ($errors->has('zip'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('zip') }}</strong>
-                                    </span>
+                                            <span class="help-block"><strong>{{ $errors->first('zip') }}</strong></span>
                                         @endif
                                     </div>
                                 </div>

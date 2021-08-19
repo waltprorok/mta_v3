@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Lesson;
 use Auth;
 use Calendar;
-use App\Lesson;
 
 class LessonController extends Controller
 {
@@ -32,7 +32,7 @@ class LessonController extends Controller
 
         $calendar = Calendar::addEvents($lessons)
             ->setOptions([
-                'firstDay'    => 1,
+                'firstDay'    => 0,
                 'editable'    => false,
                 'selectable'  => true,
                 'defaultView' => 'listWeek', // 'month' for full calendar
