@@ -116,6 +116,7 @@ export default {
             self.contact.email = null;
             self.contact.subject = null;
             self.contact.message = null;
+            self.edit = false;
         },
         showModalDelete: function (id) {
             let self = this;

@@ -45560,6 +45560,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             self.contact.email = null;
             self.contact.subject = null;
             self.contact.message = null;
+            self.edit = false;
         },
         showModalDelete: function showModalDelete(id) {
             var self = this;
