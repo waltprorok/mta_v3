@@ -15,7 +15,7 @@
                     <li class="nav-item">
                         <a href="{{ route('webapp.contact.index') }}"
                            class="nav-link {{ Route::currentRouteName() == 'webapp.contact.index' ? 'active' : '' }}">
-                            <i class="fa fa-compress"></i> Contact
+                            <i class="fa fa-compress"></i> Contact Us
                         </a>
                     </li>
 

@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <div class="form-control">
+        <div class="form-control" v-if="showForm">
             <h4>Edit Contact</h4>
             <br/>
             <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">
@@ -23,11 +23,10 @@
                 <div class="form-group">
                     <button v-show="!edit" type="submit" class="btn btn-primary">New Contact</button>
                     <button v-show="edit" type="submit" class="btn btn-primary">Update Contact</button>
+                    <button v-show="showForm" @click="showForm = false" class="btn btn-default">Cancel</button>
                 </div>
             </form>
         </div>
-
-        <br/>
 
         <table class="table">
             <thead class="thead-dark">
@@ -47,14 +46,10 @@
                 <!-- TODO: Make an anchor tag to open a new page to send a response email -->
                 <td>{{ contact.subject }}</td>
                 <td>{{ contact.message }}</td>
-                <td>{{ contact.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}
-                </td>
+                <td>{{ contact.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
                 <td class="text-nowrap">
-                    <button @click="showContact(contact.id)" class="btn btn-outline-primary btn-sm" title="edit"><i
-                        class="fa fa-edit"></i></button>
-                    <button @click="deleteContact(contact.id)" class="btn btn-outline-danger btn-sm"
-                            title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i>
-                    </button>
+                    <button @click="showContact(contact.id)" class="btn btn-outline-primary btn-sm" title="edit"><i class="fa fa-edit"></i></button>
+                    <button @click="deleteContact(contact.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 </td>
             </tr>
             </tbody>
@@ -68,6 +63,7 @@ export default {
     data() {
         return {
             edit: false,
+            showForm: false,
             list: [],
             contact: {
                 id: null,
@@ -96,10 +92,10 @@ export default {
             let params = Object.assign({}, self.contact);
             axios.post('api/contact/store', params)
                 .then(function () {
-                    self.contact.name = '';
-                    self.contact.email = '';
-                    self.contact.subject = '';
-                    self.contact.message = '';
+                    self.contact.name = null;
+                    self.contact.email = null;
+                    self.contact.subject = null;
+                    self.contact.message = null;
                     self.edit = false;
                     self.fetchContactList();
                 })
@@ -109,6 +105,7 @@ export default {
         },
         showContact: function (id) {
             let self = this;
+            self.showForm = true;
             axios.get('api/contact/' + id)
                 .then(function (response) {
                     self.contact.id = response.data.id;
@@ -123,7 +120,7 @@ export default {
             let self = this;
             let params = Object.assign({}, self.contact);
             axios.patch('api/contact/' + id, params)
-                .then(function () {
+                .then(function (response) {
                     self.contact.name = '';
                     self.contact.email = '';
                     self.contact.subject = '';
@@ -140,6 +137,7 @@ export default {
                     self.fetchContactList();
                     console.log(error);
                 });
+            self.showForm = false;
         },
         deleteContact: function (id) {
             let self = this;

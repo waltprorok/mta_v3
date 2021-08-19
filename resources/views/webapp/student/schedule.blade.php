@@ -33,9 +33,8 @@
                             <div class="row">
                                 <div class="col-sm-9">
                                     <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                                        <label for="Title" class="control-label">Name</label>
-                                        <input class="form-control" autocomplete="off" type="text" name="title"
-                                               value="{{ $student->first_name }} {{ $student->last_name }}">
+                                        <label for="name" class="control-label">Name</label>
+                                        <input class="form-control" autocomplete="off" type="text" name="name" disabled value="{{ $student->first_name }} {{ $student->last_name }}">
                                         @if ($errors->has('title'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('title') }}</strong></span>
@@ -47,9 +46,8 @@
                             <div class="row">
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
-                                        <label for="Title" class="control-label">Start Date</label>
-                                        <input class="date form-control" autocomplete="off" type="text" id="lessonDate"
-                                               name="start_date" value="{{ $startDate }}">
+                                        <label class="control-label">Start Date</label>
+                                        <input class="date form-control" autocomplete="off" type="text" id="lessonDate" title="Please select a date" name="start_date" value="{{ $startDate }}">
                                         @if ($errors->has('start_date'))
                                             <span class="help-block"><strong>{{ $errors->first('start_date') }}</strong></span>
                                         @endif
