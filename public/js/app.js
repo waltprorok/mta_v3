@@ -45529,6 +45529,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -45669,7 +45670,35 @@ var render = function() {
     _vm._v(" "),
     _vm.showForm
       ? _c("div", { staticClass: "form-control" }, [
-          _c("h4", [_vm._v("Edit Contact")]),
+          _c(
+            "h4",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.edit,
+                  expression: "edit"
+                }
+              ]
+            },
+            [_vm._v("Edit Contact")]
+          ),
+          _vm._v(" "),
+          _c(
+            "h4",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: !_vm.edit,
+                  expression: "!edit"
+                }
+              ]
+            },
+            [_vm._v("Add Contact Us")]
+          ),
           _vm._v(" "),
           _c("br"),
           _vm._v(" "),

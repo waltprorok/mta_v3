@@ -2,7 +2,8 @@
     <div class="card">
         <button type="button" class="btn btn-default" @click="showForm = true" v-show="!showForm">Add Contact</button>
         <div class="form-control" v-if="showForm">
-            <h4>Edit Contact</h4>
+            <h4 v-show="edit">Edit Contact</h4>
+            <h4 v-show="!edit">Add Contact Us</h4>
             <br/>
             <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">
                 <div class="form-group">
