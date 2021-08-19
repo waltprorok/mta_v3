@@ -1,35 +1,50 @@
 <template>
     <div class="card">
         <button type="button" class="btn btn-default" @click="showForm = true" v-show="!showForm">Add Contact</button>
-        <div class="form-control" v-if="showForm">
-            <h4 v-show="edit">Edit Contact</h4>
-            <h4 v-show="!edit">Add Contact Us</h4>
-            <br/>
-            <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input id="name" v-model="contact.name" type="text" name="name" class="form-control">
+        <div v-if="showForm">
+            <transition name="modal">
+                <div class="modal-mask">
+                    <div class="modal-wrapper">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" v-show="edit">Edit Contact Record</h5>
+                                    <h5 class="modal-title" v-show="!edit">Add Contact Record</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" @click="showForm = false">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">
+                                        <div class="form-group">
+                                            <label for="name">Name</label>
+                                            <input id="name" v-model="contact.name" type="text" name="name" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input id="email" v-model="contact.email" type="text" name="email" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="subject">Subject</label>
+                                            <input id="subject" v-model="contact.subject" type="text" name="subject" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message">Message</label>
+                                            <textarea id="message" v-model="contact.message" name="message" class="form-control" rows="10"></textarea>
+                                        </div>
+                                        <div class="form-group pull-right">
+                                            <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>
+                                            <button v-show="!edit" type="submit" class="btn btn-primary">Save</button>
+                                            <button v-show="edit" type="submit" class="btn btn-primary">Update</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input id="email" v-model="contact.email" type="text" name="email" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <input id="subject" v-model="contact.subject" type="text" name="subject" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" v-model="contact.message" name="message" class="form-control"></textarea>
-                </div>
-                <div class="form-group">
-                    <button v-show="!edit" type="submit" class="btn btn-primary">New Contact</button>
-                    <button v-show="edit" type="submit" class="btn btn-primary">Update Contact</button>
-                    <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>
-                </div>
-            </form>
+            </transition>
         </div>
-
         <table class="table">
             <thead class="thead-dark">
             <tr>
@@ -51,39 +66,36 @@
                 <td>{{ contact.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
                 <td class="text-nowrap">
                     <button @click="showContact(contact.id)" class="btn btn-outline-primary btn-sm" title="edit"><i class="fa fa-edit"></i></button>
-                    <button @click="showModalDelete(contact.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i>
-                    </button>
+                    <button @click="showModalDelete(contact.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 </td>
-
-                <div v-if="showModal">
-                    <transition name="modal">
-                        <div class="modal-mask">
-                            <div class="modal-wrapper">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Delete Contact</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true" @click="showModal = false">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Do you want to delete this contact?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline-secondary" @click="showModal = false">Cancel</button>
-                                            <button type="button" @click="deleteContact(id)" class="btn btn-danger">Delete</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </transition>
-                </div>
             </tr>
             </tbody>
         </table>
-
+        <div v-if="showModal">
+            <transition name="modal">
+                <div class="modal-mask">
+                    <div class="modal-wrapper">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Delete Contact Us Record</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" @click="showModal = false">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Do you want to delete this contact us record?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" @click="showModal = false">Cancel</button>
+                                    <button type="button" @click="deleteContact(id)" class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+        </div>
     </div>
 </template>
 
@@ -209,10 +221,10 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    backdrop-filter: brightness(75%);
-    backdrop-filter: contrast(93%);
+    backdrop-filter: brightness(25%);
+    backdrop-filter: contrast(55%);
     display: table;
-    transition: opacity .3s ease;
+    transition: opacity .8s ease;
 }
 
 .modal-wrapper {
