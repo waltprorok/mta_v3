@@ -16,5 +16,4 @@ class Contact extends Model
 
     use SoftDeletes;
 
-
 }
