@@ -85,7 +85,7 @@ class StudentController extends Controller
     {
         $email_exists = Student::where('email', $request->get('email'))->where('teacher_id', Auth::id())->first();
 
-        if ($email_exists && !null) {
+        if ($email_exists && ! null) {
             return redirect()->back()->with('error', 'The email address is already in use.');
         } else {
             $phone = preg_replace('/\D/', '', $request->get('phone'));
@@ -165,7 +165,7 @@ class StudentController extends Controller
      * @param $day
      * @return int
      */
-    public function dayOfWeek($day) : int
+    public function dayOfWeek($day): int
     {
         switch ($day) {
             case "Monday":
@@ -292,19 +292,21 @@ class StudentController extends Controller
     {
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
         $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->get();
+        $allLessons = Lesson::where('teacher_id', Auth::id())->get();
+
         $startDate = $day;
 
         if ($day == null) {
             $day = date('l');
         } else {
             $day = Carbon::parse($day)->format('l');
-        };
+        }
 
         $allTimes = [];
 
         $thisDay = $this->dayOfWeek($day);
 
-        $amount = -30;
+        $amount = -45;
 
         foreach ($businessHours as $businessHour) {
             if ($businessHour->open_time <= $businessHour->close_time && $thisDay == $businessHour->day) {
@@ -325,11 +327,29 @@ class StudentController extends Controller
 
         $lessonTimes = [];
 
-        foreach ($lessons as $lesson) {
-            $lessonStart = Carbon::parse($lesson->start_date)->format('H:i:s');
-            $lessonMinutes = Carbon::parse($lesson->start_date)->addMinute(15)->format('H:i:s');
-            $lessonTimes[] = $lessonStart;
-            $lessonTimes[] = $lessonMinutes;
+        foreach ($allLessons as $allLesson) {
+            foreach ($lessons as $lesson) {
+                $studentLessonStart = Carbon::parse($lesson->start_date)->format('Y-m-d');
+            }
+
+            $allLessonsDay = Carbon::parse($allLesson->start_date)->format('Y-m-d');
+
+            if ($allLessonsDay == $studentLessonStart) {
+                $lessonStart = Carbon::parse($allLesson->start_date)->format('H:i:s');
+//                $lessonEnd = Carbon::parse($allLesson->end_date)->format('H:i:s');
+                $lessonMinutes = Carbon::parse($allLesson->start_date)->addMinute(15)->format('H:i:s');
+
+                $lessonStartParse = Carbon::parse($allLesson->start_date);
+                $lessonEndParse = Carbon::parse($allLesson->end_date);
+                $diffInTime = $lessonEndParse->diffInSeconds($lessonStartParse);
+
+                if ($diffInTime == 900) {
+                    $lessonTimes[] = $lessonStart;
+                } else {
+                    $lessonTimes[] = $lessonStart;
+                    $lessonTimes[] = $lessonMinutes;
+                }
+            }
         }
 
         $allAvailableTimes = array_diff($allTimes, $lessonTimes);
@@ -356,7 +376,7 @@ class StudentController extends Controller
         }
         if ($request->input('action') == 'updateAll') {
             $this->scheduleUpdateAll($request);
-            return redirect()->back()->with('success', 'You successfully updated the student\'s lessons.');
+            return redirect()->back()->with('success', 'You successfully updated all the student\'s lessons.');
         }
     }
 
@@ -368,7 +388,7 @@ class StudentController extends Controller
         }
         if ($request->input('action') == 'deleteAll') {
             $this->destroyAll($id);
-            return redirect(route('student.index'))->with('success', 'The scheduled lessons have been deleted.');
+            return redirect(route('student.index'))->with('success', 'All the scheduled lessons have been deleted.');
         }
     }
 
@@ -376,8 +396,11 @@ class StudentController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|string',
-            'start_date' => 'required|string'
+            'start_date' => 'required|string',
+            'end_time' => 'required|string'
         ]);
+
+        $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
 
         $lesson = Lesson::where('student_id', $request->get('student_id'))->where('teacher_id', Auth::id())->where('id', $request->get('id'))->first();
         $lesson->id = $request->get('id');
@@ -386,8 +409,8 @@ class StudentController extends Controller
         $lesson->title = $request->get('title');
         $lesson->color = $request->get('color');
         $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
-        $lesson->end_date = $request->get('start_date') . ' ' . $request->get('end_time');
-        $lesson->interval = (int)$this->interval($request);
+        $lesson->end_date = $request->get('start_date'). ' ' . $duration;
+        $lesson->interval = (int)$request->get('end_time');
         $lesson->update();
     }
 
@@ -395,8 +418,11 @@ class StudentController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|string',
-            'start_date' => 'required|string'
+            'start_date' => 'required|string',
+            'end_time' => 'required|string'
         ]);
+
+        $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
 
         $begin = Carbon::parse($request->get('start_date'));
 
@@ -409,8 +435,8 @@ class StudentController extends Controller
             $lesson->title = $request->get('title');
             $lesson->color = $request->get('color');
             $lesson->start_date = $begin->format('Y-m-d') . ' ' . $request->get('start_time');
-            $lesson->end_date = $begin->format('Y-m-d') . ' ' . $request->get('end_time');
-            $lesson->interval = $request->get('interval');
+            $lesson->end_date = $begin->format('Y-m-d') . ' ' . $duration;
+            $lesson->interval = (int)$request->get('end_time');
             $lesson->update();
             $begin = $begin->modify('+7 day');
         }
