@@ -28,7 +28,7 @@
                             <div class="row">
                                 <div class="col-sm-9">
                                     <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                                        <label for="name" class="control-label">Name</label>
+                                        <label for="name" class="control-label">Student Name</label>
                                         <input type="text" class="form-control" autocomplete="off" name="title" value="{{ $lesson->title }}">
                                         @if ($errors->has('title'))
                                             <span class="help-block">
@@ -69,7 +69,6 @@
                                                 @endforeach
                                             @endif
                                         </select>
-
                                         @if ($errors->has('start_time'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('start_time') }}</strong>

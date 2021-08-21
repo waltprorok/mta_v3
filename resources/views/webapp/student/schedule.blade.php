@@ -8,17 +8,17 @@
         </button>
         <h4>Schedule Student</h4>
         @foreach ($students as $student)
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('student.schedule', $student->id) }}">Schedule</a></li>
-        </ul>
-        @if($studentScheduled)
-            <div class="alert alert-primary alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                The student is already scheduled.
-            </div>
-        @endif
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('student.schedule', $student->id) }}">Schedule</a></li>
+            </ul>
+            @if($studentScheduled)
+                <div class="alert alert-primary alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    The student is already scheduled.
+                </div>
+            @endif
 
             @include('partials.studentTabs', $data = ['id' => $student->id])
             <div class="card">
@@ -33,8 +33,9 @@
                             <div class="row">
                                 <div class="col-sm-9">
                                     <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                                        <label for="name" class="control-label">Name</label>
-                                        <input class="form-control" autocomplete="off" type="text" name="name" disabled value="{{ $student->first_name }} {{ $student->last_name }}">
+                                        <label for="title" class="control-label">Student Name</label>
+                                        <input class="form-control" autocomplete="off" type="text" name="title"
+                                               value="{{ $student->first_name }} {{ $student->last_name }}">
                                         @if ($errors->has('title'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('title') }}</strong></span>
@@ -47,7 +48,8 @@
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
                                         <label class="control-label">Start Date</label>
-                                        <input class="date form-control" autocomplete="off" type="text" id="lessonDate" title="Please select a date" name="start_date" value="{{ $startDate }}">
+                                        <input class="date form-control" autocomplete="off" type="text" id="lessonDate" title="Please select a date" name="start_date"
+                                               value="{{ $startDate }}">
                                         @if ($errors->has('start_date'))
                                             <span class="help-block"><strong>{{ $errors->first('start_date') }}</strong></span>
                                         @endif

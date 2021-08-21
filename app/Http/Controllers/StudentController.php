@@ -290,7 +290,6 @@ class StudentController extends Controller
 
     public function scheduleEdit($student_id, $id, $day = null)
     {
-//        $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
         $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->get();
         $startDate = $day;
@@ -314,6 +313,7 @@ class StudentController extends Controller
             }
             if ($businessHour->active == 1 && $thisDay == $businessHour->day) {
                 $openingTime = Carbon::parse($businessHour->open_time);
+
                 array_push($allTimes, $openingTime->toTimeString());
 
                 for ($i = 0; $i <= ($amount / 14); $i++) {
@@ -323,7 +323,18 @@ class StudentController extends Controller
             }
         }
 
-        return view('webapp.student.scheduleEdit')->with('lessons', $lessons)->with('businessHours', $businessHours)->with('allTimes', $allTimes)->with('startDate', $startDate);
+        $lessonTimes = [];
+
+        foreach ($lessons as $lesson) {
+            $lessonStart = Carbon::parse($lesson->start_date)->format('H:i:s');
+            $lessonMinutes = Carbon::parse($lesson->start_date)->addMinute(15)->format('H:i:s');
+            $lessonTimes[] = $lessonStart;
+            $lessonTimes[] = $lessonMinutes;
+        }
+
+        $allAvailableTimes = array_diff($allTimes, $lessonTimes);
+
+        return view('webapp.student.scheduleEdit')->with('lessons', $lessons)->with('businessHours', $businessHours)->with('allTimes', $allAvailableTimes)->with('startDate', $startDate);
     }
 
     /**
