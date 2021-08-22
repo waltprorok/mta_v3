@@ -282,7 +282,9 @@ class StudentController extends Controller
         $startDate = $day;
 
         if ($day == null) {
-            $day = date('l');
+            foreach ($lessons as $lesson) {
+                $day = Carbon::parse($lesson->start_date)->format('l');
+            }
         } else {
             $day = Carbon::parse($day)->format('l');
         }
