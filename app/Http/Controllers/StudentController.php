@@ -323,17 +323,14 @@ class StudentController extends Controller
 
             if ($allLessonsDay == $studentLessonStart) {
                 $lessonStart = Carbon::parse($allLesson->start_date)->format('H:i:s');
-//                $lessonEnd = Carbon::parse($allLesson->end_date)->format('H:i:s');
                 $lessonMinutes = Carbon::parse($allLesson->start_date)->addMinute(15)->format('H:i:s');
 
                 $lessonStartParse = Carbon::parse($allLesson->start_date);
                 $lessonEndParse = Carbon::parse($allLesson->end_date);
                 $diffInTime = $lessonEndParse->diffInSeconds($lessonStartParse);
 
-                if ($diffInTime == 900) {
-                    $lessonTimes[] = $lessonStart;
-                } else {
-                    $lessonTimes[] = $lessonStart;
+                $lessonTimes[] = $lessonStart;
+                if ($diffInTime != 900) {
                     $lessonTimes[] = $lessonMinutes;
                 }
             }
@@ -396,7 +393,7 @@ class StudentController extends Controller
         $lesson->title = $request->get('title');
         $lesson->color = $request->get('color');
         $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
-        $lesson->end_date = $request->get('start_date'). ' ' . $duration;
+        $lesson->end_date = $request->get('start_date') . ' ' . $duration;
         $lesson->interval = (int)$request->get('end_time');
         $lesson->update();
     }
