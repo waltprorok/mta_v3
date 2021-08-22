@@ -17,12 +17,6 @@ use Storage;
 
 class StudentController extends Controller
 {
-    protected $studentLimit = 10;
-    protected $waitlistLimit = 10;
-    protected $leadLimit = 10;
-    protected $inactiveLimit = 10;
-    protected $lessonsLimit = 30;
-
     public $selectedDate;
 
     public function adminStudents()
@@ -40,43 +34,28 @@ class StudentController extends Controller
         }
 
         $students = Student::with('teacher')
-            ->latestFirst()
-            ->where('teacher_id', Auth::id())
-            ->where('status', 'Active')
-            ->paginate($this->studentLimit);
+            ->latestFirst()->where('teacher_id', Auth::id())->where('status', 'Active')->get();
 
         return view('webapp.student.index')->with('students', $students);
     }
 
     public function waitlist()
     {
-        $waitlists = Student::with('teacher')
-            ->latestFirst()
-            ->where('teacher_id', Auth::id())
-            ->where('status', 'Waitlist')
-            ->paginate($this->waitlistLimit);
+        $waitlists = Student::with('teacher')->latestFirst()->where('teacher_id', Auth::id())->where('status', 'Waitlist')->get();
 
         return view('webapp.student.waitlist')->with('waitlists', $waitlists);
     }
 
     public function leads()
     {
-        $leads = Student::with('teacher')
-            ->latestFirst()
-            ->where('teacher_id', Auth::id())
-            ->where('status', 'Lead')
-            ->paginate($this->leadLimit);
+        $leads = Student::with('teacher')->latestFirst()->where('teacher_id', Auth::id())->where('status', 'Lead')->get();
 
         return view('webapp.student.leads')->with('leads', $leads);
     }
 
     public function inactive()
     {
-        $inactives = Student::with('teacher')
-            ->latestFirst()
-            ->where('teacher_id', Auth::id())
-            ->where('status', 'Inactive')
-            ->paginate($this->inactiveLimit);
+        $inactives = Student::with('teacher')->latestFirst()->where('teacher_id', Auth::id())->where('status', 'Inactive')->get();
 
         return view('webapp.student.inactive')->with('inactives', $inactives);
     }
@@ -85,7 +64,7 @@ class StudentController extends Controller
     {
         $email_exists = Student::where('email', $request->get('email'))->where('teacher_id', Auth::id())->first();
 
-        if ($email_exists && ! null) {
+        if ($email_exists->email == $request->get('email') && $email_exists->email != null) {
             return redirect()->back()->with('error', 'The email address is already in use.');
         } else {
             $phone = preg_replace('/\D/', '', $request->get('phone'));
@@ -118,7 +97,7 @@ class StudentController extends Controller
 
     public function lessons()
     {
-        $lessons = Lesson::where('teacher_id', Auth::id())->whereDate('start_date', '>=', date('Y-m-d'))->paginate($this->lessonsLimit);
+        $lessons = Lesson::where('teacher_id', Auth::id())->whereDate('start_date', '>=', date('Y-m-d'))->get();
         return view('webapp.student.lessons')->with('lessons', $lessons);
     }
 
@@ -198,7 +177,8 @@ class StudentController extends Controller
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
-        $lessons = Lesson::select('student_id', 'start_date', 'end_date')->where('teacher_id', Auth::id())->get()->toArray();
+        $lessons = Lesson::where('teacher_id', Auth::id())->get();
+
         $startDate = $day;
 
         if ($day == null) {
@@ -211,7 +191,7 @@ class StudentController extends Controller
 
         $thisDay = $this->dayOfWeek($day);
 
-        $amount = -30;
+        $amount = -45;
 
         foreach ($businessHours as $businessHour) {
             if ($businessHour->open_time <= $businessHour->close_time && $thisDay == $businessHour->day) {
@@ -237,15 +217,20 @@ class StudentController extends Controller
             $lessonStartDate = $lesson['start_date'];
             $lessonStartTime = date('H:i:s', strtotime($lesson['start_date']));
             $lessonEndTime = date('H:i:s', strtotime($lesson['end_date']));
+            $studentLessonStart = Carbon::parse($lesson->start_date)->format('Y-m-d');
 
-            if ($lesson['student_id'] == $id) {
+            if ($lesson->student_id == $id) {
                 $studentScheduled = true;
+            }
+
+            if ($startDate != $studentLessonStart) {
                 continue;
             }
 
             if ($lessonDay == $day && $lessonStartDate >= Carbon::today()) {
                 // remove time for a lesson that is already booked from all times
                 foreach ($allTimes as $allTimeKey => $allTime) {
+
                     if ($allTime == $lessonStartTime) {
                         unset($allTimes[$allTimeKey]);
                     }

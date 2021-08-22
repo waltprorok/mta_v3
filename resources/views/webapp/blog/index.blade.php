@@ -68,16 +68,18 @@
                 </div>
             </div>
         </div>
+    </div>
         <!-- End of Modal -->
             @endforeach
-        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
-        <script>
-            $(document).ready(function () {
-                $('#dtBlogIndex').DataTable();
-                $('.dataTables_length').addClass('bs-select');
-            });
-        </script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#dtBlogIndex').DataTable();
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
 
 @endsection
