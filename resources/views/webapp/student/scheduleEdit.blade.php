@@ -139,8 +139,6 @@
                                 <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancel</a>
                             </div>
 
-                            <hr/>
-
                             <div class="pull-right">
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myDeleteModal">Delete</button>
                                 <button type="button" class="btn btn-danger-outline" data-toggle="modal" data-target="#myDeleteModalAll">Delete All</button>
