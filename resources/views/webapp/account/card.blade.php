@@ -36,9 +36,8 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="stripe-errors"></div>
-
+                    <hr/>
                     <div class="form-group">
                         <div class="col-md-6">
                             <button type="submit" class="btn btn-primary">Update Card</button>

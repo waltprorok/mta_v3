@@ -31,7 +31,7 @@
                     <tbody>
                     @if(count($waitlists) == null)
                         <tr>
-                            <td>No students on wait list.</td>
+                            <td>No students on the wait list at this time.</td>
                             <td></td>
                             <td></td>
                             <td></td>

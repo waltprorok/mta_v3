@@ -49,6 +49,7 @@
                         </div>
                     </div>
                 </div>
+                <hr/>
                 <div class="form-group">
                     <div class="col-sm-6">
                         <button class="btn btn-primary" type="submit">Sign Up!</button>
