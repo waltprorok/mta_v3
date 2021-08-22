@@ -124,7 +124,6 @@
 
                             <input id="id" type="hidden" class="form-control" name="id" value="{{ $lesson->id }}">
                             <input id="student_id" type="hidden" class="form-control" name="student_id" value="{{ $lesson->student_id }}">
-{{--                            <input id="interval" type="hidden" class="form-control" name="interval" value="{{ $lesson->interval }}">--}}
 
                             <hr/>
 
@@ -139,6 +138,8 @@
                                 @endif
                                 <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancel</a>
                             </div>
+
+                            <hr/>
 
                             <div class="pull-right">
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myDeleteModal">Delete</button>

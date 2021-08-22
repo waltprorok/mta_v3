@@ -139,19 +139,15 @@
                                     </div>
                                 </div>
                             </div>
-
                             <input id="student_id" type="hidden" class="form-control" name="student_id"
                                    value="{{ $student->id }}">
-
                             <hr/>
-
                             <div class="pull-left">
                                 @if(count($allTimes) > 1)
                                     <button type="submit" class="btn btn-primary">Schedule</button>
                                 @endif
                                 <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancel</a>
                             </div>
-
                         </form>
                     @endif
                 </div>

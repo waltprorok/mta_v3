@@ -25,7 +25,6 @@
                         <th scope="col">Phone</th>
                         <th scope="col">Email</th>
                         <th scope="col">Instrument</th>
-                        <th scope="col">Status</th>
                         <th scope="col">Update</th>
                     </tr>
                     </thead>
@@ -33,6 +32,11 @@
                     @if(count($leads) == null)
                         <tr>
                             <td>No student leads at this time.</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     @else
                         @foreach($leads as $lead)
@@ -42,7 +46,6 @@
                                 <td id="phone">{{ $lead->phone_number }}</td>
                                 <td>{{ $lead->email }}</td>
                                 <td>{{ $lead->instrument }}</td>
-                                <td>{{ $lead->status }}</td>
                                 <th scope="row">
                                     <a href="{{ route('student.edit', $lead->id)}}"
                                        class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
