@@ -124,7 +124,7 @@
                         </div>
                     </div>
                     <hr/>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                     <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
                 </form>
             </div>

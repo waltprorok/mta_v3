@@ -297,16 +297,13 @@
                                     </div>
                                 </div>
                             </div>
-
                             <hr/>
-
                             <div class="pull-left">
-                                <button type="submit" class="btn btn-primary">Update Student</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
                                 <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancel</a>
                             </div>
                             <input id="student_id" type="hidden" class="form-control" name="student_id"
                                    value="{{ $student->id }}">
-
                             @endif
                         </form>
                 </div>
