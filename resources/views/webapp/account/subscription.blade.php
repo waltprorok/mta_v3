@@ -32,6 +32,7 @@
                     </div>
                 </div>
             </div>
+            <hr/>
             <div class="card-body">
                 @if (Route::currentRouteName() != 'account.subscription')
                     <a href="{{ route('account.subscription') }}" class="btn btn-primary">Back</a>
