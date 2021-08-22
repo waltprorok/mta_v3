@@ -36,6 +36,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * @var mixed
+     */
+    private $user;
+
     public function students()
     {
         return $this->hasMany(Student::class, 'teacher_id', 'id');
