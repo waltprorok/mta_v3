@@ -31,6 +31,7 @@
                 @endforeach
                 </tbody>
             </table>
+            <hr/>
             <div class="card-body">
                 <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a>
             </div>

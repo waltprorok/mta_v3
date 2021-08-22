@@ -24,7 +24,6 @@
                         <th scope="col">Phone</th>
                         <th scope="col">Email</th>
                         <th scope="col">Instrument</th>
-                        <th scope="col">Status</th>
                         <th scope="col" data-orderable="false">Actions</th>
                     </tr>
                     </thead>
@@ -32,6 +31,11 @@
                     @if(count($students) == null)
                         <tr>
                             <td>No active students at this time.</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     @else
                         @foreach($students as $student)
@@ -41,7 +45,6 @@
                                 <td>{{ $student->phone_number }}</td>
                                 <td>{{ $student->email }}</td>
                                 <td>{{ $student->instrument }}</td>
-                                <td>{{ $student->status }}</td>
                                 <th scope="row">
                                     <a href="{{ route('student.edit', $student->id) }}" class="btn btn-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
                                     <a href="{{ route('student.profile', $student->id) }}" class="btn btn-success" role="button" title="profile"><i class="fa fa-user"></i></a>

@@ -101,6 +101,8 @@
                                 </div>
                             </div>
 
+                            <hr/>
+
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -151,6 +153,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <hr/>
 
                             <div class="row">
                                 <div class="col-sm-6">
@@ -293,6 +297,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <hr/>
 
                             <div class="pull-left">
                                 <button type="submit" class="btn btn-primary">Update Student</button>

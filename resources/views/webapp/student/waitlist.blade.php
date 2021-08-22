@@ -25,7 +25,6 @@
                         <th scope="col">Phone</th>
                         <th scope="col">Email</th>
                         <th scope="col">Instrument</th>
-                        <th scope="col">Status</th>
                         <th scope="col">Update</th>
                     </tr>
                     </thead>
@@ -33,6 +32,11 @@
                     @if(count($waitlists) == null)
                         <tr>
                             <td>No students on wait list.</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     @else
                         @foreach($waitlists as $waitlist)
@@ -42,7 +46,6 @@
                                 <td>{{ $waitlist->phone_number }}</td>
                                 <td>{{ $waitlist->email }}</td>
                                 <td>{{ $waitlist->instrument }}</td>
-                                <td>{{ $waitlist->status }}</td>
                                 <th scope="row">
                                     <a href="{{ route('student.edit', $waitlist->id)}}"
                                        class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>

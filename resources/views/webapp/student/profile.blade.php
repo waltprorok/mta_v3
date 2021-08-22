@@ -5,11 +5,11 @@
     <div class="col-12">
         <h4>Student Profile</h4>
         @foreach ($students as $student)
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('student.profile', $student->id) }}">Profile</a></li>
-        </ul>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('student.profile', $student->id) }}">Profile</a></li>
+            </ul>
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3">
                     <div class="card">

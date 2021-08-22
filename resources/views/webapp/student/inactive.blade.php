@@ -25,7 +25,6 @@
                         <th scope="col">Phone</th>
                         <th scope="col">Email</th>
                         <th scope="col">Instrument</th>
-                        <th scope="col">Status</th>
                         <th scope="col">Update</th>
                     </tr>
                     </thead>
@@ -33,6 +32,11 @@
                     @if(count($inactives) == null)
                         <tr>
                             <td>No inactive students at this time.</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     @else
                         @foreach($inactives as $inactive)
@@ -42,7 +46,6 @@
                                 <td>{{ $inactive->phone_number }}</td>
                                 <td>{{ $inactive->email }}</td>
                                 <td>{{ $inactive->instrument }}</td>
-                                <td>{{ $inactive->status }}</td>
                                 <th scope="row">
                                     <a href="{{ route('student.edit', $inactive->id)}}"
                                        class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>

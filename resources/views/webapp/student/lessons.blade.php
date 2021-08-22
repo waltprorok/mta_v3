@@ -18,10 +18,11 @@
                 <table class="table" id="dtLessonsIndex">
                     <thead class="thead">
                     <tr>
-                        {{--                    <th scope="col">ID</th>--}}
+                        <th scope="col">Completed</th>
                         <th scope="col">Title</th>
                         <th scope="col">Start Date</th>
                         <th scope="col">End Date</th>
+                        <th scope="col">Duration</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
@@ -33,10 +34,11 @@
                     @else
                         @foreach($lessons as $lesson)
                             <tr>
-                                {{--<td><input type="checkbox" class="select-all checkbox" name="select-all" value="{{ $lesson->id }}"/></td>--}}
+                                <td><input type="checkbox" {{ $lesson->complete == '1' ? 'checked' : '' }} class="select-all checkbox" name="select-all" value="1"/></td>
                                 <td>{{ $lesson->title }}</td>
                                 <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('m-d-Y h:i A') }}</td>
                                 <td>{{ Carbon\Carbon::parse($lesson->end_date)->format('m-d-Y h:i A') }}</td>
+                                <td>{{ $lesson->interval }} minutes</td>
                                 <td><a href="{{ route('student.schedule.edit', [$lesson->student_id, $lesson->id])}}" class="btn btn-primary" role="button" title="edit"><i class="fa fa-edit"></i></a></td>
                             </tr>
                         @endforeach
