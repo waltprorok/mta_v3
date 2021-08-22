@@ -54,8 +54,9 @@
                 </table>
             </div>
         </div>
-        <div class="float-right">{{ $students->links() }}</div>
     </div>
+
+    @include('partials.addStudent')
 
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
@@ -66,7 +67,5 @@
             $('.dataTables_length').addClass('bs-select');
         });
     </script>
-
-    @include('partials.addStudent')
 
 @endsection

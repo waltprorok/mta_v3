@@ -8,17 +8,17 @@
         </button>
         <h4>Schedule Student</h4>
         @foreach ($students as $student)
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('student.schedule', $student->id) }}">Schedule</a></li>
-        </ul>
-        @if($studentScheduled)
-            <div class="alert alert-primary alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                The student is already scheduled.
-            </div>
-        @endif
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('student.schedule', $student->id) }}">Schedule</a></li>
+            </ul>
+            @if($studentScheduled)
+                <div class="alert alert-primary alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    The student is already scheduled.
+                </div>
+            @endif
 
             @include('partials.studentTabs', $data = ['id' => $student->id])
             <div class="card">
@@ -33,8 +33,9 @@
                             <div class="row">
                                 <div class="col-sm-9">
                                     <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                                        <label for="name" class="control-label">Name</label>
-                                        <input class="form-control" autocomplete="off" type="text" name="name" disabled value="{{ $student->first_name }} {{ $student->last_name }}">
+                                        <label for="title" class="control-label">Student Name</label>
+                                        <input class="form-control" autocomplete="off" type="text" name="title"
+                                               value="{{ $student->first_name }} {{ $student->last_name }}">
                                         @if ($errors->has('title'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('title') }}</strong></span>
@@ -47,7 +48,8 @@
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
                                         <label class="control-label">Start Date</label>
-                                        <input class="date form-control" autocomplete="off" type="text" id="lessonDate" title="Please select a date" name="start_date" value="{{ $startDate }}">
+                                        <input class="date form-control" autocomplete="off" type="text" id="lessonDate" title="Please select a date" name="start_date"
+                                               value="{{ $startDate }}">
                                         @if ($errors->has('start_date'))
                                             <span class="help-block"><strong>{{ $errors->first('start_date') }}</strong></span>
                                         @endif
@@ -57,8 +59,7 @@
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('start_time') ? ' has-error' : '' }}">
                                         <label for="start_time" class="control-label">Start Time</label>
-                                        <select class="form-control" id="start_time" name="start_time">
-                                            <option value="{{ old('start_time') }}">{{ Carbon\Carbon::parse(old('start_time'))->format('h:i A') }}</option>
+                                        <select class="form-control" id="start_time" name="start_time">123
                                             @if(count($allTimes) <= 0)
                                                 <option>No availability</option>
                                             @else
@@ -80,11 +81,15 @@
                                     <div class="form-group{{ $errors->has('end_time') ? ' has-error' : '' }}">
                                         <label for="end_time" class="control-label">Duration</label>
                                         <select class="form-control" id="end_time" name="end_time">
-                                            <option value="{{ old('end_time') }}">{{ old('end_time') }}</option>
-                                            <option value="15">15 minutes</option>
-                                            <option value="30">30 minutes</option>
-                                            <option value="45">45 minutes</option>
-                                            <option value="60">60 minutes</option>
+                                            @if(count($allTimes) <= 0)
+                                                <option>No availability</option>
+                                            @else
+                                                <option value="{{ old('end_time') }}">{{ old('end_time') }}</option>
+                                                <option value="15">15 minutes</option>
+                                                <option value="30">30 minutes</option>
+                                                <option value="45">45 minutes</option>
+                                                <option value="60">60 minutes</option>
+                                            @endif
                                         </select>
 
                                         @if ($errors->has('end_time'))
@@ -137,6 +142,8 @@
 
                             <input id="student_id" type="hidden" class="form-control" name="student_id"
                                    value="{{ $student->id }}">
+
+                            <hr/>
 
                             <div class="pull-left">
                                 @if(count($allTimes) > 1)

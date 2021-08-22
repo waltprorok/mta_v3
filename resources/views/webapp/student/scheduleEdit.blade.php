@@ -28,7 +28,7 @@
                             <div class="row">
                                 <div class="col-sm-9">
                                     <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                                        <label for="name" class="control-label">Name</label>
+                                        <label for="name" class="control-label">Student Name</label>
                                         <input type="text" class="form-control" autocomplete="off" name="title" value="{{ $lesson->title }}">
                                         @if ($errors->has('title'))
                                             <span class="help-block">
@@ -57,19 +57,20 @@
                                     <div class="form-group{{ $errors->has('start_time') ? ' has-error' : '' }}">
                                         <label for="start_time" class="control-label">Start Time</label>
                                         <select class="form-control" id="start_time" name="start_time">
-                                            <option value="{{ date('H:i:s', strtotime($lesson->start_date)) }}">{{ date('h:i A', strtotime($lesson->start_date)) }}</option>
                                             @if(old('start_time'))
                                                 <option value="{{ old('start_time') }}">{{ Carbon\Carbon::parse(old('start_time'))->format('h:i A') }}</option>
                                             @endif
                                             @if(count($allTimes) <= 0)
                                                 <option>No availability</option>
                                             @else
+                                            @if(count($allTimes) > 1)
+                                                <option value="{{ date('H:i:s', strtotime($lesson->start_date)) }}">{{ date('h:i A', strtotime($lesson->start_date)) }}</option>
+                                            @endif
                                                 @foreach($allTimes as $allTime)
                                                     <option value="{{ Carbon\Carbon::parse($allTime)->format('H:i:s') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
-
                                         @if ($errors->has('start_time'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('start_time') }}</strong>
@@ -80,23 +81,20 @@
 
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('end_time') ? ' has-error' : '' }}">
-                                        <label for="end_time" class="control-label">End Time</label>
+                                        <label for="end_time" class="control-label">Duration</label>
                                         <select class="form-control" id="end_time" name="end_time">
-                                            <option value="{{ date('H:i:s', strtotime($lesson->end_date)) }}">{{ date('h:i A', strtotime($lesson->end_date)) }}</option>
-{{--                                            <option value="{{ old('end_time') }}">{{ Carbon\Carbon::parse(old('end_time'))->format('h:i A') }}</option>--}}
                                             @if(count($allTimes) <= 0)
                                                 <option>No availability</option>
                                             @else
-                                                @foreach($allTimes as $allTime)
-                                                    <option value="{{ Carbon\Carbon::parse($allTime)->format('H:i:s') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
-                                                @endforeach
-                                            @endif
+                                                <option value="15" @if($lesson->interval == 15) selected @endif>15 minutes</option>
+                                                <option value="30" @if($lesson->interval == 30) selected @endif>30 minutes</option>
+                                                <option value="45" @if($lesson->interval == 45) selected @endif>45 minutes</option>
+                                                <option value="60" @if($lesson->interval == 60) selected @endif>60 minutes</option>
+                                             @endif
                                         </select>
 
                                         @if ($errors->has('end_time'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('end_time') }}</strong>
-                                    </span>
+                                            <span class="help-block"><strong>{{ $errors->first('end_time') }}</strong></span>
                                         @endif
                                     </div>
                                 </div>
@@ -105,7 +103,7 @@
                             <div class="row">
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('color') ? ' has-error' : '' }}">
-                                        <label for="end_time" class="control-label">Color</label>
+                                        <label for="color" class="control-label">Color</label>
                                         <select class="form-control" id="color" name="color">
                                             <option value="{{ $lesson->color }}" style="background-color: {{ $lesson->color }}; color: white;">Current Color</option>
                                             <option value="#5499C7" style="background-color: #5499C7; color: white;">Blue</option>
@@ -126,7 +124,9 @@
 
                             <input id="id" type="hidden" class="form-control" name="id" value="{{ $lesson->id }}">
                             <input id="student_id" type="hidden" class="form-control" name="student_id" value="{{ $lesson->student_id }}">
-                            <input id="interval" type="hidden" class="form-control" name="interval" value="{{ $lesson->interval }}">
+{{--                            <input id="interval" type="hidden" class="form-control" name="interval" value="{{ $lesson->interval }}">--}}
+
+                            <hr/>
 
                             <div class="pull-left">
                                 @if(count($allTimes) > 1)
