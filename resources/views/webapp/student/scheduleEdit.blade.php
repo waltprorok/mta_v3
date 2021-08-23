@@ -125,7 +125,7 @@
                                                 <option>No availability</option>
                                             @else
                                                 @if(count($allTimes) > 1)
-{{--                                                    <option value="{{ date('H:i:s', strtotime($lesson->start_date)) }}">{{ date('h:i A', strtotime($lesson->start_date)) }}</option>--}}
+                                                    <option value="{{ date('H:i:s', strtotime($lesson->start_date)) }}">{{ date('h:i A', strtotime($lesson->start_date)) }}</option>
                                                 @endif
                                                 @foreach($allTimes as $allTime)
                                                     <option value="{{ Carbon\Carbon::parse($allTime)->format('H:i:s') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
