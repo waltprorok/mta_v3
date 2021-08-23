@@ -26,17 +26,78 @@
                             @csrf
                             @method('PUT')
                             <div class="row">
-                                <div class="col-sm-9">
-                                    <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                                        <label for="name" class="control-label">Student Name</label>
-                                        <input type="text" class="form-control" autocomplete="off" name="title" value="{{ $lesson->title }}">
-                                        @if ($errors->has('title'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('title') }}</strong></span>
-                                        @endif
+                                <div class="col-sm-8">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Name</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    {{ $lesson->title }}
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            @foreach ($students as $student)
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Email</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    {{ $student->email }}
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Phone</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    {{ $student->phone }}
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Mobile</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Appointment Start</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    {{ date('M d, Y h:i A', strtotime($lesson->start_date)) }}
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Appointment End</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    {{ date('M d, Y h:i A', strtotime($lesson->end_date)) }}
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Duration</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    {{ $lesson->interval }} minutes
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <hr/>
                             <div class="row">
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
@@ -64,7 +125,7 @@
                                                 <option>No availability</option>
                                             @else
                                                 @if(count($allTimes) > 1)
-                                                    <option value="{{ date('H:i:s', strtotime($lesson->start_date)) }}">{{ date('h:i A', strtotime($lesson->start_date)) }}</option>
+{{--                                                    <option value="{{ date('H:i:s', strtotime($lesson->start_date)) }}">{{ date('h:i A', strtotime($lesson->start_date)) }}</option>--}}
                                                 @endif
                                                 @foreach($allTimes as $allTime)
                                                     <option value="{{ Carbon\Carbon::parse($allTime)->format('H:i:s') }}">{{ Carbon\Carbon::parse($allTime)->format('h:i A') }}</option>
@@ -120,6 +181,7 @@
                             </div>
                             <input id="id" type="hidden" class="form-control" name="id" value="{{ $lesson->id }}">
                             <input id="student_id" type="hidden" class="form-control" name="student_id" value="{{ $lesson->student_id }}">
+                            <input type="hidden" class="form-control" autocomplete="off" name="title" value="{{ $lesson->title }}">
                             <hr/>
                             <div class="pull-left">
                                 @if(count($allTimes) > 1)

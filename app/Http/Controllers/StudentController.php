@@ -275,8 +275,9 @@ class StudentController extends Controller
 
     public function scheduleEdit($student_id, $id, $day = null)
     {
+        $students = Student::where('id', $student_id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
-        $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->get();
+        $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
         $allLessons = Lesson::where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
 
         $startDate = $day;
@@ -325,16 +326,34 @@ class StudentController extends Controller
             if ($allLessonsDay == $studentLessonStart || $allLessonsDay == $startDate) {
 
                 $lessonStart = Carbon::parse($allLesson->start_date)->format('H:i:s');
-                $lessonMinutes = Carbon::parse($allLesson->start_date)->addMinute(15)->format('H:i:s');
+                $lesson15Minutes = Carbon::parse($allLesson->start_date)->addMinute(15)->format('H:i:s');
+                $lesson30Minutes = Carbon::parse($allLesson->start_date)->addMinute(30)->format('H:i:s');
+                $lesson45Minutes = Carbon::parse($allLesson->start_date)->addMinute(45)->format('H:i:s');
+                $lesson60Minutes = Carbon::parse($allLesson->start_date)->addMinute(60)->format('H:i:s');
 
                 $lessonStartParse = Carbon::parse($allLesson->start_date);
                 $lessonEndParse = Carbon::parse($allLesson->end_date);
                 $diffInTime = $lessonEndParse->diffInSeconds($lessonStartParse);
 
-                $lessonTimes[] = $lessonStart;
-
-                if ($diffInTime != 900) {
-                    $lessonTimes[] = $lessonMinutes;
+                switch ($diffInTime) {
+                    case 900:
+                        $lessonTimes[] = $lessonStart;
+                        break;
+                    case 1800:
+                        $lessonTimes[] = $lessonStart;
+                        $lessonTimes[] = $lesson15Minutes;
+                        break;
+                    case 2700:
+                        $lessonTimes[] = $lesson15Minutes;
+                        $lessonTimes[] = $lesson30Minutes;
+                        break;
+                    case 3600:
+                        $lessonTimes[] = $lesson15Minutes;
+                        $lessonTimes[] = $lesson30Minutes;
+                        $lessonTimes[] = $lesson45Minutes;
+                        break;
+                    default:
+                        $lessonTimes[] = $lessonStart;
                 }
             }
         }
@@ -343,6 +362,7 @@ class StudentController extends Controller
 
         return view('webapp.student.scheduleEdit')
             ->with('lessons', $lessons)
+            ->with('students', $students)
             ->with('allTimes', $allAvailableTimes)
             ->with('startDate', $startDate);
     }
