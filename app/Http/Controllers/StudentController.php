@@ -213,10 +213,11 @@ class StudentController extends Controller
         $studentScheduled = false;
 
         foreach ($lessons as $lesson) {
-            $lessonDay = date('l', strtotime($lesson->start_date));
+            $lessonDay = Carbon::parse($lesson->start_date)->format('l');
             $lessonStartDate = $lesson->start_date;
             $lessonStartTime = Carbon::parse($lesson->start_date)->format('H:i:s');
             $lessonEndTime = Carbon::parse($lesson->end_date)->format('H:i:s');
+            $lessonInterval = $lesson->interval;
             $studentLessonStart = Carbon::parse($lesson->start_date)->format('Y-m-d');
 
             if ($lesson->student_id == $id) {
@@ -231,8 +232,24 @@ class StudentController extends Controller
                 // remove time for a lesson that is already booked from all times
                 foreach ($allTimes as $allTimeKey => $allTime) {
 
-                    if ($allTime == $lessonStartTime) {
+                    if ($allTime == $lessonStartTime && $lessonInterval == 15) {
                         unset($allTimes[$allTimeKey]);
+                        unset($allTimes[$allTimeKey + 1 ]);
+                    }
+
+                    if ($allTime == $lessonStartTime && $lessonInterval == 30) {
+                        unset($allTimes[$allTimeKey]);
+                        unset($allTimes[$allTimeKey + 1 ]);
+                    }
+
+                    if ($allTime == $lessonStartTime && $lessonInterval == 45) {
+                        unset($allTimes[$allTimeKey]);
+                        unset($allTimes[$allTimeKey + 1 ]);
+                    }
+
+                    if ($allTime == $lessonStartTime && $lessonInterval == 60) {
+                        unset($allTimes[$allTimeKey]);
+                        unset($allTimes[$allTimeKey + 1 ]);
                     }
 
                     if ($allTime == $lessonEndTime) {
