@@ -42,7 +42,7 @@
                                                         <h6 class="mb-0">Email</h6>
                                                     </div>
                                                     <div class="col-sm-9 text-secondary">
-                                                        {{ $student->email }}
+                                                        <a href="mailto:{{ $student->email }}">{{ $student->email }}</a>
                                                     </div>
                                                 </div>
                                                 <hr>
@@ -50,7 +50,7 @@
                                                     <div class="col-sm-3">
                                                         <h6 class="mb-0">Phone</h6>
                                                     </div>
-                                                    <div class="col-sm-9 text-secondary">
+                                                    <div class="col-sm-9 text-secondary" id="phone">
                                                         {{ $student->phone }}
                                                     </div>
                                                 </div>

@@ -136,7 +136,6 @@ class StudentController extends Controller
     public function profile($id)
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
-
         return view('webapp.student.profile')->with('students', $students);
     }
 
@@ -228,7 +227,7 @@ class StudentController extends Controller
                 continue;
             }
 
-            if ($lessonDay == $day && $lessonStartDate >= Carbon::today()) {
+            if ($lessonDay == $day && $lessonStartDate) {
                 // remove time for a lesson that is already booked from all times
                 foreach ($allTimes as $allTimeKey => $allTime) {
 
