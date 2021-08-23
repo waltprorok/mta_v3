@@ -43,7 +43,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
@@ -55,7 +54,6 @@
                                         @endif
                                     </div>
                                 </div>
-
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('start_time') ? ' has-error' : '' }}">
                                         <label for="start_time" class="control-label">Start Time</label>
@@ -76,7 +74,6 @@
                                         @endif
                                     </div>
                                 </div>
-
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('end_time') ? ' has-error' : '' }}">
                                         <label for="end_time" class="control-label">Duration</label>
@@ -98,7 +95,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('recurrence') ? ' has-error' : '' }}">
@@ -130,7 +126,6 @@
                                             <option value="#E59866" style="background-color: #E59866; color: white;">Orange</option>
                                             <option value="#85929E" style="background-color: #85929E; color: white;">Grey</option>
                                         </select>
-
                                         @if ($errors->has('color'))
                                             <span class="help-block">
                                             <strong>{{ $errors->first('color') }}</strong>
@@ -139,8 +134,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <input id="student_id" type="hidden" class="form-control" name="student_id"
-                                   value="{{ $student->id }}">
+                            <input id="student_id" type="hidden" class="form-control" name="student_id" value="{{ $student->id }}">
                             <hr/>
                             <div class="pull-left">
                                 @if(count($allTimes) > 1)

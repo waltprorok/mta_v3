@@ -177,7 +177,7 @@ class StudentController extends Controller
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
-        $lessons = Lesson::where('teacher_id', Auth::id())->get();
+        $lessons = Lesson::where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
 
         $startDate = $day;
 
@@ -191,7 +191,7 @@ class StudentController extends Controller
 
         $thisDay = $this->dayOfWeek($day);
 
-        $amount = -45;
+        $amount = -30;
 
         foreach ($businessHours as $businessHour) {
             if ($businessHour->open_time <= $businessHour->close_time && $thisDay == $businessHour->day) {
@@ -277,11 +277,12 @@ class StudentController extends Controller
     {
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
         $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->get();
-        $allLessons = Lesson::where('teacher_id', Auth::id())->get();
+        $allLessons = Lesson::where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
 
         $startDate = $day;
 
         if ($day == null) {
+
             foreach ($lessons as $lesson) {
                 $day = Carbon::parse($lesson->start_date)->format('l');
             }
@@ -321,7 +322,8 @@ class StudentController extends Controller
 
             $allLessonsDay = Carbon::parse($allLesson->start_date)->format('Y-m-d');
 
-            if ($allLessonsDay == $studentLessonStart) {
+            if ($allLessonsDay == $studentLessonStart || $allLessonsDay == $startDate) {
+
                 $lessonStart = Carbon::parse($allLesson->start_date)->format('H:i:s');
                 $lessonMinutes = Carbon::parse($allLesson->start_date)->addMinute(15)->format('H:i:s');
 
@@ -330,6 +332,7 @@ class StudentController extends Controller
                 $diffInTime = $lessonEndParse->diffInSeconds($lessonStartParse);
 
                 $lessonTimes[] = $lessonStart;
+
                 if ($diffInTime != 900) {
                     $lessonTimes[] = $lessonMinutes;
                 }
@@ -338,12 +341,16 @@ class StudentController extends Controller
 
         $allAvailableTimes = array_diff($allTimes, $lessonTimes);
 
-        return view('webapp.student.scheduleEdit')->with('lessons', $lessons)->with('businessHours', $businessHours)->with('allTimes', $allAvailableTimes)->with('startDate', $startDate);
+        return view('webapp.student.scheduleEdit')
+            ->with('lessons', $lessons)
+            ->with('allTimes', $allAvailableTimes)
+            ->with('startDate', $startDate);
     }
 
     /**
      * @param Request $request
      * @return string
+     * remove function not used
      */
     public function interval(Request $request)
     {
