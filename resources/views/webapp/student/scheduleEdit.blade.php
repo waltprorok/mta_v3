@@ -3,9 +3,7 @@
 @section('content')
 
     <div class="col-12">
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal"
-                data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
-        </button>
+        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student</button>
         <h4>Edit Student Schedule</h4>
         @foreach ($lessons as $lesson)
             <ul class="breadcrumb">
@@ -26,7 +24,7 @@
                             @csrf
                             @method('PUT')
                             <div class="row">
-                                <div class="col-sm-8">
+                                <div class="col-sm-9">
                                     <div class="card mb-3">
                                         <div class="card-body">
                                             <div class="row">
@@ -39,32 +37,32 @@
                                             </div>
                                             <hr>
                                             @foreach ($students as $student)
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <h6 class="mb-0">Email</h6>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">Email</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary">
+                                                        {{ $student->email }}
+                                                    </div>
                                                 </div>
-                                                <div class="col-sm-9 text-secondary">
-                                                    {{ $student->email }}
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">Phone</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary">
+                                                        {{ $student->phone }}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <h6 class="mb-0">Phone</h6>
-                                                </div>
-                                                <div class="col-sm-9 text-secondary">
-                                                    {{ $student->phone }}
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <h6 class="mb-0">Mobile</h6>
-                                                </div>
-                                                <div class="col-sm-9 text-secondary">
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">Mobile</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary">
 
+                                                    </div>
                                                 </div>
-                                            </div>
                                             @endforeach
                                             <hr>
                                             <div class="row">
