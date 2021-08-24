@@ -9,7 +9,6 @@
                     <h5 class="modal-title">New Student</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="row">
@@ -26,7 +25,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
@@ -41,7 +39,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
@@ -56,7 +53,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -71,7 +67,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
@@ -106,7 +101,7 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success">Create</button>
                 </div>
             </form>
