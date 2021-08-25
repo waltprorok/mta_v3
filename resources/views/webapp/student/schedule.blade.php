@@ -3,9 +3,7 @@
 @section('content')
 
     <div class="col-12">
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal"
-                data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
-        </button>
+        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student</button>
         <h4>Schedule Student</h4>
         @foreach ($students as $student)
             <ul class="breadcrumb">
@@ -13,13 +11,6 @@
                 <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
                 <li class="breadcrumb-item active"><a href="{{ route('student.schedule', $student->id) }}">Schedule</a></li>
             </ul>
-            @if($studentScheduled)
-                <div class="alert alert-primary alert-dismissible">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    The student is already scheduled.
-                </div>
-            @endif
-
             @include('partials.studentTabs', $data = ['id' => $student->id])
             <div class="card">
                 <div class="card-body">
@@ -32,18 +23,58 @@
                             @csrf
                             <div class="row">
                                 <div class="col-sm-9">
-                                    <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                                        <label for="title" class="control-label">Student Name</label>
-                                        <input class="form-control" autocomplete="off" type="text" name="title"
-                                               value="{{ $student->first_name }} {{ $student->last_name }}">
-                                        @if ($errors->has('title'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('title') }}</strong></span>
-                                        @endif
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Name</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    {{ $student->first_name }} {{ $student->last_name }}
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Email</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <a href="mailto:{{ $student->email }}">{{ $student->email }}</a>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Phone</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    {{ $student->phone }}
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Scheduled</h6>
+                                                </div>
+                                                @if($studentScheduled)
+                                                    <div class="col-sm-9 text-secondary">
+                                                        <button type="button" class="btn btn-success">
+                                                            <i class="fa fa-check"></i>&nbsp; Has Appointment
+                                                        </button>
+                                                    </div>
+                                                @else
+                                                    <div class="col-sm-9 text-secondary">
+                                                        <button type="button" class="btn btn-danger">
+                                                            <i class="fa fa-times"></i>&nbsp; Needs Appointment
+                                                        </button>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
+                            <hr/>
                             <div class="row">
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
@@ -55,7 +86,6 @@
                                         @endif
                                     </div>
                                 </div>
-
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('start_time') ? ' has-error' : '' }}">
                                         <label for="start_time" class="control-label">Start Time</label>
@@ -68,7 +98,6 @@
                                                 @endforeach
                                             @endif
                                         </select>
-
                                         @if ($errors->has('start_time'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('start_time') }}</strong>
@@ -76,7 +105,6 @@
                                         @endif
                                     </div>
                                 </div>
-
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('end_time') ? ' has-error' : '' }}">
                                         <label for="end_time" class="control-label">Duration</label>
@@ -91,14 +119,12 @@
                                                 <option value="60">60 minutes</option>
                                             @endif
                                         </select>
-
                                         @if ($errors->has('end_time'))
                                             <span class="help-block"><strong>{{ $errors->first('end_time') }}</strong></span>
                                         @endif
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('recurrence') ? ' has-error' : '' }}">
@@ -109,7 +135,6 @@
                                             <option value="21">One Month</option>
                                             <option value="365">One Year</option>
                                         </select>
-
                                         @if ($errors->has('recurrence'))
                                             <span class="help-block">
                                             <strong>{{ $errors->first('recurrence') }}</strong>
@@ -117,7 +142,6 @@
                                         @endif
                                     </div>
                                 </div>
-
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('color') ? ' has-error' : '' }}">
                                         <label for="end_time" class="control-label">Color</label>
@@ -130,7 +154,6 @@
                                             <option value="#E59866" style="background-color: #E59866; color: white;">Orange</option>
                                             <option value="#85929E" style="background-color: #85929E; color: white;">Grey</option>
                                         </select>
-
                                         @if ($errors->has('color'))
                                             <span class="help-block">
                                             <strong>{{ $errors->first('color') }}</strong>
@@ -139,8 +162,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <input id="student_id" type="hidden" class="form-control" name="student_id"
-                                   value="{{ $student->id }}">
+                            <input type="hidden" class="form-control" name="student_id" value="{{ $student->id }}">
+                            <input type="hidden" name="title" value="{{ $student->first_name }} {{ $student->last_name }}">
                             <hr/>
                             <div class="pull-left">
                                 @if(count($allTimes) > 1)

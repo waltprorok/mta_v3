@@ -23,13 +23,18 @@
                         <th scope="col">Start Date</th>
                         <th scope="col">End Date</th>
                         <th scope="col">Duration</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col" data-orderable="false">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     @if(count($lessons) == null)
                         <tr>
                             <td>No lessons have been scheduled at this time.</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     @else
                         @foreach($lessons as $lesson)

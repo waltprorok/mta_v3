@@ -34,7 +34,10 @@ class StudentController extends Controller
         }
 
         $students = Student::with('teacher')
-            ->latestFirst()->where('teacher_id', Auth::id())->where('status', 'Active')->get();
+            ->where('teacher_id', Auth::id())
+            ->where('status', 'Active')
+            ->orderBy('first_name', 'asc')
+            ->get();
 
         return view('webapp.student.index')->with('students', $students);
     }
@@ -64,29 +67,29 @@ class StudentController extends Controller
     {
         $email_exists = Student::where('email', $request->get('email'))->where('teacher_id', Auth::id())->first();
 
-        if ($email_exists->email == $request->get('email') && $email_exists->email != null) {
+        if (isset($email_exists) && $email_exists->email == $request->get('email') && $email_exists->email != null) {
             return redirect()->back()->with('error', 'The email address is already in use.');
-        } else {
-            $phone = preg_replace('/\D/', '', $request->get('phone'));
-            $student = new Student([
-                'teacher_id' => Auth::id(),
-                'first_name' => $request->get('first_name'),
-                'last_name' => $request->get('last_name'),
-                'email' => $request->get('email'),
-                'phone' => $phone,
-                'status' => $request->get('status'),
-            ]);
-
-            if ($request->hasFile('photo')) {
-                $file = $request->file('photo');
-                $fileName = date('Ymd_hms') . "." . $file->getClientOriginalExtension();
-                Storage::disk('student')->put($fileName, File::get($file));
-                $student->photo = $fileName;
-            }
-            $student->save();
-
-            return redirect()->route('student.index')->with('success', 'The student was added successfully.');
         }
+
+        $phone = preg_replace('/\D/', '', $request->get('phone'));
+        $student = new Student([
+            'teacher_id' => Auth::id(),
+            'first_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
+            'email' => $request->get('email') ? $request->get('email') : null,
+            'phone' => $phone,
+            'status' => $request->get('status'),
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $fileName = date('Ymd_hms') . "." . $file->getClientOriginalExtension();
+            Storage::disk('student')->put($fileName, File::get($file));
+            $student->photo = $fileName;
+        }
+        $student->save();
+
+        return redirect()->route('student.index')->with('success', 'The student was added successfully.');
     }
 
     public function edit($id)
@@ -136,7 +139,6 @@ class StudentController extends Controller
     public function profile($id)
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
-
         return view('webapp.student.profile')->with('students', $students);
     }
 
@@ -177,7 +179,7 @@ class StudentController extends Controller
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
-        $lessons = Lesson::where('teacher_id', Auth::id())->get();
+        $lessons = Lesson::where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
 
         $startDate = $day;
 
@@ -191,7 +193,7 @@ class StudentController extends Controller
 
         $thisDay = $this->dayOfWeek($day);
 
-        $amount = -45;
+        $amount = -30;
 
         foreach ($businessHours as $businessHour) {
             if ($businessHour->open_time <= $businessHour->close_time && $thisDay == $businessHour->day) {
@@ -213,13 +215,14 @@ class StudentController extends Controller
         $studentScheduled = false;
 
         foreach ($lessons as $lesson) {
-            $lessonDay = date('l', strtotime($lesson['start_date']));
-            $lessonStartDate = $lesson['start_date'];
-            $lessonStartTime = date('H:i:s', strtotime($lesson['start_date']));
-            $lessonEndTime = date('H:i:s', strtotime($lesson['end_date']));
+            $lessonDay = Carbon::parse($lesson->start_date)->format('l');
+            $lessonStartDate = $lesson->start_date;
+            $lessonStartTime = Carbon::parse($lesson->start_date)->format('H:i:s');
+            $lessonEndTime = Carbon::parse($lesson->end_date)->format('H:i:s');
+            $lessonInterval = $lesson->interval;
             $studentLessonStart = Carbon::parse($lesson->start_date)->format('Y-m-d');
 
-            if ($lesson->student_id == $id) {
+               if ($lesson->student_id == $id) {
                 $studentScheduled = true;
             }
 
@@ -227,12 +230,28 @@ class StudentController extends Controller
                 continue;
             }
 
-            if ($lessonDay == $day && $lessonStartDate >= Carbon::today()) {
+            if ($lessonDay == $day && $lessonStartDate) {
                 // remove time for a lesson that is already booked from all times
                 foreach ($allTimes as $allTimeKey => $allTime) {
 
-                    if ($allTime == $lessonStartTime) {
+                    if ($allTime == $lessonStartTime && $lessonInterval == 15) {
                         unset($allTimes[$allTimeKey]);
+                        unset($allTimes[$allTimeKey + 1]);
+                    }
+
+                    if ($allTime == $lessonStartTime && $lessonInterval == 30) {
+                        unset($allTimes[$allTimeKey]);
+                        unset($allTimes[$allTimeKey + 1]);
+                    }
+
+                    if ($allTime == $lessonStartTime && $lessonInterval == 45) {
+                        unset($allTimes[$allTimeKey]);
+                        unset($allTimes[$allTimeKey + 1]);
+                    }
+
+                    if ($allTime == $lessonStartTime && $lessonInterval == 60) {
+                        unset($allTimes[$allTimeKey]);
+                        unset($allTimes[$allTimeKey + 1]);
                     }
 
                     if ($allTime == $lessonEndTime) {
@@ -275,13 +294,15 @@ class StudentController extends Controller
 
     public function scheduleEdit($student_id, $id, $day = null)
     {
+        $students = Student::where('id', $student_id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
-        $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->get();
-        $allLessons = Lesson::where('teacher_id', Auth::id())->get();
+        $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
+        $allLessons = Lesson::where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
 
         $startDate = $day;
 
         if ($day == null) {
+
             foreach ($lessons as $lesson) {
                 $day = Carbon::parse($lesson->start_date)->format('l');
             }
@@ -321,29 +342,55 @@ class StudentController extends Controller
 
             $allLessonsDay = Carbon::parse($allLesson->start_date)->format('Y-m-d');
 
-            if ($allLessonsDay == $studentLessonStart) {
+            if ($allLessonsDay == $studentLessonStart || $allLessonsDay == $startDate) {
+
                 $lessonStart = Carbon::parse($allLesson->start_date)->format('H:i:s');
-                $lessonMinutes = Carbon::parse($allLesson->start_date)->addMinute(15)->format('H:i:s');
+                $lesson15Minutes = Carbon::parse($allLesson->start_date)->addMinute(15)->format('H:i:s');
+                $lesson30Minutes = Carbon::parse($allLesson->start_date)->addMinute(30)->format('H:i:s');
+                $lesson45Minutes = Carbon::parse($allLesson->start_date)->addMinute(45)->format('H:i:s');
+                $lesson60Minutes = Carbon::parse($allLesson->start_date)->addMinute(60)->format('H:i:s');
 
                 $lessonStartParse = Carbon::parse($allLesson->start_date);
                 $lessonEndParse = Carbon::parse($allLesson->end_date);
                 $diffInTime = $lessonEndParse->diffInSeconds($lessonStartParse);
 
-                $lessonTimes[] = $lessonStart;
-                if ($diffInTime != 900) {
-                    $lessonTimes[] = $lessonMinutes;
+                switch ($diffInTime) {
+                    case 900:
+                        $lessonTimes[] = $lessonStart;
+                        break;
+                    case 1800:
+                        $lessonTimes[] = $lessonStart;
+                        $lessonTimes[] = $lesson15Minutes;
+                        break;
+                    case 2700:
+                        $lessonTimes[] = $lessonStart;
+                        $lessonTimes[] = $lesson15Minutes;
+                        $lessonTimes[] = $lesson30Minutes;
+                        break;
+                    case 3600:
+                        $lessonTimes[] = $lesson15Minutes;
+                        $lessonTimes[] = $lesson30Minutes;
+                        $lessonTimes[] = $lesson45Minutes;
+                        break;
+                    default:
+                        $lessonTimes[] = $lessonStart;
                 }
             }
         }
 
         $allAvailableTimes = array_diff($allTimes, $lessonTimes);
 
-        return view('webapp.student.scheduleEdit')->with('lessons', $lessons)->with('businessHours', $businessHours)->with('allTimes', $allAvailableTimes)->with('startDate', $startDate);
+        return view('webapp.student.scheduleEdit')
+            ->with('lessons', $lessons)
+            ->with('students', $students)
+            ->with('allTimes', $allAvailableTimes)
+            ->with('startDate', $startDate);
     }
 
     /**
      * @param Request $request
      * @return string
+     * remove function not used
      */
     public function interval(Request $request)
     {

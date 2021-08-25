@@ -19,7 +19,7 @@
                         <th scope="col">City</th>
                         <th scope="col">State</th>
                         <th scope="col">Zip</th>
-                        <th scope="col">Phone</th>
+                        <th scope="col" data-orderable="false">Phone</th>
                     </tr>
                     </thead>
                     <tbody>

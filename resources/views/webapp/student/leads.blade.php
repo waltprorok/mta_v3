@@ -22,10 +22,10 @@
                     <tr>
                         <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
-                        <th scope="col">Phone</th>
+                        <th scope="col" data-orderable="false">Phone</th>
                         <th scope="col">Email</th>
                         <th scope="col">Instrument</th>
-                        <th scope="col">Update</th>
+                        <th scope="col" data-orderable="false">Update</th>
                     </tr>
                     </thead>
                     <tbody>
