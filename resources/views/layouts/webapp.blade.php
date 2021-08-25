@@ -37,7 +37,7 @@
 
 </head>
 
-<body class="sidebar-fixed header-fixed">
+<body class="sidebar-fixed header-fixed sidebar-hidden">
 <div class="page-wrapper">
     <nav class="navbar page-header">
         <a href="#" class="btn btn-link sidebar-mobile-toggle d-md-none mr-auto">
