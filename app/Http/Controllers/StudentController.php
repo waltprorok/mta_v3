@@ -33,10 +33,10 @@ class StudentController extends Controller
             return redirect('teacher')->with('info', 'Please fill out your Studio Settings first before entering students.');
         }
 
-        $students = Student::with('teacher')
+        $students = Student::with('hasOneLesson')
             ->where('teacher_id', Auth::id())
             ->where('status', 'Active')
-            ->orderBy('first_name', 'asc')
+            ->latestFirst()
             ->get();
 
         return view('webapp.student.index')->with('students', $students);
@@ -222,7 +222,7 @@ class StudentController extends Controller
             $lessonInterval = $lesson->interval;
             $studentLessonStart = Carbon::parse($lesson->start_date)->format('Y-m-d');
 
-               if ($lesson->student_id == $id) {
+            if ($lesson->student_id == $id) {
                 $studentScheduled = true;
             }
 
