@@ -368,6 +368,7 @@ class StudentController extends Controller
                         $lessonTimes[] = $lesson30Minutes;
                         break;
                     case 3600:
+                        $lessonTimes[] = $lessonStart;
                         $lessonTimes[] = $lesson15Minutes;
                         $lessonTimes[] = $lesson30Minutes;
                         $lessonTimes[] = $lesson45Minutes;
