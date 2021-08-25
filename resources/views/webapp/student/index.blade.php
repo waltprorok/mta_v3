@@ -14,12 +14,13 @@
         @include('partials.studentListTabs')
         <div class="card">
             <div class="card-body">
-                <table class="table" id="dtStudentIndex">
+                <table class="table table-hover" id="dtStudentIndex">
                     <thead class="thead">
                     <tr>
+                        <th scope="col" data-orderable="false">Scheduled</th>
                         <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
-                        <th scope="col" data-orderable="false">Phone</th>
+                        <th scope="col">Phone</th>
                         <th scope="col">Email</th>
                         <th scope="col">Instrument</th>
                         <th scope="col" data-orderable="false">Actions</th>
@@ -34,10 +35,24 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                         </tr>
                     @else
                         @foreach($students as $student)
                             <tr>
+                                @if ($student->hasOneLesson)
+                                    <td class="text-center">
+                                        <span class="btn btn-success btn-rounded">
+                                            <i class="fa fa-check"></i>
+                                        </span>
+                                    </td>
+                                @else
+                                    <td class="text-center">
+                                        <span class="btn btn-danger btn-rounded">
+                                            <i class="fa fa-times"></i>
+                                        </span>
+                                    </td>
+                                @endif
                                 <td>{{ $student->first_name }}</td>
                                 <td>{{ $student->last_name }}</td>
                                 <td>{{ $student->phone_number }}</td>

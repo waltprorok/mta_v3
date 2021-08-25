@@ -58,15 +58,15 @@
                                                 </div>
                                                 @if($studentScheduled)
                                                     <div class="col-sm-9 text-secondary">
-                                                        <button type="button" class="btn btn-success">
+                                                        <span class="btn btn-success">
                                                             <i class="fa fa-check"></i>&nbsp; Has Appointment
-                                                        </button>
+                                                        </span>
                                                     </div>
                                                 @else
                                                     <div class="col-sm-9 text-secondary">
-                                                        <button type="button" class="btn btn-danger">
+                                                        <span class="btn btn-danger">
                                                             <i class="fa fa-times"></i>&nbsp; Needs Appointment
-                                                        </button>
+                                                        </span>
                                                     </div>
                                                 @endif
                                             </div>

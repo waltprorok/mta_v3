@@ -41,6 +41,7 @@ class Student extends Model
         'teacher_id'
     ];
 
+
     public function teacher()
     {
         return $this->belongsTo(Teacher::class);
@@ -49,6 +50,11 @@ class Student extends Model
     public function lesson()
     {
         return $this->belongsTo(Lesson::class);
+    }
+
+    public function hasOneLesson()
+    {
+        return $this->hasOne(Lesson::class);
     }
 
     public function lessons()
