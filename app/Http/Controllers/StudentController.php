@@ -34,7 +34,10 @@ class StudentController extends Controller
         }
 
         $students = Student::with('teacher')
-            ->latestFirst()->where('teacher_id', Auth::id())->where('status', 'Active')->get();
+            ->where('teacher_id', Auth::id())
+            ->where('status', 'Active')
+            ->orderBy('first_name', 'asc')
+            ->get();
 
         return view('webapp.student.index')->with('students', $students);
     }
@@ -64,29 +67,29 @@ class StudentController extends Controller
     {
         $email_exists = Student::where('email', $request->get('email'))->where('teacher_id', Auth::id())->first();
 
-        if ($email_exists->email == $request->get('email') && $email_exists->email != null) {
+        if (isset($email_exists) && $email_exists->email == $request->get('email') && $email_exists->email != null) {
             return redirect()->back()->with('error', 'The email address is already in use.');
-        } else {
-            $phone = preg_replace('/\D/', '', $request->get('phone'));
-            $student = new Student([
-                'teacher_id' => Auth::id(),
-                'first_name' => $request->get('first_name'),
-                'last_name' => $request->get('last_name'),
-                'email' => $request->get('email'),
-                'phone' => $phone,
-                'status' => $request->get('status'),
-            ]);
-
-            if ($request->hasFile('photo')) {
-                $file = $request->file('photo');
-                $fileName = date('Ymd_hms') . "." . $file->getClientOriginalExtension();
-                Storage::disk('student')->put($fileName, File::get($file));
-                $student->photo = $fileName;
-            }
-            $student->save();
-
-            return redirect()->route('student.index')->with('success', 'The student was added successfully.');
         }
+
+        $phone = preg_replace('/\D/', '', $request->get('phone'));
+        $student = new Student([
+            'teacher_id' => Auth::id(),
+            'first_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
+            'email' => $request->get('email') ? $request->get('email') : null,
+            'phone' => $phone,
+            'status' => $request->get('status'),
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $fileName = date('Ymd_hms') . "." . $file->getClientOriginalExtension();
+            Storage::disk('student')->put($fileName, File::get($file));
+            $student->photo = $fileName;
+        }
+        $student->save();
+
+        return redirect()->route('student.index')->with('success', 'The student was added successfully.');
     }
 
     public function edit($id)
@@ -219,7 +222,7 @@ class StudentController extends Controller
             $lessonInterval = $lesson->interval;
             $studentLessonStart = Carbon::parse($lesson->start_date)->format('Y-m-d');
 
-            if ($lesson->student_id == $id) {
+               if ($lesson->student_id == $id) {
                 $studentScheduled = true;
             }
 
@@ -233,22 +236,22 @@ class StudentController extends Controller
 
                     if ($allTime == $lessonStartTime && $lessonInterval == 15) {
                         unset($allTimes[$allTimeKey]);
-                        unset($allTimes[$allTimeKey + 1 ]);
+                        unset($allTimes[$allTimeKey + 1]);
                     }
 
                     if ($allTime == $lessonStartTime && $lessonInterval == 30) {
                         unset($allTimes[$allTimeKey]);
-                        unset($allTimes[$allTimeKey + 1 ]);
+                        unset($allTimes[$allTimeKey + 1]);
                     }
 
                     if ($allTime == $lessonStartTime && $lessonInterval == 45) {
                         unset($allTimes[$allTimeKey]);
-                        unset($allTimes[$allTimeKey + 1 ]);
+                        unset($allTimes[$allTimeKey + 1]);
                     }
 
                     if ($allTime == $lessonStartTime && $lessonInterval == 60) {
                         unset($allTimes[$allTimeKey]);
-                        unset($allTimes[$allTimeKey + 1 ]);
+                        unset($allTimes[$allTimeKey + 1]);
                     }
 
                     if ($allTime == $lessonEndTime) {

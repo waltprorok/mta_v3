@@ -13,13 +13,13 @@
                 <table class="table" id="dtBlogIndex">
                     <thead class="thead">
                     <tr>
-                        <th scope="col">Image</th>
+                        <th scope="col" data-orderable="false">Image</th>
                         <th scope="col">Title</th>
                         <th scope="col">Slug</th>
                         <th scope="col">Released On</th>
                         <th scope="col">Created At</th>
                         <th scope="col">Updated At</th>
-                        <th scope="col">Functions</th>
+                        <th scope="col" data-orderable="false">Functions</th>
                     </tr>
                     </thead>
                     <tbody>
