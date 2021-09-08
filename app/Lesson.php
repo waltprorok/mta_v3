@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lesson extends Model
@@ -15,9 +16,11 @@ class Lesson extends Model
         'start_date',
         'end_date'];
 
-    public function student()
+    /**
+     * @return BelongsTo
+     */
+    public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
     }
-
 }

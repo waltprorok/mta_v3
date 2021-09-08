@@ -43,7 +43,7 @@
                             <tr>
                                 <td>{{ $lead->first_name }}</td>
                                 <td>{{ $lead->last_name }}</td>
-                                <td id="phone">{{ $lead->phone_number }}</td>
+                                <td>{{ $lead->phone_number }}</td>
                                 <td>{{ $lead->email }}</td>
                                 <td>{{ $lead->instrument }}</td>
                                 <th scope="row">

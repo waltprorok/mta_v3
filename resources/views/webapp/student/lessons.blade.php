@@ -15,41 +15,53 @@
         </ul>
         <div class="card">
             <div class="card-body">
-                <table class="table" id="dtLessonsIndex">
-                    <thead class="thead">
-                    <tr>
-                        <th scope="col">Completed</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Start Date</th>
-                        <th scope="col">End Date</th>
-                        <th scope="col">Duration</th>
-                        <th scope="col" data-orderable="false">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if(count($lessons) == null)
+                <form class="form-horizontal" method="post" action="{{ route('student.lessons.update') }}">
+                    @csrf
+                    @method('PUT')
+                    <table class="table" id="dtLessonsIndex">
+                        <thead class="thead">
                         <tr>
-                            <td>No lessons have been scheduled at this time.</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <th scope="col">Completed</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
+                            <th scope="col">Duration</th>
+                            <th scope="col" data-orderable="false">Actions</th>
                         </tr>
-                    @else
-                        @foreach($lessons as $lesson)
+                        </thead>
+                        <tbody>
+                        @if(count($lessons) == null)
                             <tr>
-                                <td><input type="checkbox" {{ $lesson->complete == '1' ? 'checked' : '' }} class="select-all checkbox" name="select-all" value="1"/></td>
-                                <td>{{ $lesson->title }}</td>
-                                <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('m-d-Y h:i A') }}</td>
-                                <td>{{ Carbon\Carbon::parse($lesson->end_date)->format('m-d-Y h:i A') }}</td>
-                                <td>{{ $lesson->interval }} minutes</td>
-                                <td><a href="{{ route('student.schedule.edit', [$lesson->student_id, $lesson->id])}}" class="btn btn-primary" role="button" title="edit"><i class="fa fa-edit"></i></a></td>
+                                <td>No lessons have been scheduled at this time.</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
-                        @endforeach
-                    @endif
-                    </tbody>
-                </table>
+                        @else
+                            @foreach($lessons as $lesson)
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" {{ $lesson->complete == '1' ? 'checked' : '' }} class="checkbox" name="completed" value="1"/>
+                                        <input type="hidden" name="id" value="{{ $lesson->id }}"/>
+                                        <input type="hidden" name="student_id" value="{{ $lesson->student_id }}"/>
+                                    </td>
+                                    <td>{{ $lesson->title }}</td>
+                                    <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('m-d-Y h:i A') }}</td>
+                                    <td>{{ Carbon\Carbon::parse($lesson->end_date)->format('m-d-Y h:i A') }}</td>
+                                    <td>{{ $lesson->interval }} minutes</td>
+                                    <td><a href="{{ route('student.schedule.edit', [$lesson->student_id, $lesson->id])}}" class="btn btn-primary" role="button" title="edit"><i
+                                                    class="fa fa-edit"></i></a></td>
+                                </tr>
+                            @endforeach
+                        @endif
+                        </tbody>
+                    </table>
+                    <button type="submit" name="save" class="btn btn-default">
+                        Save
+                    </button>
+                </form>
             </div>
         </div>
     </div>

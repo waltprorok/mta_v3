@@ -32,7 +32,7 @@
                             <td>{{ $teacher->city }}</td>
                             <td>{{ $teacher->state }}</td>
                             <td>{{ $teacher->zip }}</td>
-                            <td>{{ $teacher->getPhoneNumberAttribute() }}</td>
+                            <td>{{ $teacher->phone_number }}</td>
                             {{--<td class="text-nowrap">--}}
                             {{--<span class="align-baseline"><a href="{{ route('admin.blog.edit', $teacher->id )}}" class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>--}}
                             {{--<a href="{{ route('blog.show', $teacher->slug) }}" target="_blank" class="btn btn-outline-dark" role="button" title="view"><i class="fa fa-chrome" aria-hidden="true"></i></a>--}}

@@ -2,10 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -20,38 +18,30 @@
     <!-- Favicons -->
     <link href="{{ asset('marketing/img/favicon-mta.png') }}" rel="icon">
     <link href="{{ asset('marketing/img/apple-touch-icon-mta.png') }}" rel="apple-touch-icon">
-
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('webapp/vendor/simple-line-icons/css/simple-line-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('webapp/vendor/font-awesome-4/css/font-awesome.min.css') }}">
-
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="{{ asset('webapp/css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('webapp/css/stylesheet.css') }}">
-
     <!-- Datepicker -->
     <link rel="stylesheet" href="{{ asset('webapp/css/jquery-ui.css') }}">
-
     <!-- JQuery -->
     <script src="{{ asset('webapp/vendor/jquery/jquery.min.js') }}"></script>
-
 </head>
 
-<body class="sidebar-fixed header-fixed sidebar-hidden">
+<body class="sidebar-fixed header-fixed">
 <div class="page-wrapper">
     <nav class="navbar page-header">
         <a href="#" class="btn btn-link sidebar-mobile-toggle d-md-none mr-auto">
             <i class="fa fa-bars"></i>
         </a>
-
         <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">
             <i class="fa fa-bars"></i>
         </a>
-
         <a class="navbar-brand" href="{{ route('dashboard') }}">
             <img src="{{ asset('webapp/imgs/logo-mta1.png') }}" alt="logo">
         </a>
-
         <ul class="navbar-nav ml-auto">
             <li class="nav-item d-md-down-none">
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -66,7 +56,6 @@
                     </a>
                 </div>
             </li>
-
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                    aria-expanded="false">
@@ -80,27 +69,22 @@
                     </a>
                 </div>
             </li>
-
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                    aria-expanded="false">
                     <i class="fa fa-user fa-lg" aria-hidden="true"></i>
                     <span class="small ml-1 d-md-down-none"></span>
                 </a>
-
                 <div class="dropdown-menu dropdown-menu-right">
                     <a href="{{ route('account.profile') }}" class="dropdown-item">
                         <i class="fa fa-calculator"></i>Account
                     </a>
-
                     <a href="{{ route('teacher.studioIndex') }}" class="dropdown-item">
                         <i class="fa fa-wrench"></i>Settings
                     </a>
-
                     <a href="#" class="dropdown-item">
                         <i class="fa fa-life-ring"></i>Support
                     </a>
-
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
@@ -108,7 +92,6 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
-
                 </div>
             </li>
         </ul>

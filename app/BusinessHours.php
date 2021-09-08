@@ -3,12 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BusinessHours extends Model
 {
-    protected $fillable = ['teacher_id', 'day', 'active', 'open_time', 'close_time'];
+    protected $fillable = [
+        'teacher_id',
+        'day',
+        'active',
+        'open_time',
+        'close_time',
+    ];
 
-    public function businessHours()
+    public function businessHours(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

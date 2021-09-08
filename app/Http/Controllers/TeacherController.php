@@ -9,7 +9,6 @@ use Auth;
 use File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use Storage;
 
 class TeacherController extends Controller
@@ -31,9 +30,8 @@ class TeacherController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param TeacherStoreSettings $request
      * @return RedirectResponse
-     * @throws ValidationException
      */
     public function store(TeacherStoreSettings $request)
     {

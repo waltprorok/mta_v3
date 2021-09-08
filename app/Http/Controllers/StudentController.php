@@ -72,6 +72,7 @@ class StudentController extends Controller
         }
 
         $phone = preg_replace('/\D/', '', $request->get('phone'));
+
         $student = new Student([
             'teacher_id' => Auth::id(),
             'first_name' => $request->get('first_name'),
@@ -100,8 +101,17 @@ class StudentController extends Controller
 
     public function lessons()
     {
-        $lessons = Lesson::where('teacher_id', Auth::id())->whereDate('start_date', '>=', date('Y-m-d'))->get();
+        // ->whereDate('start_date', '>=', date('Y-m-d'))
+        $lessons = Lesson::where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
         return view('webapp.student.lessons')->with('lessons', $lessons);
+    }
+
+    public function lessonsUpdate(Request $request)
+    {
+        // finish this update function
+        foreach ($request as $data) {
+            var_dump([$data->get('id'), $data->get('student_id'), $data->get('completed')]);
+        }
     }
 
     public function update(Request $request)

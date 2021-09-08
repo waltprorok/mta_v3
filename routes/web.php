@@ -80,6 +80,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('/schedule/{id}', 'StudentController@scheduledLessonDelete')->name('student.schedule.delete');
         Route::delete('/schedule/delete/{id}', 'StudentController@scheduledLessonDelete')->name('student.schedule.deleteAll');
         Route::get('/lessons', 'StudentController@lessons')->name('student.lessons');
+        Route::put('/lessons/update', 'StudentController@lessonsUpdate')->name('student.lessons.update');
         Route::post('/process_date', 'StudentController@ajaxTime');
     });
 
