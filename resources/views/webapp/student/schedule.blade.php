@@ -48,7 +48,7 @@
                                                     <h6 class="mb-0">Phone</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    {{ $student->phone }}
+                                                    {{ $student->phone_number }}
                                                 </div>
                                             </div>
                                             <hr>

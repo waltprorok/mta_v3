@@ -114,7 +114,7 @@ class StudentController extends Controller
         }
     }
 
-    public function update(Request $request)
+    public function update(StoreStudent $request)
     {
         $phone = preg_replace('/\D/', '', $request->get('phone'));
 

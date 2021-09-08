@@ -22,9 +22,7 @@
                         <div class="col-sm-12">
                             <div class="form-group{{ $errors->has('studio_name') ? ' has-error' : '' }}">
                                 <label for="studio_name" class="control-label">Studio Name</label>
-                                <input id="studio_name" type="text" class="form-control" name="studio_name"
-                                       value="{{ old('studio_name') }}">
-
+                                <input id="studio_name" type="text" class="form-control" name="studio_name" value="{{ old('studio_name') }}">
                                 @if ($errors->has('studio_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('studio_name') }}</strong>
@@ -38,9 +36,7 @@
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
                                 <label for="first_name" class="control-label">First Name</label>
-                                <input id="first_name" type="text" class="form-control"
-                                       name="first_name" value="{{ Auth::user()->first_name }}">
-
+                                <input id="first_name" type="text" class="form-control" name="first_name" value="{{ Auth::user()->first_name }}">
                                 @if ($errors->has('first_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('first_name') }}</strong>
@@ -52,9 +48,7 @@
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
                                 <label for="last_name" class="control-label">Last Name</label>
-                                <input id="last_name" type="text" class="form-control"
-                                       name="last_name" value="{{ Auth::user()->last_name }}">
-
+                                <input id="last_name" type="text" class="form-control" name="last_name" value="{{ Auth::user()->last_name }}">
                                 @if ($errors->has('last_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('last_name') }}</strong>
@@ -68,9 +62,7 @@
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                                 <label for="address" class="control-label">Address</label>
-                                <input id="address" type="text" class="form-control" name="address"
-                                       value="{{ old('address') }}">
-
+                                <input id="address" type="text" class="form-control" name="address" value="{{ old('address') }}">
                                 @if ($errors->has('address'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('address') }}</strong>
@@ -82,8 +74,7 @@
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('address_2') ? ' has-error' : '' }}">
                                 <label for="address_2" class="control-label">Address 2</label>
-                                <input id="address_2" type="text" class="form-control" placeholder="Apt 34, Suite 123, Building H"
-                                       name="address_2" value="{{ old('address_2') }}">
+                                <input id="address_2" type="text" class="form-control" placeholder="Apt 34, Suite 123, Building H" name="address_2" value="{{ old('address_2') }}">
                                 @if ($errors->has('address_2'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('address_2') }}</strong>
@@ -97,9 +88,7 @@
                         <div class="col-sm-4">
                             <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
                                 <label for="city" class="control-label">City</label>
-                                <input id="city" type="text" class="form-control" name="city"
-                                       value="{{ old('city') }}">
-
+                                <input id="city" type="text" class="form-control" name="city" value="{{ old('city') }}">
                                 @if ($errors->has('city'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('city') }}</strong>
@@ -176,9 +165,7 @@
                         <div class="col-sm-4">
                             <div class="form-group{{ $errors->has('zip') ? ' has-error' : '' }}">
                                 <label for="zip" class="control-label">Zip</label>
-                                <input id="zip" type="text" class="form-control" name="zip"
-                                       value="{{ old('zip') }}">
-
+                                <input id="zip" type="text" class="form-control" name="zip" value="{{ old('zip') }}">
                                 @if ($errors->has('zip'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('zip') }}</strong>
@@ -192,9 +179,7 @@
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email" class="control-label">Email</label>
-                                <input id="email" type="text" class="form-control" name="email"
-                                       value="{{ Auth::user()->email }}">
-
+                                <input id="email" type="text" class="form-control" name="email" value="{{ Auth::user()->email }}">
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -206,9 +191,7 @@
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                                 <label for="phone" class="control-label">Phone</label>
-                                <input id="phone" type="text" class="form-control" name="phone"
-                                       value="{{ old('phone') }}">
-
+                                <input id="phone" type="text" class="form-control" name="phone" placeholder="(___) ___-____" value="{{ old('phone') }}">
                                 @if ($errors->has('phone'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('phone') }}</strong>

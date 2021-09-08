@@ -36,7 +36,10 @@ class Blog extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getImageUrlAttribute($value)
+    /**
+     * @return string
+     */
+    public function getImageUrlAttribute(): string
     {
         $imageUrl = "";
 
@@ -49,36 +52,59 @@ class Blog extends Model
         return $imageUrl;
     }
 
-    public function getDateForHumanAttribute($value)
+    /**
+     * @return string
+     */
+    public function getDateForHumanAttribute(): string
     {
         return is_null($this->released_on) ? '' : $this->released_on->diffForHumans();
     }
 
-    public function getDateTimeAttribute($value)
+    /**
+     * @return false|string
+     */
+    public function getDateTimeAttribute(): string
     {
         return is_null($this->released_on) ? '' : date('M d, Y', strtotime($this->released_on));
     }
 
-    public function getDateBlogRawAttribute($value)
+    /**
+     * @return false|string
+     */
+    public function getDateBlogRawAttribute(): string
     {
         return is_null($this->released_on) ? '' : date('H:i:s', strtotime($this->released_on));
     }
 
-    public function getDateHourMinAttribute($value)
+    /**
+     * @return false|string
+     */
+    public function getDateHourMinAttribute(): string
     {
         return is_null($this->released_on) ? '' : date('h:i A', strtotime($this->released_on));
     }
 
-    public function getBodyHtmlAttribute($value)
+    /**
+     * @return null
+     */
+    public function getBodyHtmlAttribute(): ?string
     {
         return $this->body ? Markdown::convertToHtml(e($this->body)) : null;
     }
 
+    /**
+     * @param $query
+     * @return mixed
+     */
     public function scopeLatestFirst($query)
     {
         return $query->orderBy('released_on', 'desc');
     }
 
+    /**
+     * @param $query
+     * @return mixed
+     */
     public function scopePublished($query)
     {
         return $query->where('released_on', '<=', Carbon::now());

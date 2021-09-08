@@ -38,7 +38,7 @@ class Student extends Model
     /**
      * @return string|void
      */
-    public function getPhoneNumberAttribute()
+    public function getPhoneNumberAttribute(): string
     {
         if ($this->phone != null) {
             $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
@@ -50,6 +50,7 @@ class Student extends Model
                 return "{$matches[1]}-{$matches[2]}-{$matches[3]}-{$matches[4]}";
             }
         }
+        return $this->phone;
     }
 
     /**
@@ -85,7 +86,10 @@ class Student extends Model
         return $query->orderBy('first_name', 'asc');
     }
 
-    public function teacher()
+    /**
+     * @return BelongsTo
+     */
+    public function teacher(): BelongsTo
     {
         return $this->belongsTo(Teacher::class);
     }

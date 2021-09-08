@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
@@ -42,21 +43,33 @@ class User extends Authenticatable
      */
     private $user;
 
-    public function students()
+    /**
+     * @return HasMany
+     */
+    public function students(): HasMany
     {
         return $this->hasMany(Student::class, 'teacher_id', 'id');
     }
 
+    /**
+     * @return HasMany
+     */
     public function lessons()
     {
         return $this->hasMany(Lesson::class, 'teacher_id', 'id');
     }
 
+    /**
+     * @return mixed
+     */
     public static function activeStudentCount()
     {
         return Auth::user()->students->where('status', '==', 'Active')->count();
     }
 
+    /**
+     * @return mixed
+     */
     public static function lessonsThisWeek()
     {
         return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
