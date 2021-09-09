@@ -35,7 +35,7 @@ class TeacherController extends Controller
      */
     public function store(TeacherStoreSettings $request)
     {
-        $phonef = preg_replace('/\D+/', '', $request->get('phone'));
+        $phone = preg_replace('/\D+/', '', $request->get('phone'));
 
         $studio = new Teacher([
             'teacher_id' => $request->get('teacher_id'),
@@ -48,7 +48,7 @@ class TeacherController extends Controller
             'state' => $request->get('state'),
             'zip' => $request->get('zip'),
             'email' => $request->get('email'),
-            'phone' => $phonef
+            'phone' => $phone
         ]);
 
         if ($request->hasFile('logo')) {

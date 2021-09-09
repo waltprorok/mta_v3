@@ -121,7 +121,7 @@
                                     <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{ $student->email }}
+                                    <a href="mailto:{{ $student->email }}">{{ $student->email }}</a>
                                 </div>
                             </div>
                             <hr>

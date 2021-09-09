@@ -6,9 +6,8 @@ use App\Contact;
 use App\Http\Requests\StoreContactSubmission;
 use App\Mail\ContactForm;
 use App\Plan;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
@@ -17,17 +16,17 @@ class HomeController extends Controller
      *
      * @return void
      */
-    /*public function __construct()
-    {
-        $this->middleware('auth');
-    }*/
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
 
     /**
      * Show the application dashboard.
      *
-     * @return Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         return view('marketing.home');
     }
@@ -63,7 +62,7 @@ class HomeController extends Controller
         return view('webapp.index');
     }
 
-    public function contact(Request $request)
+    public function contact()
     {
         return view('marketing.contact');
     }
@@ -83,5 +82,4 @@ class HomeController extends Controller
 
         return redirect()->route('contact')->with('success', 'The contact form was sent successfully');
     }
-
 }

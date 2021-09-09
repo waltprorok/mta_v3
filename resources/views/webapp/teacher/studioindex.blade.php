@@ -21,7 +21,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group{{ $errors->has('studio_name') ? ' has-error' : '' }}">
-                                <label for="studio_name" class="control-label">Studio Name</label>
+                                <label for="studio_name" class="control-label">Studio Name <span class="text-danger">*</span></label>
                                 <input id="studio_name" type="text" class="form-control" name="studio_name" value="{{ old('studio_name') }}">
                                 @if ($errors->has('studio_name'))
                                     <span class="help-block">
@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
-                                <label for="first_name" class="control-label">First Name</label>
+                                <label for="first_name" class="control-label">First Name <span class="text-danger">*</span></label>
                                 <input id="first_name" type="text" class="form-control" name="first_name" value="{{ Auth::user()->first_name }}">
                                 @if ($errors->has('first_name'))
                                     <span class="help-block">
@@ -47,7 +47,7 @@
 
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
-                                <label for="last_name" class="control-label">Last Name</label>
+                                <label for="last_name" class="control-label">Last Name <span class="text-danger">*</span></label>
                                 <input id="last_name" type="text" class="form-control" name="last_name" value="{{ Auth::user()->last_name }}">
                                 @if ($errors->has('last_name'))
                                     <span class="help-block">
@@ -61,7 +61,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
-                                <label for="address" class="control-label">Address</label>
+                                <label for="address" class="control-label">Address <span class="text-danger">*</span></label>
                                 <input id="address" type="text" class="form-control" name="address" value="{{ old('address') }}">
                                 @if ($errors->has('address'))
                                     <span class="help-block">
@@ -87,7 +87,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
-                                <label for="city" class="control-label">City</label>
+                                <label for="city" class="control-label">City <span class="text-danger">*</span></label>
                                 <input id="city" type="text" class="form-control" name="city" value="{{ old('city') }}">
                                 @if ($errors->has('city'))
                                     <span class="help-block">
@@ -99,7 +99,7 @@
 
                         <div class="col-sm-4">
                             <div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
-                                <label for="state" class="control-label">State</label>
+                                <label for="state" class="control-label">State <span class="text-danger">*</span></label>
                                 <select class="form-control" id="state" name="state">
                                     <option value="{{ old('state') }}">{{ old('state') }}</option>
                                     <option value="AK">Alaska</option>
@@ -164,7 +164,7 @@
 
                         <div class="col-sm-4">
                             <div class="form-group{{ $errors->has('zip') ? ' has-error' : '' }}">
-                                <label for="zip" class="control-label">Zip</label>
+                                <label for="zip" class="control-label">Zip <span class="text-danger">*</span></label>
                                 <input id="zip" type="text" class="form-control" name="zip" value="{{ old('zip') }}">
                                 @if ($errors->has('zip'))
                                     <span class="help-block">
@@ -178,8 +178,11 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="email" class="control-label">Email</label>
-                                <input id="email" type="text" class="form-control" name="email" value="{{ Auth::user()->email }}">
+                                <label for="email" class="control-label">Email <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                                    <input id="email" type="text" class="form-control" name="email" value="{{ Auth::user()->email }}">
+                                </div>
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -190,8 +193,11 @@
 
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                                <label for="phone" class="control-label">Phone</label>
-                                <input id="phone" type="text" class="form-control" name="phone" placeholder="(___) ___-____" value="{{ old('phone') }}">
+                                <label for="phone" class="control-label">Phone <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                    <input id="phone" type="text" class="form-control" name="phone" placeholder="(___) ___-____" value="{{ old('phone') }}">
+                                </div>
                                 @if ($errors->has('phone'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('phone') }}</strong>

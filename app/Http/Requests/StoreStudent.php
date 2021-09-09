@@ -26,6 +26,7 @@ class StoreStudent extends FormRequest
         return [
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
+            'email' => 'string|email|max:255|unique:students',
             'status' => 'string|max:30',
         ];
     }
