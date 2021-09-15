@@ -9,7 +9,6 @@ use Auth;
 use File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use Storage;
 
 class TeacherController extends Controller
@@ -31,13 +30,12 @@ class TeacherController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param TeacherStoreSettings $request
      * @return RedirectResponse
-     * @throws ValidationException
      */
     public function store(TeacherStoreSettings $request)
     {
-        $phonef = preg_replace('/\D+/', '', $request->get('phone'));
+        $phone = preg_replace('/\D+/', '', $request->get('phone'));
 
         $studio = new Teacher([
             'teacher_id' => $request->get('teacher_id'),
@@ -50,7 +48,7 @@ class TeacherController extends Controller
             'state' => $request->get('state'),
             'zip' => $request->get('zip'),
             'email' => $request->get('email'),
-            'phone' => $phonef
+            'phone' => $phone
         ]);
 
         if ($request->hasFile('logo')) {

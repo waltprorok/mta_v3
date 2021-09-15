@@ -1,22 +1,16 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 
 class Student extends Model
 {
     use Notifiable;
-
-    /**
-     * @param $notification
-     * @return string
-     */
-    public function routeNotificationForNexmo($notification)
-    {
-        return '+1' . $this->phone;
-    }
 
     protected $table = 'students';
 
@@ -41,42 +35,71 @@ class Student extends Model
         'teacher_id'
     ];
 
-
-    public function teacher()
+    /**
+     * @return string|void
+     */
+    public function getPhoneNumberAttribute(): string
     {
-        return $this->belongsTo(Teacher::class);
+        if ($this->phone != null) {
+            $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
+            if (strlen($cleaned) == 10) {
+                preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
+                return "{$matches[1]}-{$matches[2]}-{$matches[3]}";
+            } else if (strlen($cleaned) == 11) {
+                preg_match('/(\d)(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
+                return "{$matches[1]}-{$matches[2]}-{$matches[3]}-{$matches[4]}";
+            }
+        }
+        return $this->phone;
     }
 
-    public function lesson()
-    {
-        return $this->belongsTo(Lesson::class);
-    }
-
-    public function hasOneLesson()
+    /**
+     * @return HasOne
+     */
+    public function hasOneLesson(): HasOne
     {
         return $this->hasOne(Lesson::class);
     }
 
-    public function lessons()
+    /**
+     * @return BelongsTo
+     */
+    public function lesson(): BelongsTo
+    {
+        return $this->belongsTo(Lesson::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class);
     }
 
+    /**
+     * @param $query
+     * @return mixed
+     */
     public function scopeLatestFirst($query)
     {
         return $query->orderBy('first_name', 'asc');
     }
 
     /**
-     * @return string|void
+     * @return BelongsTo
      */
-    public function getPhoneNumberAttribute()
+    public function teacher(): BelongsTo
     {
-        if ($this->phone != null) {
-            $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
-            preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
-            return "{$matches[1]}-{$matches[2]}-{$matches[3]}";
-        }
+        return $this->belongsTo(Teacher::class);
     }
 
+    /**
+     * @param $notification
+     * @return string
+     */
+    public function routeNotificationForNexmo($notification): string
+    {
+        return '+1' . $this->phone;
+    }
 }

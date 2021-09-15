@@ -24,7 +24,7 @@ class TeacherStoreSettings extends FormRequest
     public function rules()
     {
         return [
-            'teacher_id' => 'required',
+            'teacher_id' => 'required|integer',
             'studio_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
@@ -32,9 +32,9 @@ class TeacherStoreSettings extends FormRequest
             'address_2' => 'max:120',
             'city' => 'required|string|max:100',
             'state' => 'required|string|max:50',
-            'zip' => 'required|integer',
-            'email' => 'required|string|email|max:255',
-            'phone' => 'required|string|max:50',
+            'zip' => 'required|integer|digits:5',
+            'email' => 'required|string|email|max:255|unique:teachers',
+            'phone' => 'required|string|max:20',
             'logo' => 'mimes:jpeg,jpg,png|max:3400'
         ];
     }

@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Teacher extends Model
@@ -26,23 +28,38 @@ class Teacher extends Model
         'logo'
     ];
 
-    public function teacher()
+    /**
+     * @return mixed|string|void
+     */
+    public function getPhoneNumberAttribute(): ?string
     {
-        return $this->belongsTo(User::class);
+        if ($this->phone != null) {
+            $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
+            if (strlen($cleaned) == 10) {
+                preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
+                return "{$matches[1]}-{$matches[2]}-{$matches[3]}";
+            } else if (strlen($cleaned) == 11) {
+                preg_match('/(\d{1})(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
+                return "{$matches[1]}-{$matches[2]}-{$matches[3]}-{$matches[4]}";
+            } else {
+                return $this->phone;
+            }
+        }
     }
 
-    public function student()
+    /**
+     * @return HasMany
+     */
+    public function student(): HasMany
     {
         return $this->hasMany(Student::class);
     }
 
-    public function getPhoneNumberAttribute()
+    /**
+     * @return BelongsTo
+     */
+    public function teacher(): BelongsTo
     {
-        if ($this->phone != null) {
-            $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
-            preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
-            return "{$matches[1]}-{$matches[2]}-{$matches[3]}";
-        }
+        return $this->belongsTo(User::class);
     }
-
 }

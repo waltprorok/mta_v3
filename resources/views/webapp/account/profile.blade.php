@@ -18,7 +18,7 @@
                     <div class="row mb-5">
                         <div class="col-md-4 mb-4">
                             <div>Profile Information</div>
-                            <div class="text-muted small">Update name, email and password</div>
+                            <div class="text-muted small">Update first name, last name, and email.</div>
                         </div>
 
                         <div class="col-md-8">
@@ -26,8 +26,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('first_name') ? 'has-error' : '' }}">
                                         <label class="control-label">First Name</label>
-                                        <input for="first_name" name="first_name" class="form-control"
-                                               value="{{ Auth::user()->first_name }}">
+                                        <input for="first_name" name="first_name" class="form-control" value="{{ Auth::user()->first_name }}">
                                         @if ($errors->has('first_name'))
                                             <span class="help-block">
                                                     <strong>{{ $errors->first('first_name') }}</strong>
@@ -35,14 +34,10 @@
                                         @endif
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('last_name') ? 'has-error' : '' }}">
                                         <label for="last_name" class="control-label">Last Name</label>
-                                        <input name="last_name" class="form-control"
-                                               value="{{ Auth::user()->last_name }}">
+                                        <input name="last_name" class="form-control" value="{{ Auth::user()->last_name }}">
                                         @if ($errors->has('last_name'))
                                             <span class="help-block">
                                                     <strong>{{ $errors->first('last_name') }}</strong>
@@ -73,8 +68,7 @@
                     <div class="row mt-5">
                         <div class="col-md-4 mb-4">
                             <div>Update Password</div>
-                            <div class="text-muted small">Leave credentials fields empty if you don't wish to change the
-                                password.
+                            <div class="text-muted small">Leave credentials fields empty if you don't wish to change the password.
                             </div>
                         </div>
 
@@ -105,9 +99,6 @@
                                         @endif
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('new_password_confirmation') ? 'has-error' : '' }}">
                                         <label for="new_password_confirmation" class="control-label">Confirm New

@@ -8,11 +8,11 @@
         </button>
         <h4>Edit Student</h4>
         @foreach ($students as $student)
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('student.edit', $student->id) }}">Edit</a></li>
-        </ul>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('student.edit', $student->id) }}">Edit</a></li>
+            </ul>
             @include('partials.studentTabs', $data = ['id' => $student->id])
             <div class="card">
                 <div class="card-body">
@@ -26,10 +26,8 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
-                                        <label for="first_name" class="control-label">First Name</label>
-                                        <input id="first_name" type="text" class="form-control"
-                                               name="first_name" value="{{ $student->first_name }}">
-
+                                        <label for="first_name" class="control-label">First Name <span class="text-danger">*</span></label>
+                                        <input id="first_name" type="text" class="form-control" name="first_name" value="{{ $student->first_name }}">
                                         @if ($errors->has('first_name'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('first_name') }}</strong>
@@ -40,10 +38,8 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
-                                        <label for="last_name" class="control-label">Last Name</label>
-                                        <input id="last_name" type="text" class="form-control"
-                                               name="last_name" value="{{ $student->last_name }}">
-
+                                        <label for="last_name" class="control-label">Last Name <span class="text-danger">*</span></label>
+                                        <input id="last_name" type="text" class="form-control" name="last_name" value="{{ $student->last_name }}">
                                         @if ($errors->has('last_name'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('last_name') }}</strong>
@@ -52,11 +48,65 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                        <label for="email" class="control-label">Email</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                                            <input id="email" type="email" class="form-control" name="email" value="{{ $student->email }}">
+                                        </div>
+                                        @if ($errors->has('email'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                                        <label for="phone" class="control-label">Phone</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                            <input type="tel" class="form-control" name="phone" placeholder="(___) ___-____" value="{{ $student->phone_number }}">
+                                        </div>
+                                        @if ($errors->has('phone'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('phone') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('instrument') ? ' has-error' : '' }}">
+                                        <label for="instrument" class="control-label">Instrument</label>
+                                        <select class="form-control" id="instrument" name="instrument">
+                                            @if ($student->instrument)
+                                                <option value="{{ $student->instrument }}">{{ $student->instrument }}</option>
+                                            @else
+                                                <option value="" selected="selected">Select an instrument</option>
+                                            @endif
+                                            <option value="Guitar">Guitar</option>
+                                            <option value="Bass">Bass</option>
+                                            <option value="Drums">Drums</option>
+                                            <option value="Voice">Voice</option>
+                                            <option value="Piano">Piano</option>
+                                        </select>
+                                    </div>
+
+                                    @if ($errors->has('instrument'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('instrument') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                                         <label for="status" class="control-label">Status</label>
+
                                         <select class="form-control" id="status" name="status">
                                             @if ($student->status)
                                                 <option value="{{ $student->status }}">{{ $student->status }}</option>
@@ -68,7 +118,6 @@
                                             <option value="Waitlist">Waitlist</option>
                                             <option value="Inactive">Inactive</option>
                                         </select>
-
                                         @if ($errors->has('status'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('status') }}</strong>
@@ -76,75 +125,17 @@
                                         @endif
                                     </div>
                                 </div>
-
-                                <div class="col-sm-6">
-                                    <div class="form-group{{ $errors->has('instrument') ? ' has-error' : '' }}">
-                                        <label for="instrument" class="control-label">Instrument</label>
-                                        <select class="form-control" id="instrument" name="instrument">
-                                            @if ($student->instrument)
-                                                <option value="{{ $student->instrument }}">{{ $student->instrument }}</option>
-                                            @else
-                                                <option value="" selected="selected">Select an instrument
-                                                </option>
-                                            @endif
-                                            <option value="Guitar">Guitar</option>
-                                            <option value="Bass">Bass</option>
-                                            <option value="Drums">Drums</option>
-                                        </select>
-
-                                        @if ($errors->has('instrument'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('instrument') }}</strong>
-                                    </span>
-                                        @endif
-                                    </div>
-                                </div>
                             </div>
-
-                            <hr/>
-
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                        <label for="email" class="control-label">Email</label>
-                                        <input id="email" type="email" class="form-control" name="email"
-                                               value="{{ $student->email }}">
-
-                                        @if ($errors->has('email'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                                        <label for="phone" class="control-label">Phone</label>
-                                        <input type="tel" class="form-control" name="phone"
-                                               value="{{ $student->phone_number }}">
-                                        @if ($errors->has('phone'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('phone') }}</strong>
-                                    </span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('date_of_birth') ? ' has-error' : '' }}">
                                         <label for="date_of_birth" class="control-label">Birthday</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="date_of_birth"
-                                                   id="dateOfBirth" autocomplete="off"
-                                                   value="{{ $student->date_of_birth }}">
+                                            <input type="text" class="form-control" name="date_of_birth" id="dateOfBirth" autocomplete="off" value="{{ $student->date_of_birth }}">
                                             <span class="input-group-btn">
-                                                <button type="button" title="edit" class="btn btn-primary" id="btnEdit"><i class="fa fa-edit"></i></button>
+                                                <button type="button" title="clear date of birth" class="btn btn-secondary" id="btnEdit"><i class="fa fa-trash-o"></i></button>
                                             </span>
                                         </div>
-
                                         @if ($errors->has('date_of_birth'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('date_of_birth') }}</strong>
@@ -153,16 +144,12 @@
                                     </div>
                                 </div>
                             </div>
-
                             <hr/>
-
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                                         <label for="address" class="control-label">Address</label>
-                                        <input id="address" type="text" class="form-control" name="address"
-                                               value="{{ $student->address }}">
-
+                                        <input id="address" type="text" class="form-control" name="address" value="{{ $student->address }}">
                                         @if ($errors->has('address'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('address') }}</strong>
@@ -170,13 +157,10 @@
                                         @endif
                                     </div>
                                 </div>
-
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('address_2') ? ' has-error' : '' }}">
                                         <label for="address_2" class="control-label">Address 2</label>
-                                        <input id="address_2" type="text" class="form-control" placeholder="Apt 34, Suite 123, Building H"
-                                               name="address_2" value="{{ $student->address_2 }}">
-
+                                        <input id="address_2" type="text" class="form-control" placeholder="Apt 34, Suite 123, Building H" name="address_2" value="{{ $student->address_2 }}">
                                         @if ($errors->has('address_2'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('address_2') }}</strong>
@@ -185,14 +169,11 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
                                         <label for="city" class="control-label">City</label>
-                                        <input id="city" type="text" class="form-control" name="city"
-                                               value="{{ $student->city }}">
-
+                                        <input id="city" type="text" class="form-control" name="city" value="{{ $student->city }}">
                                         @if ($errors->has('city'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('city') }}</strong>
@@ -200,7 +181,6 @@
                                         @endif
                                     </div>
                                 </div>
-
                                 <div class="col-sm-4">
                                     <div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
                                         <label for="state" class="control-label">State</label>
@@ -261,32 +241,27 @@
                                             <option value="WI">Wisconsin</option>
                                             <option value="WY">Wyoming</option>
                                         </select>
-
                                         @if ($errors->has('state'))
                                             <span class="help-block"><strong>{{ $errors->first('state') }}</strong></span>
                                         @endif
                                     </div>
                                 </div>
-
                                 <div class="col-sm-4">
                                     <div class="form-group{{ $errors->has('zip') ? ' has-error' : '' }}">
-                                        <label for="zip" class="control-label">Zip</label>
+                                        <label for="zip" class="control-label">Zip Code</label>
                                         <input id="zip" type="text" class="form-control" name="zip" value="{{ $student->zip }}">
-
                                         @if ($errors->has('zip'))
                                             <span class="help-block"><strong>{{ $errors->first('zip') }}</strong></span>
                                         @endif
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 @if ($student->photo != null)
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="photo" class="control-label">Profile Picture</label>
-                                            <img class="form-control text-center"
-                                                 src="/storage/student/{{ $student->photo }}" alt="{{ $student->photo }}">
+                                            <img class="form-control text-center" src="/storage/student/{{ $student->photo }}" alt="{{ $student->photo }}">
                                         </div>
                                     </div>
                                 @endif
@@ -302,8 +277,7 @@
                                 <button type="submit" class="btn btn-primary">Save</button>
                                 <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancel</a>
                             </div>
-                            <input id="student_id" type="hidden" class="form-control" name="student_id"
-                                   value="{{ $student->id }}">
+                            <input id="student_id" type="hidden" class="form-control" name="student_id" value="{{ $student->id }}">
                             @endif
                         </form>
                 </div>

@@ -25,7 +25,7 @@
                         <tr>
                             <td>{{ $student->first_name }}</td>
                             <td>{{ $student->last_name }}</td>
-                            <td>{{ $student->getPhoneNumberAttribute() }}</td>
+                            <td>{{ $student->phone_number }}</td>
                             <td>{{ $student->email }}</td>
                             <td>{{ $student->instrument }}</td>
                             <td>{{ $student->status }}</td>

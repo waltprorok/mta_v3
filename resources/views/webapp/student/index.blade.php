@@ -14,7 +14,7 @@
         @include('partials.studentListTabs')
         <div class="card">
             <div class="card-body">
-                <table class="table table-hover" id="dtStudentIndex">
+                <table class="table table-condensed table-hover" id="dtStudentIndex">
                     <thead class="thead">
                     <tr>
                         <th scope="col" data-orderable="false">Scheduled</th>
@@ -42,13 +42,13 @@
                             <tr>
                                 @if ($student->hasOneLesson)
                                     <td class="text-center">
-                                        <span class="btn btn-success btn-rounded">
+                                        <span class="btn btn-sm btn-success btn-rounded">
                                             <i class="fa fa-check"></i>
                                         </span>
                                     </td>
                                 @else
                                     <td class="text-center">
-                                        <span class="btn btn-danger btn-rounded">
+                                        <span class="btn btn-sm btn-danger btn-rounded">
                                             <i class="fa fa-times"></i>
                                         </span>
                                     </td>
@@ -59,9 +59,9 @@
                                 <td>{{ $student->email }}</td>
                                 <td>{{ $student->instrument }}</td>
                                 <th scope="row">
-                                    <a href="{{ route('student.edit', $student->id) }}" class="btn btn-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
-                                    <a href="{{ route('student.profile', $student->id) }}" class="btn btn-success" role="button" title="profile"><i class="fa fa-user"></i></a>
-                                    <a href="{{ route('student.schedule', $student->id) }}" class="btn btn-warning" role="role" title="schedule"><i class="fa fa-calendar"></i></a>
+                                    <a href="{{ route('student.edit', $student->id) }}" class="btn btn-sm btn-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ route('student.profile', $student->id) }}" class="btn btn-sm btn-success" role="button" title="profile"><i class="fa fa-user"></i></a>
+                                    <a href="{{ route('student.schedule', $student->id) }}" class="btn btn-sm btn-warning" role="role" title="schedule"><i class="fa fa-calendar"></i></a>
                                 </th>
                             </tr>
                         @endforeach

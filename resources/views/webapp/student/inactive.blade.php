@@ -48,7 +48,7 @@
                                 <td>{{ $inactive->instrument }}</td>
                                 <th scope="row">
                                     <a href="{{ route('student.edit', $inactive->id)}}"
-                                       class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
+                                       class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
                                 </th>
                             </tr>
                         @endforeach
