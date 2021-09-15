@@ -36,9 +36,9 @@ class Student extends Model
     ];
 
     /**
-     * @return string|void
+     * @return string|null
      */
-    public function getPhoneNumberAttribute(): string
+    public function getPhoneNumberAttribute(): ?string
     {
         if ($this->phone != null) {
             $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
