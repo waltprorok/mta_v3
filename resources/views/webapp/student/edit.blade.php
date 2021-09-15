@@ -50,52 +50,6 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
-                                        <label for="status" class="control-label">Status</label>
-                                        <select class="form-control" id="status" name="status">
-                                            @if ($student->status)
-                                                <option value="{{ $student->status }}">{{ $student->status }}</option>
-                                            @else
-                                                <option value="" selected="selected">Select a Status</option>
-                                            @endif
-                                            <option value="Active">Active</option>
-                                            <option value="Lead">Lead</option>
-                                            <option value="Waitlist">Waitlist</option>
-                                            <option value="Inactive">Inactive</option>
-                                        </select>
-                                        @if ($errors->has('status'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('status') }}</strong>
-                                    </span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group{{ $errors->has('instrument') ? ' has-error' : '' }}">
-                                        <label for="instrument" class="control-label">Instrument</label>
-                                        <select class="form-control" id="instrument" name="instrument">
-                                            @if ($student->instrument)
-                                                <option value="{{ $student->instrument }}">{{ $student->instrument }}</option>
-                                            @else
-                                                <option value="" selected="selected">Select an instrument
-                                                </option>
-                                            @endif
-                                            <option value="Guitar">Guitar</option>
-                                            <option value="Bass">Bass</option>
-                                            <option value="Drums">Drums</option>
-                                        </select>
-
-                                        @if ($errors->has('instrument'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('instrument') }}</strong>
-                                    </span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            <hr/>
-                            <div class="row">
-                                <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                         <label for="email" class="control-label">Email</label>
                                         <div class="input-group">
@@ -124,6 +78,54 @@
                                     </div>
                                 </div>
                             </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('instrument') ? ' has-error' : '' }}">
+                                        <label for="instrument" class="control-label">Instrument</label>
+                                        <select class="form-control" id="instrument" name="instrument">
+                                            @if ($student->instrument)
+                                                <option value="{{ $student->instrument }}">{{ $student->instrument }}</option>
+                                            @else
+                                                <option value="" selected="selected">Select an instrument</option>
+                                            @endif
+                                            <option value="Guitar">Guitar</option>
+                                            <option value="Bass">Bass</option>
+                                            <option value="Drums">Drums</option>
+                                            <option value="Voice">Voice</option>
+                                            <option value="Piano">Piano</option>
+                                        </select>
+                                    </div>
+
+                                    @if ($errors->has('instrument'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('instrument') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+                                        <label for="status" class="control-label">Status</label>
+
+                                        <select class="form-control" id="status" name="status">
+                                            @if ($student->status)
+                                                <option value="{{ $student->status }}">{{ $student->status }}</option>
+                                            @else
+                                                <option value="" selected="selected">Select a Status</option>
+                                            @endif
+                                            <option value="Active">Active</option>
+                                            <option value="Lead">Lead</option>
+                                            <option value="Waitlist">Waitlist</option>
+                                            <option value="Inactive">Inactive</option>
+                                        </select>
+                                        @if ($errors->has('status'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('status') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('date_of_birth') ? ' has-error' : '' }}">
@@ -131,7 +133,7 @@
                                         <div class="input-group">
                                             <input type="text" class="form-control" name="date_of_birth" id="dateOfBirth" autocomplete="off" value="{{ $student->date_of_birth }}">
                                             <span class="input-group-btn">
-                                                <button type="button" title="clear date of birth" class="btn btn-outline-danger" id="btnEdit"><i class="fa fa-trash-o"></i></button>
+                                                <button type="button" title="clear date of birth" class="btn btn-secondary" id="btnEdit"><i class="fa fa-trash-o"></i></button>
                                             </span>
                                         </div>
                                         @if ($errors->has('date_of_birth'))

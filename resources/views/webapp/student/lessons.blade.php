@@ -18,7 +18,7 @@
                 <form class="form-horizontal" method="post" action="{{ route('student.lessons.update') }}">
                     @csrf
                     @method('PUT')
-                    <table class="table" id="dtLessonsIndex">
+                    <table class="table table-condensed table-striped" id="dtLessonsIndex">
                         <thead class="thead">
                         <tr>
                             <th scope="col">Completed</th>
@@ -51,8 +51,7 @@
                                     <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('m-d-Y h:i A') }}</td>
                                     <td>{{ Carbon\Carbon::parse($lesson->end_date)->format('m-d-Y h:i A') }}</td>
                                     <td>{{ $lesson->interval }} minutes</td>
-                                    <td><a href="{{ route('student.schedule.edit', [$lesson->student_id, $lesson->id])}}" class="btn btn-primary" role="button" title="edit"><i
-                                                    class="fa fa-edit"></i></a></td>
+                                    <td><a href="{{ route('student.schedule.edit', [$lesson->student_id, $lesson->id])}}" class="btn btn-sm btn-primary" role="button" title="edit"><i class="fa fa-edit"></i></a></td>
                                 </tr>
                             @endforeach
                         @endif

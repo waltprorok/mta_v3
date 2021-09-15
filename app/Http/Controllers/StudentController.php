@@ -114,7 +114,7 @@ class StudentController extends Controller
         }
     }
 
-    public function update(StoreStudent $request)
+    public function update(Request $request)
     {
         $phone = preg_replace('/\D/', '', $request->get('phone'));
 
@@ -495,5 +495,4 @@ class StudentController extends Controller
         $studentId = Lesson::find($id);
         Lesson::where('student_id', $studentId->student_id)->where('teacher_id', Auth::id())->whereDate('start_date', '>=', date('Y-m-d'))->delete();
     }
-
 }
