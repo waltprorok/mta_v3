@@ -29,9 +29,9 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <h6 class="mb-0">Name</h6>
+                                                    <h6 class="mb-0">Name:</h6>
                                                 </div>
-                                                <div class="col-sm-9 text-secondary">
+                                                <div class="col-sm-9">
                                                     {{ $lesson->title }}
                                                 </div>
                                             </div>
@@ -39,27 +39,27 @@
                                             @foreach ($students as $student)
                                                 <div class="row">
                                                     <div class="col-sm-3">
-                                                        <h6 class="mb-0">Email</h6>
+                                                        <h6 class="mb-0">Email:</h6>
                                                     </div>
-                                                    <div class="col-sm-9 text-secondary">
+                                                    <div class="col-sm-9">
                                                         <a href="mailto:{{ $student->email }}">{{ $student->email }}</a>
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
                                                     <div class="col-sm-3">
-                                                        <h6 class="mb-0">Phone</h6>
+                                                        <h6 class="mb-0">Phone:</h6>
                                                     </div>
-                                                    <div class="col-sm-9 text-secondary" id="phone">
+                                                    <div class="col-sm-9" id="phone">
                                                         {{ $student->phone_number }}
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
                                                     <div class="col-sm-3">
-                                                        <h6 class="mb-0">Mobile</h6>
+                                                        <h6 class="mb-0">Mobile:</h6>
                                                     </div>
-                                                    <div class="col-sm-9 text-secondary">
+                                                    <div class="col-sm-9">
 
                                                     </div>
                                                 </div>
@@ -67,27 +67,27 @@
                                             <hr>
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <h6 class="mb-0">Appointment Start</h6>
+                                                    <h6 class="mb-0">Appointment Start:</h6>
                                                 </div>
-                                                <div class="col-sm-9 text-secondary">
+                                                <div class="col-sm-9">
                                                     {{ date('M d, Y h:i A', strtotime($lesson->start_date)) }}
                                                 </div>
                                             </div>
                                             <hr>
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <h6 class="mb-0">Appointment End</h6>
+                                                    <h6 class="mb-0">Appointment End:</h6>
                                                 </div>
-                                                <div class="col-sm-9 text-secondary">
+                                                <div class="col-sm-9">
                                                     {{ date('M d, Y h:i A', strtotime($lesson->end_date)) }}
                                                 </div>
                                             </div>
                                             <hr>
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <h6 class="mb-0">Duration</h6>
+                                                    <h6 class="mb-0">Duration:</h6>
                                                 </div>
-                                                <div class="col-sm-9 text-secondary">
+                                                <div class="col-sm-3">
                                                     {{ $lesson->interval }} minutes
                                                 </div>
                                             </div>
@@ -101,11 +101,9 @@
                                     <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
                                         <label for="Title" class="control-label">Start Date</label>
                                         @if($startDate)
-                                            <input class="date form-control" title="Please select a date" autocomplete="off" type="text" id="editLessonDate" name="start_date"
-                                                   value="{{ $startDate }}">
+                                            <input class="date form-control" title="Please select a date" autocomplete="off" type="text" id="editLessonDate" name="start_date" value="{{ $startDate }}">
                                         @else
-                                            <input class="date form-control" title="Please select a date" autocomplete="off" type="text" id="editLessonDate" name="start_date"
-                                                   value="{{ date('Y-m-d', strtotime($lesson->start_date)) }}">
+                                            <input class="date form-control" title="Please select a date" autocomplete="off" type="text" id="editLessonDate" name="start_date" value="{{ date('Y-m-d', strtotime($lesson->start_date)) }}">
                                         @endif
                                         @if ($errors->has('start_date'))
                                             <span class="help-block"><strong>{{ $errors->first('start_date') }}</strong></span>

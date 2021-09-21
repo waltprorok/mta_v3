@@ -116,6 +116,11 @@ class StudentController extends Controller
 
     public function update(Request $request)
     {
+        $this->validate($request, [
+            'first_name' => 'required',
+            'last_name' => 'required',
+        ]);
+
         $phone = preg_replace('/\D/', '', $request->get('phone'));
 
         $student = Student::where('id', $request->get('student_id'))->first();
