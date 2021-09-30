@@ -23,7 +23,7 @@
                                          class="rounded-circle" width="150">
                                 @endif
                                 <div class="mt-3">
-                                    <h4>{{ $student->first_name }}&nbsp;{{ $student->last_name }}</h4>
+                                    <h5>{{ $student->first_name }}&nbsp;{{ $student->last_name }}</h5>
                                     @if($student->instrument != null)
                                         <p class="mb-1">{{ $student->instrument }}</p>
                                     @endif

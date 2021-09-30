@@ -117,8 +117,12 @@ class StudentController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'first_name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+            'email' => 'string|email|max:50|nullable',
+            'phone' => 'string|max:30|nullable',
+            'parent_email' => 'string|email|max:255|nullable',
+            'zip' => 'integer|digits:5|nullable',
         ]);
 
         $phone = preg_replace('/\D/', '', $request->get('phone'));
@@ -127,6 +131,7 @@ class StudentController extends Controller
         $student->first_name = $request->get('first_name');
         $student->last_name = $request->get('last_name');
         $student->email = $request->get('email');
+        $student->parent_email = $request->get('parent_email');
         $student->phone = $phone;
         $student->date_of_birth = $request->get('date_of_birth');
         $student->address = $request->get('address');

@@ -3,9 +3,9 @@
 @section('content')
 
     <div class="col-12">
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal"
-                data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student
-        </button>
+{{--        <button type="button" class="btn btn-primary float-right" data-toggle="modal"--}}
+{{--                data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student--}}
+{{--        </button>--}}
         <h4>Edit Student</h4>
         @foreach ($students as $student)
             <ul class="breadcrumb">
@@ -126,6 +126,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <hr/>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('date_of_birth') ? ' has-error' : '' }}">
@@ -139,6 +140,20 @@
                                         @if ($errors->has('date_of_birth'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('date_of_birth') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('parent_email') ? ' has-error' : '' }}">
+                                        <label for="email" class="control-label">Parent or Guardian Email (enter if child is a minor)</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                                            <input id="parent_email" type="email" class="form-control" name="parent_email" value="{{ $student->parent_email }}">
+                                        </div>
+                                        @if ($errors->has('parent_email'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('parent_email') }}</strong>
                                     </span>
                                         @endif
                                     </div>
@@ -285,6 +300,6 @@
         @endforeach
     </div>
 
-    @include('partials.addStudent')
+{{--    @include('partials.addStudent')--}}
 
 @endsection

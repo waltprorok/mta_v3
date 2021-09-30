@@ -43,7 +43,7 @@
                             @foreach($lessons as $lesson)
                                 <tr>
                                     <td>
-                                        <input type="checkbox" {{ $lesson->complete == '1' ? 'checked' : '' }} class="checkbox" name="completed" value="1"/>
+                                        <input type="checkbox" {{ $lesson->complete == '1' ? 'checked' : '' }} class="checkbox" name="completed" value="{{$lesson->complete == '1' ? 1 : 0}}"/>
                                         <input type="hidden" name="id" value="{{ $lesson->id }}"/>
                                         <input type="hidden" name="student_id" value="{{ $lesson->student_id }}"/>
                                     </td>
