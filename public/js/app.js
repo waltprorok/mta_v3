@@ -46582,7 +46582,7 @@ var render = function() {
                       _c("div", { staticClass: "modal-content" }, [
                         _c("div", { staticClass: "modal-header" }, [
                           _c("h5", { staticClass: "modal-title" }, [
-                            _vm._v("Delete Contact Us Record")
+                            _vm._v("Delete Contact Record")
                           ]),
                           _vm._v(" "),
                           _c(
