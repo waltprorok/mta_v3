@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SubscribedMail;
+use App\Plan;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Plan;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class SubscriptionController extends Controller
 {
@@ -17,8 +17,8 @@ class SubscriptionController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if ($user->subscribed('premium'))
-        {
+
+        if ($user->subscribed('premium')) {
             return view('webapp.account.subscription');
         } else {
             $plans = Plan::all();
@@ -31,21 +31,27 @@ class SubscriptionController extends Controller
         return view('webapp.account.subscription');
     }
 
+    /**
+     * @param Request $request
+     * @param Plan $plan
+     * @return RedirectResponse
+     */
     public function create(Request $request, Plan $plan)
     {
         $user = Auth::user();
         $plan = Plan::findOrFail($request->get('plan'));
 
-        $request->user()
-            ->newSubscription($plan->slug, $plan->stripe_plan)
-            ->create($request->stripeToken);
+        $request->user()->newSubscription($plan->slug, $plan->stripe_plan)->create($request->stripeToken);
 
         Mail::to($user->email)->send(new SubscribedMail($user));
 
         return redirect()->back()->with('success', 'Thank you for subscribing to our service.');
     }
 
-    public function cancel()
+    /**
+     * @return RedirectResponse
+     */
+    public function cancel(): RedirectResponse
     {
         $user = Auth::user();
         $subscription = $user->subscription('premium');
@@ -54,7 +60,10 @@ class SubscriptionController extends Controller
         return redirect()->back()->with('warning', 'Your subscription account has been cancelled');
     }
 
-    public function resume()
+    /**
+     * @return RedirectResponse
+     */
+    public function resume(): RedirectResponse
     {
         $user = Auth::user();
         $subscription = $user->subscription('premium');
@@ -63,14 +72,17 @@ class SubscriptionController extends Controller
         return redirect()->back()->with('success', 'Your subscription account has been reinstated');
     }
 
-    public function creditCard() {
+    public function creditCard()
+    {
         return view('webapp.account.card');
     }
 
-    public function updateCreditCard(Request $request) {
+    public function updateCreditCard(Request $request)
+    {
         $user = Auth::user();
         $ccToken = $request->input('stripeToken');
         $user->updateCard($ccToken);
+
         return redirect()->back()->with(['success' => 'Credit card updated successfully.']);
     }
 
@@ -80,7 +92,7 @@ class SubscriptionController extends Controller
 
         return $user->downloadInvoice($invoiceId, [
             'vendor' => 'Music Teachers Aid',
-            'product'=> 'Premium Subscription'
+            'product' => 'Premium Subscription'
         ]);
     }
 
@@ -116,7 +128,7 @@ class SubscriptionController extends Controller
         $user->save();
 
         if ($request['current_password'] != "") {
-            if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
+            if (! (Hash::check($request->get('current_password'), Auth::user()->password))) {
                 return redirect()->back()->with('error', 'Your current password does not match with the password you provided. Please try again.');
             }
 
@@ -136,5 +148,4 @@ class SubscriptionController extends Controller
 
         return redirect()->back()->with('success', 'Profile updated successfully!');
     }
-
 }

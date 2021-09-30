@@ -44,8 +44,7 @@
         </a>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item d-md-down-none">
-                <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
+                <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-bell"></i>
                     <span class="badge badge-pill badge-danger">5</span>
                     <span class="small ml-1 d-md-down-none"></span>
@@ -57,8 +56,7 @@
                 </div>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
+                <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-envelope-open"></i>
                     <span class="badge badge-pill badge-danger">5</span>
                     <span class="small ml-1 d-md-down-none"></span>
@@ -70,8 +68,7 @@
                 </div>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-user fa-lg" aria-hidden="true"></i>
                     <span class="small ml-1 d-md-down-none"></span>
                 </a>

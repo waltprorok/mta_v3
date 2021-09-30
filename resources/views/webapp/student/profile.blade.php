@@ -23,13 +23,12 @@
                                          class="rounded-circle" width="150">
                                 @endif
                                 <div class="mt-3">
-                                    <h4>{{ $student->first_name }}&nbsp;{{ $student->last_name }}</h4>
+                                    <h5>{{ $student->first_name }}&nbsp;{{ $student->last_name }}</h5>
                                     @if($student->instrument != null)
-                                        <p class="text-secondary mb-1">{{ $student->instrument }}</p>
+                                        <p class="mb-1">{{ $student->instrument }}</p>
                                     @endif
                                     @if($student->city != null)
-                                        <p class="text-muted font-size-sm">{{ $student->city }}
-                                            &#44;&nbsp;{{ $student->state }}</p>
+                                        <p class="text-muted font-size-sm">{{ $student->city }}&#44;&nbsp;{{ $student->state }}</p>
                                     @endif
                                     <button class="btn btn-primary">Follow</button>
                                     <button class="btn btn-outline-primary">Message</button>
@@ -109,9 +108,9 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Full Name</h6>
+                                    <h6 class="mb-0">Name</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
+                                <div class="col-sm-9">
                                     {{ $student->first_name }}&nbsp;{{ $student->last_name }}
                                 </div>
                             </div>
@@ -120,7 +119,7 @@
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Email</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
+                                <div class="col-sm-9">
                                     <a href="mailto:{{ $student->email }}">{{ $student->email }}</a>
                                 </div>
                             </div>
@@ -129,17 +128,17 @@
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Phone</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
+                                <div class="col-sm-9">
                                     {{ $student->phone_number }}
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Mobile</h6>
+                                    <h6 class="mb-0">Birthday</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
-{{--                                    {{ $student->phone_number }}--}}
+                                <div class="col-sm-9">
+                                    {{ date('F d, Y | l ', strtotime($student->date_of_birth)) }}
                                 </div>
                             </div>
                             <hr>
@@ -147,11 +146,12 @@
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Address</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
-                                    @if($student->address_2 != null)
-                                        {{ $student->address }}&nbsp;{{ $student->address_2 }}&nbsp;{{ $student->city }}&#44;&nbsp;{{ $student->state }}
+                                <div class="col-sm-9">
+                                    @if($student->address == null)
+                                    @elseif($student->address_2 != null)
+                                        {{ $student->address }}&nbsp;{{ $student->address_2 }}&nbsp;{{ $student->city }}&#44;&nbsp;{{ $student->state }} {{ $student->zip }}
                                     @else
-                                        {{ $student->address }}&nbsp;{{ $student->city }}&#44;&nbsp;{{ $student->state }}
+                                        {{ $student->address }}&nbsp;{{ $student->city }}&#44;&nbsp;{{ $student->state }} {{ $student->zip }}
                                     @endif
                                 </div>
                             </div>

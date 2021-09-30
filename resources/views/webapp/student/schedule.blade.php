@@ -29,7 +29,7 @@
                                                 <div class="col-sm-3">
                                                     <h6 class="mb-0">Name</h6>
                                                 </div>
-                                                <div class="col-sm-9 text-secondary">
+                                                <div class="col-sm-9">
                                                     {{ $student->first_name }} {{ $student->last_name }}
                                                 </div>
                                             </div>
@@ -38,7 +38,7 @@
                                                 <div class="col-sm-3">
                                                     <h6 class="mb-0">Email</h6>
                                                 </div>
-                                                <div class="col-sm-9 text-secondary">
+                                                <div class="col-sm-9">
                                                     <a href="mailto:{{ $student->email }}">{{ $student->email }}</a>
                                                 </div>
                                             </div>
@@ -47,7 +47,7 @@
                                                 <div class="col-sm-3">
                                                     <h6 class="mb-0">Phone</h6>
                                                 </div>
-                                                <div class="col-sm-9 text-secondary">
+                                                <div class="col-sm-9">
                                                     {{ $student->phone_number }}
                                                 </div>
                                             </div>
@@ -57,13 +57,13 @@
                                                     <h6 class="mb-0">Scheduled</h6>
                                                 </div>
                                                 @if($studentScheduled)
-                                                    <div class="col-sm-9 text-secondary">
+                                                    <div class="col-sm-9">
                                                         <span class="btn btn-success">
                                                             <i class="fa fa-check"></i>&nbsp; Has Appointment
                                                         </span>
                                                     </div>
                                                 @else
-                                                    <div class="col-sm-9 text-secondary">
+                                                    <div class="col-sm-9">
                                                         <span class="btn btn-danger">
                                                             <i class="fa fa-times"></i>&nbsp; Needs Appointment
                                                         </span>
