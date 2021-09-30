@@ -134,6 +134,7 @@ class TeacherController extends Controller
             } else {
                 $active = $value['active'];
             }
+
             $hours = BusinessHours::where('teacher_id', '=', Auth::id())->where('day', '=', $value['day'])->first();
             $hours->teacher_id = Auth::id();
             $hours->day = $value['day'];

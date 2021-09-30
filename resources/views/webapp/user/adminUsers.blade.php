@@ -28,10 +28,10 @@
                             <td>{{ $user->first_name }}</td>
                             <td>{{ $user->last_name }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->admin }}</td>
-                            <td>{{ $user->teacher }}</td>
-                            <td>{{ $user->student }}</td>
-                            <td>{{ $user->parent }}</td>
+                            <td class="text-center">@if ($user->admin == true) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                            <td class="text-center">@if ($user->teacher == true) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                            <td class="text-center">@if ($user->student == true) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
+                            <td class="text-center">@if ($user->parent == true) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                             <td>{{ $user->created_at }}</td>
                             {{--<td class="text-nowrap">--}}
                             {{--<span class="align-baseline"><a href="{{ route('admin.blog.edit', $teacher->id )}}" class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>--}}
