@@ -16,7 +16,7 @@ class BlogAdmin
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() and !$request->user()->admin == 1) {
+        if ($request->user() && ! $request->user()->admin == 1) {
             return redirect('/dashboard');
         }
 
