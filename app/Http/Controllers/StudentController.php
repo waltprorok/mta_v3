@@ -125,14 +125,14 @@ class StudentController extends Controller
             'zip' => 'integer|digits:5|nullable',
         ]);
 
-        $phone = preg_replace('/\D/', '', $request->get('phone'));
+        $phoneNumber = preg_replace('/\D/', '', $request->get('phone'));
 
         $student = Student::where('id', $request->get('student_id'))->first();
         $student->first_name = $request->get('first_name');
         $student->last_name = $request->get('last_name');
         $student->email = $request->get('email');
         $student->parent_email = $request->get('parent_email');
-        $student->phone = $phone;
+        $student->phone = $phoneNumber;
         $student->date_of_birth = $request->get('date_of_birth');
         $student->address = $request->get('address');
         $student->address_2 = $request->get('address_2');
@@ -322,7 +322,6 @@ class StudentController extends Controller
         $startDate = $day;
 
         if ($day == null) {
-
             foreach ($lessons as $lesson) {
                 $day = Carbon::parse($lesson->start_date)->format('l');
             }
@@ -438,10 +437,13 @@ class StudentController extends Controller
             $this->destroy($id);
             return redirect(route('student.index'))->with('success', 'The scheduled lesson has been deleted.');
         }
+
         if ($request->input('action') == 'deleteAll') {
             $this->destroyAll($id);
             return redirect(route('student.index'))->with('success', 'All the scheduled lessons have been deleted.');
         }
+
+        return null;
     }
 
     public function scheduleUpdate(Request $request)
@@ -503,6 +505,10 @@ class StudentController extends Controller
     public function destroyAll($id)
     {
         $studentId = Lesson::find($id);
-        Lesson::where('student_id', $studentId->student_id)->where('teacher_id', Auth::id())->whereDate('start_date', '>=', date('Y-m-d'))->delete();
+
+        Lesson::where('student_id', $studentId->student_id)
+            ->where('teacher_id', Auth::id())
+            ->whereDate('start_date', '>=', date('Y-m-d'))
+            ->delete();
     }
 }

@@ -211,6 +211,14 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
+                <div class="container-fluid">
+                @if (Auth::user()->trial_ends_at > Carbon\Carbon::now())
+                        <div class="alert alert-info alert-dismissible text">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            Enjoy your free trail! <a style="color: white;" href="{{ route('account.subscription') }}"><b>Don't forget to subscribe</b>.</a>
+                        </div>
+                @endif
+                </div>
                 @include('partials.alerts')
                 @yield('content')
             </div>

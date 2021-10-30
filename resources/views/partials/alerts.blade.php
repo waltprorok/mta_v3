@@ -20,4 +20,10 @@
             {{ session('error') }}
         </div>
     @endif
+{{--    @if (Auth::user()->trial_ends_at > Carbon\Carbon::now())--}}
+{{--        <div class="alert alert-info alert-dismissible text-center">--}}
+{{--            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>--}}
+{{--            Enjoy your free trail! <a style="color: white;" href="{{ route('account.subscription') }}"><b>Don't forget to subscribe</b>.</a>--}}
+{{--        </div>--}}
+{{--    @endif--}}
 </div>

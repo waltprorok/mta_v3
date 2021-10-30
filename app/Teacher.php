@@ -44,6 +44,8 @@ class Teacher extends Model
             } else {
                 return $this->phone;
             }
+        } else {
+            return null;
         }
     }
 
@@ -60,6 +62,6 @@ class Teacher extends Model
      */
     public function teacher(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'teacher_id', 'id');
     }
 }

@@ -33,7 +33,7 @@ class TeacherStoreSettings extends FormRequest
             'city' => 'required|string|max:100',
             'state' => 'required|string|max:50',
             'zip' => 'required|integer|digits:5',
-            'email' => 'required|string|email|max:255|unique:teachers',
+            'email' => 'required|string|email|max:255',
             'phone' => 'required|string|max:20',
             'logo' => 'mimes:jpeg,jpg,png|max:3400'
         ];

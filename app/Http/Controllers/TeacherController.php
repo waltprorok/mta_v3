@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\BusinessHours;
 use App\Http\Requests\TeacherStoreSettings;
 use App\Teacher;
-use Auth;
-use File;
+use App\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class TeacherController extends Controller
 {
@@ -22,6 +23,7 @@ class TeacherController extends Controller
     public function index()
     {
         $teacher = Teacher::where('teacher_id', Auth::id())->first();
+
         if ($teacher == null) {
             return view('webapp.teacher.studioindex')->with('info', 'Please fill out your studio settings.');
         } else {
@@ -33,12 +35,12 @@ class TeacherController extends Controller
      * @param TeacherStoreSettings $request
      * @return RedirectResponse
      */
-    public function store(TeacherStoreSettings $request)
+    public function store(TeacherStoreSettings $request): RedirectResponse
     {
         $phone = preg_replace('/\D+/', '', $request->get('phone'));
 
         $studio = new Teacher([
-            'teacher_id' => $request->get('teacher_id'),
+            'teacher_id' => Auth::id(),
             'studio_name' => $request->get('studio_name'),
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
@@ -57,21 +59,25 @@ class TeacherController extends Controller
             Storage::disk('teacher')->put($fileName, File::get($file));
             $studio->logo = $fileName;
         }
+
         $studio->save();
+
         return redirect()->route('teacher.editSettings')->with('success', 'You successfully saved your settings');
     }
 
     public function edit()
     {
-        $settings = Teacher::where('teacher_id', Auth::id())->get();
-        return view('webapp.teacher.studiosettings', compact('settings', $settings));
+        $user = User::find(Auth::id());
+        $setting = $user->oneTeacher;
+
+        return view('webapp.teacher.studiosettings', compact('setting', $setting));
     }
 
     public function update(TeacherStoreSettings $request)
     {
         $phonef = preg_replace('/\D+/', '', $request->get('phone'));
         $teacher = Teacher::where('teacher_id', '=', Auth::id())->first();
-        $teacher->teacher_id = $request->get('teacher_id');
+        $teacher->teacher_id = Auth::id();
         $teacher->studio_name = $request->get('studio_name');
         $teacher->first_name = $request->get('first_name');
         $teacher->last_name = $request->get('last_name');
@@ -124,12 +130,12 @@ class TeacherController extends Controller
         return view('webapp.teacher.hoursView', compact('hours', $hours));
     }
 
-    public function hoursUpdate(Request $request)
+    public function hoursUpdate(Request $request): RedirectResponse
     {
         $input = $request->all();
         foreach ($input['rows'] as $index => $value) {
 
-            if (!isset($value['active'])) {
+            if (! isset($value['active'])) {
                 $active = 0;
             } else {
                 $active = $value['active'];
@@ -147,12 +153,12 @@ class TeacherController extends Controller
         return redirect()->back()->with('success', 'Business hours updated successfully!');
     }
 
-    public function hoursSave(Request $request)
+    public function hoursSave(Request $request): RedirectResponse
     {
         $input = $request->all();
 
         foreach ($input['rows'] as $index => $value) {
-            if (!isset($value['active'])) {
+            if (! isset($value['active'])) {
                 $active = 0;
             } else {
                 $active = $value['active'];
@@ -171,5 +177,4 @@ class TeacherController extends Controller
 
         return redirect()->back()->with('success', 'Business hours saved successfully!');
     }
-
 }
