@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Blog;
+use App\Http\Requests\StoreBlogPost;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class BlogController extends Controller
@@ -20,7 +20,7 @@ class BlogController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -34,60 +34,38 @@ class BlogController extends Controller
     }
 
     /**
-     * @return Factory|View
+     * @return View
      * Admin list of blog posts
      */
-    public function list()
+    public function list(): View
     {
         $blogs = Blog::with('author')
-            ->latestFirst()
             ->published()
+            ->latestFirst()
             ->get();
 
         return view('webapp.blog.index', compact('blogs'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new blog post.
      *
-     * @return Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         return view('webapp.blog.create');
     }
 
     /**
-     * @param Request $request
+     * @param StoreBlogPost $request
      * @return RedirectResponse
-      * @throws ValidationException
      */
-    public function store(Request $request)
+    public function store(StoreBlogPost $request): RedirectResponse
     {
-        $this->validate($request, [
-            'title' => 'required|string|max:100',
-            'slug' => 'required|string|max:100',
-            'body' => 'required',
-            'image' => 'mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'released_on' => 'required',
-        ]);
-
         $blog = new Blog();
-        $blog->author_id = Auth::id();
-        $blog->title = $request->get('title');
-        $blog->slug = $request->get('slug');
-        $blog->body = $request->get('body');
-        $blog->image = $request->get('updateImage');
-        $blog->released_on = $request->get('released_on') . ' ' . $request->get('release_time');
 
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $fileName = 'MTA_' . date('Ymd_hms') . "." . $file->getClientOriginalExtension();
-            Storage::disk('blog')->put($fileName, File::get($file));
-            $blog->image = $fileName;
-        }
-
-        $blog->save();
+        $this->commitBlogPost($blog, $request);
 
         return redirect(route('admin.blog.list'))->with('success', 'Your blog article has been saved.');
     }
@@ -96,7 +74,7 @@ class BlogController extends Controller
      * Display the specified resource.
      *
      * @param Blog $slug
-     * @return Response
+     * @return Application|Factory|View
      */
     public function show($slug)
     {
@@ -109,9 +87,9 @@ class BlogController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return Application|Factory|View
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $update = Blog::findOrFail($id);
 
@@ -119,38 +97,15 @@ class BlogController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param StoreBlogPost $request
      * @param $id
      * @return RedirectResponse
-     * @throws ValidationException
      */
-    public function update(Request $request, $id)
+    public function update(StoreBlogPost $request, $id): RedirectResponse
     {
-        $this->validate($request, [
-            'title' => 'required|string|max:100',
-            'slug' => 'required|string|max:100',
-            'body' => 'required',
-            'image' => 'mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'released_on' => 'required',
-        ]);
-
         $editBlog = Blog::findOrFail($id);
-        $editBlog->author_id = Auth::id();
-        $editBlog->title = $request->get('title');
-        $editBlog->slug = $request->get('slug');
-        $editBlog->body = $request->get('body');
-        $editBlog->image = $request->get('updateImage');
-        $editBlog->released_on = $request->get('released_on') . ' ' . $request->get('release_time');
 
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $fileName = 'MTA_' . date('Ymd_hms') . "." . $file->getClientOriginalExtension();
-            Storage::disk('blog')->put($fileName, File::get($file));
-            $editBlog->image = $fileName;
-            $editBlog->save();
-        } else {
-            $editBlog->save();
-        }
+        $this->commitBlogPost($editBlog, $request);
 
         return back()->with('success', 'Your news article has been updated.');
     }
@@ -159,14 +114,46 @@ class BlogController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return Response
+     * @return Application|Redirector|RedirectResponse
      */
-    public function destroy($id): Response
+    public function destroy(int $id)
     {
         $deleteBlog = Blog::findOrFail($id);
         $deleteBlog->delete();
 
         return redirect(route('admin.blog.list'))->with('success', 'Your blog article has been deleted.');
+    }
+
+    /**
+     * @param Blog $blog
+     * @param StoreBlogPost $request
+     */
+    public function setBlogPost(Blog $blog, StoreBlogPost $request): void
+    {
+        $blog->author_id = Auth::id();
+        $blog->title = $request->get('title');
+        $blog->slug = $request->get('slug');
+        $blog->body = $request->get('body');
+        $blog->image = $request->get('updateImage');
+        $blog->released_on = $request->get('released_on') . ' ' . $request->get('release_time');
+    }
+
+    /**
+     * @param $editBlog
+     * @param StoreBlogPost $request
+     */
+    public function commitBlogPost($editBlog, StoreBlogPost $request): void
+    {
+        $this->setBlogPost($editBlog, $request);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = 'MTA_' . date('Ymd_hms') . "." . $file->getClientOriginalExtension();
+            Storage::disk('blog')->put($fileName, File::get($file));
+            $editBlog->image = $fileName;
+        }
+        
+        $editBlog->save();
     }
 
 }

@@ -76,6 +76,7 @@ class TeacherController extends Controller
     public function update(TeacherStoreSettings $request)
     {
         $phonef = preg_replace('/\D+/', '', $request->get('phone'));
+
         $teacher = Teacher::where('teacher_id', '=', Auth::id())->first();
         $teacher->teacher_id = Auth::id();
         $teacher->studio_name = $request->get('studio_name');
@@ -105,8 +106,10 @@ class TeacherController extends Controller
 
     public function profile()
     {
-        $teachers = Teacher::where('teacher_id', Auth::id())->get();
-        return view('webapp.teacher.profile')->with('teachers', $teachers);
+        $user = User::find(Auth::id());
+        $teacher = $user->oneTeacher;
+
+        return view('webapp.teacher.profile')->with('teacher', $teacher);
     }
 
     public function payment()
@@ -117,6 +120,7 @@ class TeacherController extends Controller
     public function hours()
     {
         $hours = BusinessHours::where('teacher_id', Auth::id())->first();
+
         if ($hours == null) {
             return view('webapp.teacher.hours');
         } else {
