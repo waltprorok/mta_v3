@@ -95,8 +95,6 @@ class TeacherController extends Controller
             $fileName = date('Ymd_hms') . "." . $file->getClientOriginalExtension();
             Storage::disk('teacher')->put($fileName, File::get($file));
             $teacher->logo = $fileName;
-        } else {
-            $teacher->save();
         }
 
         $teacher->save();
