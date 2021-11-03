@@ -29,24 +29,26 @@ class Teacher extends Model
     ];
 
     /**
-     * @return mixed|string|void
+     * @return string|null
      */
     public function getPhoneNumberAttribute(): ?string
     {
-        if ($this->phone != null) {
+        if ($this->phone !== null) {
             $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
-            if (strlen($cleaned) == 10) {
-                preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
-                return "{$matches[1]}-{$matches[2]}-{$matches[3]}";
-            } else if (strlen($cleaned) == 11) {
-                preg_match('/(\d{1})(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
-                return "{$matches[1]}-{$matches[2]}-{$matches[3]}-{$matches[4]}";
-            } else {
-                return $this->phone;
+
+            switch (strlen($cleaned)) {
+                case 10:
+                    preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
+                    return "{$matches[1]}-{$matches[2]}-{$matches[3]}";
+                case 11:
+                    preg_match('/(\d{1})(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
+                    return "{$matches[1]}-{$matches[2]}-{$matches[3]}-{$matches[4]}";
+                default:
+                    return $this->phone;
             }
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**

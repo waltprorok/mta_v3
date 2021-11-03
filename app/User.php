@@ -23,10 +23,15 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'email',
-        'password',
         'teacher',
-        'trial_ends_at',
+        'student',
+        'parent',
         'terms',
+        'trial_ends_at',
+    ];
+
+    protected $guarded = [
+        'admin'
     ];
 
     /**
@@ -79,7 +84,7 @@ class User extends Authenticatable
     /**
      * @return HasOne
      */
-    public function oneTeacher(): HasOne
+    public function getTeacher(): HasOne
     {
         return $this->hasOne(Teacher::class, 'teacher_id', 'id');
     }

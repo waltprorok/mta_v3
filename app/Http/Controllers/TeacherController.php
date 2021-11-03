@@ -17,6 +17,7 @@ class TeacherController extends Controller
     public function adminTeachers()
     {
         $teachers = Teacher::all();
+
         return view('webapp.teacher.adminTeachers', compact('teachers', $teachers));
     }
 
@@ -26,9 +27,9 @@ class TeacherController extends Controller
 
         if ($teacher == null) {
             return view('webapp.teacher.studioindex')->with('info', 'Please fill out your studio settings.');
-        } else {
-            return redirect()->route('teacher.editSettings');
         }
+
+        return redirect()->route('teacher.editSettings');
     }
 
     /**
@@ -68,7 +69,8 @@ class TeacherController extends Controller
     public function edit()
     {
         $user = User::find(Auth::id());
-        $setting = $user->oneTeacher;
+
+        $setting = $user->getTeacher;
 
         return view('webapp.teacher.studiosettings', compact('setting', $setting));
     }
@@ -105,7 +107,8 @@ class TeacherController extends Controller
     public function profile()
     {
         $user = User::find(Auth::id());
-        $teacher = $user->oneTeacher;
+
+        $teacher = $user->getTeacher;
 
         return view('webapp.teacher.profile')->with('teacher', $teacher);
     }
@@ -121,38 +124,16 @@ class TeacherController extends Controller
 
         if ($hours == null) {
             return view('webapp.teacher.hours');
-        } else {
-            return redirect()->route('teacher.hoursView');
         }
+
+        return redirect()->route('teacher.hoursView');
     }
 
     public function hoursView()
     {
         $hours = BusinessHours::where('teacher_id', Auth::id())->get();
+
         return view('webapp.teacher.hoursView', compact('hours', $hours));
-    }
-
-    public function hoursUpdate(Request $request): RedirectResponse
-    {
-        $input = $request->all();
-        foreach ($input['rows'] as $index => $value) {
-
-            if (! isset($value['active'])) {
-                $active = 0;
-            } else {
-                $active = $value['active'];
-            }
-
-            $hours = BusinessHours::where('teacher_id', '=', Auth::id())->where('day', '=', $value['day'])->first();
-            $hours->teacher_id = Auth::id();
-            $hours->day = $value['day'];
-            $hours->active = $active;
-            $hours->open_time = $value['open_time'];
-            $hours->close_time = $value['close_time'];
-            $hours->save();
-        }
-
-        return redirect()->back()->with('success', 'Business hours updated successfully!');
     }
 
     public function hoursSave(Request $request): RedirectResponse
@@ -178,5 +159,28 @@ class TeacherController extends Controller
         }
 
         return redirect()->back()->with('success', 'Business hours saved successfully!');
+    }
+
+    public function hoursUpdate(Request $request): RedirectResponse
+    {
+        $input = $request->all();
+        foreach ($input['rows'] as $index => $value) {
+
+            if (! isset($value['active'])) {
+                $active = 0;
+            } else {
+                $active = $value['active'];
+            }
+
+            $hours = BusinessHours::where('teacher_id', '=', Auth::id())->where('day', '=', $value['day'])->first();
+            $hours->teacher_id = Auth::id();
+            $hours->day = $value['day'];
+            $hours->active = $active;
+            $hours->open_time = $value['open_time'];
+            $hours->close_time = $value['close_time'];
+            $hours->save();
+        }
+
+        return redirect()->back()->with('success', 'Business hours updated successfully!');
     }
 }
