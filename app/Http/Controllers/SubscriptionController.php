@@ -77,7 +77,11 @@ class SubscriptionController extends Controller
         return view('webapp.account.card');
     }
 
-    public function updateCreditCard(Request $request)
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function updateCreditCard(Request $request): RedirectResponse
     {
         $user = Auth::user();
         $ccToken = $request->input('stripeToken');
@@ -86,6 +90,10 @@ class SubscriptionController extends Controller
         return redirect()->back()->with(['success' => 'Credit card updated successfully.']);
     }
 
+    /**
+     * @param $invoiceId
+     * @return mixed
+     */
     public function pdfDownload($invoiceId)
     {
         $user = Auth::user();
@@ -122,19 +130,20 @@ class SubscriptionController extends Controller
         ]);
 
         $user = Auth::user();
-        $user->first_name = $request['first_name'];
-        $user->last_name = $request['last_name'];
-        $user->email = $request['email'];
+        $user->first_name = $request->get('first_name');
+        $user->last_name = $request->get('last_name');
+        $user->email = $request->get('email');
         $user->save();
 
-        if ($request['current_password'] != "") {
+        if ($request->get('current_password') != "") {
             if (! (Hash::check($request->get('current_password'), Auth::user()->password))) {
-                return redirect()->back()->with('error', 'Your current password does not match with the password you provided. Please try again.');
+                return redirect()->back()->with('error', 'Your current password does not match with the new password you provided. Please try again.');
             }
 
             if (strcmp($request->get('current_password'), $request->get('new_password')) == 0) {
                 return redirect()->back()->with('error', 'New Password cannot be same as your current password. Please choose a different password.');
             }
+
             $request->validate([
                 'current_password' => 'required',
                 'new_password' => 'required|string|min:6|confirmed',

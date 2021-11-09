@@ -11,7 +11,7 @@ class TeacherStoreSettings extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,10 +21,9 @@ class TeacherStoreSettings extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'teacher_id' => 'required|integer',
             'studio_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
@@ -33,7 +32,7 @@ class TeacherStoreSettings extends FormRequest
             'city' => 'required|string|max:100',
             'state' => 'required|string|max:50',
             'zip' => 'required|integer|digits:5',
-            'email' => 'required|string|email|max:255|unique:teachers',
+            'email' => 'required|string|email|max:255',
             'phone' => 'required|string|max:20',
             'logo' => 'mimes:jpeg,jpg,png|max:3400'
         ];

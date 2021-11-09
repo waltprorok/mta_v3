@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreContactSubmission extends FormRequest
+class StoreBlogPost extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,14 +21,14 @@ class StoreContactSubmission extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'name' => 'required',
-            'email' => 'required|email',
-            'subject' => 'required|min:3',
-            'message' => 'required|min:3',
-            'g-recaptcha-response' => 'required|captcha',
+            'title' => 'required|string|max:100',
+            'slug' => 'required|string|max:100',
+            'body' => 'required',
+            'image' => 'mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'released_on' => 'required',
         ];
     }
 }

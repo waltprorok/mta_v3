@@ -10,7 +10,7 @@
                 </div>
                 <p class="text-center">Already a member? <a href="{{ route('login') }}"><u>Sign In</u></a></p>
                 <div class="panel panel-default">
-                    <br />
+                    <br/>
                     <div class="panel-body">
                         <form class="form-horizontal" method="POST" action="{{ route('register') }}">
                             @csrf
@@ -18,8 +18,7 @@
                                 <label for="first_name" class="col-md-4 control-label">First Name</label>
 
                                 <div class="col-md-6">
-                                    <input id="first_name" type="text" class="form-control" name="first_name"
-                                           value="{{ old('first_name') }}" autofocus>
+                                    <input id="first_name" type="text" class="form-control" name="first_name" value="{{ old('first_name') }}" autofocus>
 
                                     @if ($errors->has('first_name'))
                                         <span class="help-block">
@@ -33,8 +32,7 @@
                                 <label for="last_name" class="col-md-4 control-label">Last Name</label>
 
                                 <div class="col-md-6">
-                                    <input id="last_name" type="text" class="form-control" name="last_name"
-                                           value="{{ old('last_name') }}">
+                                    <input id="last_name" type="text" class="form-control" name="last_name" value="{{ old('last_name') }}">
 
                                     @if ($errors->has('last_name'))
                                         <span class="help-block">
@@ -48,8 +46,7 @@
                                 <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email"
-                                           value="{{ old('email') }}">
+                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
 
                                     @if ($errors->has('email'))
                                         <span class="help-block">
@@ -77,8 +74,7 @@
                                 <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
 
                                 <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control"
-                                           name="password_confirmation">
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
                                 </div>
                             </div>
 

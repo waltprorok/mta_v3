@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
@@ -24,8 +25,14 @@ class User extends Authenticatable
         'email',
         'password',
         'teacher',
-        'trial_ends_at',
+        'student',
+        'parent',
         'terms',
+        'trial_ends_at',
+    ];
+
+    protected $guarded = [
+        'admin'
     ];
 
     /**
@@ -54,7 +61,7 @@ class User extends Authenticatable
     /**
      * @return HasMany
      */
-    public function lessons()
+    public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class, 'teacher_id', 'id');
     }
@@ -73,5 +80,18 @@ class User extends Authenticatable
     public static function lessonsThisWeek()
     {
         return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function getTeacher(): HasOne
+    {
+        return $this->hasOne(Teacher::class, 'teacher_id', 'id');
+    }
+
+    public function blogArticle(): HasMany
+    {
+        return $this->hasMany(Blog::class, 'author_id', 'id');
     }
 }
