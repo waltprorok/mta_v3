@@ -23,7 +23,9 @@ class TeacherController extends Controller
 
     public function index()
     {
-        $teacher = Teacher::where('teacher_id', Auth::id())->first();
+        $user = User::find(Auth::id());
+
+        $teacher = $user->getTeacher;
 
         if ($teacher == null) {
             return view('webapp.teacher.studioindex')->with('info', 'Please fill out your studio settings.');
