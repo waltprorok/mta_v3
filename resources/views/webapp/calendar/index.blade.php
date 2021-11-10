@@ -10,7 +10,7 @@
         <h4>Calendar</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('calendar.index') }}">Calendar</a></li>
+            <li class="breadcrumb-item active">Calendar</li>
         </ul>
 
         <div class="card">

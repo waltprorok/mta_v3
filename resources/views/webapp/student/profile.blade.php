@@ -8,7 +8,7 @@
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('student.profile', $student->id) }}">Profile</a></li>
+                <li class="breadcrumb-item active">Profile</li>
             </ul>
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3">

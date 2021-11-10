@@ -7,7 +7,7 @@
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ route('teacher.editSettings') }}">Settings</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('teacher.profile') }}">Profile</a></li>
+            <li class="breadcrumb-item active">Profile</li>
         </ul>
 
         <div class="row gutters-sm">

@@ -9,7 +9,7 @@
         <h4>Students</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('student.index') }}">Students</a></li>
+            <li class="breadcrumb-item active">Students</li>
         </ul>
         @include('partials.studentListTabs')
         <div class="card">

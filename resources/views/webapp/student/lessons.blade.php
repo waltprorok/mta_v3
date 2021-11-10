@@ -11,7 +11,7 @@
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('student.lessons') }}">Lessons</a></li>
+            <li class="breadcrumb-item active">Lessons</li>
         </ul>
         <div class="card">
             <div class="card-body">

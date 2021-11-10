@@ -12,7 +12,7 @@
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('student.waitlist') }}">Waitlist</a></li>
+            <li class="breadcrumb-item active">Waitlist</li>
         </ul>
         @include('partials.studentListTabs')
         <div class="card">
