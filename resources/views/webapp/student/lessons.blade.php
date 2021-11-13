@@ -57,9 +57,9 @@
                         @endif
                         </tbody>
                     </table>
-                    <button type="submit" name="save" class="btn btn-default">
-                        Save
-                    </button>
+{{--                    <button type="submit" name="save" class="btn btn-default">--}}
+{{--                        Save--}}
+{{--                    </button>--}}
                 </form>
             </div>
         </div>

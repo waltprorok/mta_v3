@@ -23,11 +23,9 @@ class TeacherController extends Controller
 
     public function index()
     {
-        $user = User::find(Auth::id());
+        $teacher = User::with('getTeacher')->findOrFail(Auth::id());
 
-        $teacher = $user->getTeacher;
-
-        if ($teacher == null) {
+        if ($teacher->getTeacher == null) {
             return view('webapp.teacher.studioindex')->with('info', 'Please fill out your studio settings.');
         }
 
@@ -70,9 +68,7 @@ class TeacherController extends Controller
 
     public function edit()
     {
-        $user = User::find(Auth::id());
-
-        $setting = $user->getTeacher;
+        $setting = User::with('getTeacher')->findOrFail(Auth::id());
 
         return view('webapp.teacher.studiosettings', compact('setting', $setting));
     }
@@ -108,9 +104,7 @@ class TeacherController extends Controller
 
     public function profile()
     {
-        $user = User::find(Auth::id());
-
-        $teacher = $user->getTeacher;
+        $teacher = User::with('getTeacher')->find(Auth::id());
 
         return view('webapp.teacher.profile')->with('teacher', $teacher);
     }

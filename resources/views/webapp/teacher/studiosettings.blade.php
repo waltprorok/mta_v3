@@ -22,7 +22,7 @@
                         <div class="col-sm-12">
                             <div class="form-group{{ $errors->has('studio_name') ? ' has-error' : '' }}">
                                 <label for="studio_name" class="control-label">Studio Name <span class="text-danger">*</span></label>
-                                <input id="studio_name" type="text" class="form-control" name="studio_name" value="{{ $setting->studio_name }}">
+                                <input id="studio_name" type="text" class="form-control" name="studio_name" value="{{ $setting->getTeacher->studio_name }}">
 
                                 @if ($errors->has('studio_name'))
                                     <span class="help-block">
@@ -37,7 +37,7 @@
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
                                 <label for="first_name" class="control-label">First Name <span class="text-danger">*</span></label>
-                                <input id="first_name" type="text" class="form-control" name="first_name" value="{{ $setting->first_name }}">
+                                <input id="first_name" type="text" class="form-control" name="first_name" value="{{ $setting->getTeacher->first_name }}">
 
                                 @if ($errors->has('first_name'))
                                     <span class="help-block">
@@ -51,7 +51,7 @@
                             <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
                                 <label for="last_name" class="control-label">Last Name <span class="text-danger">*</span></label>
                                 <input id="last_name" type="text" class="form-control"
-                                       name="last_name" value="{{ $setting->last_name }}">
+                                       name="last_name" value="{{ $setting->getTeacher->last_name }}">
 
                                 @if ($errors->has('last_name'))
                                     <span class="help-block">
@@ -66,7 +66,7 @@
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                                 <label for="address" class="control-label">Address <span class="text-danger">*</span></label>
-                                <input id="address" type="text" class="form-control" name="address" value="{{ $setting->address }}">
+                                <input id="address" type="text" class="form-control" name="address" value="{{ $setting->getTeacher->address }}">
 
                                 @if ($errors->has('address'))
                                     <span class="help-block">
@@ -80,7 +80,7 @@
                             <div class="form-group{{ $errors->has('address_2') ? ' has-error' : '' }}">
                                 <label for="address_2" class="control-label">Address 2</label>
                                 <input id="address_2" type="text" class="form-control" placeholder="Apt 34, Suite 123, Building H"
-                                       name="address_2" value="{{ $setting->address_2 }}">
+                                       name="address_2" value="{{ $setting->getTeacher->address_2 }}">
 
                                 @if ($errors->has('address_2'))
                                     <span class="help-block">
@@ -95,7 +95,7 @@
                         <div class="col-sm-4">
                             <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
                                 <label for="city" class="control-label">City <span class="text-danger">*</span></label>
-                                <input id="city" type="text" class="form-control" name="city" value="{{ $setting->city }}">
+                                <input id="city" type="text" class="form-control" name="city" value="{{ $setting->getTeacher->city }}">
 
                                 @if ($errors->has('city'))
                                     <span class="help-block">
@@ -109,7 +109,7 @@
                             <div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
                                 <label for="state" class="control-label">State <span class="text-danger">*</span></label>
                                 <select class="form-control" id="state" name="state">
-                                    <option value="{{ $setting->state }}">{{ $setting->state }}</option>
+                                    <option value="{{ $setting->getTeacher->state }}">{{ $setting->getTeacher->state }}</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
                                     <option value="AZ">Arizona</option>
@@ -174,7 +174,7 @@
                         <div class="col-sm-4">
                             <div class="form-group{{ $errors->has('zip') ? ' has-error' : '' }}">
                                 <label for="zip" class="control-label">Zip <span class="text-danger">*</span></label>
-                                <input id="zip" type="text" class="form-control" name="zip" value="{{ $setting->zip }}">
+                                <input id="zip" type="text" class="form-control" name="zip" value="{{ $setting->getTeacher->zip }}">
 
                                 @if ($errors->has('zip'))
                                     <span class="help-block">
@@ -193,7 +193,7 @@
                                 <label for="email" class="control-label">Email <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-                                    <input id="email" type="text" class="form-control" name="email" value="{{ $setting->email }}">
+                                    <input id="email" type="text" class="form-control" name="email" value="{{ $setting->getTeacher->email }}">
                                 </div>
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -208,7 +208,7 @@
                                 <label for="phone" class="control-label">Phone <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa fa-phone"></i></span>
-                                    <input id="phone" type="text" class="form-control" name="phone" placeholder="(___) ___-____" value="{{ $setting->phone_number }}">
+                                    <input id="phone" type="text" class="form-control" name="phone" placeholder="(___) ___-____" value="{{ $setting->getTeacher->phone_number }}">
                                 </div>
                                 @if ($errors->has('phone'))
                                     <span class="help-block">
@@ -222,11 +222,11 @@
                     <hr/>
 
                     <div class="row">
-                        @if ($setting->logo != null)
+                        @if ($setting->getTeacher->logo != null)
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label for="logo" class="control-label">Current Logo</label>
-                                    <img class="form-control text-center" src="/storage/teacher/{{ $setting->logo }}" alt="{{ $setting->logo }}">
+                                    <img class="form-control text-center" src="/storage/teacher/{{ $setting->getTeacher->logo }}" alt="{{ $setting->getTeacher->logo }}">
                                 </div>
                             </div>
                         @endif

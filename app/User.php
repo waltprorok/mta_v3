@@ -55,7 +55,7 @@ class User extends Authenticatable
      */
     public function students(): HasMany
     {
-        return $this->hasMany(Student::class, 'teacher_id', 'id');
+        return $this->hasMany(Student::class, 'teacher_id');
     }
 
     /**
@@ -63,7 +63,7 @@ class User extends Authenticatable
      */
     public function lessons(): HasMany
     {
-        return $this->hasMany(Lesson::class, 'teacher_id', 'id');
+        return $this->hasMany(Lesson::class, 'teacher_id');
     }
 
     /**
@@ -87,11 +87,11 @@ class User extends Authenticatable
      */
     public function getTeacher(): HasOne
     {
-        return $this->hasOne(Teacher::class, 'teacher_id', 'id');
+        return $this->hasOne(Teacher::class, 'teacher_id');
     }
 
     public function blogArticle(): HasMany
     {
-        return $this->hasMany(Blog::class, 'author_id', 'id');
+        return $this->hasMany(Blog::class, 'author_id');
     }
 }

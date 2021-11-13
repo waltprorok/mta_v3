@@ -109,9 +109,9 @@ class StudentController extends Controller
     public function lessonsUpdate(Request $request)
     {
         // finish this update function
-        foreach ($request as $data) {
-            var_dump([$data->get('id'), $data->get('student_id'), $data->get('completed')]);
-        }
+//        foreach ($request as $data) {
+//            var_dump([$data->get('id'), $data->get('student_id'), $data->get('completed')]);
+//        }
     }
 
     public function update(Request $request)
