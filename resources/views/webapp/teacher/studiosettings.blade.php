@@ -195,6 +195,7 @@
                                     <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                                     <input id="email" type="text" class="form-control" name="email" value="{{ $setting->getTeacher->email }}">
                                 </div>
+
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -210,6 +211,7 @@
                                     <span class="input-group-text"><i class="fa fa-phone"></i></span>
                                     <input id="phone" type="text" class="form-control" name="phone" placeholder="(___) ___-____" value="{{ $setting->getTeacher->phone_number }}">
                                 </div>
+
                                 @if ($errors->has('phone'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('phone') }}</strong>
@@ -230,7 +232,8 @@
                                 </div>
                             </div>
                         @endif
-                        <div class="col-sm-8">
+
+                            <div class="col-sm-8">
                             <div class="form-group">
                                 <label for="logo" class="control-label">Update Logo</label>
                                 <input id="logo" type="file" class="form-control" name="logo">
