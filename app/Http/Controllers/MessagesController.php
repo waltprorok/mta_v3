@@ -23,13 +23,11 @@ class MessagesController extends Controller
 
     public function create(int $id = 0, string $subject = '')
     {
-        if ($id == 0) {
+        if ($id === 0) {
             $users = User::where('id', '!=', Auth::id())->get();
         } else {
             $users = User::where('id', $id)->get();
         }
-
-        $users = User::where('id', '!=', Auth::id())->get();
 
         if ($subject !== '') $subject = 'Re: ' . $subject;
 

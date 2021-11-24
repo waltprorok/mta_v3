@@ -12,7 +12,7 @@
 
         <div class="card">
             <div class="card-body">
-                <p>From: {{ $message->userFrom->name }}<br />
+                <p>From: {{ $message->userFrom->first_name }} {{ $message->userFrom->last_name }}<br />
                     Email: {{ $message->userFrom->email }}<br />
                     Subject: {{ $message->subject }}</p>
                 <hr>

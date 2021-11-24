@@ -1,5 +1,5 @@
 @extends('layouts.webapp')
-@section('title', 'Messages')
+@section('title', 'Deleted Messages')
 @section('content')
 
     <div class="col-12">

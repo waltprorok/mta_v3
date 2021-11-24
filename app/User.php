@@ -66,12 +66,22 @@ class User extends Authenticatable
         return $this->hasMany(Lesson::class, 'teacher_id');
     }
 
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'user_id_to');
+    }
+
     /**
      * @return mixed
      */
     public static function activeStudentCount()
     {
         return Auth::user()->students->where('status', '==', 'Active')->count();
+    }
+
+    public static function unreadMessagesCount()
+    {
+        return Auth::user()->messages->where('read', '==', false)->count();
     }
 
     /**
