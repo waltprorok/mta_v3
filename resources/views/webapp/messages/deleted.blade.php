@@ -16,7 +16,7 @@
                     <table class="table table-hover">
                         <thead class="thead">
                         <tr>
-                            <th scope="col">Read</th>
+                            <th scope="col">Status</th>
                             <th scope="col">From</th>
                             <th scope="col">Email</th>
                             <th scope="col">Subject</th>
