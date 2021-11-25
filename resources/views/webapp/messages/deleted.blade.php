@@ -13,15 +13,30 @@
         <div class="card">
             <div class="card-body">
                 @if (count($messages) > 0)
-                    <ul class="list-group">
+                    <table class="table table-hover">
+                        <thead class="thead">
+                        <tr>
+                            <th scope="col">Read</th>
+                            <th scope="col">From</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Subject</th>
+                            <th scope="col">Sent</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         @foreach($messages as $message)
-                            <li class="list-group-item">
-                                Deleted | From: {{ $message->userFrom->name }}, {{ $message->userFrom->email }} |
-                                Subject: {{ $message->subject }}
-                                <a href="{{ route('message.return', $message->id) }}" class="btn btn-sm btn-info float-right">Return message to inbox</a>
-                            </li>
+                            <tr class="table-row" data-href="{{route('message.read', $message->id)}}">
+                                <th scope="row">@if ($message->read) <span class="badge badge-success">READ</span> @endif</th>
+                                <td>{{ $message->userFrom->first_name }}&nbsp;{{ $message->userFrom->last_name }}</td>
+                                <td>{{ $message->userFrom->email }}</td>
+                                <td>{{ $message->subject }}</td>
+                                <td>@if (isset($message->created_at)) {{$message->created_at->format('M d')}} @endif</td>
+                                <td><a href="{{ route('message.return', $message->id) }}" class="btn btn-sm btn-info">Return message to inbox</a></td>
+                            </tr>
                         @endforeach
-                    </ul>
+                        </tbody>
+                    </table>
                 @else
                     No Messages
                 @endif

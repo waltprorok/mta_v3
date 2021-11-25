@@ -13,16 +13,28 @@
         <div class="card">
             <div class="card-body">
                 @if (count($messages) > 0)
-                    <ul class="list-group">
+                    <table class="table table-hover">
+                        <thead class="thead">
+                        <tr>
+                            <th scope="col">Read</th>
+                            <th scope="col">From</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Subject</th>
+                            <th scope="col">Sent</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         @foreach($messages as $message)
-                            <li class="list-group-item">To: {{ $message->userTo->first_name }}, {{ $message->userTo->email }} |
-                                Subject: {{ $message->subject }}
-                                @if ($message->read)
-                                    <span class="badge badge-success float-right">READ</span></li>
-                            @endif
+                            <tr class="table-row" data-href="{{route('message.read', $message->id)}}">
+                                <th scope="row">@if ($message->read) <span class="badge badge-success">READ</span> @endif</th>
+                                <td>{{ $message->userFrom->first_name }}&nbsp;{{ $message->userFrom->last_name }}</td>
+                                <td>{{ $message->userFrom->email }}</td>
+                                <td>{{ $message->subject }}</td>
+                                <td>@if (isset($message->created_at)) {{$message->created_at->format('M d')}} @endif</td>
+                            </tr>
                         @endforeach
-
-                    </ul>
+                        </tbody>
+                    </table>
                 @else
                     No Messages
                 @endif
