@@ -85,10 +85,8 @@
                                         <input type="checkbox" name="terms" value="1" id="terms"
                                                class="form-check-input">
                                         &nbsp;&nbsp;I agree to the
-                                        <a href="{{ route('terms') }}" target="_blank"
-                                           style="text-decoration: underline;">Terms of Service</a> and
-                                        <a href="{{ route('privacy') }}" target="_blank"
-                                           style="text-decoration: underline;">Privacy Policy</a>.
+                                        <a href="{{ route('terms') }}" target="_blank" style="text-decoration: underline;">Terms of Service</a> and
+                                        <a href="{{ route('privacy') }}" target="_blank" style="text-decoration: underline;">Privacy Policy</a>.
                                     </label>
                                     @if ($errors->has('terms'))
                                         <span class="help-block">
@@ -108,6 +106,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-lg-10 col-lg-offset-1">
                 <div class="panel panel-default">

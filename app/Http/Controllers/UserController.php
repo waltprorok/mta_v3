@@ -9,6 +9,7 @@ class UserController extends Controller
     public function adminUsers()
     {
         $users = User::all();
+
         return view('webapp.user.adminUsers', compact('users', $users));
     }
 }

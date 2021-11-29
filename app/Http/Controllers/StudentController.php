@@ -8,11 +8,15 @@ use App\Http\Requests\StoreStudent;
 use App\Lesson;
 use App\Student;
 use App\Teacher;
-use Auth;
+use App\User;
 use Carbon\Carbon;
-use File;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 
 class StudentController extends Controller
@@ -30,12 +34,12 @@ class StudentController extends Controller
         $teacher = Teacher::where('teacher_id', Auth::id())->first();
 
         if ($teacher == null) {
-            return redirect('teacher')->with('info', 'Please fill out your Studio Settings first before entering students.');
+            return redirect('teacher')->with('success', 'Please fill out your Studio Settings first before entering students.');
         }
 
         $students = Student::with('hasOneLesson')
             ->where('teacher_id', Auth::id())
-            ->where('status', 'Active')
+            ->where('status', Student::ACTIVE)
             ->latestFirst()
             ->get();
 
@@ -44,51 +48,53 @@ class StudentController extends Controller
 
     public function waitlist()
     {
-        $waitlists = Student::with('teacher')->latestFirst()->where('teacher_id', Auth::id())->where('status', 'Waitlist')->get();
+        $waitlists = Student::with('teacher')->latestFirst()->where('teacher_id', Auth::id())->where('status', Student::WAITLIST)->get();
 
         return view('webapp.student.waitlist')->with('waitlists', $waitlists);
     }
 
     public function leads()
     {
-        $leads = Student::with('teacher')->latestFirst()->where('teacher_id', Auth::id())->where('status', 'Lead')->get();
+        $leads = Student::with('teacher')->latestFirst()->where('teacher_id', Auth::id())->where('status', Student::LEAD)->get();
 
         return view('webapp.student.leads')->with('leads', $leads);
     }
 
     public function inactive()
     {
-        $inactives = Student::with('teacher')->latestFirst()->where('teacher_id', Auth::id())->where('status', 'Inactive')->get();
+        $inactives = Student::with('teacher')->latestFirst()->where('teacher_id', Auth::id())->where('status', Student::INACTIVE)->get();
 
         return view('webapp.student.inactive')->with('inactives', $inactives);
     }
 
-    public function store(StoreStudent $request)
+    /**
+     * @param StoreStudent $request
+     * @return RedirectResponse
+     */
+    public function store(StoreStudent $request) : RedirectResponse
     {
-        $email_exists = Student::where('email', $request->get('email'))->where('teacher_id', Auth::id())->first();
-
-        if (isset($email_exists) && $email_exists->email == $request->get('email') && $email_exists->email != null) {
-            return redirect()->back()->with('error', 'The email address is already in use.');
-        }
-
-        $phone = preg_replace('/\D/', '', $request->get('phone'));
-
         $student = new Student([
             'teacher_id' => Auth::id(),
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
             'email' => $request->get('email') ? $request->get('email') : null,
-            'phone' => $phone,
             'status' => $request->get('status'),
         ]);
 
-        if ($request->hasFile('photo')) {
-            $file = $request->file('photo');
-            $fileName = date('Ymd_hms') . "." . $file->getClientOriginalExtension();
-            Storage::disk('student')->put($fileName, File::get($file));
-            $student->photo = $fileName;
-        }
         $student->save();
+
+        if ($request->get('email') != null) {
+            $user = new User([
+                'first_name' => $request->get('first_name'),
+                'last_name' => $request->get('last_name'),
+                'email' => $request->get('email') ? $request->get('email') : null,
+                'password' => Hash::make(Str::random(10)),
+                'student' => true,
+                'terms' => true,
+            ]);
+
+            $user->save();
+        }
 
         return redirect()->route('student.index')->with('success', 'The student was added successfully.');
     }
@@ -96,6 +102,7 @@ class StudentController extends Controller
     public function edit($id)
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
+
         return view('webapp.student.edit')->with('students', $students);
     }
 
@@ -103,6 +110,7 @@ class StudentController extends Controller
     {
         // ->whereDate('start_date', '>=', date('Y-m-d'))
         $lessons = Lesson::where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
+
         return view('webapp.student.lessons')->with('lessons', $lessons);
     }
 
@@ -425,6 +433,7 @@ class StudentController extends Controller
             $this->scheduleUpdate($request);
             return redirect()->back()->with('success', 'You successfully updated the student\'s lesson.');
         }
+
         if ($request->input('action') == 'updateAll') {
             $this->scheduleUpdateAll($request);
             return redirect()->back()->with('success', 'You successfully updated all the student\'s lessons.');

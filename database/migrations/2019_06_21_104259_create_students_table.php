@@ -31,7 +31,7 @@ class CreateStudentsTable extends Migration
             $table->string('state')->nullable();
             $table->integer('zip')->nullable();
             $table->string('instrument')->nullable();
-            $table->string('status')->nullable();
+            $table->integer('status')->nullable();
             $table->string('photo')->nullable();
             $table->timestamps();
         });

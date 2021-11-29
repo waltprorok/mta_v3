@@ -51,27 +51,6 @@ class User extends Authenticatable
     private $user;
 
     /**
-     * @return HasMany
-     */
-    public function students(): HasMany
-    {
-        return $this->hasMany(Student::class, 'teacher_id');
-    }
-
-    /**
-     * @return HasMany
-     */
-    public function lessons(): HasMany
-    {
-        return $this->hasMany(Lesson::class, 'teacher_id');
-    }
-
-    public function messages(): HasMany
-    {
-        return $this->hasMany(Message::class, 'user_id_to');
-    }
-
-    /**
      * @return mixed
      */
     public static function activeStudentCount()
@@ -79,17 +58,12 @@ class User extends Authenticatable
         return Auth::user()->students->where('status', '==', 'Active')->count();
     }
 
-    public static function unreadMessagesCount()
-    {
-        return Auth::user()->messages->where('read', '==', false)->count();
-    }
-
     /**
-     * @return mixed
+     * @return HasMany
      */
-    public static function lessonsThisWeek()
+    public function blogArticle(): HasMany
     {
-        return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
+        return $this->hasMany(Blog::class, 'author_id');
     }
 
     /**
@@ -100,8 +74,37 @@ class User extends Authenticatable
         return $this->hasOne(Teacher::class, 'teacher_id');
     }
 
-    public function blogArticle(): HasMany
+    /**
+     * @return HasMany
+     */
+    public function lessons(): HasMany
     {
-        return $this->hasMany(Blog::class, 'author_id');
+        return $this->hasMany(Lesson::class, 'teacher_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function lessonsThisWeek()
+    {
+        return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
+    }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'user_id_to');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function students(): HasMany
+    {
+        return $this->hasMany(Student::class, 'teacher_id');
+    }
+
+    public static function unreadMessagesCount()
+    {
+        return Auth::user()->messages->where('read', '==', false)->count();
     }
 }
