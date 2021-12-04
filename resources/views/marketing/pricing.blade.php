@@ -15,7 +15,7 @@
                 </div>
                 <!-- /Section header -->
                 <!-- pricing -->
-                <div class="col-md-4 col-md-offset-2">
+                <div class="col-md-4 col-md-offset-0">
                     <div class="pricing">
                         <div class="price-head">
                             <span class="price-title">FREEMIUM</span>
@@ -53,7 +53,7 @@
                             <div class="price-head">
                                 <span class="price-title">{{ $plan->name }}</span>
                                 <div class="price">
-                                    <h3>${{ number_format($plan->cost, 2) }}<span class="duration">/ month</span></h3>
+                                    <h3>${{ number_format($plan->cost, 2) }}@if($plan->id == 2)<span class="duration">/ yearly</span>@else<span class="duration">/ month</span>@endif</h3>
                                 </div>
                             </div>
                             <ul class="price-content">

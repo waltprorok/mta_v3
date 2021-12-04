@@ -24,7 +24,8 @@ class MessagesController extends Controller
     public function create(int $id = 0, string $subject = '')
     {
         if ($id === 0) {
-            $users = User::where('id', '!=', Auth::id())->get(); // TODO: only get parents and students for that teacher
+//            $users = User::where('id', '!=', Auth::id())->where('student', '=', 1)->with('students')->get(); // TODO: only get parents and students for that teacher
+            $users = User::with('students')->where('student', '=', 1)->get(); // TODO: only get parents and students for that teacher
         } else {
             $users = User::where('id', $id)->get();
         }

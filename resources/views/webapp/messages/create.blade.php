@@ -7,7 +7,7 @@
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ route('message.inbox') }}">Messages</a></li>
-            <li class="breadcrumb-item active">Reply</li>
+            <li class="breadcrumb-item active">Create</li>
         </ul>
 
         <div class="card">

@@ -43,7 +43,7 @@
                             @foreach($lessons as $lesson)
                                 <tr>
                                     <td>
-                                        <input type="checkbox" {{ $lesson->complete == '1' ? 'checked' : '' }} class="checkbox" name="completed" value="{{$lesson->complete == '1' ? 1 : 0}}"/>
+                                        <input type="checkbox" {{ $lesson->complete == '1' ? 'checked' : '' }} class="checkbox" name="completed"/>
                                         <input type="hidden" name="id" value="{{ $lesson->id }}"/>
                                         <input type="hidden" name="student_id" value="{{ $lesson->student_id }}"/>
                                     </td>
@@ -57,9 +57,9 @@
                         @endif
                         </tbody>
                     </table>
-{{--                    <button type="submit" name="save" class="btn btn-default">--}}
-{{--                        Save--}}
-{{--                    </button>--}}
+                    <button type="submit" name="save" class="btn btn-default">
+                        Save
+                    </button>
                 </form>
             </div>
         </div>

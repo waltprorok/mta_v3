@@ -25,7 +25,7 @@
                         <tbody>
                         @foreach($messages as $message)
                             <tr class="table-row" data-href="{{ route('message.read', $message->id) }}">
-                                <th scope="row">@if ($message->read) <span class="badge badge-success">READ</span> @endif</th>
+                                <th scope="row">@if ($message->read) <span class="badge badge-success">READ</span>@endif</th>
                                 <td>{{ $message->userFrom->first_name }}&nbsp;{{ $message->userFrom->last_name }}</td>
                                 <td>{{ $message->userFrom->email }}</td>
                                 <td>{{ $message->subject }}</td>

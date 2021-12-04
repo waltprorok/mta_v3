@@ -56,6 +56,7 @@ class Student extends Model
                 return "{$matches[1]}-{$matches[2]}-{$matches[3]}-{$matches[4]}";
             }
         }
+
         return $this->phone;
     }
 

@@ -117,12 +117,18 @@ class StudentController extends Controller
     public function lessonsUpdate(Request $request)
     {
         // finish this update function
-//        foreach ($request as $data) {
-//            var_dump([$data->get('id'), $data->get('student_id'), $data->get('completed')]);
-//        }
+        foreach ($request as $data) {
+            if ($data->get('completed') == 'on') {
+                $lesson = Lesson::where('id', '=', $data->get('id'))->firstOrFail();
+                $lesson->complete = $data->get('completed') == 'on' ? true : false;
+                $lesson->save();
+            }
+        }
+
+        return redirect()->back()->with('success', 'You successfully updated a lesson');
     }
 
-    public function update(Request $request)
+    public function update(Request $request): RedirectResponse
     {
         $this->validate($request, [
             'first_name' => 'required|string|max:50',
@@ -167,6 +173,7 @@ class StudentController extends Controller
     public function profile($id)
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
+
         return view('webapp.student.profile')->with('students', $students);
     }
 
@@ -424,6 +431,7 @@ class StudentController extends Controller
     {
         $start_datetime = new Carbon($request->get('start_time'));
         $end_datetime = new Carbon($request->get('end_time'));
+
         return $interval = $start_datetime->diff($end_datetime)->format('%i');
     }
 

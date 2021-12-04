@@ -29,7 +29,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if(count($leads) == null)
+                    @if(count($leads) == 0)
                         <tr>
                             <td>No student leads at this time.</td>
                             <td></td>
