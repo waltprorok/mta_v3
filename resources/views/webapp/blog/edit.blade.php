@@ -14,8 +14,7 @@
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                                 <label for="title">Title</label>
-                                <input type="text" class="form-control" name="title"
-                                       value="{{ $update->title }}">
+                                <input type="text" class="form-control" name="title" value="{{ $update->title }}">
 
                                 @if ($errors->has('title'))
                                     <span class="help-block">
@@ -28,8 +27,7 @@
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('slug') ? ' has-error' : '' }}">
                                 <label for="slug">Slug</label>
-                                <input type="text" class="form-control" name="slug"
-                                       value="{{ $update->slug }}">
+                                <input type="text" class="form-control" name="slug" value="{{ $update->slug }}">
 
                                 @if ($errors->has('slug'))
                                     <span class="help-block">
@@ -44,8 +42,7 @@
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('body') ? ' has-error' : '' }}">
                                 <label for="body">Body</label>
-                                <textarea class="form-control" name="body"
-                                          rows="18">{{ $update->body }}</textarea>
+                                <textarea class="form-control" name="body" rows="18">{{ $update->body }}</textarea>
 
                                 @if ($errors->has('body'))
                                     <span class="help-block">
@@ -60,8 +57,7 @@
                                 <label for="image">Current Image</label>
                                 @if ($update->image_url)
                                     <div class="text-center">
-                                        <img src="{{ asset('storage/blog/'.$update->image) }}"
-                                             alt="{{ $update->image }}" width="100%">
+                                        <img src="{{ asset('storage/blog/'.$update->image) }}" alt="{{ $update->image }}" width="100%">
                                     </div>
                                     <input type="hidden" name="updateImage" value="{{ $update->image }}">
                                 @else

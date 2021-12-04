@@ -6,7 +6,7 @@
         <h4>All Reports</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('reports.all') }}">Reports</a></li>
+            <li class="breadcrumb-item active">Reports</li>
         </ul>
 
         <div class="row">

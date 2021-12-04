@@ -6,7 +6,7 @@
         <h4>Contact Us</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('webapp.contact.index') }}">Contact Us</a></li>
+            <li class="breadcrumb-item active">Contact Us</li>
         </ul>
 
         <div id="app">

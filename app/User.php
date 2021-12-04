@@ -51,11 +51,27 @@ class User extends Authenticatable
     private $user;
 
     /**
+     * @return mixed
+     */
+    public static function activeStudentCount()
+    {
+        return Auth::user()->students->where('status', '=', 1)->count();
+    }
+
+    /**
      * @return HasMany
      */
-    public function students(): HasMany
+    public function blogArticle(): HasMany
     {
-        return $this->hasMany(Student::class, 'teacher_id', 'id');
+        return $this->hasMany(Blog::class, 'author_id');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function getTeacher(): HasOne
+    {
+        return $this->hasOne(Teacher::class, 'teacher_id');
     }
 
     /**
@@ -63,15 +79,7 @@ class User extends Authenticatable
      */
     public function lessons(): HasMany
     {
-        return $this->hasMany(Lesson::class, 'teacher_id', 'id');
-    }
-
-    /**
-     * @return mixed
-     */
-    public static function activeStudentCount()
-    {
-        return Auth::user()->students->where('status', '==', 'Active')->count();
+        return $this->hasMany(Lesson::class, 'teacher_id');
     }
 
     /**
@@ -82,16 +90,21 @@ class User extends Authenticatable
         return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
     }
 
-    /**
-     * @return HasOne
-     */
-    public function getTeacher(): HasOne
+    public function messages(): HasMany
     {
-        return $this->hasOne(Teacher::class, 'teacher_id', 'id');
+        return $this->hasMany(Message::class, 'user_id_to');
     }
 
-    public function blogArticle(): HasMany
+    /**
+     * @return HasMany
+     */
+    public function students(): HasMany
     {
-        return $this->hasMany(Blog::class, 'author_id', 'id');
+        return $this->hasMany(Student::class, 'teacher_id');
+    }
+
+    public static function unreadMessagesCount()
+    {
+        return Auth::user()->messages->where('read', '==', false)->count();
     }
 }

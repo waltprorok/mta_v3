@@ -12,7 +12,7 @@
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('student.waitlist') }}">Waitlist</a></li>
+            <li class="breadcrumb-item active">Wait List</li>
         </ul>
         @include('partials.studentListTabs')
         <div class="card">
@@ -29,7 +29,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if(count($waitlists) == null)
+                    @if(count($waitlists) == 0)
                         <tr>
                             <td>No students on the wait list at this time.</td>
                             <td></td>

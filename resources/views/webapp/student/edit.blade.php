@@ -11,7 +11,7 @@
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('student.edit', $student->id) }}">Edit</a></li>
+                <li class="breadcrumb-item active">Edit</li>
             </ul>
             @include('partials.studentTabs', $data = ['id' => $student->id])
             <div class="card">
@@ -106,17 +106,22 @@
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                                         <label for="status" class="control-label">Status</label>
-
                                         <select class="form-control" id="status" name="status">
                                             @if ($student->status)
-                                                <option value="{{ $student->status }}">{{ $student->status }}</option>
+                                                <option value="{{ $student->status }}">
+                                                    @if ($student->status == \App\Student::ACTIVE) Active
+                                                    @elseif($student->status == \App\Student::WAITLIST) Waitlist
+                                                    @elseif($student->status == \App\Student::LEAD) Lead
+                                                    @elseif($student->status == \App\Student::INACTIVE) Inactive
+                                                    @endif
+                                                </option>
                                             @else
                                                 <option value="" selected="selected">Select a Status</option>
                                             @endif
-                                            <option value="Active">Active</option>
-                                            <option value="Lead">Lead</option>
-                                            <option value="Waitlist">Waitlist</option>
-                                            <option value="Inactive">Inactive</option>
+                                            <option value="1">Active</option>
+                                            <option value="3">Lead</option>
+                                            <option value="2">Waitlist</option>
+                                            <option value="4">Inactive</option>
                                         </select>
                                         @if ($errors->has('status'))
                                             <span class="help-block">

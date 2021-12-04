@@ -10,7 +10,7 @@
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('calendar.index') }}">Calendar</a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('student.schedule.edit', [$lesson->student_id, $lesson->id]) }}">Edit</a></li>
+                <li class="breadcrumb-item active">Edit</li>
             </ul>
             @include('partials.studentTabs', $data = ['id' => $lesson->student_id])
             <div class="card">

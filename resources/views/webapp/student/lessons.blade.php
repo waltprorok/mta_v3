@@ -11,7 +11,7 @@
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('student.lessons') }}">Lessons</a></li>
+            <li class="breadcrumb-item active">Lessons</li>
         </ul>
         <div class="card">
             <div class="card-body">
@@ -43,7 +43,7 @@
                             @foreach($lessons as $lesson)
                                 <tr>
                                     <td>
-                                        <input type="checkbox" {{ $lesson->complete == '1' ? 'checked' : '' }} class="checkbox" name="completed" value="{{$lesson->complete == '1' ? 1 : 0}}"/>
+                                        <input type="checkbox" {{ $lesson->complete == '1' ? 'checked' : '' }} class="checkbox" name="completed"/>
                                         <input type="hidden" name="id" value="{{ $lesson->id }}"/>
                                         <input type="hidden" name="student_id" value="{{ $lesson->student_id }}"/>
                                     </td>

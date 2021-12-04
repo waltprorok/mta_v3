@@ -19,7 +19,7 @@
                                     <p>Form: {{ contact.name }}</p>
                                     <p>Email: {{ contact.email }}</p>
                                     <p>Subject: {{ contact.subject }}</p>
-                                    <p>{{contact.message}}</p>
+                                    <textarea class="form-control" rows="24" disabled>{{ contact.message}}</textarea>
                                     <hr/>
                                     <div class="form-group pull-right">
                                         <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>
@@ -56,6 +56,7 @@
                 </div>
             </transition>
         </div>
+
         <table class="table">
             <thead class="thead-dark">
             <tr>
@@ -83,6 +84,7 @@
             </tr>
             </tbody>
         </table>
+
         <div v-if="showModal">
             <transition name="modal">
                 <div class="modal-mask">

@@ -7,7 +7,7 @@
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ route('teacher.editSettings') }}">Settings</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('teacher.profile') }}">Profile</a></li>
+            <li class="breadcrumb-item active">Profile</li>
         </ul>
 
         <div class="row gutters-sm">
@@ -15,18 +15,15 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            @if($teacher->logo != null)
-                                <img src="/storage/teacher/{{ $teacher->logo }}" alt="{{ $teacher->logo }}"
-                                     class="rounded" width="150">
+                            @if($teacher->getTeacher->logo != null)
+                                <img src="/storage/teacher/{{ $teacher->getTeacher->logo }}" alt="{{ $teacher->getTeacher->logo }}" class="rounded" width="150">
                             @else
-                                <img src="{{ asset('webapp/imgs/teacher-avatar.png') }}" alt="stock-avatar"
-                                     class="rounded-circle" width="150">
+                                <img src="{{ asset('webapp/imgs/teacher-avatar.png') }}" alt="stock-avatar" class="rounded-circle" width="150">
                             @endif
                             <div class="mt-3">
-                                <h4>{{ $teacher->first_name }}&nbsp;{{ $teacher->last_name }}</h4>
-                                @if($teacher->city != null)
-                                    <p class="text-muted font-size-sm">{{ $teacher->city }}
-                                        &#44;&nbsp;{{ $teacher->state }}</p>
+                                <h4>{{ $teacher->getTeacher->first_name }}&nbsp;{{ $teacher->getTeacher->last_name }}</h4>
+                                @if($teacher->getTeacher->city != null)
+                                    <p class="text-muted font-size-sm">{{ $teacher->getTeacher->city }}&#44;&nbsp;{{ $teacher->getTeacher->state }}</p>
                                 @endif
                                 <button class="btn btn-primary">Follow</button>
                                 <button class="btn btn-outline-primary">Message</button>
@@ -109,7 +106,7 @@
                                 <h6 class="mb-0">Full Name</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                {{ $teacher->first_name }}&nbsp;{{ $teacher->last_name }}
+                                {{ $teacher->getTeacher->first_name }}&nbsp;{{ $teacher->getTeacher->last_name }}
                             </div>
                         </div>
                         <hr>
@@ -118,7 +115,7 @@
                                 <h6 class="mb-0">Email</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                {{ $teacher->email }}
+                                {{ $teacher->getTeacher->email }}
                             </div>
                         </div>
                         <hr>
@@ -127,7 +124,7 @@
                                 <h6 class="mb-0">Phone</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                {{ $teacher->phone_number }}
+                                {{ $teacher->getTeacher->phone_number }}
                             </div>
                         </div>
                         <hr>
@@ -145,10 +142,10 @@
                                 <h6 class="mb-0">Address</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                @if($teacher->address_2 != null)
-                                    {{ $teacher->address }}&nbsp;{{ $teacher->address_2 }}&nbsp;{{ $teacher->city }}&#44;&nbsp;{{ $teacher->state }}
+                                @if($teacher->getTeacher->address_2 != null)
+                                    {{ $teacher->getTeacher->address }}&nbsp;{{ $teacher->getTeacher->address_2 }}&nbsp;{{ $teacher->getTeacher->city }}&#44;&nbsp;{{ $teacher->getTeacher->state }}
                                 @else
-                                    {{ $teacher->address }}&nbsp;{{ $teacher->city }}&#44;&nbsp;{{ $teacher->state }}
+                                    {{ $teacher->getTeacher->address }}&nbsp;{{ $teacher->getTeacher->city }}&#44;&nbsp;{{ $teacher->getTeacher->state }}
                                 @endif
                             </div>
                         </div>

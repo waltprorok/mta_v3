@@ -2116,7 +2116,7 @@ pre code {
 }
 
 .form-control:disabled, .form-control[readonly] {
-    background-color: #e9ecef;
+    /*background-color: #e9ecef;*/
     opacity: 1
 }
 
@@ -4542,7 +4542,7 @@ tbody.collapse.show {
     text-decoration: none
 }
 
-.breadcrumb-item.active a {
+.breadcrumb-item.active {
     color: #128ef2
 }
 
@@ -5198,7 +5198,7 @@ button.close {
 
 .modal-open .modal {
     overflow-x: hidden;
-    overflow-y: auto
+    overflow-y: auto;
 }
 
 .modal-dialog {

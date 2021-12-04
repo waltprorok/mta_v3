@@ -11,6 +11,9 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Auth::routes();
 
 // Routes for fronted marketing
@@ -82,6 +85,18 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/lessons', 'StudentController@lessons')->name('student.lessons');
         Route::put('/lessons/update', 'StudentController@lessonsUpdate')->name('student.lessons.update');
         Route::post('/process_date', 'StudentController@ajaxTime');
+    });
+
+    Route::prefix('messages')->group(function () {
+       Route::get('/inbox', 'MessagesController@index')->name('message.inbox');
+       Route::get('/create/{id?}/{subject?}', 'MessagesController@create')->name('message.create');
+       Route::post('/send', 'MessagesController@send')->name('message.send');
+       Route::get('/sent', 'MessagesController@sent')->name('message.sent');
+       Route::get('/read/{id}', 'MessagesController@read')->name('message.read');
+       Route::get('/delete/{id}', 'MessagesController@delete')->name('message.delete');
+       Route::get('/deleted', 'MessagesController@deleted')->name('message.deleted');
+       Route::get('/return/{id}', 'MessagesController@return')->name('message.return');
+
     });
 
     Route::prefix('admin')->group(function () {

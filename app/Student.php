@@ -12,6 +12,11 @@ class Student extends Model
 {
     use Notifiable;
 
+    const ACTIVE = 1;
+    const WAITLIST = 2;
+    const LEAD = 3;
+    const INACTIVE = 4;
+
     protected $table = 'students';
 
     protected $fillable = [
@@ -51,6 +56,7 @@ class Student extends Model
                 return "{$matches[1]}-{$matches[2]}-{$matches[3]}-{$matches[4]}";
             }
         }
+
         return $this->phone;
     }
 

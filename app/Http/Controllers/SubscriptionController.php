@@ -18,7 +18,7 @@ class SubscriptionController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->subscribed('premium')) {
+        if ($user->subscriptions()->first() != null) {
             return view('webapp.account.subscription');
         } else {
             $plans = Plan::all();
@@ -54,7 +54,13 @@ class SubscriptionController extends Controller
     public function cancel(): RedirectResponse
     {
         $user = Auth::user();
-        $subscription = $user->subscription('premium');
+
+        if ($user->subscription('premium')) {
+            $subscription = $user->subscription('premium');
+        } elseif ($user->subscription('enterprise')) {
+            $subscription = $user->subscription('enterprise');
+        }
+
         $subscription->cancel();
 
         return redirect()->back()->with('warning', 'Your subscription account has been cancelled');
@@ -66,7 +72,13 @@ class SubscriptionController extends Controller
     public function resume(): RedirectResponse
     {
         $user = Auth::user();
-        $subscription = $user->subscription('premium');
+
+        if ($user->subscription('premium')) {
+            $subscription = $user->subscription('premium');
+        } elseif ($user->subscription('enterprise')) {
+            $subscription = $user->subscription('enterprise');
+        }
+
         $subscription->resume();
 
         return redirect()->back()->with('success', 'Your subscription account has been reinstated');
@@ -97,10 +109,11 @@ class SubscriptionController extends Controller
     public function pdfDownload($invoiceId)
     {
         $user = Auth::user();
+        $subscriptionName = ucfirst($user->subscriptions->first()->name);
 
         return $user->downloadInvoice($invoiceId, [
             'vendor' => 'Music Teachers Aid',
-            'product' => 'Premium Subscription'
+            'product' =>  $subscriptionName
         ]);
     }
 
