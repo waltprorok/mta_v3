@@ -39,6 +39,7 @@ class SubscriptionController extends Controller
     public function create(Request $request, Plan $plan)
     {
         $user = Auth::user();
+
         $plan = Plan::findOrFail($request->get('plan'));
 
         $request->user()->newSubscription($plan->slug, $plan->stripe_plan)->create($request->stripeToken);
