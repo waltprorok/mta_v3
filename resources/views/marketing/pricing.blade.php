@@ -53,7 +53,7 @@
                             <div class="price-head">
                                 <span class="price-title">{{ $plan->name }}</span>
                                 <div class="price">
-                                    <h3>${{ number_format($plan->cost, 2) }}@if($plan->id == 2)<span class="duration">/ yearly</span>@else<span class="duration">/ month</span>@endif</h3>
+                                    <h3>${{ number_format($plan->cost, 2) }}<span class="duration">/ {{ $plan->slug }}</span></h3>
                                 </div>
                             </div>
                             <ul class="price-content">

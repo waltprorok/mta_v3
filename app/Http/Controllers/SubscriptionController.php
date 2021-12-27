@@ -42,12 +42,58 @@ class SubscriptionController extends Controller
 
         $plan = Plan::findOrFail($request->get('plan'));
 
-        $request->user()->newSubscription($plan->slug, $plan->stripe_plan)->create($request->stripeToken);
+        $request->user()->newSubscription($plan->name, $plan->stripe_plan)->create($request->stripeToken);
 
         Mail::to($user->email)->send(new SubscribedMail($user));
 
         return redirect()->back()->with('success', 'Thank you for subscribing to our service.');
     }
+
+    public function listPlanChange()
+    {
+        $plans = Plan::all();
+        $user = Auth::user();
+
+        foreach ($plans as $plan) {
+            if ($plan->stripe_plan == $user->subscription('premium')->stripe_plan) {
+                switch($plan->id){
+                    case 1:
+                        $plan = Plan::findOrFail(2);
+                        break;
+                    case 2:
+                        $plan = Plan::findOrFail(1);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        return view('webapp.account.change', compact('plan'));
+    }
+
+    public function changePlan()
+    {
+        $plans = Plan::all();
+        $user = Auth::user();
+
+        foreach ($plans as $plan) {
+            if ($plan->stripe_plan == $user->subscription('premium')->stripe_plan) {
+                if ($plan->id == 1) {
+                    $newPlan = Plan::findOrFail(2);
+                    $user->subscription('premium')->swap($newPlan->stripe_plan);
+                    break;
+                } elseif($plan->id == 2) {
+                    $newPlan = Plan::findOrFail(1);
+                    $user->subscription('premium')->swap($newPlan->stripe_plan);
+                    break;
+                }
+            }
+        }
+
+        return redirect()->back()->with('success', 'Your subscription plan has been updated.');
+    }
+
 
     /**
      * @return RedirectResponse
@@ -58,13 +104,10 @@ class SubscriptionController extends Controller
 
         if ($user->subscription('premium')) {
             $subscription = $user->subscription('premium');
-        } elseif ($user->subscription('enterprise')) {
-            $subscription = $user->subscription('enterprise');
+            $subscription->cancel();
         }
 
-        $subscription->cancel();
-
-        return redirect()->back()->with('warning', 'Your subscription account has been cancelled');
+        return redirect()->back()->with('warning', 'Your subscription account has been cancelled.');
     }
 
     /**
@@ -82,7 +125,7 @@ class SubscriptionController extends Controller
 
         $subscription->resume();
 
-        return redirect()->back()->with('success', 'Your subscription account has been reinstated');
+        return redirect()->back()->with('success', 'Your subscription account has been reinstated.');
     }
 
     public function creditCard()
@@ -97,10 +140,12 @@ class SubscriptionController extends Controller
     public function updateCreditCard(Request $request): RedirectResponse
     {
         $user = Auth::user();
+
         $ccToken = $request->input('stripeToken');
+
         $user->updateCard($ccToken);
 
-        return redirect()->back()->with(['success' => 'Credit card updated successfully.']);
+        return redirect()->back()->with('success', 'Credit card updated successfully.');
     }
 
     /**
@@ -110,17 +155,19 @@ class SubscriptionController extends Controller
     public function pdfDownload($invoiceId)
     {
         $user = Auth::user();
+
         $subscriptionName = ucfirst($user->subscriptions->first()->name);
 
         return $user->downloadInvoice($invoiceId, [
             'vendor' => 'Music Teachers Aid',
-            'product' =>  $subscriptionName
+            'product' => $subscriptionName
         ]);
     }
 
     public function invoices()
     {
         $user = Auth::user();
+
         $invoices = $user->invoices();
 
         return view('webapp.account.invoices', compact('invoices'));

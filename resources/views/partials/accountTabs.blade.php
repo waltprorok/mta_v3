@@ -18,6 +18,11 @@
             <a class="nav-link {{ Route::currentRouteName() == 'subscription.card' ? 'active' : '' }}" id="subscription"
                href="{{ route('account.subscription' ) }}">Subscription</a>
         </li>
+    @elseif (Route::currentRouteName() == 'subscription.change')
+        <li class="nav-item">
+            <a class="nav-link {{ Route::currentRouteName() == 'subscription.change' ? 'active' : '' }}" id="subscription"
+               href="{{ route('account.subscription' ) }}">Subscription</a>
+        </li>
     @elseif (Route::currentRouteName() == 'subscription.cancel')
         <li class="nav-item">
             <a class="nav-link {{ Route::currentRouteName() == 'subscription.cancel' ? 'active' : '' }}" id="subscription"
