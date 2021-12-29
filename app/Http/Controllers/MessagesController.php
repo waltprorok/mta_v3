@@ -13,10 +13,7 @@ class MessagesController extends Controller
 {
     public function index()
     {
-        $messages = Message::with('userFrom')
-            ->where('user_id_to', Auth::id())
-            ->notDeleted()
-            ->get();
+        $messages = Message::with('userFrom')->where('user_id_to', Auth::id())->notDeleted()->get();
 
         return view('webapp.messages.inbox')->with('messages', $messages);
     }
@@ -25,12 +22,14 @@ class MessagesController extends Controller
     {
         if ($id === 0) {
 //            $users = User::where('id', '!=', Auth::id())->where('student', '=', 1)->with('students')->get(); // TODO: only get parents and students for that teacher
-            $users = User::with('students')->where('student', '=', 1)->get(); // TODO: only get parents and students for that teacher
+            $users = User::with('students')->where('student', 1)->get(); // TODO: only get parents and students for that teacher
         } else {
             $users = User::where('id', $id)->get();
         }
 
-        if ($subject !== '') $subject = 'Re: ' . $subject;
+        if ($subject !== '') {
+            $subject = 'Re: ' . $subject;
+        }
 
         return view('webapp.messages.create')->with(['users' => $users, 'subject' => $subject]);
     }
