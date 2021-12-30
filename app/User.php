@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -106,5 +107,17 @@ class User extends Authenticatable
     public static function unreadMessagesCount()
     {
         return Auth::user()->messages->where('read', '==', false)->count();
+    }
+
+    public function parentStudentUsers(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            User::class,
+            ParentStudent::class,
+            'parent_id',
+            'id',
+            'id',
+            'student_id'
+        );
     }
 }

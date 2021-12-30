@@ -37,6 +37,10 @@ class StudentController extends Controller
             return redirect('teacher')->with('success', 'Please fill out your Studio Settings first before entering students.');
         }
 
+        // this gets parent and students that are related
+//        $parent = User::with('parentStudentUsers')->findOrFail(8);
+//         dd($parent);
+
         $students = Student::with('hasOneLesson')
             ->where('teacher_id', Auth::id())
             ->where('status', Student::ACTIVE)
@@ -73,7 +77,19 @@ class StudentController extends Controller
      */
     public function store(StoreStudent $request) : RedirectResponse
     {
+        $user = new User([
+            'first_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
+            'email' => $request->get('email') ? $request->get('email') : null,
+            'password' => Hash::make(Str::random(10)),
+            'student' => true,
+            'terms' => true,
+        ]);
+
+        $user->save();
+
         $student = new Student([
+            'student_id' => $user->id,
             'teacher_id' => Auth::id(),
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
@@ -83,18 +99,9 @@ class StudentController extends Controller
 
         $student->save();
 
-        if ($request->get('email') != null) {
-            $user = new User([
-                'first_name' => $request->get('first_name'),
-                'last_name' => $request->get('last_name'),
-                'email' => $request->get('email') ? $request->get('email') : null,
-                'password' => Hash::make(Str::random(10)),
-                'student' => true,
-                'terms' => true,
-            ]);
-
-            $user->save();
-        }
+//        if ($request->get('email') != null) {
+//
+//        }
 
         return redirect()->route('student.index')->with('success', 'The student was added successfully.');
     }

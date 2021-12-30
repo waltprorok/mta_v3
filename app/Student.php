@@ -20,7 +20,9 @@ class Student extends Model
     protected $table = 'students';
 
     protected $fillable = [
+        'student_id',
         'teacher_id',
+        'parent_id',
         'first_name',
         'last_name',
         'email',
@@ -108,5 +110,10 @@ class Student extends Model
     public function routeNotificationForNexmo($notification): string
     {
         return '+1' . $this->phone;
+    }
+
+    public function studentUsers(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }
