@@ -22,7 +22,7 @@ class MessagesController extends Controller
     public function create(int $id = 0, string $subject = '')
     {
         if ($id === 0) {
-            $users = Student::with('studentUsers')->orderBy('first_name', 'ASC')->get();
+            $users = Student::with('studentUsers')->where('teacher_id', Auth::id())->orderBy('first_name', 'ASC')->get();
         } else {
             $users = User::where('id', $id)->get();
         }

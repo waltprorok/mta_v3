@@ -6,6 +6,7 @@ use App\BusinessHours;
 use App\Http\Requests\StoreScheduleAppt;
 use App\Http\Requests\StoreStudent;
 use App\Lesson;
+use App\ParentStudent;
 use App\Student;
 use App\Teacher;
 use App\User;
@@ -77,7 +78,7 @@ class StudentController extends Controller
      */
     public function store(StoreStudent $request) : RedirectResponse
     {
-        $user = new User([
+        $studentUser = new User([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
             'email' => $request->get('email') ? $request->get('email') : null,
@@ -86,10 +87,10 @@ class StudentController extends Controller
             'terms' => true,
         ]);
 
-        $user->save();
+        $studentUser->save();
 
         $student = new Student([
-            'student_id' => $user->id,
+            'student_id' => $studentUser->id,
             'teacher_id' => Auth::id(),
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
@@ -98,10 +99,6 @@ class StudentController extends Controller
         ]);
 
         $student->save();
-
-//        if ($request->get('email') != null) {
-//
-//        }
 
         return redirect()->route('student.index')->with('success', 'The student was added successfully.');
     }
@@ -145,10 +142,35 @@ class StudentController extends Controller
             'parent_email' => 'string|email|max:255|nullable',
             'zip' => 'integer|digits:5|nullable',
         ]);
+        // find student record
+        $student = Student::where('id', $request->get('student_id'))->first();
+
+        if ($request->get('parent_email') != null && $student->parent_email == null) {
+            // create new parent user
+            $parent = new User([
+                'first_name' => $request->get('first_name'),
+                'last_name' => $request->get('last_name'),
+                'email' => $request->get('parent_email'),
+                'password' => Hash::make(Str::random(10)),
+                'parent' => true,
+                'terms' => true,
+            ]);
+            // save new parent user
+            $parent->save();
+            // create new parent student pivot record
+            $parentStudentPivot = new ParentStudent([
+                'parent_id' => $parent->id,
+                'student_id' => $student->id
+            ]);
+            // save parent student pivot record
+            $parentStudentPivot->save();
+            // save parent user id to student record
+            $student->parent_id = $parent->id;
+            $student->save();
+        }
 
         $phoneNumber = preg_replace('/\D/', '', $request->get('phone'));
-
-        $student = Student::where('id', $request->get('student_id'))->first();
+        // update student record
         $student->first_name = $request->get('first_name');
         $student->last_name = $request->get('last_name');
         $student->email = $request->get('email');
@@ -168,10 +190,8 @@ class StudentController extends Controller
             $fileName = date('Ymd_hms') . "." . $file->getClientOriginalExtension();
             Storage::disk('student')->put($fileName, File::get($file));
             $student->photo = $fileName;
-        } else {
-            $student->save();
         }
-
+        // save student record
         $student->save();
 
         return redirect()->back()->with('success', 'You successfully updated the student.');
