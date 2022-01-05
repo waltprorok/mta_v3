@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Message;
-use App\Student;
 use App\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,7 +21,9 @@ class MessagesController extends Controller
     public function create(int $id = 0, string $subject = '')
     {
         if ($id === 0) {
-            $users = Student::with('studentUsers')->where('teacher_id', Auth::id())->orderBy('first_name', 'ASC')->get();
+            $users = User::whereHas('studentUsers', function ($query) {
+                $query->where('teacher_id', Auth::id());
+            })->get()->sortBy('first_name');
         } else {
             $users = User::where('id', $id)->get();
         }
@@ -62,6 +63,7 @@ class MessagesController extends Controller
         $messages = Message::with('userTo')
             ->where('user_id_from', Auth::id())
             ->orderBy('created', 'desc')
+            ->notDeleted()
             ->get();
 
         return view('webapp.messages.sent')->with('messages', $messages);
@@ -70,8 +72,11 @@ class MessagesController extends Controller
     public function read(int $id)
     {
         $message = Message::with('userFrom')->find($id);
-        $message->read = true;
-        $message->save();
+
+        if ($message->user_id_from != Auth::id()) {
+            $message->read = true;
+            $message->save();
+        }
 
         return view('webapp.messages.read')->with('message', $message);
     }

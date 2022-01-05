@@ -104,6 +104,11 @@ class User extends Authenticatable
         return $this->hasMany(Student::class, 'teacher_id');
     }
 
+    public function studentUsers(): HasMany
+    {
+        return $this->hasMany(Student::class, 'student_id');
+    }
+
     public static function unreadMessagesCount()
     {
         return Auth::user()->messages->where('read', '==', false)->count();
