@@ -39,8 +39,8 @@ class StudentController extends Controller
         }
 
         // this gets parent and students that are related
-//        $parent = User::with('parentStudentUsers')->findOrFail(8);
-//         dd($parent);
+//        $parentOfStudent = User::with('parentOfStudent')->findOrFail(8);
+//         dd($parentOfStudent);
 
         $students = Student::with('hasOneLesson')
             ->where('teacher_id', Auth::id())

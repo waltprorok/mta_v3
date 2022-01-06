@@ -49,7 +49,7 @@ class User extends Authenticatable
     /**
      * @var mixed
      */
-    private $user;
+//    private $user;
 
     /**
      * @return mixed
@@ -96,6 +96,27 @@ class User extends Authenticatable
         return $this->hasMany(Message::class, 'user_id_to');
     }
 
+    public function parentOfStudent(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Student::class,
+            ParentStudent::class,
+            'parent_id',
+            'id',
+            'id',
+            'student_id'
+        );
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeFirstNameAsc($query)
+    {
+        return $query->orderBy('first_name', 'asc');
+    }
+
     /**
      * @return HasMany
      */
@@ -114,15 +135,4 @@ class User extends Authenticatable
         return Auth::user()->messages->where('read', '==', false)->count();
     }
 
-    public function parentStudentUsers(): HasManyThrough
-    {
-        return $this->hasManyThrough(
-            User::class,
-            ParentStudent::class,
-            'parent_id',
-            'id',
-            'id',
-            'student_id'
-        );
-    }
 }

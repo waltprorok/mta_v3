@@ -23,7 +23,7 @@ class MessagesController extends Controller
         if ($id === 0) {
             $users = User::whereHas('studentUsers', function ($query) {
                 $query->where('teacher_id', Auth::id());
-            })->get()->sortBy('first_name');
+            })->firstNameAsc()->get();
         } else {
             $users = User::where('id', $id)->get();
         }
