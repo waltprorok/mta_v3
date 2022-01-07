@@ -18,9 +18,9 @@ class CreateParentStudentsTable extends Migration
         Schema::create(self::TABLENAME, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('parent_id')->unsigned()->index();
-            $table->foreign('parent_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('parent_id')->references('id')->on('users')->onDelete('restrict');
             $table->integer('student_id')->unsigned()->index();
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('restrict');
             $table->timestamps();
         });
     }
