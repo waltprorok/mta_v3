@@ -45937,6 +45937,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -46185,7 +46187,7 @@ var render = function() {
                           },
                           [
                             _c("p", [
-                              _vm._v("Form: " + _vm._s(_vm.contact.name))
+                              _vm._v("From: " + _vm._s(_vm.contact.name))
                             ]),
                             _vm._v(" "),
                             _c("p", [
@@ -46196,7 +46198,14 @@ var render = function() {
                               _vm._v("Subject: " + _vm._s(_vm.contact.subject))
                             ]),
                             _vm._v(" "),
-                            _c("p", [_vm._v(_vm._s(_vm.contact.message))]),
+                            _c(
+                              "textarea",
+                              {
+                                staticClass: "form-control",
+                                attrs: { rows: "24", disabled: "" }
+                              },
+                              [_vm._v(_vm._s(_vm.contact.message))]
+                            ),
                             _vm._v(" "),
                             _c("hr"),
                             _vm._v(" "),

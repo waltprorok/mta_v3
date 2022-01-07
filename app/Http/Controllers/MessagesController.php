@@ -13,10 +13,7 @@ class MessagesController extends Controller
 {
     public function index()
     {
-        $messages = Message::with('userFrom')
-            ->where('user_id_to', Auth::id())
-            ->notDeleted()
-            ->get();
+        $messages = Message::with('userFrom')->where('user_id_to', Auth::id())->notDeleted()->get();
 
         return view('webapp.messages.inbox')->with('messages', $messages);
     }
@@ -24,13 +21,16 @@ class MessagesController extends Controller
     public function create(int $id = 0, string $subject = '')
     {
         if ($id === 0) {
-//            $users = User::where('id', '!=', Auth::id())->where('student', '=', 1)->with('students')->get(); // TODO: only get parents and students for that teacher
-            $users = User::with('students')->where('student', '=', 1)->get(); // TODO: only get parents and students for that teacher
+            $users = User::whereHas('studentUsers', function ($query) {
+                $query->where('teacher_id', Auth::id());
+            })->firstNameAsc()->get();
         } else {
             $users = User::where('id', $id)->get();
         }
 
-        if ($subject !== '') $subject = 'Re: ' . $subject;
+        if ($subject !== '') {
+            $subject = 'Re: ' . $subject;
+        }
 
         return view('webapp.messages.create')->with(['users' => $users, 'subject' => $subject]);
     }
@@ -63,6 +63,7 @@ class MessagesController extends Controller
         $messages = Message::with('userTo')
             ->where('user_id_from', Auth::id())
             ->orderBy('created', 'desc')
+            ->notDeleted()
             ->get();
 
         return view('webapp.messages.sent')->with('messages', $messages);
@@ -71,8 +72,11 @@ class MessagesController extends Controller
     public function read(int $id)
     {
         $message = Message::with('userFrom')->find($id);
-        $message->read = true;
-        $message->save();
+
+        if ($message->user_id_from != Auth::id()) {
+            $message->read = true;
+            $message->save();
+        }
 
         return view('webapp.messages.read')->with('message', $message);
     }
