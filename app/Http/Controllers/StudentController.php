@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\BusinessHours;
-use App\Http\Requests\StoreScheduleAppt;
-use App\Http\Requests\StoreStudent;
+use App\Http\Requests\StoreScheduleApptRequest;
+use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentRequest;
 use App\Lesson;
 use App\ParentStudent;
 use App\Student;
@@ -73,10 +74,10 @@ class StudentController extends Controller
     }
 
     /**
-     * @param StoreStudent $request
+     * @param StoreStudentRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreStudent $request) : RedirectResponse
+    public function store(StoreStudentRequest $request) : RedirectResponse
     {
         $studentUser = new User([
             'first_name' => $request->get('first_name'),
@@ -132,16 +133,8 @@ class StudentController extends Controller
         return redirect()->back()->with('success', 'You successfully updated a lesson');
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(UpdateStudentRequest $request): RedirectResponse
     {
-        $this->validate($request, [
-            'first_name' => 'required|string|max:50',
-            'last_name' => 'required|string|max:50',
-            'email' => 'string|email|max:50|nullable',
-            'phone' => 'string|max:30|nullable',
-            'parent_email' => 'string|email|max:255|nullable',
-            'zip' => 'integer|digits:5|nullable',
-        ]);
         // find student record
         $student = Student::where('id', $request->get('student_id'))->first();
 
@@ -332,7 +325,7 @@ class StudentController extends Controller
             ->with('studentScheduled', $studentScheduled);
     }
 
-    public function scheduleSave(StoreScheduleAppt $request)
+    public function scheduleSave(StoreScheduleApptRequest $request): RedirectResponse
     {
         $begin = Carbon::parse($request->get('start_date'));
         $duration = date('H:i:s', strtotime($request->get('start_time') . ' +' . $request->get('end_time') . ' minutes'));

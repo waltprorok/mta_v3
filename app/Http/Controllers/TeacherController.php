@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\BusinessHours;
-use App\Http\Requests\TeacherStoreSettings;
+use App\Http\Requests\StoreTeacherSettingsRequest;
 use App\Teacher;
 use App\User;
 use Illuminate\Http\RedirectResponse;
@@ -33,10 +33,10 @@ class TeacherController extends Controller
     }
 
     /**
-     * @param TeacherStoreSettings $request
+     * @param StoreTeacherSettingsRequest $request
      * @return RedirectResponse
      */
-    public function store(TeacherStoreSettings $request): RedirectResponse
+    public function store(StoreTeacherSettingsRequest $request): RedirectResponse
     {
         $phone = preg_replace('/\D+/', '', $request->get('phone'));
 
@@ -73,7 +73,7 @@ class TeacherController extends Controller
         return view('webapp.teacher.studiosettings', compact('setting', $setting));
     }
 
-    public function update(TeacherStoreSettings $request)
+    public function update(StoreTeacherSettingsRequest $request): RedirectResponse
     {
         $phonef = preg_replace('/\D+/', '', $request->get('phone'));
 
