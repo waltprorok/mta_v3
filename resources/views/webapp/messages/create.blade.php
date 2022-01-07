@@ -20,7 +20,7 @@
                                 <label for="to">To <span class="text-danger">*</span></label>
                                 <select class="form-control" name="to" id="to">
                                     @foreach($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->first_name }}&nbsp;{{ $user->last_name }}, {{$user->email }}</option>
+                                        <option value="{{ $user->id }}">{{ $user->first_name}}&nbsp;{{ $user->last_name }}</option>
                                     @endforeach
                                 </select>
                             </div>

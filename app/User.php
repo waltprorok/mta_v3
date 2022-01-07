@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -48,7 +49,7 @@ class User extends Authenticatable
     /**
      * @var mixed
      */
-    private $user;
+//    private $user;
 
     /**
      * @return mixed
@@ -95,6 +96,27 @@ class User extends Authenticatable
         return $this->hasMany(Message::class, 'user_id_to');
     }
 
+    public function parentOfStudent(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Student::class,
+            ParentStudent::class,
+            'parent_id',
+            'id',
+            'id',
+            'student_id'
+        );
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeFirstNameAsc($query)
+    {
+        return $query->orderBy('first_name', 'asc');
+    }
+
     /**
      * @return HasMany
      */
@@ -103,8 +125,14 @@ class User extends Authenticatable
         return $this->hasMany(Student::class, 'teacher_id');
     }
 
+    public function studentUsers(): HasMany
+    {
+        return $this->hasMany(Student::class, 'student_id');
+    }
+
     public static function unreadMessagesCount()
     {
         return Auth::user()->messages->where('read', '==', false)->count();
     }
+
 }

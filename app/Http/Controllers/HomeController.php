@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
-use App\Http\Requests\StoreContactSubmission;
+use App\Http\Requests\StoreContactSubmissionRequest;
 use App\Mail\ContactForm;
 use App\Plan;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
@@ -52,7 +53,7 @@ class HomeController extends Controller
         return view('marketing.contact');
     }
 
-    public function sendContact(StoreContactSubmission $request)
+    public function sendContact(StoreContactSubmissionRequest $request): RedirectResponse
     {
         $contact = new Contact([
             'name' => $request->get('name'),

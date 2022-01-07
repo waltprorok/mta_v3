@@ -22,7 +22,7 @@
                                 <label for="card-element">Amount</label>
                                 <select class="form-control" name="plan" id="sel1">
                                     @foreach($plans as $plan)
-                                        <option value="{{ $plan->id }}">${{ number_format($plan->cost, 2) }} for {{ ucfirst($plan->name) }} Plan / @if($plan->id == 1)Monthly @else Yearly @endif</option>
+                                        <option value="{{ $plan->id }}">${{ number_format($plan->cost, 2) }} for {{ ucfirst($plan->name) }} Plan / {{ ucfirst($plan->slug) }}</option>
                                     @endforeach
                                 </select>
                                 <label for="card-element">Credit Card</label>

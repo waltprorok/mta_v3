@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <button type="button" class="btn btn-default" @click="showForm = true" v-show="!showForm">Add Contact</button>
+        <button type="button" class="btn btn-default" @click="showForm=true" v-show="!showForm">Add Contact</button>
         <div v-if="showForm">
             <transition name="modal">
                 <div class="modal-mask">
@@ -16,7 +16,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body" v-show="read">
-                                    <p>Form: {{ contact.name }}</p>
+                                    <p>From: {{ contact.name }}</p>
                                     <p>Email: {{ contact.email }}</p>
                                     <p>Subject: {{ contact.subject }}</p>
                                     <textarea class="form-control" rows="24" disabled>{{ contact.message}}</textarea>

@@ -19,16 +19,11 @@
                         <ul class="list-group">
                             <li class="list-group-item"><i class="fa fa-credit-card" aria-hidden="true" style="padding-right: 12px;"></i>{{ Auth::user()->card_brand }}
                                 <span class="float-right">**** **** **** {{ Auth::user()->card_last_four }}</span></li>
-                            <li class="list-group-item"><i class="fa fa-download" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.invoices') }}">Download
-                                    Invoices</a></li>
-                            <li class="list-group-item"><i class="fa fa-keyboard-o" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.card') }}">Updated Credit
-                                    Card</a></li>
-                            @if (Auth::user()->subscription('premium') != null && Auth::user()->subscription('premium')->cancelled())
-                                <li class="list-group-item"><i class="fa fa-check" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.resume') }}">Resume
-                                        Subscription</a></li>
-                            @elseif (Auth::user()->subscription('enterprise') != null && Auth::user()->subscription('enterprise')->cancelled())
-                                <li class="list-group-item"><i class="fa fa-check" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.resume') }}">Resume
-                                        Subscription</a></li>
+                            <li class="list-group-item"><i class="fa fa-download" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.invoices') }}">Download Invoices</a></li>
+                            <li class="list-group-item"><i class="fa fa-keyboard-o" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.card') }}">Updated Credit Card</a></li>
+                            <li class="list-group-item"><i class="fa fa-calendar" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.change') }}">Change Subscription Billing Plan</a></li>
+                            @if (Auth::user()->subscription('premium') != null && Auth::user()->subscription('premium')->onGracePeriod() || Auth::user()->subscription('premium')->cancelled())
+                                <li class="list-group-item"><i class="fa fa-check" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.resume') }}">Resume Subscription</a></li>
                             @else
                                 <li class="list-group-item">
                                     <i class="fa fa-ban" aria-hidden="true" style="padding-right: 14px;"></i><a href="#" data-toggle="modal" data-target="#cancelSubscription">Cancel Subscription</a>

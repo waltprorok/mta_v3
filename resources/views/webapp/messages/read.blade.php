@@ -16,9 +16,9 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header bg-light">
-                                <b>From:</b>&emsp;&emsp;{{ $message->userFrom->first_name }} {{ $message->userFrom->last_name }}
+                                <b>From:</b>&emsp;&emsp;{{ $message->userFrom->first_name }} {{ $message->userFrom->last_name }} - {{ $message->userFrom->email }}
                                 <br/>
-                                <b>Email:</b>&emsp;&emsp;{{ $message->userFrom->email }}
+                                <b>To:</b>&nbsp;&emsp;&emsp;&emsp;{{ $message->userTo->first_name }} {{ $message->userTo->last_name }} - {{ $message->userTo->email }}
                                 <br/>
                                 <b>Subject:</b>&emsp;{{ $message->subject }}
                                 <br/>
@@ -36,7 +36,10 @@
                 </div>
 
                 <hr>
-                <a href="{{ route('message.create', [$message->userFrom->id, $message->subject]) }}" class="btn btn-primary">Reply</a>
+
+                @if ($message->userFrom->id != Auth::id())
+                    <a href="{{ route('message.create', [$message->userFrom->id, $message->subject]) }}" class="btn btn-primary">Reply</a>
+                @endif
                 <a href="{{ route('message.delete', $message->id) }}" class="btn btn-danger float-right">Delete</a>
             </div>
         </div>

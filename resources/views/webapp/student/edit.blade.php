@@ -51,7 +51,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                        <label for="email" class="control-label">Email</label>
+                                        <label for="email" class="control-label">Email <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                                             <input id="email" type="email" class="form-control" name="email" value="{{ $student->email }}">
