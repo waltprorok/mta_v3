@@ -28,7 +28,13 @@
                             <td>{{ $student->phone_number }}</td>
                             <td>{{ $student->email }}</td>
                             <td>{{ $student->instrument }}</td>
-                            <td>{{ $student->status }}</td>
+                            <td>
+                                @if ($student->status == \App\Student::ACTIVE) Active
+                                @elseif($student->status == \App\Student::WAITLIST) Waitlist
+                                @elseif($student->status == \App\Student::LEAD) Lead
+                                @elseif($student->status == \App\Student::INACTIVE) Inactive
+                            </td>
+                            @endif
                             {{--<td class="text-nowrap">--}}
                             {{--<span class="align-baseline"><a href="{{ route('admin.blog.edit', $teacher->id )}}" class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>--}}
                             {{--<a href="{{ route('blog.show', $teacher->slug) }}" target="_blank" class="btn btn-outline-dark" role="button" title="view"><i class="fa fa-chrome" aria-hidden="true"></i></a>--}}

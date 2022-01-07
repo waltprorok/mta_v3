@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Message extends Model
 {
+    protected $fillable = [
+        'user_id_from',
+        'user_id_to',
+        'subject',
+        'body',
+        'read',
+        'deleted'
+    ];
+
     /**
      * @param $query
      * @return mixed

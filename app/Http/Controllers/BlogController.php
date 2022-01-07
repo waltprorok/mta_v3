@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Blog;
-use App\Http\Requests\StoreBlogPost;
+use App\Http\Requests\StoreBlogPostRequest;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -58,10 +58,10 @@ class BlogController extends Controller
     }
 
     /**
-     * @param StoreBlogPost $request
+     * @param StoreBlogPostRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreBlogPost $request): RedirectResponse
+    public function store(StoreBlogPostRequest $request): RedirectResponse
     {
         $blog = new Blog();
 
@@ -97,11 +97,11 @@ class BlogController extends Controller
     }
 
     /**
-     * @param StoreBlogPost $request
+     * @param StoreBlogPostRequest $request
      * @param $id
      * @return RedirectResponse
      */
-    public function update(StoreBlogPost $request, $id): RedirectResponse
+    public function update(StoreBlogPostRequest $request, $id): RedirectResponse
     {
         $editBlog = Blog::findOrFail($id);
 
@@ -126,9 +126,10 @@ class BlogController extends Controller
 
     /**
      * @param Blog $blog
-     * @param StoreBlogPost $request
+     * @param StoreBlogPostRequest $request
+     * @return void
      */
-    public function setBlogPost(Blog $blog, StoreBlogPost $request): void
+    public function setBlogPost(Blog $blog, StoreBlogPostRequest $request): void
     {
         $blog->author_id = Auth::id();
         $blog->title = $request->get('title');
@@ -140,9 +141,10 @@ class BlogController extends Controller
 
     /**
      * @param $editBlog
-     * @param StoreBlogPost $request
+     * @param StoreBlogPostRequest $request
+     * @return void
      */
-    public function commitBlogPost($editBlog, StoreBlogPost $request): void
+    public function commitBlogPost($editBlog, StoreBlogPostRequest $request): void
     {
         $this->setBlogPost($editBlog, $request);
 
@@ -155,5 +157,4 @@ class BlogController extends Controller
         
         $editBlog->save();
     }
-
 }

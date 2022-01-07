@@ -239,13 +239,18 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="container-fluid">
-                    @if (Carbon\Carbon::now() > Auth::user()->trial_ends_at && ! Auth::user()->admin)
+                    @if (Auth::user()->subscription('premium') != null && Auth::user()->subscription('premium')->cancelled())
+                        <div class="alert alert-danger alert-dismissible text">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            Your subscription has been cancelled! Subscription ends at {{ Auth::user()->subscription('premium')->ends_at->format('m/d/Y') }}.
+                            <a style="color: white;" href="{{ route('account.subscription') }}"><b>Don't forget to re-subscribe</b>.</a>
+                        </div>
+                    @elseif (Carbon\Carbon::now() > Auth::user()->trial_ends_at && ! Auth::user()->admin)
                         <div class="alert alert-danger alert-dismissible text">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                             Your free trail has expired! <a style="color: white;" href="{{ route('account.subscription') }}"><b>Don't forget to subscribe</b>.</a>
                         </div>
-                    @endif
-                    @if (Carbon\Carbon::now() < Auth::user()->trial_ends_at && ! Auth::user()->admin)
+                    @elseif (Carbon\Carbon::now() < Auth::user()->trial_ends_at && ! Auth::user()->subscribed('premium') && ! Auth::user()->admin)
                         <div class="alert alert-info alert-dismissible text">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                             Enjoy your free trail! <a style="color: white;" href="{{ route('account.subscription') }}"><b>Don't forget to subscribe</b>.</a>

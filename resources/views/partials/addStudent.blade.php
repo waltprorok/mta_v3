@@ -43,7 +43,7 @@
                         <div class="col-sm-12">
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email" class="control-label" title="Your student or parent will use this email address to log in to Music Teachers Aid">
-                                    Email <span class="text-danger">*</span></label>
+                                    Email <span class="text-danger">*</span> <small><em>Use parent email address if student does not have one.</em></small></label>
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
                                 @if ($errors->has('email'))
                                     <span class="help-block">

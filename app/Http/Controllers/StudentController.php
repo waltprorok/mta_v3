@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\BusinessHours;
-use App\Http\Requests\StoreScheduleAppt;
-use App\Http\Requests\StoreStudent;
+use App\Http\Requests\StoreScheduleApptRequest;
+use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentRequest;
 use App\Lesson;
+use App\ParentStudent;
 use App\Student;
 use App\Teacher;
 use App\User;
@@ -36,6 +38,10 @@ class StudentController extends Controller
         if ($teacher == null) {
             return redirect('teacher')->with('success', 'Please fill out your Studio Settings first before entering students.');
         }
+
+        // WORKING CODE: this gets parent and students that are related
+//        $parentOfStudent = User::with('parentOfStudent')->findOrFail(8);
+//         dd($parentOfStudent);
 
         $students = Student::with('hasOneLesson')
             ->where('teacher_id', Auth::id())
@@ -68,33 +74,28 @@ class StudentController extends Controller
     }
 
     /**
-     * @param StoreStudent $request
+     * @param StoreStudentRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreStudent $request) : RedirectResponse
+    public function store(StoreStudentRequest $request) : RedirectResponse
     {
-        $student = new Student([
+        $studentUser = User::create([
+            'first_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
+            'email' => $request->get('email') ? $request->get('email') : null,
+            'password' => Hash::make(Str::random(10)),
+            'student' => true,
+            'terms' => true,
+        ]);
+
+        Student::create([
+            'student_id' => $studentUser->id,
             'teacher_id' => Auth::id(),
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
             'email' => $request->get('email') ? $request->get('email') : null,
             'status' => $request->get('status'),
         ]);
-
-        $student->save();
-
-        if ($request->get('email') != null) {
-            $user = new User([
-                'first_name' => $request->get('first_name'),
-                'last_name' => $request->get('last_name'),
-                'email' => $request->get('email') ? $request->get('email') : null,
-                'password' => Hash::make(Str::random(10)),
-                'student' => true,
-                'terms' => true,
-            ]);
-
-            $user->save();
-        }
 
         return redirect()->route('student.index')->with('success', 'The student was added successfully.');
     }
@@ -128,20 +129,37 @@ class StudentController extends Controller
         return redirect()->back()->with('success', 'You successfully updated a lesson');
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(UpdateStudentRequest $request): RedirectResponse
     {
-        $this->validate($request, [
-            'first_name' => 'required|string|max:50',
-            'last_name' => 'required|string|max:50',
-            'email' => 'string|email|max:50|nullable',
-            'phone' => 'string|max:30|nullable',
-            'parent_email' => 'string|email|max:255|nullable',
-            'zip' => 'integer|digits:5|nullable',
-        ]);
+        // find student record
+        $student = Student::where('id', $request->get('student_id'))->first();
+
+        if ($request->get('parent_email') != null && $student->parent_email == null) {
+            // create new parent user
+            $parent = new User([
+                'first_name' => $request->get('first_name'),
+                'last_name' => $request->get('last_name'),
+                'email' => $request->get('parent_email'),
+                'password' => Hash::make(Str::random(10)),
+                'parent' => true,
+                'terms' => true,
+            ]);
+            // save new parent user
+            $parent->save();
+            // create new parent student pivot record
+            $parentStudentPivot = new ParentStudent([
+                'parent_id' => $parent->id,
+                'student_id' => $student->id
+            ]);
+            // save parent student pivot record
+            $parentStudentPivot->save();
+            // save parent user id to student record
+            $student->parent_id = $parent->id;
+            $student->save();
+        }
 
         $phoneNumber = preg_replace('/\D/', '', $request->get('phone'));
-
-        $student = Student::where('id', $request->get('student_id'))->first();
+        // update student record
         $student->first_name = $request->get('first_name');
         $student->last_name = $request->get('last_name');
         $student->email = $request->get('email');
@@ -161,10 +179,8 @@ class StudentController extends Controller
             $fileName = date('Ymd_hms') . "." . $file->getClientOriginalExtension();
             Storage::disk('student')->put($fileName, File::get($file));
             $student->photo = $fileName;
-        } else {
-            $student->save();
         }
-
+        // save student record
         $student->save();
 
         return redirect()->back()->with('success', 'You successfully updated the student.');
@@ -305,7 +321,7 @@ class StudentController extends Controller
             ->with('studentScheduled', $studentScheduled);
     }
 
-    public function scheduleSave(StoreScheduleAppt $request)
+    public function scheduleSave(StoreScheduleApptRequest $request): RedirectResponse
     {
         $begin = Carbon::parse($request->get('start_date'));
         $duration = date('H:i:s', strtotime($request->get('start_time') . ' +' . $request->get('end_time') . ' minutes'));

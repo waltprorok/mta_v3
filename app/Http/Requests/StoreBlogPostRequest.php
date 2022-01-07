@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreScheduleAppt extends FormRequest
+class StoreBlogPostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,15 +21,14 @@ class StoreScheduleAppt extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'student_id' => 'required|string',
-            'title' => 'required|string',
-            'start_date' => 'required|string',
-            'start_time' => 'required|string',
-            'end_time' => 'required|string',
-            'recurrence' => 'required|string'
+            'title' => 'required|string|max:100',
+            'slug' => 'required|string|max:100',
+            'body' => 'required',
+            'image' => 'mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'released_on' => 'required',
         ];
     }
 }
