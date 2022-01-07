@@ -14,7 +14,8 @@ class Lesson extends Model
         'teacher_id',
         'title',
         'start_date',
-        'end_date'];
+        'end_date'
+    ];
 
     /**
      * @return BelongsTo

@@ -3,10 +3,9 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\NexmoMessage;
+use Illuminate\Notifications\Notification;
 
 class LessonConfirmation extends Notification
 {
@@ -32,7 +31,7 @@ class LessonConfirmation extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail', 'nexmo'];
     }
@@ -41,9 +40,9 @@ class LessonConfirmation extends Notification
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
                     ->line('The introduction to the notification.')
@@ -55,7 +54,7 @@ class LessonConfirmation extends Notification
      * @param mixed $notifiable
      * @return NexmoMessage
      */
-    public function toNexmo($notifiable)
+    public function toNexmo($notifiable): NexmoMessage
     {
         return (new NexmoMessage)->content("$this->name you have a music lesson scheduled for $this->date.");
     }
@@ -66,7 +65,7 @@ class LessonConfirmation extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable): array
     {
         return [
             //

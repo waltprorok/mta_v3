@@ -55,14 +55,12 @@ class HomeController extends Controller
 
     public function sendContact(StoreContactSubmissionRequest $request): RedirectResponse
     {
-        $contact = new Contact([
+        Contact::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'subject' => $request->get('subject'),
             'message' => $request->get('message'),
         ]);
-
-        $contact->save();
 
         Mail::to('waltprorok@gmail.com')->send(new ContactForm($request));
 

@@ -132,6 +132,10 @@ class TeacherController extends Controller
         return view('webapp.teacher.hoursView', compact('hours', $hours));
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function hoursSave(Request $request): RedirectResponse
     {
         $input = $request->all();
@@ -143,25 +147,27 @@ class TeacherController extends Controller
                 $active = $value['active'];
             }
 
-            $items = new BusinessHours([
+            BusinessHours::create([
                 'teacher_id' => Auth::id(),
                 'day' => $value['day'],
                 'active' => $active,
                 'open_time' => $value['open_time'],
                 'close_time' => $value['close_time'],
             ]);
-
-            $items->save();
         }
 
         return redirect()->back()->with('success', 'Business hours saved successfully!');
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function hoursUpdate(Request $request): RedirectResponse
     {
         $input = $request->all();
-        foreach ($input['rows'] as $index => $value) {
 
+        foreach ($input['rows'] as $index => $value) {
             if (! isset($value['active'])) {
                 $active = 0;
             } else {

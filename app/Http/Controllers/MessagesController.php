@@ -46,14 +46,14 @@ class MessagesController extends Controller
             'message' => 'required',
         ]);
 
-        $message = new Message();
-        $message->user_id_from = Auth::id();
-        $message->user_id_to = $request->input('to');
-        $message->subject = $request->input('subject');
-        $message->body = $request->input('message');
-        $message->read = 0;
-        $message->deleted = 0;
-        $message->save();
+        Message::create([
+            'user_id_from' => Auth::id(),
+            'user_id_to' => $request->input('to'),
+            'subject' => $request->input('subject'),
+            'body' => $request->input('message'),
+            'read' => 0,
+            'deleted' => 0,
+        ]);
 
         return redirect()->route('message.inbox')->with('success', 'Message sent successfully!');
     }

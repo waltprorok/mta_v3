@@ -27,6 +27,7 @@ class Blog extends Model
     ];
 
     public $value;
+
     /**
      * @var int|mixed|null
      */
