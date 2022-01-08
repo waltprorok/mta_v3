@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
 {
-    const TABLENAME = 'users';
+    const TABLE_NAME = 'users';
 
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create(self::TABLENAME, function (Blueprint $table) {
+        Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->increments('id');
             $table->string('first_name');
             $table->string('last_name');
@@ -39,6 +39,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(self::TABLENAME);
+        Schema::dropIfExists(self::TABLE_NAME);
     }
 }

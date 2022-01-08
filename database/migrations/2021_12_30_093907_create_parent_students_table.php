@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateParentStudentsTable extends Migration
 {
-    const TABLENAME = 'parent_students';
+    const TABLE_NAME = 'parent_students';
 
     /**
      * Run the migrations.
@@ -15,13 +15,14 @@ class CreateParentStudentsTable extends Migration
      */
     public function up()
     {
-        Schema::create(self::TABLENAME, function (Blueprint $table) {
+        Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('parent_id')->unsigned()->index();
             $table->foreign('parent_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('student_id')->unsigned()->index();
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('students');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -32,6 +33,6 @@ class CreateParentStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(self::TABLENAME);
+        Schema::dropIfExists(self::TABLE_NAME);
     }
 }

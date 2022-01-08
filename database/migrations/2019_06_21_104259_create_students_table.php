@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateStudentsTable extends Migration
 {
-    const TABLENAME = 'students';
+    const TABLE_NAME = 'students';
 
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateStudentsTable extends Migration
      */
     public function up()
     {
-        Schema::create(self::TABLENAME, function (Blueprint $table) {
+        Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->increments('id');
             $table->integer('student_id')->unsigned();
             $table->foreign('student_id')->references('id')->on('users')->onDelete('restrict');
@@ -48,6 +48,6 @@ class CreateStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(self::TABLENAME);
+        Schema::dropIfExists(self::TABLE_NAME);
     }
 }

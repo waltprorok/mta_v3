@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateBlogsTable extends Migration
 {
-    const TABLENAME = 'blogs';
+    const TABLE_NAME = 'blogs';
 
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateBlogsTable extends Migration
      */
     public function up()
     {
-        Schema::create(self::TABLENAME, function (Blueprint $table) {
+        Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->increments('id');
             $table->integer('author_id')->unsigned();
             $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
@@ -36,6 +36,6 @@ class CreateBlogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(self::TABLENAME);
+        Schema::dropIfExists(self::TABLE_NAME);
     }
 }
