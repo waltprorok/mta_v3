@@ -22,7 +22,7 @@ class CreateStudentsTable extends Migration
             $table->integer('teacher_id')->unsigned();
             $table->foreign('teacher_id')->references('id')->on('users')->onDelete('restrict');
             $table->integer('parent_id')->unsigned()->nullable();
-            $table->foreign('teacher_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('parent_id')->references('id')->on('users')->onDelete('restrict');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->nullable()->unique();
