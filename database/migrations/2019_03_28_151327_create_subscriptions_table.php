@@ -15,7 +15,7 @@ class CreateSubscriptionsTable extends Migration
      */
     public function up()
     {
-        Schema::table(self::TABLENAME, function ($table) {
+        Schema::table('users', function ($table) {
             $table->string('stripe_id')->nullable()->collation('utf8mb4_bin');
             $table->string('card_brand')->nullable();
             $table->string('card_last_four', 4)->nullable();
