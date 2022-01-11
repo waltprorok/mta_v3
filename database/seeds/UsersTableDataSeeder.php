@@ -40,7 +40,7 @@ class UsersTableDataSeeder extends Seeder
                 'last_name' => 'Test',
                 'email' => 'admin@domain.com',
                 'email_verified_at' => null,
-                'password' => bcrypt('123456'),
+                'password' => bcrypt('Admin213!'),
                 'admin' => 1,
                 'teacher' => 0,
                 'student' => 0,

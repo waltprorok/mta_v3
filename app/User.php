@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -106,6 +107,11 @@ class User extends Authenticatable
             'id',
             'student_id'
         );
+    }
+
+    public function parentStudentPivot(): BelongsToMany
+    {
+        return $this->belongsToMany(Student::class, 'parent_students', 'parent_id');
     }
 
     /**

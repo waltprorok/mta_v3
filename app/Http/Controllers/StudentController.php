@@ -7,7 +7,6 @@ use App\Http\Requests\StoreScheduleApptRequest;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Lesson;
-use App\ParentStudent;
 use App\Student;
 use App\Teacher;
 use App\User;
@@ -40,8 +39,8 @@ class StudentController extends Controller
         }
 
         // WORKING CODE: this gets parent and students that are related
-//        $parentOfStudent = User::with('parentOfStudent')->findOrFail(8);
-//         dd($parentOfStudent);
+//        $parentOfStudent = User::with('parentOfStudent')->findOrFail(8); // uses pivot table
+//        dd($parentOfStudent);
 
         $students = Student::with('hasOneLesson')
             ->where('teacher_id', Auth::id())
@@ -88,11 +87,14 @@ class StudentController extends Controller
             'terms' => true,
         ]);
 
+        $phoneNumber = preg_replace('/\D/', '', $request->get('phone'));
+
         Student::create([
             'student_id' => $studentUser->id,
             'teacher_id' => Auth::id(),
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
+            'phone' => $phoneNumber,
             'email' => $request->get('email') ? $request->get('email') : null,
             'status' => $request->get('status'),
         ]);
@@ -147,15 +149,7 @@ class StudentController extends Controller
             // save new parent user
             $parent->save();
             // create new parent student pivot record
-            $parentStudentPivot = new ParentStudent([
-                'parent_id' => $parent->id,
-                'student_id' => $student->id
-            ]);
-            // save parent student pivot record
-            $parentStudentPivot->save();
-            // save parent user id to student record
-            $student->parent_id = $parent->id;
-            $student->save();
+            $parent->parentStudentPivot()->toggle($student);
         }
 
         $phoneNumber = preg_replace('/\D/', '', $request->get('phone'));
@@ -166,11 +160,6 @@ class StudentController extends Controller
         $student->parent_email = $request->get('parent_email');
         $student->phone = $phoneNumber;
         $student->date_of_birth = $request->get('date_of_birth');
-        $student->address = $request->get('address');
-        $student->address_2 = $request->get('address_2');
-        $student->city = $request->get('city');
-        $student->state = $request->get('state');
-        $student->zip = $request->get('zip');
         $student->instrument = $request->get('instrument');
         $student->status = $request->get('status');
 

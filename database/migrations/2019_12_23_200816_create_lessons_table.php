@@ -18,7 +18,7 @@ class CreateLessonsTable extends Migration
         Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('student_id')->unsigned();
-            $table->foreign('student_id')->references('id')->on('students');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->integer('teacher_id')->unsigned();
             $table->string('title');
             $table->string('color');

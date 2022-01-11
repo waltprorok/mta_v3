@@ -141,20 +141,6 @@
                                     {{ date('F d, Y | l ', strtotime($student->date_of_birth)) }}
                                 </div>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Address</h6>
-                                </div>
-                                <div class="col-sm-9">
-                                    @if($student->address == null)
-                                    @elseif($student->address_2 != null)
-                                        {{ $student->address }}&nbsp;{{ $student->address_2 }}&nbsp;{{ $student->city }}&#44;&nbsp;{{ $student->state }} {{ $student->zip }}
-                                    @else
-                                        {{ $student->address }}&nbsp;{{ $student->city }}&#44;&nbsp;{{ $student->state }} {{ $student->zip }}
-                                    @endif
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="row gutters-sm">

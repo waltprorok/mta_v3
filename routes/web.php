@@ -101,6 +101,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 
+    Route::prefix('parent')->group(function () {
+        Route::get('/', 'ParentController@index')->name('webapp.parent.index');
+    });
+
     Route::prefix('admin')->group(function () {
        Route::get('teachers', 'TeacherController@adminTeachers')->name('webapp.admin.teachers');
        Route::get('students', 'StudentController@adminStudents')->name('webapp.admin.students');
@@ -108,7 +112,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('contacts')->group(function () {
-        Route::get('/', 'ContactController@indexBlade')->name('webapp.contact.index');
+        Route::get('/', 'Api\ContactController@indexBlade')->name('webapp.contact.index');
     });
 
     Route::prefix('calendar')->group(function () {

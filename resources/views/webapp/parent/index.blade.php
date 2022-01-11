@@ -1,20 +1,18 @@
 @extends('layouts.webapp')
-@section('title', 'Students')
+@section('title', 'Parent')
 @section('content')
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
-
     <div class="col-12">
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student</button>
-        <h4>Students</h4>
+
+        <h4>Parent</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">Students</li>
+            <li class="breadcrumb-item active">Parent</li>
         </ul>
         @include('partials.studentListTabs')
         <div class="card">
             <div class="card-body">
-                <table class="table table-condensed table-hover table-responsive-md" id="dtStudentIndex">
+                <table class="table table-condensed table-hover table-responsive-md">
                     <thead class="thead">
                     <tr>
                         <th scope="col" data-orderable="false">Scheduled</th>
@@ -27,9 +25,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if(count($students) == null)
+
+                    @if(count($parent->parentOfStudent) == null)
                         <tr>
-                            <td>No active students at this time.</td>
+                            <td>No student.</td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -38,7 +37,7 @@
                             <td></td>
                         </tr>
                     @else
-                        @foreach($students as $student)
+                        @foreach($parent->parentOfStudent as $student)
                             <tr>
                                 @if ($student->hasOneLesson)
                                     <td class="text-center">
@@ -72,16 +71,5 @@
         </div>
     </div>
 
-    @include('partials.addStudent')
-
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#dtStudentIndex').DataTable();
-            $('.dataTables_length').addClass('bs-select');
-        });
-    </script>
 
 @endsection
