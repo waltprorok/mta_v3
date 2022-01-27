@@ -89,6 +89,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/process_date', 'StudentController@ajaxTime');
     });
 
+    Route::prefix('lessons')->group(function () {
+        Route::get('/', 'Api\LessonController@indexBlade')->name('webapp.student.lessonsApi');
+    });
+
     Route::prefix('messages')->group(function () {
        Route::get('/inbox', 'MessagesController@index')->name('message.inbox');
        Route::get('/create/{id?}/{subject?}', 'MessagesController@create')->name('message.create');
@@ -102,7 +106,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('parent')->group(function () {
-        Route::get('/', 'ParentController@index')->name('webapp.parent.index');
+        Route::get('/household', 'ParentController@household')->name('webapp.parent.household');
     });
 
     Route::prefix('admin')->group(function () {

@@ -23,8 +23,13 @@ Route::group(['middleware' => 'api'], function () {
         Route::patch('/{contact}', 'Api\ContactController@update');
         Route::delete('/{contact}', 'Api\ContactController@delete');
     });
-});
 
+    Route::prefix('lesson')->group(function () {
+        Route::get('/', 'Api\LessonController@index');
+        Route::patch('/{lesson}', 'Api\LessonController@update');
+    });
+
+});
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

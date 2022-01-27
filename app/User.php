@@ -140,5 +140,4 @@ class User extends Authenticatable
     {
         return Auth::user()->messages->where('read', '==', false)->count();
     }
-
 }

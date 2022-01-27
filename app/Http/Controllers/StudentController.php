@@ -38,10 +38,6 @@ class StudentController extends Controller
             return redirect('teacher')->with('success', 'Please fill out your Studio Settings first before entering students.');
         }
 
-        // WORKING CODE: this gets parent and students that are related
-//        $parentOfStudent = User::with('parentOfStudent')->findOrFail(8); // uses pivot table
-//        dd($parentOfStudent);
-
         $students = Student::with('hasOneLesson')
             ->where('teacher_id', Auth::id())
             ->where('status', Student::ACTIVE)
@@ -76,7 +72,7 @@ class StudentController extends Controller
      * @param StoreStudentRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreStudentRequest $request) : RedirectResponse
+    public function store(StoreStudentRequest $request): RedirectResponse
     {
         $studentUser = User::create([
             'first_name' => $request->get('first_name'),
@@ -119,14 +115,9 @@ class StudentController extends Controller
 
     public function lessonsUpdate(Request $request)
     {
-        // finish this update function
-        foreach ($request as $data) {
-            if ($data->get('completed') == 'on') {
-                $lesson = Lesson::where('id', '=', $data->get('id'))->firstOrFail();
-                $lesson->complete = $data->get('completed') == 'on' ? true : false;
-                $lesson->save();
-            }
-        }
+        $lesson = Lesson::where('id', $request->get('id'))->firstOrFail();
+        $lesson->complete = $request->get('completed') == 'on';
+        $lesson->save();
 
         return redirect()->back()->with('success', 'You successfully updated a lesson');
     }
@@ -138,16 +129,15 @@ class StudentController extends Controller
 
         if ($request->get('parent_email') != null && $student->parent_email == null) {
             // create new parent user
-            $parent = new User([
+            $parent = User::firstOrCreate([
                 'first_name' => $request->get('first_name'),
                 'last_name' => $request->get('last_name'),
                 'email' => $request->get('parent_email'),
-                'password' => Hash::make(Str::random(10)),
+//                'password' => Hash::make(Str::random(10)),
+                'password' => bcrypt($request->get('last_name')),
                 'parent' => true,
                 'terms' => true,
             ]);
-            // save new parent user
-            $parent->save();
             // create new parent student pivot record
             $parent->parentStudentPivot()->toggle($student);
         }

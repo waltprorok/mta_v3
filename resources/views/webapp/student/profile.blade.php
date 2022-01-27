@@ -27,9 +27,6 @@
                                     @if($student->instrument != null)
                                         <p class="mb-1">{{ $student->instrument }}</p>
                                     @endif
-                                    @if($student->city != null)
-                                        <p class="text-muted font-size-sm">{{ $student->city }}&#44;&nbsp;{{ $student->state }}</p>
-                                    @endif
                                     <button class="btn btn-primary">Follow</button>
                                     <button class="btn btn-outline-primary">Message</button>
                                 </div>
