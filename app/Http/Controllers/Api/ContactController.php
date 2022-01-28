@@ -11,7 +11,7 @@ class ContactController extends Controller
 {
     public function indexBlade()
     {
-        return view('webapp.contact.index');
+        return view('webapp.admin.contact.index');
     }
 
     /**

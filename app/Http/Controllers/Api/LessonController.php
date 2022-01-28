@@ -11,7 +11,7 @@ class LessonController extends Controller
 {
     public function indexBlade()
     {
-        return view('webapp.student.apiLessons');
+        return view('webapp.admin.lesson.index');
     }
 
     public function index()

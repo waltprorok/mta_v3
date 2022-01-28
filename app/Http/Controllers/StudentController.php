@@ -27,7 +27,7 @@ class StudentController extends Controller
     public function adminStudents()
     {
         $students = Student::all();
-        return view('webapp.student.adminStudents', compact('students', $students));
+        return view('webapp.admin.student.index', compact('students', $students));
     }
 
     public function index()
