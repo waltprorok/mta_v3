@@ -14,11 +14,12 @@ class Subscribed
      * @param Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if ($request->user() && ! $request->user()->subscribed('premium'))
         {
-            return redirect('/account/subscription')->with('info', 'Please subscribe to enjoy all the benefits of Music Teachers Aid.');
+            return redirect('/account/subscription')
+                ->with('info', 'Please subscribe to enjoy all the benefits of Music Teachers Aid.');
         }
 
         return $next($request);

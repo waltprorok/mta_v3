@@ -13,37 +13,37 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('webapp.contact.index') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'webapp.contact.index' ? 'active' : '' }}">
+                        <a href="{{ route('contact.index') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'contact.index' ? 'active' : '' }}">
                             <i class="fa fa-compress"></i> Contact Us
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('webapp.student.lessonsApi') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'webapp.student.lessonsApi' ? 'active' : '' }}">
+                        <a href="{{ route('student.lessonsApi') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'student.lessonsApi' ? 'active' : '' }}">
                             <i class="fa fa-leaf"></i> Lessons
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('webapp.admin.students') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'webapp.admin.students' ? 'active' : '' }}">
+                        <a href="{{ route('admin.students') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'admin.students' ? 'active' : '' }}">
                             <i class="fa fa-graduation-cap"></i> Students
                         </a>
                     </li>
 
 
                     <li class="nav-item">
-                        <a href="{{ route('webapp.admin.teachers') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'webapp.admin.teachers' ? 'active' : '' }}">
+                        <a href="{{ route('admin.teachers') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'admin.teachers' ? 'active' : '' }}">
                             <i class="fa fa-book"></i> Teachers
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('webapp.admin.users') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'webapp.admin.users' ? 'active' : '' }}">
+                        <a href="{{ route('admin.users') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'admin.users' ? 'active' : '' }}">
                             <i class="fa fa-users"></i> Users
                         </a>
                     </li>
@@ -58,15 +58,15 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('webapp.parent.household') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'webapp.parent.household' ? 'active' : '' }}">
+                        <a href="{{ route('parent.household') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'parent.household' ? 'active' : '' }}">
                             <i class="fa fa-group"></i> Household
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('webapp.parent.household') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'webapp.parent.household' ? 'active' : '' }}">
+                        <a href="{{ route('parent.household') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'parent.household' ? 'active' : '' }}">
                             <i class="fa fa-credit-card"></i> Payments
                         </a>
                     </li>
