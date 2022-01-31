@@ -73,7 +73,7 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Blog $slug
+     * @param $slug
      * @return Application|Factory|View
      */
     public function show($slug)
