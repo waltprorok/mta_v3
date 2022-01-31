@@ -19,7 +19,6 @@ Auth::routes();
 // Routes for marketing
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('pricing', 'HomeController@pricing')->name('pricing');
-Route::get('blog', 'HomeController@blog')->name('blog');
 Route::get('contact', 'HomeController@contact')->name('contact');
 Route::post('contact', 'HomeController@sendContact');
 Route::get('privacy', 'HomeController@privacy')->name('privacy');
@@ -35,7 +34,6 @@ Route::prefix('blog')->group(function () {
 
 // Routes for authorized users
 Route::group(['middleware' => ['auth']], function () {
-
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
 
     Route::prefix('account')->group(function () {

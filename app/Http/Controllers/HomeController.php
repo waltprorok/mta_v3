@@ -33,11 +33,6 @@ class HomeController extends Controller
         return view('marketing.privacy');
     }
 
-    public function blog()
-    {
-        return view('marketing.blog');
-    }
-
     public function faq()
     {
         return view('marketing.faq');
