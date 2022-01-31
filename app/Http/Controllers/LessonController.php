@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Lesson;
-use Auth;
-use Calendar;
+use Illuminate\Support\Facades\Auth;
+use MaddHatter\LaravelFullcalendar\Facades\Calendar;
 
 class LessonController extends Controller
 {

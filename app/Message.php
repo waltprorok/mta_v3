@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Message extends Model
 {
+//    use SoftDeletes;
+
     protected $fillable = [
         'user_id_from',
         'user_id_to',

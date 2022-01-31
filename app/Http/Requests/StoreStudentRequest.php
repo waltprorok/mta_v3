@@ -26,6 +26,7 @@ class StoreStudentRequest extends FormRequest
         return [
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
+            'phone' => 'required|string|max:50',
             'email' => 'required|email|max:50|unique:students|confirmed',
             'status' => 'required|int|max:1',
         ];

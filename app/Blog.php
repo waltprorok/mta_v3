@@ -26,6 +26,9 @@ class Blog extends Model
         'released_on',
     ];
 
+    /**
+     * @var
+     */
     public $value;
 
     /**

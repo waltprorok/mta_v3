@@ -19,7 +19,7 @@
                                     <p>From: {{ contact.name }}</p>
                                     <p>Email: {{ contact.email }}</p>
                                     <p>Subject: {{ contact.subject }}</p>
-                                    <textarea class="form-control" rows="24" disabled>{{ contact.message}}</textarea>
+                                    <textarea class="form-control" rows="24" disabled>{{ contact.message }}</textarea>
                                     <hr/>
                                     <div class="form-group pull-right">
                                         <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>
@@ -29,19 +29,19 @@
                                     <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">
                                         <div class="form-group">
                                             <label for="name">Name</label>
-                                            <input id="name" v-model="contact.name" type="text" name="name" class="form-control">
+                                            <input id="name" v-model="contact.name" type="text" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Email</label>
-                                            <input id="email" v-model="contact.email" type="text" name="email" class="form-control">
+                                            <input id="email" v-model="contact.email" type="text" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label for="subject">Subject</label>
-                                            <input id="subject" v-model="contact.subject" type="text" name="subject" class="form-control">
+                                            <input id="subject" v-model="contact.subject" type="text" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label for="message">Message</label>
-                                            <textarea id="message" v-model="contact.message" name="message" class="form-control" rows="15"></textarea>
+                                            <textarea id="message" v-model="contact.message" class="form-control" rows="15"></textarea>
                                         </div>
                                         <div class="form-group pull-right">
                                             <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>
@@ -70,10 +70,10 @@
             </thead>
             <tbody>
             <tr v-for="contact in list">
-                <td>{{ contact.name }}</td>
+                <td v-text="contact.name"></td>
                 <td><a v-bind:href="'mailto:' + contact.email">{{ contact.email }}</a></td>
                 <!-- TODO: Make an anchor tag to open a new page to send a response email -->
-                <td>{{ contact.subject }}</td>
+                <td v-text="contact.subject"></td>
                 <td>{{ contact.message.substring(0, 100) + "..." }}</td>
                 <td>{{ contact.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
                 <td class="text-nowrap">

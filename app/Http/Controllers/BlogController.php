@@ -44,7 +44,7 @@ class BlogController extends Controller
             ->latestFirst()
             ->get();
 
-        return view('webapp.blog.index', compact('blogs'));
+        return view('webapp.admin.blog.index', compact('blogs'));
     }
 
     /**
@@ -54,7 +54,7 @@ class BlogController extends Controller
      */
     public function create(): View
     {
-        return view('webapp.blog.create');
+        return view('webapp.admin.blog.create');
     }
 
     /**
@@ -73,7 +73,7 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Blog $slug
+     * @param $slug
      * @return Application|Factory|View
      */
     public function show($slug)
@@ -93,7 +93,7 @@ class BlogController extends Controller
     {
         $update = Blog::findOrFail($id);
 
-        return view('webapp.blog.edit')->with('update', $update);
+        return view('webapp.admin.blog.edit')->with('update', $update);
     }
 
     /**

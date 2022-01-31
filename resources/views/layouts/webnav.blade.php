@@ -4,7 +4,7 @@
         <nav class="sidebar-nav">
             <p></p>
             <ul class="nav">
-                @if(Auth::user()->admin == true)
+                @if(Auth::user()->admin)
                     <li class="nav-item">
                         <a href="{{ route('admin.blog.list') }}"
                            class="nav-link {{ Route::currentRouteName() == 'admin.blog.list' ? 'active' : '' }}">
@@ -13,35 +13,73 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('webapp.contact.index') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'webapp.contact.index' ? 'active' : '' }}">
+                        <a href="{{ route('contact.index') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'contact.index' ? 'active' : '' }}">
                             <i class="fa fa-compress"></i> Contact Us
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('webapp.admin.students') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'webapp.admin.students' ? 'active' : '' }}">
-                            <i class="fa fa-graduation-cap"></i> Students
+                        <a href="{{ route('student.lessonsApi') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'student.lessonsApi' ? 'active' : '' }}">
+                            <i class="fa fa-leaf"></i> Lessons
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('webapp.admin.teachers') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'webapp.admin.teachers' ? 'active' : '' }}">
+                        <a href="{{ route('admin.students') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'admin.students' ? 'active' : '' }}">
+                            <i class="fa fa-graduation-cap"></i> Students
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.teachers') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'admin.teachers' ? 'active' : '' }}">
                             <i class="fa fa-book"></i> Teachers
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('webapp.admin.users') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'webapp.admin.users' ? 'active' : '' }}">
+                        <a href="{{ route('admin.users') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'admin.users' ? 'active' : '' }}">
                             <i class="fa fa-users"></i> Users
                         </a>
                     </li>
                 @endif
 
-                @if(Auth::user()->teacher == true)
+                @if(Auth::user()->parent)
+                    <li class="nav-item">
+                        <a href="{{ route('account.profile') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'account.profile' ? 'active' : '' }}">
+                            <i class="fa fa-id-card"></i> Account
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('parent.household') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'parent.household' ? 'active' : '' }}">
+                            <i class="fa fa-group"></i> Household
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('parent.household') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'parent.household' ? 'active' : '' }}">
+                            <i class="fa fa-credit-card"></i> Payments
+                        </a>
+                    </li>
+
+                    @include('partials.messageNavBar')
+
+                @endif
+
+                @if(Auth::user()->student)
+                    @include('partials.messageNavBar')
+                @endif
+
+                @if(Auth::user()->teacher)
                     <li class="nav-item">
                         <a href="{{ route('dashboard') }}"
                            class="nav-link {{ Route::currentRouteName() == 'dashboard' ? 'active' : '' }}">
@@ -101,33 +139,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item nav-dropdown">
-                        <a href="#" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == '#' ? 'active' : '' }}">
-                            <i class="fa fa-envelope"></i> Messages <i class="fa fa-caret-left"></i>
-                        </a>
-                        <ul class="nav-dropdown-items">
-                            <li class="nav-item">
-                                <a href="{{ route('message.inbox') }}" class="nav-link">
-                                    <i class="fa fa-inbox"></i> Inbox
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('message.create') }}" class="nav-link">
-                                    <i class="fa fa-pencil"></i> Create
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('message.sent') }}" class="nav-link">
-                                    <i class="fa fa-paper-plane"></i> Sent
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('message.deleted') }}" class="nav-link">
-                                    <i class="fa fa-trash"></i> Deleted
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                    @include('partials.messageNavBar')
 
                     <li class="nav-item nav-dropdown">
                         <a href="#" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == '#' ? 'active' : '' }}">
@@ -245,7 +257,7 @@
                             Your subscription has been cancelled! Subscription ends at {{ Auth::user()->subscription('premium')->ends_at->format('m/d/Y') }}.
                             <a style="color: white;" href="{{ route('account.subscription') }}"><b>Don't forget to re-subscribe</b>.</a>
                         </div>
-                    @elseif (Carbon\Carbon::now() > Auth::user()->trial_ends_at && ! Auth::user()->admin)
+                    @elseif (Carbon\Carbon::now() > Auth::user()->trial_ends_at && ! Auth::user()->admin && ! Auth::user()->parent)
                         <div class="alert alert-danger alert-dismissible text">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                             Your free trail has expired! <a style="color: white;" href="{{ route('account.subscription') }}"><b>Don't forget to subscribe</b>.</a>

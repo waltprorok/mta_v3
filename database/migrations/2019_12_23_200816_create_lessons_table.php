@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateLessonsTable extends Migration
 {
-    const TABLENAME = 'lessons';
+    const TABLE_NAME = 'lessons';
 
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateLessonsTable extends Migration
      */
     public function up()
     {
-        Schema::create(self::TABLENAME, function (Blueprint $table) {
+        Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('student_id')->unsigned();
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
@@ -38,6 +38,6 @@ class CreateLessonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(self::TABLENAME);
+        Schema::dropIfExists(self::TABLE_NAME);
     }
 }

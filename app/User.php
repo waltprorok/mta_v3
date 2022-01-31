@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -14,6 +15,13 @@ use Laravel\Cashier\Billable;
 class User extends Authenticatable
 {
     use Notifiable, Billable;
+
+    protected $casts = [
+        'admin' => 'boolean',
+        'student' => 'boolean',
+        'teacher' => 'boolean',
+        'parent' => 'boolean',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -108,6 +116,11 @@ class User extends Authenticatable
         );
     }
 
+    public function parentStudentPivot(): BelongsToMany
+    {
+        return $this->belongsToMany(Student::class, 'parent_students', 'parent_id');
+    }
+
     /**
      * @param $query
      * @return mixed
@@ -134,5 +147,4 @@ class User extends Authenticatable
     {
         return Auth::user()->messages->where('read', '==', false)->count();
     }
-
 }

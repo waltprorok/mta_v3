@@ -10,6 +10,6 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return view('webapp.user.adminUsers', compact('users', $users));
+        return view('webapp.admin.user.index', compact('users', $users));
     }
 }

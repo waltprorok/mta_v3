@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateBusinessHoursTable extends Migration
 {
-    const TABLENAME = 'business_hours';
+    const TABLE_NAME = 'business_hours';
 
     /**
      * Run the migrations.
@@ -15,10 +15,10 @@ class CreateBusinessHoursTable extends Migration
      */
     public function up()
     {
-        Schema::create(self::TABLENAME, function (Blueprint $table) {
+        Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('teacher_id')->unsigned();
-            $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('teacher_id')->references('id')->on('users');
             $table->integer('day')->nullable();
             $table->tinyInteger('active')->default('0');
             $table->time('open_time')->nullable();
@@ -34,6 +34,6 @@ class CreateBusinessHoursTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(self::TABLENAME);
+        Schema::dropIfExists(self::TABLE_NAME);
     }
 }

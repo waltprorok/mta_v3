@@ -5,22 +5,21 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class BlogAdmin
+class Teacher
 {
     /**
      * Handle an incoming request.
      *
      * @param Request $request
-     * @param  Closure  $next
+     * @param Closure $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user() && ! $request->user()->admin == 1) {
+        if ($request->user() && ! $request->user()->teacher) {
             return redirect('/dashboard');
         }
 
         return $next($request);
     }
-
 }

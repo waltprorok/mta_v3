@@ -7,7 +7,6 @@ use App\Http\Requests\StoreScheduleApptRequest;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Lesson;
-use App\ParentStudent;
 use App\Student;
 use App\Teacher;
 use App\User;
@@ -28,7 +27,7 @@ class StudentController extends Controller
     public function adminStudents()
     {
         $students = Student::all();
-        return view('webapp.student.adminStudents', compact('students', $students));
+        return view('webapp.admin.student.index', compact('students', $students));
     }
 
     public function index()
@@ -38,10 +37,6 @@ class StudentController extends Controller
         if ($teacher == null) {
             return redirect('teacher')->with('success', 'Please fill out your Studio Settings first before entering students.');
         }
-
-        // WORKING CODE: this gets parent and students that are related
-//        $parentOfStudent = User::with('parentOfStudent')->findOrFail(8);
-//         dd($parentOfStudent);
 
         $students = Student::with('hasOneLesson')
             ->where('teacher_id', Auth::id())
@@ -77,7 +72,7 @@ class StudentController extends Controller
      * @param StoreStudentRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreStudentRequest $request) : RedirectResponse
+    public function store(StoreStudentRequest $request): RedirectResponse
     {
         $studentUser = User::create([
             'first_name' => $request->get('first_name'),
@@ -88,11 +83,14 @@ class StudentController extends Controller
             'terms' => true,
         ]);
 
+        $phoneNumber = preg_replace('/\D/', '', $request->get('phone'));
+
         Student::create([
             'student_id' => $studentUser->id,
             'teacher_id' => Auth::id(),
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
+            'phone' => $phoneNumber,
             'email' => $request->get('email') ? $request->get('email') : null,
             'status' => $request->get('status'),
         ]);
@@ -117,14 +115,9 @@ class StudentController extends Controller
 
     public function lessonsUpdate(Request $request)
     {
-        // finish this update function
-        foreach ($request as $data) {
-            if ($data->get('completed') == 'on') {
-                $lesson = Lesson::where('id', '=', $data->get('id'))->firstOrFail();
-                $lesson->complete = $data->get('completed') == 'on' ? true : false;
-                $lesson->save();
-            }
-        }
+        $lesson = Lesson::where('id', $request->get('id'))->firstOrFail();
+        $lesson->complete = $request->get('completed') == 'on';
+        $lesson->save();
 
         return redirect()->back()->with('success', 'You successfully updated a lesson');
     }
@@ -136,26 +129,17 @@ class StudentController extends Controller
 
         if ($request->get('parent_email') != null && $student->parent_email == null) {
             // create new parent user
-            $parent = new User([
+            $parent = User::firstOrCreate([
                 'first_name' => $request->get('first_name'),
                 'last_name' => $request->get('last_name'),
                 'email' => $request->get('parent_email'),
-                'password' => Hash::make(Str::random(10)),
+//                'password' => Hash::make(Str::random(10)),
+                'password' => bcrypt($request->get('last_name')),
                 'parent' => true,
                 'terms' => true,
             ]);
-            // save new parent user
-            $parent->save();
             // create new parent student pivot record
-            $parentStudentPivot = new ParentStudent([
-                'parent_id' => $parent->id,
-                'student_id' => $student->id
-            ]);
-            // save parent student pivot record
-            $parentStudentPivot->save();
-            // save parent user id to student record
-            $student->parent_id = $parent->id;
-            $student->save();
+            $parent->parentStudentPivot()->toggle($student);
         }
 
         $phoneNumber = preg_replace('/\D/', '', $request->get('phone'));
@@ -166,11 +150,6 @@ class StudentController extends Controller
         $student->parent_email = $request->get('parent_email');
         $student->phone = $phoneNumber;
         $student->date_of_birth = $request->get('date_of_birth');
-        $student->address = $request->get('address');
-        $student->address_2 = $request->get('address_2');
-        $student->city = $request->get('city');
-        $student->state = $request->get('state');
-        $student->zip = $request->get('zip');
         $student->instrument = $request->get('instrument');
         $student->status = $request->get('status');
 

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateMessagesTable extends Migration
 {
+    const TABLE_NAME = 'messages';
+
     /**
      * Run the migrations.
      *
@@ -13,12 +15,12 @@ class CreateMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id_from')->unsigned();
-            $table->foreign('user_id_from')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id_from')->references('id')->on('users');
             $table->integer('user_id_to')->unsigned();
-            $table->foreign('user_id_to')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id_to')->references('id')->on('users');
             $table->string('subject');
             $table->text('body');
             $table->boolean('read');
@@ -34,6 +36,6 @@ class CreateMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists(self::TABLE_NAME);
     }
 }

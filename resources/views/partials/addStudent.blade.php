@@ -41,6 +41,20 @@
 
                     <div class="row">
                         <div class="col-sm-12">
+                            <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                                <label for="phone" class="control-label">Phone <span class="text-danger">*</span></label>
+                                <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}">
+                                @if ($errors->has('phone'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('phone') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email" class="control-label" title="Your student or parent will use this email address to log in to Music Teachers Aid">
                                     Email <span class="text-danger">*</span> <small><em>Use parent email address if student does not have one.</em></small></label>

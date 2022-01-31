@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Contact;
-use Exception;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
-
     public function indexBlade()
     {
-        return view('webapp.contact.index');
+        return view('webapp.admin.contact.index');
     }
 
     /**
@@ -20,7 +19,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return Contact::latest()->orderBy('created_at', 'desc')->get();
+        return Contact::orderBy('created_at', 'desc')->get();
     }
 
     /**

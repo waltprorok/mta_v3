@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class Subscribed
+class Household
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,8 @@ class Subscribed
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user() && ! $request->user()->subscribed('premium'))
-        {
-            return redirect('/account/subscription')
-                ->with('info', 'Please subscribe to enjoy all the benefits of Music Teachers Aid.');
+        if ($request->user() && ! $request->user()->parent) {
+            return redirect('/dashboard');
         }
 
         return $next($request);

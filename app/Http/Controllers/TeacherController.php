@@ -18,7 +18,7 @@ class TeacherController extends Controller
     {
         $teachers = Teacher::all();
 
-        return view('webapp.teacher.adminTeachers', compact('teachers', $teachers));
+        return view('webapp.admin.teacher.index', compact('teachers', $teachers));
     }
 
     public function index()

@@ -14,7 +14,7 @@
         @include('partials.studentListTabs')
         <div class="card">
             <div class="card-body">
-                <table class="table table-condensed table-hover" id="dtStudentIndex">
+                <table class="table table-condensed table-hover table-responsive-md" id="dtStudentIndex">
                     <thead class="thead">
                     <tr>
                         <th scope="col" data-orderable="false">Scheduled</th>

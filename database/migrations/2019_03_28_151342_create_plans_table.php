@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreatePlansTable extends Migration
 {
-    const TABLENAME = 'plans';
+    const TABLE_NAME = 'plans';
 
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreatePlansTable extends Migration
      */
     public function up()
     {
-        Schema::create(self::TABLENAME, function (Blueprint $table) {
+        Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('slug')->unique();
@@ -33,6 +33,6 @@ class CreatePlansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(self::TABLENAME);
+        Schema::dropIfExists(self::TABLE_NAME);
     }
 }

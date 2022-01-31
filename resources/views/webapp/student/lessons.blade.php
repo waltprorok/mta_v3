@@ -43,9 +43,16 @@
                             @foreach($lessons as $lesson)
                                 <tr>
                                     <td>
+                                        <form class="form-horizontal" method="post" action="{{ route('student.lessons.update') }}">
+                                            @csrf
+                                            @method('PUT')
                                         <input type="checkbox" {{ $lesson->complete == '1' ? 'checked' : '' }} class="checkbox" name="completed"/>
                                         <input type="hidden" name="id" value="{{ $lesson->id }}"/>
                                         <input type="hidden" name="student_id" value="{{ $lesson->student_id }}"/>
+                                            <button type="submit" name="save" class="btn btn-default">
+                                                Save
+                                            </button>
+                                        </form>
                                     </td>
                                     <td>{{ $lesson->title }}</td>
                                     <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('m-d-Y h:i A') }}</td>
