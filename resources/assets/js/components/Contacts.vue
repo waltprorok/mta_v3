@@ -58,7 +58,7 @@
         </div>
 
         <table class="table">
-            <thead class="thead-dark">
+            <thead>
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>

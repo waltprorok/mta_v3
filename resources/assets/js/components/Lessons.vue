@@ -1,8 +1,7 @@
 <template>
     <div class="card">
-
         <table class="table">
-            <thead class="thead-dark">
+            <thead>
             <tr>
                 <th scope="col">Completed</th>
                 <th scope="col">Name</th>
