@@ -66,4 +66,9 @@ class Teacher extends Model
     {
         return $this->belongsTo(User::class, 'teacher_id');
     }
+
+    public function teacherStudent(): BelongsTo
+    {
+        return $this->belongsTo(Student::class, 'teacher_id');
+    }
 }

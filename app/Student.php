@@ -50,6 +50,7 @@ class Student extends Model
     {
         if ($this->phone != null) {
             $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
+
             if (strlen($cleaned) == 10) {
                 preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
                 return "{$matches[1]}-{$matches[2]}-{$matches[3]}";
@@ -110,6 +111,11 @@ class Student extends Model
     public function routeNotificationForNexmo($notification): string
     {
         return '+1' . $this->phone;
+    }
+
+    public function studentTeacher(): HasOne
+    {
+        return $this->hasOne(Teacher::class, 'teacher_id', 'teacher_id');
     }
 
     public function studentUsers(): BelongsTo
