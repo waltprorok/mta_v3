@@ -64,14 +64,14 @@
                         </a>
                     </li>
 
+                    @include('partials.messageNavBar')
+
                     <li class="nav-item">
                         <a href="{{ route('parent.household') }}"
                            class="nav-link {{ Route::currentRouteName() == 'parent.household' ? 'active' : '' }}">
                             <i class="fa fa-credit-card"></i> Payments
                         </a>
                     </li>
-
-                    @include('partials.messageNavBar')
 
                 @endif
 
