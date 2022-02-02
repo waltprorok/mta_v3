@@ -91,7 +91,7 @@ class Student extends Model
      * @param $query
      * @return mixed
      */
-    public function scopeLatestFirst($query)
+    public function scopeFirstNameAsc($query)
     {
         return $query->orderBy('first_name', 'asc');
     }

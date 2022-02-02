@@ -45,13 +45,13 @@ class MessageService
      */
     public function getUsers(int $id)
     {
-        switch(true) {
+        switch (true) {
             case Auth::user()->teacher:
                 return $this->getStudentUsers($id);
             case Auth::user()->student:
                 return $this->getStudentTeacher();
             case Auth::user()->parent:
-                return $this->getParentTeacher();
+                return $this->getParentTeacher($id);
             default:
                 return null;
         }
@@ -111,15 +111,22 @@ class MessageService
     /**
      * @return Teacher[]|Collection
      */
-    private function getParentTeacher(): Collection
+    private function getParentTeacher(int $id): Collection
     {
         $teacherId = [];
-        $students = User::with('parentOfStudent')->findOrFail(Auth::id());
 
-        foreach($students->parentOfStudent as $student) {
-            $teacherId[] = $student->teacher_id;
+        $this->setId($id);
+
+        if ($this->getId() > 0) {
+            return User::where('id', $this->getId())->get();
+        } else {
+            $students = User::with('parentOfStudent')->findOrFail(Auth::id());
+
+            foreach ($students->parentOfStudent as $student) {
+                $teacherId[] = $student->teacher_id;
+            }
+
+            return Teacher::whereIn('teacher_id', $teacherId)->firstNameAsc()->get();
         }
-
-        return Teacher::all()->whereIn('teacher_id', $teacherId);
     }
 }

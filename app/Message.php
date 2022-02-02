@@ -31,7 +31,7 @@ class Message extends Model
      * @param $query
      * @return mixed
      */
-    public function scopeDeleted($query)
+    public function scopeIsDeleted($query)
     {
         return $query->where('deleted', true);
     }

@@ -41,7 +41,7 @@ class StudentController extends Controller
         $students = Student::with('hasOneLesson')
             ->where('teacher_id', Auth::id())
             ->where('status', Student::ACTIVE)
-            ->latestFirst()
+            ->firstNameAsc()
             ->get();
 
         return view('webapp.student.index')->with('students', $students);
@@ -49,21 +49,21 @@ class StudentController extends Controller
 
     public function waitlist()
     {
-        $waitlists = Student::with('teacher')->latestFirst()->where('teacher_id', Auth::id())->where('status', Student::WAITLIST)->get();
+        $waitlists = Student::with('teacher')->firstNameAsc()->where('teacher_id', Auth::id())->where('status', Student::WAITLIST)->get();
 
         return view('webapp.student.waitlist')->with('waitlists', $waitlists);
     }
 
     public function leads()
     {
-        $leads = Student::with('teacher')->latestFirst()->where('teacher_id', Auth::id())->where('status', Student::LEAD)->get();
+        $leads = Student::with('teacher')->firstNameAsc()->where('teacher_id', Auth::id())->where('status', Student::LEAD)->get();
 
         return view('webapp.student.leads')->with('leads', $leads);
     }
 
     public function inactive()
     {
-        $inactives = Student::with('teacher')->latestFirst()->where('teacher_id', Auth::id())->where('status', Student::INACTIVE)->get();
+        $inactives = Student::with('teacher')->firstNameAsc()->where('teacher_id', Auth::id())->where('status', Student::INACTIVE)->get();
 
         return view('webapp.student.inactive')->with('inactives', $inactives);
     }

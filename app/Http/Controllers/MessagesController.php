@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SendMessageRequest;
 use App\Message;
 use App\Services\MessageService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -47,14 +47,8 @@ class MessagesController extends Controller
     /**
      * @throws ValidationException
      */
-    public function send(Request $request): RedirectResponse
+    public function send(SendMessageRequest $request): RedirectResponse
     {
-        $this->validate($request, [
-            'to' => 'required',
-            'subject' => 'required',
-            'message' => 'required',
-        ]);
-
         Message::create([
             'user_id_from' => Auth::id(),
             'user_id_to' => $request->input('to'),
@@ -103,7 +97,7 @@ class MessagesController extends Controller
     {
         $messages = Message::with('userFrom')
             ->where('user_id_to', Auth::id())
-            ->deleted()
+            ->isDeleted()
             ->get();
 
         return view('webapp.messages.deleted')->with('messages', $messages);
