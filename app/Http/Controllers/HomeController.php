@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Contact;
 use App\Http\Requests\StoreContactSubmissionRequest;
 use App\Mail\ContactForm;
-use App\Plan;
+use App\Models\Contact;
+use App\Models\Plan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;

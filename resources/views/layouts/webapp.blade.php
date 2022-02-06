@@ -58,12 +58,12 @@
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-envelope-open"></i>
-                    <span class="badge badge-pill badge-danger">{{ \App\User::unreadMessagesCount() }}</span>
+                    <span class="badge badge-pill badge-danger">{{ \App\Models\User::unreadMessagesCount() }}</span>
                     <span class="small ml-1 d-md-down-none"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a href="{{ route('message.inbox') }}" class="dropdown-item">
-                        <i class="fa fa-envelope"></i>@if (\App\User::unreadMessagesCount() > 0)You Got Mail @else No Mail Today @endif
+                        <i class="fa fa-envelope"></i>@if (\App\Models\User::unreadMessagesCount() > 0)You Got Mail @else No Mail Today @endif
                     </a>
                 </div>
             </li>

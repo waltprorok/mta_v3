@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\BusinessHours;
 use App\Http\Requests\StoreScheduleApptRequest;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
-use App\Lesson;
-use App\Student;
-use App\Teacher;
-use App\User;
+use App\Models\BusinessHours;
+use App\Models\Lesson;
+use App\Models\Student;
+use App\Models\Teacher;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

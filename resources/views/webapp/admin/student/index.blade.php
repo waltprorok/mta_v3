@@ -29,10 +29,10 @@
                             <td>{{ $student->email }}</td>
                             <td>{{ $student->instrument }}</td>
                             <td>
-                                @if ($student->status == \App\Student::ACTIVE) Active
-                                @elseif($student->status == \App\Student::WAITLIST) Waitlist
-                                @elseif($student->status == \App\Student::LEAD) Lead
-                                @elseif($student->status == \App\Student::INACTIVE) Inactive
+                                @if ($student->status == \App\Models\Student::ACTIVE) Active
+                                @elseif($student->status == \App\Models\Student::WAITLIST) Waitlist
+                                @elseif($student->status == \App\Models\Student::LEAD) Lead
+                                @elseif($student->status == \App\Models\Student::INACTIVE) Inactive
                             </td>
                             @endif
                             {{--<td class="text-nowrap">--}}

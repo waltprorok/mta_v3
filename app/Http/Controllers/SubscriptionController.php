@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SubscribedMail;
-use App\Plan;
+use App\Models\Plan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

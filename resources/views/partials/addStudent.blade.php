@@ -88,17 +88,17 @@
                                 <label for="status" class="control-label">Status: </label>
                                 <div class="form-check-inline">
                                     <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" checked name="status" value="{{ \App\Student::ACTIVE }}">Active
+                                        <input type="radio" class="form-check-input" checked name="status" value="{{ \App\Models\Student::ACTIVE }}">Active
                                     </label>
                                 </div>
                                 <div class="form-check-inline">
                                     <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="status" value="{{ \App\Student::LEAD }}">Lead
+                                        <input type="radio" class="form-check-input" name="status" value="{{ \App\Models\Student::LEAD }}">Lead
                                     </label>
                                 </div>
                                 <div class="form-check-inline">
                                     <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="status" value="{{ \App\Student::WAITLIST }}">Waitlist
+                                        <input type="radio" class="form-check-input" name="status" value="{{ \App\Models\Student::WAITLIST }}">Waitlist
                                     </label>
                                 </div>
                             </div>

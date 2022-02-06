@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Contact;
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

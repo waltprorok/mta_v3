@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Blog;
 use App\Http\Requests\StoreBlogPostRequest;
+use App\Models\Blog;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
