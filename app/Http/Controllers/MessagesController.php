@@ -2,15 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Message;
-use App\User;
+use App\Http\Requests\SendMessageRequest;
+use App\Models\Message;
+use App\Services\MessageService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 
 class MessagesController extends Controller
 {
+    /**
+     * @var MessageService
+     */
+    private $messageService;
+
+    public function __construct(MessageService $messageService)
+    {
+        $this->messageService = $messageService;
+    }
+
     public function index()
     {
         $messages = Message::with('userFrom')->where('user_id_to', Auth::id())->notDeleted()->get();
@@ -18,19 +31,15 @@ class MessagesController extends Controller
         return view('webapp.messages.inbox')->with('messages', $messages);
     }
 
+    /**
+     * @param int $id
+     * @param string $subject
+     * @return Application|Factory|View
+     */
     public function create(int $id = 0, string $subject = '')
     {
-        if ($id === 0) {
-            $users = User::whereHas('studentUsers', function ($query) {
-                $query->where('teacher_id', Auth::id());
-            })->firstNameAsc()->get();
-        } else {
-            $users = User::where('id', $id)->get();
-        }
-
-        if ($subject !== '') {
-            $subject = 'Re: ' . $subject;
-        }
+        $users = $this->messageService->getUsers($id);
+        $subject = $this->messageService->getSubjectString($subject);
 
         return view('webapp.messages.create')->with(['users' => $users, 'subject' => $subject]);
     }
@@ -38,14 +47,8 @@ class MessagesController extends Controller
     /**
      * @throws ValidationException
      */
-    public function send(Request $request): RedirectResponse
+    public function send(SendMessageRequest $request): RedirectResponse
     {
-        $this->validate($request, [
-            'to' => 'required',
-            'subject' => 'required',
-            'message' => 'required',
-        ]);
-
         Message::create([
             'user_id_from' => Auth::id(),
             'user_id_to' => $request->input('to'),
@@ -94,7 +97,7 @@ class MessagesController extends Controller
     {
         $messages = Message::with('userFrom')
             ->where('user_id_to', Auth::id())
-            ->deleted()
+            ->isDeleted()
             ->get();
 
         return view('webapp.messages.deleted')->with('messages', $messages);

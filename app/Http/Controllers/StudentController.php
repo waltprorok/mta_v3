@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\BusinessHours;
 use App\Http\Requests\StoreScheduleApptRequest;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
-use App\Lesson;
-use App\Student;
-use App\Teacher;
-use App\User;
+use App\Models\BusinessHours;
+use App\Models\Lesson;
+use App\Models\Student;
+use App\Models\Teacher;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -41,7 +41,7 @@ class StudentController extends Controller
         $students = Student::with('hasOneLesson')
             ->where('teacher_id', Auth::id())
             ->where('status', Student::ACTIVE)
-            ->latestFirst()
+            ->firstNameAsc()
             ->get();
 
         return view('webapp.student.index')->with('students', $students);
@@ -49,21 +49,21 @@ class StudentController extends Controller
 
     public function waitlist()
     {
-        $waitlists = Student::with('teacher')->latestFirst()->where('teacher_id', Auth::id())->where('status', Student::WAITLIST)->get();
+        $waitlists = Student::with('teacher')->firstNameAsc()->where('teacher_id', Auth::id())->where('status', Student::WAITLIST)->get();
 
         return view('webapp.student.waitlist')->with('waitlists', $waitlists);
     }
 
     public function leads()
     {
-        $leads = Student::with('teacher')->latestFirst()->where('teacher_id', Auth::id())->where('status', Student::LEAD)->get();
+        $leads = Student::with('teacher')->firstNameAsc()->where('teacher_id', Auth::id())->where('status', Student::LEAD)->get();
 
         return view('webapp.student.leads')->with('leads', $leads);
     }
 
     public function inactive()
     {
-        $inactives = Student::with('teacher')->latestFirst()->where('teacher_id', Auth::id())->where('status', Student::INACTIVE)->get();
+        $inactives = Student::with('teacher')->firstNameAsc()->where('teacher_id', Auth::id())->where('status', Student::INACTIVE)->get();
 
         return view('webapp.student.inactive')->with('inactives', $inactives);
     }

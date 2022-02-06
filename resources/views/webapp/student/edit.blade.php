@@ -109,10 +109,10 @@
                                         <select class="form-control" id="status" name="status">
                                             @if ($student->status)
                                                 <option value="{{ $student->status }}">
-                                                    @if ($student->status == \App\Student::ACTIVE) Active
-                                                    @elseif($student->status == \App\Student::WAITLIST) Waitlist
-                                                    @elseif($student->status == \App\Student::LEAD) Lead
-                                                    @elseif($student->status == \App\Student::INACTIVE) Inactive
+                                                    @if ($student->status == \App\Models\Student::ACTIVE) Active
+                                                    @elseif($student->status == \App\Models\Student::WAITLIST) Waitlist
+                                                    @elseif($student->status == \App\Models\Student::LEAD) Lead
+                                                    @elseif($student->status == \App\Models\Student::INACTIVE) Inactive
                                                     @endif
                                                 </option>
                                             @else

@@ -5,7 +5,7 @@
             <transition name="modal">
                 <div class="modal-mask">
                     <div class="modal-wrapper">
-                        <div class="modal-dialog" role="document">
+                        <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" v-show="read">Contact Record</h5>
@@ -58,7 +58,7 @@
         </div>
 
         <table class="table">
-            <thead class="thead-dark">
+            <thead>
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>

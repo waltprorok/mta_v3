@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -52,6 +52,15 @@ class Teacher extends Model
     }
 
     /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeFirstNameAsc($query)
+    {
+        return $query->orderBy('first_name', 'asc');
+    }
+
+    /**
      * @return HasMany
      */
     public function student(): HasMany
@@ -65,5 +74,10 @@ class Teacher extends Model
     public function teacher(): BelongsTo
     {
         return $this->belongsTo(User::class, 'teacher_id');
+    }
+
+    public function teacherStudent(): BelongsTo
+    {
+        return $this->belongsTo(Student::class, 'teacher_id');
     }
 }

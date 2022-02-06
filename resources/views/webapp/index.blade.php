@@ -8,7 +8,7 @@
                 <div class="card p-4">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <span class="h4 d-block font-weight-normal mb-2">{{ \App\User::activeStudentCount() }}</span>
+                            <span class="h4 d-block font-weight-normal mb-2">{{ \App\Models\User::activeStudentCount() }}</span>
                             <span class="font-weight-light">Active Students</span>
                         </div>
 
@@ -38,7 +38,7 @@
                 <div class="card p-4">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <span class="h4 d-block font-weight-normal mb-2">{{ \App\User::lessonsThisWeek() }}</span>
+                            <span class="h4 d-block font-weight-normal mb-2">{{ \App\Models\User::lessonsThisWeek() }}</span>
                             <span class="font-weight-light">Lessons This Week</span>
                         </div>
 

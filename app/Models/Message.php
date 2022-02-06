@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,7 +31,7 @@ class Message extends Model
      * @param $query
      * @return mixed
      */
-    public function scopeDeleted($query)
+    public function scopeIsDeleted($query)
     {
         return $query->where('deleted', true);
     }
