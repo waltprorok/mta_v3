@@ -119,6 +119,7 @@ class BlogController extends Controller
     public function destroy(int $id)
     {
         $deleteBlog = Blog::findOrFail($id);
+
         $deleteBlog->delete();
 
         return redirect(route('admin.blog.list'))->with('success', 'Your blog article has been deleted.');
