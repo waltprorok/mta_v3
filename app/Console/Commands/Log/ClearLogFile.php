@@ -37,7 +37,7 @@ class ClearLogFile extends Command
      */
     public function handle()
     {
-        exec('truncate -s 0 ' . storage_path('logs/laravel.log'));
+        exec('truncate -s 0 ' . storage_path('logs/laravel-*.log'));
         $this->info('Logs have been cleared');
     }
 }
