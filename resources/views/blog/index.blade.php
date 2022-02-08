@@ -12,7 +12,7 @@
                     <h2 class="title">Music Teachers Aid Blog</h2>
                 </div>
                 @foreach ($blogs as $blog)
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="blog thumbnail">
                             @if ($blog->image_url)
                                 <div class="blog-img">
@@ -28,7 +28,7 @@
                                     <li><i class="fa fa-clock-o"></i>{{ $blog->date_time }}</li>
                                 </ul>
                                 <p>
-                                    <small>{!! \Illuminate\Support\Str::limit($blog->body_html, 120) !!}</small>
+                                    <small>{!! \Illuminate\Support\Str::limit($blog->body_html, 160) !!}</small>
                                 </p>
                                 <p class="text-right">
                                     <a href="{{ route('blog.show', $blog->slug) }}" class="btn btn-default">Read More</a>
