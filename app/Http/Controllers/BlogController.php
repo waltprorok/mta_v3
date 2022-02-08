@@ -15,7 +15,7 @@ use Illuminate\View\View;
 
 class BlogController extends Controller
 {
-    protected $blogLimit = 3;
+    protected $blogLimit = 4;
 
     /**
      * Display a listing of the resource.
@@ -119,6 +119,7 @@ class BlogController extends Controller
     public function destroy(int $id)
     {
         $deleteBlog = Blog::findOrFail($id);
+
         $deleteBlog->delete();
 
         return redirect(route('admin.blog.list'))->with('success', 'Your blog article has been deleted.');
