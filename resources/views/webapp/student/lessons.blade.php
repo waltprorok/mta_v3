@@ -18,10 +18,10 @@
                 <form class="form-horizontal" method="post" action="{{ route('student.lessons.update') }}">
                     @csrf
                     @method('PUT')
-                    <table class="table table-condensed table-striped" id="dtLessonsIndex">
+                    <table class="table table-condensed table-hover" id="dtLessonsIndex">
                         <thead class="thead">
                         <tr>
-                            <th scope="col">Completed</th>
+                            <th scope="col" data-orderable="false">Completed</th>
                             <th scope="col">Title</th>
                             <th scope="col">Start Date</th>
                             <th scope="col">End Date</th>
@@ -30,7 +30,28 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @if(count($lessons) == null)
+                        @forelse($lessons as $lesson)
+                            <tr>
+                                <td>
+                                    <form class="form-horizontal" method="post" action="{{ route('student.lessons.update') }}">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="checkbox" {{ $lesson->complete == '1' ? 'checked' : '' }} class="checkbox" name="completed"/>
+                                        <input type="hidden" name="id" value="{{ $lesson->id }}"/>
+                                        <input type="hidden" name="student_id" value="{{ $lesson->student_id }}"/>
+                                        <button type="submit" name="save" class="btn btn-outline-primary" style="margin-left: 24px;">
+                                            Save
+                                        </button>
+                                    </form>
+                                </td>
+                                <td>{{ $lesson->title }}</td>
+                                <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('m-d-Y h:i A') }}</td>
+                                <td>{{ Carbon\Carbon::parse($lesson->end_date)->format('m-d-Y h:i A') }}</td>
+                                <td>{{ $lesson->interval }} minutes</td>
+                                <td><a href="{{ route('student.schedule.edit', [$lesson->student_id, $lesson->id])}}" class="btn btn-sm btn-primary" role="button" title="edit"><i
+                                                class="fa fa-edit"></i></a></td>
+                            </tr>
+                        @empty
                             <tr>
                                 <td>No lessons have been scheduled at this time.</td>
                                 <td></td>
@@ -39,29 +60,7 @@
                                 <td></td>
                                 <td></td>
                             </tr>
-                        @else
-                            @foreach($lessons as $lesson)
-                                <tr>
-                                    <td>
-                                        <form class="form-horizontal" method="post" action="{{ route('student.lessons.update') }}">
-                                            @csrf
-                                            @method('PUT')
-                                        <input type="checkbox" {{ $lesson->complete == '1' ? 'checked' : '' }} class="checkbox" name="completed"/>
-                                        <input type="hidden" name="id" value="{{ $lesson->id }}"/>
-                                        <input type="hidden" name="student_id" value="{{ $lesson->student_id }}"/>
-                                            <button type="submit" name="save" class="btn btn-default">
-                                                Save
-                                            </button>
-                                        </form>
-                                    </td>
-                                    <td>{{ $lesson->title }}</td>
-                                    <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('m-d-Y h:i A') }}</td>
-                                    <td>{{ Carbon\Carbon::parse($lesson->end_date)->format('m-d-Y h:i A') }}</td>
-                                    <td>{{ $lesson->interval }} minutes</td>
-                                    <td><a href="{{ route('student.schedule.edit', [$lesson->student_id, $lesson->id])}}" class="btn btn-sm btn-primary" role="button" title="edit"><i class="fa fa-edit"></i></a></td>
-                                </tr>
-                            @endforeach
-                        @endif
+                        @endforelse
                         </tbody>
                     </table>
                     <button type="submit" name="save" class="btn btn-default">

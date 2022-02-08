@@ -29,7 +29,19 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if(count($waitlists) == 0)
+                    @forelse($waitlists as $waitlist)
+                        <tr>
+                            <td>{{ $waitlist->first_name }}</td>
+                            <td>{{ $waitlist->last_name }}</td>
+                            <td>{{ $waitlist->phone_number }}</td>
+                            <td>{{ $waitlist->email }}</td>
+                            <td>{{ $waitlist->instrument }}</td>
+                            <th scope="row">
+                                <a href="{{ route('student.edit', $waitlist->id)}}"
+                                   class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
+                            </th>
+                        </tr>
+                    @empty
                         <tr>
                             <td>No students on the wait list at this time.</td>
                             <td></td>
@@ -38,21 +50,7 @@
                             <td></td>
                             <td></td>
                         </tr>
-                    @else
-                        @foreach($waitlists as $waitlist)
-                            <tr>
-                                <td>{{ $waitlist->first_name }}</td>
-                                <td>{{ $waitlist->last_name }}</td>
-                                <td>{{ $waitlist->phone_number }}</td>
-                                <td>{{ $waitlist->email }}</td>
-                                <td>{{ $waitlist->instrument }}</td>
-                                <th scope="row">
-                                    <a href="{{ route('student.edit', $waitlist->id)}}"
-                                       class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
-                                </th>
-                            </tr>
-                        @endforeach
-                    @endif
+                    @endforelse
                     </tbody>
                 </table>
             </div>

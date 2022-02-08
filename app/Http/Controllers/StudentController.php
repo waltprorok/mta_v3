@@ -113,7 +113,7 @@ class StudentController extends Controller
         return view('webapp.student.lessons')->with('lessons', $lessons);
     }
 
-    public function lessonsUpdate(Request $request)
+    public function lessonsUpdate(Request $request): RedirectResponse
     {
         $lesson = Lesson::where('id', $request->get('id'))->firstOrFail();
         $lesson->complete = $request->get('completed') == 'on';
