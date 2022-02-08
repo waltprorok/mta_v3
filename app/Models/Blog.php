@@ -45,19 +45,11 @@ class Blog extends Model
     }
 
     /**
-     * @return string
+     * @return null
      */
-    public function getImageUrlAttribute(): string
+    public function getBodyHtmlAttribute(): ?string
     {
-        $imageUrl = "";
-
-        if (! is_null($this->image)) {
-            $imagePath = public_path() . "/storage/blog/" . $this->image;
-            if (file_exists($imagePath)) {
-                $imageUrl = asset("storage/blog/" . $this->image);
-            }
-        }
-        return $imageUrl;
+        return $this->body ? Markdown::convertToHtml(e($this->body)) : null;
     }
 
     /**
@@ -93,11 +85,21 @@ class Blog extends Model
     }
 
     /**
-     * @return null
+     * @return string
      */
-    public function getBodyHtmlAttribute(): ?string
+    public function getImageUrlAttribute(): string
     {
-        return $this->body ? Markdown::convertToHtml(e($this->body)) : null;
+        $imageUrl = "";
+
+        if (! is_null($this->image)) {
+            $imagePath = public_path('/storage/blog/') . $this->image;
+
+            if (file_exists($imagePath)) {
+                $imageUrl = asset("storage/blog/" . $this->image);
+            }
+        }
+
+        return $imageUrl;
     }
 
     /**

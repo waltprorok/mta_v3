@@ -55,11 +55,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * @var mixed
-     */
-//    private $user;
-
-    /**
      * @return mixed
      */
     public static function activeStudentCount()
