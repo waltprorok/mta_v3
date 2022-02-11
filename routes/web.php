@@ -76,9 +76,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
     Route::group(['middleware' => ['household']], function () {
-        Route::prefix('parent')->group(function () {
             Route::get('/household', 'ParentController@household')->name('parent.household');
-        });
     });
 
     Route::group(['middleware' => ['teacher']], function () {

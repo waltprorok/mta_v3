@@ -17,7 +17,7 @@
         @include('partials.studentListTabs')
         <div class="card">
             <div class="card-body">
-                <table class="table" id="dtStudentsInactiveIndex">
+                <table class="table table-condensed table-hover table-responsive-md" id="dtStudentsInactiveIndex">
                     <thead class="thead">
                     <tr>
                         <th scope="col">First Name</th>
@@ -29,7 +29,19 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if(count($inactives) == null)
+                    @forelse($inactives as $inactive)
+                        <tr>
+                            <td>{{ $inactive->first_name }}</td>
+                            <td>{{ $inactive->last_name }}</td>
+                            <td>{{ $inactive->phone_number }}</td>
+                            <td>{{ $inactive->email }}</td>
+                            <td>{{ $inactive->instrument }}</td>
+                            <th scope="row">
+                                <a href="{{ route('student.edit', $inactive->id)}}"
+                                   class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
+                            </th>
+                        </tr>
+                    @empty
                         <tr>
                             <td>No inactive students at this time.</td>
                             <td></td>
@@ -38,21 +50,7 @@
                             <td></td>
                             <td></td>
                         </tr>
-                    @else
-                        @foreach($inactives as $inactive)
-                            <tr>
-                                <td>{{ $inactive->first_name }}</td>
-                                <td>{{ $inactive->last_name }}</td>
-                                <td>{{ $inactive->phone_number }}</td>
-                                <td>{{ $inactive->email }}</td>
-                                <td>{{ $inactive->instrument }}</td>
-                                <th scope="row">
-                                    <a href="{{ route('student.edit', $inactive->id)}}"
-                                       class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
-                                </th>
-                            </tr>
-                        @endforeach
-                    @endif
+                    @endforelse
                     </tbody>
                 </table>
             </div>

@@ -17,7 +17,7 @@
         @include('partials.studentListTabs')
         <div class="card">
             <div class="card-body">
-                <table class="table" id="dtStudentLeadsIndex">
+                <table class="table table-condensed table-hover table-responsive-md" id="dtStudentLeadsIndex">
                     <thead class="thead">
                     <tr>
                         <th scope="col">First Name</th>
@@ -29,7 +29,19 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if(count($leads) == 0)
+                    @forelse($leads as $lead)
+                        <tr>
+                            <td>{{ $lead->first_name }}</td>
+                            <td>{{ $lead->last_name }}</td>
+                            <td>{{ $lead->phone_number }}</td>
+                            <td>{{ $lead->email }}</td>
+                            <td>{{ $lead->instrument }}</td>
+                            <th scope="row">
+                                <a href="{{ route('student.edit', $lead->id)}}"
+                                   class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
+                            </th>
+                        </tr>
+                    @empty
                         <tr>
                             <td>No student leads at this time.</td>
                             <td></td>
@@ -38,21 +50,7 @@
                             <td></td>
                             <td></td>
                         </tr>
-                    @else
-                        @foreach($leads as $lead)
-                            <tr>
-                                <td>{{ $lead->first_name }}</td>
-                                <td>{{ $lead->last_name }}</td>
-                                <td>{{ $lead->phone_number }}</td>
-                                <td>{{ $lead->email }}</td>
-                                <td>{{ $lead->instrument }}</td>
-                                <th scope="row">
-                                    <a href="{{ route('student.edit', $lead->id)}}"
-                                       class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
-                                </th>
-                            </tr>
-                        @endforeach
-                    @endif
+                    @endforelse
                     </tbody>
                 </table>
             </div>

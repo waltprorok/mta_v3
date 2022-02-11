@@ -10,7 +10,7 @@
         <div class="card">
             <div class="card-body">
                 <a href="{{ route('admin.blog.create') }}" class="btn btn-primary float-left"><i class="fa fa-plus"></i> Create Post</a>
-                <table class="table" id="dtBlogIndex">
+                <table class="table table-responsive-md" id="dtBlogIndex">
                     <thead class="thead">
                     <tr>
                         <th scope="col" data-orderable="false">Image</th>

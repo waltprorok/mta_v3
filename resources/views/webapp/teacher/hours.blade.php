@@ -16,7 +16,7 @@
             <div class="card-body">
                 <form method="POST" action="{{ route('teacher.hoursSave') }}">
                     @csrf
-                    <table class="table">
+                    <table class="table table-responsive-md">
                         <thead class="thead">
                         <tr>
                             <th>Day of the Week</th>
