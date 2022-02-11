@@ -18,7 +18,7 @@
                 <form class="form-horizontal" method="post" action="{{ route('student.lessons.update') }}">
                     @csrf
                     @method('PUT')
-                    <table class="table table-condensed table-hover" id="dtLessonsIndex">
+                    <table class="table table-condensed table-hover table-responsive-md" id="dtLessonsIndex">
                         <thead class="thead">
                         <tr>
                             <th scope="col" data-orderable="false">Completed</th>

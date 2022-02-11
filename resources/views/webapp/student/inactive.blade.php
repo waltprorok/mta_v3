@@ -17,7 +17,7 @@
         @include('partials.studentListTabs')
         <div class="card">
             <div class="card-body">
-                <table class="table" id="dtStudentsInactiveIndex">
+                <table class="table table-condensed table-hover table-responsive-md" id="dtStudentsInactiveIndex">
                     <thead class="thead">
                     <tr>
                         <th scope="col">First Name</th>
