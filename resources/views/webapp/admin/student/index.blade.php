@@ -9,7 +9,7 @@
         <br>
         <div class="card">
             <div class="card-body">
-                <table class="table" id="dtStudentIndex">
+                <table class="table table-responsive-md" id="dtStudentIndex">
                     <thead class="thead">
                     <tr>
                         <th scope="col">First Name</th>
