@@ -15,7 +15,7 @@ use Illuminate\View\View;
 
 class BlogController extends Controller
 {
-    protected $blogLimit = 4;
+    protected $blogLimit = 12;
 
     /**
      * Display a listing of the resource.
