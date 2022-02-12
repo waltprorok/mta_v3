@@ -30,7 +30,7 @@
                                                 <li><i class="fa fa-user"></i>{{ $blog->author->first_name . ' ' . $blog->author->last_name }}</li>
                                                 <li><i class="fa fa-clock-o"></i>{{ $blog->date_time }}</li>
                                             </ul>
-                                            <p>{!! \Illuminate\Support\Str::limit($blog->body_html, 160) !!}</p>
+                                            <p>{{ $blog->body_short }}</p>
                                             <p class="text-right">
                                                 <a href="{{ route('blog.show', $blog->slug) }}" class="btn btn-default">Read More</a>
                                             </p>

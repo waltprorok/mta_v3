@@ -7,6 +7,7 @@ use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Blog extends Model
 {
@@ -45,11 +46,19 @@ class Blog extends Model
     }
 
     /**
-     * @return null
+     * @return string|null
      */
     public function getBodyHtmlAttribute(): ?string
     {
         return $this->body ? Markdown::convertToHtml(e($this->body)) : null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBodyShortAttribute(): ?string
+    {
+        return $this->body ? Str::limit($this->body,160) : null;
     }
 
     /**
