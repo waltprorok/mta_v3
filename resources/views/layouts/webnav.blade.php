@@ -51,13 +51,6 @@
 
                 @if(Auth::user()->parent)
                     <li class="nav-item">
-                        <a href="{{ route('account.profile') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'account.profile' ? 'active' : '' }}">
-                            <i class="fa fa-id-card"></i> Account
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
                         <a href="{{ route('parent.household') }}"
                            class="nav-link {{ Route::currentRouteName() == 'parent.household' ? 'active' : '' }}">
                             <i class="fa fa-group"></i> Household
@@ -72,7 +65,6 @@
                             <i class="fa fa-credit-card"></i> Payments
                         </a>
                     </li>
-
                 @endif
 
                 @if(Auth::user()->student)
@@ -257,7 +249,7 @@
                             Your subscription has been cancelled! Subscription ends at {{ Auth::user()->subscription('premium')->ends_at->format('m/d/Y') }}.
                             <a style="color: white;" href="{{ route('account.subscription') }}"><b>Don't forget to re-subscribe</b>.</a>
                         </div>
-                    @elseif (Carbon\Carbon::now() > Auth::user()->trial_ends_at && ! Auth::user()->admin && ! Auth::user()->parent)
+                    @elseif (Carbon\Carbon::now() > Auth::user()->trial_ends_at && ! Auth::user()->admin && ! Auth::user()->parent && ! Auth::user()->student)
                         <div class="alert alert-danger alert-dismissible text">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                             Your free trail has expired! <a style="color: white;" href="{{ route('account.subscription') }}"><b>Don't forget to subscribe</b>.</a>
