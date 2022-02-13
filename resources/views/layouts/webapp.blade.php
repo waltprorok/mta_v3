@@ -77,9 +77,11 @@
                     <a href="{{ route('account.profile') }}" class="dropdown-item">
                         <i class="fa fa-calculator"></i>Account
                     </a>
+                    @if(Auth::user()->teacher)
                     <a href="{{ route('teacher.studioIndex') }}" class="dropdown-item">
                         <i class="fa fa-wrench"></i>Settings
                     </a>
+                    @endif
                     <a href="#" class="dropdown-item">
                         <i class="fa fa-life-ring"></i>Support
                     </a>
