@@ -37,6 +37,38 @@
             <!-- /Main -->
         </div>
         <!-- /Row -->
+
+        <hr>
+
+        <div id="blog" class="section lg-padding">
+            <!-- Container -->
+            <div class="container">
+                <!-- Row -->
+                <div class="row">
+                    <!-- Section header -->
+                    <div class="section-header text-center">
+                        <h2 class="title">Subscribe to Our News Letter</h2>
+                        <h3>Subscribe to stay up to date with the latest and greatest news and releases.</h3>
+                    </div>
+                    <!-- /Section header -->
+                    <!-- blog -->
+                    <div class="col-md-6 col-md-offset-3">
+                        <form method="post" action="{{ route('newsletter') }}">
+                            @csrf
+                            <div class="input-group">
+                                <input class="form-control" name="email" placeholder="Enter Your Email Address" type="text">
+                                <span class="input-group-btn">
+                               <button class="btn btn-primary" type="submit">Submit</button>
+                            </span>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /blog -->
+                </div>
+                <!-- /Row -->
+            </div>
+            <!-- /Container -->
+        </div>
     </div>
     <!-- /Container -->
     <!-- /Blog -->

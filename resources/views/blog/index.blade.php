@@ -25,12 +25,12 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
                                         <div class="blog-content">
-                                            <h2 class="md-heading">{{ $blog->title }}</h2>
+                                            <h3 class="md-heading">{{ $blog->title }}</h3>
                                             <ul class="blog-meta">
                                                 <li><i class="fa fa-user"></i>{{ $blog->author->first_name . ' ' . $blog->author->last_name }}</li>
                                                 <li><i class="fa fa-clock-o"></i>{{ $blog->date_time }}</li>
                                             </ul>
-                                            <p>{!! \Illuminate\Support\Str::limit($blog->body_html, 160) !!}</p>
+                                            <p>{{ $blog->body_short }}</p>
                                             <p class="text-right">
                                                 <a href="{{ route('blog.show', $blog->slug) }}" class="btn btn-default">Read More</a>
                                             </p>

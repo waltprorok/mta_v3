@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <table class="table">
+        <table class="table table-responsive-md">
             <thead>
             <tr>
                 <th scope="col">Completed</th>
