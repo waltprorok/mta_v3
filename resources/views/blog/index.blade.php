@@ -25,7 +25,7 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
                                         <div class="blog-content">
-                                            <h2 class="md-heading">{{ $blog->title }}</h2>
+                                            <h3 class="md-heading">{{ $blog->title }}</h3>
                                             <ul class="blog-meta">
                                                 <li><i class="fa fa-user"></i>{{ $blog->author->first_name . ' ' . $blog->author->last_name }}</li>
                                                 <li><i class="fa fa-clock-o"></i>{{ $blog->date_time }}</li>

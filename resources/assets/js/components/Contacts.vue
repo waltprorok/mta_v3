@@ -57,7 +57,7 @@
             </transition>
         </div>
 
-        <table class="table">
+        <table class="table table-responsive-md">
             <thead>
             <tr>
                 <th scope="col">Name</th>

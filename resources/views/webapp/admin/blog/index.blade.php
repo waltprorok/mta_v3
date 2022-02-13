@@ -6,10 +6,11 @@
 
     <div class="col-12">
         <h4>Blog Posts</h4>
+        <a href="{{ route('admin.blog.create') }}" class="btn btn-primary float-right"><i class="fa fa-plus"></i> Create Post</a>
+        <br>
         <br>
         <div class="card">
             <div class="card-body">
-                <a href="{{ route('admin.blog.create') }}" class="btn btn-primary float-left"><i class="fa fa-plus"></i> Create Post</a>
                 <table class="table table-responsive-md" id="dtBlogIndex">
                     <thead class="thead">
                     <tr>
