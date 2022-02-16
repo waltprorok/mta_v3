@@ -32,13 +32,7 @@
                             <td class="text-center">@if ($user->teacher == true) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                             <td class="text-center">@if ($user->student == true) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
                             <td class="text-center">@if ($user->parent == true) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                            <td>{{ $user->created_at }}</td>
-                            {{--<td class="text-nowrap">--}}
-                            {{--<span class="align-baseline"><a href="{{ route('admin.blog.edit', $teacher->id )}}" class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>--}}
-                            {{--<a href="{{ route('blog.show', $teacher->slug) }}" target="_blank" class="btn btn-outline-dark" role="button" title="view"><i class="fa fa-chrome" aria-hidden="true"></i></a>--}}
-                            {{--<button type="button" class="btn btn-outline-danger" title="delete" data-toggle="modal" data-target="#myDeleteModal-{{ $teacher->id }}"><i class="fa fa-trash-o" aria-hidden="true"></i>--}}
-                            {{--</button></span>--}}
-                            {{--</td>--}}
+                            <td>{{ Carbon\Carbon::parse($user->created_at)->format('m-d-Y h:i A') }}</td>
                         </tr>
                     @endforeach
                     </tbody>
