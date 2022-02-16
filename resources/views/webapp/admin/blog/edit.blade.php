@@ -85,7 +85,7 @@
                         </div>
 
                         <div class="col-sm-3">
-                            <div class="form-group{{ $errors->has('start_time') ? ' has-error' : '' }}">
+                            <div class="form-group{{ $errors->has('release_time') ? ' has-error' : '' }}">
                                 <label for="start_time" class="control-label">Release Time</label>
                                 <select class="form-control" id="release_time" name="release_time">
                                     <option value="{{ $update->date_blog_raw }}">{{ $update->date_hour_min }}</option>
@@ -94,9 +94,9 @@
                                     <option value="15:00:00">3:00 PM</option>
                                 </select>
 
-                                @if ($errors->has('start_time'))
+                                @if ($errors->has('release_time'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('start_time') }}</strong>
+                                        <strong>{{ $errors->first('release_time') }}</strong>
                                     </span>
                                 @endif
                             </div>

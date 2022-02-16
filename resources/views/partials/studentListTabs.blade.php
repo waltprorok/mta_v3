@@ -6,7 +6,7 @@
 
     <li class="nav-item">
         <a class="nav-link {{ Route::currentRouteName() == 'student.waitlist' ? 'active' : '' }}" id="waitlist"
-           href="{{ route('student.waitlist') }}">Waitlist</a>
+           href="{{ route('student.waitlist') }}">Wait List</a>
     </li>
 
     <li class="nav-item">

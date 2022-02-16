@@ -29,9 +29,9 @@
                             <td><img width="40" src="{{ $blog->image_url }}" alt="{{ $blog->image }}"></td>
                             <td>{{ $blog->title }}</td>
                             <td>{{ $blog->slug }}</td>
-                            <td>{{ $blog->released_on }}</td>
-                            <td>{{ $blog->created_at }}</td>
-                            <td>{{ $blog->updated_at }}</td>
+                            <td>{{ $blog->released_date_format }}</td>
+                            <td>{{ $blog->created_date_format }}</td>
+                            <td>{{ $blog->updated_date_format }}</td>
                             <td class="text-nowrap">
                             <span class="align-baseline"><a href="{{ route('admin.blog.edit', $blog->id )}}" class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
                             <a href="{{ route('blog.show', $blog->slug) }}" target="_blank" class="btn btn-outline-dark" role="button" title="view"><i class="fa fa-chrome" aria-hidden="true"></i></a>

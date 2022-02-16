@@ -6,7 +6,7 @@
             @csrf
             <!-- Modal Header -->
                 <div class="modal-header">
-                    <h5 class="modal-title">Add a New Student</h5>
+                    <h5 class="modal-title">Add Student</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->

@@ -28,16 +28,6 @@ class Blog extends Model
     ];
 
     /**
-     * @var
-     */
-    public $value;
-
-    /**
-     * @var int|mixed|null
-     */
-    private $author_id;
-
-    /**
      * @return BelongsTo
      */
     public function author(): BelongsTo
@@ -70,15 +60,15 @@ class Blog extends Model
     }
 
     /**
-     * @return false|string
+     * @return string
      */
     public function getDateTimeAttribute(): string
     {
-        return is_null($this->released_on) ? '' : date('M d, Y', strtotime($this->released_on));
+        return is_null($this->released_on) ? '' : date('F d, Y', strtotime($this->released_on));
     }
 
     /**
-     * @return false|string
+     * @return string
      */
     public function getDateBlogRawAttribute(): string
     {
@@ -86,11 +76,35 @@ class Blog extends Model
     }
 
     /**
-     * @return false|string
+     * @return string
      */
     public function getDateHourMinAttribute(): string
     {
         return is_null($this->released_on) ? '' : date('h:i A', strtotime($this->released_on));
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedDateFormatAttribute(): string
+    {
+        return is_null($this->created_at) ? '' : date('m-d-Y h:i A', strtotime($this->created_at));
+    }
+
+    /**
+     * @return string
+     */
+    public function getUpdatedDateFormatAttribute(): string
+    {
+        return is_null($this->updated_at) ? '' : date('m-d-Y h:i A', strtotime($this->updated_at));
+    }
+
+    /**
+     * @return string
+     */
+    public function getReleasedDateFormatAttribute(): string
+    {
+        return is_null($this->released_on) ? '' : date('m-d-Y h:i A', strtotime($this->released_on));
     }
 
     /**

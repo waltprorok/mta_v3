@@ -48,7 +48,7 @@
                                 <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('m-d-Y h:i A') }}</td>
                                 <td>{{ Carbon\Carbon::parse($lesson->end_date)->format('m-d-Y h:i A') }}</td>
                                 <td>{{ $lesson->interval }} minutes</td>
-                                <td><a href="{{ route('student.schedule.edit', [$lesson->student_id, $lesson->id])}}" class="btn btn-sm btn-primary" role="button" title="edit"><i
+                                <td class="text-nowrap"><a href="{{ route('student.schedule.edit', [$lesson->student_id, $lesson->id])}}" class="btn btn-sm btn-primary" role="button" title="edit"><i
                                                 class="fa fa-edit"></i></a></td>
                             </tr>
                         @empty
