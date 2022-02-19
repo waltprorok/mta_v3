@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lesson;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use MaddHatter\LaravelFullcalendar\Facades\Calendar;
 
 class LessonController extends Controller
 {
+    /**
+     * @throws Exception
+     */
     public function index()
     {
         $lessons = [];
@@ -34,10 +38,11 @@ class LessonController extends Controller
                 'firstDay' => 0,
                 'editable' => false,
                 'selectable' => true,
-                'defaultView' => 'listWeek', // 'month' for full calendar
+                'defaultView' => 'listWeek', // 'month' for full calendar 'listWeek'
                 'minTime' => '08:00:00',
                 'maxTime' => '22:00:00',
                 'fixedWeekCount' => false,
+                'height' => 850,
             ]);
 
         return view('webapp.calendar.index', compact('calendar'));

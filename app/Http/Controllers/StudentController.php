@@ -107,7 +107,6 @@ class StudentController extends Controller
 
     public function lessons()
     {
-        // ->whereDate('start_date', '>=', date('Y-m-d'))
         $lessons = Lesson::where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
 
         return view('webapp.student.lessons')->with('lessons', $lessons);
