@@ -42,7 +42,7 @@ class LessonController extends Controller
                 'minTime' => '08:00:00',
                 'maxTime' => '22:00:00',
                 'fixedWeekCount' => false,
-                'height' => 850,
+                'height' => 800,
             ]);
 
         return view('webapp.calendar.index', compact('calendar'));
