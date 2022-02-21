@@ -18,7 +18,7 @@ class LessonController extends Controller
         $data = Lesson::where('teacher_id', Auth::id())->get();
 
         if ($data->count()) {
-            foreach ($data as $key => $value) {
+            foreach ($data as $value) {
                 $lessons[] = Calendar::event(
                     $value->title,
                     null,
