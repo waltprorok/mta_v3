@@ -31,10 +31,10 @@ $(document).ready(function () {
             yearRange: "-05:+05",
             todayHighlight: true,
             locale: 'en',
-        }).change('changeDate',function () {
-            var url = window.location.pathname.split('/');
-            var studentId = url[2]
-            window.location.href='/students/' + studentId + '/schedule/'+ $('#lessonDate').val();
+        }).change('changeDate', function () {
+            let url = window.location.pathname.split('/');
+            let studentId = url[2]
+            window.location.href = '/students/' + studentId + '/schedule/' + $('#lessonDate').val();
         })
 
         $("#editLessonDate").datepicker({
@@ -48,11 +48,11 @@ $(document).ready(function () {
             yearRange: "-05:+05",
             todayHighlight: true,
             locale: 'en',
-        }).change('changeDate',function () {
-            var url = window.location.pathname.split('/');
-            var studentId = url[3];
-            var lessonId = url[5];
-            window.location.href='/students/schedule/' + studentId + '/edit/'+ lessonId + '/' + $('#editLessonDate').val();
+        }).change('changeDate', function () {
+            let url = window.location.pathname.split('/');
+            let studentId = url[3];
+            let lessonId = url[5];
+            window.location.href = '/students/schedule/' + studentId + '/edit/' + lessonId + '/' + $('#editLessonDate').val();
         })
 
         $("#datepicker2").datepicker({
