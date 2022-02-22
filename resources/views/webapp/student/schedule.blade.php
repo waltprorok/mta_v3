@@ -89,7 +89,7 @@
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('start_time') ? ' has-error' : '' }}">
                                         <label for="start_time" class="control-label">Start Time</label>
-                                        <select class="form-control" id="start_time" name="start_time">123
+                                        <select class="form-control" id="start_time" name="start_time">
                                             @if(count($allTimes) <= 0)
                                                 <option>No availability</option>
                                             @else
