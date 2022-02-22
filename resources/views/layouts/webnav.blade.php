@@ -33,7 +33,6 @@
                         </a>
                     </li>
 
-
                     <li class="nav-item">
                         <a href="{{ route('admin.teachers') }}"
                            class="nav-link {{ Route::currentRouteName() == 'admin.teachers' ? 'active' : '' }}">

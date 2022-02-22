@@ -41,8 +41,9 @@
 {{--            <i class="fa fa-bars"></i>--}}
 {{--        </a>--}}
         <a class="navbar-brand" href="{{ route('dashboard') }}">
-            <img src="{{ asset('webapp/imgs/logo-mta1.png') }}" alt="logo">
+            <img src="{{ asset('webapp/imgs/logo-mta1.png') }}" alt="mta_logo">
         </a>
+
         <ul class="navbar-nav ml-auto">
 {{--            <li class="nav-item d-md-down-none">--}}
 {{--                <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}

@@ -13,7 +13,7 @@
             <tbody>
             <tr v-for="lesson in list">
                 <td>
-                    <button class="btn btn-primary btn-rounded" v-if="!lesson.complete" @click="updateLesson(lesson.id, lesson.complete)">Click to Complete</button>
+                    <button class="btn btn-default btn-rounded" v-if="!lesson.complete" @click="updateLesson(lesson.id, lesson.complete)">Click to Complete</button>
                     <button class="btn btn-success btn-rounded" v-if="lesson.complete" @click="updateLesson(lesson.id, lesson.complete)">Completed</button>
                 </td>
                 <td v-text="lesson.title"></td>

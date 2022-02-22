@@ -125,6 +125,8 @@ class StudentController extends Controller
             $parent->parentStudentPivot()->toggle($student);
         }
 
+        // TODO if successful fire an event to email the new user
+
         $phoneNumber = preg_replace('/\D/', '', $request->get('phone'));
         // update student record
         $student->first_name = $request->get('first_name');

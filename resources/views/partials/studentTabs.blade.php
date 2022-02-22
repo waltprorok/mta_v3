@@ -14,4 +14,8 @@
                href="{{ route('student.schedule', $data['id']) }}">Schedule</a>
         </li>
     @endif
+    <li class="nav-item">
+        <a class="nav-link {{ Route::currentRouteName() == 'student.profile' ? 'active' : '' }}" id="profile"
+           href="{{ route('student.profile', $data['id']) }}">Profile</a>
+    </li>
 </ul>
