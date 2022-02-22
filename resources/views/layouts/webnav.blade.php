@@ -20,8 +20,8 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('student.lessonsApi') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'student.lessonsApi' ? 'active' : '' }}">
+                        <a href="{{ route('complete.lessons') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'complete.lessons' ? 'active' : '' }}">
                             <i class="fa fa-leaf"></i> Lessons
                         </a>
                     </li>
@@ -93,7 +93,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ route('student.lessons') }}" class="nav-link">
+                                <a href="{{ route('complete.lessons') }}" class="nav-link">
                                     <i class="fa fa-music" aria-hidden="true"></i> Lessons
                                 </a>
                             </li>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Lesson;
 use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use MaddHatter\LaravelFullcalendar\Facades\Calendar;
 
@@ -46,5 +48,33 @@ class LessonController extends Controller
             ]);
 
         return view('webapp.calendar.index', compact('calendar'));
+    }
+
+    public function indexBlade()
+    {
+        return view('webapp.lessons.index');
+    }
+
+    public function list()
+    {
+        if (Auth::user()->admin) {
+            return Lesson::with('lessonTeacherId')->orderBy('title')->orderBy('start_date', 'asc')->get();
+        } else {
+            return Lesson::where('teacher_id', Auth::id())->orderBy('title')->orderBy('start_date', 'asc')->get();
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param Lesson $lesson
+     * @return JsonResponse
+     */
+    public function update(Request $request, Lesson $lesson): JsonResponse
+    {
+        $lesson = Lesson::find($lesson->getAttribute('id'));
+        $lesson->complete = $request->get('complete');
+        $lesson->save();
+
+        return response()->json($lesson, 200);
     }
 }

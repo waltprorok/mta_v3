@@ -61,7 +61,9 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('lessons')->group(function () {
-        Route::get('/', 'Api\LessonController@indexBlade')->name('student.lessonsApi');
+        Route::get('/', 'LessonController@indexBlade')->name('complete.lessons');
+        Route::get('/list', 'LessonController@list');
+        Route::patch('/update/{lesson}', 'LessonController@update');
     });
 
     Route::prefix('messages')->group(function () {

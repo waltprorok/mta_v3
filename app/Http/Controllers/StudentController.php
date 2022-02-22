@@ -105,22 +105,6 @@ class StudentController extends Controller
         return view('webapp.student.edit')->with('students', $students);
     }
 
-    public function lessons()
-    {
-        $lessons = Lesson::where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
-
-        return view('webapp.student.lessons')->with('lessons', $lessons);
-    }
-
-    public function lessonsUpdate(Request $request): RedirectResponse
-    {
-        $lesson = Lesson::where('id', $request->get('id'))->firstOrFail();
-        $lesson->complete = $request->get('completed') == 'on';
-        $lesson->save();
-
-        return redirect()->back()->with('success', 'You successfully updated a lesson');
-    }
-
     public function update(UpdateStudentRequest $request): RedirectResponse
     {
         // find student record

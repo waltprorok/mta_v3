@@ -47,7 +47,7 @@ export default {
     },
     methods: {
         fetchLessonList: function () {
-            axios.get('api/lesson')
+            axios.get('lessons/list')
                 .then((response) => {
                     this.list = response.data;
                 }).catch((error) => {
@@ -59,7 +59,7 @@ export default {
             self.lesson.id = id;
             self.lesson.complete = !complete;
             let params = Object.assign({}, self.lesson);
-            axios.patch('api/lesson/' + id, params)
+            axios.patch('lessons/update/' + id, params)
                 .then(function (response) {
                     self.fetchLessonList();
                 })
