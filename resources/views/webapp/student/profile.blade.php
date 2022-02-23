@@ -134,9 +134,11 @@
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Birthday</h6>
                                 </div>
-                                <div class="col-sm-9">
-                                    {{ date('F d, Y | l ', strtotime($student->date_of_birth)) }}
-                                </div>
+                                @if (isset($student->date_of_birth))
+                                    <div class="col-sm-9">
+                                        {{ date('F d, Y | l ', strtotime($student->date_of_birth)) }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

@@ -6,7 +6,7 @@
         <h4>Lessons</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">Contact Us</li>
+            <li class="breadcrumb-item active">Complete Lessons</li>
         </ul>
 
         <div id="app">

@@ -13,7 +13,7 @@
             <tbody>
             <tr v-for="lesson in list">
                 <td>
-                    <button class="btn btn-primary btn-rounded" v-if="!lesson.complete" @click="updateLesson(lesson.id, lesson.complete)">Click to Complete</button>
+                    <button class="btn btn-default btn-rounded" v-if="!lesson.complete" @click="updateLesson(lesson.id, lesson.complete)">Click to Complete</button>
                     <button class="btn btn-success btn-rounded" v-if="lesson.complete" @click="updateLesson(lesson.id, lesson.complete)">Completed</button>
                 </td>
                 <td v-text="lesson.title"></td>
@@ -47,7 +47,7 @@ export default {
     },
     methods: {
         fetchLessonList: function () {
-            axios.get('api/lesson')
+            axios.get('lessons/list')
                 .then((response) => {
                     this.list = response.data;
                 }).catch((error) => {
@@ -59,7 +59,7 @@ export default {
             self.lesson.id = id;
             self.lesson.complete = !complete;
             let params = Object.assign({}, self.lesson);
-            axios.patch('api/lesson/' + id, params)
+            axios.patch('lessons/update/' + id, params)
                 .then(function (response) {
                     self.fetchLessonList();
                 })

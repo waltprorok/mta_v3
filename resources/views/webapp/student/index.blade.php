@@ -48,9 +48,9 @@
                             <td>{{ $student->email }}</td>
                             <td>{{ $student->instrument }}</td>
                             <td class="text-nowrap">
-                                <a href="{{ route('student.profile', $student->id) }}" class="btn btn-sm btn-success" role="button" title="profile"><i class="fa fa-user"></i></a>
-                                <a href="{{ route('student.edit', $student->id) }}" class="btn btn-sm btn-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
-                                <a href="{{ route('student.schedule', $student->id) }}" class="btn btn-sm btn-warning" role="role" title="schedule"><i class="fa fa-calendar"></i></a>
+                                <a href="{{ route('student.edit', $student->id) }}" class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
+                                <a href="{{ route('student.schedule', $student->id) }}" class="btn btn-sm btn-outline-secondary" role="button" title="schedule"><i class="fa fa-calendar"></i></a>
+                                <a href="{{ route('student.profile', $student->id) }}" class="btn btn-sm btn-outline-success" role="button" title="profile"><i class="fa fa-user"></i></a>
                             </td>
                         </tr>
                     @empty

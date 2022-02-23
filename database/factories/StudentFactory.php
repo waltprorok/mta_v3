@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Models\Student;
 use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factory;
 
@@ -17,15 +17,15 @@ use Illuminate\Database\Eloquent\Factory;
 |
 */
 
-$factory->define(User::class, function (Faker $faker) {
-    static $password;
+$factory->define(Student::class, function (Faker $faker) {
 
     return [
+        'student_id' => $faker->unique()->numberBetween(6, 56),
+        'teacher_id' => $faker->numberBetween(3, 4),
         'first_name' => $faker->firstName(),
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
-        'student' => true,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
+        'phone' => $faker->numerify('##########'),
+        'status' =>  $faker->numberBetween(1, 4),
     ];
 });

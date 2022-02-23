@@ -20,8 +20,8 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('student.lessonsApi') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'student.lessonsApi' ? 'active' : '' }}">
+                        <a href="{{ route('complete.lessons') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'complete.lessons' ? 'active' : '' }}">
                             <i class="fa fa-leaf"></i> Lessons
                         </a>
                     </li>
@@ -32,7 +32,6 @@
                             <i class="fa fa-graduation-cap"></i> Students
                         </a>
                     </li>
-
 
                     <li class="nav-item">
                         <a href="{{ route('admin.teachers') }}"
@@ -80,20 +79,19 @@
                     </li>
 
                     <li class="nav-item nav-dropdown">
-                        <a href="#"
-                           class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == 'student.index' ? 'active' : '' }}">
+                        <a href="#students" class="nav-link nav-dropdown-toggle">
                             <i class="fa fa-users"></i> Students <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="{{ route('student.index') }}" class="nav-link">
+                                <a href="{{ route('student.index') }}" class="nav-link {{ Route::currentRouteName() == 'student.index' ? 'active' : '' }}">
                                     <i class="fa fa-list" aria-hidden="true"></i> Student List
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ route('student.lessons') }}" class="nav-link">
+                                <a href="{{ route('complete.lessons') }}" class="nav-link {{ Route::currentRouteName() == 'complete.lessons' ? 'active' : '' }}">
                                     <i class="fa fa-music" aria-hidden="true"></i> Lessons
                                 </a>
                             </li>
@@ -133,8 +131,8 @@
 
                     @include('partials.messageNavBar')
 
-                    <li class="nav-item nav-dropdown">
-                        <a href="#" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == '#' ? 'active' : '' }}">
+                    <li class="nav-item nav-dropdown" id="#billing">
+                        <a href="#billing" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == '#' ? 'active' : '' }}">
                             <i class="fa fa-credit-card"></i> Billing <i class="fa fa-caret-left"></i>
                         </a>
 
@@ -202,15 +200,14 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item nav-dropdown">
-                        <a href="#"
-                           class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == 'reports.all' ? 'active' : '' }}">
+                    <li class="nav-item nav-dropdown" id="#reports">
+                        <a href="#reports" class="nav-link nav-dropdown-toggle">
                             <i class="fa fa-pie-chart"></i> Reports <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="{{ route('reports.all') }}" class="nav-link">
+                                <a href="{{ route('reports.all') }}" class="nav-link {{ Route::currentRouteName() == 'reports.all' ? 'active' : '' }}">
                                     <i class="fa fa-area-chart"></i> All Reports
                                 </a>
                             </li>

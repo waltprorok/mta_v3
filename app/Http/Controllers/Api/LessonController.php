@@ -16,7 +16,7 @@ class LessonController extends Controller
 
     public function index()
     {
-        return Lesson::with('lessonTeacherId')->orderBy('start_date')->get();
+        return Lesson::with('lessonTeacherId')->orderBy('title')->orderBy('start_date', 'asc')->get();
     }
 
     /**

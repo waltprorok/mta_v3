@@ -105,23 +105,6 @@ class StudentController extends Controller
         return view('webapp.student.edit')->with('students', $students);
     }
 
-    public function lessons()
-    {
-        // ->whereDate('start_date', '>=', date('Y-m-d'))
-        $lessons = Lesson::where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
-
-        return view('webapp.student.lessons')->with('lessons', $lessons);
-    }
-
-    public function lessonsUpdate(Request $request): RedirectResponse
-    {
-        $lesson = Lesson::where('id', $request->get('id'))->firstOrFail();
-        $lesson->complete = $request->get('completed') == 'on';
-        $lesson->save();
-
-        return redirect()->back()->with('success', 'You successfully updated a lesson');
-    }
-
     public function update(UpdateStudentRequest $request): RedirectResponse
     {
         // find student record
@@ -141,6 +124,8 @@ class StudentController extends Controller
             // create new parent student pivot record
             $parent->parentStudentPivot()->toggle($student);
         }
+
+        // TODO if successful fire an event to email the new user
 
         $phoneNumber = preg_replace('/\D/', '', $request->get('phone'));
         // update student record
