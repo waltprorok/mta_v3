@@ -1,5 +1,5 @@
 <li class="nav-item nav-dropdown">
-    <a href="#" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == 'message.inbox' ? 'active' : '' }}">
+    <a href="#messages" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == 'message.inbox' ? 'active' : '' }}">
         <i class="fa fa-envelope"></i> Messages <i class="fa fa-caret-left"></i>
     </a>
     <ul class="nav-dropdown-items">

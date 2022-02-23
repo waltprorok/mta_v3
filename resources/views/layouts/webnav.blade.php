@@ -79,8 +79,7 @@
                     </li>
 
                     <li class="nav-item nav-dropdown">
-                        <a href="#"
-                           class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == 'student.index' ? 'active' : '' }}">
+                        <a href="#students" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == 'student.index' ? 'active' : '' }}">
                             <i class="fa fa-users"></i> Students <i class="fa fa-caret-left"></i>
                         </a>
 
@@ -132,8 +131,8 @@
 
                     @include('partials.messageNavBar')
 
-                    <li class="nav-item nav-dropdown">
-                        <a href="#" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == '#' ? 'active' : '' }}">
+                    <li class="nav-item nav-dropdown" id="#billing">
+                        <a href="#billing" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == 'dashboard' ? 'active' : '' }}">
                             <i class="fa fa-credit-card"></i> Billing <i class="fa fa-caret-left"></i>
                         </a>
 
@@ -201,9 +200,8 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item nav-dropdown">
-                        <a href="#"
-                           class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == 'reports.all' ? 'active' : '' }}">
+                    <li class="nav-item nav-dropdown" id="#reports">
+                        <a href="#reports" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == 'reports.all' ? 'active' : '' }}">
                             <i class="fa fa-pie-chart"></i> Reports <i class="fa fa-caret-left"></i>
                         </a>
 

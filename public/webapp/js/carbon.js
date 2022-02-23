@@ -5,6 +5,14 @@ $(document).ready(function () {
     $('.nav-dropdown-toggle').on('click', function (e) {
         e.preventDefault();
         $(this).parent().toggleClass('open');
+
+        if ($(this).parent().hasClass('open')) {
+            let linkStatus = $(e.target).attr('href')
+            localStorage.setItem('navDropdownToggle', linkStatus);
+        } else {
+            let linkStatus = '#';
+            localStorage.setItem('navDropdownToggle', linkStatus);
+        }
     });
 
     // open sub-menu when an item is active.
@@ -61,7 +69,11 @@ $(document).ready(function () {
         $(".table-row").click(function () {
             window.document.location = $(this).data("href");
         });
+
+        let navDropdownToggle = localStorage.getItem('navDropdownToggle');
+
+        if (navDropdownToggle) {
+            $('ul.nav').find('a[href="' + navDropdownToggle + '"]').parent().addClass('open')
+        }
     });
-
-
 });
