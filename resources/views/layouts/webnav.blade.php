@@ -60,7 +60,7 @@
 
                     <li class="nav-item">
                         <a href="{{ route('parent.household') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'parent.household' ? 'active' : '' }}">
+                           class="nav-link {{ Route::currentRouteName() == '#' ? 'active' : '' }}">
                             <i class="fa fa-credit-card"></i> Payments
                         </a>
                     </li>
