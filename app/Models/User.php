@@ -57,7 +57,7 @@ class User extends Authenticatable
     /**
      * @return mixed
      */
-    public static function activeStudentCount()
+    public static function activeStudentCount(): int
     {
         return Auth::user()->students->where('status', '=', 1)->count();
     }
@@ -89,7 +89,7 @@ class User extends Authenticatable
     /**
      * @return mixed
      */
-    public static function lessonsThisWeek()
+    public static function lessonsThisWeek(): int
     {
         return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
     }
@@ -97,6 +97,11 @@ class User extends Authenticatable
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class, 'user_id_to');
+    }
+
+    public function businessHours(): HasMany
+    {
+        return $this->hasMany(BusinessHours::class, 'teacher_id');
     }
 
     public function parentOfStudent(): HasManyThrough
@@ -125,9 +130,6 @@ class User extends Authenticatable
         return $query->orderBy('first_name', 'asc');
     }
 
-    /**
-     * @return HasMany
-     */
     public function students(): HasMany
     {
         return $this->hasMany(Student::class, 'teacher_id');
@@ -138,7 +140,22 @@ class User extends Authenticatable
         return $this->hasMany(Student::class, 'student_id');
     }
 
-    public static function unreadMessagesCount()
+    public static function openTimeBlocks(): int
+    {
+        $minutesInDay = 0;
+        $lessonsInWeek = self::lessonsThisWeek() * 30;
+        $businessHours = Auth::user()->businessHours->where('active', true);
+
+        foreach ($businessHours as $businessHour) {
+            $closeTime = Carbon::createFromFormat('H:i', $businessHour->close_time);
+            $openTime = Carbon::createFromFormat('H:i', $businessHour->open_time);
+            $minutesInDay += $closeTime->diffInMinutes($openTime);
+        }
+
+        return ($minutesInDay - $lessonsInWeek) / 30;
+    }
+
+    public static function unreadMessagesCount(): int
     {
         return Auth::user()->messages->where('read', '==', false)->count();
     }
