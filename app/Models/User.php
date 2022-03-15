@@ -71,6 +71,14 @@ class User extends Authenticatable
     }
 
     /**
+     * @return HasMany
+     */
+    public function businessHours(): HasMany
+    {
+        return $this->hasMany(BusinessHours::class, 'teacher_id');
+    }
+
+    /**
      * @return HasOne
      */
     public function getTeacher(): HasOne
@@ -97,11 +105,6 @@ class User extends Authenticatable
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class, 'user_id_to');
-    }
-
-    public function businessHours(): HasMany
-    {
-        return $this->hasMany(BusinessHours::class, 'teacher_id');
     }
 
     public function parentOfStudent(): HasManyThrough
