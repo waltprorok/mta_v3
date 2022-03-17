@@ -42,7 +42,8 @@ class SubscriptionController extends Controller
 
         $plan = Plan::findOrFail($request->get('plan'));
 
-        $request->user()->newSubscription($plan->name, $plan->stripe_plan)->create($request->stripeToken);
+        $request->user()->newSubscription($plan->name, $plan->stripe_plan)
+            ->create($request->stripeToken, ['name' => $user->first_name . ' ' . $user->last_name]);
 
         Mail::to($user->email)->send(new SubscribedMail($user));
 
