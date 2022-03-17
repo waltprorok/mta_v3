@@ -38,14 +38,24 @@ class SubscriptionController extends Controller
      */
     public function create(Request $request, Plan $plan)
     {
-        $user = Auth::user();
+        $teacher = Auth::user()->getTeacher()->first();
 
         $plan = Plan::findOrFail($request->get('plan'));
 
         $request->user()->newSubscription($plan->name, $plan->stripe_plan)
-            ->create($request->stripeToken, ['name' => $user->first_name . ' ' . $user->last_name]);
+            ->create($request->stripeToken, [
+                'name' => $teacher->first_name . ' ' . $teacher->last_name,
+                'address' => [
+                    'line1' => $teacher->address,
+                    'line2' => $teacher->address_2,
+                    'city' => $teacher->city,
+                    'state' => $teacher->state,
+                    'postal_code' => $teacher->zip,
+                ],
+                'phone' => $teacher->phone,
+            ]);
 
-        Mail::to($user->email)->send(new SubscribedMail($user));
+        Mail::to($teacher->email)->send(new SubscribedMail($teacher));
 
         return redirect()->back()->with('success', 'Thank you for subscribing to our service.');
     }
@@ -57,7 +67,7 @@ class SubscriptionController extends Controller
 
         foreach ($plans as $plan) {
             if ($plan->stripe_plan == $user->subscription('premium')->stripe_plan) {
-                switch($plan->id){
+                switch ($plan->id) {
                     case 1:
                         $plan = Plan::findOrFail(2);
                         break;
@@ -84,7 +94,7 @@ class SubscriptionController extends Controller
                     $newPlan = Plan::findOrFail(2);
                     $user->subscription('premium')->swap($newPlan->stripe_plan);
                     break;
-                } elseif($plan->id == 2) {
+                } elseif ($plan->id == 2) {
                     $newPlan = Plan::findOrFail(1);
                     $user->subscription('premium')->swap($newPlan->stripe_plan);
                     break;
