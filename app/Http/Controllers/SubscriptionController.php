@@ -4,16 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Mail\SubscribedMail;
 use App\Models\Plan;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
 
 class SubscriptionController extends Controller
 {
     protected $receiptLimit = 5;
 
+    /**
+     * @return Application|Factory|View
+     */
     public function index()
     {
         $user = Auth::user();
@@ -26,6 +32,9 @@ class SubscriptionController extends Controller
         }
     }
 
+    /**
+     * @return Application|Factory|View
+     */
     public function subscribed()
     {
         return view('webapp.account.subscription');
@@ -83,7 +92,10 @@ class SubscriptionController extends Controller
         return view('webapp.account.change', compact('plan'));
     }
 
-    public function changePlan()
+    /**
+     * @return RedirectResponse
+     */
+    public function changePlan(): RedirectResponse
     {
         $plans = Plan::all();
         $user = Auth::user();
@@ -104,7 +116,6 @@ class SubscriptionController extends Controller
 
         return redirect()->back()->with('success', 'Your subscription plan has been updated.');
     }
-
 
     /**
      * @return RedirectResponse
@@ -128,17 +139,16 @@ class SubscriptionController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->subscription('premium')) {
-            $subscription = $user->subscription('premium');
-        } elseif ($user->subscription('enterprise')) {
-            $subscription = $user->subscription('enterprise');
-        }
+        $subscription = $user->subscription('premium');
 
         $subscription->resume();
 
         return redirect()->back()->with('success', 'Your subscription account has been reinstated.');
     }
 
+    /**
+     * @return Application|Factory|View
+     */
     public function creditCard()
     {
         return view('webapp.account.card');
@@ -175,6 +185,9 @@ class SubscriptionController extends Controller
         ]);
     }
 
+    /**
+     * @return Application|Factory|View
+     */
     public function invoices()
     {
         $user = Auth::user();
@@ -184,6 +197,9 @@ class SubscriptionController extends Controller
         return view('webapp.account.invoices', compact('invoices'));
     }
 
+    /**
+     * @return Application|Factory|View
+     */
     public function profile()
     {
         return view('webapp.account.profile');
