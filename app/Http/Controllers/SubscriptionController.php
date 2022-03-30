@@ -24,7 +24,7 @@ class SubscriptionController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->subscriptions()->first() != null) {
+        if ($user->subscriptions()->first() !== null) {
             return view('webapp.account.subscription');
         } else {
             $plans = Plan::all();

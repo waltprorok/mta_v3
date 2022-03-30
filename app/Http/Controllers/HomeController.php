@@ -48,6 +48,10 @@ class HomeController extends Controller
         return view('marketing.contact');
     }
 
+    /**
+     * @param StoreContactSubmissionRequest $request
+     * @return RedirectResponse
+     */
     public function sendContact(StoreContactSubmissionRequest $request): RedirectResponse
     {
         Contact::create([
