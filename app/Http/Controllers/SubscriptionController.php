@@ -4,16 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Mail\SubscribedMail;
 use App\Models\Plan;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
 
 class SubscriptionController extends Controller
 {
     protected $receiptLimit = 5;
 
+    /**
+     * @return Application|Factory|View
+     */
     public function index()
     {
         $user = Auth::user();
@@ -26,6 +32,9 @@ class SubscriptionController extends Controller
         }
     }
 
+    /**
+     * @return Application|Factory|View
+     */
     public function subscribed()
     {
         return view('webapp.account.subscription');
@@ -38,13 +47,24 @@ class SubscriptionController extends Controller
      */
     public function create(Request $request, Plan $plan)
     {
-        $user = Auth::user();
+        $teacher = Auth::user()->getTeacher()->first();
 
         $plan = Plan::findOrFail($request->get('plan'));
 
-        $request->user()->newSubscription($plan->name, $plan->stripe_plan)->create($request->stripeToken);
+        $request->user()->newSubscription($plan->name, $plan->stripe_plan)
+            ->create($request->stripeToken, [
+                'name' => $teacher->first_name . ' ' . $teacher->last_name,
+                'address' => [
+                    'line1' => $teacher->address,
+                    'line2' => $teacher->address_2,
+                    'city' => $teacher->city,
+                    'state' => $teacher->state,
+                    'postal_code' => $teacher->zip,
+                ],
+                'phone' => $teacher->phone,
+            ]);
 
-        Mail::to($user->email)->send(new SubscribedMail($user));
+        Mail::to($teacher->email)->send(new SubscribedMail($teacher));
 
         return redirect()->back()->with('success', 'Thank you for subscribing to our service.');
     }
@@ -56,7 +76,7 @@ class SubscriptionController extends Controller
 
         foreach ($plans as $plan) {
             if ($plan->stripe_plan == $user->subscription('premium')->stripe_plan) {
-                switch($plan->id){
+                switch ($plan->id) {
                     case 1:
                         $plan = Plan::findOrFail(2);
                         break;
@@ -72,7 +92,10 @@ class SubscriptionController extends Controller
         return view('webapp.account.change', compact('plan'));
     }
 
-    public function changePlan()
+    /**
+     * @return RedirectResponse
+     */
+    public function changePlan(): RedirectResponse
     {
         $plans = Plan::all();
         $user = Auth::user();
@@ -83,7 +106,7 @@ class SubscriptionController extends Controller
                     $newPlan = Plan::findOrFail(2);
                     $user->subscription('premium')->swap($newPlan->stripe_plan);
                     break;
-                } elseif($plan->id == 2) {
+                } elseif ($plan->id == 2) {
                     $newPlan = Plan::findOrFail(1);
                     $user->subscription('premium')->swap($newPlan->stripe_plan);
                     break;
@@ -93,7 +116,6 @@ class SubscriptionController extends Controller
 
         return redirect()->back()->with('success', 'Your subscription plan has been updated.');
     }
-
 
     /**
      * @return RedirectResponse
@@ -117,17 +139,16 @@ class SubscriptionController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->subscription('premium')) {
-            $subscription = $user->subscription('premium');
-        } elseif ($user->subscription('enterprise')) {
-            $subscription = $user->subscription('enterprise');
-        }
+        $subscription = $user->subscription('premium');
 
         $subscription->resume();
 
         return redirect()->back()->with('success', 'Your subscription account has been reinstated.');
     }
 
+    /**
+     * @return Application|Factory|View
+     */
     public function creditCard()
     {
         return view('webapp.account.card');
@@ -164,6 +185,9 @@ class SubscriptionController extends Controller
         ]);
     }
 
+    /**
+     * @return Application|Factory|View
+     */
     public function invoices()
     {
         $user = Auth::user();
@@ -173,6 +197,9 @@ class SubscriptionController extends Controller
         return view('webapp.account.invoices', compact('invoices'));
     }
 
+    /**
+     * @return Application|Factory|View
+     */
     public function profile()
     {
         return view('webapp.account.profile');

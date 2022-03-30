@@ -59,13 +59,13 @@
                                                 @if($studentScheduled)
                                                     <div class="col-sm-9">
                                                         <span class="btn btn-success">
-                                                            <i class="fa fa-check"></i>&nbsp; Has Appointment
+                                                            <i class="fa fa-check"></i>&nbsp;Has Appointment
                                                         </span>
                                                     </div>
                                                 @else
                                                     <div class="col-sm-9">
                                                         <span class="btn btn-danger">
-                                                            <i class="fa fa-times"></i>&nbsp; Needs Appointment
+                                                            <i class="fa fa-times"></i>&nbsp;Needs Appointment
                                                         </span>
                                                     </div>
                                                 @endif
