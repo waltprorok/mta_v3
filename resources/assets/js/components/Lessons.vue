@@ -54,7 +54,7 @@ export default {
             axios.get('lessons/list')
                 .then((response) => {
                     this.list = response.data;
-                    this.hasData = this.list ? this.list.length >= 1 : false;
+                    this.hasData = this.hasDataFn();
                 }).catch((error) => {
                 console.log(error);
             });
@@ -73,6 +73,9 @@ export default {
                     console.log(error);
                 });
         },
+        hasDataFn: function () {
+            return this.list ? this.list.length >= 1 : false;
+        }
     },
 }
 </script>
