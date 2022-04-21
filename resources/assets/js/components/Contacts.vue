@@ -126,7 +126,7 @@ export default {
             read: false,
             showModal: false,
             list: [],
-            hasData: false,
+            hasData: true,
             contact: {
                 id: null,
                 name: null,

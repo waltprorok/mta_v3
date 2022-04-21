@@ -35,7 +35,7 @@ export default {
     data() {
         return {
             list: [],
-            hasData: false,
+            hasData: true,
             lesson: {
                 id: null,
                 complete: null,
