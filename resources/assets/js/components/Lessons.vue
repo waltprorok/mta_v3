@@ -11,7 +11,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="lesson in list">
+            <tr v-for="lesson in list" v-show="hasData">
                 <td>
                     <button class="btn btn-default btn-rounded" v-if="!lesson.complete" @click="updateLesson(lesson.id, lesson.complete)">Click to Complete</button>
                     <button class="btn btn-success btn-rounded" v-if="lesson.complete" @click="updateLesson(lesson.id, lesson.complete)">Completed</button>
@@ -20,6 +20,9 @@
                 <td>{{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
                 <td>{{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
                 <td v-text="lesson.interval"></td>
+            </tr>
+            <tr v-show="!hasData">
+                <td colspan="6" class="text-center">No data available in table</td>
             </tr>
             </tbody>
         </table>
@@ -32,6 +35,7 @@ export default {
     data() {
         return {
             list: [],
+            hasData: false,
             lesson: {
                 id: null,
                 complete: null,
@@ -50,6 +54,7 @@ export default {
             axios.get('lessons/list')
                 .then((response) => {
                     this.list = response.data;
+                    this.hasData = this.list ? this.list.length >= 1 : false;
                 }).catch((error) => {
                 console.log(error);
             });

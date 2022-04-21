@@ -69,7 +69,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="contact in list">
+            <tr v-for="contact in list" v-show="hasData">
                 <td v-text="contact.name"></td>
                 <td><a v-bind:href="'mailto:' + contact.email">{{ contact.email }}</a></td>
                 <!-- TODO: Make an anchor tag to open a new page to send a response email -->
@@ -81,6 +81,9 @@
                     <button @click="showContact(contact.id, false)" class="btn btn-outline-secondary btn-sm" title="edit"><i class="fa fa-edit"></i></button>
                     <button @click="showModalDelete(contact.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 </td>
+            </tr>
+            <tr v-show="!hasData">
+                <td colspan="6" class="text-center">No data available in table</td>
             </tr>
             </tbody>
         </table>
@@ -123,6 +126,7 @@ export default {
             read: false,
             showModal: false,
             list: [],
+            hasData: false,
             contact: {
                 id: null,
                 name: null,
@@ -156,6 +160,7 @@ export default {
             axios.get('api/contact')
                 .then((response) => {
                     this.list = response.data;
+                    this.hasData = this.list ? this.list.length >= 1 : false;
                 }).catch((error) => {
                 console.log(error);
             });
