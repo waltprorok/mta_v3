@@ -30,7 +30,7 @@
                                 <td>{{ $message->userTo->first_name }}&nbsp;{{ $message->userTo->last_name }}</td>
                                 <td>{{ $message->userTo->email }}</td>
                                 <td>{{ $message->subject }}</td>
-                                <td>@if (isset($message->created_at)) {{$message->created_at->format('M d')}} @endif</td>
+                                <td>@if (isset($message->created_at)) {{$message->created_at->format('M d h:i a')}} @endif</td>
                             </tr>
                         @endforeach
                         </tbody>

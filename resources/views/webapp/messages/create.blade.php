@@ -21,7 +21,9 @@
                                 <select class="form-control" name="to" id="to">
                                     @foreach($users as $user)
                                         @if(isset($user->studentTeacher->id))
-                                            <option value="{{ $user->studentTeacher->id }}">{{ $user->studentTeacher->first_name}}&nbsp;{{ $user->studentTeacher->last_name }}</option>
+                                            <option value="{{ $user->studentTeacher->teacher_id }}">{{ $user->studentTeacher->first_name}}&nbsp;{{ $user->studentTeacher->last_name }}</option>
+                                        @elseif(isset($user->teacher_id))
+                                            <option value="{{ $user->teacher_id }}">{{ $user->first_name}}&nbsp;{{ $user->last_name }}</option>
                                         @else
                                             <option value="{{ $user->id }}">{{ $user->first_name}}&nbsp;{{ $user->last_name }}</option>
                                         @endif

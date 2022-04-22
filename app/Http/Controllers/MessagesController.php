@@ -26,7 +26,7 @@ class MessagesController extends Controller
 
     public function index()
     {
-        $messages = Message::with('userFrom')->where('user_id_to', Auth::id())->notDeleted()->get();
+        $messages = Message::with('userFrom')->where('user_id_to', Auth::id())->notDeleted()->orderBy('created_at', 'desc')->get();
 
         return view('webapp.messages.inbox')->with('messages', $messages);
     }
