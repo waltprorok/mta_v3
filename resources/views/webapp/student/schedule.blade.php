@@ -164,7 +164,7 @@
                                 @if(count($allTimes) < 1)
                                     <div class="col-sm-3">
                                         <div class="form-group">
-                                            <label for="end_time" class="control-label">Go To Settings and Set Schedule</label>
+                                            <label for="end_time" class="control-label">Go To Settings</label>
                                             <a href="{{ route('teacher.hours') }}">
                                                 <button type="button" class="btn btn-default">
                                                     <i class="fa fa-clock-o"></i> &nbsp; Click if no appointment times are available
