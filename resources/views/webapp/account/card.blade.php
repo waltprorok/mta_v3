@@ -29,6 +29,7 @@
                             <div class="card-body">
                                 <ul class="list-group">
                                     <li class="list-group-item active">Update Current Credit Card on File</li>
+                                    <li class="list-group-item"><i class="fa fa-credit-card-alt" style="padding-right: 10px;" aria-hidden="true"></i>{{ Auth::user()->card_brand }} ending in {{ Auth::user()->card_last_four }}</li>
                                     <li class="list-group-item"><i class="fa fa-credit-card" style="padding-right: 10px;" aria-hidden="true"></i> Credit Card Number</li>
                                     <li class="list-group-item"><i class="fa fa-keyboard-o" style="padding-right: 10px;" aria-hidden="true"></i> Month, Year, CVC and Zip Code</li>
                                     <li class="list-group-item"><i class="fa fa-lock" style="padding-right: 16px;" aria-hidden="true"></i> Trusted Secure Payment</li>

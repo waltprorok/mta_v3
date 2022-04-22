@@ -19,7 +19,6 @@ class BlogController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
      * @return Application|Factory|View
      */
     public function index()
@@ -34,8 +33,8 @@ class BlogController extends Controller
     }
 
     /**
-     * @return View
      * Admin list of blog posts
+     * @return View
      */
     public function list(): View
     {
@@ -72,7 +71,6 @@ class BlogController extends Controller
 
     /**
      * Display the specified resource.
-     *
      * @param $slug
      * @return Application|Factory|View
      */
@@ -85,7 +83,6 @@ class BlogController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
      * @param int $id
      * @return Application|Factory|View
      */
@@ -112,7 +109,6 @@ class BlogController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
      * @param int $id
      * @return Application|Redirector|RedirectResponse
      */

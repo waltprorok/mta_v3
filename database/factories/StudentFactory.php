@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Factory;
 $factory->define(Student::class, function (Faker $faker) {
 
     return [
-        'student_id' => $faker->unique()->numberBetween(6, 56),
+        'student_id' => $faker->unique()->numberBetween(8, 108),
         'teacher_id' => $faker->numberBetween(3, 4),
         'first_name' => $faker->firstName(),
         'last_name' => $faker->lastName,
