@@ -254,7 +254,7 @@
                     @elseif (Carbon\Carbon::now() < Auth::user()->trial_ends_at && ! Auth::user()->subscribed('premium') && ! Auth::user()->admin)
                         <div class="alert alert-info alert-dismissible text">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            Enjoy your free trail! <a style="color: white;" href="{{ route('account.subscription') }}"><b>Don't forget to subscribe</b>.</a>
+                            Enjoy your free trail. <a style="color: white;" href="{{ route('account.subscription') }}"><b>Don't forget to subscribe</b>.</a>
                         </div>
                     @endif
                 </div>

@@ -6,6 +6,7 @@ use App\Http\Requests\StoreTeacherSettingsRequest;
 use App\Models\BusinessHours;
 use App\Models\Teacher;
 use App\Models\User;
+use App\Services\PhoneNumberService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,16 @@ use Illuminate\Support\Facades\Storage;
 
 class TeacherController extends Controller
 {
+    private $phoneNumberService;
+
+    /**
+     * @param PhoneNumberService $phoneNumberService
+     */
+    public function __construct(PhoneNumberService $phoneNumberService)
+    {
+        $this->phoneNumberService = $phoneNumberService;
+    }
+
     public function adminTeachers()
     {
         $teachers = Teacher::all();
@@ -38,7 +49,7 @@ class TeacherController extends Controller
      */
     public function store(StoreTeacherSettingsRequest $request): RedirectResponse
     {
-        $phone = preg_replace('/\D+/', '', $request->get('phone'));
+        $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
 
         $studio = new Teacher([
             'teacher_id' => Auth::id(),
@@ -51,7 +62,7 @@ class TeacherController extends Controller
             'state' => $request->get('state'),
             'zip' => $request->get('zip'),
             'email' => $request->get('email'),
-            'phone' => $phone
+            'phone' => $phoneNumber
         ]);
 
         if ($request->hasFile('logo')) {
@@ -75,7 +86,7 @@ class TeacherController extends Controller
 
     public function update(StoreTeacherSettingsRequest $request): RedirectResponse
     {
-        $phonef = preg_replace('/\D+/', '', $request->get('phone'));
+        $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
 
         $teacher = Teacher::where('teacher_id', '=', Auth::id())->first();
         $teacher->teacher_id = Auth::id();
@@ -88,7 +99,7 @@ class TeacherController extends Controller
         $teacher->state = $request->get('state');
         $teacher->zip = $request->get('zip');
         $teacher->email = $request->get('email');
-        $teacher->phone = $phonef;
+        $teacher->phone = $phoneNumber;
 
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');

@@ -10,6 +10,7 @@ use App\Models\Lesson;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
+use App\Services\PhoneNumberService;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,6 +24,19 @@ use Illuminate\Support\Str;
 class StudentController extends Controller
 {
     public $selectedDate;
+
+    /**
+     * @var PhoneNumberService
+     */
+    private $phoneNumberService;
+
+    /**
+     * @param PhoneNumberService $phoneNumberService
+     */
+    public function __construct(PhoneNumberService $phoneNumberService)
+    {
+        $this->phoneNumberService = $phoneNumberService;
+    }
 
     public function adminStudents()
     {
@@ -83,7 +97,7 @@ class StudentController extends Controller
             'terms' => true,
         ]);
 
-        $phoneNumber = preg_replace('/\D/', '', $request->get('phone'));
+        $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
 
         Student::create([
             'student_id' => $studentUser->id,
@@ -126,8 +140,8 @@ class StudentController extends Controller
         }
 
         // TODO if successful fire an event to email the new user
+        $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
 
-        $phoneNumber = preg_replace('/\D/', '', $request->get('phone'));
         // update student record
         $student->first_name = $request->get('first_name');
         $student->last_name = $request->get('last_name');
