@@ -136,7 +136,7 @@
                                 </div>
                                 @if (isset($student->date_of_birth))
                                     <div class="col-sm-9">
-                                        {{ date('F d, Y | l ', strtotime($student->date_of_birth)) }}
+                                        {{ date('F d, Y', strtotime($student->date_of_birth)) }}
                                     </div>
                                 @endif
                             </div>

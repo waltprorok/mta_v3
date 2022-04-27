@@ -161,6 +161,18 @@
                                         @endif
                                     </div>
                                 </div>
+                                @if(count($allTimes) < 1)
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="end_time" class="control-label">Go To Settings</label>
+                                            <a href="{{ route('teacher.hours') }}">
+                                                <button type="button" class="btn btn-default">
+                                                    <i class="fa fa-clock-o"></i> &nbsp; Click if no appointment times are available
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                             <input type="hidden" class="form-control" name="student_id" value="{{ $student->id }}">
                             <input type="hidden" name="title" value="{{ $student->first_name }} {{ $student->last_name }}">

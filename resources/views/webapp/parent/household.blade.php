@@ -81,7 +81,7 @@
                                     <h6 class="mb-0">Birthday</h6>
                                 </div>
                                 <div class="col-sm-9">
-                                    {{ date('F d, Y | l ', strtotime($student->date_of_birth)) }}
+                                    {{ date('F d, Y', strtotime($student->date_of_birth)) }}
                                 </div>
                             </div>
                         </div>

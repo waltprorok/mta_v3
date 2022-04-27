@@ -209,7 +209,7 @@ class SubscriptionController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function updateProfile(Request $request)
+    public function updateProfile(Request $request): RedirectResponse
     {
         $request->validate([
             'first_name' => 'required',
@@ -238,7 +238,10 @@ class SubscriptionController extends Controller
             ]);
 
             $user->password = bcrypt($request->get('new_password'));
+
             $user->save();
+
+
 
             return redirect()->back()->with('success', 'Password changed successfully!');
         }

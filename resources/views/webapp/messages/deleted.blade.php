@@ -31,7 +31,7 @@
                                 <td>{{ $message->userFrom->first_name }}&nbsp;{{ $message->userFrom->last_name }}</td>
                                 <td>{{ $message->userFrom->email }}</td>
                                 <td>{{ $message->subject }}</td>
-                                <td>@if (isset($message->created_at)) {{$message->created_at->format('M d')}} @endif</td>
+                                <td>@if (isset($message->created_at)) {{$message->created_at->format('M d h:i a')}} @endif</td>
                                 <td><a href="{{ route('message.return', $message->id) }}" class="btn btn-sm btn-info">Return message to inbox</a></td>
                             </tr>
                         @endforeach

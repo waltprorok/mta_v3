@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\PhoneNumberService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -43,24 +44,25 @@ class Student extends Model
         'teacher_id'
     ];
 
+    private $phoneNumberService;
+
+    /**
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+
+        $phoneNumberService = new PhoneNumberService();
+        $this->phoneNumberService = $phoneNumberService;
+    }
+
     /**
      * @return string|null
      */
     public function getPhoneNumberAttribute(): ?string
     {
-        if ($this->phone != null) {
-            $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
-
-            if (strlen($cleaned) == 10) {
-                preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
-                return "{$matches[1]}-{$matches[2]}-{$matches[3]}";
-            } else if (strlen($cleaned) == 11) {
-                preg_match('/(\d)(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
-                return "{$matches[1]}-{$matches[2]}-{$matches[3]}-{$matches[4]}";
-            }
-        }
-
-        return $this->phone;
+        return $this->phoneNumberService->getPhoneNumberFormat($this->phone);
     }
 
     /**

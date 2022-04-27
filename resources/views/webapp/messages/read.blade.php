@@ -22,7 +22,7 @@
                                 <br/>
                                 <b>Subject:</b>&emsp;{{ $message->subject }}
                                 <br/>
-                                <b>Sent:</b>&emsp;&emsp;&ensp;{{ $message->created_at->format('F d Y h:m a') }}
+                                <b>Sent:</b>&emsp;&emsp;&ensp;{{ $message->created_at->format('F d, Y h:m a') }}
                             </div>
 
                             <div class="card-body">
