@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class ParentController extends Controller
 {
-    public function household()
+    /**
+     * @return View
+     */
+    public function household(): View
     {
         $parent = User::with('parentOfStudent')->findOrFail(Auth::id()); // uses pivot table
 

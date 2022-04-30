@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class TeacherController extends Controller
 {
@@ -25,14 +26,20 @@ class TeacherController extends Controller
         $this->phoneNumberService = $phoneNumberService;
     }
 
-    public function adminTeachers()
+    /**
+     * @return View
+     */
+    public function adminTeachers(): View
     {
         $teachers = Teacher::all();
 
         return view('webapp.admin.teacher.index', compact('teachers', $teachers));
     }
 
-    public function index()
+    /**
+     * @return RedirectResponse
+     */
+    public function index(): RedirectResponse
     {
         $teacher = User::with('getTeacher')->findOrFail(Auth::id());
 
@@ -77,13 +84,20 @@ class TeacherController extends Controller
         return redirect()->route('teacher.editSettings')->with('success', 'You successfully saved your settings');
     }
 
-    public function edit()
+    /**
+     * @return View
+     */
+    public function edit(): View
     {
         $setting = User::with('getTeacher')->findOrFail(Auth::id());
 
         return view('webapp.teacher.studiosettings', compact('setting', $setting));
     }
 
+    /**
+     * @param StoreTeacherSettingsRequest $request
+     * @return RedirectResponse
+     */
     public function update(StoreTeacherSettingsRequest $request): RedirectResponse
     {
         $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
@@ -113,19 +127,28 @@ class TeacherController extends Controller
         return redirect()->back()->with('success', 'You successfully updated your settings');
     }
 
-    public function profile()
+    /**
+     * @return View
+     */
+    public function profile(): View
     {
         $teacher = User::with('getTeacher')->find(Auth::id());
 
         return view('webapp.teacher.profile')->with('teacher', $teacher);
     }
 
-    public function payment()
+    /**
+     * @return View
+     */
+    public function payment(): View
     {
         return view('webapp.teacher.payment');
     }
 
-    public function hours()
+    /**
+     * @return RedirectResponse
+     */
+    public function hours(): RedirectResponse
     {
         $hours = BusinessHours::where('teacher_id', Auth::id())->first();
 
@@ -136,7 +159,10 @@ class TeacherController extends Controller
         return redirect()->route('teacher.hoursView');
     }
 
-    public function hoursView()
+    /**
+     * @return View
+     */
+    public function hoursView(): View
     {
         $hours = BusinessHours::where('teacher_id', Auth::id())->get();
 
