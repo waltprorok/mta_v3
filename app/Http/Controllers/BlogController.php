@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBlogPostRequest;
 use App\Models\Blog;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -15,13 +12,13 @@ use Illuminate\View\View;
 
 class BlogController extends Controller
 {
-    protected $blogLimit = 12;
+    protected $blogLimit = 6;
 
     /**
      * Display a listing of the resource.
-     * @return Application|Factory|View
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $blogs = Blog::with('author')
             ->latestFirst()
@@ -48,7 +45,6 @@ class BlogController extends Controller
 
     /**
      * Show the form for creating a new blog post.
-     *
      * @return View
      */
     public function create(): View
@@ -72,9 +68,9 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      * @param $slug
-     * @return Application|Factory|View
+     * @return View
      */
-    public function show($slug)
+    public function show($slug): View
     {
         $blog = Blog::where('slug', $slug)->firstOrFail();
 
@@ -84,9 +80,9 @@ class BlogController extends Controller
     /**
      * Show the form for editing the specified resource.
      * @param int $id
-     * @return Application|Factory|View
+     * @return View
      */
-    public function edit(int $id)
+    public function edit(int $id): View
     {
         $update = Blog::findOrFail($id);
 
@@ -110,9 +106,9 @@ class BlogController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param int $id
-     * @return Application|Redirector|RedirectResponse
+     * @return RedirectResponse
      */
-    public function destroy(int $id)
+    public function destroy(int $id): RedirectResponse
     {
         $deleteBlog = Blog::findOrFail($id);
 
@@ -151,7 +147,7 @@ class BlogController extends Controller
             Storage::disk('blog')->put($fileName, File::get($file));
             $editBlog->image = $fileName;
         }
-        
+
         $editBlog->save();
     }
 }

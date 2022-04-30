@@ -17,33 +17,33 @@ class HomeController extends Controller
         return view('marketing.home');
     }
 
-    public function pricing()
+    public function pricing(): View
     {
         $plans = Plan::all();
         return view('marketing.pricing', compact('plans'));
     }
 
-    public function terms()
+    public function terms(): View
     {
         return view('marketing.terms');
     }
 
-    public function privacy()
+    public function privacy(): View
     {
         return view('marketing.privacy');
     }
 
-    public function faq()
+    public function faq(): View
     {
         return view('marketing.faq');
     }
 
-    public function dashboard()
+    public function dashboard(): View
     {
         return view('webapp.index');
     }
 
-    public function contact()
+    public function contact(): View
     {
         return view('marketing.contact');
     }
