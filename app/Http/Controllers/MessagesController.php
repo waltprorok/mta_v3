@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SendMessageRequest;
 use App\Models\Message;
 use App\Services\MessageService;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -24,9 +22,16 @@ class MessagesController extends Controller
         $this->messageService = $messageService;
     }
 
-    public function index()
+    /**
+     * @return View
+     */
+    public function index(): View
     {
-        $messages = Message::with('userFrom')->where('user_id_to', Auth::id())->notDeleted()->orderBy('created_at', 'desc')->get();
+        $messages = Message::with('userFrom')
+            ->where('user_id_to', Auth::id())
+            ->notDeleted()
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('webapp.messages.inbox')->with('messages', $messages);
     }
@@ -34,9 +39,9 @@ class MessagesController extends Controller
     /**
      * @param int $id
      * @param string $subject
-     * @return Application|Factory|View
+     * @return View
      */
-    public function create(int $id = 0, string $subject = '')
+    public function create(int $id = 0, string $subject = ''): View
     {
         $users = $this->messageService->getUsers($id);
         $subject = $this->messageService->getSubjectString($subject);
@@ -61,18 +66,25 @@ class MessagesController extends Controller
         return redirect()->route('message.inbox')->with('success', 'Message sent successfully!');
     }
 
-    public function sent()
+    /**
+     * @return View
+     */
+    public function sent(): View
     {
         $messages = Message::with('userTo')
             ->where('user_id_from', Auth::id())
-            ->orderBy('created', 'desc')
             ->notDeleted()
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('webapp.messages.sent')->with('messages', $messages);
     }
 
-    public function read(int $id)
+    /**
+     * @param int $id
+     * @return View
+     */
+    public function read(int $id): View
     {
         $message = Message::with('userFrom')->find($id);
 
@@ -84,6 +96,10 @@ class MessagesController extends Controller
         return view('webapp.messages.read')->with('message', $message);
     }
 
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     */
     public function delete(int $id): RedirectResponse
     {
         $message = Message::find($id);
@@ -93,7 +109,10 @@ class MessagesController extends Controller
         return redirect()->route('message.inbox')->with('success', 'Message deleted successfully');
     }
 
-    public function deleted()
+    /**
+     * @return View
+     */
+    public function deleted(): View
     {
         $messages = Message::with('userFrom')
             ->where('user_id_to', Auth::id())
@@ -103,6 +122,10 @@ class MessagesController extends Controller
         return view('webapp.messages.deleted')->with('messages', $messages);
     }
 
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     */
     public function return(int $id): RedirectResponse
     {
         $message = Message::find($id);
