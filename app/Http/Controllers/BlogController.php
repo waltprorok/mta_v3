@@ -91,10 +91,10 @@ class BlogController extends Controller
 
     /**
      * @param StoreBlogPostRequest $request
-     * @param $id
+     * @param int $id
      * @return RedirectResponse
      */
-    public function update(StoreBlogPostRequest $request, $id): RedirectResponse
+    public function update(StoreBlogPostRequest $request, int $id): RedirectResponse
     {
         $editBlog = Blog::findOrFail($id);
 

@@ -8,42 +8,41 @@ use App\Models\Contact;
 use App\Models\Plan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    public function index(): View
+    public function index()
     {
         return view('marketing.home');
     }
 
-    public function pricing(): View
+    public function pricing()
     {
         $plans = Plan::all();
         return view('marketing.pricing', compact('plans'));
     }
 
-    public function terms(): View
+    public function terms()
     {
         return view('marketing.terms');
     }
 
-    public function privacy(): View
+    public function privacy()
     {
         return view('marketing.privacy');
     }
 
-    public function faq(): View
+    public function faq()
     {
         return view('marketing.faq');
     }
 
-    public function dashboard(): View
+    public function dashboard()
     {
         return view('webapp.index');
     }
 
-    public function contact(): View
+    public function contact()
     {
         return view('marketing.contact');
     }
@@ -52,7 +51,7 @@ class HomeController extends Controller
      * @param StoreContactSubmissionRequest $request
      * @return RedirectResponse
      */
-    public function sendContact(StoreContactSubmissionRequest $request): RedirectResponse
+    public function sendContact(StoreContactSubmissionRequest $request)
     {
         Contact::create([
             'name' => $request->get('name'),
