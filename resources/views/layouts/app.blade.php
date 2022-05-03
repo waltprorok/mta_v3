@@ -15,7 +15,7 @@
 
     <title>
         @if(View::hasSection('title'))
-            @yield('title') - {{ config('app.name', 'MTA') }}
+            @yield('title') | {{ config('app.name', 'MTA') }}
         @else
             {{ config('app.name', 'MTA') }}
         @endif

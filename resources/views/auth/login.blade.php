@@ -8,7 +8,7 @@
                 <div class="section-header text-center">
                     <h2 class="title">Sign In To Your Account</h2>
                 </div>
-                <p class="text-center">Not a member yet? <a href="{{ route('pricing') }}"><u>Click here</u></a> to join our
+                <p class="text-center">Not a member yet? <a href="{{ route('register') }}"><u>Click here</u></a> to join our
                     community.</p>
                 <div class="panel panel-default">
                     <br/>

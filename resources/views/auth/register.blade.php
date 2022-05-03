@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Register')
+@section('title', 'Create your account')
 @section('content')
 
     <div id="fixedNavBar" class="container reg-padding">
@@ -100,25 +100,6 @@
                 </div>
             </div>
         </div>
-
-{{--        <div class="row">--}}
-{{--            <div class="col-lg-10 col-lg-offset-1">--}}
-{{--                <div class="panel panel-default">--}}
-{{--                    <div class="panel-heading">Payment Questions</div>--}}
-{{--                    <div class="panel-body">--}}
-{{--                        <p><b>Do I have to give my credit card information to use the 30-Day free trial?</b></p>--}}
-{{--                        <p>Definitely not. We only expect you to submit your card info once you've tried the--}}
-{{--                            service and decide to continue using it. Once you submit your payment info, your card will--}}
-{{--                            be charged at that time, and the free period will end.</p>--}}
-{{--                        <p><b>How do I cancel my account?</b></p>--}}
-{{--                        <p>You can cancel at any time from the "Account->Subscription" page after you login. There are no--}}
-{{--                            cancellation fees or other hidden charges. Everything is month to month.</p>--}}
-{{--                        <p><b>What types of payment do you accept?</b></p>--}}
-{{--                        <p>We accept all major credit cards (Visa, Mastercard, Amex, Discover).</p>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
     </div>
 
 @endsection
