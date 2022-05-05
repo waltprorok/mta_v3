@@ -9,7 +9,6 @@
                     <h2 class="title">FAQ</h2>
                     <h3>Frequently Asked Questions.</h3>
                 </div>
-
                 <div class="col-md-8 col-md-offset-2">
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 

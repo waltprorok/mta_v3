@@ -11,7 +11,6 @@
                 </div>
 
                 <div class="col-md-8 col-md-offset-2">
-
                     <form action="{{ route('contact') }}" method="post">
                         @csrf
                         <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">

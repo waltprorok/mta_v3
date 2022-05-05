@@ -76,12 +76,12 @@
                             <div class="form-check{{ $errors->has('terms') ? ' has-error' : '' }}">
                                 <div class="col-md-10 col-md-offset-1">
                                     <label for="terms" class="form-check-label">
-                                        <input type="checkbox" name="terms" value="1" id="terms"
-                                               class="form-check-input">
+                                        <input type="checkbox" name="terms" value="1" id="terms" class="form-check-input">
                                         &nbsp;&nbsp;I agree to the
                                         <a href="{{ route('terms') }}" target="_blank" style="text-decoration: underline;">Terms of Service</a> and
                                         <a href="{{ route('privacy') }}" target="_blank" style="text-decoration: underline;">Privacy Policy</a>.
                                     </label>
+
                                     @if ($errors->has('terms'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('terms') }}</strong>
@@ -92,7 +92,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-10 col-md-offset-1" style="margin-top: 16px;">
-                                    <button type="submit" id="signup" class="btn btn-primary btn-block btn-" disabled>Sign Up</button>
+                                    <button type="submit" id="signup" class="btn btn-primary btn-block" disabled>Register</button>
                                 </div>
                             </div>
                         </form>

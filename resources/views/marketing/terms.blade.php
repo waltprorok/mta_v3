@@ -69,7 +69,6 @@
                     products, software, and the Services, including without limitation, any and all information,
                     text, graphics, and photos.</p>
 
-
                 <h3>Definitions: The following terminology applies to these Terms of Service:</h3>
 
                 <ul class="list-group">
@@ -426,6 +425,7 @@
                     including reasonable attorney’s fees.</p>
 
                 <h3>Remedies for Breach of Terms of Service</h3>
+
                 <p>MusicTeachersAid may suspend and terminate your use of the Site or Services without notice to
                     you for breach of the Terms of Service. MusicTeachersAid may also report your activities to
                     federal and/or state law enforcement agencies.</p>
@@ -460,6 +460,7 @@
                     networking software or other third-party software.</p>
 
                 <h3>Third Party Content</h3>
+
                 <p>The Site and Services may contain information and content provided by third parties not
                     related to MusicTeachersAid, including hyperlinks to third party websites. MusicTeachersAid
                     does not in any way imply, suggest, or constitute any sponsorship or recommendation of any
@@ -576,11 +577,10 @@
                     TO INSTALL MusicTeachersAid SOFTWARE, YOU EXPRESSLY CONSENT TO BE BOUND BY THE TERMS OF THIS
                     AGREEMENT.</p>
 
-
                 <p>By using the Music Teacher's Aid website, you are agreeing to be bound by the following
                     terms and conditions (“Terms of Service”).</p>
-                <p>
-                    Music Teacher's Aid reserves the right to update and change the Terms of Service from
+
+                <p>Music Teacher's Aid reserves the right to update and change the Terms of Service from
                     time to time without notice. Any new features that augment or enhance the current Service,
                     including the release of new tools and resources, shall be subject to the Terms of Service.
                     Continued use of the Service after any such changes shall constitute your consent to such
