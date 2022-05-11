@@ -32,33 +32,36 @@
 <script>
 
 export default {
-    data() {
+    data: function () {
         return {
             list: [],
             hasData: true,
             lesson: {
                 id: null,
                 complete: null,
-                // title: null,
-                // start_date: null,
-                // end_date: null,
-                // duration: null,
+                title: null,
+                start_date: null,
+                end_date: null,
+                interval: null,
             },
         }
     },
+
     mounted: function () {
         this.fetchLessonList();
     },
+
     methods: {
         fetchLessonList: function () {
             axios.get('lessons/list')
                 .then((response) => {
-                    this.list = response.data;
+                    this.list = response.data.data;
                     this.hasData = this.hasDataFn();
                 }).catch((error) => {
                 console.log(error);
             });
         },
+
         updateLesson: function (id, complete) {
             let self = this;
             self.lesson.id = id;
@@ -73,8 +76,9 @@ export default {
                     console.log(error);
                 });
         },
+
         hasDataFn: function () {
-            return this.list ? this.list.length >= 1 : false;
+            return this.list ? this.list.length > 0 : false;
         }
     },
 }

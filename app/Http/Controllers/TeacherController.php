@@ -145,10 +145,7 @@ class TeacherController extends Controller
         return view('webapp.teacher.payment');
     }
 
-    /**
-     * @return RedirectResponse
-     */
-    public function hours(): RedirectResponse
+    public function hours()
     {
         $hours = BusinessHours::where('teacher_id', Auth::id())->first();
 

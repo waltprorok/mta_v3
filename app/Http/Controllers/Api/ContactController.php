@@ -10,11 +10,6 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
-    public function indexBlade()
-    {
-        return view('webapp.admin.contact.index');
-    }
-
     /**
      * @return mixed
      */

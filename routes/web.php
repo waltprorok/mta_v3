@@ -53,7 +53,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('contacts')->group(function () {
-        Route::get('/', 'Api\ContactController@indexBlade')->name('contact.index');
+        Route::view('/', 'webapp.admin.contact.index')->name('contact.index');
     });
 
     Route::prefix('calendar')->group(function () {
@@ -61,7 +61,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('lessons')->group(function () {
-        Route::get('/', 'LessonController@indexBlade')->name('complete.lessons');
+        Route::view('/', 'webapp.lessons.index')->name('complete.lessons');
         Route::get('/list', 'LessonController@list');
         Route::patch('/update/{lesson}', 'LessonController@update');
     });
@@ -144,7 +144,3 @@ Route::group(['middleware' => ['subscribed']], function () {
 // Example of single route with middleware
 // Route::get('/', 'LessonController@index')->name('calendar.index')->middleware('subscribed');
 });
-
-
-
-

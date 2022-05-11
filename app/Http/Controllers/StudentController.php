@@ -149,6 +149,11 @@ class StudentController extends Controller
         $student->parent_email = $request->get('parent_email');
         $student->phone = $phoneNumber;
         $student->date_of_birth = $request->get('date_of_birth');
+        $student->address = $request->get('address');
+        $student->address_2 = $request->get('address_2');
+        $student->city = $request->get('city');
+        $student->state = $request->get('state');
+        $student->zip = $request->get('zip');
         $student->instrument = $request->get('instrument');
         $student->status = $request->get('status');
 
@@ -158,7 +163,7 @@ class StudentController extends Controller
             Storage::disk('student')->put($fileName, File::get($file));
             $student->photo = $fileName;
         }
-        // save student record
+
         $student->save();
 
         return redirect()->back()->with('success', 'You successfully updated the student.');

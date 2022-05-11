@@ -9,7 +9,7 @@
 
     <title>
         @if(View::hasSection('title'))
-            @yield('title') - MTA
+            @yield('title') | MTA
         @else
             MTA
         @endif
@@ -58,7 +58,7 @@
 {{--                </div>--}}
 {{--            </li>--}}
             <li class="nav-item dropdown">
-                <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link" href="#" role="button" title="Messages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-envelope-open"></i>
                     <span class="badge badge-pill badge-danger">{{ \App\Models\User::unreadMessagesCount() }}</span>
                     <span class="small ml-1 d-md-down-none"></span>
@@ -70,7 +70,7 @@
                 </div>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" title="Account and Settings" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-user fa-lg" aria-hidden="true"></i>
                     <span class="small ml-1 d-md-down-none"></span>
                 </a>
