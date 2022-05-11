@@ -69,7 +69,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="contact in list" v-show="hasData">
+            <tr v-for="contact in list" v-show="hasListData">
                 <td v-text="contact.name"></td>
                 <td><a v-bind:href="'mailto:' + contact.email">{{ contact.email }}</a></td>
                 <!-- TODO: Make an anchor tag to open a new page to send a response email -->
@@ -82,7 +82,7 @@
                     <button @click="showModalDelete(contact.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 </td>
             </tr>
-            <tr v-show="!hasData">
+            <tr v-show="!hasListData">
                 <td colspan="6" class="text-center">No data available in table</td>
             </tr>
             </tbody>
@@ -119,14 +119,13 @@
 <script>
 
 export default {
-    data() {
+    data: function () {
         return {
             edit: false,
             showForm: false,
             read: false,
             showModal: false,
             list: [],
-            hasData: true,
             contact: {
                 id: null,
                 name: null,
@@ -137,9 +136,17 @@ export default {
             },
         }
     },
+
     mounted: function () {
         this.fetchContactList();
     },
+
+    computed: {
+        hasListData: function () {
+            return this.list ? this.list.length > 0 : false;
+        }
+    },
+
     methods: {
         cancelForm: function () {
             let self = this;
@@ -151,20 +158,22 @@ export default {
             self.contact.message = null;
             self.edit = false;
         },
+
         showModalDelete: function (id) {
             let self = this;
             self.showModal = true;
             self.id = id;
         },
+
         fetchContactList: function () {
             axios.get('api/contact')
                 .then((response) => {
                     this.list = response.data;
-                    this.hasData = this.hasDataFn();
                 }).catch((error) => {
                 console.log(error);
             });
         },
+
         createContact: function () {
             let self = this;
             let params = Object.assign({}, self.contact);
@@ -182,6 +191,7 @@ export default {
                     console.log(error);
                 });
         },
+
         showContact: function (id, read) {
             let self = this;
             self.showForm = true;
@@ -196,11 +206,12 @@ export default {
                 })
             self.edit = true;
         },
+
         updateContact: function (id) {
             let self = this;
             let params = Object.assign({}, self.contact);
             axios.patch('api/contact/' + id, params)
-                .then(function (response) {
+                .then(function () {
                     self.contact.name = '';
                     self.contact.email = '';
                     self.contact.subject = '';
@@ -219,6 +230,7 @@ export default {
                 });
             self.showForm = false;
         },
+
         deleteContact: function (id) {
             let self = this;
             let params = Object.assign({}, self.contact);
@@ -231,9 +243,6 @@ export default {
                     console.log(error);
                 });
         },
-        hasDataFn: function () {
-            return this.list ? this.list.length >= 1 : false;
-        }
     },
 }
 </script>

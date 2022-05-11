@@ -36,10 +36,10 @@
         <a href="#" class="btn btn-link sidebar-mobile-toggle d-md-none mr-auto">
             <i class="fa fa-bars"></i>
         </a>
-{{--        Toogle side navigation bar--}}
-{{--        <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">--}}
-{{--            <i class="fa fa-bars"></i>--}}
-{{--        </a>--}}
+        {{--Toogle side navigation bar--}}
+        <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">
+            <i class="fa fa-bars"></i>
+        </a>
         <a class="navbar-brand" href="{{ route('dashboard') }}">
             <img src="{{ asset('webapp/imgs/logo-mta1.png') }}" alt="mta_logo">
         </a>
@@ -79,9 +79,9 @@
                         <i class="fa fa-calculator"></i>Account
                     </a>
                     @if(Auth::user()->teacher)
-                    <a href="{{ route('teacher.studioIndex') }}" class="dropdown-item">
-                        <i class="fa fa-wrench"></i>Settings
-                    </a>
+                        <a href="{{ route('teacher.studioIndex') }}" class="dropdown-item">
+                            <i class="fa fa-wrench"></i>Settings
+                        </a>
                     @endif
                     <a href="#" class="dropdown-item">
                         <i class="fa fa-life-ring"></i>Support
@@ -103,7 +103,6 @@
 
 <!-- Javascript Libraries -->
 {{--Controls Dashboard UI conflicting with Calendar--}}
-
 <script src="{{ asset('webapp/vendor/popper.js/popper.min.js') }}"></script>
 <script src="{{ asset('webapp/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('webapp/vendor/chart.js/chart.min.js') }}"></script>
