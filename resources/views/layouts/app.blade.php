@@ -208,7 +208,6 @@
 </div>
 <!-- /Preloader -->
 
-
 <!-- jQuery Plugins -->
 <script type="text/javascript" src="{{ asset('marketing/js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('marketing/js/bootstrap.min.js') }}"></script>
