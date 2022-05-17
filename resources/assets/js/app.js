@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -14,7 +13,10 @@ let axios = require('axios');
 import Vue from 'vue';
 import VueFilterDateParse from '@vuejs-community/vue-filter-date-parse';
 import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
+import {VuejsDatatableFactory} from 'vuejs-datatable';
 
+
+Vue.use(VuejsDatatableFactory);
 Vue.use(VueFilterDateParse);
 Vue.use(VueFilterDateFormat);
 /**

@@ -57,36 +57,62 @@
             </transition>
         </div>
 
-        <table class="table table-responsive-md">
-            <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Subject</th>
-                <th scope="col">Message</th>
-                <th scope="col">Created</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="contact in list" v-show="hasListData">
-                <td v-text="contact.name"></td>
-                <td><a v-bind:href="'mailto:' + contact.email">{{ contact.email }}</a></td>
-                <!-- TODO: Make an anchor tag to open a new page to send a response email -->
-                <td v-text="contact.subject"></td>
-                <td>{{ contact.message.substring(0, 100) + "..." }}</td>
-                <td>{{ contact.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
-                <td class="text-nowrap">
-                    <button @click="showContact(contact.id, true)" class="btn btn-outline-primary btn-sm" title="read"><i class="fa fa-envelope-open"></i></button>
-                    <button @click="showContact(contact.id, false)" class="btn btn-outline-secondary btn-sm" title="edit"><i class="fa fa-edit"></i></button>
-                    <button @click="showModalDelete(contact.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                </td>
-            </tr>
-            <tr v-show="!hasListData">
-                <td colspan="6" class="text-center">No data available in table</td>
-            </tr>
-            </tbody>
-        </table>
+        <!--        <table class="table table-responsive-md">-->
+        <!--            <thead>-->
+        <!--            <tr>-->
+        <!--                <th scope="col">Name</th>-->
+        <!--                <th scope="col">Email</th>-->
+        <!--                <th scope="col">Subject</th>-->
+        <!--                <th scope="col">Message</th>-->
+        <!--                <th scope="col">Created</th>-->
+        <!--                <th scope="col">Actions</th>-->
+        <!--            </tr>-->
+        <!--            </thead>-->
+        <!--            <tbody>-->
+        <!--            <tr v-for="contact in list" v-show="hasListData">-->
+        <!--                <td v-text="contact.name"></td>-->
+        <!--                <td><a v-bind:href="'mailto:' + contact.email">{{ contact.email }}</a></td>-->
+        <!--                &lt;!&ndash; TODO: Make an anchor tag to open a new page to send a response email &ndash;&gt;-->
+        <!--                <td v-text="contact.subject"></td>-->
+        <!--                <td>{{ contact.message.substring(0, 100) + "..." }}</td>-->
+        <!--                <td>{{ contact.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>-->
+        <!--                <td class="text-nowrap">-->
+        <!--                    <button @click="showContact(contact.id, true)" class="btn btn-outline-primary btn-sm" title="read"><i class="fa fa-envelope-open"></i></button>-->
+        <!--                    <button @click="showContact(contact.id, false)" class="btn btn-outline-secondary btn-sm" title="edit"><i class="fa fa-edit"></i></button>-->
+        <!--                    <button @click="showModalDelete(contact.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>-->
+        <!--                </td>-->
+        <!--            </tr>-->
+        <!--            <tr v-show="!hasListData">-->
+        <!--                <td colspan="6" class="text-center">No data available in table</td>-->
+        <!--            </tr>-->
+        <!--            </tbody>-->
+        <!--        </table>-->
+
+        <!-- vue js data table -->
+        <div class="form-control">
+            <div class="form-group pull-right">
+                <!--                <label for="filter" class="sr-only">Search</label>-->
+                <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
+            </div>
+            <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
+                <template v-slot="{ columns, row }">
+                    <tr>
+                        <td>{{ row.name }}</td>
+                        <td><a v-bind:href="'mailto:' + row.email">{{ row.email }}</a></td>
+                        <td>{{ row.subject }}</td>
+                        <td>{{ row.message.substring(0, 100) + "..." }}</td>
+                        <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
+                        <td class="text-nowrap">
+                            <button @click="showContact(row.id, true)" class="btn btn-outline-primary btn-sm" title="read"><i class="fa fa-envelope-open"></i></button>
+                            <button @click="showContact(row.id, false)" class="btn btn-outline-secondary btn-sm" title="edit"><i class="fa fa-edit"></i></button>
+                            <button @click="showModalDelete(row.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        </td>
+                    </tr>
+                </template>
+            </datatable>
+            <datatable-pager v-model="page" type="long" :per-page="per_page"></datatable-pager>
+        </div>
+        <!-- end of vue js data table -->
 
         <div v-if="showModal">
             <transition name="modal">
@@ -117,15 +143,25 @@
 </template>
 
 <script>
-
 export default {
     data: function () {
         return {
+            filter: '',
+            columns: [
+                {label: 'Name', field: 'name', align: 'left'},
+                {label: 'Email', field: 'email', align: 'left'},
+                {label: 'Subject', field: 'subject', align: 'left'},
+                {label: 'Message', field: 'message', align: 'left'},
+                {label: 'Created At', field: 'created_at', align: 'left'},
+                {label: 'Actions', align: 'left'}
+            ],
             edit: false,
             showForm: false,
             read: false,
             showModal: false,
             list: [],
+            page: 1,
+            per_page: 2,
             contact: {
                 id: null,
                 name: null,
