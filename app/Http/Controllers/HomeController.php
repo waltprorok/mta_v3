@@ -8,11 +8,10 @@ use App\Models\Contact;
 use App\Models\Plan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    public function index(): View
+    public function index()
     {
         return view('marketing.home');
     }
@@ -52,7 +51,7 @@ class HomeController extends Controller
      * @param StoreContactSubmissionRequest $request
      * @return RedirectResponse
      */
-    public function sendContact(StoreContactSubmissionRequest $request): RedirectResponse
+    public function sendContact(StoreContactSubmissionRequest $request)
     {
         Contact::create([
             'name' => $request->get('name'),

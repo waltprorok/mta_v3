@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\LessonResource;
 use App\Models\Lesson;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use MaddHatter\LaravelFullcalendar\Facades\Calendar;
 
@@ -50,17 +52,12 @@ class LessonController extends Controller
         return view('webapp.calendar.index', compact('calendar'));
     }
 
-    public function indexBlade()
-    {
-        return view('webapp.lessons.index');
-    }
-
-    public function list()
+    public function list(): AnonymousResourceCollection
     {
         if (Auth::user()->admin) {
-            return Lesson::with('lessonTeacherId')->orderBy('title')->orderBy('start_date', 'asc')->get();
+            return LessonResource::collection(Lesson::with('lessonTeacherId')->orderBy('title')->orderBy('start_date')->get());
         } else {
-            return Lesson::where('teacher_id', Auth::id())->orderBy('title')->orderBy('start_date', 'asc')->get();
+            return LessonResource::collection(Lesson::where('teacher_id', Auth::id())->orderBy('title')->orderBy('start_date')->get());
         }
     }
 

@@ -1,8 +1,12 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use Tests\TestCase;
+
+/**
+ * Purpose to call
+ */
 
 class MarketingTest extends TestCase
 {

@@ -682,7 +682,7 @@ header {
 .about {
     position: relative;
     text-align: center;
-    padding: 40px 20px;
+    padding: 8px 20px;
     margin: 15px 0px;
 }
 
@@ -828,31 +828,32 @@ header {
     border-radius: 50%;
 }
 
-.service:after {
-    content: "";
-    background-color: #1C1D21;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 0%;
-    z-index: -1;
-    -webkit-transition: 0.2s width;
-    transition: 0.2s width;
-}
+/*.service:after {*/
+/*    content: "";*/
+/*    background-color: #1C1D21;*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*    top: 0;*/
+/*    bottom: 0;*/
+/*    width: 0%;*/
+/*    z-index: -1;*/
+/*    -webkit-transition: 0.2s width;*/
+/*    transition: 0.2s width;*/
+/*}*/
 
-.service:hover:after {
-    width: 100%;
-}
+/*.service:hover:after {*/
+/*    width: 100%;*/
+/*}*/
 
-.service h3 {
-    -webkit-transition: 0.2s color;
-    transition: 0.2s color;
-}
+/*.service h3 {*/
+/*    -webkit-transition: 0.2s color;*/
+/*    transition: 0.2s color;*/
+/*}*/
 
-.service:hover h3 {
-    color: #fff;
-}
+/*.service:hover h3 {*/
+/*    !*color: #ccc;*!*/
+/*    font-weight: 900;*/
+/*}*/
 
 /*------------------------------------*\
 	Why choose us

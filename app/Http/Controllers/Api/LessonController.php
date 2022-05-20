@@ -3,20 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\LessonResource;
 use App\Models\Lesson;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class LessonController extends Controller
 {
-    public function indexBlade()
+    public function index(): AnonymousResourceCollection
     {
-        return view('webapp.admin.lesson.index');
-    }
-
-    public function index()
-    {
-        return Lesson::with('lessonTeacherId')->orderBy('title')->orderBy('start_date', 'asc')->get();
+        return LessonResource::collection(
+            Lesson::with('lessonTeacherId')->orderBy('title')->orderBy('start_date')->get()
+        );
     }
 
     /**

@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Mail\SubscribedMail;
 use App\Models\Plan;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,12 +13,12 @@ use Illuminate\View\View;
 
 class SubscriptionController extends Controller
 {
-    protected $receiptLimit = 5;
+    protected $receiptLimit = 12;
 
     /**
-     * @return Application|Factory|View
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $user = Auth::user();
 
@@ -33,9 +31,9 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * @return Application|Factory|View
+     * @return View
      */
-    public function subscribed()
+    public function subscribed(): View
     {
         return view('webapp.account.subscription');
     }
@@ -45,7 +43,7 @@ class SubscriptionController extends Controller
      * @param Plan $plan
      * @return RedirectResponse
      */
-    public function create(Request $request, Plan $plan)
+    public function create(Request $request, Plan $plan): RedirectResponse
     {
         $teacher = Auth::user()->getTeacher()->first();
 
@@ -69,7 +67,10 @@ class SubscriptionController extends Controller
         return redirect()->back()->with('success', 'Thank you for subscribing to our service.');
     }
 
-    public function listPlanChange()
+    /**
+     * @return View
+     */
+    public function listPlanChange(): View
     {
         $plans = Plan::all();
         $user = Auth::user();
@@ -147,9 +148,9 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * @return Application|Factory|View
+     * @return View
      */
-    public function creditCard()
+    public function creditCard(): View
     {
         return view('webapp.account.card');
     }
@@ -171,7 +172,7 @@ class SubscriptionController extends Controller
 
     /**
      * @param $invoiceId
-     * @return mixed
+     * @return array
      */
     public function pdfDownload($invoiceId)
     {
@@ -186,9 +187,9 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * @return Application|Factory|View
+     * @return View
      */
-    public function invoices()
+    public function invoices(): View
     {
         $user = Auth::user();
 
@@ -198,9 +199,9 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * @return Application|Factory|View
+     * @return View
      */
-    public function profile()
+    public function profile(): View
     {
         return view('webapp.account.profile');
     }
@@ -240,8 +241,6 @@ class SubscriptionController extends Controller
             $user->password = bcrypt($request->get('new_password'));
 
             $user->save();
-
-
 
             return redirect()->back()->with('success', 'Password changed successfully!');
         }

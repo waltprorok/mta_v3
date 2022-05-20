@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
-    public function adminUsers()
+    /**
+     * @return View
+     */
+    public function adminUsers(): View
     {
         $users = User::all();
 

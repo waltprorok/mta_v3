@@ -80,7 +80,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group{{ $errors->has('body') ? ' has-error' : '' }}">
-                                <label for="body" class="control-label">Body</label>
+                                <label for="body" class="control-label">Body</label>&nbsp;<small>*Markdown Available</small>
                                 <textarea class="form-control" name="body" rows="16">{{ old('body') }}</textarea>
 
                                 @if ($errors->has('body'))
@@ -88,7 +88,6 @@
                                         <strong>{{ $errors->first('body') }}</strong>
                                     </span>
                                 @endif
-
                             </div>
                         </div>
                     </div>

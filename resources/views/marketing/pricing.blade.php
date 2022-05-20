@@ -2,19 +2,14 @@
 @section('title', 'Pricing')
 @section('content')
 
-    <!-- Pricing -->
     <div id="pricing" class="section md-padding">
-        <!-- Container -->
         <div class="container">
-            <!-- Row -->
             <div class="row">
-                <!-- Section header -->
                 <div class="section-header text-center">
                     <h2 class="title">Pricing Table</h2>
                     <h3>Music Teacher's Aid automates scheduling and billing so you can focus on your students.</h3>
                 </div>
-                <!-- /Section header -->
-                <!-- pricing -->
+
                 <div class="col-md-4 col-md-offset-0">
                     <div class="pricing">
                         <div class="price-head">
@@ -42,7 +37,7 @@
                         </ul>
 
                         <div class="price-btn">
-                            <a href="{{ route('register') }}" class="outline-btn">Sign Up</a>
+                            <a href="{{ route('register') }}" class="outline-btn">Start Free Trial</a>
                         </div>
                     </div>
                 </div>
@@ -74,17 +69,13 @@
                                 </li>
                             </ul>
                             <div class="price-btn">
-                                <a href="{{ route('register') }}" class="outline-btn">Free Trial</a>
+                                <a href="{{ route('register') }}" class="outline-btn">Start Free Trial</a>
                             </div>
                         </div>
                     </div>
-            @endforeach
-            <!-- /pricing -->
+                @endforeach
             </div>
-            <!-- Row -->
         </div>
-        <!-- /Container -->
     </div>
-    <!-- /Pricing -->
 
 @endsection

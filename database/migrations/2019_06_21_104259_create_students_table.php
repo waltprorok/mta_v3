@@ -27,6 +27,11 @@ class CreateStudentsTable extends Migration
             $table->string('parent_email')->nullable()->unique();
             $table->string('phone')->nullable();
             $table->date('date_of_birth')->nullable();
+            $table->string('address')->nullable();
+            $table->string('address_2')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->integer('zip')->nullable();
             $table->string('instrument')->nullable();
             $table->integer('status')->nullable();
             $table->string('photo')->nullable();

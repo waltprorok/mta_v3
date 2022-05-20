@@ -57,36 +57,32 @@
             </transition>
         </div>
 
-        <table class="table table-responsive-md">
-            <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Subject</th>
-                <th scope="col">Message</th>
-                <th scope="col">Created</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="contact in list" v-show="hasData">
-                <td v-text="contact.name"></td>
-                <td><a v-bind:href="'mailto:' + contact.email">{{ contact.email }}</a></td>
-                <!-- TODO: Make an anchor tag to open a new page to send a response email -->
-                <td v-text="contact.subject"></td>
-                <td>{{ contact.message.substring(0, 100) + "..." }}</td>
-                <td>{{ contact.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
-                <td class="text-nowrap">
-                    <button @click="showContact(contact.id, true)" class="btn btn-outline-primary btn-sm" title="read"><i class="fa fa-envelope-open"></i></button>
-                    <button @click="showContact(contact.id, false)" class="btn btn-outline-secondary btn-sm" title="edit"><i class="fa fa-edit"></i></button>
-                    <button @click="showModalDelete(contact.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                </td>
-            </tr>
-            <tr v-show="!hasData">
-                <td colspan="6" class="text-center">No data available in table</td>
-            </tr>
-            </tbody>
-        </table>
+        <!-- vue js data table -->
+        <div class="form-control">
+            <div class="form-group pull-right">
+                <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
+            </div>
+            <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
+                <template v-slot="{ columns, row }">
+                    <tr>
+                        <td>{{ row.name }}</td>
+                        <td><a v-bind:href="'mailto:' + row.email">{{ row.email }}</a></td>
+                        <td>{{ row.subject }}</td>
+                        <td>{{ row.message.substring(0, 100) + "..." }}</td>
+                        <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
+                        <td class="text-nowrap">
+                            <button @click="showContact(row.id, true)" class="btn btn-outline-primary btn-sm" title="read"><i class="fa fa-envelope-open"></i></button>
+                            <button @click="showContact(row.id, false)" class="btn btn-outline-secondary btn-sm" title="edit"><i class="fa fa-edit"></i></button>
+                            <button @click="showModalDelete(row.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        </td>
+                    </tr>
+                </template>
+            </datatable>
+            <div class="pull-right">
+                <bootstrap-3-datatable-pager class="pagination" v-model="page" type="long" :per-page="per_page"></bootstrap-3-datatable-pager>
+            </div>
+        </div>
+        <!-- end of vue js data table -->
 
         <div v-if="showModal">
             <transition name="modal">
@@ -117,16 +113,27 @@
 </template>
 
 <script>
+import 'vuejs-datatable/dist/themes/bootstrap-3.esm';
 
 export default {
-    data() {
+    data: function () {
         return {
+            filter: '',
+            columns: [
+                {label: 'Name', field: 'name',},
+                {label: 'Email', field: 'email',},
+                {label: 'Subject', field: 'subject',},
+                {label: 'Message', field: 'message',},
+                {label: 'Created', field: 'created_at',},
+                {label: 'Actions',}
+            ],
             edit: false,
             showForm: false,
             read: false,
             showModal: false,
             list: [],
-            hasData: true,
+            page: 1,
+            per_page: 10,
             contact: {
                 id: null,
                 name: null,
@@ -137,9 +144,17 @@ export default {
             },
         }
     },
+
     mounted: function () {
         this.fetchContactList();
     },
+
+    computed: {
+        hasListData: function () {
+            return this.list ? this.list.length > 0 : false;
+        }
+    },
+
     methods: {
         cancelForm: function () {
             let self = this;
@@ -151,20 +166,22 @@ export default {
             self.contact.message = null;
             self.edit = false;
         },
+
         showModalDelete: function (id) {
             let self = this;
             self.showModal = true;
             self.id = id;
         },
+
         fetchContactList: function () {
             axios.get('api/contact')
                 .then((response) => {
                     this.list = response.data;
-                    this.hasData = this.hasDataFn();
                 }).catch((error) => {
                 console.log(error);
             });
         },
+
         createContact: function () {
             let self = this;
             let params = Object.assign({}, self.contact);
@@ -182,6 +199,7 @@ export default {
                     console.log(error);
                 });
         },
+
         showContact: function (id, read) {
             let self = this;
             self.showForm = true;
@@ -196,11 +214,12 @@ export default {
                 })
             self.edit = true;
         },
+
         updateContact: function (id) {
             let self = this;
             let params = Object.assign({}, self.contact);
             axios.patch('api/contact/' + id, params)
-                .then(function (response) {
+                .then(function () {
                     self.contact.name = '';
                     self.contact.email = '';
                     self.contact.subject = '';
@@ -219,6 +238,7 @@ export default {
                 });
             self.showForm = false;
         },
+
         deleteContact: function (id) {
             let self = this;
             let params = Object.assign({}, self.contact);
@@ -231,9 +251,6 @@ export default {
                     console.log(error);
                 });
         },
-        hasDataFn: function () {
-            return this.list ? this.list.length >= 1 : false;
-        }
     },
 }
 </script>
@@ -255,5 +272,65 @@ export default {
 .modal-wrapper {
     display: table-cell;
     vertical-align: top;
+}
+
+table thead tr th {
+    text-align: left !important;
+}
+
+.pagination {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding-left: 0;
+    list-style: none
+}
+
+.pagination ul li {
+    position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #777;
+    background-color: #fff;
+    border: 1px solid #dee2e6
+}
+
+.pagination ul li:hover {
+    color: #515151;
+    text-decoration: none;
+    background-color: #e9ecef;
+    border-color: #dee2e6
+}
+
+.pagination ul li:focus {
+    z-index: 2;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+
+.pagination ul li:not(:disabled):not(.disabled) {
+    cursor: pointer
+}
+
+.pagination ul li:first-child {
+    margin-left: 0
+}
+
+.pagination ul li.active {
+    z-index: 1;
+    color: #fff;
+    background-color: #42a5f5;
+    border-color: #42a5f5
+}
+
+.pagination ul li.disabled {
+    color: #999;
+    pointer-events: none;
+    cursor: auto;
+    background-color: #fff;
+    border-color: #dee2e6
 }
 </style>

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ReportController extends Controller
 {
-    public function all()
+    /**
+     * @return View
+     */
+    public function all(): View
     {
         return view('webapp.reports.all');
     }

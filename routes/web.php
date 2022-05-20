@@ -52,16 +52,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('updateProfile', 'SubscriptionController@updateProfile')->name('account.updateProfile');
     });
 
-    Route::prefix('contacts')->group(function () {
-        Route::get('/', 'Api\ContactController@indexBlade')->name('contact.index');
-    });
-
     Route::prefix('calendar')->group(function () {
         Route::get('/', 'LessonController@index')->name('calendar.index');
     });
 
     Route::prefix('lessons')->group(function () {
-        Route::get('/', 'LessonController@indexBlade')->name('complete.lessons');
+        Route::view('/', 'webapp.lessons.index')->name('complete.lessons');
         Route::get('/list', 'LessonController@list');
         Route::patch('/update/{lesson}', 'LessonController@update');
     });
@@ -122,6 +118,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     // middleware guard for just admin user in dashboard
     Route::group(['middleware' => ['admin']], function () {
+        // admin contacts list
+        Route::prefix('contacts')->group(function () {
+            Route::view('/', 'webapp.admin.contact.index')->name('contact.index');
+        });
         Route::prefix('admin')->group(function () {
             // admin blog routes
             Route::get('/blog', 'BlogController@list')->name('admin.blog.list');
@@ -144,7 +144,3 @@ Route::group(['middleware' => ['subscribed']], function () {
 // Example of single route with middleware
 // Route::get('/', 'LessonController@index')->name('calendar.index')->middleware('subscribed');
 });
-
-
-
-

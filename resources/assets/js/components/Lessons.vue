@@ -11,7 +11,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="lesson in list" v-show="hasData">
+            <tr v-for="lesson in list" v-show="hasListData">
                 <td>
                     <button class="btn btn-default btn-rounded" v-if="!lesson.complete" @click="updateLesson(lesson.id, lesson.complete)">Click to Complete</button>
                     <button class="btn btn-success btn-rounded" v-if="lesson.complete" @click="updateLesson(lesson.id, lesson.complete)">Completed</button>
@@ -21,7 +21,7 @@
                 <td>{{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
                 <td v-text="lesson.interval"></td>
             </tr>
-            <tr v-show="!hasData">
+            <tr v-show="!hasListData">
                 <td colspan="6" class="text-center">No data available in table</td>
             </tr>
             </tbody>
@@ -30,40 +30,47 @@
 </template>
 
 <script>
-
 export default {
-    data() {
+    data: function () {
         return {
             list: [],
-            hasData: true,
             lesson: {
                 id: null,
                 complete: null,
-                // title: null,
-                // start_date: null,
-                // end_date: null,
-                // duration: null,
+                title: null,
+                start_date: null,
+                end_date: null,
+                interval: null,
             },
         }
     },
+
     mounted: function () {
         this.fetchLessonList();
     },
+
+    computed: {
+        hasListData() {
+            return this.list ? this.list.length > 0 : false;
+        }
+    },
+
     methods: {
         fetchLessonList: function () {
             axios.get('lessons/list')
                 .then((response) => {
-                    this.list = response.data;
-                    this.hasData = this.hasDataFn();
+                    this.list = response.data.data;
                 }).catch((error) => {
                 console.log(error);
             });
         },
+
         updateLesson: function (id, complete) {
             let self = this;
             self.lesson.id = id;
             self.lesson.complete = !complete;
             let params = Object.assign({}, self.lesson);
+
             axios.patch('lessons/update/' + id, params)
                 .then(function (response) {
                     self.fetchLessonList();
@@ -73,9 +80,6 @@ export default {
                     console.log(error);
                 });
         },
-        hasDataFn: function () {
-            return this.list ? this.list.length >= 1 : false;
-        }
     },
 }
 </script>

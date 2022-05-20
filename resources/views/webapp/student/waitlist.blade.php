@@ -11,12 +11,20 @@
         <h4>Students</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
-            <li class="breadcrumb-item active">Wait List</li>
+            <li class="breadcrumb-item active">Students</li>
         </ul>
-        @include('partials.studentListTabs')
+{{--        @include('partials.studentListTabs')--}}
         <div class="card">
             <div class="card-body">
+                <div class="input-group mb-3 col-2">
+                    <span class="input-group-text"><i class="fa fa-user"></i></span><div class="input-group-prepend"></div>
+                    <select id=students class="form-control" onchange="window.location.href=this.options[this.selectedIndex].value;">
+                        <option value="{{ route('student.index') }}">Active</option>
+                        <option value="{{ route('student.leads') }}">Leads</option>
+                        <option value="{{ route('student.waitlist') }}" selected>Wait List</option>
+                        <option value="{{ route('student.inactive') }}">Inactive</option>
+                    </select>
+                </div>
                 <table class="table table-condensed table-hover table-responsive-md" id="dtStudentWaitlistIndex">
                     <thead class="thead">
                     <tr>

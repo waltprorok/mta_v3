@@ -76,4 +76,6 @@ $(document).ready(function () {
             $('ul.nav').find('a[href="' + navDropdownToggle + '"]').parent().addClass('open')
         }
     });
+
+    onchange="window.location.href=this.value;"
 });

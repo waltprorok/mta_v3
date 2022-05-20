@@ -15,7 +15,7 @@
 
     <title>
         @if(View::hasSection('title'))
-            @yield('title') - {{ config('app.name', 'MTA') }}
+            @yield('title') | {{ config('app.name', 'MTA') }}
         @else
             {{ config('app.name', 'MTA') }}
         @endif
@@ -78,9 +78,10 @@
                 <li><a href="{{ url('/#features') }}">Features</a></li>
                 <li><a href="{{ url('/#testimonials') }}">Testimonials</a></li>
                 <li><a href="{{ route('blog.index') }}">Blog</a></li>
-                <li class="active"><a href="{{ route('pricing') }}">Pricing</a></li>
+                <li><a href="{{ route('pricing') }}">Pricing</a></li>
                 @guest
                     <li><a href="{{ route('login') }}">Login</a></li>
+                    <li class="active"><a href="{{ route('register') }}">Sign Up Today!</a></li>
                 @else
                     <li class="has-dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"
@@ -125,7 +126,7 @@
     <!-- Container -->
     <div class="container">
         <div class="row">
-            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 ">
+            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6">
                 <div class="footer-widget ">
                     <div class="footer-title">Company</div>
                     <ul class="list-unstyled">
@@ -135,7 +136,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 ">
+            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6">
                 <div class="footer-widget ">
                     <div class="footer-title">Quick Links</div>
                     <ul class="list-unstyled">
@@ -144,18 +145,18 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 ">
-                <div class="footer-widget ">
-                    <div class="footer-title">Social</div>
-                    <ul class="list-unstyled">
-                        <li><a href="#">Facebook</a></li>
-                        <li><a href="#">Twitter</a></li>
-                        <li><a href="#">LinkedIn</a></li>
-                        <li><a href="#">YouTube</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-6 col-6 ">
+{{--            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6">--}}
+{{--                <div class="footer-widget ">--}}
+{{--                    <div class="footer-title">Social</div>--}}
+{{--                    <ul class="list-unstyled">--}}
+{{--                        <li><a href="#">Facebook</a></li>--}}
+{{--                        <li><a href="#">Twitter</a></li>--}}
+{{--                        <li><a href="#">LinkedIn</a></li>--}}
+{{--                        <li><a href="#">YouTube</a></li>--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+            <div class="col-xl-3 col-lg-4 col-md-12 col-sm-6 col-6 col-lg-offset-2">
                 <div class="footer-widget ">
                     <h3 class="footer-title">Subscribe to Our News Letter</h3>
                     <form method="post" action="{{ route('newsletter') }}">
@@ -180,7 +181,7 @@
                 <!-- /footer logo -->
                 <!-- footer copyright -->
                 <div class="footer-copyright">
-                    <p>Copyright © {{ now()->year }}. All Rights Reserved. Designed by
+                    <p>Copyright &copy; {{ now()->year }}. All Rights Reserved. Designed by
                         <a href="{{ route('home') }}">Music Teachers Aid, LLC</a></p>
                 </div>
                 <!-- /footer copyright -->
@@ -207,7 +208,6 @@
 </div>
 <!-- /Preloader -->
 
-
 <!-- jQuery Plugins -->
 <script type="text/javascript" src="{{ asset('marketing/js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('marketing/js/bootstrap.min.js') }}"></script>
@@ -216,7 +216,7 @@
 <script type="text/javascript" src="{{ asset('marketing/js/main.js') }}"></script>
 
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
+{{--<script src="{{ asset('js/app.js') }}"></script>--}}
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146819127-1"></script>

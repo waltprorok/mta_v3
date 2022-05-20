@@ -16,7 +16,7 @@
                 <p>MusicTeachersAid is an automated studio for music teachers. The privacy and security of our
                     customers and all individuals who visit MusicTeachersAid sites and the sites of
                     MusicTeachersAid affiliates (“MusicTeachersAid”) are of paramount importance to us and we
-                    are committed to protecting your Personal Information. This Privacy policy describes our
+                    are committed to protecting your Personal Information. This Privacy Policy describes our
                     policies regarding the nature of the information we collect, how we use this information,
                     our compliance with law and regulation, and the security provided to prevent disclosure of
                     your Personal Information. This Privacy Policy also provides information relating to choices
