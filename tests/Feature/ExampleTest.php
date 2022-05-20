@@ -1,16 +1,17 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Feature;
 
 use Tests\TestCase;
 
 /**
- * Unit tests target small, relatively isolated
- * units -- a class or method, usually
+ * Feature Tests test the way individual
+ * units work together and pass massages
  */
 
 class ExampleTest extends TestCase
 {
+
     /**
      * A basic test example.
      *
@@ -20,4 +21,5 @@ class ExampleTest extends TestCase
     {
         $this->assertTrue(true);
     }
+
 }
