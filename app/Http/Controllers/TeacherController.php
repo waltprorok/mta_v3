@@ -36,10 +36,7 @@ class TeacherController extends Controller
         return view('webapp.admin.teacher.index', compact('teachers', $teachers));
     }
 
-    /**
-     * @return RedirectResponse
-     */
-    public function index(): RedirectResponse
+    public function index()
     {
         $teacher = User::with('getTeacher')->findOrFail(Auth::id());
 
