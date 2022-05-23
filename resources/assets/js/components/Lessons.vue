@@ -12,10 +12,10 @@
                             <button class="btn btn-default btn-rounded" v-if="!row.complete" @click="updateLesson(row.id, row.complete)">Click to Complete</button>
                             <button class="btn btn-success btn-rounded" v-if="row.complete" @click="updateLesson(row.id, row.complete)">Completed</button>
                         </td>
-                        <td>{{ row.title }}</td>
+                        <td v-text="row.title"></td>
                         <td>{{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
                         <td>{{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
-                        <td>{{ row.interval }}</td>
+                        <td v-text="row.interval"></td>
                     </tr>
                 </template>
             </datatable>

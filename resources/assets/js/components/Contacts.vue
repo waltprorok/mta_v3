@@ -65,10 +65,10 @@
             <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
                     <tr>
-                        <td>{{ row.name }}</td>
-                        <td><a v-bind:href="'mailto:' + row.email">{{ row.email }}</a></td>
-                        <td>{{ row.subject }}</td>
-                        <td>{{ row.message.substring(0, 100) + "..." }}</td>
+                        <td v-text="row.name"></td>
+                        <td><a v-bind:href="'mailto:' + row.email" v-text="row.email"></a></td>
+                        <td v-text="row.subject"></td>
+                        <td v-text="row.message.substring(0, 100) + '...'"></td>
                         <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
                         <td class="text-nowrap">
                             <button @click="showContact(row.id, true)" class="btn btn-outline-primary btn-sm" title="read"><i class="fa fa-envelope-open"></i></button>
@@ -113,8 +113,6 @@
 </template>
 
 <script>
-import 'vuejs-datatable/dist/themes/bootstrap-3.esm';
-
 export default {
     data: function () {
         return {

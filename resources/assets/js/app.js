@@ -14,6 +14,7 @@ import Vue from 'vue';
 import VueFilterDateParse from '@vuejs-community/vue-filter-date-parse';
 import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
 import {VuejsDatatableFactory} from 'vuejs-datatable';
+import 'vuejs-datatable/dist/themes/bootstrap-3.esm';
 
 
 Vue.use(VuejsDatatableFactory);

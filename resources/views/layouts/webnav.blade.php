@@ -15,7 +15,7 @@
                     <li class="nav-item">
                         <a href="{{ route('contact.index') }}"
                            class="nav-link {{ Route::currentRouteName() == 'contact.index' ? 'active' : '' }}">
-                            <i class="fa fa-compress"></i> Contact Us
+                            <i class="fa fa-compress"></i> Contacts
                         </a>
                     </li>
 
