@@ -8,7 +8,7 @@
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" v-show="read">Contact Record</h5>
+                                    <h5 class="modal-title" v-show="read">Read Contact Record</h5>
                                     <h5 class="modal-title" v-show="edit && !read">Edit Contact Record</h5>
                                     <h5 class="modal-title" v-show="!edit && !read">Add Contact Record</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -66,7 +66,7 @@
                 <template v-slot="{ columns, row }">
                     <tr>
                         <td v-text="row.name"></td>
-                        <td><a v-bind:href="'mailto:' + row.email" v-text="row.email"></a></td>
+                        <td><a :href="'mailto:' + row.email" v-text="row.email"></a></td>
                         <td v-text="row.subject"></td>
                         <td v-text="row.message.substring(0, 100) + '...'"></td>
                         <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>

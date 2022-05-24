@@ -17,8 +17,8 @@ class NewsletterController extends Controller
         if (empty($request->input('email'))) {
             return back();
         } else {
-            if (! Newsletter::isSubscribed($request->email)) {
-                Newsletter::subscribePending($request->email);
+            if (! Newsletter::isSubscribed($request->get('email'))) {
+                Newsletter::subscribePending($request->get('email'));
 
                 return back()->with('success', 'Thank You For Subscribing to the News Letter');
             }
