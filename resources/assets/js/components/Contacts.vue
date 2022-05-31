@@ -29,19 +29,19 @@
                                     <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">
                                         <div class="form-group">
                                             <label for="name">Name</label>
-                                            <input id="name" v-model="contact.name" type="text" class="form-control">
+                                            <input id="name" v-model.trim="contact.name" type="text" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Email</label>
-                                            <input id="email" v-model="contact.email" type="text" class="form-control">
+                                            <input id="email" v-model.trim="contact.email" type="text" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label for="subject">Subject</label>
-                                            <input id="subject" v-model="contact.subject" type="text" class="form-control">
+                                            <input id="subject" v-model.trim="contact.subject" type="text" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label for="message">Message</label>
-                                            <textarea id="message" v-model="contact.message" class="form-control" rows="15"></textarea>
+                                            <textarea id="message" v-model.trim="contact.message" class="form-control" rows="15"></textarea>
                                         </div>
                                         <div class="form-group pull-right">
                                             <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>
@@ -79,7 +79,7 @@
                 </template>
             </datatable>
             <div class="pull-right">
-                <bootstrap-3-datatable-pager class="pagination" v-model="page" type="long" :per-page="per_page"></bootstrap-3-datatable-pager>
+                <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
             </div>
         </div>
         <!-- end of vue js data table -->

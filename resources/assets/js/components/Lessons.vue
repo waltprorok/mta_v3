@@ -20,7 +20,7 @@
                 </template>
             </datatable>
             <div class="pull-right">
-                <bootstrap-3-datatable-pager class="pagination" v-model="page" type="long" :per-page="per_page"></bootstrap-3-datatable-pager>
+                <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
             </div>
         </div>
         <!-- end of vue js data table -->

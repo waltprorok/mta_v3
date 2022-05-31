@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\LessonResource;
 use App\Models\Lesson;
+use DateTime;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -26,8 +27,8 @@ class LessonController extends Controller
                 $lessons[] = Calendar::event(
                     $value->title,
                     null,
-                    new \DateTime($value->start_date),
-                    new \DateTime($value->end_date),
+                    new DateTime($value->start_date),
+                    new DateTime($value->end_date),
                     $value->id,
                     [
                         'color' => $value->color,
