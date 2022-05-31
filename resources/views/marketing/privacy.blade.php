@@ -187,24 +187,13 @@
                 <h3>Data protection officer</h3>
 
                 <p>MusicTeachersAid has appointed a Data Protection Officer to coordinate regulatory, contract
-                    and legal matters. You may contact our Data Protection Officer by email at
-                    dpo@MusicTeachersAid.com, or write to us at the following address:</p>
-                <address>MusicTeachersAid, LLC<br/>
-                    Data Protection Officer<br/>
-                    9917 Lenox Street<br/>
-                    Clermont, FL 34711 USA
-                </address>
+                    and legal matters. You may contact our Data Protection Officer at
+                    <a href="https://musicteachersaid.com/contact">Contact Us</a>.</p>
 
 
                 <h3>Contact information</h3>
-                <p>You may contact us online concerning our Privacy Policy at support@MusicTeachersAid.com or
-                    write to us at the following address:</p>
-
-                <address>MusicTeachersAid, LLC<br/>
-                    Attention: Data Privacy Manager<br/>
-                    9917 Lenox Street<br/>
-                    Clermont, FL 34711 USA
-                </address>
+                <p>You may contact us online concerning our Privacy Policy
+                    at <a href="https://musicteachersaid.com/contact">Contact Us</a></p>
             </div>
         </div>
     </div>

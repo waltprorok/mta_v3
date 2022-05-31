@@ -56,9 +56,9 @@ class LessonController extends Controller
     public function list(): AnonymousResourceCollection
     {
         if (Auth::user()->admin) {
-            return LessonResource::collection(Lesson::with('lessonTeacherId')->orderBy('title')->orderBy('start_date')->get());
+            return $this->getAllLessonsForAdmin();
         } else {
-            return LessonResource::collection(Lesson::where('teacher_id', Auth::id())->orderBy('title')->orderBy('start_date')->get());
+            return $this->getLessonsForTeacherId();
         }
     }
 
@@ -74,5 +74,15 @@ class LessonController extends Controller
         $lesson->save();
 
         return response()->json($lesson, 200);
+    }
+
+    public function getAllLessonsForAdmin(): AnonymousResourceCollection
+    {
+        return LessonResource::collection(Lesson::with('lessonTeacherId')->orderBy('title')->orderBy('start_date')->get());
+    }
+
+    public function getLessonsForTeacherId(): AnonymousResourceCollection
+    {
+        return LessonResource::collection(Lesson::where('teacher_id', Auth::id())->orderBy('title')->orderBy('start_date')->get());
     }
 }
