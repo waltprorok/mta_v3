@@ -1,31 +1,29 @@
 <template>
     <div class="card">
-        <table class="table table-responsive-md">
-            <thead>
-            <tr>
-                <th scope="col">Completed</th>
-                <th scope="col">Name</th>
-                <th scope="col">Start Date</th>
-                <th scope="col">End Date</th>
-                <th scope="col">Duration</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="lesson in list" v-show="hasListData">
-                <td>
-                    <button class="btn btn-default btn-rounded" v-if="!lesson.complete" @click="updateLesson(lesson.id, lesson.complete)">Click to Complete</button>
-                    <button class="btn btn-success btn-rounded" v-if="lesson.complete" @click="updateLesson(lesson.id, lesson.complete)">Completed</button>
-                </td>
-                <td v-text="lesson.title"></td>
-                <td>{{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
-                <td>{{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
-                <td v-text="lesson.interval"></td>
-            </tr>
-            <tr v-show="!hasListData">
-                <td colspan="6" class="text-center">No data available in table</td>
-            </tr>
-            </tbody>
-        </table>
+        <!-- vue js data table -->
+        <div class="form-control">
+            <div class="form-group pull-right">
+                <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
+            </div>
+            <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
+                <template v-slot="{ columns, row }">
+                    <tr>
+                        <td>
+                            <button class="btn btn-default btn-rounded" v-if="!row.complete" @click="updateLesson(row.id, row.complete)">Click to Complete</button>
+                            <button class="btn btn-success btn-rounded" v-if="row.complete" @click="updateLesson(row.id, row.complete)">Completed</button>
+                        </td>
+                        <td v-text="row.title"></td>
+                        <td>{{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
+                        <td>{{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
+                        <td v-text="row.interval"></td>
+                    </tr>
+                </template>
+            </datatable>
+            <div class="pull-right">
+                <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
+            </div>
+        </div>
+        <!-- end of vue js data table -->
     </div>
 </template>
 
@@ -33,7 +31,17 @@
 export default {
     data: function () {
         return {
+            filter: '',
+            columns: [
+                {label: 'Completed', field: 'complete',},
+                {label: 'Name', field: 'title',},
+                {label: 'Start Date', field: 'start_date',},
+                {label: 'End Date', field: 'end_date',},
+                {label: 'Duration', field: 'interval',},
+            ],
             list: [],
+            page: 1,
+            per_page: 10,
             lesson: {
                 id: null,
                 complete: null,
@@ -83,3 +91,65 @@ export default {
     },
 }
 </script>
+
+<style>
+table thead tr th {
+    text-align: left !important;
+}
+
+.pagination {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding-left: 0;
+    list-style: none
+}
+
+.pagination ul li {
+    position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #777;
+    background-color: #fff;
+    border: 1px solid #dee2e6
+}
+
+.pagination ul li:hover {
+    color: #515151;
+    text-decoration: none;
+    background-color: #e9ecef;
+    border-color: #dee2e6
+}
+
+.pagination ul li:focus {
+    z-index: 2;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+
+.pagination ul li:not(:disabled):not(.disabled) {
+    cursor: pointer
+}
+
+.pagination ul li:first-child {
+    margin-left: 0
+}
+
+.pagination ul li.active {
+    z-index: 1;
+    color: #fff;
+    background-color: #42a5f5;
+    border-color: #42a5f5
+}
+
+.pagination ul li.disabled {
+    color: #999;
+    pointer-events: none;
+    cursor: auto;
+    background-color: #fff;
+    border-color: #dee2e6
+}
+</style>

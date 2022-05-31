@@ -8,7 +8,7 @@
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" v-show="read">Contact Record</h5>
+                                    <h5 class="modal-title" v-show="read">Read Contact Record</h5>
                                     <h5 class="modal-title" v-show="edit && !read">Edit Contact Record</h5>
                                     <h5 class="modal-title" v-show="!edit && !read">Add Contact Record</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -29,19 +29,19 @@
                                     <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">
                                         <div class="form-group">
                                             <label for="name">Name</label>
-                                            <input id="name" v-model="contact.name" type="text" class="form-control">
+                                            <input id="name" v-model.trim="contact.name" type="text" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Email</label>
-                                            <input id="email" v-model="contact.email" type="text" class="form-control">
+                                            <input id="email" v-model.trim="contact.email" type="text" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label for="subject">Subject</label>
-                                            <input id="subject" v-model="contact.subject" type="text" class="form-control">
+                                            <input id="subject" v-model.trim="contact.subject" type="text" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label for="message">Message</label>
-                                            <textarea id="message" v-model="contact.message" class="form-control" rows="15"></textarea>
+                                            <textarea id="message" v-model.trim="contact.message" class="form-control" rows="15"></textarea>
                                         </div>
                                         <div class="form-group pull-right">
                                             <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>
@@ -65,10 +65,10 @@
             <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
                     <tr>
-                        <td>{{ row.name }}</td>
-                        <td><a v-bind:href="'mailto:' + row.email">{{ row.email }}</a></td>
-                        <td>{{ row.subject }}</td>
-                        <td>{{ row.message.substring(0, 100) + "..." }}</td>
+                        <td v-text="row.name"></td>
+                        <td><a :href="'mailto:' + row.email" v-text="row.email"></a></td>
+                        <td v-text="row.subject"></td>
+                        <td v-text="row.message.substring(0, 100) + '...'"></td>
                         <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
                         <td class="text-nowrap">
                             <button @click="showContact(row.id, true)" class="btn btn-outline-primary btn-sm" title="read"><i class="fa fa-envelope-open"></i></button>
@@ -79,7 +79,7 @@
                 </template>
             </datatable>
             <div class="pull-right">
-                <bootstrap-3-datatable-pager class="pagination" v-model="page" type="long" :per-page="per_page"></bootstrap-3-datatable-pager>
+                <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
             </div>
         </div>
         <!-- end of vue js data table -->
@@ -113,8 +113,6 @@
 </template>
 
 <script>
-import 'vuejs-datatable/dist/themes/bootstrap-3.esm';
-
 export default {
     data: function () {
         return {
