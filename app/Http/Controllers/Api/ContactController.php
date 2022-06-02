@@ -7,6 +7,7 @@ use App\Models\Contact;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
@@ -33,6 +34,17 @@ class ContactController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'subject' => 'required|min:3',
+            'message' => 'required|min:3',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
+        }
+
         $contact = Contact::create($request->all());
 
         return response()->json($contact, 201);
@@ -55,7 +67,7 @@ class ContactController extends Controller
      * @return JsonResponse
      * @throws Exception
      */
-    public function delete(Contact $contact): JsonResponse
+    public function destroy(Contact $contact): JsonResponse
     {
         $contact->delete();
 

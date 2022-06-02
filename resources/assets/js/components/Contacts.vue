@@ -30,18 +30,22 @@
                                         <div class="form-group">
                                             <label for="name">Name</label>
                                             <input id="name" v-model.trim="contact.name" type="text" class="form-control">
+                                            <small>{{ error_name }}</small>
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Email</label>
                                             <input id="email" v-model.trim="contact.email" type="text" class="form-control">
+                                            <small>{{ error_email }}</small>
                                         </div>
                                         <div class="form-group">
                                             <label for="subject">Subject</label>
                                             <input id="subject" v-model.trim="contact.subject" type="text" class="form-control">
+                                            <small>{{ error_subject }}</small>
                                         </div>
                                         <div class="form-group">
                                             <label for="message">Message</label>
                                             <textarea id="message" v-model.trim="contact.message" class="form-control" rows="15"></textarea>
+                                            <small>{{ error_message }}</small>
                                         </div>
                                         <div class="form-group pull-right">
                                             <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>
@@ -140,6 +144,10 @@ export default {
                 message: null,
                 created_at: null,
             },
+            error_name: '',
+            error_email: '',
+            error_subject: '',
+            error_message: '',
         }
     },
 
@@ -163,6 +171,10 @@ export default {
             self.contact.subject = null;
             self.contact.message = null;
             self.edit = false;
+            self.error_name = '';
+            self.error_email = '';
+            self.error_subject = '';
+            self.error_message = '';
         },
 
         showModalDelete: function (id) {
@@ -183,7 +195,7 @@ export default {
         createContact: function () {
             let self = this;
             let params = Object.assign({}, self.contact);
-            axios.post('api/contact/store', params)
+            axios.post('api/contact', params)
                 .then(function () {
                     self.contact.name = null;
                     self.contact.email = null;
@@ -191,10 +203,17 @@ export default {
                     self.contact.message = null;
                     self.edit = false;
                     self.showForm = false;
+                    self.error_name = '';
+                    self.error_email = '';
+                    self.error_subject = '';
+                    self.error_message = '';
                     self.fetchContactList();
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    self.error_name = error.response.data.error.name;
+                    self.error_email = error.response.data.error.email;
+                    self.error_subject = error.response.data.error.subject;
+                    self.error_message = error.response.data.error.message;
                 });
         },
 
@@ -254,6 +273,10 @@ export default {
 </script>
 
 <style>
+small {
+    color: red;
+}
+
 .modal-mask {
     position: fixed;
     z-index: 9998;
