@@ -184,7 +184,7 @@ export default {
         },
 
         fetchContactList: function () {
-            axios.get('api/contact')
+            axios.get('/web/contact')
                 .then((response) => {
                     this.list = response.data;
                 }).catch((error) => {
@@ -195,7 +195,7 @@ export default {
         createContact: function () {
             let self = this;
             let params = Object.assign({}, self.contact);
-            axios.post('api/contact', params)
+            axios.post('/web/contact', params)
                 .then(function () {
                     self.contact.name = null;
                     self.contact.email = null;
@@ -221,7 +221,7 @@ export default {
             let self = this;
             self.showForm = true;
             self.read = read;
-            axios.get('api/contact/' + id)
+            axios.get('/web/contact/' + id)
                 .then(function (response) {
                     self.contact.id = response.data.id;
                     self.contact.name = response.data.name;
@@ -235,7 +235,7 @@ export default {
         updateContact: function (id) {
             let self = this;
             let params = Object.assign({}, self.contact);
-            axios.patch('api/contact/' + id, params)
+            axios.patch('/web/contact/' + id, params)
                 .then(function () {
                     self.contact.name = '';
                     self.contact.email = '';
@@ -259,7 +259,7 @@ export default {
         deleteContact: function (id) {
             let self = this;
             let params = Object.assign({}, self.contact);
-            axios.delete('api/contact/' + id, params)
+            axios.delete('/web/contact/' + id, params)
                 .then(function () {
                     self.showModal = false;
                     self.fetchContactList();

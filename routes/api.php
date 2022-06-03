@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'api'], function () {
-    Route::apiResource('/contact', 'Api\ContactController');
-    Route::apiResource('/lesson', 'Api\LessonController')->only(['index', 'update']);
+    // use lesson api controller for example
+//    Route::apiResource('/lesson', 'Api\LessonController')->only(['index', 'update']);
 });
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
