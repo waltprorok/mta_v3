@@ -69,8 +69,8 @@ class LessonController extends Controller
      */
     public function update(Request $request, Lesson $lesson): JsonResponse
     {
-        $lesson = Lesson::find($lesson->getAttribute('id'));
         $lesson->complete = $request->get('complete');
+
         $lesson->save();
 
         return response()->json($lesson, 200);

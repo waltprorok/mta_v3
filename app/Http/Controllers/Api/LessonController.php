@@ -14,7 +14,10 @@ class LessonController extends Controller
     public function index(): AnonymousResourceCollection
     {
         return LessonResource::collection(
-            Lesson::with('lessonTeacherId')->orderBy('title')->orderBy('start_date')->get()
+            Lesson::with('lessonTeacherId')
+                ->orderBy('title')
+                ->orderBy('start_date')
+                ->get()
         );
     }
 
@@ -25,8 +28,8 @@ class LessonController extends Controller
      */
     public function update(Request $request, Lesson $lesson): JsonResponse
     {
-        $lesson = Lesson::find($lesson->getAttribute('id'));
         $lesson->complete = $request->get('complete');
+
         $lesson->save();
 
         return response()->json($lesson, 200);

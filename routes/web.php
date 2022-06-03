@@ -122,6 +122,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::prefix('contacts')->group(function () {
             Route::view('/', 'webapp.admin.contact.index')->name('contact.index');
         });
+
         Route::prefix('admin')->group(function () {
             // admin blog routes
             Route::get('/blog', 'BlogController@list')->name('admin.blog.list');
@@ -134,6 +135,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('teachers', 'TeacherController@adminTeachers')->name('admin.teachers');
             Route::get('students', 'StudentController@adminStudents')->name('admin.students');
             Route::get('users', 'UserController@adminUsers')->name('admin.users');
+
+            Route::view('/', 'webapp.admin.contact.index')->name('contact.index');
         });
     });
 
