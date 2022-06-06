@@ -2,29 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ContactResource;
 use App\Models\Contact;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
     /**
-     * @return mixed
+     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-        return Contact::orderBy('created_at', 'desc')->get();
+        return ContactResource::collection(Contact::orderBy('created_at', 'desc')->get());
     }
 
     /**
      * @param Contact $contact
-     * @return Contact
+     * @return JsonResponse
      */
-    public function show(Contact $contact): Contact
+    public function show(Contact $contact): JsonResponse
     {
-        return $contact;
+        return response()->json($contact, Response::HTTP_OK);
     }
 
     /**
@@ -41,12 +44,12 @@ class ContactController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
+            return response()->json(['error' => $validator->errors()], Response::HTTP_UNAUTHORIZED);
         }
 
         $contact = Contact::create($request->all());
 
-        return response()->json($contact, 201);
+        return response()->json($contact, Response::HTTP_CREATED);
     }
 
     /**
@@ -58,7 +61,7 @@ class ContactController extends Controller
     {
         $contact->update($request->all());
 
-        return response()->json($contact, 200);
+        return response()->json($contact, Response::HTTP_OK);
     }
 
     /**
@@ -70,6 +73,6 @@ class ContactController extends Controller
     {
         $contact->delete();
 
-        return response()->json(null, 204);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

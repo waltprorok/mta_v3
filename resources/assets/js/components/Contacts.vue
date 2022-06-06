@@ -186,7 +186,7 @@ export default {
         fetchContactList: function () {
             axios.get('/web/contact')
                 .then((response) => {
-                    this.list = response.data;
+                    this.list = response.data.data;
                 }).catch((error) => {
                 console.log(error);
             });
