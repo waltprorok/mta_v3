@@ -47,9 +47,11 @@ class ContactController extends Controller
             return response()->json(['error' => $validator->errors()], Response::HTTP_UNAUTHORIZED);
         }
 
-        $contact = Contact::create($request->all());
+        Contact::create($request->all());
 
-        return response()->json($contact, Response::HTTP_CREATED);
+        $toast = ['success' => 'Contact saved successfully!'];
+
+        return response()->json($toast, Response::HTTP_CREATED);
     }
 
     /**
