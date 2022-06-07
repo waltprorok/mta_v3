@@ -2,7 +2,7 @@
     <div>
         <div v-if="alert" class="alert alert-success alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" @click="alert=false" aria-label="close">&times;</a>
-            {{ message.success }}
+            {{ toast.success }}
         </div>
         <div class="card">
             <button type="button" class="btn btn-default" @click="showForm=true" v-show="!showForm">Add Contact</button>
@@ -126,7 +126,7 @@
 export default {
     data: function () {
         return {
-            message: '',
+            toast: '',
             alert: false,
             filter: '',
             columns: [
@@ -216,7 +216,7 @@ export default {
                     self.error_email = '';
                     self.error_subject = '';
                     self.error_message = '';
-                    self.message = success.data;
+                    self.toast = success.data;
                     self.fetchContactList();
                 })
                 .catch(function (error) {
@@ -246,12 +246,14 @@ export default {
             let self = this;
             let params = Object.assign({}, self.contact);
             axios.patch('/web/contact/' + id, params)
-                .then(function () {
+                .then(function (success) {
+                    self.alert = true;
                     self.contact.name = '';
                     self.contact.email = '';
                     self.contact.subject = '';
                     self.contact.message = '';
                     self.edit = false;
+                    self.toast = success.data;
                     self.fetchContactList();
                 })
                 .catch(function (error) {
@@ -270,8 +272,10 @@ export default {
             let self = this;
             let params = Object.assign({}, self.contact);
             axios.delete('/web/contact/' + id, params)
-                .then(function () {
+                .then(function (success) {
+                    self.alert = true;
                     self.showModal = false;
+                    self.toast = success.data;
                     self.fetchContactList();
                 })
                 .catch(function (error) {

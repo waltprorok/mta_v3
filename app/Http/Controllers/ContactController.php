@@ -63,7 +63,9 @@ class ContactController extends Controller
     {
         $contact->update($request->all());
 
-        return response()->json($contact, Response::HTTP_OK);
+        $toast = ['success' => 'Contact has been updated!'];
+
+        return response()->json($toast, Response::HTTP_OK);
     }
 
     /**
@@ -75,6 +77,8 @@ class ContactController extends Controller
     {
         $contact->delete();
 
-        return response()->json(null, Response::HTTP_NO_CONTENT);
+        $toast = ['success' => 'Contact has been deleted!'];
+
+        return response()->json($toast, Response::HTTP_OK);
     }
 }
