@@ -258,6 +258,11 @@ export default {
                     self.contact.message = '';
                     self.edit = false;
                     self.showForm = false;
+                    self.error_name = '';
+                    self.error_email = '';
+                    self.error_subject = '';
+                    self.error_message = '';
+                    self.classError = '';
                     self.fetchContactList();
                 })
                 .catch(function (error) {
@@ -265,6 +270,7 @@ export default {
                     self.error_email = error.response.data.error.email;
                     self.error_subject = error.response.data.error.subject;
                     self.error_message = error.response.data.error.message;
+                    self.classError = 'has-error';
                 });
         },
 
@@ -287,89 +293,5 @@ export default {
 </script>
 
 <style>
-small {
-    color: #a94442;
-}
-
-.has-error {
-    color: #a94442;
-}
-
-.modal-mask {
-    position: fixed;
-    z-index: 9998;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: brightness(25%);
-    backdrop-filter: contrast(55%);
-    display: table;
-    transition: opacity .8s ease;
-}
-
-.modal-wrapper {
-    display: table-cell;
-    vertical-align: top;
-}
-
-table thead tr th {
-    text-align: left !important;
-}
-
-.pagination {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    padding-left: 0;
-    list-style: none
-}
-
-.pagination ul li {
-    position: relative;
-    display: block;
-    padding: .5rem .75rem;
-    margin-left: -1px;
-    line-height: 1.25;
-    color: #777;
-    background-color: #fff;
-    border: 1px solid #dee2e6
-}
-
-.pagination ul li:hover {
-    color: #515151;
-    text-decoration: none;
-    background-color: #e9ecef;
-    border-color: #dee2e6
-}
-
-.pagination ul li:focus {
-    z-index: 2;
-    outline: 0;
-    -webkit-box-shadow: none;
-    box-shadow: none
-}
-
-.pagination ul li:not(:disabled):not(.disabled) {
-    cursor: pointer
-}
-
-.pagination ul li:first-child {
-    margin-left: 0
-}
-
-.pagination ul li.active {
-    z-index: 1;
-    color: #fff;
-    background-color: #42a5f5;
-    border-color: #42a5f5
-}
-
-.pagination ul li.disabled {
-    color: #999;
-    pointer-events: none;
-    cursor: auto;
-    background-color: #fff;
-    border-color: #dee2e6
-}
+@import '/webapp/css/stylesheet.css';
 </style>
