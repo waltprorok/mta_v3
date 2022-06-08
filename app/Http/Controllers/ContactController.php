@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreContactSubmissionRequest;
 use App\Http\Resources\ContactResource;
 use App\Models\Contact;
 use Exception;
@@ -31,7 +32,7 @@ class ContactController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param StoreContactSubmissionRequest $request
      * @return JsonResponse
      */
     public function store(Request $request): JsonResponse
@@ -61,6 +62,17 @@ class ContactController extends Controller
      */
     public function update(Request $request, Contact $contact): JsonResponse
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'subject' => 'required|min:3',
+            'message' => 'required|min:3',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], Response::HTTP_UNAUTHORIZED);
+        }
+
         $contact->update($request->all());
 
         $toast = ['success' => 'Contact has been updated!'];

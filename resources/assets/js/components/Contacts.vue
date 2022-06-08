@@ -32,22 +32,22 @@
                                     </div>
                                     <div class="modal-body" v-show="!read">
                                         <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">
-                                            <div class="form-group">
+                                            <div class="form-group" :class="error_name && classError">
                                                 <label for="name">Name</label>
                                                 <input id="name" v-model.trim="contact.name" type="text" class="form-control">
                                                 <small>{{ error_name }}</small>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" :class="error_email && classError">
                                                 <label for="email">Email</label>
                                                 <input id="email" v-model.trim="contact.email" type="text" class="form-control">
                                                 <small>{{ error_email }}</small>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" :class="error_subject && classError">
                                                 <label for="subject">Subject</label>
                                                 <input id="subject" v-model.trim="contact.subject" type="text" class="form-control">
                                                 <small>{{ error_subject }}</small>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" :class="error_message && classError">
                                                 <label for="message">Message</label>
                                                 <textarea id="message" v-model.trim="contact.message" class="form-control" rows="15"></textarea>
                                                 <small>{{ error_message }}</small>
@@ -102,7 +102,7 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title">Delete Contact Record</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true" @click="showModal = false">&times;</span>
+                                            <span aria-hidden="true" @click="showModal=false">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
@@ -128,6 +128,7 @@ export default {
         return {
             toast: '',
             alert: false,
+            classError: '',
             filter: '',
             columns: [
                 {label: 'Name', field: 'name',},
@@ -135,7 +136,7 @@ export default {
                 {label: 'Subject', field: 'subject',},
                 {label: 'Message', field: 'message',},
                 {label: 'Created', field: 'created_at',},
-                {label: 'Actions',}
+                {label: 'Actions', filterable: false}
             ],
             edit: false,
             showForm: false,
@@ -183,6 +184,7 @@ export default {
             self.error_email = '';
             self.error_subject = '';
             self.error_message = '';
+            self.classError = '';
         },
 
         showModalDelete: function (id) {
@@ -224,6 +226,7 @@ export default {
                     self.error_email = error.response.data.error.email;
                     self.error_subject = error.response.data.error.subject;
                     self.error_message = error.response.data.error.message;
+                    self.classError = 'has-error';
                 });
         },
 
@@ -248,24 +251,21 @@ export default {
             axios.patch('/web/contact/' + id, params)
                 .then(function (success) {
                     self.alert = true;
+                    self.toast = success.data;
                     self.contact.name = '';
                     self.contact.email = '';
                     self.contact.subject = '';
                     self.contact.message = '';
                     self.edit = false;
-                    self.toast = success.data;
+                    self.showForm = false;
                     self.fetchContactList();
                 })
                 .catch(function (error) {
-                    self.contact.name = '';
-                    self.contact.email = '';
-                    self.contact.subject = '';
-                    self.contact.message = '';
-                    self.edit = false;
-                    self.fetchContactList();
-                    console.log(error);
+                    self.error_name = error.response.data.error.name;
+                    self.error_email = error.response.data.error.email;
+                    self.error_subject = error.response.data.error.subject;
+                    self.error_message = error.response.data.error.message;
                 });
-            self.showForm = false;
         },
 
         deleteContact: function (id) {
@@ -288,7 +288,11 @@ export default {
 
 <style>
 small {
-    color: red;
+    color: #a94442;
+}
+
+.has-error {
+    color: #a94442;
 }
 
 .modal-mask {
