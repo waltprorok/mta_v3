@@ -34,8 +34,8 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('admin.teachers') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'admin.teachers' ? 'active' : '' }}">
+                        <a href="{{ route('teacher.index') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'teacher.index' ? 'active' : '' }}">
                             <i class="fa fa-book"></i> Teachers
                         </a>
                     </li>

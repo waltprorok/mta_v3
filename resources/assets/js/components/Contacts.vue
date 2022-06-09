@@ -87,6 +87,9 @@
                         </tr>
                     </template>
                 </datatable>
+                <div class="pull-left">
+                    Total: {{ list.length }} entries
+                </div>
                 <div class="pull-right">
                     <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
                 </div>
@@ -208,7 +211,7 @@ export default {
             self.showForm = false;
         },
 
-        getErrorMessage: function(error) {
+        getErrorMessage: function (error) {
             let self = this;
             self.error_name = error.response.data.error.name;
             self.error_email = error.response.data.error.email;

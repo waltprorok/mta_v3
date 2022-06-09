@@ -28,6 +28,7 @@ Vue.use(VueFilterDateFormat);
 
 Vue.component('contacts', require('./components/Contacts.vue'));
 Vue.component('lessons', require('./components/Lessons.vue'));
+Vue.component('teachers', require('./components/Teachers.vue'));
 
 const app = new Vue({
     el: '#app'

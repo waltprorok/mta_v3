@@ -121,6 +121,7 @@ Route::group(['middleware' => ['auth']], function () {
         // web API endpoints for admin
         Route::prefix('web')->group(function () {
             Route::resource('contact', 'ContactController');
+            Route::get('teacher', 'TeacherController@adminTeachers');
         });
 
         Route::prefix('admin')->group(function () {
@@ -131,7 +132,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('blog/', 'BlogController@store')->name('admin.blog.save');
             Route::delete('blog/{id}', 'BlogController@destroy')->name('admin.blog.destroy');
             Route::view('contacts', 'webapp.admin.contact.index')->name('contact.index');
-            Route::get('teachers', 'TeacherController@adminTeachers')->name('admin.teachers');
+            Route::view('teachers', 'webapp.admin.teacher.index')->name('teacher.index');
             Route::get('students', 'StudentController@adminStudents')->name('admin.students');
             Route::get('users', 'UserController@adminUsers')->name('admin.users');
         });

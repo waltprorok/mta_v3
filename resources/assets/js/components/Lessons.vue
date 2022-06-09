@@ -19,6 +19,9 @@
                     </tr>
                 </template>
             </datatable>
+            <div class="pull-left">
+                Total: {{ list.length }} entries
+            </div>
             <div class="pull-right">
                 <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
             </div>
