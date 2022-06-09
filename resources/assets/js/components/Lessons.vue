@@ -80,7 +80,7 @@ export default {
             let params = Object.assign({}, self.lesson);
 
             axios.patch('lessons/update/' + id, params)
-                .then(function (response) {
+                .then(function () {
                     self.fetchLessonList();
                 })
                 .catch(function (error) {

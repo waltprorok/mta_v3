@@ -180,17 +180,41 @@ export default {
             self.contact.subject = null;
             self.contact.message = null;
             self.edit = false;
-            self.error_name = '';
-            self.error_email = '';
-            self.error_subject = '';
-            self.error_message = '';
-            self.classError = '';
+            self.clearErrorData();
         },
 
         showModalDelete: function (id) {
             let self = this;
             self.showModal = true;
             self.id = id;
+        },
+
+        clearErrorData: function () {
+            let self = this;
+            self.classError = '';
+            self.error_name = '';
+            self.error_email = '';
+            self.error_subject = '';
+            self.error_message = '';
+        },
+
+        clearContactData: function () {
+            let self = this;
+            self.contact.name = null;
+            self.contact.email = null;
+            self.contact.subject = null;
+            self.contact.message = null;
+            self.edit = false;
+            self.showForm = false;
+        },
+
+        getErrorMessage: function(error) {
+            let self = this;
+            self.error_name = error.response.data.error.name;
+            self.error_email = error.response.data.error.email;
+            self.error_subject = error.response.data.error.subject;
+            self.error_message = error.response.data.error.message;
+            self.classError = 'has-error';
         },
 
         fetchContactList: function () {
@@ -208,25 +232,13 @@ export default {
             axios.post('/web/contact', params)
                 .then(function (success) {
                     self.alert = true;
-                    self.contact.name = null;
-                    self.contact.email = null;
-                    self.contact.subject = null;
-                    self.contact.message = null;
-                    self.edit = false;
-                    self.showForm = false;
-                    self.error_name = '';
-                    self.error_email = '';
-                    self.error_subject = '';
-                    self.error_message = '';
                     self.toast = success.data;
+                    self.clearContactData()
+                    self.clearErrorData();
                     self.fetchContactList();
                 })
                 .catch(function (error) {
-                    self.error_name = error.response.data.error.name;
-                    self.error_email = error.response.data.error.email;
-                    self.error_subject = error.response.data.error.subject;
-                    self.error_message = error.response.data.error.message;
-                    self.classError = 'has-error';
+                    self.getErrorMessage(error);
                 });
         },
 
@@ -252,25 +264,12 @@ export default {
                 .then(function (success) {
                     self.alert = true;
                     self.toast = success.data;
-                    self.contact.name = '';
-                    self.contact.email = '';
-                    self.contact.subject = '';
-                    self.contact.message = '';
-                    self.edit = false;
-                    self.showForm = false;
-                    self.error_name = '';
-                    self.error_email = '';
-                    self.error_subject = '';
-                    self.error_message = '';
-                    self.classError = '';
+                    self.clearContactData();
+                    self.clearErrorData();
                     self.fetchContactList();
                 })
                 .catch(function (error) {
-                    self.error_name = error.response.data.error.name;
-                    self.error_email = error.response.data.error.email;
-                    self.error_subject = error.response.data.error.subject;
-                    self.error_message = error.response.data.error.message;
-                    self.classError = 'has-error';
+                    self.getErrorMessage(error);
                 });
         },
 
