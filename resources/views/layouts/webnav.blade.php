@@ -28,7 +28,7 @@
 
                     <li class="nav-item">
                         <a href="{{ route('admin.student.index') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'student.index' ? 'active' : '' }}">
+                           class="nav-link {{ Route::currentRouteName() == 'admin.student.index' ? 'active' : '' }}">
                             <i class="fa fa-graduation-cap"></i> Students
                         </a>
                     </li>

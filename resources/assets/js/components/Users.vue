@@ -94,7 +94,7 @@ export default {
 
         getUserType: function (row) {
             if (row) {
-                return "&#10003;";
+                return "&#10004;";
             } else {
                 return '';
             }

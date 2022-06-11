@@ -15,6 +15,10 @@
             <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
                     <tr>
+                        <td>
+                            <img style="width:20px;" :src="'/storage/student/' + row.photo"
+                                 @error="$event.target.src='/webapp/imgs/avatar.jpeg'" :alt="'' + row.photo"/>
+                        </td>
                         <td v-text="row.first_name"></td>
                         <td v-text="row.last_name"></td>
                         <td v-text="row.phone"></td>
@@ -45,6 +49,7 @@ export default {
             per_page: 10,
             pages: [10, 25, 50, 100],
             columns: [
+                {label: 'Photo', field: 'photo',},
                 {label: 'First Name', field: 'first_name',},
                 {label: 'Last Name', field: 'last_name',},
                 {label: 'Phone', field: 'phone',},
@@ -77,7 +82,7 @@ export default {
     },
 
     methods: {
-        fetchStudentList: function() {
+        fetchStudentList: function () {
             axios.get('/web/student')
                 .then((response) => {
                     this.list = response.data;
@@ -86,7 +91,7 @@ export default {
             });
         },
 
-        getStatus: function(row) {
+        getStatus: function (row) {
             switch (parseInt(row.status)) {
                 case 1:
                     return 'Active';
