@@ -2,6 +2,13 @@
     <div class="card">
         <!-- vue js data table -->
         <div class="form-control">
+            <div class="form-group pull-left">
+                <div class="form-group">
+                    <select id="single-select" v-model="per_page" class="form-control">
+                        <option v-for="page in pages" :value="page">{{ page }}</option>
+                    </select>
+                </div>
+            </div>
             <div class="form-group pull-right">
                 <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
             </div>
@@ -39,6 +46,7 @@ export default {
             list: [],
             page: 1,
             per_page: 10,
+            pages: [10, 25, 50, 100],
             columns: [
                 {label: 'First Name', field: 'first_name',},
                 {label: 'Last Name', field: 'last_name',},
@@ -78,7 +86,7 @@ export default {
         fetchUserList: function () {
             axios.get('/web/user')
                 .then((response) => {
-                    this.list = response.data;
+                    this.list = response.data.data;
                 }).catch((error) => {
                 console.log(error);
             });

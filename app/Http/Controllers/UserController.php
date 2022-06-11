@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserController extends Controller
 {
     /**
-     * @return JsonResponse
+     * @return AnonymousResourceCollection
      */
-    public function adminUsers(): JsonResponse
+    public function adminUsers(): AnonymousResourceCollection
     {
         $users = User::orderBy('first_name', 'asc')->get();
 
-        return response()->json($users, Response::HTTP_OK);
+        return UserResource::collection($users);
     }
 }

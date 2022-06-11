@@ -68,6 +68,13 @@
 
             <!-- vue js data table -->
             <div class="form-control">
+                <div class="form-group pull-left">
+                    <div class="form-group">
+                        <select id="single-select" v-model="per_page" class="form-control">
+                            <option v-for="page in pages" :value="page">{{ page }}</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group pull-right">
                     <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
                 </div>
@@ -148,6 +155,7 @@ export default {
             list: [],
             page: 1,
             per_page: 10,
+            pages: [10, 25, 50, 100],
             contact: {
                 id: null,
                 name: null,
