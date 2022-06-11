@@ -32,7 +32,7 @@
 
 <script>
 export default {
-    data: function () {
+    data() {
         return {
             filter: '',
             columns: [
@@ -56,7 +56,7 @@ export default {
         }
     },
 
-    mounted: function () {
+    mounted() {
         this.fetchLessonList();
     },
 
@@ -67,7 +67,7 @@ export default {
     },
 
     methods: {
-        fetchLessonList: function () {
+        fetchLessonList() {
             axios.get('lessons/list')
                 .then((response) => {
                     this.list = response.data.data;
@@ -76,7 +76,7 @@ export default {
             });
         },
 
-        updateLesson: function (id, complete) {
+        updateLesson(id, complete) {
             let self = this;
             self.lesson.id = id;
             self.lesson.complete = !complete;

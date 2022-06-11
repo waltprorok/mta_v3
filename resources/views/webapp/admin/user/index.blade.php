@@ -2,53 +2,18 @@
 @section('title', 'Admin Users')
 @section('content')
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
-
     <div class="col-12">
         <h4>Users</h4>
-        <br>
-        <div class="card">
-            <div class="card-body">
-                <table class="table table-responsive-md" id="dtUserIndex">
-                    <thead class="thead">
-                    <tr>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Admin</th>
-                        <th scope="col">Teacher</th>
-                        <th scope="col">Student</th>
-                        <th scope="col">Parent</th>
-                        <th scope="col">Created At</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($users as $user)
-                        <tr>
-                            <td>{{ $user->first_name }}</td>
-                            <td>{{ $user->last_name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td class="text-center">@if ($user->admin == true) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                            <td class="text-center">@if ($user->teacher == true) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                            <td class="text-center">@if ($user->student == true) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                            <td class="text-center">@if ($user->parent == true) <i class="fa fa-check" aria-hidden="true"></i>@endif</td>
-                            <td>{{ Carbon\Carbon::parse($user->created_at)->format('m-d-Y h:i A') }}</td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
+        <ul class="breadcrumb">
+            {{--<li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>--}}
+            {{--<li class="breadcrumb-item">Teachers</li>--}}
+        </ul>
+
+        <div id="app">
+            <users></users>
         </div>
     </div>
 
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#dtUserIndex').DataTable();
-            $('.dataTables_length').addClass('bs-select');
-        });
-    </script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
 @endsection

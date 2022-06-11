@@ -7,17 +7,14 @@
             </div>
             <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
-<!--                    <tr>-->
-<!--                        <td v-text="row.first_name"></td>-->
-<!--                        <td v-text="row.last_name"></td>-->
-<!--                        <td v-text="row.address"></td>-->
-<!--                        <td v-text="row.address_2"></td>-->
-<!--                        <td v-text="row.city"></td>-->
-<!--                        <td v-text="row.state"></td>-->
-<!--                        <td v-text="row.zip"></td>-->
-<!--                        <td v-text="row.phone"></td>-->
-<!--                        <td v-text="row.email"></td>-->
-<!--                    </tr>-->
+                    <tr>
+                        <td v-text="row.first_name"></td>
+                        <td v-text="row.last_name"></td>
+                        <td v-text="row.phone"></td>
+                        <td v-text="row.email"></td>
+                        <td v-text="row.instrument"></td>
+                        <td v-html="getStatus(row)"></td>
+                    </tr>
                 </template>
             </datatable>
             <div class="pull-left">
@@ -32,7 +29,6 @@
 </template>
 
 <script>
-
 export default {
     data: function () {
         return {
@@ -43,42 +39,38 @@ export default {
             columns: [
                 {label: 'First Name', field: 'first_name',},
                 {label: 'Last Name', field: 'last_name',},
-                {label: 'Address', field: 'address',},
-                {label: 'Address 2', field: 'address_2',},
-                {label: 'City', field: 'city',},
-                {label: 'State', field: 'state',},
-                {label: 'Zip', field: 'zip',},
                 {label: 'Phone', field: 'phone',},
                 {label: 'Email', field: 'email',},
+                {label: 'Instrument', field: 'instrument',},
+                {label: 'Status', field: 'status',},
+
+
             ],
-            teacher: {
+            student: {
                 id: null,
                 first_name: null,
                 last_name: null,
-                address: null,
-                address_2: null,
-                city: null,
-                state: null,
-                zip: null,
-                email: null,
                 phone: null,
+                email: null,
+                instrument: null,
+                status: null,
             },
         }
     },
 
     mounted: function () {
-        this.fetchTeacherList();
+        this.fetchStudentList();
     },
 
     computed: {
-        hasListData: function() {
+        hasListData() {
             return this.list ? this.list.length > 0 : false;
-        }
+        },
     },
 
     methods: {
-        fetchTeacherList: function () {
-            axios.get('/web/teacher')
+        fetchStudentList: function() {
+            axios.get('/web/student')
                 .then((response) => {
                     this.list = response.data;
                 }).catch((error) => {
@@ -86,7 +78,22 @@ export default {
             });
         },
 
-        // updateTeacher: function (id, complete) {
+        getStatus: function(row) {
+            switch (parseInt(row.status)) {
+                case 1:
+                    return 'Active';
+                case 2:
+                    return 'Waitlist';
+                case 3:
+                    return 'Lead';
+                case 4:
+                    return 'Active';
+                default:
+                    return 'this';
+            }
+        }
+
+        // updateTeacher (id, complete) {
         //     let self = this;
         //     self.lesson.id = id;
         //     self.lesson.complete = !complete;

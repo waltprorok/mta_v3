@@ -122,6 +122,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::prefix('web')->group(function () {
             Route::resource('contact', 'ContactController');
             Route::get('teacher', 'TeacherController@adminTeachers');
+            Route::get('student', 'StudentController@adminStudents');
+            Route::get('user', 'UserController@adminUsers');
         });
 
         Route::prefix('admin')->group(function () {
@@ -133,8 +135,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::delete('blog/{id}', 'BlogController@destroy')->name('admin.blog.destroy');
             Route::view('contacts', 'webapp.admin.contact.index')->name('contact.index');
             Route::view('teachers', 'webapp.admin.teacher.index')->name('teacher.index');
-            Route::get('students', 'StudentController@adminStudents')->name('admin.students');
-            Route::get('users', 'UserController@adminUsers')->name('admin.users');
+            Route::view('students', 'webapp.admin.student.index')->name('admin.student.index');
+            Route::view('users', 'webapp.admin.user.index')->name('admin.users');
         });
     });
 });

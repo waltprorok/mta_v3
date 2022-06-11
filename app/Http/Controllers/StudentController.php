@@ -12,8 +12,10 @@ use App\Models\Teacher;
 use App\Models\User;
 use App\Services\PhoneNumberService;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -38,10 +40,14 @@ class StudentController extends Controller
         $this->phoneNumberService = $phoneNumberService;
     }
 
-    public function adminStudents()
+    /**
+     * @return JsonResponse
+     */
+    public function adminStudents(): JsonResponse
     {
-        $students = Student::all();
-        return view('webapp.admin.student.index', compact('students', $students));
+        $students = Student::orderBy('first_name', 'asc')->get();
+
+        return response()->json($students, Response::HTTP_OK);
     }
 
     public function index()
