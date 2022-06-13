@@ -17,11 +17,11 @@
                     <tr>
                         <td>
                             <img style="width:20px;" :src="'/storage/student/' + row.photo"
-                                 @error="$event.target.src='/webapp/imgs/avatar.jpeg'" :alt="'' + row.photo"/>
+                                 @error="$event.target.src='/webapp/imgs/avatar.jpeg'" :alt="row.photo"/>
                         </td>
                         <td v-text="row.first_name"></td>
                         <td v-text="row.last_name"></td>
-                        <td v-text="row.phone"></td>
+                        <td v-html="formatPhoneNumber(row)"></td>
                         <td v-text="row.email"></td>
                         <td v-text="row.instrument"></td>
                         <td v-html="getStatus(row)"></td>
@@ -82,6 +82,16 @@ export default {
     },
 
     methods: {
+        formatPhoneNumber: function (row) {
+            if (row.phone && row.phone.length === 10) {
+                return row.phone.replace(/[^0-9]/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+            } else if (row.phone && row.phone.length === 11) {
+                return row.phone.replace(/[^0-9]/g, '').replace(/(\d{1})(\d{3})(\d{3})(\d{4})/, '$1-$2-$3-$4');
+            } else {
+                return row.phone;
+            }
+        },
+
         fetchStudentList: function () {
             axios.get('/web/student')
                 .then((response) => {

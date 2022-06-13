@@ -14,17 +14,17 @@
             </div>
             <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
-<!--                    <tr>-->
-<!--                        <td v-text="row.first_name"></td>-->
-<!--                        <td v-text="row.last_name"></td>-->
-<!--                        <td v-text="row.address"></td>-->
-<!--                        <td v-text="row.address_2"></td>-->
-<!--                        <td v-text="row.city"></td>-->
-<!--                        <td v-text="row.state"></td>-->
-<!--                        <td v-text="row.zip"></td>-->
-<!--                        <td v-text="row.phone"></td>-->
-<!--                        <td v-text="row.email"></td>-->
-<!--                    </tr>-->
+                    <tr>
+                        <td v-text="row.first_name"></td>
+                        <td v-text="row.last_name"></td>
+                        <td v-text="row.address"></td>
+                        <td v-text="row.address_2"></td>
+                        <td v-text="row.city"></td>
+                        <td v-text="row.state"></td>
+                        <td v-text="row.zip"></td>
+                        <td v-html="formatPhoneNumber(row)"></td>
+                        <td v-text="row.email"></td>
+                    </tr>
                 </template>
             </datatable>
             <div class="pull-left">
@@ -85,6 +85,16 @@ export default {
     },
 
     methods: {
+        formatPhoneNumber: function (row) {
+            if (row.phone && row.phone.length === 10) {
+                return row.phone.replace(/[^0-9]/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+            } else if (row.phone && row.phone.length === 11) {
+                return row.phone.replace(/[^0-9]/g, '').replace(/(\d{1})(\d{3})(\d{3})(\d{4})/, '$1-$2-$3-$4');
+            } else {
+                return row.phone;
+            }
+        },
+
         fetchTeacherList: function () {
             axios.get('/web/teacher')
                 .then((response) => {
