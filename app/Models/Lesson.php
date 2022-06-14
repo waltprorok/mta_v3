@@ -11,6 +11,10 @@ class Lesson extends Model
 {
     use SoftDeletes;
 
+    protected $casts = [
+        'complete' => 'boolean'
+    ];
+
     protected $fillable = [
         'color',
         'complete',
@@ -19,8 +23,6 @@ class Lesson extends Model
         'start_date',
         'end_date'
     ];
-
-    protected $casts = ['complete' => 'boolean'];
 
     /**
      * @return BelongsTo

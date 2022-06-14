@@ -15,9 +15,6 @@ class Blog extends Model
 
     protected $dates = ['released_on'];
 
-    /**
-     * @var string[]
-     */
     protected $fillable = [
         'author_id',
         'title',

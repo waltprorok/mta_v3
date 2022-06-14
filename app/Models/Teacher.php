@@ -12,7 +12,9 @@ class Teacher extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'teachers';
+    protected $casts = [
+        'teacher_id' => 'integer'
+    ];
 
     protected $fillable = [
         'teacher_id',
