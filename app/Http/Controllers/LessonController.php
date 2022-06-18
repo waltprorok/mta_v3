@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use MaddHatter\LaravelFullcalendar\Facades\Calendar;
 
@@ -69,11 +70,11 @@ class LessonController extends Controller
      */
     public function update(Request $request, Lesson $lesson): JsonResponse
     {
-        $lesson = Lesson::find($lesson->getAttribute('id'));
         $lesson->complete = $request->get('complete');
+
         $lesson->save();
 
-        return response()->json($lesson, 200);
+        return response()->json($lesson, Response::HTTP_OK);
     }
 
     public function getAllLessonsForAdmin(): AnonymousResourceCollection

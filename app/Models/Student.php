@@ -18,7 +18,9 @@ class Student extends Model
     const LEAD = 3;
     const INACTIVE = 4;
 
-    protected $table = 'students';
+    protected $casts = [
+        'student_id' => 'integer'
+    ];
 
     protected $fillable = [
         'student_id',

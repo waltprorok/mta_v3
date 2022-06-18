@@ -7,8 +7,10 @@ use App\Models\BusinessHours;
 use App\Models\Teacher;
 use App\Models\User;
 use App\Services\PhoneNumberService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -27,13 +29,11 @@ class TeacherController extends Controller
     }
 
     /**
-     * @return View
+     * @return JsonResponse
      */
-    public function adminTeachers(): View
+    public function adminTeachers(): JsonResponse
     {
-        $teachers = Teacher::all();
-
-        return view('webapp.admin.teacher.index', compact('teachers', $teachers));
+        return response()->json(Teacher::all(), Response::HTTP_OK);
     }
 
     public function index()

@@ -27,8 +27,10 @@ Vue.use(VueFilterDateFormat);
  */
 
 Vue.component('contacts', require('./components/Contacts.vue'));
-Vue.component('example', require('./components/Example.vue'));
 Vue.component('lessons', require('./components/Lessons.vue'));
+Vue.component('teachers', require('./components/Teachers.vue'));
+Vue.component('students', require('./components/Students.vue'));
+Vue.component('users', require('./components/Users.vue'));
 
 const app = new Vue({
     el: '#app'

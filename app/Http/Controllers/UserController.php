@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\View\View;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserController extends Controller
 {
     /**
-     * @return View
+     * @return AnonymousResourceCollection
      */
-    public function adminUsers(): View
+    public function adminUsers(): AnonymousResourceCollection
     {
-        $users = User::all();
+        $users = User::orderBy('first_name', 'asc')->get();
 
-        return view('webapp.admin.user.index', compact('users', $users));
+        return UserResource::collection($users);
     }
 }

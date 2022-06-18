@@ -15,7 +15,7 @@
                     <li class="nav-item">
                         <a href="{{ route('contact.index') }}"
                            class="nav-link {{ Route::currentRouteName() == 'contact.index' ? 'active' : '' }}">
-                            <i class="fa fa-compress"></i> Contacts
+                            <i class="fa fa-compress"></i> Contact Us
                         </a>
                     </li>
 
@@ -27,15 +27,15 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('admin.students') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'admin.students' ? 'active' : '' }}">
+                        <a href="{{ route('admin.student.index') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'admin.student.index' ? 'active' : '' }}">
                             <i class="fa fa-graduation-cap"></i> Students
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('admin.teachers') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'admin.teachers' ? 'active' : '' }}">
+                        <a href="{{ route('teacher.index') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'teacher.index' ? 'active' : '' }}">
                             <i class="fa fa-book"></i> Teachers
                         </a>
                     </li>
