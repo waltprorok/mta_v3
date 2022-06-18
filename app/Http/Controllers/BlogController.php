@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBlogPostRequest;
 use App\Models\Blog;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -79,40 +80,35 @@ class BlogController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * @param int $id
+     * @param Blog $id
      * @return View
      */
-    public function edit(int $id): View
+    public function edit(Blog $id): View
     {
-        $update = Blog::findOrFail($id);
-
-        return view('webapp.admin.blog.edit')->with('update', $update);
+        return view('webapp.admin.blog.edit')->with('update', $id);
     }
 
     /**
      * @param StoreBlogPostRequest $request
-     * @param int $id
+     * @param Blog $id
      * @return RedirectResponse
      */
-    public function update(StoreBlogPostRequest $request, int $id): RedirectResponse
+    public function update(StoreBlogPostRequest $request, Blog $id): RedirectResponse
     {
-        $editBlog = Blog::findOrFail($id);
-
-        $this->commitBlogPost($editBlog, $request);
+        $this->commitBlogPost($id, $request);
 
         return back()->with('success', 'Your news article has been updated.');
     }
 
     /**
      * Remove the specified resource from storage.
-     * @param int $id
+     * @param Blog $id
      * @return RedirectResponse
+     * @throws Exception
      */
-    public function destroy(int $id): RedirectResponse
+    public function destroy(Blog $id): RedirectResponse
     {
-        $deleteBlog = Blog::findOrFail($id);
-
-        $deleteBlog->delete();
+        $id->delete();
 
         return redirect(route('admin.blog.list'))->with('success', 'Your blog article has been deleted.');
     }
