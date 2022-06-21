@@ -178,22 +178,24 @@
                     </li>
                 </ul>
 
+                <br>
+
                 <h3>Controller</h3>
 
                 <p>MusicTeachersAid processes Personal Information both as a processor and a controller as
-                    defined in the GDPR. You may contact the Controller by email at
-                    controller@MusicTeachersAid.com.</p>
+                    defined in the GDPR. <br>You may contact the Controller at
+                    <a href="https://musicteachersaid.com/contact">Contact Us</a></p>
 
                 <h3>Data protection officer</h3>
 
                 <p>MusicTeachersAid has appointed a Data Protection Officer to coordinate regulatory, contract
-                    and legal matters. You may contact our Data Protection Officer at
+                    and legal matters. <br>You may contact our Data Protection Officer at
                     <a href="https://musicteachersaid.com/contact">Contact Us</a>.</p>
 
 
                 <h3>Contact information</h3>
-                <p>You may contact us online concerning our Privacy Policy
-                    at <a href="https://musicteachersaid.com/contact">Contact Us</a></p>
+                <p>You may contact us online concerning our Privacy Policy at
+                    <a href="https://musicteachersaid.com/contact">Contact Us</a></p>
             </div>
         </div>
     </div>
