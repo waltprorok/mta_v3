@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBlogPostRequest;
 use App\Models\Blog;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -32,16 +34,16 @@ class BlogController extends Controller
 
     /**
      * Admin list of blog posts
-     * @return View
+     * @return JsonResponse
      */
-    public function list(): View
+    public function list(): JsonResponse
     {
         $blogs = Blog::with('author')
             ->published()
             ->latestFirst()
             ->get();
 
-        return view('webapp.admin.blog.index', compact('blogs'));
+        return response()->json($blogs, Response::HTTP_OK);
     }
 
     /**
@@ -103,14 +105,16 @@ class BlogController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param Blog $id
-     * @return RedirectResponse
+     * @return JsonResponse
      * @throws Exception
      */
-    public function destroy(Blog $id): RedirectResponse
+    public function destroy(Blog $id): JsonResponse
     {
         $id->delete();
 
-        return redirect(route('admin.blog.list'))->with('success', 'Your blog article has been deleted.');
+        $toast = ['success' => 'Blog has been deleted!'];
+
+        return response()->json($toast, Response::HTTP_OK);
     }
 
     /**

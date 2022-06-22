@@ -124,15 +124,16 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('teacher', 'TeacherController@adminTeachers');
             Route::get('student', 'StudentController@adminStudents');
             Route::get('user', 'UserController@adminUsers');
+            Route::get('blog', 'BlogController@list');
+            Route::delete('blog/{id}', 'BlogController@destroy');
         });
 
         Route::prefix('admin')->group(function () {
-            Route::get('blog', 'BlogController@list')->name('admin.blog.list');
+            Route::view('blog', 'webapp.admin.blog.index')->name('admin.blog.list');
             Route::get('blog/{id}/edit', 'BlogController@edit')->name('admin.blog.edit');
             Route::get('blog/create', 'BlogController@create')->name('admin.blog.create');
             Route::put('blog/{id}', 'BlogController@update')->name('admin.blog.update');
             Route::post('blog/', 'BlogController@store')->name('admin.blog.save');
-            Route::delete('blog/{id}', 'BlogController@destroy')->name('admin.blog.destroy');
             Route::view('contacts', 'webapp.admin.contact.index')->name('contact.index');
             Route::view('teachers', 'webapp.admin.teacher.index')->name('teacher.index');
             Route::view('students', 'webapp.admin.student.index')->name('admin.student.index');
