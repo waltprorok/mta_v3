@@ -51,57 +51,17 @@ class Blog extends Model
     /**
      * @return string
      */
-    public function getDateForHumanAttribute(): string
-    {
-        return is_null($this->released_on) ? '' : $this->released_on->diffForHumans();
-    }
+//    public function getDateForHumanAttribute(): string
+//    {
+//        return is_null($this->released_on) ? '' : $this->released_on->diffForHumans();
+//    }
 
     /**
      * @return string
      */
     public function getDateTimeAttribute(): string
     {
-        return is_null($this->released_on) ? '' : date('F d, Y', strtotime($this->released_on));
-    }
-
-    /**
-     * @return string
-     */
-    public function getDateBlogRawAttribute(): string
-    {
-        return is_null($this->released_on) ? '' : date('H:i:s', strtotime($this->released_on));
-    }
-
-    /**
-     * @return string
-     */
-    public function getDateHourMinAttribute(): string
-    {
-        return is_null($this->released_on) ? '' : date('h:i A', strtotime($this->released_on));
-    }
-
-    /**
-     * @return string
-     */
-    public function getCreatedDateFormatAttribute(): string
-    {
-        return is_null($this->created_at) ? '' : date('m-d-Y h:i A', strtotime($this->created_at));
-    }
-
-    /**
-     * @return string
-     */
-    public function getUpdatedDateFormatAttribute(): string
-    {
-        return is_null($this->updated_at) ? '' : date('m-d-Y h:i A', strtotime($this->updated_at));
-    }
-
-    /**
-     * @return string
-     */
-    public function getReleasedDateFormatAttribute(): string
-    {
-        return is_null($this->released_on) ? '' : date('m-d-Y h:i A', strtotime($this->released_on));
+        return is_null($this->released_on) ? '' : date('F j, Y', strtotime($this->released_on));
     }
 
     /**
@@ -109,13 +69,13 @@ class Blog extends Model
      */
     public function getImageUrlAttribute(): string
     {
-        $imageUrl = "";
+        $imageUrl = '';
 
         if (! is_null($this->image)) {
             $imagePath = public_path('/storage/blog/') . $this->image;
 
             if (file_exists($imagePath)) {
-                $imageUrl = asset("storage/blog/" . $this->image);
+                $imageUrl = asset('storage/blog/' . $this->image);
             }
         }
 

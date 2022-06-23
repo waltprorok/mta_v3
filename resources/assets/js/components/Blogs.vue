@@ -5,67 +5,6 @@
             {{ toast.success }}
         </div>
         <div class="card">
-            <!--            <button type="button" class="btn btn-default" @click="showForm=true" v-show="!showForm">Add Contact</button>-->
-            <!--            <div v-if="showForm">-->
-            <!--                <transition name="modal">-->
-            <!--                    <div class="modal-mask">-->
-            <!--                        <div class="modal-wrapper">-->
-            <!--                            <div class="modal-dialog modal-lg" role="document">-->
-            <!--                                <div class="modal-content">-->
-            <!--                                    <div class="modal-header">-->
-            <!--                                        <h5 class="modal-title" v-show="read">Read Contact Record</h5>-->
-            <!--                                        <h5 class="modal-title" v-show="edit && !read">Edit Contact Record</h5>-->
-            <!--                                        <h5 class="modal-title" v-show="!edit && !read">Add Contact Record</h5>-->
-            <!--                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-            <!--                                            <span aria-hidden="true" @click="cancelForm()">&times;</span>-->
-            <!--                                        </button>-->
-            <!--                                    </div>-->
-            <!--                                    <div class="modal-body" v-show="read">-->
-            <!--                                        <p>From: {{ contact.name }}</p>-->
-            <!--                                        <p>Email: {{ contact.email }}</p>-->
-            <!--                                        <p>Subject: {{ contact.subject }}</p>-->
-            <!--                                        <textarea class="form-control" rows="24" disabled>{{ contact.message }}</textarea>-->
-            <!--                                        <hr/>-->
-            <!--                                        <div class="form-group pull-right">-->
-            <!--                                            <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>-->
-            <!--                                        </div>-->
-            <!--                                    </div>-->
-            <!--                                    <div class="modal-body" v-show="!read">-->
-            <!--                                        <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">-->
-            <!--                                            <div class="form-group" :class="error_name && classError">-->
-            <!--                                                <label for="name">Name</label>-->
-            <!--                                                <input id="name" v-model.trim="contact.name" type="text" class="form-control">-->
-            <!--                                                <small>{{ error_name }}</small>-->
-            <!--                                            </div>-->
-            <!--                                            <div class="form-group" :class="error_email && classError">-->
-            <!--                                                <label for="email">Email</label>-->
-            <!--                                                <input id="email" v-model.trim="contact.email" type="text" class="form-control">-->
-            <!--                                                <small>{{ error_email }}</small>-->
-            <!--                                            </div>-->
-            <!--                                            <div class="form-group" :class="error_subject && classError">-->
-            <!--                                                <label for="subject">Subject</label>-->
-            <!--                                                <input id="subject" v-model.trim="contact.subject" type="text" class="form-control">-->
-            <!--                                                <small>{{ error_subject }}</small>-->
-            <!--                                            </div>-->
-            <!--                                            <div class="form-group" :class="error_message && classError">-->
-            <!--                                                <label for="message">Message</label>-->
-            <!--                                                <textarea id="message" v-model.trim="contact.message" class="form-control" rows="15"></textarea>-->
-            <!--                                                <small>{{ error_message }}</small>-->
-            <!--                                            </div>-->
-            <!--                                            <div class="form-group pull-right">-->
-            <!--                                                <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>-->
-            <!--                                                <button v-show="!edit" type="submit" class="btn btn-primary">Save</button>-->
-            <!--                                                <button v-show="edit" type="submit" class="btn btn-primary">Update</button>-->
-            <!--                                            </div>-->
-            <!--                                        </form>-->
-            <!--                                    </div>-->
-            <!--                                </div>-->
-            <!--                            </div>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </transition>-->
-            <!--            </div>-->
-
             <!-- vue js data table -->
             <div class="form-control">
                 <div class="form-group pull-left">
@@ -75,20 +14,19 @@
                         </select>
                     </div>
                 </div>
-                &nbsp;
-                <div class="form-group pull-left pl-2">
-                    <div class="form-group">
-                        <a :href="`/admin/blog/create`" class="btn btn-primary float-right"><i class="fa fa-plus"></i> Create Post</a>
-                    </div>
-                </div>
                 <div class="form-group pull-right">
                     <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
+                </div>
+                <div class="form-group pull-right pr-2">
+                    <div class="form-group">
+                        <a :href="'/admin/blog/create'" class="btn btn-primary float-right"><i class="fa fa-plus"></i> Create Post</a>
+                    </div>
                 </div>
                 <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                     <template v-slot="{ columns, row }">
                         <tr>
                             <td>
-                                <img style="width:30px;" :src="'/storage/blog/' + row.image" :alt="row.image"/>
+                                <img style="width:30px;" :src="'/storage/blog/' + row.image" @error="$event.target.src='/webapp/imgs/teacher-avatar.png'" :alt="row.image"/>
                             </td>
                             <td v-text="row.title"></td>
                             <td v-text="row.slug"></td>
@@ -160,9 +98,6 @@ export default {
                 {label: 'Updated', field: 'updated_at',},
                 {label: 'Actions', filterable: false,}
             ],
-            // edit: false,
-            // showForm: false,
-            // read: false,
             showModal: false,
             list: [],
             page: 1,
@@ -196,17 +131,6 @@ export default {
     // },
 
     methods: {
-        // cancelForm: function () {
-        //     let self = this;
-        //     self.showForm = false;
-        //     self.read = false;
-        //     self.contact.name = null;
-        //     self.contact.email = null;
-        //     self.contact.subject = null;
-        //     self.contact.message = null;
-        //     self.edit = false;
-        //     self.clearErrorData();
-        // },
 
         showModalDelete: function (id) {
             let self = this;
