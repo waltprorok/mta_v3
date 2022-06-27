@@ -77,6 +77,8 @@ class Blog extends Model
             if (file_exists($imagePath)) {
                 $imageUrl = asset('storage/blog/' . $this->image);
             }
+        } else {
+            $imageUrl = asset('webapp/imgs/sheet-music.jpg');
         }
 
         return $imageUrl;

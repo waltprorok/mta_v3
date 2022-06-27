@@ -57,7 +57,7 @@
                                 <label for="image">Current Image</label>
                                 @if ($update->image_url)
                                     <div class="text-center">
-                                        <img src="{{ asset('storage/blog/'.$update->image) }}" alt="{{ $update->image }}" width="100%">
+                                        <img src="{{ $update->image_url }}" alt="{{ $update->image }}" width="100%">
                                     </div>
                                     <input type="hidden" name="updateImage" value="{{ $update->image }}">
                                 @else
