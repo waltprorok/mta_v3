@@ -15,12 +15,12 @@
                     </div>
                 </div>
                 <div class="form-group pull-right">
-                    <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
+                    <div class="form-group">
+                        <a :href="'/admin/blog/create'" class="btn btn-primary float-right">Create Post</a>
+                    </div>
                 </div>
                 <div class="form-group pull-right pr-2">
-                    <div class="form-group">
-                        <a :href="'/admin/blog/create'" class="btn btn-primary float-right"><i class="fa fa-plus"></i> Create Post</a>
-                    </div>
+                    <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
                 </div>
                 <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                     <template v-slot="{ columns, row }">
