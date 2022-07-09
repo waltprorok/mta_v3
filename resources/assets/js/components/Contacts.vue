@@ -5,7 +5,6 @@
             {{ toast.success }}
         </div>
         <div class="card">
-            <button type="button" class="btn btn-default" @click="showForm=true" v-show="!showForm">Add Contact</button>
             <div v-if="showForm">
                 <transition name="modal">
                     <div class="modal-mask">
@@ -76,6 +75,9 @@
                     </div>
                 </div>
                 <div class="form-group pull-right">
+                    <button type="button" class="btn btn-primary" @click="showForm=true" v-show="!showForm">Create Contact</button>
+                </div>
+                <div class="form-group pull-right pr-2">
                     <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
                 </div>
                 <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">

@@ -7,7 +7,7 @@
                 @if(Auth::user()->admin)
                     <li class="nav-item">
                         <a href="{{ route('admin.blog.list') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'admin.blog.list' ? 'active' : '' }}">
+                           class="nav-link {{ Route::currentRouteName() == 'admin.blog.list' || Route::currentRouteName() == 'admin.blog.create' || Route::currentRouteName() == 'admin.blog.edit' ? 'active' : '' }}">
                             <i class="fa fa-newspaper-o"></i> Blog
                         </a>
                     </li>
