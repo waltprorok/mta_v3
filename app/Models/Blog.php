@@ -45,7 +45,7 @@ class Blog extends Model
      */
     public function getBodyShortAttribute(): ?string
     {
-        return $this->body ? Str::limit($this->body,160) : null;
+        return $this->body ? Str::limit($this->body, 260) : null;
     }
 
     /**
@@ -63,6 +63,23 @@ class Blog extends Model
     {
         return is_null($this->released_on) ? '' : date('F j, Y', strtotime($this->released_on));
     }
+
+    /**
+     * @return string
+     */
+    public function getDateBlogRawAttribute(): string
+    {
+        return is_null($this->released_on) ? '' : date('H:i:s', strtotime($this->released_on));
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateHourMinAttribute(): string
+    {
+        return is_null($this->released_on) ? '' : date('h:i A', strtotime($this->released_on));
+    }
+
 
     /**
      * @return string
