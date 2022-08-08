@@ -14,6 +14,7 @@
                     <div class="panel-body">
                         <form class="form-horizontal" method="POST" action="{{ route('register') }}">
                             @csrf
+                            @honeypot
                             <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
                                 <div class="col-md-10 col-md-offset-1">
                                     <label for="first_name" class="control-label">First Name</label>

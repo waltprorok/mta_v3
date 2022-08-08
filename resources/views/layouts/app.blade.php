@@ -161,6 +161,7 @@
                     <h3 class="footer-title">Subscribe to Our News Letter</h3>
                     <form method="post" action="{{ route('newsletter') }}">
                         @csrf
+                        @honeypot
                         <div class="newsletter-form input-group">
                             <input class="form-control" name="email" placeholder="Enter Your Email Address" type="text">
                             <span class="input-group-btn">
