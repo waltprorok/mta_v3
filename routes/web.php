@@ -13,18 +13,21 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Spatie\Honeypot\ProtectAgainstSpam;
 
-Auth::routes();
+Route::middleware(ProtectAgainstSpam::class)->group(function() {
+    Auth::routes();
+});
 
 // Routes for marketing
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('pricing', 'HomeController@pricing')->name('pricing');
 Route::get('contact', 'HomeController@contact')->name('contact');
-Route::post('contact', 'HomeController@createContact');
+Route::post('contact', 'HomeController@createContact')->middleware(ProtectAgainstSpam::class);
 Route::get('privacy', 'HomeController@privacy')->name('privacy');
 Route::get('faq', 'HomeController@faq')->name('faq');
 Route::get('terms', 'HomeController@terms')->name('terms');
-Route::post('newsletter', 'NewsletterController@store')->name('newsletter');
+Route::post('newsletter', 'NewsletterController@store')->name('newsletter')->middleware(ProtectAgainstSpam::class);
 
 // Routes for blog
 Route::prefix('blog')->group(function () {

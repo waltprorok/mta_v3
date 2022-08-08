@@ -13,6 +13,7 @@
                 <div class="col-md-8 col-md-offset-2">
                     <form action="{{ route('contact') }}" method="post">
                         @csrf
+                        @honeypot
                         <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="control-label">Name</label>
                             <input name="name" type="text" class="form-control" value="{{ old('name') }}">
