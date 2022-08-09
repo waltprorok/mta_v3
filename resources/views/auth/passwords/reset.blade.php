@@ -13,6 +13,7 @@
                     <div class="panel-body">
                         <form class="form-horizontal" method="POST" action="{{ route('password.request') }}">
                             @csrf
+                            @honeypot
                             <input type="hidden" name="token" value="{{ $token }}">
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <div class="col-md-8 col-md-offset-2">
