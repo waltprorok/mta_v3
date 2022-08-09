@@ -15,6 +15,7 @@
                     <div class="panel-body">
                         <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                             @csrf
+                            @honeypot
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <div class="col-md-10 col-md-offset-1">
                                     <label for="email" class="control-label">Email Address</label>
