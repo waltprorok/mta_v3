@@ -58,42 +58,24 @@ class StudentController extends Controller
             ->get();
 
         return response()->json($students, Response::HTTP_OK);
-
-
-//        $teacher = Teacher::where('teacher_id', Auth::id())->first();
-//
-//        if ($teacher == null) {
-//            return redirect('teacher')->with('success', 'Please fill out your Studio Settings first before entering students.');
-//        }
-//
-//        $students = Student::with('hasOneLesson')
-//            ->where('teacher_id', Auth::id())
-//            ->where('status', Student::ACTIVE)
-//            ->firstNameAsc()
-//            ->get();
-//
-//        return view('webapp.student.index')->with('students', $students);
     }
 
-    public function waitlist()
+    public function waitlist(): JsonResponse
     {
         $waitlists = Student::with('teacher')->firstNameAsc()->where('teacher_id', Auth::id())->where('status', Student::WAITLIST)->get();
-
-        return view('webapp.student.waitlist')->with('waitlists', $waitlists);
+        return response()->json($waitlists, Response::HTTP_OK);
     }
 
-    public function leads()
+    public function leads(): JsonResponse
     {
         $leads = Student::with('teacher')->firstNameAsc()->where('teacher_id', Auth::id())->where('status', Student::LEAD)->get();
-
-        return view('webapp.student.leads')->with('leads', $leads);
+        return response()->json($leads, Response::HTTP_OK);
     }
 
-    public function inactive()
+    public function inactive(): JsonResponse
     {
         $inactives = Student::with('teacher')->firstNameAsc()->where('teacher_id', Auth::id())->where('status', Student::INACTIVE)->get();
-
-        return view('webapp.student.inactive')->with('inactives', $inactives);
+        return response()->json($inactives, Response::HTTP_OK);
     }
 
     /**
