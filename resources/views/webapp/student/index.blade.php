@@ -2,95 +2,108 @@
 @section('title', 'Students')
 @section('content')
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
-
     <div class="col-12">
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student</button>
         <h4>Students</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item active">Students</li>
         </ul>
-{{--        @include('partials.studentListTabs')--}}
-        <div class="card">
-            <div class="card-body">
-                <div class="input-group mb-3 col-2">
-                    <span class="input-group-text"><i class="fa fa-user"></i></span>
-                    <div class="input-group-prepend"></div>
-                    <select id=students class="form-control" onchange="window.location.href=this.options[this.selectedIndex].value;">
-                        <option value="{{ route('student.index') }}" selected>Active</option>
-                        <option value="{{ route('student.leads') }}">Leads</option>
-                        <option value="{{ route('student.waitlist') }}">Wait List</option>
-                        <option value="{{ route('student.inactive') }}">Inactive</option>
-                    </select>
-                </div>
-                <hr>
-                <table class="table table-condensed table-hover table-responsive-md" id="dtStudentIndex">
-                    <thead class="thead">
-                    <tr>
-                        <th scope="col" data-orderable="false">Scheduled</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Instrument</th>
-                        <th scope="col" data-orderable="false">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @forelse($students as $student)
-                        <tr>
-                            @if ($student->hasOneLesson)
-                                <td class="text-center">
-                                        <span class="btn btn-sm btn-success btn-rounded">
-                                            <i class="fa fa-check"></i>
-                                        </span>
-                                </td>
-                            @else
-                                <td class="text-center">
-                                        <span class="btn btn-sm btn-danger btn-rounded">
-                                            <i class="fa fa-times"></i>
-                                        </span>
-                                </td>
-                            @endif
-                            <td>{{ $student->first_name }}</td>
-                            <td>{{ $student->last_name }}</td>
-                            <td>{{ $student->phone_number }}</td>
-                            <td>{{ $student->email }}</td>
-                            <td>{{ $student->instrument }}</td>
-                            <td class="text-nowrap">
-                                <a href="{{ route('student.edit', $student->id) }}" class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
-                                <a href="{{ route('student.schedule', $student->id) }}" class="btn btn-sm btn-outline-secondary" role="button" title="schedule"><i class="fa fa-calendar"></i></a>
-                                <a href="{{ route('student.profile', $student->id) }}" class="btn btn-sm btn-outline-success" role="button" title="profile"><i class="fa fa-user"></i></a>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td>No active students at this time.</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    @endforelse
-                    </tbody>
-                </table>
-            </div>
+        <div id="app">
+            <student-list></student-list>
         </div>
+
+        <script src="{{ asset('js/app.js') }}"></script>
     </div>
 
-    @include('partials.addStudent')
+    {{--    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>--}}
 
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    {{--    <div class="col-12">--}}
+    {{--        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student</button>--}}
+    {{--        <h4>Students</h4>--}}
+    {{--        <ul class="breadcrumb">--}}
+    {{--            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>--}}
+    {{--            <li class="breadcrumb-item active">Students</li>--}}
+    {{--        </ul>--}}
+    {{--        @include('partials.studentListTabs')--}}
+    {{--        <div class="card">--}}
+    {{--            <div class="card-body">--}}
+    {{--                <div class="input-group mb-3 col-2">--}}
+    {{--                    <span class="input-group-text"><i class="fa fa-user"></i></span>--}}
+    {{--                    <div class="input-group-prepend"></div>--}}
+    {{--                    <select id=students class="form-control" onchange="window.location.href=this.options[this.selectedIndex].value;">--}}
+    {{--                        <option value="{{ route('student.index') }}" selected>Active</option>--}}
+    {{--                        <option value="{{ route('student.leads') }}">Leads</option>--}}
+    {{--                        <option value="{{ route('student.waitlist') }}">Wait List</option>--}}
+    {{--                        <option value="{{ route('student.inactive') }}">Inactive</option>--}}
+    {{--                    </select>--}}
+    {{--                </div>--}}
+    {{--                <hr>--}}
+    {{--                <table class="table table-condensed table-hover table-responsive-md" id="dtStudentIndex">--}}
+    {{--                    <thead class="thead">--}}
+    {{--                    <tr>--}}
+    {{--                        <th scope="col" data-orderable="false">Scheduled</th>--}}
+    {{--                        <th scope="col">First Name</th>--}}
+    {{--                        <th scope="col">Last Name</th>--}}
+    {{--                        <th scope="col">Phone</th>--}}
+    {{--                        <th scope="col">Email</th>--}}
+    {{--                        <th scope="col">Instrument</th>--}}
+    {{--                        <th scope="col" data-orderable="false">Actions</th>--}}
+    {{--                    </tr>--}}
+    {{--                    </thead>--}}
+    {{--                    <tbody>--}}
+    {{--                    @forelse($students as $student)--}}
+    {{--                        <tr>--}}
+    {{--                            @if ($student->hasOneLesson)--}}
+    {{--                                <td class="text-center">--}}
+{{--                                            <span class="btn btn-sm btn-success btn-rounded">--}}
+{{--                                                <i class="fa fa-check"></i>--}}
+{{--                                            </span>--}}
+    {{--                                </td>--}}
+    {{--                            @else--}}
+    {{--                                <td class="text-center">--}}
+    {{--                                        <span class="btn btn-sm btn-danger btn-rounded">--}}
+    {{--                                            <i class="fa fa-times"></i>--}}
+    {{--                                        </span>--}}
+    {{--                                </td>--}}
+    {{--                            @endif--}}
+    {{--                            <td>{{ $student->first_name }}</td>--}}
+    {{--                            <td>{{ $student->last_name }}</td>--}}
+    {{--                            <td>{{ $student->phone_number }}</td>--}}
+    {{--                            <td>{{ $student->email }}</td>--}}
+    {{--                            <td>{{ $student->instrument }}</td>--}}
+    {{--                            <td class="text-nowrap">--}}
+{{--                                    <a href="{{ route('student.edit', $student->id) }}" class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>--}}
+{{--                                    <a href="{{ route('student.schedule', $student->id) }}" class="btn btn-sm btn-outline-secondary" role="button" title="schedule"><i class="fa fa-calendar"></i></a>--}}
+{{--                                    <a href="{{ route('student.profile', $student->id) }}" class="btn btn-sm btn-outline-success" role="button" title="profile"><i class="fa fa-user"></i></a>--}}
+    {{--                            </td>--}}
+    {{--                        </tr>--}}
+    {{--                    @empty--}}
+    {{--                        <tr>--}}
+    {{--                            <td>No active students at this time.</td>--}}
+    {{--                            <td></td>--}}
+    {{--                            <td></td>--}}
+    {{--                            <td></td>--}}
+    {{--                            <td></td>--}}
+    {{--                            <td></td>--}}
+    {{--                            <td></td>--}}
+    {{--                        </tr>--}}
+    {{--                    @endforelse--}}
+    {{--                    </tbody>--}}
+    {{--                </table>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
 
-    <script>
-        $(document).ready(function () {
-            $('#dtStudentIndex').DataTable();
-            $('.dataTables_length').addClass('bs-select');
-        });
-    </script>
+    {{--    @include('partials.addStudent')--}}
+
+    {{--    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>--}}
+    {{--    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>--}}
+
+    {{--    <script>--}}
+    {{--        $(document).ready(function () {--}}
+    {{--            $('#dtStudentIndex').DataTable();--}}
+    {{--            $('.dataTables_length').addClass('bs-select');--}}
+    {{--        });--}}
+    {{--    </script>--}}
 
 @endsection

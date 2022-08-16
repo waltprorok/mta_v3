@@ -81,8 +81,12 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['middleware' => ['teacher']], function () {
+        Route::prefix('web')->group(function () {
+            Route::get('student-index', 'StudentController@index');
+        });
+
         Route::prefix('students')->group(function () {
-            Route::get('/', 'StudentController@index')->name('student.index');
+            Route::view('/', 'webapp.student.index')->name('student.index');
             Route::get('{id}/profile', 'StudentController@profile')->name('student.profile');
             Route::get('waitlist', 'StudentController@waitlist')->name('student.waitlist');
             Route::get('leads', 'StudentController@leads')->name('student.leads');

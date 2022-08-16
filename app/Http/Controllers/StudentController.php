@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateStudentRequest;
 use App\Models\BusinessHours;
 use App\Models\Lesson;
 use App\Models\Student;
-use App\Models\Teacher;
 use App\Models\User;
 use App\Services\PhoneNumberService;
 use Carbon\Carbon;
@@ -50,21 +49,30 @@ class StudentController extends Controller
         return response()->json($students, Response::HTTP_OK);
     }
 
-    public function index()
+    public function index(): JsonResponse
     {
-        $teacher = Teacher::where('teacher_id', Auth::id())->first();
-
-        if ($teacher == null) {
-            return redirect('teacher')->with('success', 'Please fill out your Studio Settings first before entering students.');
-        }
-
         $students = Student::with('hasOneLesson')
             ->where('teacher_id', Auth::id())
             ->where('status', Student::ACTIVE)
             ->firstNameAsc()
             ->get();
 
-        return view('webapp.student.index')->with('students', $students);
+        return response()->json($students, Response::HTTP_OK);
+
+
+//        $teacher = Teacher::where('teacher_id', Auth::id())->first();
+//
+//        if ($teacher == null) {
+//            return redirect('teacher')->with('success', 'Please fill out your Studio Settings first before entering students.');
+//        }
+//
+//        $students = Student::with('hasOneLesson')
+//            ->where('teacher_id', Auth::id())
+//            ->where('status', Student::ACTIVE)
+//            ->firstNameAsc()
+//            ->get();
+//
+//        return view('webapp.student.index')->with('students', $students);
     }
 
     public function waitlist()
