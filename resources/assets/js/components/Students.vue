@@ -52,7 +52,7 @@ export default {
                 {label: 'Photo', field: 'photo',},
                 {label: 'First Name', field: 'first_name',},
                 {label: 'Last Name', field: 'last_name',},
-                {label: 'Phone', field: 'phone',},
+                {label: 'Phone', field: 'phone', sortable: false},
                 {label: 'Email', field: 'email',},
                 {label: 'Instrument', field: 'instrument',},
                 {label: 'Status', field: 'status',},

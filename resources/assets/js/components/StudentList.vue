@@ -1,9 +1,9 @@
 <template>
     <div>
-        <!--        <div v-if="alert" class="alert alert-success alert-dismissible">-->
-        <!--            <a href="#" class="close" data-dismiss="alert" @click="alert=false" aria-label="close">&times;</a>-->
-        <!--            {{ toast.success }}-->
-        <!--        </div>-->
+        <div v-if="alert" class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" @click="alert=false" aria-label="close">&times;</a>
+            {{ toast.success }}
+        </div>
         <div class="card">
             <div v-if="showForm">
                 <transition name="modal">
@@ -19,7 +19,7 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        <form action="#" @submit.prevent="edit ? updateContact(student.id) : createContact()">
+                                        <form action="#" @submit.prevent="createStudent()">
                                             <div class="form-group" :class="error_first_name && classError">
                                                 <label for="first_name">First Name <span class="text-danger">*</span></label>
                                                 <input id="first_name" v-model.trim="student.first_name" type="text" class="form-control">
@@ -61,10 +61,10 @@
                                                     </label>
                                                 </div>
                                                 <small>{{ error_status }}</small>
+                                                <hr />
                                                 <div class="form-group pull-right">
                                                     <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>
-                                                    <button v-show="!edit" type="submit" class="btn btn-primary">Save</button>
-                                                    <button v-show="edit" type="submit" class="btn btn-primary">Update</button>
+                                                    <button type="submit" class="btn btn-primary">Save</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -88,7 +88,7 @@
                 <div class="form-group pull-left input-group mb-3 col-2">
                     <span class="input-group-text"><i class="fa fa-user"></i></span>
                     <div class="input-group-prepend"></div>
-                    <select id=students class="form-control" @change="onChange($event)">
+                    <select id=students class="form-control" @change="getOnChangeList($event)">
                         <option value="student-index" selected>Active</option>
                         <option value="leads">Leads</option>
                         <option value="waitlist">Wait List</option>
@@ -133,33 +133,6 @@
                     <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
                 </div>
             </div>
-            <!-- end of vue js data table -->
-
-            <!--            <div v-if="showModal">-->
-            <!--                <transition name="modal">-->
-            <!--                    <div class="modal-mask">-->
-            <!--                        <div class="modal-wrapper">-->
-            <!--                            <div class="modal-dialog" role="document">-->
-            <!--                                <div class="modal-content">-->
-            <!--                                    <div class="modal-header">-->
-            <!--                                        <h5 class="modal-title">Delete Contact Record</h5>-->
-            <!--                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-            <!--                                            <span aria-hidden="true" @click="showModal=false">&times;</span>-->
-            <!--                                        </button>-->
-            <!--                                    </div>-->
-            <!--                                    <div class="modal-body">-->
-            <!--                                        <p>Do you want to delete this contact us record?</p>-->
-            <!--                                    </div>-->
-            <!--                                    <div class="modal-footer">-->
-            <!--                                        <button type="button" class="btn btn-outline-secondary" @click="showModal = false">Cancel</button>-->
-            <!--                                        <button type="button" @click="deleteContact(id)" class="btn btn-danger">Delete</button>-->
-            <!--                                    </div>-->
-            <!--                                </div>-->
-            <!--                            </div>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </transition>-->
-            <!--            </div>-->
         </div>
     </div>
 </template>
@@ -176,14 +149,12 @@ export default {
                 {label: 'Scheduled', field: 'has_one_lesson',},
                 {label: 'First Name', field: 'first_name',},
                 {label: 'Last Name', field: 'last_name',},
-                {label: 'Phone', field: 'phone',},
+                {label: 'Phone', field: 'phone', sortable: false},
                 {label: 'Email', field: 'email',},
                 {label: 'Instrument', field: 'instrument',},
                 {label: 'Actions', filterable: false}
             ],
-            edit: false,
             showForm: false,
-            read: false,
             showModal: false,
             list: [],
             page: 1,
@@ -228,7 +199,7 @@ export default {
             }
         },
 
-        onChange: function (event) {
+        getOnChangeList: function (event) {
             axios.get('/web/' + event.target.value)
                 .then((response) => {
                     this.list = response.data;
@@ -239,47 +210,38 @@ export default {
 
         cancelForm: function () {
             let self = this;
+            self.student.first_name = null;
+            self.student.last_name = null;
+            self.student.phone = null;
+            self.student.email = null;
             self.showForm = false;
-            self.read = false;
-            self.contact.name = null;
-            self.contact.email = null;
-            self.contact.subject = null;
-            self.contact.message = null;
-            self.edit = false;
             self.clearErrorData();
-        },
-
-        showModalDelete: function (id) {
-            let self = this;
-            self.showModal = true;
-            self.id = id;
         },
 
         clearErrorData: function () {
             let self = this;
             self.classError = '';
-            self.error_name = '';
+            self.error_first_name = '';
+            self.error_last_name = '';
+            self.error_phone = '';
             self.error_email = '';
-            self.error_subject = '';
-            self.error_message = '';
         },
 
-        clearContactData: function () {
+        clearStudentData: function () {
             let self = this;
-            self.contact.name = null;
-            self.contact.email = null;
-            self.contact.subject = null;
-            self.contact.message = null;
-            self.edit = false;
+            self.student.first_name = null;
+            self.student.last_name = null;
+            self.student.phone = null;
+            self.student.email = null;
             self.showForm = false;
         },
 
         getErrorMessage: function (error) {
             let self = this;
-            self.error_name = error.response.data.error.name;
+            self.error_first_name = error.response.data.error.first_name;
+            self.error_last_name = error.response.data.error.last_name;
+            self.error_phone = error.response.data.error.phone;
             self.error_email = error.response.data.error.email;
-            self.error_subject = error.response.data.error.subject;
-            self.error_message = error.response.data.error.message;
             self.classError = 'has-error';
         },
 
@@ -292,71 +254,25 @@ export default {
             });
         },
 
-        createContact: function () {
+        createStudent: function () {
             let self = this;
             let params = Object.assign({}, self.contact);
             axios.post('/web/contact', params)
                 .then(function (success) {
                     self.alert = true;
                     self.toast = success.data;
-                    self.clearContactData()
+                    self.clearStudentData()
                     self.clearErrorData();
-                    self.fetchContactList();
+                    self.fetchStudentList();
                 })
                 .catch(function (error) {
                     self.getErrorMessage(error);
-                });
-        },
-
-        showContact: function (id, read) {
-            let self = this;
-            self.showForm = true;
-            self.read = read;
-            axios.get('/web/contact/' + id)
-                .then(function (response) {
-                    self.contact.id = response.data.id;
-                    self.contact.name = response.data.name;
-                    self.contact.email = response.data.email;
-                    self.contact.subject = response.data.subject;
-                    self.contact.message = response.data.message;
-                })
-            self.edit = true;
-        },
-
-        updateContact: function (id) {
-            let self = this;
-            let params = Object.assign({}, self.contact);
-            axios.patch('/web/contact/' + id, params)
-                .then(function (success) {
-                    self.alert = true;
-                    self.toast = success.data;
-                    self.clearContactData();
-                    self.clearErrorData();
-                    self.fetchContactList();
-                })
-                .catch(function (error) {
-                    self.getErrorMessage(error);
-                });
-        },
-
-        deleteContact: function (id) {
-            let self = this;
-            let params = Object.assign({}, self.contact);
-            axios.delete('/web/contact/' + id, params)
-                .then(function (success) {
-                    self.alert = true;
-                    self.showModal = false;
-                    self.toast = success.data;
-                    self.fetchContactList();
-                })
-                .catch(function (error) {
-                    console.log(error);
                 });
         },
     },
 }
 </script>
 
-<!--<style>-->
-<!--@import '/webapp/css/stylesheet.css';-->
-<!--</style>-->
+<style>
+@import '/webapp/css/stylesheet.css';
+</style>
