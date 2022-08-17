@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BusinessHours;
 use App\Models\Lesson;
 use App\Models\Student;
 use App\Models\User;
