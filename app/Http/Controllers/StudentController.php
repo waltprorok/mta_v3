@@ -2,23 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreScheduleApptRequest;
-use App\Http\Requests\StoreStudentRequest;
-use App\Http\Requests\UpdateStudentRequest;
-use App\Models\BusinessHours;
 use App\Models\Lesson;
 use App\Models\Student;
 use App\Models\User;
 use App\Services\PhoneNumberService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 
@@ -79,11 +73,23 @@ class StudentController extends Controller
     }
 
     /**
-     * @param StoreStudentRequest $request
-     * @return RedirectResponse
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function store(StoreStudentRequest $request): RedirectResponse
+    public function store(Request $request): JsonResponse
     {
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email',
+            'status' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], Response::HTTP_UNAUTHORIZED);
+        }
+
         $studentUser = User::create([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
@@ -105,7 +111,11 @@ class StudentController extends Controller
             'status' => $request->get('status'),
         ]);
 
-        return redirect()->route('student.index')->with('success', 'The student was added successfully.');
+        $toast = ['success' => 'Student saved successfully!'];
+
+        return response()->json($toast, Response::HTTP_CREATED);
+
+//        return redirect()->route('student.index')->with('success', 'The student was added successfully.');
     }
 
     public function edit($id)

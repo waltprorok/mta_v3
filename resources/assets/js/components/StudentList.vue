@@ -47,21 +47,21 @@
                                                 <label for="status">Status: </label>
                                                 <div class="form-check-inline">
                                                     <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" checked name="status" value="1">Active
+                                                        <input type="radio" class="form-check-input" :checked="student.status === 1" v-model="student.status" :value="1">Active
                                                     </label>
                                                 </div>
                                                 <div class="form-check-inline">
                                                     <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="status" value="3">Lead
+                                                        <input type="radio" class="form-check-input" v-model="student.status" :value="3">Lead
                                                     </label>
                                                 </div>
                                                 <div class="form-check-inline">
                                                     <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="status" value="2">Waitlist
+                                                        <input type="radio" class="form-check-input" v-model="student.status" :value="2">Waitlist
                                                     </label>
                                                 </div>
                                                 <small>{{ error_status }}</small>
-                                                <hr />
+                                                <hr/>
                                                 <div class="form-group pull-right">
                                                     <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>
                                                     <button type="submit" class="btn btn-primary">Save</button>
@@ -96,7 +96,7 @@
                     </select>
                 </div>
                 <div class="form-group pull-right">
-                    <button type="button" class="btn btn-primary" @click="showForm=true" v-show="!showForm">Add Student</button>
+                    <button type="button" class="btn btn-primary" @click="showForm=true">Add Student</button>
                 </div>
                 <div class="form-group pull-right pr-2">
                     <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
@@ -168,7 +168,7 @@ export default {
                 phone: null,
                 email: null,
                 instrument: null,
-                status: null,
+                status: 1,
             },
             error_first_name: '',
             error_last_name: '',
@@ -189,25 +189,6 @@ export default {
     },
 
     methods: {
-        formatPhoneNumber: function (row) {
-            if (row.phone && row.phone.length === 10) {
-                return row.phone.replace(/[^0-9]/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-            } else if (row.phone && row.phone.length === 11) {
-                return row.phone.replace(/[^0-9]/g, '').replace(/(\d{1})(\d{3})(\d{3})(\d{4})/, '$1-$2-$3-$4');
-            } else {
-                return row.phone;
-            }
-        },
-
-        getOnChangeList: function (event) {
-            axios.get('/web/' + event.target.value)
-                .then((response) => {
-                    this.list = response.data;
-                }).catch((error) => {
-                console.log(error);
-            });
-        },
-
         cancelForm: function () {
             let self = this;
             self.student.first_name = null;
@@ -236,28 +217,10 @@ export default {
             self.showForm = false;
         },
 
-        getErrorMessage: function (error) {
-            let self = this;
-            self.error_first_name = error.response.data.error.first_name;
-            self.error_last_name = error.response.data.error.last_name;
-            self.error_phone = error.response.data.error.phone;
-            self.error_email = error.response.data.error.email;
-            self.classError = 'has-error';
-        },
-
-        fetchStudentList: function () {
-            axios.get('/web/student-index')
-                .then((response) => {
-                    this.list = response.data;
-                }).catch((error) => {
-                console.log(error);
-            });
-        },
-
         createStudent: function () {
             let self = this;
-            let params = Object.assign({}, self.contact);
-            axios.post('/web/contact', params)
+            let params = Object.assign({}, self.student);
+            axios.post('/web/student-save', params)
                 .then(function (success) {
                     self.alert = true;
                     self.toast = success.data;
@@ -268,6 +231,43 @@ export default {
                 .catch(function (error) {
                     self.getErrorMessage(error);
                 });
+        },
+
+        formatPhoneNumber: function (row) {
+            if (row.phone && row.phone.length === 10) {
+                return row.phone.replace(/[^0-9]/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+            } else if (row.phone && row.phone.length === 11) {
+                return row.phone.replace(/[^0-9]/g, '').replace(/(\d{1})(\d{3})(\d{3})(\d{4})/, '$1-$2-$3-$4');
+            } else {
+                return row.phone;
+            }
+        },
+
+        getErrorMessage: function (error) {
+            let self = this;
+            self.error_first_name = error.response.data.error.first_name;
+            self.error_last_name = error.response.data.error.last_name;
+            self.error_phone = error.response.data.error.phone;
+            self.error_email = error.response.data.error.email;
+            self.classError = 'has-error';
+        },
+
+        getOnChangeList: function (event) {
+            axios.get('/web/' + event.target.value)
+                .then((response) => {
+                    this.list = response.data;
+                }).catch((error) => {
+                console.log(error);
+            });
+        },
+
+        fetchStudentList: function () {
+            axios.get('/web/student-index')
+                .then((response) => {
+                    this.list = response.data;
+                }).catch((error) => {
+                console.log(error);
+            });
         },
     },
 }

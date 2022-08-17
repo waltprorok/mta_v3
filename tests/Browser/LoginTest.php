@@ -7,20 +7,14 @@ use Throwable;
 
 class LoginTest extends DuskTestCase
 {
-//    use DatabaseMigrations;
-
     /**
      * A Dusk test example.
      *
      * @return void
      * @throws Throwable
      */
-    public function testBasicExample()
+    public function testLoginShowDashboard()
     {
-//        $user = factory(User::class)->create([
-//            'email' => 'teacher9@domain.com',
-//        ]);
-
         $this->browse(function ($browser) {
             $browser->visit('/login')
                 ->type('email', 'teacher@domain.com')

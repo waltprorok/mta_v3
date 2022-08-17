@@ -86,12 +86,12 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('leads', 'StudentController@leads')->name('student.leads');
             Route::get('waitlist', 'StudentController@waitlist')->name('student.waitlist');
             Route::get('inactive', 'StudentController@inactive')->name('student.inactive');
+            Route::post('student-save', 'StudentController@store')->name('student.save');
         });
 
         Route::prefix('students')->group(function () {
             Route::view('/', 'webapp.student.index')->name('student.index');
             Route::get('{id}/profile', 'StudentController@profile')->name('student.profile');
-            Route::post('save', 'StudentController@store')->name('student.save');
             Route::post('update', 'StudentController@update')->name('student.update');
             Route::get('{id}/edit', 'StudentController@edit')->name('student.edit');
             Route::get('{id}/schedule/{day?}', 'StudentController@schedule')->name('student.schedule');
