@@ -110,7 +110,7 @@
                             <td v-show="row.has_one_lesson !== null && row.status === 1">
                                 <span class="btn btn-sm btn-success btn-rounded"><i class="fa fa-check"></i></span>
                             </td>
-                            <td v-show="row.status === 2 || row.status === 3 || row.status === 4">
+                            <td v-show="getStatusData(row)">
                                 <span class="btn btn-sm btn-default btn-rounded"><i class="fa fa-calendar-minus-o"></i></span>
                             </td>
                             <td v-text="row.first_name"></td>
@@ -183,8 +183,8 @@ export default {
     },
 
     computed: {
-        // hasListData: function () {
-        //     return this.list ? this.list.length > 0 : false;
+        // getStatusData: function (row) {
+        //     return row.status === 2 || row.status === 3 || row.status === 4;
         // }
     },
 
@@ -250,6 +250,10 @@ export default {
             self.error_phone = error.response.data.error.phone;
             self.error_email = error.response.data.error.email;
             self.classError = 'has-error';
+        },
+
+        getStatusData: function (row) {
+            return row.status === 2 || row.status === 3 || row.status === 4;
         },
 
         getOnChangeList: function (event) {
