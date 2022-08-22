@@ -118,8 +118,6 @@ class StudentController extends Controller
         $toast = ['success' => 'Student saved successfully!'];
 
         return response()->json($toast, Response::HTTP_CREATED);
-
-//        return redirect()->route('student.index')->with('success', 'The student was added successfully.');
     }
 
     public function edit($id)
