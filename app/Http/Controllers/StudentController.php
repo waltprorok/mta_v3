@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreScheduleApptRequest;
-use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Models\BusinessHours;
 use App\Models\Lesson;
 use App\Models\Student;
-use App\Models\Teacher;
 use App\Models\User;
 use App\Services\PhoneNumberService;
 use Carbon\Carbon;
@@ -17,9 +15,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 
@@ -50,50 +47,53 @@ class StudentController extends Controller
         return response()->json($students, Response::HTTP_OK);
     }
 
-    public function index()
+    public function index(): JsonResponse
     {
-        $teacher = Teacher::where('teacher_id', Auth::id())->first();
-
-        if ($teacher == null) {
-            return redirect('teacher')->with('success', 'Please fill out your Studio Settings first before entering students.');
-        }
-
         $students = Student::with('hasOneLesson')
             ->where('teacher_id', Auth::id())
             ->where('status', Student::ACTIVE)
             ->firstNameAsc()
             ->get();
 
-        return view('webapp.student.index')->with('students', $students);
+        return response()->json($students, Response::HTTP_OK);
     }
 
-    public function waitlist()
+    public function waitlist(): JsonResponse
     {
         $waitlists = Student::with('teacher')->firstNameAsc()->where('teacher_id', Auth::id())->where('status', Student::WAITLIST)->get();
-
-        return view('webapp.student.waitlist')->with('waitlists', $waitlists);
+        return response()->json($waitlists, Response::HTTP_OK);
     }
 
-    public function leads()
+    public function leads(): JsonResponse
     {
         $leads = Student::with('teacher')->firstNameAsc()->where('teacher_id', Auth::id())->where('status', Student::LEAD)->get();
-
-        return view('webapp.student.leads')->with('leads', $leads);
+        return response()->json($leads, Response::HTTP_OK);
     }
 
-    public function inactive()
+    public function inactive(): JsonResponse
     {
         $inactives = Student::with('teacher')->firstNameAsc()->where('teacher_id', Auth::id())->where('status', Student::INACTIVE)->get();
-
-        return view('webapp.student.inactive')->with('inactives', $inactives);
+        return response()->json($inactives, Response::HTTP_OK);
     }
 
     /**
-     * @param StoreStudentRequest $request
-     * @return RedirectResponse
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function store(StoreStudentRequest $request): RedirectResponse
+    public function store(Request $request): JsonResponse
     {
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email',
+            'status' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], Response::HTTP_UNAUTHORIZED);
+        }
+
         $studentUser = User::create([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
@@ -115,7 +115,11 @@ class StudentController extends Controller
             'status' => $request->get('status'),
         ]);
 
-        return redirect()->route('student.index')->with('success', 'The student was added successfully.');
+        $toast = ['success' => 'Student saved successfully!'];
+
+        return response()->json($toast, Response::HTTP_CREATED);
+
+//        return redirect()->route('student.index')->with('success', 'The student was added successfully.');
     }
 
     public function edit($id)

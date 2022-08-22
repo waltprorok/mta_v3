@@ -26,12 +26,13 @@ Vue.use(VueFilterDateFormat);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('contacts', require('./components/Contacts.vue'));
+Vue.component('contacts', require('./components/admin/Contacts.vue'));
 Vue.component('lessons', require('./components/Lessons.vue'));
-Vue.component('teachers', require('./components/Teachers.vue'));
-Vue.component('students', require('./components/Students.vue'));
-Vue.component('users', require('./components/Users.vue'));
-Vue.component('blogs', require('./components/Blogs.vue'));
+Vue.component('teachers', require('./components/admin/Teachers.vue'));
+Vue.component('students', require('./components/admin/Students.vue'));
+Vue.component('users', require('./components/admin/Users.vue'));
+Vue.component('blogs', require('./components/admin/Blogs.vue'));
+Vue.component('studentList', require('./components/students/StudentList.vue'));
 
 const app = new Vue({
     el: '#app'

@@ -19,7 +19,8 @@ class Student extends Model
     const INACTIVE = 4;
 
     protected $casts = [
-        'student_id' => 'integer'
+        'student_id' => 'integer',
+        'status' => 'integer'
     ];
 
     protected $fillable = [

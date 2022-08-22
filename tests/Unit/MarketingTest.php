@@ -130,4 +130,15 @@ class MarketingTest extends TestCase
 
         $this->assertEquals(200, $response->getStatusCode());
     }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function dashboard_page_200()
+    {
+        $response = $this->call('GET', '/dashboard');
+
+        $this->assertEquals(302, $response->getStatusCode());
+    }
 }

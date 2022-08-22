@@ -6,6 +6,7 @@
         </div>
         <div class="card">
             <div v-if="showForm">
+                <!-- modal create read edit -->
                 <transition name="modal">
                     <div class="modal-mask">
                         <div class="modal-wrapper">
@@ -63,6 +64,7 @@
                         </div>
                     </div>
                 </transition>
+                <!-- end of modal create read edit -->
             </div>
 
             <!-- vue js data table -->
@@ -105,6 +107,7 @@
             </div>
             <!-- end of vue js data table -->
 
+            <!-- modal delete contact -->
             <div v-if="showModal">
                 <transition name="modal">
                     <div class="modal-mask">
@@ -130,6 +133,7 @@
                     </div>
                 </transition>
             </div>
+            <!-- end of modal delete contact -->
         </div>
     </div>
 </template>
