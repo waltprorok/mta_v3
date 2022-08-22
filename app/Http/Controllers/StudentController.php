@@ -83,11 +83,11 @@ class StudentController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'phone' => 'required',
-            'email' => 'required|email',
-            'status' => 'required',
+            'first_name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+            'phone' => 'required|string|max:28',
+            'email' => 'required|email|max:50|unique:students',
+            'status' => 'required|int|max:1',
         ]);
 
         if ($validator->fails()) {

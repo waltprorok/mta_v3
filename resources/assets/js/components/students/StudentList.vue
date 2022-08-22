@@ -38,7 +38,7 @@
                                             <div class="form-group" :class="error_email && classError">
                                                 <label for="email">Email
                                                     <span class="text-danger">*</span>
-                                                    <small><em>Use parent email address if student does not have one.</em></small>
+                                                    <small class="text-danger"><em>Use parent email address if student does not have one.</em></small>
                                                 </label>
                                                 <input id="email" v-model.trim="student.email" type="text" class="form-control">
                                                 <small>{{ error_email }}</small>

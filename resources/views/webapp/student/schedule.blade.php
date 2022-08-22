@@ -3,7 +3,6 @@
 @section('content')
 
     <div class="col-12">
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student</button>
         <h4>Schedule Student</h4>
         @foreach ($students as $student)
             <ul class="breadcrumb">
