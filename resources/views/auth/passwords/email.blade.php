@@ -36,7 +36,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-2">
-                                    <a href="{{ route('login') }}" class="btn-link">Already have an account?</a>
+                                    <small><a href="{{ route('login') }}" class="btn-link">Already have an account?</a></small>
                                 </div>
                             </div>
 
