@@ -215,6 +215,4 @@
 
     @endforeach
 
-    @include('partials.addStudent')
-
 @endsection

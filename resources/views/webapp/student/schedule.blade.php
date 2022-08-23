@@ -189,6 +189,4 @@
         @endforeach
     </div>
 
-    @include('partials.addStudent')
-
 @endsection
