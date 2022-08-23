@@ -48,7 +48,7 @@ class LessonController extends Controller
                 'minTime' => '08:00:00',
                 'maxTime' => '22:00:00',
                 'fixedWeekCount' => false,
-                'height' => 800,
+                'height' => 760,
             ]);
 
         return view('webapp.calendar.index', compact('calendar'));
@@ -73,12 +73,12 @@ class LessonController extends Controller
         return response()->json($lesson, Response::HTTP_OK);
     }
 
-    public function getAllLessonsForAdmin(): AnonymousResourceCollection
+    private function getAllLessonsForAdmin(): AnonymousResourceCollection
     {
         return LessonResource::collection(Lesson::with('lessonTeacherId')->orderBy('title')->orderBy('start_date')->get());
     }
 
-    public function getLessonsForTeacherId(): AnonymousResourceCollection
+    private function getLessonsForTeacherId(): AnonymousResourceCollection
     {
         return LessonResource::collection(Lesson::where('teacher_id', Auth::id())->orderBy('title')->orderBy('start_date')->get());
     }
