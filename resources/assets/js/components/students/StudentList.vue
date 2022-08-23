@@ -30,14 +30,6 @@
                                                 <input id="last_name" v-model.trim="student.last_name" type="text" class="form-control">
                                                 <small>{{ error_last_name }}</small>
                                             </div>
-                                            <div class="form-group" :class="error_phone && class_error">
-                                                <label for="phone">Phone
-                                                    <span class="text-danger">*</span>
-                                                    <small class="text-secondary"><em>Use parent phone number if student does not have one.</em></small>
-                                                </label>
-                                                <input id="phone" v-model.trim="student.phone" type="text" class="form-control">
-                                                <small>{{ error_phone }}</small>
-                                            </div>
                                             <div class="form-group" :class="error_email && class_error">
                                                 <label for="email">Email
                                                     <span class="text-danger">*</span>
@@ -45,6 +37,14 @@
                                                 </label>
                                                 <input id="email" v-model.trim="student.email" type="text" class="form-control">
                                                 <small>{{ error_email }}</small>
+                                            </div>
+                                            <div class="form-group" :class="error_phone && class_error">
+                                                <label for="phone">Phone
+<!--                                                    <span class="text-danger">*</span>-->
+                                                    <small class="text-secondary"><em> * Use parent phone number if student does not have one.</em></small>
+                                                </label>
+                                                <input id="phone" v-model.trim="student.phone" type="text" class="form-control">
+                                                <small>{{ error_phone }}</small>
                                             </div>
                                             <div class="form-group" :class="error_status && class_error">
                                                 <label for="status">Status: </label>
@@ -99,7 +99,7 @@
                     </select>
                 </div>
                 <div class="form-group pull-right">
-                    <button type="button" class="btn btn-primary" @click="show_form=true">Add Student</button>
+                    <button type="button" class="form-control btn btn-primary" @click="show_form=true">Add Student</button>
                 </div>
                 <div class="form-group pull-right pr-2">
                     <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">

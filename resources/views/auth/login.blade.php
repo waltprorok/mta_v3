@@ -19,7 +19,7 @@
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <div class="col-md-10 col-md-offset-1">
                                     <label for="email" class="control-label">Email Address</label>
-                                    <input id="email" type="email" class="form-control" autocapitalize="off" autocomplete="email" name="email" placeholder="email@example.com"
+                                    <input id="email" type="email" tabindex="1" class="form-control" autocapitalize="off" autocomplete="email" name="email" placeholder="email@example.com"
                                            value="{{ old('email') }}" autofocus>
 
                                     @if ($errors->has('email'))
@@ -29,17 +29,15 @@
                                     @endif
                                 </div>
                             </div>
-
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <div class="col-md-10 col-md-offset-1">
                                     <label for="password" class="control-label">Password</label>
                                     <small>
-                                        <a class="btn btn-link pull-right" href="{{ route('password.request') }}">
+                                        <a class="btn btn-link pull-right" tabindex="-1" href="{{ route('password.request') }}">
                                             Forgot Your Password?
                                         </a>
                                     </small>
-                                    <input id="password" type="password" class="form-control" name="password" placeholder="Password">
-
+                                    <input id="password" type="password" tabindex="2" class="form-control" name="password" placeholder="Password">
                                     @if ($errors->has('password'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -47,21 +45,18 @@
                                     @endif
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <div class="col-md-10 col-md-offset-1">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                                            <input type="checkbox" name="remember" tabindex="3" {{ old('remember') ? 'checked' : '' }}> Remember Me
                                         </label>
                                     </div>
                                 </div>
                             </div>
-                            <br/>
-
                             <div class="form-group">
                                 <div class="col-md-10 col-md-offset-1">
-                                    <button type="submit" class="btn btn-primary btn-block">
+                                    <button type="submit" tabindex="4" class="btn btn-primary btn-block">
                                         Login
                                     </button>
                                 </div>
