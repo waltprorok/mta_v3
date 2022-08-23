@@ -56,6 +56,13 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="{{ route('parent.calendar') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'parent.calendar' ? 'active' : '' }}">
+                            <i class="fa fa-calendar"></i> Calendar
+                        </a>
+                    </li>
+
                     @include('partials.messageNavBar')
 
                     <li class="nav-item">
