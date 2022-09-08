@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', '404')
+@section('code', '403')
 @section('content')
 
     <div id="pricing" class="section lg-padding">
