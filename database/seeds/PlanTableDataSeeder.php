@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 class PlanTableDataSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seed.
      *
      * @return void
      */

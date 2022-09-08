@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\App;
 class UsersTableDataSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seed.
      *
      * @return void
      */
@@ -159,7 +159,7 @@ class UsersTableDataSeeder extends Seeder
 
         if (App::environment('local')) {
             // Create 150 student users.
-            factory(App\Models\User::class, 150)->create();
+            factory(User::class, 150)->create();
         }
     }
 }
