@@ -18,7 +18,7 @@
                             <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
                                 <div class="col-md-10 col-md-offset-1">
                                     <label for="first_name" class="control-label">First Name</label>
-                                    <input id="first_name" type="text" class="form-control" name="first_name" value="{{ old('first_name') }}" autofocus>
+                                    <input id="first_name" type="text" class="form-control" name="first_name" placeholder="First name" value="{{ old('first_name') }}" autofocus>
 
                                     @if ($errors->has('first_name'))
                                         <span class="help-block">
@@ -31,7 +31,7 @@
                             <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
                                 <div class="col-md-10 col-md-offset-1">
                                     <label for="last_name" class="control-label">Last Name</label>
-                                    <input id="last_name" type="text" class="form-control" name="last_name" value="{{ old('last_name') }}">
+                                    <input id="last_name" type="text" class="form-control" name="last_name" placeholder="Last name" value="{{ old('last_name') }}">
 
                                     @if ($errors->has('last_name'))
                                         <span class="help-block">
@@ -44,7 +44,7 @@
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <div class="col-md-10 col-md-offset-1">
                                     <label for="email" class="control-label">E-Mail Address</label>
-                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                    <input id="email" type="email" class="form-control" name="email" placeholder="email@example.com" value="{{ old('email') }}">
 
                                     @if ($errors->has('email'))
                                         <span class="help-block">
@@ -57,7 +57,7 @@
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <div class="col-md-10 col-md-offset-1">
                                     <label for="password" class="control-label">Password</label>
-                                    <input id="password" type="password" class="form-control" name="password">
+                                    <input id="password" type="password" class="form-control" name="password" placeholder="Password">
 
                                     @if ($errors->has('password'))
                                         <span class="help-block">
@@ -70,7 +70,7 @@
                             <div class="form-group">
                                 <div class="col-md-10 col-md-offset-1">
                                     <label for="password-confirm" class="control-label">Confirm Password</label>
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm password">
                                 </div>
                             </div>
 

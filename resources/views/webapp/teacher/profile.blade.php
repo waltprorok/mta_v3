@@ -223,6 +223,4 @@
         </div>
     </div>
 
-    @include('partials.addStudent')
-
 @endsection

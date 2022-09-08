@@ -27,8 +27,7 @@
                                     @if($student->instrument != null)
                                         <p class="mb-1">{{ $student->instrument }}</p>
                                     @endif
-                                    <button class="btn btn-primary">Follow</button>
-                                    <button class="btn btn-outline-primary">Message</button>
+                                    <a href="{{ route('message.create', ['id' => $student->student_id]) }}" class="btn btn-outline-primary">Message</a>
                                 </div>
                             </div>
                         </div>
@@ -215,7 +214,5 @@
     </div>
 
     @endforeach
-
-    @include('partials.addStudent')
 
 @endsection

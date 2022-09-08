@@ -32,12 +32,15 @@
     color: #a94442;
 }
 
+.fc-time {
+    color: #fff;
+}
+
 .fc-title {
     color: #fff;
 }
 
 small {
-    color: #a94442;
     font-weight: bold;
 }
 

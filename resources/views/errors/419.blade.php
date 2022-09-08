@@ -1,5 +1,24 @@
-@extends('errors::minimal')
-
-@section('title', __('Page Expired'))
+@extends('layouts.app')
+@section('title', 'Page Expired')
 @section('code', '419')
-@section('message', __('Page Expired'))
+@section('content')
+
+    <div id="pricing" class="section lg-padding">
+        <!-- Container -->
+        <div class="container sm-padding">
+            <!-- Row -->
+            <div class="row">
+                <!-- Section header -->
+                <div class="section-header text-center">
+                    <h2 class="title">419 Page</h2>
+                    <div class="lead">The page you are looking for has expired.</div>
+                    <a href="{{ route('home') }}" class="btn btn-link">Back to Home</a>
+                </div>
+                <!-- /Section header -->
+            </div>
+            <!-- Row -->
+        </div>
+        <!-- /Container -->
+    </div>
+
+@endsection

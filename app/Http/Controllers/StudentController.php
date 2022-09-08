@@ -15,7 +15,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -82,13 +84,7 @@ class StudentController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'phone' => 'required',
-            'email' => 'required|email',
-            'status' => 'required',
-        ]);
+        $validator = $this->studentStoreRequest($request);
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], Response::HTTP_UNAUTHORIZED);
@@ -97,7 +93,7 @@ class StudentController extends Controller
         $studentUser = User::create([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
-            'email' => $request->get('email') ? $request->get('email') : null,
+            'email' => $request->get('email'),
             'password' => Hash::make(Str::random(10)),
             'student' => true,
             'terms' => true,
@@ -111,7 +107,7 @@ class StudentController extends Controller
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
             'phone' => $phoneNumber,
-            'email' => $request->get('email') ? $request->get('email') : null,
+            'email' => $request->get('email'),
             'status' => $request->get('status'),
         ]);
 
@@ -131,15 +127,19 @@ class StudentController extends Controller
     {
         // find student record
         $student = Student::where('id', $request->get('student_id'))->first();
+        $parentEmail = User::where('email', $request->get('parent_email'))->first();
 
-        if ($request->get('parent_email') != null && $student->parent_email == null) {
+        if ($parentEmail !== null && $student->parent_email == null) {
+            $parentEmail->parentStudentPivot()->toggle($student);
+        }
+
+        elseif ($request->get('parent_email') != null && $parentEmail == null && $student->parent_email == null) {
             // create new parent user
             $parent = User::firstOrCreate([
                 'first_name' => $request->get('first_name'),
                 'last_name' => $request->get('last_name'),
                 'email' => $request->get('parent_email'),
-//                'password' => Hash::make(Str::random(10)),
-                'password' => bcrypt($request->get('last_name')),
+                'password' => Hash::make($request->get('last_name')),
                 'parent' => true,
                 'terms' => true,
             ]);
@@ -459,11 +459,13 @@ class StudentController extends Controller
     {
         if ($request->input('action') == 'delete') {
             $this->destroy($id);
+
             return redirect(route('student.index'))->with('success', 'The scheduled lesson has been deleted.');
         }
 
         if ($request->input('action') == 'deleteAll') {
             $this->destroyAll($id);
+
             return redirect(route('student.index'))->with('success', 'All the scheduled lessons have been deleted.');
         }
 
@@ -520,13 +522,13 @@ class StudentController extends Controller
         }
     }
 
-    public function destroy($id)
+    private function destroy($id)
     {
         $lesson = Lesson::find($id);
         $lesson->delete();
     }
 
-    public function destroyAll($id)
+    private function destroyAll($id)
     {
         $studentId = Lesson::find($id);
 
@@ -534,5 +536,16 @@ class StudentController extends Controller
             ->where('teacher_id', Auth::id())
             ->whereDate('start_date', '>=', date('Y-m-d'))
             ->delete();
+    }
+
+    private function studentStoreRequest($request): \Illuminate\Contracts\Validation\Validator
+    {
+         return Validator::make($request->all(), [
+            'first_name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+            'phone' => 'max:32',
+            'email' => 'required:phone|email|max:50|unique:students',
+            'status' => 'required|int|max:1',
+        ]);
     }
 }

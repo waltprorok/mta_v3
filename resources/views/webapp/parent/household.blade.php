@@ -81,7 +81,9 @@
                                     <h6 class="mb-0">Birthday</h6>
                                 </div>
                                 <div class="col-sm-9">
+                                    @if($student->date_of_birth != null)
                                     {{ date('F d, Y', strtotime($student->date_of_birth)) }}
+                                    @endif
                                 </div>
                             </div>
                         </div>

@@ -5,7 +5,7 @@
             {{ toast.success }}
         </div>
         <div class="card">
-            <div v-if="showForm">
+            <div v-if="show_form">
                 <transition name="modal">
                     <div class="modal-mask">
                         <div class="modal-wrapper">
@@ -20,30 +20,33 @@
 
                                     <div class="modal-body">
                                         <form action="#" @submit.prevent="createStudent()">
-                                            <div class="form-group" :class="error_first_name && classError">
+                                            <div class="form-group" :class="error_first_name && class_error">
                                                 <label for="first_name">First Name <span class="text-danger">*</span></label>
                                                 <input id="first_name" v-model.trim="student.first_name" type="text" class="form-control">
                                                 <small>{{ error_first_name }}</small>
                                             </div>
-                                            <div class="form-group" :class="error_last_name && classError">
+                                            <div class="form-group" :class="error_last_name && class_error">
                                                 <label for="last_name">Last Name <span class="text-danger">*</span></label>
                                                 <input id="last_name" v-model.trim="student.last_name" type="text" class="form-control">
                                                 <small>{{ error_last_name }}</small>
                                             </div>
-                                            <div class="form-group" :class="error_phone && classError">
-                                                <label for="phone">Phone <span class="text-danger">*</span></label>
-                                                <input id="phone" v-model.trim="student.phone" type="text" class="form-control">
-                                                <small>{{ error_phone }}</small>
-                                            </div>
-                                            <div class="form-group" :class="error_email && classError">
+                                            <div class="form-group" :class="error_email && class_error">
                                                 <label for="email">Email
                                                     <span class="text-danger">*</span>
-                                                    <small><em>Use parent email address if student does not have one.</em></small>
+                                                    <small class="text-secondary"><em>Use parent email address if student does not have one.</em></small>
                                                 </label>
                                                 <input id="email" v-model.trim="student.email" type="text" class="form-control">
                                                 <small>{{ error_email }}</small>
                                             </div>
-                                            <div class="form-group" :class="error_status && classError">
+                                            <div class="form-group" :class="error_phone && class_error">
+                                                <label for="phone">Phone
+<!--                                                    <span class="text-danger">*</span>-->
+                                                    <small class="text-secondary"><em> * Use parent phone number if student does not have one.</em></small>
+                                                </label>
+                                                <input id="phone" v-model.trim="student.phone" type="text" class="form-control">
+                                                <small>{{ error_phone }}</small>
+                                            </div>
+                                            <div class="form-group" :class="error_status && class_error">
                                                 <label for="status">Status: </label>
                                                 <div class="form-check-inline">
                                                     <label class="form-check-label">
@@ -63,7 +66,7 @@
                                                 <small>{{ error_status }}</small>
                                                 <hr/>
                                                 <div class="form-group pull-right">
-                                                    <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>
+                                                    <button v-show="show_form" @click="cancelForm()" class="btn btn-default">Cancel</button>
                                                     <button type="submit" class="btn btn-primary">Save</button>
                                                 </div>
                                             </div>
@@ -96,7 +99,7 @@
                     </select>
                 </div>
                 <div class="form-group pull-right">
-                    <button type="button" class="btn btn-primary" @click="showForm=true">Add Student</button>
+                    <button type="button" class="form-control btn btn-primary" @click="show_form=true">Add Student</button>
                 </div>
                 <div class="form-group pull-right pr-2">
                     <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
@@ -143,7 +146,7 @@ export default {
         return {
             toast: '',
             alert: false,
-            classError: '',
+            class_error: '',
             filter: '',
             columns: [
                 {label: 'Scheduled', field: 'has_one_lesson',},
@@ -154,8 +157,8 @@ export default {
                 {label: 'Instrument', field: 'instrument',},
                 {label: 'Actions', filterable: false}
             ],
-            showForm: false,
-            showModal: false,
+            show_form: false,
+            show_modal: false,
             list: [],
             page: 1,
             per_page: 10,
@@ -195,13 +198,13 @@ export default {
             self.student.last_name = null;
             self.student.phone = null;
             self.student.email = null;
-            self.showForm = false;
+            self.show_form = false;
             self.clearErrorData();
         },
 
         clearErrorData: function () {
             let self = this;
-            self.classError = '';
+            self.class_error = '';
             self.error_first_name = '';
             self.error_last_name = '';
             self.error_phone = '';
@@ -214,7 +217,7 @@ export default {
             self.student.last_name = null;
             self.student.phone = null;
             self.student.email = null;
-            self.showForm = false;
+            self.show_form = false;
         },
 
         createStudent: function () {
@@ -249,7 +252,7 @@ export default {
             self.error_last_name = error.response.data.error.last_name;
             self.error_phone = error.response.data.error.phone;
             self.error_email = error.response.data.error.email;
-            self.classError = 'has-error';
+            self.class_error = 'has-error';
         },
 
         getStatusData: function (row) {

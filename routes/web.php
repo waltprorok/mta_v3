@@ -78,6 +78,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['household']], function () {
         Route::get('household', 'ParentController@household')->name('parent.household');
+        Route::get('household/calendar', 'ParentController@calendar')->name('parent.calendar');
     });
 
     Route::group(['middleware' => ['teacher']], function () {
@@ -100,7 +101,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('schedule/{student_id}/edit/{id}/{day?}', 'StudentController@scheduleEdit')->name('student.schedule.edit');
             Route::delete('schedule/{id}', 'StudentController@scheduledLessonDelete')->name('student.schedule.delete');
             Route::delete('schedule/delete/{id}', 'StudentController@scheduledLessonDelete')->name('student.schedule.deleteAll');
-            Route::get('lessons', 'StudentController@lessons')->name('student.lessons');
             Route::put('lessons/update', 'StudentController@lessonsUpdate')->name('student.lessons.update');
             Route::post('process_date', 'StudentController@ajaxTime');
         });

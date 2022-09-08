@@ -1,10 +1,11 @@
 @extends('layouts.app')
 @section('title', '404')
+@section('code', '403')
 @section('content')
 
     <div id="pricing" class="section lg-padding">
         <!-- Container -->
-        <div class="container">
+        <div class="container sm-padding">
             <!-- Row -->
             <div class="row">
                 <!-- Section header -->

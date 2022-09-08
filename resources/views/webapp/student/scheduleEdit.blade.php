@@ -3,7 +3,6 @@
 @section('content')
 
     <div class="col-12">
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addStudentModal"><i class="fa fa-plus"></i>&nbsp;Add Student</button>
         <h4>Edit Student Schedule</h4>
         @foreach ($lessons as $lesson)
             <ul class="breadcrumb">
@@ -200,8 +199,6 @@
             </div>
         @endforeach
     </div>
-
-    @include('partials.addStudent')
 
     <!-- Modal -->
     <div class="modal fade" id="myDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
