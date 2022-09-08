@@ -5,7 +5,7 @@
 
     <div id="pricing" class="section lg-padding">
         <!-- Container -->
-        <div class="container">
+        <div class="container sm-padding">
             <!-- Row -->
             <div class="row">
                 <!-- Section header -->
