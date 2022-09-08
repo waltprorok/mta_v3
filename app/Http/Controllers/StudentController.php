@@ -139,7 +139,7 @@ class StudentController extends Controller
                 'first_name' => $request->get('first_name'),
                 'last_name' => $request->get('last_name'),
                 'email' => $request->get('parent_email'),
-                'password' => Hash::make(Str::random(10)),
+                'password' => Hash::make($request->get('last_name')),
                 'parent' => true,
                 'terms' => true,
             ]);
