@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
 
 class StudentTableDataSeeder extends Seeder
 {
@@ -11,7 +12,9 @@ class StudentTableDataSeeder extends Seeder
      */
     public function run()
     {
-        // Create 100 students.
-        factory(App\Models\Student::class, 100)->create();
+        if (App::environment('local')) {
+            // Create 100 students.
+            factory(App\Models\Student::class, 100)->create();
+        }
     }
 }

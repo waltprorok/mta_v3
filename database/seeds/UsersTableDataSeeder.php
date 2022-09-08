@@ -3,6 +3,7 @@
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
 
 class UsersTableDataSeeder extends Seeder
 {
@@ -156,7 +157,9 @@ class UsersTableDataSeeder extends Seeder
             ]
         ]);
 
-        // Create 150 student users.
-        factory(App\Models\User::class, 150)->create();
+        if (App::environment('local')) {
+            // Create 150 student users.
+            factory(App\Models\User::class, 150)->create();
+        }
     }
 }
