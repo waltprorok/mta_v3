@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreScheduleApptRequest;
+use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Models\BusinessHours;
 use App\Models\Lesson;
@@ -18,7 +19,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 
@@ -79,17 +79,11 @@ class StudentController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param StoreStudentRequest $request
      * @return JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreStudentRequest $request): JsonResponse
     {
-        $validator = $this->studentStoreRequest($request);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], Response::HTTP_UNAUTHORIZED);
-        }
-
         $studentUser = User::create([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
@@ -125,7 +119,6 @@ class StudentController extends Controller
 
     public function update(UpdateStudentRequest $request): RedirectResponse
     {
-        // find student record
         $student = Student::where('id', $request->get('student_id'))->first();
         $parentEmail = User::where('email', $request->get('parent_email'))->first();
 
@@ -536,16 +529,5 @@ class StudentController extends Controller
             ->where('teacher_id', Auth::id())
             ->whereDate('start_date', '>=', date('Y-m-d'))
             ->delete();
-    }
-
-    private function studentStoreRequest($request): \Illuminate\Contracts\Validation\Validator
-    {
-         return Validator::make($request->all(), [
-            'first_name' => 'required|string|max:50',
-            'last_name' => 'required|string|max:50',
-            'phone' => 'max:32',
-            'email' => 'required:phone|email|max:50|unique:students',
-            'status' => 'required|int|max:1',
-        ]);
     }
 }
