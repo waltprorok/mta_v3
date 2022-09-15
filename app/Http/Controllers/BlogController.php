@@ -136,7 +136,7 @@ class BlogController extends Controller
      * @param StoreBlogPostRequest $request
      * @return void
      */
-    public function commitBlogPost($editBlog, StoreBlogPostRequest $request): void
+    private function commitBlogPost($editBlog, StoreBlogPostRequest $request): void
     {
         $this->setBlogPost($editBlog, $request);
 
