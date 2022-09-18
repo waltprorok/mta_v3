@@ -33,13 +33,14 @@
 <body class="sidebar-fixed header-fixed">
 <div class="page-wrapper">
     <nav class="navbar page-header">
+        {{--Toogle side mobile bar--}}
         <a href="#" class="btn btn-link sidebar-mobile-toggle d-md-none mr-auto">
             <i class="fa fa-bars"></i>
         </a>
         {{--Toogle side navigation bar--}}
-        <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">
-            <i class="fa fa-bars"></i>
-        </a>
+{{--        <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">--}}
+{{--            <i class="fa fa-bars"></i>--}}
+{{--        </a>--}}
         <a class="navbar-brand" href="{{ route('dashboard') }}">
             <img src="{{ asset('webapp/imgs/logo-mta1.png') }}" alt="mta_logo">
         </a>
