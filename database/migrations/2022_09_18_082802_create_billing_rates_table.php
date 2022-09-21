@@ -18,7 +18,7 @@ class CreateBillingRatesTable extends Migration
             $table->integer('teacher_id')->unsigned();
             $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('type')->nullable();
-            $table->decimal('rate')->nullable();
+            $table->decimal('amount')->nullable();
             $table->timestamps();
         });
     }

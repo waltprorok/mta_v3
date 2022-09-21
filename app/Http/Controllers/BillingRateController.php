@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBillingRateRequest;
 use App\Models\BillingRate;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,12 +21,12 @@ class BillingRateController extends Controller
         return response()->json($paymentRate, Response::HTTP_OK);
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(StoreBillingRateRequest $request): JsonResponse
     {
         BillingRate::create([
             'teacher_id' => Auth::id(),
             'type' => $request->get('type'),
-            'rate' => $request->get('rate')
+            'amount' => $request->get('amount')
         ]);
 
         $toast = ['success' => 'Billing rate saved successfully!'];

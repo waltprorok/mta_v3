@@ -1,25 +1,38 @@
 <template>
-    <div class="card">
-        <div class="card-header bg-light">Billing Rates</div>
-        <div class="card-body">
+    <div>
+        <div v-if="alert" class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" @click="alert=false" aria-label="close">&times;</a>
+            {{ toast.success }}
+        </div>
 
-            <form class="form-horizontal" action="#" @submit.prevent="createBillingRate()">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <div class="form-group">
+        <div class="card">
+            <div class="card-header bg-light">Billing Rates</div>
+            <div class="card-body">
+
+                <form class="form-horizontal" action="#" @submit.prevent="createBillingRate()">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group" :class="error_type && classError">
                                 <label for="single-select">Rate Types</label>
                                 <select id="single-select" class="form-control" v-model="rate.type">
                                     <option v-for="type in types" :value="type">{{ type | capitalising }}</option>
                                 </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="name">Amount</label>
-                                <input id="name" v-model.trim="rate.rate" type="text" class="form-control">
                                 <small>{{ error_type }}</small>
                             </div>
 
+                            <div class="form-group" :class="error_amount && classError">
+                                <label for="name">Amount</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input id="name" v-model.trim="rate.amount" type="text" class="form-control">
+                                </div>
+                                <small>{{ error_amount }}</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
                             <div v-for="rate in list">
                                 <label for="hourly" class="control-label">{{ rate.type | capitalising }} Type</label>
                                 <div class="input-group mb-3">
@@ -27,25 +40,24 @@
                                         <span class="input-group-text">$</span>
                                     </div>
 
-                                    <input type="text" class="form-control" name="hourly" v-model="rate.rate">
+                                    <input type="text" class="form-control" name="hourly" v-model="rate.amount">
                                     <div class="input-group-append">
                                         <span class="input-group-text">.00</span>
                                     </div>
-                                    <small>{{ error_rate }}</small>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <hr/>
+                    <hr/>
 
-                <div class="pull-left">
-                    <button type="submit" name="action" value="save" class="btn btn-primary">Save</button>
-                    <a href="#" class="btn btn-outline-secondary">Cancel</a>
-                </div>
+                    <div class="pull-left">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button @click="cancelForm()" class="btn btn-default">Cancel</button>
+                    </div>
 
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </template>
@@ -78,10 +90,10 @@ export default {
             rate: {
                 id: null,
                 type: null,
-                rate: null,
+                amount: null,
             },
             error_type: '',
-            error_rate: '',
+            error_amount: '',
         }
     },
 
@@ -111,12 +123,8 @@ export default {
     methods: {
         cancelForm: function () {
             let self = this;
-            self.showForm = false;
-            self.read = false;
-            self.contact.name = null;
-            self.contact.email = null;
-            self.contact.subject = null;
-            self.contact.message = null;
+            self.rate.type = null;
+            self.rate.amount = null;
             self.edit = false;
             self.clearErrorData();
         },
@@ -131,19 +139,19 @@ export default {
             let self = this;
             self.classError = '';
             self.error_type = '';
-            self.error_rate = '';
+            self.error_amount = '';
         },
 
         clearRateData: function () {
             let self = this;
             self.rate.type = null;
-            self.rate.rate = null;
+            self.rate.amount = null;
         },
 
         getErrorMessage: function (error) {
             let self = this;
             self.error_type = error.response.data.error.type;
-            self.error_rate = error.response.data.error.rate;
+            self.error_amount = error.response.data.error.amount;
             self.classError = 'has-error';
         },
 
@@ -189,7 +197,7 @@ export default {
 
         updateRate: function (id) {
             let self = this;
-            let params = Object.assign({}, self.contact);
+            let params = Object.assign({}, self.rate);
             axios.patch('/web/contact/' + id, params)
                 .then(function (success) {
                     self.alert = true;

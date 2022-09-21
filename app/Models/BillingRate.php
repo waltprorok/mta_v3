@@ -10,7 +10,7 @@ class BillingRate extends Model
     protected $fillable = [
         'teacher_id',
         'type',
-        'rate',
+        'amount',
         ];
 
     public function teacher(): BelongsTo
