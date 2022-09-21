@@ -86,6 +86,11 @@ class User extends Authenticatable
         return $this->hasOne(Teacher::class, 'teacher_id');
     }
 
+    public function getTeacherPaymentRate(): HasMany
+    {
+        return $this->hasMany(BillingRate::class, 'teacher_id');
+    }
+
     /**
      * @return HasMany
      */

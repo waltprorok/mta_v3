@@ -33,6 +33,7 @@ Vue.component('students', require('./components/admin/Students.vue'));
 Vue.component('users', require('./components/admin/Users.vue'));
 Vue.component('blogs', require('./components/admin/Blogs.vue'));
 Vue.component('studentList', require('./components/students/StudentList.vue'));
+Vue.component('billingRate', require('./components/teacher/BillingRate.vue'));
 
 const app = new Vue({
     el: '#app'

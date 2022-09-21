@@ -87,6 +87,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('leads', 'StudentController@leads')->name('student.leads');
             Route::get('waitlist', 'StudentController@waitlist')->name('student.waitlist');
             Route::get('inactive', 'StudentController@inactive')->name('student.inactive');
+            Route::get('billing-rate', 'BillingRateController@index')->name('teacher.billing-rate');
+            Route::post('billing-rate-save', 'BillingRateController@store')->name('teacher.billing-rate.save');
             Route::post('student-save', 'StudentController@store')->name('student.save');
         });
 
@@ -111,7 +113,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::put('update', 'TeacherController@update')->name('teacher.studioUpdate');
             Route::post('store', 'TeacherController@store')->name('save.studioSettings');
             Route::get('profile', 'TeacherController@profile')->name('teacher.profile');
-            Route::get('payment', 'TeacherController@payment')->name('teacher.payment');
+            Route::view('payment', 'webapp.teacher.billing')->name('teacher.billing');
             Route::get('hours', 'TeacherController@hours')->name('teacher.hours');
             Route::post('hours', 'TeacherController@hoursSave')->name('teacher.hoursSave');
             Route::get('hours/view', 'TeacherController@hoursView')->name('teacher.hoursView');
