@@ -11,7 +11,12 @@ class BillingRate extends Model
         'teacher_id',
         'type',
         'amount',
-        ];
+        'description',
+    ];
+
+    protected $cast = [
+        'rate' => 'float',
+    ];
 
     public function teacher(): BelongsTo
     {

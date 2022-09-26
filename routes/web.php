@@ -87,8 +87,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('leads', 'StudentController@leads')->name('student.leads');
             Route::get('waitlist', 'StudentController@waitlist')->name('student.waitlist');
             Route::get('inactive', 'StudentController@inactive')->name('student.inactive');
-            Route::get('billing-rate', 'BillingRateController@index')->name('teacher.billing-rate');
-            Route::post('billing-rate-save', 'BillingRateController@store')->name('teacher.billing-rate.save');
+            Route::resource('billing-rate', 'BillingRateController');
             Route::post('student-save', 'StudentController@store')->name('student.save');
         });
 

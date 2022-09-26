@@ -6,58 +6,136 @@
         </div>
 
         <div class="card">
-            <div class="card-header bg-light">Billing Rates</div>
-            <div class="card-body">
-
-                <form class="form-horizontal" action="#" @submit.prevent="createBillingRate()">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group" :class="error_type && classError">
-                                <label for="single-select">Rate Types</label>
-                                <select id="single-select" class="form-control" v-model="rate.type">
-                                    <option v-for="type in types" :value="type">{{ type | capitalising }}</option>
-                                </select>
-                                <small>{{ error_type }}</small>
-                            </div>
-
-                            <div class="form-group" :class="error_amount && classError">
-                                <label for="name">Amount</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">$</span>
-                                    </div>
-                                    <input id="name" v-model.trim="rate.amount" type="text" class="form-control">
-                                </div>
-                                <small>{{ error_amount }}</small>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div v-for="rate in list">
-                                <label for="hourly" class="control-label">{{ rate.type | capitalising }} Type</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">$</span>
+            <div v-if="showForm">
+                <!-- modal create read edit -->
+                <transition name="modal">
+                    <div class="modal-mask">
+                        <div class="modal-wrapper">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" v-show="edit">Edit Rate Record</h5>
+                                        <h5 class="modal-title" v-show="!edit">Create a New Rate</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true" @click="cancelForm()">&times;</span>
+                                        </button>
                                     </div>
 
-                                    <input type="text" class="form-control" name="hourly" v-model="rate.amount">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">.00</span>
+                                    <div class="modal-body" v-show="!read">
+                                        <form class="form-horizontal" action="#" @submit.prevent="edit ? updateRate(rate.id) : createBillingRate()">
+                                            <div class="row">
+                                                <div class="col-md-6 offset-3">
+                                                    <div class="form-group" :class="error_type && classError">
+                                                        <label for="single-select">Rate Types</label>
+                                                        <select id="single-select" class="form-control" v-model="rate.type">
+                                                            <option v-for="type in types" :value="type">{{ type | capitalising }}</option>
+                                                        </select>
+                                                        <small>{{ error_type }}</small>
+                                                    </div>
+                                                    <div class="form-group" :class="error_amount && classError">
+                                                        <label for="amount">Amount</label>
+                                                        <div class="input-group mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">$</span>
+                                                            </div>
+                                                            <input id="amount" v-model="rate.amount" type="text" class="form-control">
+                                                        </div>
+                                                        <small>{{ error_amount }}</small>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="description">Description</label>
+                                                        <div class="input-group mb-3">
+                                                            <input id="description" v-model="rate.description" placeholder="optional" type="text" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr/>
+
+                                            <div class="form-group pull-right">
+                                                <button @click="cancelForm()" class="btn btn-default">Cancel</button>
+                                                <button v-show="!edit" type="submit" class="btn btn-primary">Save</button>
+                                                <button v-show="edit" type="submit" class="btn btn-primary">Update</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <hr/>
-
-                    <div class="pull-left">
-                        <button type="submit" class="btn btn-primary">Save</button>
-                        <button @click="cancelForm()" class="btn btn-default">Cancel</button>
-                    </div>
-
-                </form>
+                </transition>
+                <!-- end of modal create read edit -->
             </div>
+
+            <div class="card-header bg-light">Billing Rates</div>
+            <!-- vue js data table -->
+            <div class="form-control">
+                <div class="form-group pull-left">
+                    <div class="form-group">
+                        <select id="single-select" v-model="per_page" class="form-control">
+                            <option v-for="page in pages" :value="page">{{ page }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group pull-right">
+                    <button type="button" class="btn btn-primary" @click="showForm=true" v-show="!showForm">Create Rate</button>
+                </div>
+                <div class="form-group pull-right pr-2">
+                    <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
+                </div>
+                <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
+                    <template v-slot="{ columns, row }">
+                        <tr>
+                            <td>{{ row.type | capitalising}}</td>
+                            <td>${{ row.amount }}</td>
+                            <td v-text="row.description"></td>
+                            <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
+                            <td class="text-nowrap">
+<!--                                <button @click="showRate(row.id, true)" class="btn btn-outline-primary btn-sm" title="read"><i class="fa fa-envelope-open"></i></button>-->
+                                <button @click="showRate(row.id, false)" class="btn btn-outline-primary btn-sm" title="edit"><i class="fa fa-edit"></i></button>
+                                <button @click="showModalDelete(row.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                    </template>
+                </datatable>
+                <div class="pull-left">
+                    Total: {{ list.length }} entries
+                </div>
+                <div class="pull-right">
+                    <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
+                </div>
+            </div>
+            <!-- end of vue js data table -->
+
+            <!-- modal delete contact -->
+            <div v-if="showModal">
+                <transition name="modal">
+                    <div class="modal-mask">
+                        <div class="modal-wrapper">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Delete Rate Record</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true" @click="showModal=false">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Do you want to delete this rate record?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-secondary" @click="showModal = false">Cancel</button>
+                                        <button type="button" @click="deleteRate(id)" class="btn btn-danger">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </transition>
+            </div>
+            <!-- end of modal delete contact -->
+
         </div>
     </div>
 </template>
@@ -71,10 +149,9 @@ export default {
             classError: '',
             filter: '',
             columns: [
-                {label: 'Name', field: 'name',},
-                {label: 'Email', field: 'email',},
-                {label: 'Subject', field: 'subject',},
-                {label: 'Message', field: 'message',},
+                {label: 'Type', field: 'type',},
+                {label: 'Amount', field: 'amount',},
+                {label: 'Description', field: 'description',},
                 {label: 'Created', field: 'created_at',},
                 {label: 'Actions', filterable: false}
             ],
@@ -91,6 +168,7 @@ export default {
                 id: null,
                 type: null,
                 amount: null,
+                description: null,
             },
             error_type: '',
             error_amount: '',
@@ -114,19 +192,17 @@ export default {
         this.fetchRateList();
     },
 
-    computed: {
-        // hasListData: function () {
-        //     return this.list ? this.list.length > 0 : false;
-        // }
-    },
+    // computed: {
+    //     // hasListData: function () {
+    //     //     return this.list ? this.list.length > 0 : false;
+    //     // }
+    // },
 
     methods: {
         cancelForm: function () {
             let self = this;
-            self.rate.type = null;
-            self.rate.amount = null;
-            self.edit = false;
             self.clearErrorData();
+            self.clearRateData();
         },
 
         showModalDelete: function (id) {
@@ -144,8 +220,10 @@ export default {
 
         clearRateData: function () {
             let self = this;
+            self.showForm = false;
             self.rate.type = null;
             self.rate.amount = null;
+            self.rate.description = null;
         },
 
         getErrorMessage: function (error) {
@@ -167,7 +245,7 @@ export default {
         createBillingRate: function () {
             let self = this;
             let params = Object.assign({}, self.rate);
-            axios.post('/web/billing-rate-save', params)
+            axios.post('/web/billing-rate', params)
                 .then(function (success) {
                     self.alert = true;
                     self.toast = success.data;
@@ -180,51 +258,50 @@ export default {
                 });
         },
 
-        // showContact: function (id, read) {
-        //     let self = this;
-        //     self.showForm = true;
-        //     self.read = read;
-        //     axios.get('/web/contact/' + id)
-        //         .then(function (response) {
-        //             self.contact.id = response.data.id;
-        //             self.contact.name = response.data.name;
-        //             self.contact.email = response.data.email;
-        //             self.contact.subject = response.data.subject;
-        //             self.contact.message = response.data.message;
-        //         })
-        //     self.edit = true;
-        // },
+        showRate: function (id, read) {
+            let self = this;
+            self.showForm = true;
+            self.read = read;
+            axios.get('/web/billing-rate/' + id)
+                .then(function (response) {
+                    self.rate.id = response.data.id;
+                    self.rate.type = response.data.type;
+                    self.rate.amount = response.data.amount;
+                    self.rate.description = response.data.description;
+                })
+            self.edit = true;
+        },
 
         updateRate: function (id) {
             let self = this;
             let params = Object.assign({}, self.rate);
-            axios.patch('/web/contact/' + id, params)
+            axios.patch('/web/billing-rate/' + id, params)
                 .then(function (success) {
                     self.alert = true;
                     self.toast = success.data;
-                    self.clearContactData();
+                    self.clearRateData();
                     self.clearErrorData();
-                    self.fetchContactList();
+                    self.fetchRateList();
                 })
                 .catch(function (error) {
                     self.getErrorMessage(error);
                 });
         },
 
-        // deleteContact: function (id) {
-        //     let self = this;
-        //     let params = Object.assign({}, self.contact);
-        //     axios.delete('/web/contact/' + id, params)
-        //         .then(function (success) {
-        //             self.alert = true;
-        //             self.showModal = false;
-        //             self.toast = success.data;
-        //             self.fetchContactList();
-        //         })
-        //         .catch(function (error) {
-        //             console.log(error);
-        //         });
-        // },
+        deleteRate: function (id) {
+            let self = this;
+            let params = Object.assign({}, self.rate);
+            axios.delete('/web/billing-rate/' + id, params)
+                .then(function (success) {
+                    self.alert = true;
+                    self.showModal = false;
+                    self.toast = success.data;
+                    self.fetchRateList();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
 
     },
 }
