@@ -87,12 +87,11 @@
                 <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                     <template v-slot="{ columns, row }">
                         <tr>
-                            <td>{{ row.type | capitalising}}</td>
-                            <td>${{ row.amount }}</td>
+                            <td>{{ row.type | capitalising }}</td>
+                            <td>{{ row.amount | toCurrency }}</td>
                             <td v-text="row.description"></td>
                             <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
                             <td class="text-nowrap">
-<!--                                <button @click="showRate(row.id, true)" class="btn btn-outline-primary btn-sm" title="read"><i class="fa fa-envelope-open"></i></button>-->
                                 <button @click="showRate(row.id, false)" class="btn btn-outline-primary btn-sm" title="edit"><i class="fa fa-edit"></i></button>
                                 <button @click="showModalDelete(row.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
                             </td>
@@ -155,7 +154,7 @@ export default {
                 {label: 'Created', field: 'created_at',},
                 {label: 'Actions', filterable: false}
             ],
-            types: ['hourly', 'weekly', 'monthly'],
+            types: ['lesson', 'hourly', 'weekly', 'monthly'],
             edit: false,
             showForm: false,
             read: false,
@@ -177,14 +176,23 @@ export default {
 
     filters: {
         capitalising: function (data) {
-            let capitalized = []
+            let capitalized = [];
             data.split(' ').forEach(word => {
                 capitalized.push(
                     word.charAt(0).toUpperCase() +
                     word.slice(1).toLowerCase()
                 )
-            })
-            return capitalized.join(' ')
+            });
+            return capitalized.join(' ');
+        },
+
+        toCurrency: function (value) {
+            let formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            });
+
+            return formatter.format(value);
         }
     },
 

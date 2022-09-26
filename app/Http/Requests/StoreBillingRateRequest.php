@@ -29,7 +29,7 @@ class StoreBillingRateRequest extends FormRequest
         return [
             'type' => 'required',
             'amount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-            'description' => 'string',
+            'description' => 'string|nullable',
         ];
     }
 

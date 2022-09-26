@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBillingRateRequest;
 use App\Models\BillingRate;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -62,6 +63,11 @@ class BillingRateController extends Controller
         return response()->json($toast, Response::HTTP_OK);
     }
 
+    /**
+     * @param BillingRate $billingRate
+     * @return JsonResponse
+     * @throws Exception
+     */
     public function destroy(BillingRate $billingRate): JsonResponse
     {
         $billingRate->delete();
@@ -70,5 +76,4 @@ class BillingRateController extends Controller
 
         return response()->json($toast, Response::HTTP_OK);
     }
-
 }
