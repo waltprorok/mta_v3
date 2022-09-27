@@ -150,11 +150,11 @@ export default {
             columns: [
                 {label: 'Type', field: 'type',},
                 {label: 'Amount', field: 'amount',},
-                {label: 'Description', field: 'description',},
+                {label: 'Description', filterable: false},
                 {label: 'Created', field: 'created_at',},
                 {label: 'Actions', filterable: false}
             ],
-            types: ['lesson', 'hourly', 'weekly', 'monthly'],
+            types: ['lesson', 'hourly', 'weekly', 'monthly', 'yearly'],
             edit: false,
             showForm: false,
             read: false,
@@ -270,6 +270,7 @@ export default {
             let self = this;
             self.showForm = true;
             self.read = read;
+            self.edit = true;
             axios.get('/web/billing-rate/' + id)
                 .then(function (response) {
                     self.rate.id = response.data.id;
