@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateBillingRatesTable extends Migration
 {
+    const TABLE_NAME = 'billing_rates';
+
     /**
      * Run the migrations.
      *
@@ -13,7 +15,7 @@ class CreateBillingRatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('billing_rates', function (Blueprint $table) {
+        Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('teacher_id')->unsigned();
             $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');
@@ -31,6 +33,6 @@ class CreateBillingRatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('billing_rates');
+        Schema::dropIfExists(self::TABLE_NAME);
     }
 }
