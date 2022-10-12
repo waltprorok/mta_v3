@@ -57,6 +57,7 @@
                                                 <button @click="cancelForm()" class="btn btn-default">Cancel</button>
                                                 <button v-show="!edit" type="submit" class="btn btn-primary">Save</button>
                                                 <button v-show="edit" type="submit" class="btn btn-primary">Update</button>
+                                                <p>{{title}}</p>
                                             </div>
                                         </form>
                                     </div>
@@ -172,6 +173,10 @@ export default {
             error_type: '',
             error_amount: '',
         }
+    },
+
+    props: {
+        title: String,
     },
 
     filters: {
