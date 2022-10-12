@@ -11,7 +11,7 @@
         @include('partials.teacherTabs')
 
         <div id="app">
-            <billing-rate title="Title Goes Here"></billing-rate>
+            <billing-rate></billing-rate>
         </div>
     </div>
 
