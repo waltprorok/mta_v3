@@ -9,7 +9,7 @@
                     <h2 class="title">FAQ</h2>
                     <h3>Frequently Asked Questions.</h3>
                 </div>
-                <div class="col-md-8 col-md-offset-2">
+                <div class="col-md-10 col-md-offset-1">
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
                         <div class="panel panel-default">
@@ -22,8 +22,7 @@
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
-                                 aria-labelledby="headingOne">
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                 <div class="panel-body">
                                     Music Teachers Aid is software that aids private music teachers.
                                     The software keeps track of students, lesson, payments, gives feedback to
