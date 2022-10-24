@@ -22,7 +22,7 @@
         </li>
     @endif
         <li class="nav-item">
-            <a class="nav-link {{ Route::currentRouteName() == 'teacher.payment' ? 'active' : '' }}"
-               href="{{ route('teacher.payment') }}">Payment</a>
+            <a class="nav-link {{ Route::currentRouteName() == 'teacher.billing' ? 'active' : '' }}"
+               href="{{ route('teacher.billing') }}">Billing</a>
         </li>
 </ul>

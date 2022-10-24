@@ -174,7 +174,7 @@ class SubscriptionController extends Controller
      * @param $invoiceId
      * @return array
      */
-    public function pdfDownload($invoiceId)
+    public function pdfDownload($invoiceId): array
     {
         $user = Auth::user();
 

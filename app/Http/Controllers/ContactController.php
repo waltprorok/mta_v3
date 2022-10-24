@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreContactSubmissionRequest;
+use App\Http\Requests\StoreContactRequest;
 use App\Http\Resources\ContactResource;
 use App\Models\Contact;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
@@ -32,22 +30,11 @@ class ContactController extends Controller
     }
 
     /**
-     * @param StoreContactSubmissionRequest $request
+     * @param StoreContactRequest $request
      * @return JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreContactRequest $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'subject' => 'required|min:3',
-            'message' => 'required|min:3',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], Response::HTTP_UNAUTHORIZED);
-        }
-
         Contact::create($request->all());
 
         $toast = ['success' => 'Contact saved successfully!'];
@@ -56,23 +43,12 @@ class ContactController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param StoreContactRequest $request
      * @param Contact $contact
      * @return JsonResponse
      */
-    public function update(Request $request, Contact $contact): JsonResponse
+    public function update(StoreContactRequest $request, Contact $contact): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'subject' => 'required|min:3',
-            'message' => 'required|min:3',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], Response::HTTP_UNAUTHORIZED);
-        }
-
         $contact->update($request->all());
 
         $toast = ['success' => 'Contact has been updated!'];

@@ -134,14 +134,6 @@ class TeacherController extends Controller
         return view('webapp.teacher.profile')->with('teacher', $teacher);
     }
 
-    /**
-     * @return View
-     */
-    public function payment(): View
-    {
-        return view('webapp.teacher.payment');
-    }
-
     public function hours()
     {
         $hours = BusinessHours::where('teacher_id', Auth::id())->first();
