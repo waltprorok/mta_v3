@@ -44,7 +44,7 @@ class LessonController extends Controller
                 'firstDay' => 0,
                 'editable' => false,
                 'selectable' => true,
-                'defaultView' => 'listWeek', // 'month' for full calendar 'listWeek'
+                'defaultView' => 'month', // 'month' for full calendar 'listWeek'
                 'minTime' => '08:00:00',
                 'maxTime' => '22:00:00',
                 'fixedWeekCount' => false,

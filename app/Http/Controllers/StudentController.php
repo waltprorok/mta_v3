@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -24,8 +24,6 @@ use Illuminate\Support\Str;
 
 class StudentController extends Controller
 {
-    public $selectedDate;
-
     /**
      * @var PhoneNumberService
      */
@@ -93,7 +91,7 @@ class StudentController extends Controller
             'terms' => true,
         ]);
 
-        $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
+        $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone')) ?? null;
 
         Student::create([
             'student_id' => $studentUser->id,
@@ -105,12 +103,14 @@ class StudentController extends Controller
             'status' => $request->get('status'),
         ]);
 
+        // TODO: if successful send email to user and instruct to update password
+
         $toast = ['success' => 'Student saved successfully!'];
 
         return response()->json($toast, Response::HTTP_CREATED);
     }
 
-    public function edit($id)
+    public function edit(int $id)
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
 
@@ -122,11 +122,9 @@ class StudentController extends Controller
         $student = Student::where('id', $request->get('student_id'))->first();
         $parentEmail = User::where('email', $request->get('parent_email'))->first();
 
-        if ($parentEmail !== null && $student->parent_email == null) {
+        if ($parentEmail !== null && $student->parent_email === null) {
             $parentEmail->parentStudentPivot()->toggle($student);
-        }
-
-        elseif ($request->get('parent_email') != null && $parentEmail == null && $student->parent_email == null) {
+        } elseif ($request->get('parent_email') !== null && $parentEmail === null && $student->parent_email === null) {
             // create new parent user
             $parent = User::firstOrCreate([
                 'first_name' => $request->get('first_name'),
@@ -141,7 +139,7 @@ class StudentController extends Controller
         }
 
         // TODO if successful fire an event to email the new user
-        $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
+        $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone')) ?? null;
 
         // update student record
         $student->first_name = $request->get('first_name');
@@ -170,7 +168,7 @@ class StudentController extends Controller
         return redirect()->back()->with('success', 'You successfully updated the student.');
     }
 
-    public function profile($id)
+    public function profile(int $id)
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
 
@@ -178,10 +176,10 @@ class StudentController extends Controller
     }
 
     /**
-     * @param $day
+     * @param string $day
      * @return int
      */
-    public function dayOfWeek($day): int
+    public function dayOfWeek(string $day): int
     {
         switch ($day) {
             case "Monday":
@@ -355,6 +353,7 @@ class StudentController extends Controller
                 $diff = Carbon::parse($businessHour->open_time)->diff(Carbon::parse($businessHour->close_time));
                 $amount = $amount + ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
             }
+
             if ($businessHour->active == 1 && $thisDay == $businessHour->day) {
                 $openingTime = Carbon::parse($businessHour->open_time);
 
@@ -448,7 +447,7 @@ class StudentController extends Controller
         }
     }
 
-    public function scheduledLessonDelete(Request $request, $id)
+    public function scheduledLessonDelete(Request $request, Lesson $id)
     {
         if ($request->input('action') == 'delete') {
             $this->destroy($id);
@@ -467,6 +466,7 @@ class StudentController extends Controller
 
     public function scheduleUpdate(Request $request)
     {
+        // TODO: make request class
         $this->validate($request, [
             'title' => 'required|string',
             'start_date' => 'required|string',
@@ -489,6 +489,7 @@ class StudentController extends Controller
 
     public function scheduleUpdateAll(Request $request)
     {
+        // TODO: use request class to validate input
         $this->validate($request, [
             'title' => 'required|string',
             'start_date' => 'required|string',
@@ -515,17 +516,22 @@ class StudentController extends Controller
         }
     }
 
-    private function destroy($id)
+    /**
+     * @param $lesson
+     * @return void
+     */
+    private function destroy($lesson)
     {
-        $lesson = Lesson::find($id);
         $lesson->delete();
     }
 
-    private function destroyAll($id)
+    /**
+     * @param $lessons
+     * @return void
+     */
+    private function destroyAll($lessons)
     {
-        $studentId = Lesson::find($id);
-
-        Lesson::where('student_id', $studentId->student_id)
+        Lesson::where('student_id', $lessons->student_id)
             ->where('teacher_id', Auth::id())
             ->whereDate('start_date', '>=', date('Y-m-d'))
             ->delete();

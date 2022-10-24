@@ -12,7 +12,8 @@ class Lesson extends Model
     use SoftDeletes;
 
     protected $casts = [
-        'complete' => 'boolean'
+        'complete' => 'boolean',
+        'student_id' => 'integer',
     ];
 
     protected $fillable = [
