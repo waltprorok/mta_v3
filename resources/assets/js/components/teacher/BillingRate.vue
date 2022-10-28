@@ -38,7 +38,7 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
                                                             </div>
-                                                            <input id="amount" v-model="rate.amount" type="text" class="form-control">
+                                                            <input class="form-control" type="text"  id="amount" v-model="rate.amount">
                                                         </div>
                                                         <small>{{ error_amount }}</small>
                                                     </div>
