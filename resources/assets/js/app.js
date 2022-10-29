@@ -27,6 +27,7 @@ Vue.use(VueFilterDateFormat);
  */
 
 Vue.component('contacts', require('./components/admin/Contacts.vue'));
+Vue.component('alert', require('./components/alert/Alert.vue'));
 Vue.component('lessons', require('./components/Lessons.vue'));
 Vue.component('teachers', require('./components/admin/Teachers.vue'));
 Vue.component('students', require('./components/admin/Students.vue'));

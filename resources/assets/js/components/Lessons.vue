@@ -91,10 +91,10 @@ export default {
             let params = Object.assign({}, self.lesson);
 
             axios.patch('lessons/update/' + id, params)
-                .then(function () {
+                .then(() => {
                     self.fetchLessonList();
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     self.fetchLessonList();
                     console.log(error);
                 });

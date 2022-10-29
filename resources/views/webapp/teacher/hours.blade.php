@@ -2,7 +2,6 @@
 @section('title', 'Business Hours')
 @section('content')
 
-
     <div class="col-12">
         <h4>Studio Settings</h4>
         <ul class="breadcrumb">
@@ -589,6 +588,8 @@
                         </tr>
                         </tbody>
                     </table>
+
+                    <hr/>
 
                     <button type="submit" class="btn btn-primary">Save</button>
                     <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">Cancel</a>

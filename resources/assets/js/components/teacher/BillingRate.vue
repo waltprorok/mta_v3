@@ -1,10 +1,5 @@
 <template>
     <div>
-        <div v-if="alert" class="alert alert-success alert-dismissible">
-            <a href="#" class="close" data-dismiss="alert" @click="alert=false" aria-label="close">&times;</a>
-            {{ toast.success }}
-        </div>
-
         <div class="card">
             <div v-if="showForm">
                 <!-- modal create read edit -->
@@ -38,7 +33,7 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
                                                             </div>
-                                                            <input class="form-control" type="text"  id="amount" v-model="rate.amount">
+                                                            <input class="form-control" type="text" id="amount" v-model="rate.amount">
                                                         </div>
                                                         <small>{{ error_amount }}</small>
                                                     </div>
@@ -140,11 +135,11 @@
 </template>
 
 <script>
+
 export default {
+    name: 'BillingRate',
     data: function () {
         return {
-            toast: '',
-            alert: false,
             classError: '',
             filter: '',
             columns: [
@@ -200,12 +195,6 @@ export default {
         this.fetchRateList();
     },
 
-    // computed: {
-    //     // hasListData: function () {
-    //     //     return this.list ? this.list.length > 0 : false;
-    //     // }
-    // },
-
     methods: {
         cancelForm: function () {
             let self = this;
@@ -254,14 +243,12 @@ export default {
             let self = this;
             let params = Object.assign({}, self.rate);
             axios.post('/web/billing-rate', params)
-                .then(function (success) {
-                    self.alert = true;
-                    self.toast = success.data;
+                .then(() => {
                     self.clearRateData()
                     self.clearErrorData();
                     self.fetchRateList();
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     self.getErrorMessage(error);
                 });
         },
@@ -272,7 +259,7 @@ export default {
             self.read = read;
             self.edit = true;
             axios.get('/web/billing-rate/' + id)
-                .then(function (response) {
+                .then((response) => {
                     self.rate.id = response.data.id;
                     self.rate.type = response.data.type;
                     self.rate.amount = response.data.amount;
@@ -285,14 +272,12 @@ export default {
             let self = this;
             let params = Object.assign({}, self.rate);
             axios.patch('/web/billing-rate/' + id, params)
-                .then(function (success) {
-                    self.alert = true;
-                    self.toast = success.data;
+                .then(() => {
                     self.clearRateData();
                     self.clearErrorData();
                     self.fetchRateList();
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     self.getErrorMessage(error);
                 });
         },
@@ -301,13 +286,11 @@ export default {
             let self = this;
             let params = Object.assign({}, self.rate);
             axios.delete('/web/billing-rate/' + id, params)
-                .then(function (success) {
-                    self.alert = true;
+                .then(() => {
                     self.showModal = false;
-                    self.toast = success.data;
                     self.fetchRateList();
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     console.log(error);
                 });
         },

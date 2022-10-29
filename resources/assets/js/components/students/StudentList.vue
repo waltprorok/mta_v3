@@ -1,9 +1,5 @@
 <template>
     <div>
-        <div v-if="alert" class="alert alert-success alert-dismissible">
-            <a href="#" class="close" data-dismiss="alert" @click="alert=false" aria-label="close">&times;</a>
-            {{ toast.success }}
-        </div>
         <div class="card">
             <div v-if="show_form">
                 <transition name="modal">
@@ -40,7 +36,7 @@
                                             </div>
                                             <div class="form-group" :class="error_phone && class_error">
                                                 <label for="phone">Phone
-<!--                                                    <span class="text-danger">*</span>-->
+                                                    <!--                                                    <span class="text-danger">*</span>-->
                                                     <small class="text-secondary"><em> * Use parent phone number if student does not have one.</em></small>
                                                 </label>
                                                 <input id="phone" v-model.trim="student.phone" type="text" class="form-control">
@@ -144,8 +140,6 @@
 export default {
     data: function () {
         return {
-            toast: '',
-            alert: false,
             class_error: '',
             filter: '',
             columns: [
@@ -185,12 +179,6 @@ export default {
         this.fetchStudentList();
     },
 
-    computed: {
-        // getStatusData: function (row) {
-        //     return row.status === 2 || row.status === 3 || row.status === 4;
-        // }
-    },
-
     methods: {
         cancelForm: function () {
             let self = this;
@@ -224,14 +212,12 @@ export default {
             let self = this;
             let params = Object.assign({}, self.student);
             axios.post('/web/student-save', params)
-                .then(function (success) {
-                    self.alert = true;
-                    self.toast = success.data;
+                .then(() => {
                     self.clearStudentData()
                     self.clearErrorData();
                     self.fetchStudentList();
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     self.getErrorMessage(error);
                 });
         },
