@@ -1,149 +1,13 @@
-<template>
-    <div>
-        <div v-if="alert" class="alert alert-success alert-dismissible">
-            <a href="#" class="close" data-dismiss="alert" @click="alert=false" aria-label="close">&times;</a>
-            {{ toast.success }}
-        </div>
-        <div class="card">
-            <div v-if="showForm">
-                <!-- modal create read edit -->
-                <transition name="modal">
-                    <div class="modal-mask">
-                        <div class="modal-wrapper">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" v-show="read">Read Contact Record</h5>
-                                        <h5 class="modal-title" v-show="edit && !read">Edit Contact Record</h5>
-                                        <h5 class="modal-title" v-show="!edit && !read">Add Contact Record</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true" @click="cancelForm()">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body" v-show="read">
-                                        <p>From: {{ contact.name }}</p>
-                                        <p>Email: {{ contact.email }}</p>
-                                        <p>Subject: {{ contact.subject }}</p>
-                                        <textarea class="form-control" rows="24" disabled>{{ contact.message }}</textarea>
-                                        <hr/>
-                                        <div class="form-group pull-right">
-                                            <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>
-                                        </div>
-                                    </div>
-                                    <div class="modal-body" v-show="!read">
-                                        <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">
-                                            <div class="form-group" :class="error_name && classError">
-                                                <label for="name">Name</label>
-                                                <input id="name" v-model.trim="contact.name" type="text" class="form-control">
-                                                <small>{{ error_name }}</small>
-                                            </div>
-                                            <div class="form-group" :class="error_email && classError">
-                                                <label for="email">Email</label>
-                                                <input id="email" v-model.trim="contact.email" type="text" class="form-control">
-                                                <small>{{ error_email }}</small>
-                                            </div>
-                                            <div class="form-group" :class="error_subject && classError">
-                                                <label for="subject">Subject</label>
-                                                <input id="subject" v-model.trim="contact.subject" type="text" class="form-control">
-                                                <small>{{ error_subject }}</small>
-                                            </div>
-                                            <div class="form-group" :class="error_message && classError">
-                                                <label for="message">Message</label>
-                                                <textarea id="message" v-model.trim="contact.message" class="form-control" rows="15"></textarea>
-                                                <small>{{ error_message }}</small>
-                                            </div>
-                                            <div class="form-group pull-right">
-                                                <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>
-                                                <button v-show="!edit" type="submit" class="btn btn-primary">Save</button>
-                                                <button v-show="edit" type="submit" class="btn btn-primary">Update</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </transition>
-                <!-- end of modal create read edit -->
-            </div>
+<template src="./contact-template.html"></template>
 
-            <!-- vue js data table -->
-            <div class="form-control">
-                <div class="form-group pull-left">
-                    <div class="form-group">
-                        <select id="single-select" v-model="per_page" class="form-control">
-                            <option v-for="page in pages" :value="page">{{ page }}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group pull-right">
-                    <button type="button" class="btn btn-primary" @click="showForm=true" v-show="!showForm">Create Contact</button>
-                </div>
-                <div class="form-group pull-right pr-2">
-                    <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
-                </div>
-                <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
-                    <template v-slot="{ columns, row }">
-                        <tr>
-                            <td v-text="row.name"></td>
-                            <td><a :href="'mailto:' + row.email" v-text="row.email"></a></td>
-                            <td v-text="row.subject"></td>
-                            <td v-text="row.message.substring(0, 100) + '...'"></td>
-                            <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
-                            <td class="text-nowrap">
-                                <button @click="showContact(row.id, true)" class="btn btn-outline-primary btn-sm" title="read"><i class="fa fa-envelope-open"></i></button>
-                                <button @click="showContact(row.id, false)" class="btn btn-outline-secondary btn-sm" title="edit"><i class="fa fa-edit"></i></button>
-                                <button @click="showModalDelete(row.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                            </td>
-                        </tr>
-                    </template>
-                </datatable>
-                <div class="pull-left">
-                    Total: {{ list.length }} entries
-                </div>
-                <div class="pull-right">
-                    <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
-                </div>
-            </div>
-            <!-- end of vue js data table -->
-
-            <!-- modal delete contact -->
-            <div v-if="showModal">
-                <transition name="modal">
-                    <div class="modal-mask">
-                        <div class="modal-wrapper">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Delete Contact Record</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true" @click="showModal=false">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Do you want to delete this contact us record?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-secondary" @click="showModal = false">Cancel</button>
-                                        <button type="button" @click="deleteContact(id)" class="btn btn-danger">Delete</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </transition>
-            </div>
-            <!-- end of modal delete contact -->
-        </div>
-    </div>
-</template>
+<style>
+/*@import '/webapp/css/stylesheet.css';*/
+</style>
 
 <script>
 export default {
     data: function () {
         return {
-            toast: '',
-            alert: false,
             classError: '',
             filter: '',
             columns: [
@@ -247,14 +111,12 @@ export default {
             let self = this;
             let params = Object.assign({}, self.contact);
             axios.post('/web/contact', params)
-                .then(function (success) {
-                    self.alert = true;
-                    self.toast = success.data;
+                .then((success) => {
                     self.clearContactData()
                     self.clearErrorData();
                     self.fetchContactList();
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     self.getErrorMessage(error);
                 });
         },
@@ -264,7 +126,7 @@ export default {
             self.showForm = true;
             self.read = read;
             axios.get('/web/contact/' + id)
-                .then(function (response) {
+                .then((response) => {
                     self.contact.id = response.data.id;
                     self.contact.name = response.data.name;
                     self.contact.email = response.data.email;
@@ -278,14 +140,12 @@ export default {
             let self = this;
             let params = Object.assign({}, self.contact);
             axios.patch('/web/contact/' + id, params)
-                .then(function (success) {
-                    self.alert = true;
-                    self.toast = success.data;
+                .then(() => {
                     self.clearContactData();
                     self.clearErrorData();
                     self.fetchContactList();
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     self.getErrorMessage(error);
                 });
         },
@@ -294,20 +154,14 @@ export default {
             let self = this;
             let params = Object.assign({}, self.contact);
             axios.delete('/web/contact/' + id, params)
-                .then(function (success) {
-                    self.alert = true;
+                .then(() => {
                     self.showModal = false;
-                    self.toast = success.data;
                     self.fetchContactList();
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     console.log(error);
                 });
         },
     },
 }
 </script>
-
-<style>
-@import '/webapp/css/stylesheet.css';
-</style>

@@ -1,92 +1,11 @@
-<template>
-    <div>
-        <div v-if="alert" class="alert alert-success alert-dismissible">
-            <a href="#" class="close" data-dismiss="alert" @click="alert=false" aria-label="close">&times;</a>
-            {{ toast.success }}
-        </div>
-        <div class="card">
-            <!-- vue js data table -->
-            <div class="form-control">
-                <div class="form-group pull-left">
-                    <div class="form-group">
-                        <select id="single-select" v-model="per_page" class="form-control">
-                            <option v-for="page in pages" :value="page">{{ page }}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group pull-right">
-                    <div class="form-group">
-                        <a :href="'/admin/blog/create'" class="btn btn-primary float-right">Create Post</a>
-                    </div>
-                </div>
-                <div class="form-group pull-right pr-2">
-                    <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
-                </div>
-                <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
-                    <template v-slot="{ columns, row }">
-                        <tr>
-                            <td>
-                                <img style="width:30px;" :src="'/storage/blog/' + row.image" @error="$event.target.src='/webapp/imgs/sheet-music.jpg'" :alt="row.image"/>
-                            </td>
-                            <td v-text="row.title"></td>
-                            <td v-text="row.slug"></td>
-                            <td>{{ row.released_on | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
-                            <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
-                            <td>{{ row.updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
-                            <td class="text-nowrap">
-                            <span class="align-baseline">
-                                <a :href="`/admin/blog/${row.id}/edit`" class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
-                                <a :href="`/blog/${row.slug}`" target="_blank" class="btn btn-outline-dark" role="button" title="view"><i class="fa fa-chrome" aria-hidden="true"></i></a>
-                                <button @click="showModalDelete(row.id)" class="btn btn-outline-danger" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                            </span>
-                            </td>
-                        </tr>
-                    </template>
-                </datatable>
-                <div class="pull-left">
-                    Total: {{ list.length }} entries
-                </div>
-                <div class="pull-right">
-                    <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
-                </div>
-            </div>
-            <!-- end of vue js data table -->
+<template src="./blog-template.html"></template>
 
-            <div v-if="showModal">
-                <transition name="modal">
-                    <div class="modal-mask">
-                        <div class="modal-wrapper">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Delete Blog Record</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true" @click="showModal=false">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Do you want to delete this blog record?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-secondary" @click="showModal=false">Cancel</button>
-                                        <button type="button" @click="deleteBlog(id)" class="btn btn-danger">Delete</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </transition>
-            </div>
-        </div>
-    </div>
-</template>
+<!--<style>@import '/webapp/css/stylesheet.css';</style>-->
 
 <script>
 export default {
     data: function () {
         return {
-            toast: '',
-            alert: false,
             classError: '',
             filter: '',
             columns: [
@@ -131,7 +50,6 @@ export default {
     // },
 
     methods: {
-
         showModalDelete: function (id) {
             let self = this;
             self.showModal = true;
@@ -175,7 +93,7 @@ export default {
             });
         },
 
-        // createContact: function () {
+        // createBlog: function () {
         //     let self = this;
         //     let params = Object.assign({}, self.contact);
         //     axios.post('/web/contact', params)
@@ -191,7 +109,7 @@ export default {
         //         });
         // },
 
-        // showContact: function (id, read) {
+        // showBlog: function (id, read) {
         //     let self = this;
         //     self.showForm = true;
         //     self.read = read;
@@ -206,7 +124,7 @@ export default {
         //     self.edit = true;
         // },
 
-        // updateContact: function (id) {
+        // updateBlog: function (id) {
         //     let self = this;
         //     let params = Object.assign({}, self.contact);
         //     axios.patch('/web/contact/' + id, params)
@@ -226,20 +144,14 @@ export default {
             let self = this;
             let params = Object.assign({}, self.contact);
             axios.delete('/web/blog/' + id, params)
-                .then(function (success) {
-                    self.alert = true;
+                .then(() => {
                     self.showModal = false;
-                    self.toast = success.data;
                     self.fetchBlogList();
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     console.log(error);
                 });
         },
     },
 }
 </script>
-
-<style>
-@import '/webapp/css/stylesheet.css';
-</style>

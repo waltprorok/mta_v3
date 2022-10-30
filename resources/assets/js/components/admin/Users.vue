@@ -1,41 +1,8 @@
-<template>
-    <div class="card">
-        <!-- vue js data table -->
-        <div class="form-control">
-            <div class="form-group pull-left">
-                <div class="form-group">
-                    <select id="single-select" v-model="per_page" class="form-control">
-                        <option v-for="page in pages" :value="page">{{ page }}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group pull-right">
-                <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
-            </div>
-            <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
-                <template v-slot="{ columns, row }">
-                    <tr>
-                        <td v-text="row.first_name"></td>
-                        <td v-text="row.last_name"></td>
-                        <td v-text="row.email"></td>
-                        <td v-html="getUserType(row.admin)"></td>
-                        <td v-html="getUserType(row.teacher)"></td>
-                        <td v-html="getUserType(row.student)"></td>
-                        <td v-html="getUserType(row.parent)"></td>
-                        <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
-                    </tr>
-                </template>
-            </datatable>
-            <div class="pull-left">
-                Total: {{ list.length }} entries
-            </div>
-            <div class="pull-right">
-                <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
-            </div>
-        </div>
-        <!-- end of vue js data table -->
-    </div>
-</template>
+<template src="./user-template.html"></template>
+
+<style>
+/*@import '/webapp/css/stylesheet.css';*/
+</style>
 
 <script>
 
@@ -118,7 +85,3 @@ export default {
     },
 }
 </script>
-
-<style>
-@import '/webapp/css/stylesheet.css';
-</style>

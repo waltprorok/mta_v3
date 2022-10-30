@@ -1,42 +1,8 @@
-<template>
-    <div class="card">
-        <!-- vue js data table -->
-        <div class="form-control">
-            <div class="form-group pull-left">
-                <div class="form-group">
-                    <select id="single-select" v-model="per_page" class="form-control">
-                        <option v-for="page in pages" :value="page">{{ page }}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group pull-right">
-                <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
-            </div>
-            <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
-                <template v-slot="{ columns, row }">
-                    <tr>
-                        <td v-text="row.first_name"></td>
-                        <td v-text="row.last_name"></td>
-                        <td v-text="row.address"></td>
-                        <td v-text="row.address_2"></td>
-                        <td v-text="row.city"></td>
-                        <td v-text="row.state"></td>
-                        <td v-text="row.zip"></td>
-                        <td v-html="formatPhoneNumber(row)"></td>
-                        <td v-text="row.email"></td>
-                    </tr>
-                </template>
-            </datatable>
-            <div class="pull-left">
-                Total: {{ list.length }} entries
-            </div>
-            <div class="pull-right">
-                <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
-            </div>
-        </div>
-        <!-- end of vue js data table -->
-    </div>
-</template>
+<template src="./teacher-template.html"></template>
+
+<style>
+/*@import '/webapp/css/stylesheet.css';*/
+</style>
 
 <script>
 
@@ -51,13 +17,13 @@ export default {
             columns: [
                 {label: 'First Name', field: 'first_name',},
                 {label: 'Last Name', field: 'last_name',},
-                {label: 'Address', field: 'address',},
-                {label: 'Address 2', field: 'address_2',},
+                {label: 'Address', field: 'address', sortable: false},
+                {label: 'Address 2', field: 'address_2', sortable: false},
                 {label: 'City', field: 'city',},
                 {label: 'State', field: 'state',},
-                {label: 'Zip', field: 'zip',},
-                {label: 'Phone', field: 'phone',},
-                {label: 'Email', field: 'email',},
+                {label: 'Zip', field: 'zip', sortable: false},
+                {label: 'Phone', field: 'phone', sortable: false},
+                {label: 'Email', field: 'email', sortable: false},
             ],
             teacher: {
                 id: null,
@@ -79,7 +45,7 @@ export default {
     },
 
     computed: {
-        hasListData: function() {
+        hasListData: function () {
             return this.list ? this.list.length > 0 : false;
         }
     },
@@ -122,7 +88,3 @@ export default {
     },
 }
 </script>
-
-<style>
-@import '/webapp/css/stylesheet.css';
-</style>
