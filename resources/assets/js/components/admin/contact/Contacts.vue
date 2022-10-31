@@ -46,9 +46,9 @@ export default {
     },
 
     computed: {
-        // hasListData: function () {
-        //     return this.list ? this.list.length > 0 : false;
-        // }
+        hasListData: function () {
+            return this.list ? this.list.length > 0 : false;
+        }
     },
 
     methods: {

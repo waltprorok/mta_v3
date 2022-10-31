@@ -92,6 +92,7 @@
                 </tr>
             </template>
         </datatable>
+        <div class="text-center" v-if="!hasListData">No Data</div>
         <div class="pull-left">
             Total: {{ list.length }} entries
         </div>

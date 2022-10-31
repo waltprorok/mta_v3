@@ -60,6 +60,12 @@ export default {
         this.fetchRateList();
     },
 
+    computed: {
+        hasListData() {
+            return this.list ? this.list.length > 0 : false;
+        }
+    },
+
     methods: {
         cancelForm: function () {
             let self = this;

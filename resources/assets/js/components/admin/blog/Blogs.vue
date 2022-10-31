@@ -43,11 +43,11 @@ export default {
         this.fetchBlogList();
     },
 
-    // computed: {
-    //     hasListData: function () {
-    //         return this.list ? this.list.length > 0 : false;
-    //     }
-    // },
+    computed: {
+        hasListData: function () {
+            return this.list ? this.list.length > 0 : false;
+        }
+    },
 
     methods: {
         showModalDelete: function (id) {
