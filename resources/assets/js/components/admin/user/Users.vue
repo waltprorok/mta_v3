@@ -1,9 +1,5 @@
 <template src="./user-template.html"></template>
 
-<style>
-/*@import '/webapp/css/stylesheet.css';*/
-</style>
-
 <script>
 
 export default {
