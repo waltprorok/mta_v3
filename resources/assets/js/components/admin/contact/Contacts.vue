@@ -5,6 +5,8 @@
 </style>
 
 <script>
+import TotalEntries from "../../TotalEntries";
+
 export default {
     data: function () {
         return {
@@ -45,10 +47,8 @@ export default {
         this.fetchContactList();
     },
 
-    computed: {
-        hasListData: function () {
-            return this.list ? this.list.length > 0 : false;
-        }
+    components: {
+        TotalEntries
     },
 
     methods: {

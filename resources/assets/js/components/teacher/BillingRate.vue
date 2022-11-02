@@ -1,6 +1,8 @@
 <template src="./billing-rate-template.html"></template>
 
 <script>
+import TotalEntries from "../TotalEntries";
+
 export default {
     name: 'BillingRate',
     data: function () {
@@ -34,6 +36,10 @@ export default {
         }
     },
 
+    components: {
+        TotalEntries
+    },
+
     filters: {
         capitalising: function (data) {
             let capitalized = [];
@@ -58,12 +64,6 @@ export default {
 
     mounted: function () {
         this.fetchRateList();
-    },
-
-    computed: {
-        hasListData() {
-            return this.list ? this.list.length > 0 : false;
-        }
     },
 
     methods: {

@@ -3,6 +3,8 @@
 <!--<style>@import '/webapp/css/stylesheet.css';</style>-->
 
 <script>
+import TotalEntries from "../../TotalEntries";
+
 export default {
     data: function () {
         return {
@@ -43,10 +45,8 @@ export default {
         this.fetchBlogList();
     },
 
-    computed: {
-        hasListData: function () {
-            return this.list ? this.list.length > 0 : false;
-        }
+    components: {
+        TotalEntries
     },
 
     methods: {

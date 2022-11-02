@@ -92,10 +92,7 @@
                 </tr>
             </template>
         </datatable>
-        <div class="text-center" v-if="!hasListData">No Data</div>
-        <div class="pull-left">
-            Total: {{ list.length }} entries
-        </div>
+        <total-entries v-bind:list="list"></total-entries>
         <div class="pull-right">
             <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
         </div>

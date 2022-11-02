@@ -26,15 +26,17 @@ Vue.use(VueFilterDateFormat);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('contacts', require('./components/admin/contact/Contacts.vue'));
 Vue.component('alert', require('./components/alert/Alert.vue'));
-Vue.component('lessons', require('./components/Lessons.vue'));
-Vue.component('teachers', require('./components/admin/teacher/Teachers.vue'));
-Vue.component('students', require('./components/admin/student/Students.vue'));
-Vue.component('users', require('./components/admin/user/Users.vue'));
-Vue.component('blogs', require('./components/admin/blog/Blogs.vue'));
-Vue.component('studentList', require('./components/students/StudentList.vue'));
 Vue.component('billingRate', require('./components/teacher/BillingRate.vue'));
+Vue.component('blogs', require('./components/admin/blog/Blogs.vue'));
+Vue.component('contacts', require('./components/admin/contact/Contacts.vue'));
+Vue.component('lessons', require('./components/Lessons.vue'));
+Vue.component('students', require('./components/admin/student/Students.vue'));
+Vue.component('studentList', require('./components/students/StudentList.vue'));
+Vue.component('teachers', require('./components/admin/teacher/Teachers.vue'));
+Vue.component('totalEntries', require('./components/TotalEntries.vue'));
+Vue.component('users', require('./components/admin/user/Users.vue'));
+
 
 const app = new Vue({
     el: '#app'

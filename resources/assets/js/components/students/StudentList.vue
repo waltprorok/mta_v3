@@ -1,6 +1,8 @@
 <template src="./student-list-template.html"></template>
 
 <script>
+import TotalEntries from "../TotalEntries";
+
 export default {
     data: function () {
         return {
@@ -39,14 +41,12 @@ export default {
         }
     },
 
-    mounted: function () {
-        this.fetchStudentList();
+    components: {
+        TotalEntries
     },
 
-    computed: {
-        hasListData() {
-            return this.list ? this.list.length > 0 : false;
-        }
+    mounted: function () {
+        this.fetchStudentList();
     },
 
     methods: {
