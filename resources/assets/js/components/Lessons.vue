@@ -26,10 +26,7 @@
                     </tr>
                 </template>
             </datatable>
-            <div class="text-center" v-if="!hasListData">No Data</div>
-            <div class="pull-left">
-                Total: {{ list.length }} entries
-            </div>
+            <total-entries v-bind:list="list"></total-entries>
             <div class="pull-right">
                 <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
             </div>
@@ -39,6 +36,8 @@
 </template>
 
 <script>
+import TotalEntries from "./TotalEntries";
+
 export default {
     data() {
         return {
@@ -69,10 +68,8 @@ export default {
         this.fetchLessonList();
     },
 
-    computed: {
-        hasListData() {
-            return this.list ? this.list.length > 0 : false;
-        }
+    components: {
+        TotalEntries
     },
 
     methods: {
@@ -103,7 +100,3 @@ export default {
     },
 }
 </script>
-
-<style>
-@import '/webapp/css/stylesheet.css';
-</style>
