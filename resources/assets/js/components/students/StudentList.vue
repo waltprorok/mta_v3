@@ -50,6 +50,10 @@ export default {
     },
 
     methods: {
+        hasOneLesson: function (row) {
+            return row.has_one_lesson !== null && row.status === 1;
+        },
+
         cancelForm: function () {
             let self = this;
             self.student.first_name = null;

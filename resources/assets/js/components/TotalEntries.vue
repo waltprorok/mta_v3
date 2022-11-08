@@ -19,7 +19,5 @@ export default {
             return this.list ? this.list.length > 0 : false;
         }
     },
-
 }
-
 </script>

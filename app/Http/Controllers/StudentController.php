@@ -213,6 +213,10 @@ class StudentController extends Controller
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
         $lessons = Lesson::where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
+        $lastLesson = Student::with('hasOneLesson')
+            ->where('id', $id)
+            ->where('teacher_id', Auth::id())
+            ->where('status', Student::ACTIVE)->get();
 
         $startDate = $day;
 
@@ -300,7 +304,8 @@ class StudentController extends Controller
             ->with('businessHours', $businessHours)
             ->with('allTimes', $allTimes)
             ->with('startDate', $startDate)
-            ->with('studentScheduled', $studentScheduled);
+            ->with('studentScheduled', $studentScheduled)
+            ->with('lastLesson', $lastLesson);
     }
 
     public function scheduleSave(StoreScheduleApptRequest $request): RedirectResponse
