@@ -213,6 +213,10 @@ class StudentController extends Controller
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
         $lessons = Lesson::where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
+        $lastLesson = Student::with('hasOneLesson')
+            ->where('id', $id)
+            ->where('teacher_id', Auth::id())
+            ->where('status', Student::ACTIVE)->get();
 
         $startDate = $day;
 
@@ -229,18 +233,18 @@ class StudentController extends Controller
         $amount = -30;
 
         foreach ($businessHours as $businessHour) {
-            if ($businessHour->open_time <= $businessHour->close_time && $thisDay == $businessHour->day) {
+            if ($businessHour->open_time <= $businessHour->close_time && $thisDay === $businessHour->day) {
                 $diff = Carbon::parse($businessHour->open_time)->diff(Carbon::parse($businessHour->close_time));
                 $amount = $amount + ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
             }
 
             if ($businessHour->active == 1 && $thisDay == $businessHour->day) {
                 $openingTime = Carbon::parse($businessHour->open_time);
-                array_push($allTimes, $openingTime->toTimeString());
+                $allTimes[] = $openingTime->toTimeString();
 
                 for ($i = 0; $i <= ($amount / 15); $i++) {
                     $thisOpeningTime = $openingTime->addMinutes(15);
-                    array_push($allTimes, $thisOpeningTime->toTimeString());
+                    $allTimes[] = $thisOpeningTime->toTimeString();
                 }
             }
         }
@@ -255,7 +259,7 @@ class StudentController extends Controller
             $lessonInterval = $lesson->interval;
             $studentLessonStart = Carbon::parse($lesson->start_date)->format('Y-m-d');
 
-            if ($lesson->student_id == $id) {
+            if ($lesson->student_id === $id) {
                 $studentScheduled = true;
             }
 
@@ -300,7 +304,8 @@ class StudentController extends Controller
             ->with('businessHours', $businessHours)
             ->with('allTimes', $allTimes)
             ->with('startDate', $startDate)
-            ->with('studentScheduled', $studentScheduled);
+            ->with('studentScheduled', $studentScheduled)
+            ->with('lastLesson', $lastLesson);
     }
 
     public function scheduleSave(StoreScheduleApptRequest $request): RedirectResponse

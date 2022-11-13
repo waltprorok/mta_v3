@@ -1,45 +1,12 @@
-<template>
-    <div class="card">
-        <!-- vue js data table -->
-        <div class="form-control">
-            <div class="form-group pull-left">
-                <div class="form-group">
-                    <select id="single-select" v-model="per_page" class="form-control">
-                        <option v-for="page in pages" :value="page">{{ page }}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group pull-right">
-                <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
-            </div>
-            <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
-                <template v-slot="{ columns, row }">
-                    <tr>
-                        <td>
-                            <img style="width:20px;" :src="'/storage/student/' + row.photo"
-                                 @error="$event.target.src='/webapp/imgs/avatar.jpeg'" :alt="row.photo"/>
-                        </td>
-                        <td v-text="row.first_name"></td>
-                        <td v-text="row.last_name"></td>
-                        <td v-html="formatPhoneNumber(row)"></td>
-                        <td v-text="row.email"></td>
-                        <td v-text="row.instrument"></td>
-                        <td v-html="getStatus(row)"></td>
-                    </tr>
-                </template>
-            </datatable>
-            <div class="pull-left">
-                Total: {{ list.length }} entries
-            </div>
-            <div class="pull-right">
-                <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
-            </div>
-        </div>
-        <!-- end of vue js data table -->
-    </div>
-</template>
+<template src="./student-template.html"></template>
+
+<style>
+/*@import '/webapp/css/stylesheet.css';*/
+</style>
 
 <script>
+import TotalEntries from "../../TotalEntries";
+
 export default {
     data: function () {
         return {
@@ -49,7 +16,7 @@ export default {
             per_page: 10,
             pages: [10, 25, 50, 100],
             columns: [
-                {label: 'Photo', field: 'photo',},
+                {label: 'Photo', field: 'photo', sortable: false},
                 {label: 'First Name', field: 'first_name',},
                 {label: 'Last Name', field: 'last_name',},
                 {label: 'Phone', field: 'phone', sortable: false},
@@ -75,10 +42,8 @@ export default {
         this.fetchStudentList();
     },
 
-    computed: {
-        hasListData() {
-            return this.list ? this.list.length > 0 : false;
-        },
+    components: {
+        TotalEntries
     },
 
     methods: {
@@ -134,7 +99,3 @@ export default {
     },
 }
 </script>
-
-<style>
-@import '/webapp/css/stylesheet.css';
-</style>

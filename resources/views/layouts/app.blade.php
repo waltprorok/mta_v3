@@ -49,7 +49,6 @@
 </head>
 
 <body>
-{{--@include('partials.alerts')--}}
 <!-- Header -->
 <header>
     <!-- Nav -->

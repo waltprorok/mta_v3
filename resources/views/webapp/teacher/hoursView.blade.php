@@ -13,7 +13,7 @@
         @include('partials.teacherTabs')
         <div class="card">
             <div class="card-header bg-light">Business Hours</div>
-            <div class="card-body p-0">
+            <div class="card-body">
                 <form method="POST" action="{{ route('teacher.hoursUpdate') }}">
                     @method('PUT')
                     @csrf

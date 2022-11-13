@@ -69,6 +69,21 @@
                                                     </div>
                                                 @endif
                                             </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Last Lesson</h6>
+                                                </div>
+                                                @if(!$studentScheduled)
+                                                    <div class="col-sm-9">
+                                                        @foreach($lastLesson as $lesson)
+                                                            @if(isset($lesson->hasOneLesson->start_date))
+                                                            <i class="fa fa-clock-o"></i>&nbsp;{{ \Carbon\Carbon::parse($lesson->hasOneLesson->start_date)->format('F j, Y | g:i:s A') }}
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
@@ -35,9 +36,13 @@ class ContactController extends Controller
      */
     public function store(StoreContactRequest $request): JsonResponse
     {
-        Contact::create($request->all());
-
-        $toast = ['success' => 'Contact saved successfully!'];
+        try {
+            Contact::create($request->all());
+            $toast = ['success' => 'Contact saved successfully.'];
+        } catch (Exception $e) {
+            Log::info($e);
+            $toast = ['error' => $e];
+        }
 
         return response()->json($toast, Response::HTTP_CREATED);
     }
@@ -49,9 +54,13 @@ class ContactController extends Controller
      */
     public function update(StoreContactRequest $request, Contact $contact): JsonResponse
     {
-        $contact->update($request->all());
-
-        $toast = ['success' => 'Contact has been updated!'];
+        try {
+            $contact->update($request->all());
+            $toast = ['success' => 'Contact has been updated.'];
+        } catch (Exception $e) {
+            Log::info($e);
+            $toast = ['error' => $e];
+        }
 
         return response()->json($toast, Response::HTTP_OK);
     }
@@ -63,9 +72,13 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact): JsonResponse
     {
-        $contact->delete();
-
-        $toast = ['success' => 'Contact has been deleted!'];
+        try {
+            $contact->delete();
+            $toast = ['success' => 'Contact has been deleted.'];
+        } catch (Exception $e) {
+            Log::info($e);
+            $toast = ['error' => $e];
+        }
 
         return response()->json($toast, Response::HTTP_OK);
     }
