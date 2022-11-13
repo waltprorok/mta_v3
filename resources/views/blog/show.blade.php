@@ -55,6 +55,7 @@
                     <div class="col-md-6 col-md-offset-3">
                         <form method="post" action="{{ route('newsletter') }}">
                             @csrf
+                            @honeypot
                             <div class="input-group">
                                 <input class="form-control" name="email" placeholder="Enter Your Email Address" type="text">
                                 <span class="input-group-btn">
