@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreScheduleApptRequest;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use App\Mail\WelcomeNewUserEmail;
 use App\Models\BusinessHours;
 use App\Models\Lesson;
 use App\Models\Student;
 use App\Models\User;
 use App\Services\PhoneNumberService;
 use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,8 +21,11 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 
 class StudentController extends Controller
@@ -82,7 +88,7 @@ class StudentController extends Controller
      */
     public function store(StoreStudentRequest $request): JsonResponse
     {
-        $studentUser = User::create([
+        $user = User::create([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
             'email' => $request->get('email'),
@@ -94,7 +100,7 @@ class StudentController extends Controller
         $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone')) ?? null;
 
         Student::create([
-            'student_id' => $studentUser->id,
+            'student_id' => $user->id,
             'teacher_id' => Auth::id(),
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
@@ -103,13 +109,21 @@ class StudentController extends Controller
             'status' => $request->get('status'),
         ]);
 
-        // TODO: if successful send email to user and instruct to update password
+        try {
+            Mail::to($user->email)->send(new WelcomeNewUserEmail($user));
+        } catch (\Exception $exception) {
+            Log::info($exception->getMessage());
+        }
 
         $toast = ['success' => 'Student saved successfully!'];
 
         return response()->json($toast, Response::HTTP_CREATED);
     }
 
+    /**
+     * @param int $id
+     * @return Application|Factory|View
+     */
     public function edit(int $id)
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
@@ -126,7 +140,7 @@ class StudentController extends Controller
             $parentEmail->parentStudentPivot()->toggle($student);
         } elseif ($request->get('parent_email') !== null && $parentEmail === null && $student->parent_email === null) {
             // create new parent user
-            $parent = User::firstOrCreate([
+            $user = User::firstOrCreate([
                 'first_name' => $request->get('first_name'),
                 'last_name' => $request->get('last_name'),
                 'email' => $request->get('parent_email'),
@@ -135,7 +149,12 @@ class StudentController extends Controller
                 'terms' => true,
             ]);
             // create new parent student pivot record
-            $parent->parentStudentPivot()->toggle($student);
+            $user->parentStudentPivot()->toggle($student);
+            try {
+                Mail::to($user->email)->send(new WelcomeNewUserEmail($user));
+            } catch (\Exception $exception) {
+                Log::info($exception->getMessage());
+            }
         }
 
         // TODO if successful fire an event to email the new user

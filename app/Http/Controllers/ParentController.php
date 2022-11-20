@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -6,6 +6,7 @@ use App\Models\Lesson;
 use App\Models\Teacher;
 use App\Models\User;
 use DateTime;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use MaddHatter\LaravelFullcalendar\Facades\Calendar;
@@ -30,7 +31,9 @@ class ParentController extends Controller
             ->with('teacher', $teacher);
     }
 
-
+    /**
+     * @throws Exception
+     */
     public function calendar()
     {
         $lessons = [];
@@ -72,6 +75,6 @@ class ParentController extends Controller
                 'height' => 760,
             ]);
 
-        return view('webapp.calendar.index', compact('calendar'));
+        return view('webapp.calendar.index')->with('calendar', $calendar);
     }
 }
