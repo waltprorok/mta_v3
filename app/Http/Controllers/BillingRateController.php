@@ -14,13 +14,12 @@ use Throwable;
 class BillingRateController extends Controller
 {
     /**
-     * Admin list of blog posts
      * @return JsonResponse
      */
     public function index(): JsonResponse
     {
         try {
-            $paymentRate = BillingRate::all()->where('teacher_id', Auth::id());
+            $paymentRate = BillingRate::where('teacher_id', Auth::id())->get();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }
@@ -54,8 +53,8 @@ class BillingRateController extends Controller
             $toast = ['success' => 'Billing rate saved successfully.'];
 
         } catch (Throwable $e) {
-            Log::info($e);
-            $toast = ['error' => $e];
+            Log::info($e->getMessage());
+            $toast = ['error' => $e->getMessage()];
         }
 
         return response()->json($toast, Response::HTTP_CREATED);
@@ -72,8 +71,8 @@ class BillingRateController extends Controller
             $billingRate->update($request->all());
             $toast = ['success' => 'Billing rate has been updated.'];
         } catch (Throwable $e) {
-            Log::info($e);
-            $toast = ['error' => $e];
+            Log::info($e->getMessage());
+            $toast = ['error' => $e->getMessage()];
         }
 
         return response()->json($toast, Response::HTTP_OK);
@@ -90,8 +89,8 @@ class BillingRateController extends Controller
             $billingRate->delete();
             $toast = ['success' => 'Billing rate has been deleted.'];
         } catch (Throwable $e) {
-            Log::info($e);
-            $toast = ['error' => $e];
+            Log::info($e->getMessage());
+            $toast = ['error' => $e->getMessage()];
         }
 
         return response()->json($toast, Response::HTTP_OK);

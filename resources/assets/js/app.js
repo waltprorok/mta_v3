@@ -34,7 +34,6 @@ Vue.component('lessons', require('./components/Lessons.vue'));
 Vue.component('students', require('./components/admin/student/Students.vue'));
 Vue.component('studentList', require('./components/students/StudentList.vue'));
 Vue.component('teachers', require('./components/admin/teacher/Teachers.vue'));
-// Vue.component('totalEntries', require('./components/TotalEntries.vue'));
 Vue.component('users', require('./components/admin/user/Users.vue'));
 
 
