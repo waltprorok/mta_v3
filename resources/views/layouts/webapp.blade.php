@@ -84,7 +84,7 @@
                             <i class="fa fa-wrench"></i>Settings
                         </a>
                     @endif
-                    <a href="#" class="dropdown-item">
+                    <a href="{{ route('contact') }}" class="dropdown-item">
                         <i class="fa fa-life-ring"></i>Support
                     </a>
                     <a class="dropdown-item" href="{{ route('logout') }}"
