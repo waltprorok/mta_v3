@@ -21,8 +21,8 @@ class BillingRateController extends Controller
     {
         try {
             $paymentRate = BillingRate::all()->where('teacher_id', Auth::id());
-        } catch (Exception $e) {
-            Log::info($e);
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
         }
 
         return response()->json($paymentRate, Response::HTTP_OK);
