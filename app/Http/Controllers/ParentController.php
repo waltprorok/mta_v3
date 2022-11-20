@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lesson;
+use App\Models\Teacher;
 use App\Models\User;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
@@ -17,21 +18,30 @@ class ParentController extends Controller
     public function household(): View
     {
         $parent = User::with('parentOfStudent')->findOrFail(Auth::id()); // uses pivot table
+        $students = $parent->parentOfStudent()->get();
+        $teacher = [];
 
-        return view('webapp.parent.household')->with('parent', $parent);
+        foreach ($students as $student) {
+            $teacher = Teacher::where('teacher_id', $student->teacher_id)->first();
+        }
+
+        return view('webapp.parent.household')
+            ->with('parent', $parent)
+            ->with('teacher', $teacher);
     }
+
 
     public function calendar()
     {
         $lessons = [];
-        $studentIds= [];
+        $studentIds = [];
 
         $parent = User::with('parentOfStudent')->findOrFail(Auth::id()); // uses pivot table
 
-        foreach($parent->parentOfStudent as $studentId) {
+        foreach ($parent->parentOfStudent as $studentId) {
             $studentIds[] = $studentId->id;
         }
-        
+
         $data = Lesson::whereIn('student_id', $studentIds)->get();
 
         if ($data->count()) {
@@ -55,7 +65,7 @@ class ParentController extends Controller
                 'firstDay' => 0,
                 'editable' => false,
                 'selectable' => true,
-                'defaultView' => 'listWeek', // 'month' for full calendar 'listWeek'
+                'defaultView' => 'month', // 'month' for full calendar 'listWeek'
                 'minTime' => '08:00:00',
                 'maxTime' => '22:00:00',
                 'fixedWeekCount' => false,

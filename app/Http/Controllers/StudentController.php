@@ -233,7 +233,7 @@ class StudentController extends Controller
         $amount = -30;
 
         foreach ($businessHours as $businessHour) {
-            if ($businessHour->open_time <= $businessHour->close_time && $thisDay === $businessHour->day) {
+            if ($businessHour->open_time <= $businessHour->close_time && $thisDay == $businessHour->day) {
                 $diff = Carbon::parse($businessHour->open_time)->diff(Carbon::parse($businessHour->close_time));
                 $amount = $amount + ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
             }
@@ -259,7 +259,7 @@ class StudentController extends Controller
             $lessonInterval = $lesson->interval;
             $studentLessonStart = Carbon::parse($lesson->start_date)->format('Y-m-d');
 
-            if ($lesson->student_id === $id) {
+            if ($lesson->student_id == $id) {
                 $studentScheduled = true;
             }
 
