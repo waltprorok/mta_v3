@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace App\Services;
 
@@ -8,7 +8,7 @@ class PhoneNumberService
      * @param String|null $phoneNumber
      * @return array|string|string[]|null
      */
-    public function stripPhoneNumber(?String $phoneNumber)
+    public function stripPhoneNumber(?string $phoneNumber): ?string
     {
         if($phoneNumber !== null) {
             return preg_replace('/\D+/', '', $phoneNumber);
@@ -21,7 +21,7 @@ class PhoneNumberService
      * @param $phoneNumber
      * @return mixed|string|null
      */
-    public function getPhoneNumberFormat($phoneNumber)
+    public function getPhoneNumberFormat($phoneNumber): ?string
     {
         if ($phoneNumber !== null) {
             $cleaned = preg_replace('/[^[:digit:]]/', '', $phoneNumber);

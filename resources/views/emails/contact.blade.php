@@ -7,7 +7,7 @@
     {{ $message }}
 @endcomponent
 
-@component('mail::button', ['url' => route('contact')])
+@component('mail::button', ['url' => route('contact.index')])
     Reply to this Email
 @endcomponent
 

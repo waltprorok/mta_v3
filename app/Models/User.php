@@ -59,7 +59,7 @@ class User extends Authenticatable
      */
     public static function activeStudentCount(): int
     {
-        return Auth::user()->students->where('status', '=', 1)->count();
+        return Auth::user()->students->where('status', 1)->count();
     }
 
     /**
@@ -99,12 +99,19 @@ class User extends Authenticatable
         return $this->hasMany(Lesson::class, 'teacher_id');
     }
 
-    /**
-     * @return mixed
-     */
     public static function lessonsThisWeek(): int
     {
         return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
+    }
+
+    public static function lessonsThisMonth(): int
+    {
+        return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
+    }
+
+    public static function getBillingRates()
+    {
+        return Auth::user()->getTeacherPaymentRate;
     }
 
     public function messages(): HasMany
@@ -144,6 +151,25 @@ class User extends Authenticatable
         return $this->hasMany(Student::class, 'student_id');
     }
 
+    public static function monthlyIncome(): int
+    {
+        $lessonsInMonth = self::lessonsThisMonth();
+        $billingRate = self::getBillingRates();
+
+        // TODO improve this logic there can be more than one rate
+        // Is Rate (lesson, hourly, weekly, monthly, yearly)?
+        // Get lessons for the month
+        // check which rate is assigned to the lesson
+        // ** add column and relationship for lesson and rate
+        // ** add option during lesson schedule
+        // Break down the rate vs lesson
+        foreach ($billingRate as $rate) {
+            $monthlyAmount = ($rate->amount * $lessonsInMonth);
+        }
+
+        return $monthlyAmount ?? 0;
+    }
+
     public static function openTimeBlocks(): int
     {
         $minutesInDay = 0;
@@ -156,7 +182,7 @@ class User extends Authenticatable
             $minutesInDay += $closeTime->diffInMinutes($openTime);
         }
 
-        return ($minutesInDay - $lessonsInWeek) / 30;
+        return ($minutesInDay - $lessonsInWeek) / 30 ?? 0;
     }
 
     public static function unreadMessagesCount(): int

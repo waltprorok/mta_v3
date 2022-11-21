@@ -39,9 +39,9 @@ class ContactController extends Controller
         try {
             Contact::create($request->all());
             $toast = ['success' => 'Contact saved successfully.'];
-        } catch (Exception $e) {
-            Log::info($e);
-            $toast = ['error' => $e];
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            $toast = ['error' => $exception->getMessage()];
         }
 
         return response()->json($toast, Response::HTTP_CREATED);
@@ -57,9 +57,9 @@ class ContactController extends Controller
         try {
             $contact->update($request->all());
             $toast = ['success' => 'Contact has been updated.'];
-        } catch (Exception $e) {
-            Log::info($e);
-            $toast = ['error' => $e];
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            $toast = ['error' => $exception->getMessage()];
         }
 
         return response()->json($toast, Response::HTTP_OK);
@@ -75,9 +75,9 @@ class ContactController extends Controller
         try {
             $contact->delete();
             $toast = ['success' => 'Contact has been deleted.'];
-        } catch (Exception $e) {
-            Log::info($e);
-            $toast = ['error' => $e];
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            $toast = ['error' => $exception->getMessage()];
         }
 
         return response()->json($toast, Response::HTTP_OK);

@@ -5,7 +5,6 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SubscribedMail extends Mailable
 {
@@ -29,6 +28,6 @@ class SubscribedMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.subscribed');
+        return $this->markdown('emails.teacher.subscribed');
     }
 }

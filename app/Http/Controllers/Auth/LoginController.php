@@ -53,7 +53,7 @@ class LoginController extends Controller
             case $user->teacher;
                 return '/dashboard';
             case $user->student;
-                return '/messages/inbox';
+                return '/calendar/student';
             case $user->parent;
                 return '/household';
             default:

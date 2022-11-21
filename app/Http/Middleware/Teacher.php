@@ -17,7 +17,7 @@ class Teacher
     public function handle(Request $request, Closure $next)
     {
         if ($request->user() && ! $request->user()->teacher) {
-            return redirect('/dashboard');
+            return redirect('/messages/inbox');
         }
 
         return $next($request);

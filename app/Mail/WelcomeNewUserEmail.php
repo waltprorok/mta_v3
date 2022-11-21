@@ -6,14 +6,14 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class WelcomeEmail extends Mailable
+class WelcomeNewUserEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $user;
 
     /**
-     * WelcomeEmail constructor.
+     * Create a new welcome student email.
      * @param $user
      */
     public function __construct($user)
@@ -23,10 +23,11 @@ class WelcomeEmail extends Mailable
 
     /**
      * Build the message.
+     *
      * @return $this
      */
-    public function build()
+    public function build(): WelcomeNewUserEmail
     {
-        return $this->markdown('emails.teacher.welcome');
+        return $this->markdown('emails.user.welcome');
     }
 }

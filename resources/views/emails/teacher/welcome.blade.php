@@ -15,7 +15,7 @@
     Support
 @endcomponent
 
-<p>Your registered email id is {{$user['email']}}</p>
+<p>Your registered email is <b>{{$user['email']}}</b></p>
 
 <p>To unlock the full potential of the software please sign up for a <a href="{{ route('account.subscription') }}" target="_blank">Premium Account</a> to unlock all the system features.</p>
 

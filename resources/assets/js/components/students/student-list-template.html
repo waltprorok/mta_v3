@@ -101,10 +101,10 @@
         <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
             <template v-slot="{ columns, row }">
                 <tr>
-                    <td v-show="!hasOneLesson(row)">
+                    <td v-show="!hasOneLesson(row) && !getStatusData(row)">
                         <span class="btn btn-sm btn-danger btn-rounded"><i class="fa fa-times"></i></span>
                     </td>
-                    <td v-show="hasOneLesson(row)">
+                    <td v-show="hasOneLesson(row) && !getStatusData(row)">
                         <span class="btn btn-sm btn-success btn-rounded"><i class="fa fa-check"></i></span>
                     </td>
                     <td v-show="getStatusData(row)">

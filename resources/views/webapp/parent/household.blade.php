@@ -10,7 +10,7 @@
             <li class="breadcrumb-item active">Household</li>
         </ul>
 
-{{--        @include('partials.studentListTabs')--}}
+        {{--        @include('partials.studentListTabs')--}}
 
         <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
@@ -30,6 +30,10 @@
                                     @if($student->instrument != null)
                                         <p class="mb-1">{{ $student->instrument }}</p>
                                     @endif
+                                    @if($teacher != null)
+                                        <a href="{{ route('message.create', ['id' => $teacher->teacher_id, 'subject' => $student->first_name . ' ' . $student->last_name, 'new' => true]) }}" class="btn btn-sm btn-outline-primary">Message Teacher</a>
+                                    @endif
+
                                     {{--<button class="btn btn-primary">Follow</button>--}}
                                     {{--<button class="btn btn-outline-primary">Message</button>--}}
                                 </div>
@@ -82,7 +86,7 @@
                                 </div>
                                 <div class="col-sm-9">
                                     @if($student->date_of_birth != null)
-                                    {{ date('F d, Y', strtotime($student->date_of_birth)) }}
+                                        {{ date('F d, Y', strtotime($student->date_of_birth)) }}
                                     @endif
                                 </div>
                             </div>
