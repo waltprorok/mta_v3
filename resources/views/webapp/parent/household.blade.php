@@ -31,7 +31,7 @@
                                         <p class="mb-1">{{ $student->instrument }}</p>
                                     @endif
                                     @if($teacher != null)
-                                        <a href="{{ route('message.create', ['id' => $teacher->teacher_id]) }}" class="btn btn-sm btn-outline-primary">Message Teacher</a>
+                                        <a href="{{ route('message.create', ['id' => $teacher->teacher_id, 'subject' => $student->first_name . ' ' . $student->last_name]) }}" class="btn btn-sm btn-outline-primary">Message Teacher</a>
                                     @endif
 
                                     {{--<button class="btn btn-primary">Follow</button>--}}

@@ -150,6 +150,7 @@ class StudentController extends Controller
             ]);
             // create new parent student pivot record
             $user->parentStudentPivot()->toggle($student);
+
             try {
                 Mail::to($user->email)->send(new WelcomeNewUserEmail($user));
             } catch (\Exception $exception) {

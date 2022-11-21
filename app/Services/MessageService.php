@@ -24,47 +24,11 @@ class MessageService
     }
 
     /**
-     * @param int $id
-     * @return void
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getSubject(): string
     {
         return $this->subject;
-    }
-
-    /**
-     * @param int $id
-     * @return Student[]|Builder[]|Collection|mixed|object|null
-     */
-    public function getUsers(int $id)
-    {
-        switch (true) {
-            case Auth::user()->teacher:
-                return $this->getStudentUsers($id);
-            case Auth::user()->student:
-                return $this->getStudentTeacher();
-            case Auth::user()->parent:
-                return $this->getParentTeacher($id);
-            default:
-                return null;
-        }
-    }
-
-    /**
-     * @param string $subject
-     * @return void
-     */
-    public function setSubject(string $subject)
-    {
-        $this->subject = $subject;
     }
 
     /**
@@ -103,7 +67,7 @@ class MessageService
         $this->setSubject($subject);
 
         if ($this->getSubject() !== '') {
-            return $this->subject = 'Re: ' . $subject;
+            return $this->subject = 'RE: ' . $subject;
         }
 
         return $this->subject;
@@ -129,5 +93,41 @@ class MessageService
 
             return Teacher::whereIn('teacher_id', $teacherId)->firstNameAsc()->get();
         }
+    }
+
+    /**
+     * @param int $id
+     * @return Student[]|Builder[]|Collection|mixed|object|null
+     */
+    public function getUsers(int $id)
+    {
+        switch (true) {
+            case Auth::user()->teacher:
+                return $this->getStudentUsers($id);
+            case Auth::user()->student:
+                return $this->getStudentTeacher();
+            case Auth::user()->parent:
+                return $this->getParentTeacher($id);
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * @param int $id
+     * @return void
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param string $subject
+     * @return void
+     */
+    public function setSubject(string $subject)
+    {
+        $this->subject = $subject;
     }
 }
