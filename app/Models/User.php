@@ -161,7 +161,7 @@ class User extends Authenticatable
             $monthlyAmount = ($rate->amount * $lessonsInMonth);
         }
 
-        return $monthlyAmount;
+        return $monthlyAmount ?? 0;
     }
 
     public static function openTimeBlocks(): int
@@ -176,7 +176,7 @@ class User extends Authenticatable
             $minutesInDay += $closeTime->diffInMinutes($openTime);
         }
 
-        return ($minutesInDay - $lessonsInWeek) / 30;
+        return ($minutesInDay - $lessonsInWeek) / 30 ?? 0;
     }
 
     public static function unreadMessagesCount(): int

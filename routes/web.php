@@ -37,7 +37,6 @@ Route::prefix('blog')->group(function () {
 
 // Routes for authorized users
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
 
     Route::prefix('account')->group(function () {
         Route::get('subscription', 'SubscriptionController@index')->name('account.subscription');
@@ -57,6 +56,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('calendar')->group(function () {
         Route::get('/', 'LessonController@index')->name('calendar.index');
+        Route::get('student', 'StudentUserController@calendar')->name('student.calendar');
     });
 
     Route::prefix('lessons')->group(function () {
@@ -90,6 +90,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('billing-rate', 'BillingRateController');
             Route::post('student-save', 'StudentController@store')->name('student.save');
         });
+
+        Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
 
         Route::prefix('students')->group(function () {
             Route::view('/', 'webapp.student.index')->name('student.index');

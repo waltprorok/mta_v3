@@ -74,6 +74,20 @@
                 @endif
 
                 @if(Auth::user()->student)
+                    <li class="nav-item">
+                        <a href="{{ route('student.calendar') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'student.calendar' ? 'active' : '' }}">
+                            <i class="fa fa-calendar"></i> Calendar
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#"
+                           class="nav-link {{ Route::currentRouteName() == '#' ? 'active' : '' }}">
+                            <i class="fa fa-music"></i> Sheet Music
+                        </a>
+                    </li>
+
                     @include('partials.messageNavBar')
                 @endif
 
