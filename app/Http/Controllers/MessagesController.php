@@ -39,14 +39,15 @@ class MessagesController extends Controller
     /**
      * @param int $id
      * @param string $subject
+     * @param bool $new
      * @return View
      */
-    public function create(int $id = 0, string $subject = ''): View
+    public function create(int $id = 0, string $subject = '', bool $new = false): View
     {
         $users = $this->messageService->getUsers($id);
-        $subject = $this->messageService->getSubjectString($subject);
+        $subject = $this->messageService->getSubjectString($subject, $new);
 
-        return view('webapp.messages.create')->with(['users' => $users, 'subject' => $subject]);
+        return view('webapp.messages.create')->with(['users' => $users, 'subject' => $subject, 'new' => $new]);
     }
 
     /**

@@ -15,12 +15,19 @@ class MessageService
 
     private $subject = '';
 
+    private $new = false;
+
     /**
      * @return int
      */
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function getNewFlag(): bool
+    {
+        return $this->new;
     }
 
     /**
@@ -60,11 +67,16 @@ class MessageService
 
     /**
      * @param string $subject
+     * @param bool $new
      * @return string
      */
-    public function getSubjectString(string $subject): string
+    public function getSubjectString(string $subject, bool $new): string
     {
         $this->setSubject($subject);
+
+        if ($new) {
+            return $this->subject;
+        }
 
         if ($this->getSubject() !== '') {
             return $this->subject = 'RE: ' . $subject;

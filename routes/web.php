@@ -67,7 +67,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('messages')->group(function () {
         Route::get('inbox', 'MessagesController@index')->name('message.inbox');
-        Route::get('create/{id?}/{subject?}', 'MessagesController@create')->name('message.create');
+        Route::get('create/{id?}/{subject?}/{new?}', 'MessagesController@create')->name('message.create');
         Route::post('send', 'MessagesController@send')->name('message.send');
         Route::get('sent', 'MessagesController@sent')->name('message.sent');
         Route::get('read/{id}', 'MessagesController@read')->name('message.read');
