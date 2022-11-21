@@ -87,7 +87,7 @@
                     <a href="{{ route('contact') }}" class="dropdown-item">
                         <i class="fa fa-life-ring"></i>Support
                     </a>
-                    <a class="dropdown-item" href="{{ route('logout') }}"
+                    <a id="logout-link" class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
                     </a>

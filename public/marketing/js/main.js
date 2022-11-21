@@ -134,6 +134,10 @@
         }
     });
 
+    $('#logout-link').click(function () {
+        window.localStorage.removeItem('navDropdownToggle');
+    });
+
     function toggleIcon(e) {
         $(e.target)
             .prev('.panel-heading')

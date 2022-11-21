@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function ($) {
     /**
      * Sidebar Dropdown
      */
@@ -65,17 +65,19 @@ $(document).ready(function () {
         });
     });
 
-    $(document).ready(function ($) {
-        $(".table-row").click(function () {
-            window.document.location = $(this).data("href");
-        });
-
-        let navDropdownToggle = localStorage.getItem('navDropdownToggle');
-
-        if (navDropdownToggle) {
-            $('ul.nav').find('a[href="' + navDropdownToggle + '"]').parent().addClass('open')
-        }
+    $(".table-row").click(function () {
+        window.document.location = $(this).data("href");
     });
 
-    onchange="window.location.href=this.value;"
+    let navDropdownToggle = localStorage.getItem('navDropdownToggle');
+
+    if (navDropdownToggle) {
+        $('ul.nav').find('a[href="' + navDropdownToggle + '"]').parent().addClass('open')
+    }
+
+    onchange = "window.location.href=this.value;"
+
+    $('#logout-link').click(function () {
+        window.localStorage.removeItem('navDropdownToggle');
+    });
 });
