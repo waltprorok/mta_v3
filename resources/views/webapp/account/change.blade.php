@@ -43,6 +43,6 @@
 
 @section('scripts')
     <script src="https://js.stripe.com/v3/"></script>
-    <script>var stripe = Stripe('{{ env("STRIPE_KEY") }}');</script>
+    <script>let stripe = Stripe('{{ env('STRIPE_KEY') }}');</script>
     <script src="{{ asset('webapp/js/stripe.js') }}"></script>
 @endsection
