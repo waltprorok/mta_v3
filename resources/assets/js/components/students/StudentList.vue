@@ -30,15 +30,15 @@ export default {
                 has_one_lesson: null,
                 first_name: null,
                 last_name: null,
-                phone: null,
                 email: null,
+                phone: null,
                 instrument: null,
                 status: 1,
             },
             error_first_name: '',
             error_last_name: '',
-            error_phone: '',
             error_email: '',
+            error_phone: '',
             error_status: '',
         }
     },
@@ -60,8 +60,9 @@ export default {
             let self = this;
             self.student.first_name = null;
             self.student.last_name = null;
-            self.student.phone = null;
             self.student.email = null;
+            self.student.phone = null;
+            self.student.status = 1;
             self.show_form = false;
             self.clearErrorData();
         },
@@ -71,16 +72,19 @@ export default {
             self.class_error = '';
             self.error_first_name = '';
             self.error_last_name = '';
-            self.error_phone = '';
             self.error_email = '';
+            self.error_phone = '';
+            self.error_status = '';
+
         },
 
         clearStudentData: function () {
             let self = this;
             self.student.first_name = null;
             self.student.last_name = null;
-            self.student.phone = null;
             self.student.email = null;
+            self.student.phone = null;
+            self.student.status = 1;
             self.show_form = false;
         },
 
