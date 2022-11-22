@@ -31,7 +31,7 @@ class StoreStudentRequest extends FormRequest
             'last_name' => 'required|string|max:50',
             'email' => 'required:phone|email|max:50|unique:students',
             'phone' => 'max:32',
-            'status' => 'required|int|max:1',
+            'status' => 'required|int|max:4',
         ];
     }
 

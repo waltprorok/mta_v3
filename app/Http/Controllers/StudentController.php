@@ -115,7 +115,7 @@ class StudentController extends Controller
             Log::info($exception->getMessage());
         }
 
-        $toast = ['success' => 'Student saved successfully!'];
+        $toast = ['success' => 'Student saved successfully.'];
 
         return response()->json($toast, Response::HTTP_CREATED);
     }
