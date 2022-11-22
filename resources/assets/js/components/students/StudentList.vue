@@ -6,6 +6,8 @@ import TotalEntries from "../TotalEntries";
 export default {
     data: function () {
         return {
+            alert: false,
+            toast: '',
             class_error: '',
             filter: '',
             columns: [
@@ -86,7 +88,9 @@ export default {
             let self = this;
             let params = Object.assign({}, self.student);
             axios.post('/web/student-save', params)
-                .then(() => {
+                .then((success) => {
+                    self.alert = true;
+                    self.toast = success.data;
                     self.clearStudentData()
                     self.clearErrorData();
                     self.fetchStudentList();
