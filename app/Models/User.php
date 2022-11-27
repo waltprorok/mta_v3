@@ -59,7 +59,7 @@ class User extends Authenticatable
      */
     public static function activeStudentCount(): int
     {
-        return Auth::user()->students->where('status', 1)->count();
+        return Auth::user()->students->where('status', Student::ACTIVE)->count();
     }
 
     /**
