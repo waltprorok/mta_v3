@@ -8999,8 +8999,9 @@ a.text-dark:focus, a.text-dark:hover {
     margin: 0;
     overflow: hidden;
     max-height: 0 !important;
-    -webkit-transition: max-height .3s ease-in-out;
-    transition: max-height .3s ease-in-out
+    /* MTA-175 commented out transition animation */
+    /*-webkit-transition: max-height .3s ease-in-out;*/
+    /*transition: max-height .3s ease-in-out*/
 }
 
 .sidebar .nav-dropdown-items .nav-item {
