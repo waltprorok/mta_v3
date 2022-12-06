@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ScheduleUpdateRequest;
 use App\Http\Requests\StoreScheduleApptRequest;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
@@ -199,7 +200,7 @@ class StudentController extends Controller
      * @param string $day
      * @return int
      */
-    public function dayOfWeek(string $day): int
+    private function dayOfWeek(string $day): int
     {
         switch ($day) {
             case "Monday":
@@ -459,7 +460,7 @@ class StudentController extends Controller
         return $interval = $start_datetime->diff($end_datetime)->format('%i');
     }
 
-    public function scheduleUpdateStore(Request $request)
+    public function scheduleUpdateStore(ScheduleUpdateRequest $request): ?RedirectResponse
     {
         if ($request->input('action') == 'update') {
             $this->scheduleUpdate($request);
@@ -470,6 +471,8 @@ class StudentController extends Controller
             $this->scheduleUpdateAll($request);
             return redirect()->back()->with('success', 'You successfully updated all the student\'s lessons.');
         }
+
+        return null;
     }
 
     public function scheduledLessonDelete(Request $request, Lesson $id)
@@ -489,15 +492,8 @@ class StudentController extends Controller
         return null;
     }
 
-    public function scheduleUpdate(Request $request)
+    private function scheduleUpdate(Request $request)
     {
-        // TODO: make request class
-        $this->validate($request, [
-            'title' => 'required|string',
-            'start_date' => 'required|string',
-            'end_time' => 'required|string'
-        ]);
-
         $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
 
         $lesson = Lesson::where('student_id', $request->get('student_id'))->where('teacher_id', Auth::id())->where('id', $request->get('id'))->first();
@@ -512,15 +508,8 @@ class StudentController extends Controller
         $lesson->update();
     }
 
-    public function scheduleUpdateAll(Request $request)
+    private function scheduleUpdateAll(Request $request)
     {
-        // TODO: use request class to validate input
-        $this->validate($request, [
-            'title' => 'required|string',
-            'start_date' => 'required|string',
-            'end_time' => 'required|string'
-        ]);
-
         $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
 
         $begin = Carbon::parse($request->get('start_date'));
