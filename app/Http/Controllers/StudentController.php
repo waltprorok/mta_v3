@@ -98,7 +98,7 @@ class StudentController extends Controller
             'terms' => true,
         ]);
 
-        $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone')) ?? null;
+        $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
 
         Student::create([
             'student_id' => $user->id,
@@ -160,7 +160,7 @@ class StudentController extends Controller
         }
 
         // TODO if successful fire an event to email the new user
-        $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone')) ?? null;
+        $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
 
         // update student record
         $student->first_name = $request->get('first_name');
@@ -483,6 +483,12 @@ class StudentController extends Controller
             return redirect(route('student.index'))->with('success', 'The scheduled lesson has been deleted.');
         }
 
+        if ($request->input('action') == 'deleteRemaining') {
+            $this->destroyRemaining($id);
+
+            return redirect(route('student.index'))->with('success', 'All the remaining scheduled lessons have been deleted.');
+        }
+
         if ($request->input('action') == 'deleteAll') {
             $this->destroyAll($id);
 
@@ -534,7 +540,7 @@ class StudentController extends Controller
      * @param $lesson
      * @return void
      */
-    private function destroy($lesson)
+    public function destroy($lesson)
     {
         $lesson->delete();
     }
@@ -543,7 +549,18 @@ class StudentController extends Controller
      * @param $lessons
      * @return void
      */
-    private function destroyAll($lessons)
+    public function destroyAll($lessons)
+    {
+        Lesson::where('student_id', $lessons->student_id)
+            ->where('teacher_id', Auth::id())
+            ->delete();
+    }
+
+    /**
+     * @param $lessons
+     * @return void
+     */
+    public function destroyRemaining($lessons)
     {
         Lesson::where('student_id', $lessons->student_id)
             ->where('teacher_id', Auth::id())

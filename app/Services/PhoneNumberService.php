@@ -11,7 +11,7 @@ class PhoneNumberService
     public function stripPhoneNumber(?string $phoneNumber): ?string
     {
         if($phoneNumber !== null) {
-            return preg_replace('/\D+/', '', $phoneNumber);
+            return preg_replace('/[^[:digit:]]/', '', $phoneNumber);
         } else {
             return null;
         }
@@ -24,7 +24,7 @@ class PhoneNumberService
     public function getPhoneNumberFormat($phoneNumber): ?string
     {
         if ($phoneNumber !== null) {
-            $cleaned = preg_replace('/[^[:digit:]]/', '', $phoneNumber);
+            $cleaned = $this->stripPhoneNumber($phoneNumber);
 
             switch (strlen($cleaned)) {
                 case 10:
