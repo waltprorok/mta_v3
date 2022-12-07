@@ -137,7 +137,7 @@ export default {
         },
 
         fetchStudentList: function () {
-            axios.get('/web/student-index')
+            axios.get('/web/active')
                 .then((response) => {
                     this.list = response.data;
                 }).catch((error) => {
