@@ -88,21 +88,21 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('waitlist', 'StudentListController@waitlist')->name('student.waitlist');
             Route::get('inactive', 'StudentListController@inactive')->name('student.inactive');
             Route::resource('billing-rate', 'BillingRateController');
-            Route::post('student-save', 'StudentController@store')->name('student.save');
+            Route::post('student-save', 'StudentController@store');
         });
 
         Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
 
         Route::prefix('students')->group(function () {
             Route::view('/', 'webapp.student.index')->name('student.index');
-            Route::get('{id}/profile', 'StudentController@profile')->name('student.profile');
+            Route::get('{id}/profile', 'StudentController@index')->name('student.profile');
             Route::post('update', 'StudentController@update')->name('student.update');
-            Route::get('{id}/edit', 'StudentController@edit')->name('student.edit');
-            Route::get('{id}/schedule/{day?}', 'StudentLessonController@schedule')->name('student.schedule');
-            Route::post('schedule/add', 'StudentLessonController@scheduleSave')->name('student.schedule.save');
-            Route::put('schedule/update', 'StudentLessonController@scheduleUpdateStore')->name('student.schedule.update');
-            Route::get('schedule/{student_id}/edit/{id}/{day?}', 'StudentLessonController@scheduleEdit')->name('student.schedule.edit');
-            Route::delete('schedule/delete/{id}', 'StudentLessonController@scheduledLessonDelete')->name('student.schedule.delete');
+            Route::get('{id}/edit', 'StudentController@show')->name('student.edit');
+            Route::get('{id}/schedule/{day?}', 'StudentLessonController@index')->name('student.schedule');
+            Route::post('schedule/add', 'StudentLessonController@store')->name('student.schedule.save');
+            Route::put('schedule/update', 'StudentLessonController@update')->name('student.schedule.update');
+            Route::get('schedule/{student_id}/edit/{id}/{day?}', 'StudentLessonController@show')->name('student.schedule.edit');
+            Route::delete('schedule/delete/{id}', 'StudentLessonController@destroy')->name('student.schedule.delete');
             Route::put('lessons/update', 'StudentLessonController@lessonsUpdate')->name('student.lessons.update');
             Route::post('process_date', 'StudentLessonController@ajaxTime');
         });

@@ -14,40 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class StudentLessonController extends Controller
 {
-    /**
-     * @param string $day
-     * @return int
-     */
-    private function dayOfWeek(string $day): int
-    {
-        switch ($day) {
-            case "Monday":
-                $today = 0;
-                break;
-            case "Tuesday":
-                $today = 1;
-                break;
-            case "Wednesday":
-                $today = 2;
-                break;
-            case "Thursday":
-                $today = 3;
-                break;
-            case "Friday":
-                $today = 4;
-                break;
-            case "Saturday":
-                $today = 5;
-                break;
-            case "Sunday":
-                $today = 6;
-                break;
-        }
-
-        return $today;
-    }
-
-    public function schedule($id, $day = null)
+    public function index($id, $day = null)
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
@@ -147,29 +114,7 @@ class StudentLessonController extends Controller
             ->with('lastLesson', $lastLesson);
     }
 
-    public function scheduleSave(StoreScheduleApptRequest $request): RedirectResponse
-    {
-        $begin = Carbon::parse($request->get('start_date'));
-        $duration = date('H:i:s', strtotime($request->get('start_time') . ' +' . $request->get('end_time') . ' minutes'));
-        $recurrence = (int)$request->get('recurrence');
-        $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
-
-        for ($i = $begin; $i <= $end; $i->modify('+7 day')) {
-            $lesson = new Lesson();
-            $lesson->student_id = $request->get('student_id');
-            $lesson->teacher_id = Auth::id();
-            $lesson->title = $request->get('title');
-            $lesson->color = $request->get('color');
-            $lesson->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
-            $lesson->end_date = $i->format('Y-m-d') . ' ' . $duration;
-            $lesson->interval = $request->get('end_time');
-            $lesson->save();
-        }
-
-        return redirect()->back()->with('success', ' The student has been scheduled successfully.');
-    }
-
-    public function scheduleEdit($student_id, $id, $day = null)
+    public function show($student_id, $id, $day = null)
     {
         $students = Student::where('id', $student_id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
@@ -265,20 +210,29 @@ class StudentLessonController extends Controller
             ->with('startDate', $startDate);
     }
 
-    /**
-     * @param Request $request
-     * @return string
-     * remove function not used
-     */
-    public function interval(Request $request)
+    public function store(StoreScheduleApptRequest $request): RedirectResponse
     {
-        $start_datetime = new Carbon($request->get('start_time'));
-        $end_datetime = new Carbon($request->get('end_time'));
+        $begin = Carbon::parse($request->get('start_date'));
+        $duration = date('H:i:s', strtotime($request->get('start_time') . ' +' . $request->get('end_time') . ' minutes'));
+        $recurrence = (int)$request->get('recurrence');
+        $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
 
-        return $interval = $start_datetime->diff($end_datetime)->format('%i');
+        for ($i = $begin; $i <= $end; $i->modify('+7 day')) {
+            $lesson = new Lesson();
+            $lesson->student_id = $request->get('student_id');
+            $lesson->teacher_id = Auth::id();
+            $lesson->title = $request->get('title');
+            $lesson->color = $request->get('color');
+            $lesson->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
+            $lesson->end_date = $i->format('Y-m-d') . ' ' . $duration;
+            $lesson->interval = $request->get('end_time');
+            $lesson->save();
+        }
+
+        return redirect()->back()->with('success', ' The student has been scheduled successfully.');
     }
 
-    public function scheduleUpdateStore(ScheduleUpdateRequest $request): ?RedirectResponse
+    public function update(ScheduleUpdateRequest $request): ?RedirectResponse
     {
         if ($request->input('action') == 'update') {
             $this->scheduleUpdate($request);
@@ -293,10 +247,10 @@ class StudentLessonController extends Controller
         return null;
     }
 
-    public function scheduledLessonDelete(Request $request, Lesson $id)
+    public function destroy(Request $request, Lesson $id)
     {
         if ($request->input('action') == 'delete') {
-            $this->destroy($id);
+            $this->destroyOne($id);
 
             return redirect(route('student.index'))->with('success', 'The scheduled lesson has been deleted.');
         }
@@ -314,6 +268,52 @@ class StudentLessonController extends Controller
         }
 
         return null;
+    }
+
+    /**
+     * @param string $day
+     * @return int
+     */
+    private function dayOfWeek(string $day): int
+    {
+        switch ($day) {
+            case "Monday":
+                $today = 0;
+                break;
+            case "Tuesday":
+                $today = 1;
+                break;
+            case "Wednesday":
+                $today = 2;
+                break;
+            case "Thursday":
+                $today = 3;
+                break;
+            case "Friday":
+                $today = 4;
+                break;
+            case "Saturday":
+                $today = 5;
+                break;
+            case "Sunday":
+                $today = 6;
+                break;
+        }
+
+        return $today;
+    }
+
+    /**
+     * @param Request $request
+     * @return string
+     * @deprecated remove function not used
+     */
+    private function interval(Request $request)
+    {
+        $start_datetime = new Carbon($request->get('start_time'));
+        $end_datetime = new Carbon($request->get('end_time'));
+
+        return $start_datetime->diff($end_datetime)->format('%i');
     }
 
     private function scheduleUpdate(Request $request)
@@ -358,7 +358,7 @@ class StudentLessonController extends Controller
      * @param $lesson
      * @return void
      */
-    public function destroy($lesson)
+    private function destroyOne($lesson)
     {
         $lesson->delete();
     }
@@ -367,7 +367,7 @@ class StudentLessonController extends Controller
      * @param $lessons
      * @return void
      */
-    public function destroyAll($lessons)
+    private function destroyAll($lessons)
     {
         Lesson::where('student_id', $lessons->student_id)
             ->where('teacher_id', Auth::id())
@@ -378,7 +378,7 @@ class StudentLessonController extends Controller
      * @param $lessons
      * @return void
      */
-    public function destroyRemaining($lessons)
+    private function destroyRemaining($lessons)
     {
         Lesson::where('student_id', $lessons->student_id)
             ->where('teacher_id', Auth::id())

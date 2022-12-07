@@ -39,6 +39,19 @@ class StudentController extends Controller
     }
 
     /**
+     * Student Profile Page
+     *
+     * @param int $id
+     * @return Application|Factory|View
+     */
+    public function index(int $id)
+    {
+        $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
+
+        return view('webapp.student.profile')->with('students', $students);
+    }
+
+    /**
      * @param StoreStudentRequest $request
      * @return JsonResponse
      */
@@ -77,10 +90,12 @@ class StudentController extends Controller
     }
 
     /**
+     * Edit Student Record
+     *
      * @param int $id
      * @return Application|Factory|View
      */
-    public function edit(int $id)
+    public function show(int $id)
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
 
@@ -141,12 +156,5 @@ class StudentController extends Controller
         $student->save();
 
         return redirect()->back()->with('success', 'You successfully updated the student.');
-    }
-
-    public function profile(int $id)
-    {
-        $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
-
-        return view('webapp.student.profile')->with('students', $students);
     }
 }
