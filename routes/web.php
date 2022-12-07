@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Spatie\Honeypot\ProtectAgainstSpam;
 
-Route::middleware(ProtectAgainstSpam::class)->group(function() {
+Route::middleware(ProtectAgainstSpam::class)->group(function () {
     Auth::routes();
 });
 
@@ -83,10 +83,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['teacher']], function () {
         Route::prefix('web')->group(function () {
-            Route::get('student-index', 'StudentController@index')->name('student.index');
-            Route::get('leads', 'StudentController@leads')->name('student.leads');
-            Route::get('waitlist', 'StudentController@waitlist')->name('student.waitlist');
-            Route::get('inactive', 'StudentController@inactive')->name('student.inactive');
+            Route::get('student-index', 'StudentListController@active')->name('student.active');
+            Route::get('leads', 'StudentListController@leads')->name('student.leads');
+            Route::get('waitlist', 'StudentListController@waitlist')->name('student.waitlist');
+            Route::get('inactive', 'StudentListController@inactive')->name('student.inactive');
             Route::resource('billing-rate', 'BillingRateController');
             Route::post('student-save', 'StudentController@store')->name('student.save');
         });
@@ -131,7 +131,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::prefix('web')->group(function () {
             Route::resource('contact', 'ContactController');
             Route::get('teacher', 'TeacherController@adminTeachers');
-            Route::get('student', 'StudentController@adminStudents');
+            Route::get('student', 'StudentListController@adminStudents');
             Route::get('user', 'UserController@adminUsers');
             Route::get('blog', 'BlogController@list');
             Route::delete('blog/{id}', 'BlogController@destroy');
