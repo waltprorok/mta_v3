@@ -6,7 +6,7 @@ class PhoneNumberService
 {
     /**
      * @param String|null $phoneNumber
-     * @return array|string|string[]|null
+     * @return string|null
      */
     public function stripPhoneNumber(?string $phoneNumber): ?string
     {
@@ -19,7 +19,7 @@ class PhoneNumberService
 
     /**
      * @param $phoneNumber
-     * @return mixed|string|null
+     * @return string|null
      */
     public function getPhoneNumberFormat($phoneNumber): ?string
     {
