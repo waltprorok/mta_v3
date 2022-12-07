@@ -6,7 +6,9 @@ use App\Http\Requests\StoreContactSubmissionRequest;
 use App\Mail\ContactForm;
 use App\Models\Contact;
 use App\Models\Plan;
+use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
@@ -19,6 +21,7 @@ class HomeController extends Controller
     public function pricing()
     {
         $plans = Plan::all();
+
         return view('marketing.pricing', compact('plans'));
     }
 
@@ -53,14 +56,18 @@ class HomeController extends Controller
      */
     public function createContact(StoreContactSubmissionRequest $request): RedirectResponse
     {
-        Contact::create([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'subject' => $request->get('subject'),
-            'message' => $request->get('message'),
-        ]);
+        try {
+            Contact::create([
+                'name' => $request->get('name'),
+                'email' => $request->get('email'),
+                'subject' => $request->get('subject'),
+                'message' => $request->get('message'),
+            ]);
 
-        Mail::to('waltprorok@gmail.com')->send(new ContactForm($request));
+            Mail::to('waltprorok@gmail.com')->send(new ContactForm($request));
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+        }
 
         return redirect()->route('contact')->with('success', 'The contact form was sent successfully');
     }
