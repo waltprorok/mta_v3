@@ -138,7 +138,7 @@ class MessageService
      * @param string $subject
      * @return void
      */
-    public function setSubject(string $subject)
+    public function setSubject(string $subject): void
     {
         $this->subject = $subject;
     }

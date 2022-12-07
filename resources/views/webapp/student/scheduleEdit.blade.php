@@ -191,6 +191,7 @@
                             </div>
                             <div class="pull-right">
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myDeleteModal">Delete</button>
+                                <button type="button" class="btn btn-danger-outline" data-toggle="modal" data-target="#myDeleteModalRemaining">Delete Remaining</button>
                                 <button type="button" class="btn btn-danger-outline" data-toggle="modal" data-target="#myDeleteModalAll">Delete All</button>
                             </div>
                         </form>
@@ -206,8 +207,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">Delete Lesson?</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
                 <div class="modal-body">
@@ -228,13 +228,12 @@
     <!-- End of Modal -->
 
     <!-- Modal -->
-    <div class="modal fade" id="myDeleteModalAll" tabindex="-1" role="dialog" aria-labelledby="myModalLabelAll">
+    <div class="modal fade" id="myDeleteModalRemaining" tabindex="-1" role="dialog" aria-labelledby="myModalLabelRemaining">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabelAll">Delete all the Remaining Lessons?</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabelRemaining">Delete all the Scheduled Lessons?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
                 <div class="modal-body">
@@ -242,7 +241,33 @@
                 </div>
 
                 <div class="modal-footer">
-                    <form action="{{ route('student.schedule.deleteAll', $lesson->id) }}" method="POST">
+                    <form action="{{ route('student.schedule.delete', $lesson->id) }}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                        &nbsp;<button type="submit" name="action" value="deleteRemaining" class="btn btn-danger pull-right">Delete Remaining</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Modal -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="myDeleteModalAll" tabindex="-1" role="dialog" aria-labelledby="myModalLabelAll">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabelAll">Delete all the Lessons?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <p>Are you sure you want to delete all the scheduled lessons?</p>
+                </div>
+
+                <div class="modal-footer">
+                    <form action="{{ route('student.schedule.delete', $lesson->id) }}" method="POST">
                         @method('DELETE')
                         @csrf
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>

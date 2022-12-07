@@ -7,6 +7,8 @@ use App\Models\Lesson;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+// Http/Controllers/Api
+// This directory is for an external API
 class LessonController extends Controller
 {
 //    public function index(): AnonymousResourceCollection

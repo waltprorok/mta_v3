@@ -6,12 +6,12 @@ class PhoneNumberService
 {
     /**
      * @param String|null $phoneNumber
-     * @return array|string|string[]|null
+     * @return string|null
      */
     public function stripPhoneNumber(?string $phoneNumber): ?string
     {
         if($phoneNumber !== null) {
-            return preg_replace('/\D+/', '', $phoneNumber);
+            return preg_replace('/[^[:digit:]]/', '', $phoneNumber);
         } else {
             return null;
         }
@@ -19,12 +19,12 @@ class PhoneNumberService
 
     /**
      * @param $phoneNumber
-     * @return mixed|string|null
+     * @return string|null
      */
     public function getPhoneNumberFormat($phoneNumber): ?string
     {
         if ($phoneNumber !== null) {
-            $cleaned = preg_replace('/[^[:digit:]]/', '', $phoneNumber);
+            $cleaned = $this->stripPhoneNumber($phoneNumber);
 
             switch (strlen($cleaned)) {
                 case 10:
