@@ -117,21 +117,6 @@ class BlogController extends Controller
     }
 
     /**
-     * @param Blog $blog
-     * @param StoreBlogPostRequest $request
-     * @return void
-     */
-    public function setBlogPost(Blog $blog, StoreBlogPostRequest $request): void
-    {
-        $blog->author_id = Auth::id();
-        $blog->title = $request->get('title');
-        $blog->slug = $request->get('slug');
-        $blog->body = $request->get('body');
-        $blog->image = $request->get('updateImage');
-        $blog->released_on = $request->get('released_on') . ' ' . $request->get('release_time');
-    }
-
-    /**
      * @param $editBlog
      * @param StoreBlogPostRequest $request
      * @return void
@@ -148,5 +133,20 @@ class BlogController extends Controller
         }
 
         $editBlog->save();
+    }
+
+    /**
+     * @param Blog $blog
+     * @param StoreBlogPostRequest $request
+     * @return void
+     */
+    private function setBlogPost(Blog $blog, StoreBlogPostRequest $request): void
+    {
+        $blog->author_id = Auth::id();
+        $blog->title = $request->get('title');
+        $blog->slug = $request->get('slug');
+        $blog->body = $request->get('body');
+        $blog->image = $request->get('updateImage');
+        $blog->released_on = $request->get('released_on') . ' ' . $request->get('release_time');
     }
 }

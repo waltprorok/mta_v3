@@ -9,7 +9,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Throwable;
 
 class BillingRateController extends Controller
 {
@@ -52,9 +51,9 @@ class BillingRateController extends Controller
 
             $toast = ['success' => 'Billing rate saved successfully.'];
 
-        } catch (Throwable $e) {
-            Log::info($e->getMessage());
-            $toast = ['error' => $e->getMessage()];
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            $toast = ['error' => $exception->getMessage()];
         }
 
         return response()->json($toast, Response::HTTP_CREATED);
@@ -70,9 +69,9 @@ class BillingRateController extends Controller
         try {
             $billingRate->update($request->all());
             $toast = ['success' => 'Billing rate has been updated.'];
-        } catch (Throwable $e) {
-            Log::info($e->getMessage());
-            $toast = ['error' => $e->getMessage()];
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            $toast = ['error' => $exception->getMessage()];
         }
 
         return response()->json($toast, Response::HTTP_OK);
@@ -88,9 +87,9 @@ class BillingRateController extends Controller
         try {
             $billingRate->delete();
             $toast = ['success' => 'Billing rate has been deleted.'];
-        } catch (Throwable $e) {
-            Log::info($e->getMessage());
-            $toast = ['error' => $e->getMessage()];
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            $toast = ['error' => $exception->getMessage()];
         }
 
         return response()->json($toast, Response::HTTP_OK);

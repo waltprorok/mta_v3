@@ -75,7 +75,6 @@ export default {
             self.error_email = '';
             self.error_phone = '';
             self.error_status = '';
-
         },
 
         clearStudentData: function () {
