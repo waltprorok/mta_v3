@@ -289,6 +289,7 @@ class StudentLessonController extends Controller
     private function getLessonTimes($allLessons, $lessons, $startDate): array
     {
         $lessonTimes = [];
+        $studentLessonStart = '';
 
         foreach ($allLessons as $allLesson) {
             foreach ($lessons as $lesson) {
