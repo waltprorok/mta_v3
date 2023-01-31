@@ -22,88 +22,16 @@ class StudentLessonController extends Controller
         $lastLesson = Student::with('hasOneLesson')
             ->where('id', $id)
             ->where('teacher_id', Auth::id())
-            ->where('status', Student::ACTIVE)->get();
+            ->where('status', Student::ACTIVE)
+            ->get();
 
         $startDate = $day;
 
-        if ($day == null) {
-            $day = date('l');
-        } else {
-            $day = Carbon::parse($day)->format('l');
-        };
+        $day = is_null($day) ? date('l') : Carbon::parse($day)->format('l');
 
-        $allTimes = [];
+        $allTimes = $this->getAllTimes($day, $businessHours);
 
-        $thisDay = $this->dayOfWeek($day);
-
-        $amount = -30;
-
-        foreach ($businessHours as $businessHour) {
-            if ($businessHour->open_time <= $businessHour->close_time && $thisDay == $businessHour->day) {
-                $diff = Carbon::parse($businessHour->open_time)->diff(Carbon::parse($businessHour->close_time));
-                $amount = $amount + ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
-            }
-
-            if ($businessHour->active == 1 && $thisDay == $businessHour->day) {
-                $openingTime = Carbon::parse($businessHour->open_time);
-                $allTimes[] = $openingTime->toTimeString();
-
-                for ($i = 0; $i <= ($amount / 15); $i++) {
-                    $thisOpeningTime = $openingTime->addMinutes(15);
-                    $allTimes[] = $thisOpeningTime->toTimeString();
-                }
-            }
-        }
-
-        $studentScheduled = false;
-
-        foreach ($lessons as $lesson) {
-            $lessonDay = Carbon::parse($lesson->start_date)->format('l');
-            $lessonStartDate = $lesson->start_date;
-            $lessonStartTime = Carbon::parse($lesson->start_date)->format('H:i:s');
-            $lessonEndTime = Carbon::parse($lesson->end_date)->format('H:i:s');
-            $lessonInterval = $lesson->interval;
-            $studentLessonStart = Carbon::parse($lesson->start_date)->format('Y-m-d');
-
-            if ($lesson->student_id == $id) {
-                $studentScheduled = true;
-            }
-
-            if ($startDate != $studentLessonStart) {
-                continue;
-            }
-
-            if ($lessonDay == $day && $lessonStartDate) {
-                // remove time for a lesson that is already booked from all times
-                foreach ($allTimes as $allTimeKey => $allTime) {
-
-                    if ($allTime == $lessonStartTime && $lessonInterval == 15) {
-                        unset($allTimes[$allTimeKey]);
-                        unset($allTimes[$allTimeKey + 1]);
-                    }
-
-                    if ($allTime == $lessonStartTime && $lessonInterval == 30) {
-                        unset($allTimes[$allTimeKey]);
-                        unset($allTimes[$allTimeKey + 1]);
-                    }
-
-                    if ($allTime == $lessonStartTime && $lessonInterval == 45) {
-                        unset($allTimes[$allTimeKey]);
-                        unset($allTimes[$allTimeKey + 1]);
-                    }
-
-                    if ($allTime == $lessonStartTime && $lessonInterval == 60) {
-                        unset($allTimes[$allTimeKey]);
-                        unset($allTimes[$allTimeKey + 1]);
-                    }
-
-                    if ($allTime == $lessonEndTime) {
-                        $allTimeKey = $allTimeKey - 1;
-                        unset($allTimes[$allTimeKey]);
-                    }
-                }
-            }
-        }
+        list($studentScheduled, $allTimes) = $this->getTimes($lessons, $id, $startDate, $day, $allTimes);
 
         return view('webapp.student.schedule')
             ->with('students', $students)
@@ -131,75 +59,9 @@ class StudentLessonController extends Controller
             $day = Carbon::parse($day)->format('l');
         }
 
-        $allTimes = [];
+        $allTimes = $this->getAllTimes($day, $businessHours);
 
-        $thisDay = $this->dayOfWeek($day);
-
-        $amount = -45;
-
-        foreach ($businessHours as $businessHour) {
-            if ($businessHour->open_time <= $businessHour->close_time && $thisDay == $businessHour->day) {
-                $diff = Carbon::parse($businessHour->open_time)->diff(Carbon::parse($businessHour->close_time));
-                $amount = $amount + ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
-            }
-
-            if ($businessHour->active == 1 && $thisDay == $businessHour->day) {
-                $openingTime = Carbon::parse($businessHour->open_time);
-
-                array_push($allTimes, $openingTime->toTimeString());
-
-                for ($i = 0; $i <= ($amount / 14); $i++) {
-                    $thisOpeningTime = $openingTime->addMinutes(15);
-                    array_push($allTimes, $thisOpeningTime->toTimeString());
-                }
-            }
-        }
-
-        $lessonTimes = [];
-
-        foreach ($allLessons as $allLesson) {
-            foreach ($lessons as $lesson) {
-                $studentLessonStart = Carbon::parse($lesson->start_date)->format('Y-m-d');
-            }
-
-            $allLessonsDay = Carbon::parse($allLesson->start_date)->format('Y-m-d');
-
-            if ($allLessonsDay == $studentLessonStart || $allLessonsDay == $startDate) {
-
-                $lessonStart = Carbon::parse($allLesson->start_date)->format('H:i:s');
-                $lesson15Minutes = Carbon::parse($allLesson->start_date)->addMinute(15)->format('H:i:s');
-                $lesson30Minutes = Carbon::parse($allLesson->start_date)->addMinute(30)->format('H:i:s');
-                $lesson45Minutes = Carbon::parse($allLesson->start_date)->addMinute(45)->format('H:i:s');
-                $lesson60Minutes = Carbon::parse($allLesson->start_date)->addMinute(60)->format('H:i:s');
-
-                $lessonStartParse = Carbon::parse($allLesson->start_date);
-                $lessonEndParse = Carbon::parse($allLesson->end_date);
-                $diffInTime = $lessonEndParse->diffInSeconds($lessonStartParse);
-
-                switch ($diffInTime) {
-                    case 900:
-                        $lessonTimes[] = $lessonStart;
-                        break;
-                    case 1800:
-                        $lessonTimes[] = $lessonStart;
-                        $lessonTimes[] = $lesson15Minutes;
-                        break;
-                    case 2700:
-                        $lessonTimes[] = $lessonStart;
-                        $lessonTimes[] = $lesson15Minutes;
-                        $lessonTimes[] = $lesson30Minutes;
-                        break;
-                    case 3600:
-                        $lessonTimes[] = $lessonStart;
-                        $lessonTimes[] = $lesson15Minutes;
-                        $lessonTimes[] = $lesson30Minutes;
-                        $lessonTimes[] = $lesson45Minutes;
-                        break;
-                    default:
-                        $lessonTimes[] = $lessonStart;
-                }
-            }
-        }
+        $lessonTimes = $this->getLessonTimes($allLessons, $lessons, $startDate);
 
         $allAvailableTimes = array_diff($allTimes, $lessonTimes);
 
@@ -306,6 +168,7 @@ class StudentLessonController extends Controller
     /**
      * @param Request $request
      * @return string
+     * @deprecated
      * @deprecated remove function not used
      */
     private function interval(Request $request)
@@ -335,9 +198,7 @@ class StudentLessonController extends Controller
     private function scheduleUpdateAll(Request $request)
     {
         $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
-
         $begin = Carbon::parse($request->get('start_date'));
-
         $lessons = Lesson::all()->where('student_id', $request->get('student_id'))->where('teacher_id', Auth::id());
 
         foreach ($lessons as $lesson) {
@@ -384,5 +245,152 @@ class StudentLessonController extends Controller
             ->where('teacher_id', Auth::id())
             ->whereDate('start_date', '>=', date('Y-m-d'))
             ->delete();
+    }
+
+    /**
+     * @param $day
+     * @param $businessHours
+     * @return array
+     */
+    private function getAllTimes($day, $businessHours): array
+    {
+        $allTimes = [];
+
+        $thisDay = $this->dayOfWeek($day);
+
+        $amount = -30;
+
+        foreach ($businessHours as $businessHour) {
+            if ($businessHour->open_time <= $businessHour->close_time && $thisDay == $businessHour->day) {
+                $diff = Carbon::parse($businessHour->open_time)->diff(Carbon::parse($businessHour->close_time));
+                $amount = $amount + ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
+            }
+
+            if ($businessHour->active == 1 && $thisDay == $businessHour->day) {
+                $openingTime = Carbon::parse($businessHour->open_time);
+                $allTimes[] = $openingTime->toTimeString();
+
+                for ($i = 0; $i <= ($amount / 15); $i++) {
+                    $thisOpeningTime = $openingTime->addMinutes(15);
+                    $allTimes[] = $thisOpeningTime->toTimeString();
+                }
+            }
+        }
+
+        return $allTimes;
+    }
+
+    /**
+     * @param $allLessons
+     * @param $lessons
+     * @param $startDate
+     * @return array
+     */
+    private function getLessonTimes($allLessons, $lessons, $startDate): array
+    {
+        $lessonTimes = [];
+
+        foreach ($allLessons as $allLesson) {
+            foreach ($lessons as $lesson) {
+                $studentLessonStart = Carbon::parse($lesson->start_date)->format('Y-m-d');
+            }
+
+            $allLessonsDay = Carbon::parse($allLesson->start_date)->format('Y-m-d');
+
+            if ($allLessonsDay == $studentLessonStart || $allLessonsDay == $startDate) {
+                $lessonStart = Carbon::parse($allLesson->start_date)->format('H:i:s');
+                $lesson15Minutes = Carbon::parse($allLesson->start_date)->addMinute(15)->format('H:i:s');
+                $lesson30Minutes = Carbon::parse($allLesson->start_date)->addMinute(30)->format('H:i:s');
+                $lesson45Minutes = Carbon::parse($allLesson->start_date)->addMinute(45)->format('H:i:s');
+                $lesson60Minutes = Carbon::parse($allLesson->start_date)->addMinute(60)->format('H:i:s');
+
+                $lessonStartParse = Carbon::parse($allLesson->start_date);
+                $lessonEndParse = Carbon::parse($allLesson->end_date);
+                $diffInTime = $lessonEndParse->diffInSeconds($lessonStartParse);
+
+                $lessonTimes[] = $lessonStart;
+
+                switch ($diffInTime) {
+                    case 900:
+                        break;
+                    case 1800:
+                        $lessonTimes[] = $lesson15Minutes;
+                        break;
+                    case 2700:
+                        $lessonTimes[] = $lesson15Minutes;
+                        $lessonTimes[] = $lesson30Minutes;
+                        break;
+                    case 3600:
+                        $lessonTimes[] = $lesson15Minutes;
+                        $lessonTimes[] = $lesson30Minutes;
+                        $lessonTimes[] = $lesson45Minutes;
+                        break;
+                }
+            }
+        }
+
+        return $lessonTimes;
+    }
+
+    /**
+     * @param $lessons
+     * @param $id
+     * @param $startDate
+     * @param $day
+     * @param array $allTimes
+     * @return array
+     */
+    private function getTimes($lessons, $id, $startDate, $day, array $allTimes): array
+    {
+        $studentScheduled = false;
+
+        foreach ($lessons as $lesson) {
+            $lessonDay = Carbon::parse($lesson->start_date)->format('l');
+            $lessonStartDate = $lesson->start_date;
+            $lessonStartTime = Carbon::parse($lesson->start_date)->format('H:i:s');
+            $lessonEndTime = Carbon::parse($lesson->end_date)->format('H:i:s');
+            $lessonInterval = $lesson->interval;
+            $studentLessonStart = Carbon::parse($lesson->start_date)->format('Y-m-d');
+
+            if ($lesson->student_id == $id) {
+                $studentScheduled = true;
+            }
+
+            if ($startDate != $studentLessonStart) {
+                continue;
+            }
+
+            if ($lessonDay == $day && $lessonStartDate) {
+                // remove time for a lesson that is already booked from all times
+                foreach ($allTimes as $allTimeKey => $allTime) {
+                    if ($allTime == $lessonStartTime && $lessonInterval == 15) {
+                        unset($allTimes[$allTimeKey]);
+                        unset($allTimes[$allTimeKey + 1]);
+                    }
+
+                    if ($allTime == $lessonStartTime && $lessonInterval == 30) {
+                        unset($allTimes[$allTimeKey]);
+                        unset($allTimes[$allTimeKey + 1]);
+                    }
+
+                    if ($allTime == $lessonStartTime && $lessonInterval == 45) {
+                        unset($allTimes[$allTimeKey]);
+                        unset($allTimes[$allTimeKey + 1]);
+                    }
+
+                    if ($allTime == $lessonStartTime && $lessonInterval == 60) {
+                        unset($allTimes[$allTimeKey]);
+                        unset($allTimes[$allTimeKey + 1]);
+                    }
+
+                    if ($allTime == $lessonEndTime) {
+                        $allTimeKey = $allTimeKey - 1;
+                        unset($allTimes[$allTimeKey]);
+                    }
+                }
+            }
+        }
+
+        return array($studentScheduled, $allTimes);
     }
 }
