@@ -65,7 +65,7 @@ class ParentController extends Controller
 
         $calendar = Calendar::addEvents($lessons)
             ->setOptions([
-                'firstDay' => 1,
+                'firstDay' => 0,
                 'editable' => false,
                 'selectable' => true,
                 'defaultView' => 'month', // 'month' for full calendar 'listWeek'

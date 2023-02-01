@@ -78,7 +78,7 @@
                                                     <div class="col-sm-9">
                                                         @foreach($lastLesson as $lesson)
                                                             @if(isset($lesson->hasOneLesson->start_date))
-                                                                <i class="fa fa-clock-o"></i>&nbsp;{{ \Carbon\Carbon::parse($lesson->hasOneLesson->start_date)->format('F j, Y | g:i:s A') }}
+                                                                <i class="fa fa-clock-o"></i>&nbsp;{{ \Carbon\Carbon::parse($lesson->hasOneLesson->start_date)->format('F j, Y | l | g:i:s A ') }}
                                                             @endif
                                                         @endforeach
                                                     </div>

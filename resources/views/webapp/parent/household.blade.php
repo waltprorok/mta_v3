@@ -10,8 +10,6 @@
             <li class="breadcrumb-item active">Household</li>
         </ul>
 
-        {{--        @include('partials.studentListTabs')--}}
-
         <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
                 @forelse($parent->parentOfStudent as $student)

@@ -75,7 +75,6 @@ export default {
             self.error_email = '';
             self.error_phone = '';
             self.error_status = '';
-
         },
 
         clearStudentData: function () {
@@ -137,7 +136,7 @@ export default {
         },
 
         fetchStudentList: function () {
-            axios.get('/web/student-index')
+            axios.get('/web/active')
                 .then((response) => {
                     this.list = response.data;
                 }).catch((error) => {
