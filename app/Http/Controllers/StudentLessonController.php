@@ -18,7 +18,7 @@ class StudentLessonController extends Controller
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
-        $lessons = Lesson::where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
+        $lessons = Lesson::where('teacher_id', Auth::id())->whereDate('start_date', $day)->orderBy('start_date', 'asc')->get();
         $lastLesson = Student::with('hasOneLesson')
             ->where('id', $id)
             ->where('teacher_id', Auth::id())
@@ -47,15 +47,18 @@ class StudentLessonController extends Controller
         $students = Student::where('id', $student_id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
         $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
-        $allLessons = Lesson::where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
 
         $startDate = $day;
 
         if ($day == null) {
+            $lessonStartDate = '';
             foreach ($lessons as $lesson) {
                 $day = Carbon::parse($lesson->start_date)->format('l');
+                $lessonStartDate = Carbon::parse($lesson->start_date)->format('Y-m-d');
             }
+            $allLessons = Lesson::where('teacher_id', Auth::id())->whereDate('start_date', $lessonStartDate)->orderBy('start_date', 'asc')->get();
         } else {
+            $allLessons = Lesson::where('teacher_id', Auth::id())->whereDate('start_date', $day)->orderBy('start_date', 'asc')->get();
             $day = Carbon::parse($day)->format('l');
         }
 
