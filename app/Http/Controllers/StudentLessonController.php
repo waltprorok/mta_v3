@@ -58,8 +58,8 @@ class StudentLessonController extends Controller
             }
             $allLessons = Lesson::where('teacher_id', Auth::id())->whereDate('start_date', $lessonStartDate)->orderBy('start_date', 'asc')->get();
         } else {
-            $allLessons = Lesson::where('teacher_id', Auth::id())->whereDate('start_date', $day)->orderBy('start_date', 'asc')->get();
             $day = Carbon::parse($day)->format('l');
+            $allLessons = Lesson::where('teacher_id', Auth::id())->whereDate('start_date', $startDate)->orderBy('start_date', 'asc')->get();
         }
 
         $allTimes = $this->getAllTimes($day, $businessHours);
