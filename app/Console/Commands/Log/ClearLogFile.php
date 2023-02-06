@@ -18,7 +18,7 @@ class ClearLogFile extends Command
      *
      * @var string
      */
-    protected $description = 'Clear Laravel log';
+    protected $description = 'Clears out Laravel logs';
 
     /**
      * Create a new command instance.
@@ -40,5 +40,7 @@ class ClearLogFile extends Command
         exec('truncate -s 0 ' . storage_path('logs/laravel.log')); // empties laravel log
         exec('rm ' . storage_path('logs/laravel-*.log')); // remove all logs with a date
         $this->info('Logs have been cleared');
+
+        return true;
     }
 }
