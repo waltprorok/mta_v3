@@ -25,6 +25,7 @@ class StoreScheduleApptRequest extends FormRequest
     {
         return [
             'student_id' => 'required|string',
+            'billing_rate_id' => 'string',
             'title' => 'required|string',
             'start_date' => 'required|string',
             'start_time' => 'required|string',
