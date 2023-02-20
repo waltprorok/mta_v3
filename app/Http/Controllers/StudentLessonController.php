@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ScheduleUpdateRequest;
 use App\Http\Requests\StoreScheduleApptRequest;
+use App\Models\BillingRate;
 use App\Models\BusinessHours;
 use App\Models\Lesson;
 use App\Models\Student;
@@ -18,6 +19,7 @@ class StudentLessonController extends Controller
     {
         $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
+        $billingRates = BillingRate::where('teacher_id', Auth::id())->get();
         $lessons = Lesson::where('teacher_id', Auth::id())->whereDate('start_date', $day)->orderBy('start_date', 'asc')->get();
         $lastLesson = Student::with('hasOneLesson')
             ->where('id', $id)
@@ -39,7 +41,8 @@ class StudentLessonController extends Controller
             ->with('allTimes', $allTimes)
             ->with('startDate', $startDate)
             ->with('studentScheduled', $studentScheduled)
-            ->with('lastLesson', $lastLesson);
+            ->with('lastLesson', $lastLesson)
+            ->with('billingRates', $billingRates);
     }
 
     public function show($student_id, $id, $day = null)
@@ -47,6 +50,7 @@ class StudentLessonController extends Controller
         $students = Student::where('id', $student_id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
         $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
+        $billingRates = BillingRate::where('teacher_id', Auth::id())->get();
 
         $startDate = $day;
 
@@ -72,7 +76,8 @@ class StudentLessonController extends Controller
             ->with('lessons', $lessons)
             ->with('students', $students)
             ->with('allTimes', $allAvailableTimes)
-            ->with('startDate', $startDate);
+            ->with('startDate', $startDate)
+            ->with('billingRates', $billingRates);
     }
 
     public function store(StoreScheduleApptRequest $request): RedirectResponse
@@ -86,11 +91,12 @@ class StudentLessonController extends Controller
             $lesson = new Lesson();
             $lesson->student_id = $request->get('student_id');
             $lesson->teacher_id = Auth::id();
+            $lesson->billing_rate_id = $request->get('billing_rate_id');
             $lesson->title = $request->get('title');
             $lesson->color = $request->get('color');
             $lesson->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
             $lesson->end_date = $i->format('Y-m-d') . ' ' . $duration;
-            $lesson->interval = $request->get('end_time');
+            $lesson->interval = (int)$request->get('end_time');
             $lesson->save();
         }
 
