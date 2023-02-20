@@ -18,7 +18,7 @@ class CreateBillingRatesTable extends Migration
         Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('teacher_id')->unsigned();
-            $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('teacher_id')->references('id')->on(CreateUsersTable::TABLE_NAME)->onDelete('cascade');
             $table->string('type')->nullable();
             $table->decimal('amount')->nullable();
             $table->string('description')->nullable();
