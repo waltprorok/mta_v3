@@ -74,7 +74,7 @@ export default {
         },
 
         showDeleteIcon: function(row) {
-            return row.lessons.length === 0;
+            return row.billing_rate === null;
         },
 
         showModalDelete: function (id) {

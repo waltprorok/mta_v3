@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class BillingRate extends Model
 {
@@ -18,6 +19,11 @@ class BillingRate extends Model
     protected $cast = [
         'amount' => 'decimal:2',
     ];
+
+    public function billingRate(): HasOne
+    {
+        return $this->hasOne(Lesson::class, 'billing_rate_id', 'id')->where('complete', false);
+    }
 
     public function lessons(): HasMany
     {
