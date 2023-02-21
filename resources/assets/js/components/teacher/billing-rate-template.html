@@ -86,7 +86,7 @@
                     <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
                     <td class="text-nowrap">
                         <button @click="showRate(row.id, false)" class="btn btn-outline-primary btn-sm" title="edit"><i class="fa fa-edit"></i></button>
-                        <button @click="showModalDelete(row.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        <button @click="showModalDelete(row.id)" v-show="showDeleteIcon(row)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
                     </td>
                 </tr>
             </template>

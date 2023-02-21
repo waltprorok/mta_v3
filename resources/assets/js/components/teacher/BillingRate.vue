@@ -73,6 +73,10 @@ export default {
             self.clearRateData();
         },
 
+        showDeleteIcon: function(row) {
+            return row.lessons.length === 0;
+        },
+
         showModalDelete: function (id) {
             let self = this;
             self.showModal = true;

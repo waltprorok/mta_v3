@@ -19,7 +19,7 @@ class BillingRate extends Model
         'amount' => 'decimal:2',
     ];
 
-    public function lesson(): HasMany
+    public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class, 'billing_rate_id', 'id');
     }
