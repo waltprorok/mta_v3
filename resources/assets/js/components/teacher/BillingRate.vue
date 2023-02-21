@@ -96,6 +96,7 @@ export default {
             self.rate.type = null;
             self.rate.amount = null;
             self.rate.description = null;
+            self.edit = false;
         },
 
         getErrorMessage: function (error) {
