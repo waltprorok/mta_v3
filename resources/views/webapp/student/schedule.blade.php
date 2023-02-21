@@ -159,7 +159,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('color') ? ' has-error' : '' }}">
-                                        <label for="end_time" class="control-label">Color</label>
+                                        <label for="color" class="control-label">Color</label>
                                         <select class="form-control" id="color" name="color">
                                             <option value="#5499C7" style="background-color: #5499C7; color: white;">Blue</option>
                                             <option value="#CD6155" style="background-color: #CD6155; color: white;">Red</option>
@@ -189,7 +189,28 @@
                                     </div>
                                 @endif
                             </div>
-                            <input type="hidden" class="form-control" name="student_id" value="{{ $student->id }}">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        @if(count($billingRates) < 1)
+                                            <label for="billing_rate" class="control-label">Go To Settings</label>
+                                            <a href="{{ route('teacher.billing') }}" id="billing_rate">
+                                                <button type="button" class="btn btn-default">
+                                                    <i class="fa fa-money"></i> &nbsp; Click here for settings and add a Billing Rate
+                                                </button>
+                                            </a>
+                                        @else
+                                            <label for="billing_rate" class="control-label">Billing Rate</label>
+                                            <select class="form-control" id="billing_rate" name="billing_rate_id">
+                                                @foreach($billingRates as $billingRate)
+                                                    <option value="{{ $billingRate->id }}">${{ number_format($billingRate->amount, 2) }} | {{ ucfirst($billingRate->type) }}</option>
+                                                @endforeach
+                                            </select>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="student_id" value="{{ $student->id }}">
                             <input type="hidden" name="title" value="{{ $student->first_name }} {{ $student->last_name }}">
                             <hr/>
                             <div class="pull-left">

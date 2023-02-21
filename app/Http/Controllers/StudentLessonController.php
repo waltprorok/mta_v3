@@ -49,7 +49,7 @@ class StudentLessonController extends Controller
     {
         $students = Student::where('id', $student_id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
-        $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->get();
+        $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->with('billingRate')->get();
         $billingRates = BillingRate::where('teacher_id', Auth::id())->get();
 
         $startDate = $day;
@@ -196,6 +196,7 @@ class StudentLessonController extends Controller
         $lesson->id = $request->get('id');
         $lesson->student_id = $request->get('student_id');
         $lesson->teacher_id = Auth::id();
+        $lesson->billing_rate_id = $request->get('billing_rate_id');
         $lesson->title = $request->get('title');
         $lesson->color = $request->get('color');
         $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
@@ -214,6 +215,7 @@ class StudentLessonController extends Controller
             $lesson->id = $lesson->id;
             $lesson->student_id = $request->get('student_id');
             $lesson->teacher_id = Auth::id();
+            $lesson->billing_rate_id = $request->get('billing_rate_id');
             $lesson->title = $request->get('title');
             $lesson->color = $request->get('color');
             $lesson->start_date = $begin->format('Y-m-d') . ' ' . $request->get('start_time');
@@ -264,9 +266,7 @@ class StudentLessonController extends Controller
     private function getAllTimes($day, $businessHours): array
     {
         $allTimes = [];
-
         $thisDay = $this->dayOfWeek($day);
-
         $amount = -30;
 
         foreach ($businessHours as $businessHour) {
