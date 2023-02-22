@@ -53,7 +53,8 @@ export default {
 
     methods: {
         hasOneLesson: function (row) {
-            return row.has_one_lesson !== null && row.status === 1;
+            console.log(row.has_one_future_lesson);
+            return row.has_one_future_lesson !== null && row.status === 1;
         },
 
         cancelForm: function () {

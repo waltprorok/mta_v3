@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Services\PhoneNumberService;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -71,9 +72,17 @@ class Student extends Model
     /**
      * @return HasOne
      */
+    public function hasOneFutureLesson(): HasOne
+    {
+        return $this->hasOne(Lesson::class)->where('start_date', '>', Carbon::now()->format('Y-m-d H:i:s'));
+    }
+
+    /**
+     * @return HasOne
+     */
     public function hasOneLesson(): HasOne
     {
-        return $this->hasOne(Lesson::class)->latest();
+        return $this->hasOne(Lesson::class);
     }
 
     /**

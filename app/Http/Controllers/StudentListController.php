@@ -21,7 +21,7 @@ class StudentListController extends Controller
 
     public function active(): JsonResponse
     {
-        $students = Student::with('hasOneLesson')
+        $students = Student::with('hasOneFutureLesson')
             ->where('teacher_id', Auth::id())
             ->where('status', Student::ACTIVE)
             ->firstNameAsc()
