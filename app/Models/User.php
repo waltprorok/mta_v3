@@ -101,6 +101,11 @@ class User extends Authenticatable
         return $this->hasMany(BillingRate::class, 'teacher_id');
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->admin && $this->admin !== null;
+    }
+
     /**
      * @return HasMany
      */
