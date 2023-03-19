@@ -14,24 +14,6 @@ use MaddHatter\LaravelFullcalendar\Facades\Calendar;
 class ParentController extends Controller
 {
     /**
-     * @return View
-     */
-    public function household(): View
-    {
-        $parent = User::with('parentOfStudent')->findOrFail(Auth::id()); // uses pivot table
-        $students = $parent->parentOfStudent()->get();
-        $teacher = [];
-
-        foreach ($students as $student) {
-            $teacher = Teacher::where('teacher_id', $student->teacher_id)->first();
-        }
-
-        return view('webapp.parent.household')
-            ->with('parent', $parent)
-            ->with('teacher', $teacher);
-    }
-
-    /**
      * @throws Exception
      */
     public function calendar()
@@ -77,4 +59,24 @@ class ParentController extends Controller
 
         return view('webapp.calendar.index')->with('calendar', $calendar);
     }
+
+    /**
+     * @return View
+     */
+    public function household(): View
+    {
+        $parent = User::with('parentOfStudent')->findOrFail(Auth::id()); // uses pivot table
+        $students = $parent->parentOfStudent()->get();
+        $teacher = [];
+
+        foreach ($students as $student) {
+            $teacher = Teacher::where('teacher_id', $student->teacher_id)->first();
+        }
+
+        return view('webapp.parent.household')
+            ->with('parent', $parent)
+            ->with('teacher', $teacher);
+    }
+
+
 }
