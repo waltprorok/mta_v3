@@ -106,6 +106,21 @@ class User extends Authenticatable
         return $this->admin && $this->admin !== null;
     }
 
+    public function isParent(): bool
+    {
+        return $this->parent && $this->parent !== null;
+    }
+
+    public function isStudent(): bool
+    {
+        return $this->student && $this->student !== null;
+    }
+
+    public function isTeacher(): bool
+    {
+        return $this->teacher && $this->teacher !== null;
+    }
+
     /**
      * @return HasMany
      */
