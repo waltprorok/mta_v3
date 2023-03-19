@@ -78,6 +78,16 @@ class User extends Authenticatable
         return $this->hasMany(BusinessHours::class, 'teacher_id');
     }
 
+    public static function getBillingRates()
+    {
+        return Auth::user()->getTeacherPaymentRate;
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
     /**
      * @return HasOne
      */
@@ -107,11 +117,6 @@ class User extends Authenticatable
     public static function lessonsThisMonth(): int
     {
         return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
-    }
-
-    public static function getBillingRates()
-    {
-        return Auth::user()->getTeacherPaymentRate;
     }
 
     public function messages(): HasMany
