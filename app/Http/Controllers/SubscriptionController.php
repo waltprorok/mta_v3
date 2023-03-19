@@ -16,6 +16,83 @@ class SubscriptionController extends Controller
     protected $receiptLimit = 12;
 
     /**
+     * @return RedirectResponse
+     */
+    public function cancel(): RedirectResponse
+    {
+        $user = Auth::user();
+
+        if ($user->subscription('premium')) {
+            $subscription = $user->subscription('premium');
+            $subscription->cancel();
+        }
+
+        return redirect()->back()->with('warning', 'Your subscription account has been cancelled.');
+    }
+
+    /**
+     * @return RedirectResponse
+     */
+    public function changePlan(): RedirectResponse
+    {
+        $plans = Plan::all();
+        $user = Auth::user();
+
+        foreach ($plans as $plan) {
+            if ($plan->stripe_plan == $user->subscription('premium')->stripe_plan) {
+                if ($plan->id == 1) {
+                    $newPlan = Plan::findOrFail(2);
+                    $user->subscription('premium')->swap($newPlan->stripe_plan);
+                    break;
+                } elseif ($plan->id == 2) {
+                    $newPlan = Plan::findOrFail(1);
+                    $user->subscription('premium')->swap($newPlan->stripe_plan);
+                    break;
+                }
+            }
+        }
+
+        return redirect()->back()->with('success', 'Your subscription plan has been updated.');
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function create(Request $request): RedirectResponse
+    {
+        $teacher = Auth::user()->getTeacher()->first();
+
+        $plan = Plan::findOrFail($request->get('plan_id'));
+
+        $request->user()
+            ->newSubscription($plan->name, $plan->stripe_plan)
+            ->create($request->stripeToken, [
+                'name' => $teacher->first_name . ' ' . $teacher->last_name,
+                'address' => [
+                    'line1' => $teacher->address,
+                    'line2' => $teacher->address_2,
+                    'city' => $teacher->city,
+                    'state' => $teacher->state,
+                    'postal_code' => $teacher->zip,
+                ],
+                'phone' => $teacher->phone,
+            ]);
+
+        Mail::to($teacher->email)->send(new SubscribedMail($teacher));
+
+        return redirect()->back()->with('success', 'Thank you for subscribing to our service.');
+    }
+
+    /**
+     * @return View
+     */
+    public function creditCard(): View
+    {
+        return view('webapp.account.card');
+    }
+
+    /**
      * @return View
      */
     public function index(): View
@@ -33,38 +110,13 @@ class SubscriptionController extends Controller
     /**
      * @return View
      */
-    public function subscribed(): View
+    public function invoices(): View
     {
-        return view('webapp.account.subscription');
-    }
+        $user = Auth::user();
 
-    /**
-     * @param Request $request
-     * @param Plan $plan
-     * @return RedirectResponse
-     */
-    public function create(Request $request, Plan $plan): RedirectResponse
-    {
-        $teacher = Auth::user()->getTeacher()->first();
+        $invoices = $user->invoices();
 
-        $plan = Plan::findOrFail($request->get('plan'));
-
-        $request->user()->newSubscription($plan->name, $plan->stripe_plan)
-            ->create($request->stripeToken, [
-                'name' => $teacher->first_name . ' ' . $teacher->last_name,
-                'address' => [
-                    'line1' => $teacher->address,
-                    'line2' => $teacher->address_2,
-                    'city' => $teacher->city,
-                    'state' => $teacher->state,
-                    'postal_code' => $teacher->zip,
-                ],
-                'phone' => $teacher->phone,
-            ]);
-
-        Mail::to($teacher->email)->send(new SubscribedMail($teacher));
-
-        return redirect()->back()->with('success', 'Thank you for subscribing to our service.');
+        return view('webapp.account.invoices', compact('invoices'));
     }
 
     /**
@@ -94,43 +146,27 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * @return RedirectResponse
+     * @param $invoiceId
+     * @return array
      */
-    public function changePlan(): RedirectResponse
+    public function pdfDownload($invoiceId): array
     {
-        $plans = Plan::all();
         $user = Auth::user();
 
-        foreach ($plans as $plan) {
-            if ($plan->stripe_plan == $user->subscription('premium')->stripe_plan) {
-                if ($plan->id == 1) {
-                    $newPlan = Plan::findOrFail(2);
-                    $user->subscription('premium')->swap($newPlan->stripe_plan);
-                    break;
-                } elseif ($plan->id == 2) {
-                    $newPlan = Plan::findOrFail(1);
-                    $user->subscription('premium')->swap($newPlan->stripe_plan);
-                    break;
-                }
-            }
-        }
+        $subscriptionName = ucfirst($user->subscriptions->first()->name);
 
-        return redirect()->back()->with('success', 'Your subscription plan has been updated.');
+        return $user->downloadInvoice($invoiceId, [
+            'vendor' => 'Music Teachers Aid',
+            'product' => $subscriptionName
+        ]);
     }
 
     /**
-     * @return RedirectResponse
+     * @return View
      */
-    public function cancel(): RedirectResponse
+    public function profile(): View
     {
-        $user = Auth::user();
-
-        if ($user->subscription('premium')) {
-            $subscription = $user->subscription('premium');
-            $subscription->cancel();
-        }
-
-        return redirect()->back()->with('warning', 'Your subscription account has been cancelled.');
+        return view('webapp.account.profile');
     }
 
     /**
@@ -150,9 +186,9 @@ class SubscriptionController extends Controller
     /**
      * @return View
      */
-    public function creditCard(): View
+    public function subscribed(): View
     {
-        return view('webapp.account.card');
+        return view('webapp.account.subscription');
     }
 
     /**
@@ -168,42 +204,6 @@ class SubscriptionController extends Controller
         $user->updateCard($ccToken);
 
         return redirect()->back()->with('success', 'Credit card updated successfully.');
-    }
-
-    /**
-     * @param $invoiceId
-     * @return array
-     */
-    public function pdfDownload($invoiceId): array
-    {
-        $user = Auth::user();
-
-        $subscriptionName = ucfirst($user->subscriptions->first()->name);
-
-        return $user->downloadInvoice($invoiceId, [
-            'vendor' => 'Music Teachers Aid',
-            'product' => $subscriptionName
-        ]);
-    }
-
-    /**
-     * @return View
-     */
-    public function invoices(): View
-    {
-        $user = Auth::user();
-
-        $invoices = $user->invoices();
-
-        return view('webapp.account.invoices', compact('invoices'));
-    }
-
-    /**
-     * @return View
-     */
-    public function profile(): View
-    {
-        return view('webapp.account.profile');
     }
 
     /**
