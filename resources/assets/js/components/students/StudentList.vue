@@ -53,7 +53,6 @@ export default {
 
     methods: {
         hasOneLesson: function (row) {
-            console.log(row.has_one_future_lesson);
             return row.has_one_future_lesson !== null && row.status === 1;
         },
 
