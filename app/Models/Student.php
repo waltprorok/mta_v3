@@ -102,29 +102,21 @@ class Student extends Model
     }
 
     /**
-     * @param $query
-     * @return mixed
-     */
-    public function scopeFirstNameAsc($query)
-    {
-        return $query->orderBy('first_name', 'asc');
-    }
-
-    /**
-     * @return BelongsTo
-     */
-    public function teacher(): BelongsTo
-    {
-        return $this->belongsTo(Teacher::class);
-    }
-
-    /**
      * @param $notification
      * @return string
      */
     public function routeNotificationForNexmo($notification): string
     {
         return '+1' . $this->phone;
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeFirstNameAsc($query)
+    {
+        return $query->orderBy('first_name', 'asc');
     }
 
     public function studentTeacher(): HasOne
@@ -135,5 +127,13 @@ class Student extends Model
     public function studentUsers(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function teacher(): BelongsTo
+    {
+        return $this->belongsTo(Teacher::class);
     }
 }
