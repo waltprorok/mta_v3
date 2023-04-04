@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Mail\SubscribedMail;
 use App\Models\Plan;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response;
 
 class SubscriptionController extends Controller
 {
@@ -20,6 +22,7 @@ class SubscriptionController extends Controller
      */
     public function cancel(): RedirectResponse
     {
+        /** @var User $user */
         $user = Auth::user();
 
         if ($user->subscription('premium')) {
@@ -35,7 +38,10 @@ class SubscriptionController extends Controller
      */
     public function changePlan(): RedirectResponse
     {
+        /** @var Plan $plans */
         $plans = Plan::all();
+
+        /** @var User $user */
         $user = Auth::user();
 
         foreach ($plans as $plan) {
@@ -97,6 +103,7 @@ class SubscriptionController extends Controller
      */
     public function index(): View
     {
+        /** @var User $user */
         $user = Auth::user();
 
         if ($user->subscriptions()->first() !== null) {
@@ -112,6 +119,7 @@ class SubscriptionController extends Controller
      */
     public function invoices(): View
     {
+        /** @var User $user */
         $user = Auth::user();
 
         $invoices = $user->invoices();
@@ -124,7 +132,10 @@ class SubscriptionController extends Controller
      */
     public function listPlanChange(): View
     {
+        /** @var Plan $plans */
         $plans = Plan::all();
+
+        /** @var User $user */
         $user = Auth::user();
 
         foreach ($plans as $plan) {
@@ -147,10 +158,11 @@ class SubscriptionController extends Controller
 
     /**
      * @param $invoiceId
-     * @return array
+     * @return Response
      */
-    public function pdfDownload($invoiceId): array
+    public function pdfDownload($invoiceId): Response
     {
+        /** @var User $user */
         $user = Auth::user();
 
         $subscriptionName = ucfirst($user->subscriptions->first()->name);
@@ -174,6 +186,7 @@ class SubscriptionController extends Controller
      */
     public function resume(): RedirectResponse
     {
+        /** @var User $user */
         $user = Auth::user();
 
         $subscription = $user->subscription('premium');
@@ -197,6 +210,7 @@ class SubscriptionController extends Controller
      */
     public function updateCreditCard(Request $request): RedirectResponse
     {
+        /** @var User $user */
         $user = Auth::user();
 
         $ccToken = $request->input('stripeToken');
@@ -218,13 +232,14 @@ class SubscriptionController extends Controller
             'email' => 'required',
         ]);
 
+        /** @var User $user */
         $user = Auth::user();
         $user->first_name = $request->get('first_name');
         $user->last_name = $request->get('last_name');
         $user->email = $request->get('email');
         $user->save();
 
-        if ($request->get('current_password') != "") {
+        if ($request->get('current_password') !== null) {
             if (! (Hash::check($request->get('current_password'), Auth::user()->password))) {
                 return redirect()->back()->with('error', 'Your current password does not match with the new password you provided. Please try again.');
             }
