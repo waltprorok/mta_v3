@@ -83,7 +83,7 @@ class User extends Authenticatable
         return Auth::user()->getTeacherPaymentRate;
     }
 
-    public function getFullNameAttribute()
+    public function getFullNameAttribute(): string
     {
         return "{$this->first_name} {$this->last_name}";
     }
@@ -180,7 +180,6 @@ class User extends Authenticatable
     {
         $lessonsInMonth = self::lessonsThisMonth();
         $billingRate = self::getBillingRates();
-
         // TODO improve this logic there can be more than one rate
         // Is Rate (lesson, hourly, weekly, monthly, yearly)?
         // Get lessons for the month
@@ -189,7 +188,10 @@ class User extends Authenticatable
         // ** add option during lesson schedule
         // Break down the rate vs lesson
         foreach ($billingRate as $rate) {
-            $monthlyAmount = ($rate->amount * $lessonsInMonth);
+            if ($rate->type == 'lesson') {
+                $monthlyAmount = ($rate->amount * $lessonsInMonth);
+                break;
+            }
         }
 
         return $monthlyAmount ?? 0;
