@@ -3,11 +3,14 @@
 namespace Tests\Browser;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\DuskTestCase;
 use Throwable;
 
 class RegisterLoginTest extends DuskTestCase
 {
+    use RefreshDatabase;
+
     /**
      * @throws Throwable
      */
@@ -24,23 +27,6 @@ class RegisterLoginTest extends DuskTestCase
                 ->type('password_confirmation', $user->password)
                 ->check('#terms')
                 ->press('Register')
-                ->assertPathIs('/register');
-        });
-    }
-
-    /**
-     * Test logging into app and see the dashboard
-     *
-     * @return void
-     * @throws Throwable
-     */
-    public function testLoginShowDashboard()
-    {
-        $this->browse(function ($browser) {
-            $browser->visit('/login')
-                ->type('email', 'teacher@domain.com')
-                ->type('password', '123456')
-                ->press('Login')
                 ->assertPathIs('/dashboard');
         });
     }

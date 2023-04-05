@@ -1,15 +1,17 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 /**
  * Purpose to call
  */
-
 class MarketingTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * @test
      * @return void
@@ -60,6 +62,8 @@ class MarketingTest extends TestCase
      */
     public function blog_scheduling_students_page_200()
     {
+        $this->seed();
+
         $response = $this->call('GET', '/blog/scheduling-students');
 
         $this->assertEquals(200, $response->getStatusCode());
