@@ -15,9 +15,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Spatie\Honeypot\ProtectAgainstSpam;
 
-Route::middleware(ProtectAgainstSpam::class)->group(function () {
+if (env('APP_ENV') == 'testing') {
     Auth::routes();
-});
+} else {
+    Route::middleware(ProtectAgainstSpam::class)->group(function () {
+        Auth::routes();
+    });
+}
 
 // Routes for marketing
 Route::get('/', 'HomeController@index')->name('home');
