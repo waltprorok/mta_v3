@@ -1,0 +1,48 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+/**
+ * Feature Tests test the way individual
+ * units work together and pass massages
+ */
+class TeacherUserLogInTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_registration_screen_can_be_rendered()
+    {
+        $response = $this->call('get', '/register');
+
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    public function test_visitor_can_able_to_login()
+    {
+        $user = factory(User::class)->create();
+
+        $hasUser = (bool)$user;
+
+        $this->assertTrue($hasUser);
+    }
+
+    public function test_new_users_can_register()
+    {
+        $this->call('post', '/register', [
+            'first_name' => 'test',
+            'last_name' => 'user',
+            'email' => 'test_user@domain.com',
+            'password' => '12345678',
+            'password_confirmation' => '12345678',
+            'terms' => 1,
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'email' => 'test_user@domain.com',
+        ]);
+    }
+}

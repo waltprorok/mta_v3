@@ -12,136 +12,88 @@ class MarketingTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @test
-     * @return void
-     */
-    public function home_page_200()
+    public function test_home_page_200()
     {
-        $response = $this->call('GET', '/');
+        $response = $this->call('get', '/');
 
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    /**
-     * @test
-     * @return void
-     */
-    public function faq_page_200()
+    public function test_faq_page_200()
     {
-        $response = $this->call('GET', '/faq');
+        $response = $this->call('get', '/faq');
 
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    /**
-     * @test
-     * @return void
-     */
-    public function contact_page_200()
+    public function test_contact_page_200()
     {
-        $response = $this->call('GET', '/contact');
+        $response = $this->call('get', '/contact');
 
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    /**
-     * @test
-     * @return void
-     */
-    public function blog_page_200()
+    public function test_blog_page_200()
     {
-        $response = $this->call('GET', '/blog');
+        $response = $this->call('get', '/blog');
 
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    /**
-     * @test
-     * @return void
-     */
-    public function blog_scheduling_students_page_200()
+    public function test_blog_scheduling_students_page_200()
     {
         $this->seed();
 
-        $response = $this->call('GET', '/blog/scheduling-students');
+        $response = $this->call('get', '/blog/scheduling-students');
 
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    /**
-     * @test
-     * @return void
-     */
-    public function pricing_page_200()
+    public function test_pricing_page_200()
     {
-        $response = $this->call('GET', '/pricing');
+        $response = $this->call('get', '/pricing');
 
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    /**
-     * @test
-     * @return void
-     */
-    public function login_page_200()
+    public function test_login_page_200()
     {
-        $response = $this->call('GET', '/login');
+        $response = $this->call('get', '/login');
 
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    /**
-     * @test
-     * @return void
-     */
-    public function register_page_200()
+    public function test_register_page_200()
     {
-        $response = $this->call('GET', '/register');
+        $response = $this->call('get', '/register');
 
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    /**
-     * @test
-     * @return void
-     */
-    public function terms_page_200()
+    public function test_terms_page_200()
     {
-        $response = $this->call('GET', '/terms');
+        $response = $this->call('get', '/terms');
 
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    /**
-     * @test
-     * @return void
-     */
-    public function privacy_page_200()
+    public function test_privacy_page_200()
     {
-        $response = $this->call('GET', '/privacy');
+        $response = $this->call('get', '/privacy');
 
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    /**
-     * @test
-     * @return void
-     */
-    public function password_reset_page_200()
+    public function test_password_reset_page_200()
     {
-        $response = $this->call('GET', '/password/reset');
+        $response = $this->call('get', '/password/reset');
 
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    /**
-     * @test
-     * @return void
-     */
-    public function dashboard_page_200()
+    public function test_dashboard_page_200()
     {
-        $response = $this->call('GET', '/dashboard');
+        $response = $this->call('get', '/dashboard');
 
         $this->assertEquals(302, $response->getStatusCode());
     }
