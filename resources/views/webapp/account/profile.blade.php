@@ -101,8 +101,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('new_password_confirmation') ? 'has-error' : '' }}">
-                                        <label for="new_password_confirmation" class="control-label">Confirm New
-                                            Password</label>
+                                        <label for="new_password_confirmation" class="control-label">Confirm New Password</label>
                                         <input name="new_password_confirmation" type="password" class="form-control">
                                         @if ($errors->has('new_password_confirmation'))
                                             <span class="help-block">

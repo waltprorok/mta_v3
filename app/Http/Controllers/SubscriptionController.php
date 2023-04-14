@@ -229,7 +229,7 @@ class SubscriptionController extends Controller
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
         ]);
 
         /** @var User $user */
@@ -250,7 +250,7 @@ class SubscriptionController extends Controller
 
             $request->validate([
                 'current_password' => 'required',
-                'new_password' => 'required|string|min:6|confirmed',
+                'new_password' => 'required|string|min:8|confirmed',
             ]);
 
             $user->password = bcrypt($request->get('new_password'));

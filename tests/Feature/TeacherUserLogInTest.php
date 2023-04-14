@@ -14,14 +14,21 @@ class TeacherUserLogInTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_registration_screen_can_be_rendered()
+    public function test_register_page_200()
     {
         $response = $this->call('get', '/register');
 
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function test_visitor_can_able_to_login()
+    public function test_login_page_200()
+    {
+        $response = $this->call('get', '/login');
+
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    public function test_visitor_is_able_to_login()
     {
         $user = factory(User::class)->create();
 
@@ -44,5 +51,22 @@ class TeacherUserLogInTest extends TestCase
         $this->assertDatabaseHas('users', [
             'email' => 'test_user@domain.com',
         ]);
+    }
+
+    public function test_unauthenticated_user_cannot_access_dashboard()
+    {
+        $response = $this->get('/dashboard');
+
+        $this->assertEquals(302, $response->getStatusCode());
+
+    }
+
+    public function test_authenticated_teacher_user_can_access_dashboard()
+    {
+        $user = factory(User::class)->create(['teacher' => 1]);
+
+        $response = $this->actingAs($user)->get('/dashboard');
+
+        $this->assertEquals(200, $response->getStatusCode());
     }
 }

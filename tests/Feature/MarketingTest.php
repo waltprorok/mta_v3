@@ -56,13 +56,6 @@ class MarketingTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function test_login_page_200()
-    {
-        $response = $this->call('get', '/login');
-
-        $this->assertEquals(200, $response->getStatusCode());
-    }
-
     public function test_register_page_200()
     {
         $response = $this->call('get', '/register');
