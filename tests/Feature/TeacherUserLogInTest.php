@@ -71,13 +71,4 @@ class TeacherUserLogInTest extends TestCase
 
         $response->assertStatus(200);
     }
-
-    /**
-     * @return void
-     */
-    public function test_this_thing()
-    {
-        $response = $this->get('/');
-        $response->assertStatus(200);
-    }
 }
