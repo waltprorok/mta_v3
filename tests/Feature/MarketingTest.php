@@ -14,80 +14,80 @@ class MarketingTest extends TestCase
 
     public function test_home_page_200()
     {
-        $response = $this->call('get', '/');
+        $response = $this->get('/');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $response->assertStatus(200);
     }
 
     public function test_faq_page_200()
     {
-        $response = $this->call('get', '/faq');
+        $response = $this->get('/faq');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $response->assertStatus(200);
     }
 
     public function test_contact_page_200()
     {
-        $response = $this->call('get', '/contact');
+        $response = $this->get('/contact');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $response->assertStatus(200);
     }
 
     public function test_blog_page_200()
     {
-        $response = $this->call('get', '/blog');
+        $response = $this->get('/blog');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $response->assertStatus(200);
     }
 
     public function test_blog_scheduling_students_page_200()
     {
         $this->seed();
 
-        $response = $this->call('get', '/blog/scheduling-students');
+        $response = $this->get('/blog/scheduling-students');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $response->assertStatus(200);
     }
 
     public function test_pricing_page_200()
     {
-        $response = $this->call('get', '/pricing');
+        $response = $this->get('/pricing');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $response->assertStatus(200);
     }
 
     public function test_register_page_200()
     {
-        $response = $this->call('get', '/register');
+        $response = $this->get('/register');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $response->assertStatus(200);
     }
 
     public function test_terms_page_200()
     {
-        $response = $this->call('get', '/terms');
+        $response = $this->get('/terms');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $response->assertStatus(200);
     }
 
     public function test_privacy_page_200()
     {
-        $response = $this->call('get', '/privacy');
+        $response = $this->get('/privacy');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $response->assertStatus(200);
     }
 
     public function test_password_reset_page_200()
     {
-        $response = $this->call('get', '/password/reset');
+        $response = $this->get('/password/reset');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $response->assertStatus(200);
     }
 
     public function test_dashboard_page_200()
     {
-        $response = $this->call('get', '/dashboard');
+        $response = $this->get('/dashboard');
 
-        $this->assertEquals(302, $response->getStatusCode());
+        $response->assertStatus(302);
     }
 }
