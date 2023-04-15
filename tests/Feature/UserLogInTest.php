@@ -24,9 +24,9 @@ class UserLogInTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_new_user_has_registered()
+    public function test_new_teacher_user_has_registered()
     {
-        $this->call('post', '/register', [
+        $this->post('/register', [
             'first_name' => 'test',
             'last_name' => 'user',
             'email' => 'teacher_user@domain.com',
@@ -34,7 +34,7 @@ class UserLogInTest extends TestCase
             'password' => '12345678',
             'password_confirmation' => '12345678',
             'terms' => 1,
-        ]);
+        ])->assertStatus(302);
 
         $this->assertDatabaseHas('users', [
             'email' => 'teacher_user@domain.com',
