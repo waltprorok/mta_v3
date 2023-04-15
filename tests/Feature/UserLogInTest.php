@@ -92,4 +92,13 @@ class UserLogInTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_authenticated_admin_user_can_access_admin_blog()
+    {
+        $user = factory(User::class)->create(['admin' => 1]);
+
+        $response = $this->actingAs($user)->get('/admin/blog');
+
+        $response->assertStatus(200);
+    }
 }
