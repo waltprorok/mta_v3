@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class TeacherUserLogInTest extends TestCase
+class UserLogInTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -71,6 +71,24 @@ class TeacherUserLogInTest extends TestCase
         $user = factory(User::class)->create(['teacher' => 1]);
 
         $response = $this->actingAs($user)->get('/dashboard');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_authenticated_student_user_can_access_calendar_student()
+    {
+        $user = factory(User::class)->create(['student' => 1]);
+
+        $response = $this->actingAs($user)->get('/calendar/student');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_authenticated_parent_user_can_access_household()
+    {
+        $user = factory(User::class)->create(['parent' => 1]);
+
+        $response = $this->actingAs($user)->get('/household');
 
         $response->assertStatus(200);
     }
