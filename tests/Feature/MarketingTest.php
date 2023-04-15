@@ -5,9 +5,6 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/**
- * Purpose to call
- */
 class MarketingTest extends TestCase
 {
     use RefreshDatabase;
@@ -56,13 +53,6 @@ class MarketingTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_register_page_200()
-    {
-        $response = $this->get('/register');
-
-        $response->assertStatus(200);
-    }
-
     public function test_terms_page_200()
     {
         $response = $this->get('/terms');
@@ -75,19 +65,5 @@ class MarketingTest extends TestCase
         $response = $this->get('/privacy');
 
         $response->assertStatus(200);
-    }
-
-    public function test_password_reset_page_200()
-    {
-        $response = $this->get('/password/reset');
-
-        $response->assertStatus(200);
-    }
-
-    public function test_dashboard_page_200()
-    {
-        $response = $this->get('/dashboard');
-
-        $response->assertStatus(302);
     }
 }

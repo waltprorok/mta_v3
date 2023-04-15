@@ -6,13 +6,16 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/**
- * Feature Tests test the way individual
- * units work together and pass massages
- */
 class TeacherUserLogInTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function test_password_reset_page_200()
+    {
+        $response = $this->get('/password/reset');
+
+        $response->assertStatus(200);
+    }
 
     public function test_register_page_200()
     {
@@ -21,7 +24,7 @@ class TeacherUserLogInTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_new_users_can_register()
+    public function test_new_user_has_registered()
     {
         $this->call('post', '/register', [
             'first_name' => 'test',
