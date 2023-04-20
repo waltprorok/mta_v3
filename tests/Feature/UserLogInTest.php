@@ -36,13 +36,25 @@ class UserLogInTest extends TestCase
             'terms' => 1,
         ])->assertStatus(302);
 
-        $this->assertAuthenticated();
-
         $response->assertRedirect('/dashboard');
+
+        $this->assertAuthenticated();
 
         $this->assertDatabaseHas('users', [
             'email' => 'teacher_user@domain.com',
         ]);
+    }
+
+    public function test_users_can_not_authenticate_with_invalid_password()
+    {
+        $user = factory(User::class)->create();
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'wrong_password',
+        ]);
+
+        $this->assertGuest();
     }
 
     public function test_login_page_200()
