@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Mail\WelcomeEmail;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class UserLogInTest extends TestCase
@@ -26,6 +28,8 @@ class UserLogInTest extends TestCase
 
     public function test_new_teacher_user_has_registered()
     {
+        Mail::fake();
+
         $response = $this->post('/register', [
             'first_name' => 'test',
             'last_name' => 'user',
@@ -43,6 +47,8 @@ class UserLogInTest extends TestCase
         $this->assertDatabaseHas('users', [
             'email' => 'teacher_user@domain.com',
         ]);
+
+        Mail::assertSent(WelcomeEmail::class, 1);
     }
 
     public function test_users_can_not_authenticate_with_invalid_password()
