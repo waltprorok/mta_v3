@@ -30,13 +30,15 @@ class UserLogInTest extends TestCase
     {
         Mail::fake();
 
+        $user = factory(User::class)->make();
+
         $response = $this->post('/register', [
-            'first_name' => 'test',
-            'last_name' => 'user',
-            'email' => 'teacher_user@domain.com',
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'email' => $user->email,
             'teacher' => true,
-            'password' => '12345678',
-            'password_confirmation' => '12345678',
+            'password' => $user->password,
+            'password_confirmation' => $user->password,
             'terms' => 1,
         ])->assertStatus(302);
 
@@ -45,8 +47,12 @@ class UserLogInTest extends TestCase
         $this->assertAuthenticated();
 
         $this->assertDatabaseHas('users', [
-            'email' => 'teacher_user@domain.com',
+            'email' => $user->email,
         ]);
+
+        Mail::assertSent(WelcomeEmail::class, function ($mail) use ($user) {
+            return $mail->hasTo($user->email);
+        });
 
         Mail::assertSent(WelcomeEmail::class, 1);
     }
