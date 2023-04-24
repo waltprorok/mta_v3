@@ -12,6 +12,12 @@ class UserLogInTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+        Mail::fake();
+    }
+
     public function test_password_reset_page_200()
     {
         $response = $this->get('/password/reset');
@@ -28,8 +34,6 @@ class UserLogInTest extends TestCase
 
     public function test_new_teacher_user_has_registered()
     {
-        Mail::fake();
-
         $user = factory(User::class)->make();
 
         $response = $this->post('/register', [
