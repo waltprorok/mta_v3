@@ -37,8 +37,13 @@ class ClearLogFile extends Command
      */
     public function handle()
     {
-        exec('truncate -s 0 ' . storage_path('logs/laravel.log')); // empties laravel log
-        exec('rm ' . storage_path('logs/laravel-*.log')); // remove all logs with a date
+        $result = glob(base_path() . '/storage/logs/*.log');
+
+        if (count($result)) {
+            exec('truncate -s 0 ' . storage_path('logs/laravel.log')); // empties laravel log
+            exec('rm ' . storage_path('logs/laravel-*.log')); // remove all logs with a date
+        }
+        
         $this->info('Logs have been cleared');
 
         return true;
