@@ -40,12 +40,6 @@ return [
             'ignore_exceptions' => false,
         ],
 
-//        'single' => [
-//            'driver' => 'single',
-//            'path' => storage_path('logs/laravel.log'),
-//            'level' => 'debug',
-//        ],
-
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
