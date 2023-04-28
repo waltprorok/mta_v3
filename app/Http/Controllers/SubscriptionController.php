@@ -4,52 +4,75 @@ namespace App\Http\Controllers;
 
 use App\Mail\SubscribedMail;
 use App\Models\Plan;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response;
 
 class SubscriptionController extends Controller
 {
     protected $receiptLimit = 12;
 
     /**
-     * @return View
+     * @return RedirectResponse
      */
-    public function index(): View
+    public function cancel(): RedirectResponse
     {
+        /** @var User $user */
         $user = Auth::user();
 
-        if ($user->subscriptions()->first() !== null) {
-            return view('webapp.account.subscription');
-        } else {
-            $plans = Plan::all();
-            return view('webapp.account.index', compact('plans'));
+        if ($user->subscription('premium')) {
+            $subscription = $user->subscription('premium');
+            $subscription->cancel();
         }
+
+        return redirect()->back()->with('warning', 'Your subscription account has been cancelled.');
     }
 
     /**
-     * @return View
+     * @return RedirectResponse
      */
-    public function subscribed(): View
+    public function changePlan(): RedirectResponse
     {
-        return view('webapp.account.subscription');
+        /** @var Plan $plans */
+        $plans = Plan::all();
+
+        /** @var User $user */
+        $user = Auth::user();
+
+        foreach ($plans as $plan) {
+            if ($plan->stripe_plan == $user->subscription('premium')->stripe_plan) {
+                if ($plan->id == 1) {
+                    $newPlan = Plan::findOrFail(2);
+                    $user->subscription('premium')->swap($newPlan->stripe_plan);
+                    break;
+                } elseif ($plan->id == 2) {
+                    $newPlan = Plan::findOrFail(1);
+                    $user->subscription('premium')->swap($newPlan->stripe_plan);
+                    break;
+                }
+            }
+        }
+
+        return redirect()->back()->with('success', 'Your subscription plan has been updated.');
     }
 
     /**
      * @param Request $request
-     * @param Plan $plan
      * @return RedirectResponse
      */
-    public function create(Request $request, Plan $plan): RedirectResponse
+    public function create(Request $request): RedirectResponse
     {
         $teacher = Auth::user()->getTeacher()->first();
 
-        $plan = Plan::findOrFail($request->get('plan'));
+        $plan = Plan::findOrFail($request->get('plan_id'));
 
-        $request->user()->newSubscription($plan->name, $plan->stripe_plan)
+        $request->user()
+            ->newSubscription($plan->name, $plan->stripe_plan)
             ->create($request->stripeToken, [
                 'name' => $teacher->first_name . ' ' . $teacher->last_name,
                 'address' => [
@@ -70,9 +93,49 @@ class SubscriptionController extends Controller
     /**
      * @return View
      */
+    public function creditCard(): View
+    {
+        return view('webapp.account.card');
+    }
+
+    /**
+     * @return View
+     */
+    public function index(): View
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        if ($user->subscriptions()->first() !== null) {
+            return view('webapp.account.subscription');
+        } else {
+            $plans = Plan::all();
+            return view('webapp.account.index', compact('plans'));
+        }
+    }
+
+    /**
+     * @return View
+     */
+    public function invoices(): View
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        $invoices = $user->invoices();
+
+        return view('webapp.account.invoices', compact('invoices'));
+    }
+
+    /**
+     * @return View
+     */
     public function listPlanChange(): View
     {
+        /** @var Plan $plans */
         $plans = Plan::all();
+
+        /** @var User $user */
         $user = Auth::user();
 
         foreach ($plans as $plan) {
@@ -94,88 +157,12 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * @return RedirectResponse
-     */
-    public function changePlan(): RedirectResponse
-    {
-        $plans = Plan::all();
-        $user = Auth::user();
-
-        foreach ($plans as $plan) {
-            if ($plan->stripe_plan == $user->subscription('premium')->stripe_plan) {
-                if ($plan->id == 1) {
-                    $newPlan = Plan::findOrFail(2);
-                    $user->subscription('premium')->swap($newPlan->stripe_plan);
-                    break;
-                } elseif ($plan->id == 2) {
-                    $newPlan = Plan::findOrFail(1);
-                    $user->subscription('premium')->swap($newPlan->stripe_plan);
-                    break;
-                }
-            }
-        }
-
-        return redirect()->back()->with('success', 'Your subscription plan has been updated.');
-    }
-
-    /**
-     * @return RedirectResponse
-     */
-    public function cancel(): RedirectResponse
-    {
-        $user = Auth::user();
-
-        if ($user->subscription('premium')) {
-            $subscription = $user->subscription('premium');
-            $subscription->cancel();
-        }
-
-        return redirect()->back()->with('warning', 'Your subscription account has been cancelled.');
-    }
-
-    /**
-     * @return RedirectResponse
-     */
-    public function resume(): RedirectResponse
-    {
-        $user = Auth::user();
-
-        $subscription = $user->subscription('premium');
-
-        $subscription->resume();
-
-        return redirect()->back()->with('success', 'Your subscription account has been reinstated.');
-    }
-
-    /**
-     * @return View
-     */
-    public function creditCard(): View
-    {
-        return view('webapp.account.card');
-    }
-
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
-    public function updateCreditCard(Request $request): RedirectResponse
-    {
-        $user = Auth::user();
-
-        $ccToken = $request->input('stripeToken');
-
-        $user->updateCard($ccToken);
-
-        return redirect()->back()->with('success', 'Credit card updated successfully.');
-    }
-
-    /**
      * @param $invoiceId
-     * @return array
+     * @return Response
      */
-    public function pdfDownload($invoiceId): array
+    public function pdfDownload($invoiceId): Response
     {
+        /** @var User $user */
         $user = Auth::user();
 
         $subscriptionName = ucfirst($user->subscriptions->first()->name);
@@ -189,21 +176,48 @@ class SubscriptionController extends Controller
     /**
      * @return View
      */
-    public function invoices(): View
+    public function profile(): View
     {
+        return view('webapp.account.profile');
+    }
+
+    /**
+     * @return RedirectResponse
+     */
+    public function resume(): RedirectResponse
+    {
+        /** @var User $user */
         $user = Auth::user();
 
-        $invoices = $user->invoices();
+        $subscription = $user->subscription('premium');
 
-        return view('webapp.account.invoices', compact('invoices'));
+        $subscription->resume();
+
+        return redirect()->back()->with('success', 'Your subscription account has been reinstated.');
     }
 
     /**
      * @return View
      */
-    public function profile(): View
+    public function subscribed(): View
     {
-        return view('webapp.account.profile');
+        return view('webapp.account.subscription');
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function updateCreditCard(Request $request): RedirectResponse
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        $ccToken = $request->input('stripeToken');
+
+        $user->updateCard($ccToken);
+
+        return redirect()->back()->with('success', 'Credit card updated successfully.');
     }
 
     /**
@@ -215,16 +229,17 @@ class SubscriptionController extends Controller
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
         ]);
 
+        /** @var User $user */
         $user = Auth::user();
         $user->first_name = $request->get('first_name');
         $user->last_name = $request->get('last_name');
         $user->email = $request->get('email');
         $user->save();
 
-        if ($request->get('current_password') != "") {
+        if ($request->get('current_password') !== null) {
             if (! (Hash::check($request->get('current_password'), Auth::user()->password))) {
                 return redirect()->back()->with('error', 'Your current password does not match with the new password you provided. Please try again.');
             }
@@ -235,7 +250,7 @@ class SubscriptionController extends Controller
 
             $request->validate([
                 'current_password' => 'required',
-                'new_password' => 'required|string|min:6|confirmed',
+                'new_password' => 'required|string|min:8|confirmed',
             ]);
 
             $user->password = bcrypt($request->get('new_password'));

@@ -41,6 +41,7 @@
                                                     <input id="description" v-model="rate.description" placeholder="optional" type="text" class="form-control">
                                                 </div>
                                             </div>
+                                            <small v-show="edit">* Changing a rate will effect outstanding lessons.</small>
                                         </div>
                                     </div>
 
@@ -63,7 +64,7 @@
 
     <div class="card-header bg-light">Billing Rates</div>
     <!-- vue js data table -->
-    <div class="form-control">
+    <div class="form-control" v-cloak>
         <div class="form-group pull-left">
             <div class="form-group">
                 <select id="single-select" v-model="per_page" class="form-control">
@@ -86,7 +87,7 @@
                     <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
                     <td class="text-nowrap">
                         <button @click="showRate(row.id, false)" class="btn btn-outline-primary btn-sm" title="edit"><i class="fa fa-edit"></i></button>
-                        <button @click="showModalDelete(row.id)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        <button @click="showModalDelete(row.id)" v-show="showDeleteIcon(row)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
                     </td>
                 </tr>
             </template>

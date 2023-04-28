@@ -13,3 +13,4 @@ yarn-error.log
 /database/database.sqlite
 composer.lock
 mta.code-workspace
+.phpunit.result.cache

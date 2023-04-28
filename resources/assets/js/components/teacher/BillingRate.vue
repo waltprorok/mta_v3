@@ -73,6 +73,10 @@ export default {
             self.clearRateData();
         },
 
+        showDeleteIcon: function(row) {
+            return row.billing_rate === null;
+        },
+
         showModalDelete: function (id) {
             let self = this;
             self.showModal = true;
@@ -92,6 +96,7 @@ export default {
             self.rate.type = null;
             self.rate.amount = null;
             self.rate.description = null;
+            self.edit = false;
         },
 
         getErrorMessage: function (error) {

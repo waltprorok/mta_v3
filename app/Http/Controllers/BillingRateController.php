@@ -17,13 +17,15 @@ class BillingRateController extends Controller
      */
     public function index(): JsonResponse
     {
+        $billingRate = collect();
+
         try {
-            $paymentRate = BillingRate::where('teacher_id', Auth::id())->get();
+            $billingRate = BillingRate::where('teacher_id', Auth::id())->with('billingRate')->get();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }
 
-        return response()->json($paymentRate, Response::HTTP_OK);
+        return response()->json($billingRate, Response::HTTP_OK);
     }
 
     /**

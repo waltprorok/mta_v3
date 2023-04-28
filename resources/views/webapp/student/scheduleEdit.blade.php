@@ -173,6 +173,28 @@
                                         @endif
                                     </div>
                                 </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        @if(count($billingRates) < 1)
+                                            <label for="billing_rate" class="control-label">Go To Settings</label>
+                                            <a href="{{ route('teacher.billing') }}" id="billing_rate">
+                                                <button type="button" class="btn btn-default">
+                                                    <i class="fa fa-money"></i> &nbsp; Click here for settings and add a Billing Rate
+                                                </button>
+                                            </a>
+                                        @else
+                                            <label for="billing_rate" class="control-label">Billing Rate</label>
+                                            <select class="form-control" id="billing_rate" name="billing_rate_id">
+                                                @if($lesson->billingRate)
+                                                    <option value="{{ $lesson->billingRate->id }}">${{ number_format($lesson->billingRate->amount, 2) }} | {{ ucfirst($lesson->billingRate->type) }}</option>
+                                                @endif
+                                                @foreach($billingRates as $billingRate)
+                                                    <option value="{{ $billingRate->id }}">${{ $billingRate->amount }} | {{ ucfirst($billingRate->type) }}</option>
+                                                @endforeach
+                                            </select>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                             <input id="id" type="hidden" class="form-control" name="id" value="{{ $lesson->id }}">
                             <input id="student_id" type="hidden" class="form-control" name="student_id" value="{{ $lesson->student_id }}">

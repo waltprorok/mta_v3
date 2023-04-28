@@ -62,7 +62,7 @@ class BlogController extends Controller
     {
         $blog = new Blog();
 
-        $this->commitBlogPost($blog, $request);
+        $this->saveBlogPost($blog, $request);
 
         return redirect(route('admin.blog.list'))->with('success', 'Your blog article has been saved.');
     }
@@ -96,7 +96,7 @@ class BlogController extends Controller
      */
     public function update(StoreBlogPostRequest $request, Blog $id): RedirectResponse
     {
-        $this->commitBlogPost($id, $request);
+        $this->saveBlogPost($id, $request);
 
         return back()->with('success', 'Your news article has been updated.');
     }
@@ -121,7 +121,7 @@ class BlogController extends Controller
      * @param StoreBlogPostRequest $request
      * @return void
      */
-    private function commitBlogPost($editBlog, StoreBlogPostRequest $request): void
+    private function saveBlogPost($editBlog, StoreBlogPostRequest $request): void
     {
         $this->setBlogPost($editBlog, $request);
 

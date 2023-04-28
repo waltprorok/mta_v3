@@ -80,7 +80,6 @@ class Blog extends Model
         return is_null($this->released_on) ? '' : date('h:i A', strtotime($this->released_on));
     }
 
-
     /**
      * @return string
      */

@@ -56,7 +56,7 @@ class LessonController extends Controller
 
     public function list(): AnonymousResourceCollection
     {
-        return Auth::user()->admin ? $this->getAllLessonsForAdmin() : $this->getLessonsForTeacherId();
+        return Auth::user()->isAdmin() ? $this->getAllLessonsForAdmin() : $this->getLessonsForTeacherId();
     }
 
     /**

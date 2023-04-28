@@ -12,18 +12,35 @@ class Lesson extends Model
     use SoftDeletes;
 
     protected $casts = [
+        'billing_rate_id' => 'integer',
         'complete' => 'boolean',
         'student_id' => 'integer',
     ];
 
     protected $fillable = [
+        'billing_rate_id',
         'color',
         'complete',
-        'teacher_id',
+        'end_date',
+        'interval',
         'title',
         'start_date',
-        'end_date'
+        'student_id',
+        'teacher_id',
     ];
+
+    public function billingRate(): BelongsTo
+    {
+        return $this->belongsTo(BillingRate::class, 'billing_rate_id');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function lessonTeacherId(): HasOne
+    {
+        return $this->hasOne(Teacher::class, 'teacher_id', 'teacher_id');
+    }
 
     /**
      * @return BelongsTo
@@ -31,10 +48,5 @@ class Lesson extends Model
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
-    }
-
-    public function lessonTeacherId(): HasOne
-    {
-        return $this->hasOne(Teacher::class, 'teacher_id', 'teacher_id');
     }
 }

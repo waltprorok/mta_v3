@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,16 +46,17 @@ class LoginController extends Controller
      */
     public function redirectTo(): string
     {
+        /** @var User $user */
         $user = Auth::user();
 
         switch (true) {
-            case $user->admin;
+            case $user->isAdmin();
                 return '/admin/blog';
-            case $user->teacher;
+            case $user->isTeacher();
                 return '/dashboard';
-            case $user->student;
+            case $user->isStudent();
                 return '/calendar/student';
-            case $user->parent;
+            case $user->isParent();
                 return '/household';
             default:
                 return 'dashboard';

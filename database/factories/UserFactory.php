@@ -24,9 +24,12 @@ $factory->define(User::class, function (Faker $faker) {
         'first_name' => $faker->firstName(),
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
-        'student' => true,
-        'terms' => true,
         'password' => $password ?: $password = bcrypt('secret'),
+        'admin' => false,
+        'student' => false,
+        'teacher' => false,
+        'parent' => false,
+        'terms' => true,
         'remember_token' => str_random(10),
     ];
 });

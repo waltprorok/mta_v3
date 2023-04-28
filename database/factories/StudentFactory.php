@@ -18,7 +18,6 @@ use Illuminate\Database\Eloquent\Factory;
 */
 
 $factory->define(Student::class, function (Faker $faker) {
-
     return [
         'student_id' => $faker->unique()->numberBetween(8, 108),
         'teacher_id' => $faker->numberBetween(3, 4),
@@ -26,6 +25,6 @@ $factory->define(Student::class, function (Faker $faker) {
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'phone' => $faker->numerify('##########'),
-        'status' =>  $faker->numberBetween(1, 4),
+        'status' => $faker->numberBetween(1, 4),
     ];
 });

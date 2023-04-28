@@ -159,7 +159,7 @@ class UsersTableDataSeeder extends Seeder
 
         if (App::environment('local')) {
             // Create 150 student users.
-            factory(User::class, 150)->create();
+            factory(User::class, 150)->create(['student' => true]);
         }
     }
 }

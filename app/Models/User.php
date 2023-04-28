@@ -78,6 +78,16 @@ class User extends Authenticatable
         return $this->hasMany(BusinessHours::class, 'teacher_id');
     }
 
+    public static function getBillingRates()
+    {
+        return Auth::user()->getTeacherPaymentRate;
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
     /**
      * @return HasOne
      */
@@ -89,6 +99,26 @@ class User extends Authenticatable
     public function getTeacherPaymentRate(): HasMany
     {
         return $this->hasMany(BillingRate::class, 'teacher_id');
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->admin && $this->admin !== null;
+    }
+
+    public function isParent(): bool
+    {
+        return $this->parent && $this->parent !== null;
+    }
+
+    public function isStudent(): bool
+    {
+        return $this->student && $this->student !== null;
+    }
+
+    public function isTeacher(): bool
+    {
+        return $this->teacher && $this->teacher !== null;
     }
 
     /**
@@ -107,11 +137,6 @@ class User extends Authenticatable
     public static function lessonsThisMonth(): int
     {
         return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
-    }
-
-    public static function getBillingRates()
-    {
-        return Auth::user()->getTeacherPaymentRate;
     }
 
     public function messages(): HasMany
@@ -155,7 +180,6 @@ class User extends Authenticatable
     {
         $lessonsInMonth = self::lessonsThisMonth();
         $billingRate = self::getBillingRates();
-
         // TODO improve this logic there can be more than one rate
         // Is Rate (lesson, hourly, weekly, monthly, yearly)?
         // Get lessons for the month
@@ -164,7 +188,10 @@ class User extends Authenticatable
         // ** add option during lesson schedule
         // Break down the rate vs lesson
         foreach ($billingRate as $rate) {
-            $monthlyAmount = ($rate->amount * $lessonsInMonth);
+            if ($rate->type == 'lesson') {
+                $monthlyAmount = ($rate->amount * $lessonsInMonth);
+                break;
+            }
         }
 
         return $monthlyAmount ?? 0;

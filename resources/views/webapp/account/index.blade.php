@@ -20,10 +20,12 @@
                         <div class="col-md-6">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="card-element">Amount 123</label>
-                                    <select class="form-control" name="plan" id="sel1">
+                                    <label for="card-element">Amount</label>
+                                    <select class="form-control" name="plan_id" id="sel1">
                                         @foreach($plans as $plan)
-                                            <option value="{{ $plan->id }}">${{ number_format($plan->cost, 2) }} for {{ ucfirst($plan->name) }} Plan / {{ ucfirst($plan->slug) }}</option>
+                                            <option value="{{ $plan->id }}">
+                                                ${{ number_format($plan->cost, 2) }} for {{ ucfirst($plan->name) }} Plan / {{ ucfirst($plan->slug) }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
