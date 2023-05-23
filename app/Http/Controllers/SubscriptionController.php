@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserProfileRequest;
 use App\Mail\SubscribedMail;
-use App\Mail\UserPasswordUpdatedEmail;
+use App\Mail\UserPasswordUpdatedMail;
 use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -254,7 +254,7 @@ class SubscriptionController extends Controller
 
             $user->save();
 
-            Mail::to($user->email)->send(new UserPasswordUpdatedEmail($user));
+            Mail::to($user->email)->send(new UserPasswordUpdatedMail($user));
 
             return redirect()->back()->with('success', 'Password changed successfully!');
         }

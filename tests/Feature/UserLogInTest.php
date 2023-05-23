@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Mail\WelcomeEmail;
+use App\Mail\WelcomeMail;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
@@ -54,11 +54,11 @@ class UserLogInTest extends TestCase
             'email' => $user->email,
         ]);
 
-        Mail::assertSent(WelcomeEmail::class, function ($mail) use ($user) {
+        Mail::assertSent(WelcomeMail::class, function ($mail) use ($user) {
             return $mail->hasTo($user->email);
         });
 
-        Mail::assertSent(WelcomeEmail::class, 1);
+        Mail::assertSent(WelcomeMail::class, 1);
     }
 
     public function test_users_can_not_authenticate_with_invalid_password()

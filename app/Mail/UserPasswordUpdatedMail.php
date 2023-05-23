@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class UserPasswordUpdatedEmail extends Mailable
+class UserPasswordUpdatedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -27,8 +27,9 @@ class UserPasswordUpdatedEmail extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): UserPasswordUpdatedMail
     {
-        return $this->markdown('emails.user.password');
+        return $this->subject("Changes have been made to your account")
+            ->markdown('emails.user.password');
     }
 }

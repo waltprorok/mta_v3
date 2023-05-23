@@ -5,7 +5,6 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ContactForm extends Mailable
 {
@@ -34,7 +33,7 @@ class ContactForm extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): ContactForm
     {
         return $this->from($this->email, $this->name)
             ->subject($this->subject)

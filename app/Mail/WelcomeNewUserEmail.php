@@ -28,6 +28,7 @@ class WelcomeNewUserEmail extends Mailable
      */
     public function build(): WelcomeNewUserEmail
     {
-        return $this->markdown('emails.user.welcome');
+        return $this->subject('Welcome to Music Teachers Aid')
+            ->markdown('emails.user.welcome');
     }
 }

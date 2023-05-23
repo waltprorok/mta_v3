@@ -29,6 +29,7 @@ class SubscribedMail extends Mailable
      */
     public function build(): SubscribedMail
     {
-        return $this->markdown('emails.teacher.subscribed');
+        return $this->subject('You have successfully subscribed to Music Teachers Aid')
+            ->markdown('emails.teacher.subscribed');
     }
 }
