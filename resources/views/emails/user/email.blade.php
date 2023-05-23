@@ -7,13 +7,7 @@ Thank you for choosing {{ config('app.name') }}!
 
 This message is a confirmation of recent changes to your account.
 
-Your password was recently changed.
-
-If you did not change it, please reset the password to protect your account.
-
-@component('mail::button', ['url' => url('/password/reset')])
-    Reset Password
-@endcomponent
+Your email was recently changed to **{{ $user['email'] }}**
 
 @endcomponent
 

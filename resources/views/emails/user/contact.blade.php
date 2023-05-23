@@ -11,6 +11,5 @@
     Reply to this Email
 @endcomponent
 
-Thanks,<br>
 {{ config('app.name') }}
 @endcomponent

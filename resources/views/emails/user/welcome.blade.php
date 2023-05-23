@@ -5,7 +5,7 @@
 
 <p>You have been added to this service by your music teacher.</p>
 
-<p>Music Teachers Aid is a software to allows your teacher help keep better track of lessons, scheduling, and payments.</p>
+<p>{{ config('app.name') }} is a software to allows your teacher help keep better track of lessons, scheduling, and payments.</p>
 
 <p>Your registered email is <b>{{$user['email']}}</b></p>
 
