@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
-use App\Mail\WelcomeNewUserEmail;
+use App\Mail\WelcomeNewUserMail;
 use App\Models\Student;
 use App\Models\User;
 use App\Services\PhoneNumberService;
@@ -79,7 +79,7 @@ class StudentController extends Controller
                 'status' => $request->get('status'),
             ]);
 
-            Mail::to($user->email)->send(new WelcomeNewUserEmail($user));
+            Mail::to($user->email)->send(new WelcomeNewUserMail($user));
         } catch (\Exception $exception) {
             Log::info($exception->getMessage());
         }
@@ -123,7 +123,7 @@ class StudentController extends Controller
                 // create new parent student pivot record
                 $user->parentStudentPivot()->toggle($student);
 
-                Mail::to($user->email)->send(new WelcomeNewUserEmail($user));
+                Mail::to($user->email)->send(new WelcomeNewUserMail($user));
             } catch (\Exception $exception) {
                 Log::info($exception->getMessage());
             }
