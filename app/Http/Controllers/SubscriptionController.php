@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserProfileRequest;
 use App\Mail\SubscribedMail;
+use App\Mail\UserPasswordUpdatedEmail;
 use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -221,16 +223,11 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param UpdateUserProfileRequest $request
      * @return RedirectResponse
      */
-    public function updateProfile(Request $request): RedirectResponse
+    public function updateProfile(UpdateUserProfileRequest $request): RedirectResponse
     {
-        $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email',
-        ]);
 
         /** @var User $user */
         $user = Auth::user();
@@ -256,6 +253,8 @@ class SubscriptionController extends Controller
             $user->password = bcrypt($request->get('new_password'));
 
             $user->save();
+
+            Mail::to($user->email)->send(new UserPasswordUpdatedEmail($user));
 
             return redirect()->back()->with('success', 'Password changed successfully!');
         }
