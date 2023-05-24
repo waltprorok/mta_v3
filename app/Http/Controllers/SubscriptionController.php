@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserProfileRequest;
 use App\Mail\SubscribedMail;
+use App\Mail\UpdatedCreditCardMail;
 use App\Mail\UserEmailChangedMail;
 use App\Mail\UserPasswordUpdatedMail;
 use App\Models\Plan;
@@ -219,6 +220,8 @@ class SubscriptionController extends Controller
         $ccToken = $request->input('stripeToken');
 
         $user->updateCard($ccToken);
+
+        Mail::to($user->email)->send(new UpdatedCreditCardMail($user));
 
         return redirect()->back()->with('success', 'Credit card updated successfully.');
     }
