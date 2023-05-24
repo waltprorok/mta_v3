@@ -50,7 +50,6 @@ class SubscriptionTest extends TestCase
         Mail::assertSent(ResumeSubscriptionMail::class, 1);
     }
 
-
     public function test_subscribed_email()
     {
         Mail::to($this->user->email)->send(new SubscribedMail($this->user));
