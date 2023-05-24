@@ -13,9 +13,7 @@ class UserEmailChangedMail extends Mailable
     public $user;
 
     /**
-     * Create a new message instance.
-     *
-     * @return void
+     * @param $user
      */
     public function __construct($user)
     {
@@ -30,6 +28,6 @@ class UserEmailChangedMail extends Mailable
     public function build(): UserEmailChangedMail
     {
         return $this->subject('Changes have been made to your account')
-            ->markdown('emails.user.email');
+            ->markdown('emails.account.email');
     }
 }

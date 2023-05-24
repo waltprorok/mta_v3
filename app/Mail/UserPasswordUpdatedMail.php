@@ -29,7 +29,7 @@ class UserPasswordUpdatedMail extends Mailable
      */
     public function build(): UserPasswordUpdatedMail
     {
-        return $this->subject('Email change have been made to your account')
-            ->markdown('emails.user.password');
+        return $this->subject('Changes have been made to your account')
+            ->markdown('emails.account.password');
     }
 }
