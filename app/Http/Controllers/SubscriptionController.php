@@ -241,7 +241,6 @@ class SubscriptionController extends Controller
      */
     public function updateProfile(UpdateUserProfileRequest $request): RedirectResponse
     {
-
         /** @var User $user */
         $user = Auth::user();
         $user->first_name = $request->get('first_name');
