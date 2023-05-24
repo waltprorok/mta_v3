@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class UpdatedCreditCardMail extends Mailable
+class ResumeSubscriptionMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -27,9 +27,9 @@ class UpdatedCreditCardMail extends Mailable
      *
      * @return $this
      */
-    public function build(): UpdatedCreditCardMail
+    public function build(): ResumeSubscriptionMail
     {
-        return $this->subject('Your credit card on file was recently updated')
-            ->markdown('emails.account.card');
+        return $this->subject('Your subscription has resumed')
+            ->markdown('emails.account.resume');
     }
 }

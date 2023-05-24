@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserProfileRequest;
+use App\Mail\CancelledSubscriptionMail;
+use App\Mail\ChangedSubscriptionMail;
+use App\Mail\ResumeSubscriptionMail;
 use App\Mail\SubscribedMail;
 use App\Mail\UpdatedCreditCardMail;
 use App\Mail\UserEmailChangedMail;
@@ -32,6 +35,8 @@ class SubscriptionController extends Controller
         if ($user->subscription('premium')) {
             $subscription = $user->subscription('premium');
             $subscription->cancel();
+
+            Mail::to($user->email)->send(new CancelledSubscriptionMail($user));
         }
 
         return redirect()->back()->with('warning', 'Your subscription account has been cancelled.');
@@ -61,6 +66,8 @@ class SubscriptionController extends Controller
                 }
             }
         }
+
+        Mail::to($user->email)->send(new ChangedSubscriptionMail($user, $newPlan));
 
         return redirect()->back()->with('success', 'Your subscription plan has been updated.');
     }
@@ -196,6 +203,8 @@ class SubscriptionController extends Controller
         $subscription = $user->subscription('premium');
 
         $subscription->resume();
+
+        Mail::to($user->email)->send(new ResumeSubscriptionMail($user));
 
         return redirect()->back()->with('success', 'Your subscription account has been reinstated.');
     }

@@ -6,20 +6,23 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class UpdatedCreditCardMail extends Mailable
+class ChangedSubscriptionMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $user;
+
+    public $plan;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user, $plan)
     {
         $this->user = $user;
+        $this->plan = $plan;
     }
 
     /**
@@ -27,9 +30,9 @@ class UpdatedCreditCardMail extends Mailable
      *
      * @return $this
      */
-    public function build(): UpdatedCreditCardMail
+    public function build()
     {
-        return $this->subject('Your credit card on file was recently updated')
-            ->markdown('emails.account.card');
+        return $this->subject('Your subscription plan has changed')
+            ->markdown('emails.account.plan');
     }
 }
