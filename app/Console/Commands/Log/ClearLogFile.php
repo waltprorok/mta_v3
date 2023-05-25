@@ -18,7 +18,10 @@ class ClearLogFile extends Command
      *
      * @var string
      */
-    protected $description = 'Clears out Laravel logs';
+    protected $description = 'Removes daily logs and truncates Laravel log';
+
+    const LARAVEL_LOG_PATH = '/storage/logs/laravel.log';
+    const LARAVEL_DAILY_LOGS_PATH = '/storage/logs/laravel*.log';
 
     /**
      * Create a new command instance.
@@ -33,18 +36,31 @@ class ClearLogFile extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return true
      */
-    public function handle()
+    public function handle(): bool
     {
-        $result = glob(base_path() . '/storage/logs/*.log');
+        $getLogs = glob(base_path() . self::LARAVEL_DAILY_LOGS_PATH);
 
-        if (count($result)) {
-            exec('truncate -s 0 ' . storage_path('logs/laravel.log')); // empties laravel log
-            exec('rm ' . storage_path('logs/laravel-*.log')); // remove all logs with a date
+        $logs = collect($getLogs);
+
+        $bar = $this->output->createProgressBar(count($logs));
+
+        $bar->start();
+
+        foreach ($logs as $log) {
+            if ($log == base_path() . self::LARAVEL_LOG_PATH) {
+                exec('truncate -s 0 ' . $log); // empties laravel log
+            } else {
+                exec('rm ' . $log); // remove all logs with a date
+            }
+
+            $bar->advance();
         }
-        
-        $this->info('Logs have been cleared');
+
+        $bar->finish();
+
+        $this->info('');
 
         return true;
     }
