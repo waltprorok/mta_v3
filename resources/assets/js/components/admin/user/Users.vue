@@ -1,7 +1,6 @@
 <template src="./user-template.html"></template>
 
 <script>
-
 import TotalEntries from "../../TotalEntries";
 
 export default {

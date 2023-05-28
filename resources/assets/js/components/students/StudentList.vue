@@ -2,6 +2,7 @@
 
 <script>
 import TotalEntries from "../TotalEntries";
+import PhoneNumberFormat from "../PhoneNumberFormat.vue";
 
 export default {
     data: function () {
@@ -44,6 +45,7 @@ export default {
     },
 
     components: {
+        PhoneNumberFormat,
         TotalEntries
     },
 

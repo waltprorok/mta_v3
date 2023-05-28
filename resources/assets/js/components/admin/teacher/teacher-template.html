@@ -21,7 +21,9 @@
                     <td v-text="row.city"></td>
                     <td v-text="row.state"></td>
                     <td v-text="row.zip"></td>
-                    <td v-html="formatPhoneNumber(row)"></td>
+                    <td>
+                        <phone-number-format v-bind:data="row"></phone-number-format>
+                    </td>
                     <td v-text="row.email"></td>
                 </tr>
             </template>

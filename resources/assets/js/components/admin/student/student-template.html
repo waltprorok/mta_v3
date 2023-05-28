@@ -20,7 +20,9 @@
                     </td>
                     <td v-text="row.first_name"></td>
                     <td v-text="row.last_name"></td>
-                    <td v-html="formatPhoneNumber(row)"></td>
+                    <td>
+                        <phone-number-format v-bind:data="row"></phone-number-format>
+                    </td>
                     <td v-text="row.email"></td>
                     <td v-text="row.instrument"></td>
                     <td v-html="getStatus(row)"></td>

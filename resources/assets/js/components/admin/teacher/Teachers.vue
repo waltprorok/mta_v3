@@ -1,12 +1,8 @@
 <template src="./teacher-template.html"></template>
 
-<style>
-/*@import '/webapp/css/stylesheet.css';*/
-</style>
-
 <script>
-
 import TotalEntries from "../../TotalEntries";
+import PhoneNumberFormat from "../../PhoneNumberFormat";
 
 export default {
     data: function () {
@@ -47,7 +43,8 @@ export default {
     },
 
     components: {
-        TotalEntries
+        TotalEntries,
+        PhoneNumberFormat,
     },
 
     methods: {

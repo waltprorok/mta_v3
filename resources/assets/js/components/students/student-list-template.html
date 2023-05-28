@@ -118,13 +118,15 @@
                         </td>
                         <td v-text="row.first_name"></td>
                         <td v-text="row.last_name"></td>
-                        <td v-html="formatPhoneNumber(row)"></td>
+                        <td>
+                            <phone-number-format v-bind:data="row"></phone-number-format>
+                        </td>
                         <td><a :href="'mailto:' + row.email" v-text="row.email"></a></td>
                         <td v-text="row.instrument"></td>
                         <td class="text-nowrap">
                             <a :href="`/students/${row.id}/edit`" class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
                             <a :href="`/students/${row.id}/schedule`" class="btn btn-sm btn-outline-secondary" role="button" title="schedule"><i class="fa fa-calendar"></i></a>
-                            <a :href="`/students/${row.id}/profile`" class="btn btn-sm btn-outline-success" role="button" title="profile"><i class="fa fa-user"></i></a>
+                            <a :href="`/students/profile/${row.id}`" class="btn btn-sm btn-outline-success" role="button" title="profile"><i class="fa fa-user"></i></a>
                         </td>
                     </tr>
                 </template>

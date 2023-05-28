@@ -1,11 +1,8 @@
 <template src="./student-template.html"></template>
 
-<style>
-/*@import '/webapp/css/stylesheet.css';*/
-</style>
-
 <script>
 import TotalEntries from "../../TotalEntries";
+import PhoneNumberFormat from "../../PhoneNumberFormat";
 
 export default {
     data: function () {
@@ -43,20 +40,11 @@ export default {
     },
 
     components: {
-        TotalEntries
+        TotalEntries,
+        PhoneNumberFormat,
     },
 
     methods: {
-        formatPhoneNumber: function (row) {
-            if (row.phone && row.phone.length === 10) {
-                return row.phone.replace(/[^0-9]/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-            } else if (row.phone && row.phone.length === 11) {
-                return row.phone.replace(/[^0-9]/g, '').replace(/(\d{1})(\d{3})(\d{3})(\d{4})/, '$1-$2-$3-$4');
-            } else {
-                return row.phone;
-            }
-        },
-
         fetchStudentList: function () {
             axios.get('/web/student')
                 .then((response) => {
