@@ -1,4 +1,4 @@
-<template v-cloak>
+<template>
     <div class="card">
         <!-- vue js data table -->
         <div class="form-control">

@@ -1,7 +1,5 @@
 <template src="./blog-template.html"></template>
 
-<!--<style>@import '/webapp/css/stylesheet.css';</style>-->
-
 <script>
 import TotalEntries from "../../TotalEntries";
 
