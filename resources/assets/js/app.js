@@ -46,6 +46,6 @@ Vue.component('users', require('./components/admin/user/Users.vue'));
 
 
 const app = new Vue({
+    el: '#app',
     router,
-    el: '#app'
 });
