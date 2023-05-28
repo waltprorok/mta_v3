@@ -99,7 +99,8 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::prefix('students')->group(function () {
             Route::view('/', 'webapp.student.index')->name('student.index');
-            Route::get('{id}/profile', 'StudentController@index')->name('student.profile');
+            Route::get('{id}/profile', 'StudentController@index')->name('student.profile'); // TODO route name
+            Route::view('profile/{id}', 'webapp.student.profile')->name('student.profiles'); // TODO check route name
             Route::post('update', 'StudentController@update')->name('student.update');
             Route::get('{id}/edit', 'StudentController@show')->name('student.edit');
             Route::get('{id}/schedule/{day?}', 'StudentLessonController@index')->name('student.schedule');

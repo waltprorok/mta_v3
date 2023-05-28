@@ -42,13 +42,13 @@ class StudentController extends Controller
      * Student Profile Page
      *
      * @param int $id
-     * @return Application|Factory|View
+     * @return JsonResponse
      */
-    public function index(int $id)
+    public function index(int $id): JsonResponse
     {
-        $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
+        $student = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
 
-        return view('webapp.student.profile')->with('students', $students);
+        return response()->json($student);
     }
 
     /**
