@@ -6,7 +6,7 @@ import PhoneNumberFormat from "../PhoneNumberFormat";
 export default {
     data() {
         return {
-            profiles: [],
+            profile: {},
         }
     },
 
@@ -25,7 +25,7 @@ export default {
 
             axios.get('/students/' + id + '/profile')
                 .then((response) => {
-                    this.profiles = response.data;
+                    this.profile = response.data;
                 }).catch((error) => {
                 console.log(error);
             });

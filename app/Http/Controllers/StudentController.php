@@ -46,7 +46,7 @@ class StudentController extends Controller
      */
     public function index(int $id): JsonResponse
     {
-        $student = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
+        $student = Student::where('id', $id)->where('teacher_id', Auth::id())->first();
 
         return response()->json($student);
     }
