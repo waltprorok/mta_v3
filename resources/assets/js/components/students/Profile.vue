@@ -20,7 +20,6 @@ export default {
 
     methods: {
         fetchProfile() {
-            let self = this;
             let parameters = this.$route.fullPath
             let id = parameters.split('/').pop()
 

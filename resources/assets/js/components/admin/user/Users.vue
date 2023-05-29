@@ -20,7 +20,6 @@ export default {
                 {label: 'Student', field: 'student',},
                 {label: 'Parent', field: 'parent',},
                 {label: 'Created At', field: 'created_at',},
-
             ],
             user: {
                 id: null,

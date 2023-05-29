@@ -48,16 +48,6 @@ export default {
     },
 
     methods: {
-        formatPhoneNumber: function (row) {
-            if (row.phone && row.phone.length === 10) {
-                return row.phone.replace(/[^0-9]/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-            } else if (row.phone && row.phone.length === 11) {
-                return row.phone.replace(/[^0-9]/g, '').replace(/(\d{1})(\d{3})(\d{3})(\d{4})/, '$1-$2-$3-$4');
-            } else {
-                return row.phone;
-            }
-        },
-
         fetchTeacherList: function () {
             axios.get('/web/teacher')
                 .then((response) => {

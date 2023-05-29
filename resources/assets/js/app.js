@@ -6,22 +6,21 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+window.Vue = require('vue').default;
 
 let axios = require('axios');
 
 import Vue from 'vue';
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
 import VueFilterDateParse from '@vuejs-community/vue-filter-date-parse';
 import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
 import {VuejsDatatableFactory} from 'vuejs-datatable';
 import 'vuejs-datatable/dist/themes/bootstrap-3.esm';
 
-
-Vue.use(VuejsDatatableFactory);
+Vue.use(VueRouter);
 Vue.use(VueFilterDateParse);
 Vue.use(VueFilterDateFormat);
-Vue.use(VueRouter);
+Vue.use(VuejsDatatableFactory);
 
 const router = new VueRouter({
     mode: 'history',
