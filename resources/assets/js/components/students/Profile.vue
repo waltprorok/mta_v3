@@ -19,6 +19,10 @@ export default {
     },
 
     methods: {
+        profileImg() {
+            return this.profile.photo ? '/storage/student/' + this.profile.photo : '/webapp/imgs/avatar.jpeg';
+        },
+
         fetchProfile() {
             let parameters = this.$route.fullPath
             let id = parameters.split('/').pop()

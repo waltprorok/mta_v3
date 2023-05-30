@@ -121,3 +121,7 @@ table thead tr th {
     display: table-cell;
     vertical-align: top;
 }
+
+[v-cloak] {
+    display: none;
+}
