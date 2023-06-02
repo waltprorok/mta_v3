@@ -47,9 +47,9 @@ class StudentLessonController extends Controller
 
     public function show($student_id, $id, $day = null)
     {
-        $students = Student::where('id', $student_id)->where('teacher_id', Auth::id())->get();
+        $students = Student::where(['id' => $student_id, 'teacher_id' => Auth::id()])->get();
         $businessHours = BusinessHours::where('teacher_id', Auth::id())->get();
-        $lessons = Lesson::where('student_id', $student_id)->where('id', $id)->where('teacher_id', Auth::id())->orderBy('start_date', 'asc')->with('billingRate')->get();
+        $lessons = Lesson::where(['student_id' => $student_id, 'id' => $id, 'teacher_id' => Auth::id()])->orderBy('start_date', 'asc')->with('billingRate')->get();
         $billingRates = BillingRate::where('teacher_id', Auth::id())->get();
 
         $startDate = $day;
@@ -192,7 +192,7 @@ class StudentLessonController extends Controller
     {
         $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
 
-        $lesson = Lesson::where('student_id', $request->get('student_id'))->where('teacher_id', Auth::id())->where('id', $request->get('id'))->first();
+        $lesson = Lesson::where(['student_id' => $request->get('student_id'), 'teacher_id' => Auth::id(), 'id' => $request->get('id')])->first();
         $lesson->id = $request->get('id');
         $lesson->student_id = $request->get('student_id');
         $lesson->teacher_id = Auth::id();
@@ -241,8 +241,8 @@ class StudentLessonController extends Controller
      */
     private function destroyAll($lessons)
     {
-        Lesson::where('student_id', $lessons->student_id)
-            ->where('teacher_id', Auth::id())
+        Lesson::where(['student_id' => $lessons->student_id, 'teacher_id' => Auth::id()])
+            ->where()
             ->delete();
     }
 

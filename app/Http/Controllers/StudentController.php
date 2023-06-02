@@ -46,7 +46,7 @@ class StudentController extends Controller
      */
     public function index(int $id): JsonResponse
     {
-        $student = Student::where('id', $id)->where('teacher_id', Auth::id())->first();
+        $student = Student::where(['id' => $id, 'teacher_id' => Auth::id()])->with('hasOneFutureLesson')->first();
 
         return response()->json($student);
     }
@@ -97,7 +97,7 @@ class StudentController extends Controller
      */
     public function show(int $id)
     {
-        $students = Student::where('id', $id)->where('teacher_id', Auth::id())->get();
+        $students = Student::where(['id' => $id, 'teacher_id' => Auth::id()])->get();
 
         return view('webapp.student.edit')->with('students', $students);
     }
