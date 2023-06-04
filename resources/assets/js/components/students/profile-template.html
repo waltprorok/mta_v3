@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex flex-column align-items-center text-center" v-cloak>
-                    <img v-if="profile.photo || profile.id" style="width:150px;" :src="profileImg()" :alt="profile.photo"/>
+                    <img v-if="profile.id || profile.photo" style="width:150px;" :src="getProfileImg()" alt="Student profile picture"/>
                     <div class="mt-3">
                         <h5>{{ profile.first_name }}&nbsp;{{ profile.last_name }}</h5>
                         <p class="mb-1">{{ profile.instrument }}</p>

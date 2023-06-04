@@ -19,10 +19,6 @@ export default {
     },
 
     methods: {
-        profileImg() {
-            return this.profile.photo ? '/storage/student/' + this.profile.photo : '/webapp/imgs/avatar.jpeg';
-        },
-
         fetchProfile() {
             let parameters = this.$route.fullPath
             let id = parameters.split('/').pop()
@@ -30,9 +26,18 @@ export default {
             axios.get('/students/' + id + '/profile')
                 .then((response) => {
                     this.profile = response.data;
+
                 }).catch((error) => {
                 console.log(error);
             });
+        },
+
+        hasPhoto() {
+            return this.profile.id !== null && this.profile.photo !== null;
+        },
+
+        getProfileImg() {
+            return this.profile.photo ? '/storage/student/' + this.profile.photo : '/webapp/imgs/avatar.jpeg';
         },
     },
 }

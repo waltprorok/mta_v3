@@ -19,10 +19,10 @@
         "vue": "^2.7.14"
     },
     "dependencies": {
-        "@vuejs-community/vue-filter-date-format": "^1.6.3",
-        "@vuejs-community/vue-filter-date-parse": "^1.1.6",
-        "vue-filter-date-format": "^1.3.1",
+        "@vuejs-community/vue-filter-date-format": "1.6.3",
+        "@vuejs-community/vue-filter-date-parse": "1.1.6",
+        "vue-filter-date-format": "1.3.1",
         "vue-router": "^3.6.5",
-        "vuejs-datatable": "^2.0.0-alpha.7"
+        "vuejs-datatable": "2.0.0-alpha.7"
     }
 }
