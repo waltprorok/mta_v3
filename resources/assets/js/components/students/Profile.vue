@@ -26,7 +26,6 @@ export default {
             axios.get('/students/' + id + '/profile')
                 .then((response) => {
                     this.profile = response.data;
-
                 }).catch((error) => {
                 console.log(error);
             });

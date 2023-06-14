@@ -29,8 +29,8 @@
                                         <input for="first_name" name="first_name" class="form-control" value="{{ Auth::user()->first_name }}">
                                         @if ($errors->has('first_name'))
                                             <span class="help-block">
-                                                    <strong>{{ $errors->first('first_name') }}</strong>
-                                                </span>
+                                                <strong>{{ $errors->first('first_name') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
                                 </div>
@@ -40,8 +40,8 @@
                                         <input name="last_name" class="form-control" value="{{ Auth::user()->last_name }}">
                                         @if ($errors->has('last_name'))
                                             <span class="help-block">
-                                                    <strong>{{ $errors->first('last_name') }}</strong>
-                                                </span>
+                                                <strong>{{ $errors->first('last_name') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
                                 </div>
@@ -54,8 +54,8 @@
                                         <input name="email" class="form-control" value="{{ Auth::user()->email }}">
                                         @if ($errors->has('email'))
                                             <span class="help-block">
-                                                    <strong>{{ $errors->first('email') }}</strong>
-                                                </span>
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
                                 </div>
@@ -77,11 +77,11 @@
                                 <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('current_password') ? 'has-error' : '' }}">
                                         <label for="current_password" class="control-label">Current Password</label>
-                                        <input name="current_password" type="password" class="form-control">
+                                        <input name="current_password" autocomplete="new-password" type="password" class="form-control">
                                         @if ($errors->has('current_password'))
                                             <span class="help-block">
-                                                    <strong>{{ $errors->first('current_password') }}</strong>
-                                                </span>
+                                                <strong>{{ $errors->first('current_password') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
                                 </div>
@@ -94,8 +94,8 @@
                                         <input name="new_password" type="password" class="form-control">
                                         @if ($errors->has('new_password'))
                                             <span class="help-block">
-                                                    <strong>{{ $errors->first('new_password') }}</strong>
-                                                </span>
+                                                <strong>{{ $errors->first('new_password') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
                                 </div>
@@ -105,8 +105,8 @@
                                         <input name="new_password_confirmation" type="password" class="form-control">
                                         @if ($errors->has('new_password_confirmation'))
                                             <span class="help-block">
-                                                    <strong>{{ $errors->first('new_password_confirmation') }}</strong>
-                                                </span>
+                                                <strong>{{ $errors->first('new_password_confirmation') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
                                 </div>
