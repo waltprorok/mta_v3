@@ -15,7 +15,7 @@ class StudentTableDataSeeder extends Seeder
     {
         if (App::environment('local')) {
             // Create 100 students.
-            factory(Student::class, 100)->create(['student' => true]);
+            factory(Student::class, 100)->create();
         }
     }
 }
