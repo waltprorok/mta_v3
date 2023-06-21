@@ -9,5 +9,5 @@ php artisan optimize:clear
 php artisan route:cache
 php artisan view:cache
 php artisan route:cache
-npm run dev
+npm run production
 php artisan up
