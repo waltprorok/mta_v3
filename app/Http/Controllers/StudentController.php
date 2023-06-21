@@ -58,14 +58,15 @@ class StudentController extends Controller
     public function store(StoreStudentRequest $request): JsonResponse
     {
         try {
-            $user = User::create([
-                'first_name' => $request->get('first_name'),
-                'last_name' => $request->get('last_name'),
-                'email' => $request->get('email'),
-                'password' => Hash::make(Str::random(10)),
-                'student' => true,
-                'terms' => true,
-            ]);
+            $user = User::firstOrCreate(
+                ['email' => $request->get('email')],
+                ['first_name' => $request->get('first_name'),
+                    'last_name' => $request->get('last_name'),
+                    'email' => $request->get('email'),
+                    'password' => Hash::make(Str::random(10)),
+                    'student' => true,
+                    'terms' => true]
+            );
 
             $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
 
@@ -80,11 +81,11 @@ class StudentController extends Controller
             ]);
 
             Mail::to($user->email)->send(new WelcomeNewUserMail($user));
+            $toast = ['success' => 'Student saved successfully.'];
         } catch (\Exception $exception) {
             Log::info($exception->getMessage());
+            $toast = ['success' => 'Whoops!'];
         }
-
-        $toast = ['success' => 'Student saved successfully.'];
 
         return response()->json($toast, Response::HTTP_CREATED);
     }
