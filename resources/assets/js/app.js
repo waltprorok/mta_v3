@@ -32,16 +32,16 @@ const router = new VueRouter({
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('alert', require('./components/alert/Alert.vue'));
-Vue.component('billingRate', require('./components/teacher/BillingRate.vue'));
-Vue.component('blogs', require('./components/admin/blog/Blogs.vue'));
-Vue.component('contacts', require('./components/admin/contact/Contacts.vue'));
-Vue.component('lessons', require('./components/Lessons.vue'));
-Vue.component('profile', require('./components/students/Profile.vue'));
-Vue.component('students', require('./components/admin/student/Students.vue'));
-Vue.component('studentList', require('./components/students/StudentList.vue'));
-Vue.component('teachers', require('./components/admin/teacher/Teachers.vue'));
-Vue.component('users', require('./components/admin/user/Users.vue'));
+Vue.component('alert', require('./components/alert/Alert.vue').default);
+Vue.component('billingRate', require('./components/teacher/BillingRate.vue').default);
+Vue.component('blogs', require('./components/admin/blog/Blogs.vue').default);
+Vue.component('contacts', require('./components/admin/contact/Contacts.vue').default);
+Vue.component('lessons', require('./components/Lessons.vue').default);
+Vue.component('profile', require('./components/students/Profile.vue').default);
+Vue.component('students', require('./components/admin/student/Students.vue').default);
+Vue.component('studentList', require('./components/students/StudentList.vue').default);
+Vue.component('teachers', require('./components/admin/teacher/Teachers.vue').default);
+Vue.component('users', require('./components/admin/user/Users.vue').default);
 
 
 const app = new Vue({
