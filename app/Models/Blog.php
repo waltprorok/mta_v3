@@ -4,11 +4,15 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use GrahamCampbell\Markdown\Facades\Markdown;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
+/**
+ * @mixin Builder
+ */
 class Blog extends Model
 {
     use SoftDeletes;
