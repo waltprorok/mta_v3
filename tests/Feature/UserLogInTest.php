@@ -34,6 +34,8 @@ class UserLogInTest extends TestCase
 
     public function test_new_teacher_user_has_registered()
     {
+        config()->set('honeypot.enabled', false);
+
         $user = factory(User::class)->make();
 
         $response = $this->post('/register', [
