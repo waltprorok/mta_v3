@@ -2,6 +2,9 @@
 
 namespace Tests\Feature\Contact;
 
+
+use Anhskohbo\NoCaptcha\NoCaptcha;
+use App\Mail\ContactForm;
 use App\Models\Contact;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
@@ -17,23 +20,22 @@ class ContactTest extends TestCase
         Mail::fake();
     }
 
-    public function test_new_contact_submitted_error()
+    public function test_new_contact_submitted()
     {
         config()->set('honeypot.enabled', false);
 
-//        $this->mock(NoCaptcha::class, function ($mock) {
-//            $mock->shouldReceive('verifyResponse')
-//                ->once()
-//                ->withArgs(['g-recaptcha-response'])
-//                ->andReturn(true);
-//        });
+        $mockNoCaptcha = $this->createMock(NoCaptcha::class);
 
+        $mockNoCaptcha->method('verifyResponse')
+            ->willReturn(true);
 
-//        $this->mock(NoCaptcha::class, function ($mock) {
-//            $mock->shouldReceive('display')
-//                ->zeroOrMoreTimes()
-//                ->andReturn('<input type="hidden" name="g-recaptcha-response" value="1" />');
-//        });
+        $mockRecaptchaResponse = $this->mock(NoCaptcha::class, function ($mock) {
+            $mock->shouldReceive('display')
+                ->zeroOrMoreTimes()
+                ->andReturn('<input type="hidden" name="g-recaptcha-response" value="1" />');
+        });
+
+        self::assertTrue($mockNoCaptcha->verifyResponse($mockRecaptchaResponse));
 
         $contact = factory(Contact::class)->make();
 
@@ -45,19 +47,18 @@ class ContactTest extends TestCase
             'g-recaptcha-response' => '1',
         ]);
 
-        $response->assertSessionHasErrors();
+        $response->assertSessionHasNoErrors();
 
-        $response->assertRedirect('/');
+        $response->assertRedirect('/contact');
 
-        // TODO fix this test to pass successfully with valid data.
-//        $this->assertDatabaseHas('contacts', [
-//            'email' => $contact->email,
-//        ]);
-//
-//        Mail::assertSent(Contact::class, function ($mail) use ($contact) {
-//            return $mail->hasTo($contact->email);
-//        });
-//
-//        Mail::assertSent(ContactForm::class, 1);
+        $this->assertDatabaseHas('contacts', [
+            'email' => $contact->email,
+        ]);
+
+        Mail::assertSent(ContactForm::class, function ($mail) use ($contact) {
+            return $mail->hasTo('waltprorok@gmail.com');
+        });
+
+        Mail::assertSent(ContactForm::class, 1);
     }
 }
