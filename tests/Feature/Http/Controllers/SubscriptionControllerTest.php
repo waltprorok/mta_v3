@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Subscription;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Mail\CancelledSubscriptionMail;
 use App\Mail\ChangedSubscriptionMail;
@@ -14,7 +14,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
-class SubscriptionTest extends TestCase
+class SubscriptionControllerTest extends TestCase
 {
     use RefreshDatabase;
 

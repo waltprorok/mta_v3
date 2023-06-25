@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controllers\Auth;
 
 use App\Mail\WelcomeMail;
 use App\Models\User;

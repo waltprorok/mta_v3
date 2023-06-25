@@ -1,7 +1,6 @@
 <?php
 
-namespace Tests\Feature\Contact;
-
+namespace Tests\Feature\Http\Controllers;
 
 use Anhskohbo\NoCaptcha\NoCaptcha;
 use App\Mail\ContactForm;
@@ -10,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
-class ContactTest extends TestCase
+class HomeControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -18,6 +17,64 @@ class ContactTest extends TestCase
     {
         parent::setUp();
         Mail::fake();
+    }
+
+    public function test_home_page_200()
+    {
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_faq_page_200()
+    {
+        $response = $this->get('/faq');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_contact_page_200()
+    {
+        $response = $this->get('/contact');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_blog_page_200()
+    {
+        $response = $this->get('/blog');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_blog_scheduling_students_page_200()
+    {
+        $this->seed();
+
+        $response = $this->get('/blog/scheduling-students');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_pricing_page_200()
+    {
+        $response = $this->get('/pricing');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_terms_page_200()
+    {
+        $response = $this->get('/terms');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_privacy_page_200()
+    {
+        $response = $this->get('/privacy');
+
+        $response->assertStatus(200);
     }
 
     public function test_new_contact_submitted()
