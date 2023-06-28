@@ -81,13 +81,11 @@ class StudentController extends Controller
             ]);
 
             Mail::to($user->email)->send(new WelcomeNewUserMail($user));
-            $toast = ['success' => 'Student saved successfully.'];
         } catch (\Exception $exception) {
             Log::info($exception->getMessage());
-            $toast = ['success' => 'Whoops!'];
         }
 
-        return response()->json($toast, Response::HTTP_CREATED);
+        return response()->json('', Response::HTTP_CREATED);
     }
 
     /**
