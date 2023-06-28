@@ -4,12 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
-
-window.Vue = require('vue').default;
-
-let axios = require('axios');
-
+import Notifications from 'vue-notification'
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueFilterDateParse from '@vuejs-community/vue-filter-date-parse';
@@ -17,10 +12,17 @@ import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
 import {VuejsDatatableFactory} from 'vuejs-datatable';
 import 'vuejs-datatable/dist/themes/bootstrap-3.esm';
 
+require('./bootstrap');
+
+window.Vue = require('vue').default;
+
+let axios = require('axios');
+
 Vue.use(VueRouter);
 Vue.use(VueFilterDateParse);
 Vue.use(VueFilterDateFormat);
 Vue.use(VuejsDatatableFactory);
+Vue.use(Notifications);
 
 const router = new VueRouter({
     mode: 'history',
@@ -32,7 +34,6 @@ const router = new VueRouter({
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('alert', require('./components/alert/Alert.vue').default);
 Vue.component('billingRate', require('./components/teacher/BillingRate.vue').default);
 Vue.component('blogs', require('./components/admin/blog/Blogs.vue').default);
 Vue.component('contacts', require('./components/admin/contact/Contacts.vue').default);
