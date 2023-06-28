@@ -7,8 +7,6 @@ import PhoneNumberFormat from "../PhoneNumberFormat";
 export default {
     data: function () {
         return {
-            alert: false,
-            toast: '',
             class_error: '',
             filter: '',
             columns: [
@@ -93,9 +91,15 @@ export default {
             let self = this;
             let params = Object.assign({}, self.student);
             axios.post('/web/student-save', params)
-                .then((success) => {
-                    self.alert = true;
-                    self.toast = success.data;
+                .then(() => {
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'The student added.',
+                        duration: 10000,
+                    })
+                })
+                .then(() => {
                     self.clearStudentData()
                     self.clearErrorData();
                     self.fetchStudentList();

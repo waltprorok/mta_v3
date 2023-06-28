@@ -32,6 +32,7 @@
             </div>
         </div>
         <!-- end of vue js data table -->
+        <notifications position="bottom right"/>
     </div>
 </template>
 
@@ -91,6 +92,14 @@ export default {
             axios.patch('lessons/update/' + id, params)
                 .then(() => {
                     self.fetchLessonList();
+                })
+                .then(() => {
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'The lesson was updated successfully.',
+                        duration: 10000,
+                    })
                 })
                 .catch((error) => {
                     self.fetchLessonList();

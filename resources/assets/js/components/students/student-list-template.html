@@ -1,9 +1,4 @@
 <div>
-    <div v-if="alert" class="alert alert-success alert-dismissible">
-        <a href="#" class="close" data-dismiss="alert" @click="alert=false" aria-label="close">&times;</a>
-        {{ toast.success }}
-    </div>
-
     <div class="card">
         <div v-if="show_form">
             <transition name="modal">
@@ -137,4 +132,5 @@
             </div>
         </div>
     </div>
+    <notifications position="bottom right"/>
 </div>

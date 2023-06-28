@@ -107,10 +107,18 @@ export default {
             let self = this;
             let params = Object.assign({}, self.contact);
             axios.post('/web/contact', params)
-                .then((success) => {
+                .then(() => {
                     self.clearContactData()
                     self.clearErrorData();
                     self.fetchContactList();
+                })
+                .then(() => {
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'The contact was created.',
+                        duration: 10000,
+                    })
                 })
                 .catch((error) => {
                     self.getErrorMessage(error);
@@ -141,6 +149,14 @@ export default {
                     self.clearErrorData();
                     self.fetchContactList();
                 })
+                .then(() => {
+                    this.$notify({
+                        type: 'warn',
+                        title: 'Updated',
+                        text: 'The contact was Updated.',
+                        duration: 10000,
+                    })
+                })
                 .catch((error) => {
                     self.getErrorMessage(error);
                 });
@@ -153,6 +169,14 @@ export default {
                 .then(() => {
                     self.showModal = false;
                     self.fetchContactList();
+                })
+                .then(() => {
+                    this.$notify({
+                        type: 'error',
+                        title: 'Removed',
+                        text: 'The contact was deleted.',
+                        duration: 10000,
+                    })
                 })
                 .catch((error) => {
                     console.log(error);
