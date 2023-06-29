@@ -27,7 +27,7 @@ class ContactController extends Controller
      */
     public function show(Contact $contact): JsonResponse
     {
-        return response()->json($contact, Response::HTTP_OK);
+        return response()->json($contact);
     }
 
     /**
@@ -42,7 +42,7 @@ class ContactController extends Controller
             Log::info($exception->getMessage());
         }
 
-        return response()->json('', Response::HTTP_CREATED);
+        return response()->json([], Response::HTTP_CREATED);
     }
 
     /**
@@ -58,7 +58,7 @@ class ContactController extends Controller
             Log::info($exception->getMessage());
         }
 
-        return response()->json('', Response::HTTP_OK);
+        return response()->json();
     }
 
     /**
@@ -74,6 +74,6 @@ class ContactController extends Controller
             Log::info($exception->getMessage());
         }
 
-        return response()->json('', Response::HTTP_OK);
+        return response()->json();
     }
 }

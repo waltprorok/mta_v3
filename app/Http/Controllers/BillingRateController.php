@@ -25,7 +25,7 @@ class BillingRateController extends Controller
             Log::info($exception->getMessage());
         }
 
-        return response()->json($billingRate, Response::HTTP_OK);
+        return response()->json($billingRate);
     }
 
     /**
@@ -34,7 +34,7 @@ class BillingRateController extends Controller
      */
     public function show(BillingRate $billingRate): JsonResponse
     {
-        return response()->json($billingRate, Response::HTTP_OK);
+        return response()->json($billingRate);
     }
 
     /**
@@ -51,14 +51,11 @@ class BillingRateController extends Controller
                 'description' => $request->get('description'),
             ]);
 
-            $toast = ['success' => 'Billing rate saved successfully.'];
-
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            $toast = ['error' => $exception->getMessage()];
         }
 
-        return response()->json($toast, Response::HTTP_CREATED);
+        return response()->json([], Response::HTTP_CREATED);
     }
 
     /**
@@ -70,13 +67,11 @@ class BillingRateController extends Controller
     {
         try {
             $billingRate->update($request->all());
-            $toast = ['success' => 'Billing rate has been updated.'];
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            $toast = ['error' => $exception->getMessage()];
         }
 
-        return response()->json($toast, Response::HTTP_OK);
+        return response()->json();
     }
 
     /**
@@ -88,12 +83,10 @@ class BillingRateController extends Controller
     {
         try {
             $billingRate->delete();
-            $toast = ['success' => 'Billing rate has been deleted.'];
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            $toast = ['error' => $exception->getMessage()];
         }
 
-        return response()->json($toast, Response::HTTP_OK);
+        return response()->json($billingRate);
     }
 }

@@ -73,7 +73,7 @@ export default {
             self.clearRateData();
         },
 
-        showDeleteIcon: function(row) {
+        showDeleteIcon: function (row) {
             return row.billing_rate === null;
         },
 
@@ -110,9 +110,16 @@ export default {
             axios.get('/web/billing-rate')
                 .then((response) => {
                     this.list = response.data;
-                }).catch((error) => {
-                console.log(error);
-            });
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load billing rate list.',
+                        duration: 10000,
+                    });
+                });
         },
 
         createBillingRate: function () {
@@ -123,9 +130,21 @@ export default {
                     self.clearRateData()
                     self.clearErrorData();
                     self.fetchRateList();
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'Billing rate created.',
+                        duration: 10000,
+                    });
                 })
                 .catch((error) => {
                     self.getErrorMessage(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not create billing rate.',
+                        duration: 10000,
+                    });
                 });
         },
 
@@ -152,9 +171,21 @@ export default {
                     self.clearRateData();
                     self.clearErrorData();
                     self.fetchRateList();
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'Updated billing rate.',
+                        duration: 10000,
+                    });
                 })
                 .catch((error) => {
                     self.getErrorMessage(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not update billing rate.',
+                        duration: 10000,
+                    });
                 });
         },
 
@@ -165,9 +196,21 @@ export default {
                 .then(() => {
                     self.showModal = false;
                     self.fetchRateList();
+                    this.$notify({
+                        type: 'warn',
+                        title: 'Deleted',
+                        text: 'Billing rate was deleted.',
+                        duration: 10000,
+                    });
                 })
                 .catch((error) => {
                     console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not delete billing rate.',
+                        duration: 10000,
+                    });
                 });
         },
 

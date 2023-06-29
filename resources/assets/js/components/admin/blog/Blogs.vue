@@ -86,15 +86,16 @@ export default {
             axios.get('/web/blog')
                 .then((response) => {
                     this.list = response.data;
-                }).catch((error) => {
-                console.log(error);
-                this.$notify({
-                    type: 'error',
-                    title: 'Error',
-                    text: 'Could not load blog list.',
-                    duration: 10000,
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load blog list.',
+                        duration: 10000,
+                    });
                 });
-            });
         },
 
         // createBlog: function () {
@@ -151,8 +152,6 @@ export default {
                 .then(() => {
                     self.showModal = false;
                     self.fetchBlogList();
-                })
-                .then(() => {
                     this.$notify({
                         type: 'warn',
                         title: 'Deleted',

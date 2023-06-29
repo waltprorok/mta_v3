@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class StudentListController extends Controller
@@ -14,9 +13,9 @@ class StudentListController extends Controller
      */
     public function adminStudents(): JsonResponse
     {
-        $students = Student::orderBy('first_name', 'asc')->get();
+        $students = Student::orderBy('first_name')->get();
 
-        return response()->json($students, Response::HTTP_OK);
+        return response()->json($students);
     }
 
     public function active(): JsonResponse
@@ -27,7 +26,7 @@ class StudentListController extends Controller
             ->firstNameAsc()
             ->get();
 
-        return response()->json($students, Response::HTTP_OK);
+        return response()->json($students);
     }
 
     public function waitlist(): JsonResponse
@@ -38,7 +37,7 @@ class StudentListController extends Controller
             ->firstNameAsc()
             ->get();
 
-        return response()->json($waitlists, Response::HTTP_OK);
+        return response()->json($waitlists);
     }
 
     public function leads(): JsonResponse
@@ -49,7 +48,7 @@ class StudentListController extends Controller
             ->firstNameAsc()
             ->get();
 
-        return response()->json($leads, Response::HTTP_OK);
+        return response()->json($leads);
     }
 
     public function inactive(): JsonResponse
@@ -60,6 +59,6 @@ class StudentListController extends Controller
             ->firstNameAsc()
             ->get();
 
-        return response()->json($inactives, Response::HTTP_OK);
+        return response()->json($inactives);
     }
 }

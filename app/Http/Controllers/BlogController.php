@@ -7,7 +7,6 @@ use App\Models\Blog;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -42,7 +41,7 @@ class BlogController extends Controller
             ->published()
             ->get();
 
-        return response()->json($blogs, Response::HTTP_OK);
+        return response()->json($blogs);
     }
 
     /**
@@ -111,9 +110,7 @@ class BlogController extends Controller
     {
         $id->delete();
 
-        $toast = ['success' => 'Blog has been deleted!'];
-
-        return response()->json($toast, Response::HTTP_OK);
+        return response()->json();
     }
 
     /**

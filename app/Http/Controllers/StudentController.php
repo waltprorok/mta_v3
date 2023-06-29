@@ -85,7 +85,7 @@ class StudentController extends Controller
             Log::info($exception->getMessage());
         }
 
-        return response()->json('', Response::HTTP_CREATED);
+        return response()->json([], Response::HTTP_CREATED);
     }
 
     /**
