@@ -88,6 +88,12 @@ export default {
                     this.list = response.data;
                 }).catch((error) => {
                 console.log(error);
+                this.$notify({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Could not load blog list.',
+                    duration: 10000,
+                });
             });
         },
 
@@ -146,8 +152,22 @@ export default {
                     self.showModal = false;
                     self.fetchBlogList();
                 })
+                .then(() => {
+                    this.$notify({
+                        type: 'warn',
+                        title: 'Deleted',
+                        text: 'The blog was deleted.',
+                        duration: 10000,
+                    })
+                })
                 .catch((error) => {
                     console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not delete blog entry.',
+                        duration: 10000,
+                    });
                 });
         },
     },

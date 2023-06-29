@@ -50,6 +50,12 @@ export default {
                     this.list = response.data.data;
                 }).catch((error) => {
                 console.log(error);
+                this.$notify({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Could not load user list.',
+                    duration: 10000,
+                });
             });
         },
 

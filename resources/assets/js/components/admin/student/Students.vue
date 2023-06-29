@@ -49,9 +49,16 @@ export default {
             axios.get('/web/student')
                 .then((response) => {
                     this.list = response.data;
-                }).catch((error) => {
-                console.log(error);
-            });
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load student list.',
+                        duration: 10000,
+                    });
+                });
         },
 
         getStatus: function (row) {

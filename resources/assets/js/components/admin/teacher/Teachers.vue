@@ -54,6 +54,12 @@ export default {
                     this.list = response.data;
                 }).catch((error) => {
                 console.log(error);
+                this.$notify({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Could not load teacher list.',
+                    duration: 10000,
+                })
             });
         },
 

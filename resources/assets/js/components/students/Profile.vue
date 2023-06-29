@@ -26,9 +26,16 @@ export default {
             axios.get('/students/' + id + '/profile')
                 .then((response) => {
                     this.profile = response.data;
-                }).catch((error) => {
-                console.log(error);
-            });
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load student profile.',
+                        duration: 10000,
+                    });
+                });
         },
 
         hasPhoto() {

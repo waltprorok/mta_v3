@@ -38,6 +38,8 @@
 
 <script>
 import TotalEntries from "./TotalEntries";
+import {dateParse} from "@vuejs-community/vue-filter-date-parse";
+import {dateFormat} from "vue-filter-date-format";
 
 export default {
     data() {
@@ -74,16 +76,24 @@ export default {
     },
 
     methods: {
-        fetchLessonList() {
+        dateFormat,
+        dateParse,
+        fetchLessonList: function () {
             axios.get('lessons/list')
                 .then((response) => {
                     this.list = response.data.data;
                 }).catch((error) => {
                 console.log(error);
+                this.$notify({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Could not load lessons list.',
+                    duration: 10000,
+                });
             });
         },
 
-        updateLesson(id, complete) {
+        updateLesson: function (id, complete) {
             let self = this;
             self.lesson.id = id;
             self.lesson.complete = !complete;
@@ -97,13 +107,19 @@ export default {
                     this.$notify({
                         type: 'success',
                         title: 'Success',
-                        text: 'The lesson was updated successfully.',
+                        text: 'The lesson was updated.',
                         duration: 10000,
                     })
                 })
                 .catch((error) => {
                     self.fetchLessonList();
                     console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'The lesson failed to update.',
+                        duration: 10000,
+                    })
                 });
         },
     },

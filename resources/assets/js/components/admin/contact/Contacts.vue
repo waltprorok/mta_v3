@@ -100,6 +100,12 @@ export default {
                     this.list = response.data.data;
                 }).catch((error) => {
                 console.log(error);
+                this.$notify({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Could not load contact list.',
+                    duration: 10000,
+                });
             });
         },
 
@@ -153,12 +159,18 @@ export default {
                     this.$notify({
                         type: 'warn',
                         title: 'Updated',
-                        text: 'The contact was Updated.',
+                        text: 'The contact was updated.',
                         duration: 10000,
                     })
                 })
                 .catch((error) => {
                     self.getErrorMessage(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not update contact record.',
+                        duration: 10000,
+                    });
                 });
         },
 
@@ -172,14 +184,20 @@ export default {
                 })
                 .then(() => {
                     this.$notify({
-                        type: 'error',
-                        title: 'Removed',
+                        type: 'warn',
+                        title: 'Deleted',
                         text: 'The contact was deleted.',
                         duration: 10000,
                     })
                 })
                 .catch((error) => {
                     console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load delete contact.',
+                        duration: 10000,
+                    });
                 });
         },
     },

@@ -95,9 +95,9 @@ export default {
                     this.$notify({
                         type: 'success',
                         title: 'Success',
-                        text: 'The student added.',
+                        text: 'The student was added.',
                         duration: 10000,
-                    })
+                    });
                 })
                 .then(() => {
                     self.clearStudentData()
@@ -128,6 +128,12 @@ export default {
                     this.list = response.data;
                 }).catch((error) => {
                 console.log(error);
+                this.$notify({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Could not load student list.',
+                    duration: 10000,
+                });
             });
         },
 
@@ -135,9 +141,16 @@ export default {
             axios.get('/web/active')
                 .then((response) => {
                     this.list = response.data;
-                }).catch((error) => {
-                console.log(error);
-            });
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load student list.',
+                        duration: 10000,
+                    });
+                });
         },
     },
 }
