@@ -1,3 +1,4 @@
+<!--suppress JSUnresolvedReference -->
 <template>
     <div class="card">
         <!-- vue js data table -->
