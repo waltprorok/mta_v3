@@ -2,6 +2,8 @@
 
 <script>
 import TotalEntries from "../../TotalEntries";
+import {dateParse} from "@vuejs-community/vue-filter-date-parse";
+import {dateFormat} from "vue-filter-date-format";
 
 export default {
     data: function () {
@@ -44,6 +46,8 @@ export default {
     },
 
     methods: {
+        dateFormat,
+        dateParse,
         fetchUserList: function () {
             axios.get('/web/user')
                 .then((response) => {

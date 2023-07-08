@@ -1,3 +1,4 @@
+<!--suppress JSUnresolvedReference -->
 <div class="card">
     <!-- vue js data table -->
     <div class="form-control">
@@ -20,7 +21,7 @@
             <template v-slot="{ columns, row }">
                 <tr>
                     <td>
-                        <img style="width:30px;" :src="'/storage/blog/' + row.image" @error="$event.target.src='/webapp/imgs/sheet-music.jpg'" :alt="row.image"/>
+                        <img style="width:30px;" :src="'/storage/blog/' + row.image" @error="$event.target.src='/webapp/img/sheet-music.jpg'" :alt="row.image"/>
                     </td>
                     <td v-text="row.title"></td>
                     <td v-text="row.slug"></td>

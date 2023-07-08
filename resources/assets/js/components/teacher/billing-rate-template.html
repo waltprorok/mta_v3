@@ -31,7 +31,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">$</span>
                                                     </div>
-                                                    <input class="form-control" type="text" id="amount" v-model="rate.amount">
+                                                    <input class="form-control" type="number" id="amount" v-model="rate.amount" min=".01" step=".01">
                                                 </div>
                                                 <small>{{ error_amount }}</small>
                                             </div>
@@ -84,11 +84,20 @@
                     <td>{{ row.type | capitalising }}</td>
                     <td>{{ row.amount | toCurrency }}</td>
                     <td v-text="row.description"></td>
+                    <!--suppress JSUnresolvedReference -->
                     <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
                     <td class="text-nowrap">
-                        <button @click="showRate(row.id, false)" class="btn btn-outline-primary btn-sm" title="edit"><i class="fa fa-edit"></i></button>
-                        <button @click="showModalDelete(row.id)" v-show="showDeleteIcon(row)" class="btn btn-outline-danger btn-sm" title="click to delete"><i class="fa fa-trash"
-                                                                                                                                                               aria-hidden="true"></i></button>
+                        <button @click="showRate(row.id, false)"
+                                class="btn btn-outline-primary btn-sm"
+                                title="edit">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button @click="showModalDelete(row.id)"
+                                v-show="showDeleteIcon(row)"
+                                class="btn btn-outline-danger btn-sm"
+                                title="click to delete">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
                     </td>
                 </tr>
             </template>

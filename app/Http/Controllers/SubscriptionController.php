@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 class SubscriptionController extends Controller
 {
     protected $receiptLimit = 12;
+    const PREMIUM = 'premium';
 
     /**
      * @return RedirectResponse
@@ -32,8 +33,8 @@ class SubscriptionController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        if ($user->subscription('premium')) {
-            $subscription = $user->subscription('premium');
+        if ($user->subscription(self::PREMIUM)) {
+            $subscription = $user->subscription(self::PREMIUM);
             $subscription->cancel();
 
             Mail::to($user->email)->send(new CancelledSubscriptionMail($user));
@@ -57,11 +58,11 @@ class SubscriptionController extends Controller
             if ($plan->stripe_plan == $user->subscription('premium')->stripe_plan) {
                 if ($plan->id == 1) {
                     $newPlan = Plan::findOrFail(2);
-                    $user->subscription('premium')->swap($newPlan->stripe_plan);
+                    $user->subscription(self::PREMIUM)->swap($newPlan->stripe_plan);
                     break;
                 } elseif ($plan->id == 2) {
                     $newPlan = Plan::findOrFail(1);
-                    $user->subscription('premium')->swap($newPlan->stripe_plan);
+                    $user->subscription(self::PREMIUM)->swap($newPlan->stripe_plan);
                     break;
                 }
             }
@@ -150,7 +151,7 @@ class SubscriptionController extends Controller
         $user = Auth::user();
 
         foreach ($plans as $plan) {
-            if ($plan->stripe_plan == $user->subscription('premium')->stripe_plan) {
+            if ($plan->stripe_plan == $user->subscription(self::PREMIUM)->stripe_plan) {
                 switch ($plan->id) {
                     case 1:
                         $plan = Plan::findOrFail(2);
@@ -200,7 +201,7 @@ class SubscriptionController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        $subscription = $user->subscription('premium');
+        $subscription = $user->subscription(self::PREMIUM);
 
         $subscription->resume();
 

@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTeacherSettingsRequest;
-use App\Models\BusinessHours;
 use App\Models\Teacher;
 use App\Models\User;
 use App\Services\PhoneNumberService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -132,80 +130,5 @@ class TeacherController extends Controller
         $teacher = User::with('getTeacher')->find(Auth::id());
 
         return view('webapp.teacher.profile')->with('teacher', $teacher);
-    }
-
-    public function hours()
-    {
-        $hours = BusinessHours::where('teacher_id', Auth::id())->first();
-
-        if ($hours == null) {
-            return view('webapp.teacher.hours');
-        }
-
-        return redirect()->route('teacher.hoursView');
-    }
-
-    /**
-     * @return View
-     */
-    public function hoursView(): View
-    {
-        $hours = BusinessHours::where('teacher_id', Auth::id())->get();
-
-        return view('webapp.teacher.hoursView', compact('hours', $hours));
-    }
-
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
-    public function hoursSave(Request $request): RedirectResponse
-    {
-        $input = $request->all();
-
-        foreach ($input['rows'] as $index => $value) {
-            if (! isset($value['active'])) {
-                $active = 0;
-            } else {
-                $active = $value['active'];
-            }
-
-            BusinessHours::create([
-                'teacher_id' => Auth::id(),
-                'day' => $value['day'],
-                'active' => $active,
-                'open_time' => $value['open_time'],
-                'close_time' => $value['close_time'],
-            ]);
-        }
-
-        return redirect()->back()->with('success', 'Business hours saved successfully!');
-    }
-
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
-    public function hoursUpdate(Request $request): RedirectResponse
-    {
-        $input = $request->all();
-
-        foreach ($input['rows'] as $index => $value) {
-            if (! isset($value['active'])) {
-                $active = 0;
-            } else {
-                $active = $value['active'];
-            }
-
-            $hours = BusinessHours::where('teacher_id', '=', Auth::id())->where('day', '=', $value['day'])->first();
-            $hours->teacher_id = Auth::id();
-            $hours->day = $value['day'];
-            $hours->active = $active;
-            $hours->open_time = $value['open_time'];
-            $hours->close_time = $value['close_time'];
-            $hours->save();
-        }
-
-        return redirect()->back()->with('success', 'Business hours updated successfully!');
     }
 }

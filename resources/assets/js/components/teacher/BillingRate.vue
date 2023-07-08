@@ -2,6 +2,8 @@
 
 <script>
 import TotalEntries from "../TotalEntries";
+import {dateParse} from "@vuejs-community/vue-filter-date-parse";
+import {dateFormat} from "vue-filter-date-format";
 
 export default {
     name: 'BillingRate',
@@ -67,12 +69,20 @@ export default {
     },
 
     methods: {
+        dateFormat,
+        dateParse,
         cancelForm: function () {
             let self = this;
             self.clearErrorData();
             self.clearRateData();
         },
 
+        /**
+         *
+         * @param row
+         * @property {Object} billing_rate
+         * @returns {boolean}
+         */
         showDeleteIcon: function (row) {
             return row.billing_rate === null;
         },
