@@ -115,10 +115,10 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('store', 'TeacherController@store')->name('save.studioSettings');
             Route::get('profile', 'TeacherController@profile')->name('teacher.profile');
             Route::view('rates', 'webapp.teacher.billing')->name('teacher.billing');
-            Route::get('hours', 'TeacherController@hours')->name('teacher.hours');
-            Route::post('hours', 'TeacherController@hoursSave')->name('teacher.hoursSave');
-            Route::get('hours/view', 'TeacherController@hoursView')->name('teacher.hoursView');
-            Route::put('hours/update', 'TeacherController@hoursUpdate')->name('teacher.hoursUpdate');
+            Route::get('hours', 'BusinessHourController@index')->name('teacher.hours');
+            Route::post('hours', 'BusinessHourController@store')->name('teacher.hoursSave');
+            Route::get('hours/view', 'BusinessHourController@show')->name('teacher.hoursView');
+            Route::put('hours/update', 'BusinessHourController@update')->name('teacher.hoursUpdate');
         });
 
         Route::prefix('reports')->group(function () {
