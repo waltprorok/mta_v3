@@ -77,6 +77,12 @@ export default {
             self.clearRateData();
         },
 
+        /**
+         *
+         * @param row
+         * @property {Object} billing_rate
+         * @returns {boolean}
+         */
         showDeleteIcon: function (row) {
             return row.billing_rate === null;
         },

@@ -98,7 +98,7 @@ class Blog extends Model
                 $imageUrl = asset('storage/blog/' . $this->image);
             }
         } else {
-            $imageUrl = asset('webapp/imgs/sheet-music.jpg');
+            $imageUrl = asset('webapp/img/sheet-music.jpg');
         }
 
         return $imageUrl;

@@ -16,7 +16,7 @@
                 <tr>
                     <td>
                         <img style="width:20px;" :src="'/storage/student/' + row.photo"
-                             @error="$event.target.src='/webapp/imgs/avatar.jpeg'" :alt="row.photo"/>
+                             @error="$event.target.src='/webapp/img/avatar.jpeg'" :alt="row.photo"/>
                     </td>
                     <td v-text="row.first_name"></td>
                     <td v-text="row.last_name"></td>

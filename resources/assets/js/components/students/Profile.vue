@@ -47,7 +47,7 @@ export default {
         },
 
         getProfileImg() {
-            return this.profile.photo ? '/storage/student/' + this.profile.photo : '/webapp/imgs/avatar.jpeg';
+            return this.profile.photo ? '/storage/student/' + this.profile.photo : '/webapp/img/avatar.jpeg';
         },
     },
 }
