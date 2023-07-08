@@ -18,7 +18,7 @@
                             @if($teacher->getTeacher->logo != null)
                                 <img src="/storage/teacher/{{ $teacher->getTeacher->logo }}" alt="{{ $teacher->getTeacher->logo }}" class="rounded" width="150">
                             @else
-                                <img src="{{ asset('webapp/imgs/teacher-avatar.png') }}" alt="stock-avatar" class="rounded-circle" width="150">
+                                <img src="{{ asset('webapp/img/teacher-avatar.png') }}" alt="stock-avatar" class="rounded-circle" width="150">
                             @endif
                             <div class="mt-3">
                                 <h4>{{ $teacher->getTeacher->first_name }}&nbsp;{{ $teacher->getTeacher->last_name }}</h4>

@@ -20,7 +20,7 @@
                                     <img src="/storage/student/{{ $student->photo }}" alt="{{ $student->photo }}"
                                          class="rounded-circle" width="120">
                                 @else
-                                    <img src="{{ asset('webapp/imgs/avatar.jpeg') }}" alt="stock-avatar"
+                                    <img src="{{ asset('webapp/img/avatar.jpeg') }}" alt="stock-avatar"
                                          class="rounded-circle" width="120">
                                 @endif
                                 <div class="mt-3">
@@ -29,7 +29,8 @@
                                         <p class="mb-1">{{ $student->instrument }}</p>
                                     @endif
                                     @if($teacher != null)
-                                        <a href="{{ route('message.create', ['id' => $teacher->teacher_id, 'subject' => $student->first_name . ' ' . $student->last_name, 'new' => true]) }}" class="btn btn-sm btn-outline-primary">Message Teacher</a>
+                                        <a href="{{ route('message.create', ['id' => $teacher->teacher_id, 'subject' => $student->first_name . ' ' . $student->last_name, 'new' => true]) }}"
+                                           class="btn btn-sm btn-outline-primary">Message Teacher</a>
                                     @endif
 
                                     {{--<button class="btn btn-primary">Follow</button>--}}

@@ -2,6 +2,8 @@
 
 <script>
 import PhoneNumberFormat from "../PhoneNumberFormat";
+import {dateParse} from "@vuejs-community/vue-filter-date-parse";
+import {dateFormat} from "vue-filter-date-format";
 
 export default {
     data() {
@@ -19,6 +21,8 @@ export default {
     },
 
     methods: {
+        dateFormat,
+        dateParse,
         fetchProfile() {
             let parameters = this.$route.fullPath
             let id = parameters.split('/').pop()
@@ -43,7 +47,7 @@ export default {
         },
 
         getProfileImg() {
-            return this.profile.photo ? '/storage/student/' + this.profile.photo : '/webapp/imgs/avatar.jpeg';
+            return this.profile.photo ? '/storage/student/' + this.profile.photo : '/webapp/img/avatar.jpeg';
         },
     },
 }
