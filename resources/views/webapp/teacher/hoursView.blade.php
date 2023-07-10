@@ -140,7 +140,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>{{ $totalHours }}</td>
+                            <th><strong>{{ $totalHours }}</strong></th>
                         </tr>
                         </tbody>
                     </table>

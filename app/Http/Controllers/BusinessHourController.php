@@ -8,7 +8,6 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -19,23 +18,21 @@ class BusinessHourController extends Controller
      */
     public function index()
     {
-        $hours = BusinessHours::where('teacher_id', Auth::id())->first();
+        $hours = BusinessHours::query()->where('teacher_id', Auth::id())->first();
 
         if ($hours == null) {
-            return view('webapp.teacher.hours');
+            return $this->create();
         }
 
         return redirect()->route('teacher.hoursView');
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @return Application|Factory|View
      */
     public function create()
     {
-        //
+        return view('webapp.teacher.hours');
     }
 
     /**
@@ -78,15 +75,6 @@ class BusinessHourController extends Controller
     }
 
     /**
-     * @param $id
-     * @return void
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * @param Request $request
      * @return RedirectResponse
      */
@@ -111,17 +99,6 @@ class BusinessHourController extends Controller
         }
 
         return redirect()->back()->with('success', 'Business hours updated successfully!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     /**
