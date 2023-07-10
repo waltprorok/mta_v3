@@ -126,9 +126,22 @@
                                         </select>
                                     </div>
                                 </td>
-                                <th>{{ $carbon::createFromTimestamp(strtotime($hour->open_time))->diff($hour->close_time)->format('%h:%I') }}</th>
+                                <td>
+                                    @if ($hour->active)
+                                        {{ $carbon::createFromTimestamp(strtotime($hour->open_time))->diff($hour->close_time)->format('%h:%I') }}
+                                    @else
+                                        0:00
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ $totalHours }}</td>
+                        </tr>
                         </tbody>
                     </table>
                     <hr/>

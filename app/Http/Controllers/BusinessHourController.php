@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BusinessHours;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -69,9 +70,11 @@ class BusinessHourController extends Controller
      */
     public function show()
     {
-        $hours = BusinessHours::where('teacher_id', Auth::id())->get();
+        $hours = BusinessHours::query()->where('teacher_id', Auth::id())->get();
 
-        return view('webapp.teacher.hoursView', compact('hours', $hours));
+        $totalHours = $this->getTotalsHours($hours);
+
+        return view('webapp.teacher.hoursView', compact('hours', $hours, 'totalHours', $totalHours));
     }
 
     /**
@@ -119,5 +122,22 @@ class BusinessHourController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param object $hours
+     * @return float|int
+     */
+    private function getTotalsHours(object $hours)
+    {
+        $totalHours = 0;
+
+        foreach ($hours as $hour) {
+            if ($hour->active) {
+                $totalHours += Carbon::createFromTimestamp(strtotime($hour->open_time))->diffInMinutes($hour->close_time);
+            }
+        }
+
+        return $totalHours / 60;
     }
 }
