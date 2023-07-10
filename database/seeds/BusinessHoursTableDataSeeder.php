@@ -18,7 +18,7 @@ class BusinessHoursTableDataSeeder extends Seeder
             BusinessHours::insert([
                 [
                     'id' => '1',
-                    'teacher_id' => '3',
+                    'teacher_id' => '4',
                     'day' => '0',
                     'active' => '0',
                     'open_time' => '08:00',
@@ -28,7 +28,7 @@ class BusinessHoursTableDataSeeder extends Seeder
                 ],
                 [
                     'id' => '2',
-                    'teacher_id' => '3',
+                    'teacher_id' => '4',
                     'day' => '1',
                     'active' => '1',
                     'open_time' => '16:00',
@@ -38,7 +38,7 @@ class BusinessHoursTableDataSeeder extends Seeder
                 ],
                 [
                     'id' => '3',
-                    'teacher_id' => '3',
+                    'teacher_id' => '4',
                     'day' => '2',
                     'active' => '1',
                     'open_time' => '16:00',
@@ -48,7 +48,7 @@ class BusinessHoursTableDataSeeder extends Seeder
                 ],
                 [
                     'id' => '4',
-                    'teacher_id' => '3',
+                    'teacher_id' => '4',
                     'day' => '3',
                     'active' => '1',
                     'open_time' => '16:00',
@@ -58,7 +58,7 @@ class BusinessHoursTableDataSeeder extends Seeder
                 ],
                 [
                     'id' => '5',
-                    'teacher_id' => '3',
+                    'teacher_id' => '4',
                     'day' => '4',
                     'active' => '1',
                     'open_time' => '16:00',
@@ -68,7 +68,7 @@ class BusinessHoursTableDataSeeder extends Seeder
                 ],
                 [
                     'id' => '6',
-                    'teacher_id' => '3',
+                    'teacher_id' => '4',
                     'day' => '5',
                     'active' => '1',
                     'open_time' => '10:00',
@@ -78,7 +78,7 @@ class BusinessHoursTableDataSeeder extends Seeder
                 ],
                 [
                     'id' => '7',
-                    'teacher_id' => '3',
+                    'teacher_id' => '4',
                     'day' => '6',
                     'active' => '0',
                     'open_time' => '08:00',
