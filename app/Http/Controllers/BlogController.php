@@ -73,7 +73,7 @@ class BlogController extends Controller
      */
     public function show($slug): View
     {
-        $blog = Blog::where('slug', $slug)->firstOrFail();
+        $blog = Blog::query()->where('slug', $slug)->firstOrFail();
 
         return view('blog.show', compact('blog'));
     }

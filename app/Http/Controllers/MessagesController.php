@@ -7,7 +7,6 @@ use App\Models\Message;
 use App\Services\MessageService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class MessagesController extends Controller
@@ -51,7 +50,8 @@ class MessagesController extends Controller
     }
 
     /**
-     * @throws ValidationException
+     * @param SendMessageRequest $request
+     * @return RedirectResponse
      */
     public function send(SendMessageRequest $request): RedirectResponse
     {

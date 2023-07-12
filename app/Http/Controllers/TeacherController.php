@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Services\PhoneNumberService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -31,7 +30,7 @@ class TeacherController extends Controller
      */
     public function adminTeachers(): JsonResponse
     {
-        return response()->json(Teacher::all(), Response::HTTP_OK);
+        return response()->json(Teacher::all());
     }
 
     public function index()
@@ -97,7 +96,7 @@ class TeacherController extends Controller
     {
         $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
 
-        $teacher = Teacher::where('teacher_id', '=', Auth::id())->first();
+        $teacher = Teacher::query()->where('teacher_id', '=', Auth::id())->first();
         $teacher->teacher_id = Auth::id();
         $teacher->studio_name = $request->get('studio_name');
         $teacher->first_name = $request->get('first_name');

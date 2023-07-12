@@ -5,7 +5,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
 
-class TeachersTableSeeder extends Seeder
+class TeachersTableDataSeeder extends Seeder
 {
     /**
      * Run the database seed.

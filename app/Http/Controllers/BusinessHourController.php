@@ -3,38 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\BusinessHours;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class BusinessHourController extends Controller
 {
     /**
-     * @return Application|Factory|RedirectResponse|View
+     * @return Application|Factory|View
      */
     public function index()
     {
-        $hours = BusinessHours::where('teacher_id', Auth::id())->first();
+        $hours = BusinessHours::query()->where('teacher_id', Auth::id())->first();
 
         if ($hours == null) {
-            return view('webapp.teacher.hours');
+            return $this->create();
         }
 
-        return redirect()->route('teacher.hoursView');
+        return $this->show();
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @return Application|Factory|View
      */
     public function create()
     {
-        //
+        return view('webapp.teacher.hours');
     }
 
     /**
@@ -69,18 +67,11 @@ class BusinessHourController extends Controller
      */
     public function show()
     {
-        $hours = BusinessHours::where('teacher_id', Auth::id())->get();
+        $hours = BusinessHours::query()->where('teacher_id', Auth::id())->get();
 
-        return view('webapp.teacher.hoursView', compact('hours', $hours));
-    }
+        $totalHours = $this->getTotalHours($hours);
 
-    /**
-     * @param $id
-     * @return void
-     */
-    public function edit($id)
-    {
-        //
+        return view('webapp.teacher.hoursView', compact('hours', $hours, 'totalHours', $totalHours));
     }
 
     /**
@@ -111,13 +102,19 @@ class BusinessHourController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return Response
+     * @param $hours
+     * @return float|int
      */
-    public function destroy($id)
+    private function getTotalHours($hours)
     {
-        //
+        $totalHours = 0;
+
+        foreach ($hours as $hour) {
+            if ($hour->active) {
+                $totalHours += Carbon::createFromTimestamp(strtotime($hour->open_time))->diffInMinutes($hour->close_time);
+            }
+        }
+
+        return $totalHours / 60;
     }
 }

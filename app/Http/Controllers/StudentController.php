@@ -46,7 +46,7 @@ class StudentController extends Controller
      */
     public function index(int $id): JsonResponse
     {
-        $student = Student::where(['id' => $id, 'teacher_id' => Auth::id()])->with('hasOneFutureLesson')->first();
+        $student = Student::query()->where(['id' => $id, 'teacher_id' => Auth::id()])->with('hasOneFutureLesson')->first();
 
         return response()->json($student);
     }
@@ -96,15 +96,15 @@ class StudentController extends Controller
      */
     public function show(int $id)
     {
-        $students = Student::where(['id' => $id, 'teacher_id' => Auth::id()])->get();
+        $students = Student::query()->where(['id' => $id, 'teacher_id' => Auth::id()])->get();
 
         return view('webapp.student.edit')->with('students', $students);
     }
 
     public function update(UpdateStudentRequest $request): RedirectResponse
     {
-        $student = Student::where('id', $request->get('student_id'))->first();
-        $parentEmail = User::where('email', $request->get('parent_email'))->first();
+        $student = Student::query()->where('id', $request->get('student_id'))->first();
+        $parentEmail = User::query()->where('email', $request->get('parent_email'))->first();
 
         if ($parentEmail !== null && $student->parent_email === null) {
             $parentEmail->parentStudentPivot()->toggle($student);
