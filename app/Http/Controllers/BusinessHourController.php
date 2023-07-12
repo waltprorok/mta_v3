@@ -14,7 +14,7 @@ use Illuminate\View\View;
 class BusinessHourController extends Controller
 {
     /**
-     * @return Application|Factory|RedirectResponse|View
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -24,7 +24,7 @@ class BusinessHourController extends Controller
             return $this->create();
         }
 
-        return redirect()->route('teacher.hoursView');
+        return $this->show();
     }
 
     /**
@@ -69,7 +69,7 @@ class BusinessHourController extends Controller
     {
         $hours = BusinessHours::query()->where('teacher_id', Auth::id())->get();
 
-        $totalHours = $this->getTotalsHours($hours);
+        $totalHours = $this->getTotalHours($hours);
 
         return view('webapp.teacher.hoursView', compact('hours', $hours, 'totalHours', $totalHours));
     }
@@ -102,10 +102,10 @@ class BusinessHourController extends Controller
     }
 
     /**
-     * @param object $hours
+     * @param $hours
      * @return float|int
      */
-    private function getTotalsHours(object $hours)
+    private function getTotalHours($hours)
     {
         $totalHours = 0;
 

@@ -117,7 +117,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::view('rates', 'webapp.teacher.billing')->name('teacher.billing');
             Route::get('hours', 'BusinessHourController@index')->name('teacher.hours');
             Route::post('hours', 'BusinessHourController@store')->name('teacher.hoursSave');
-            Route::get('hours/view', 'BusinessHourController@show')->name('teacher.hoursView');
             Route::put('hours/update', 'BusinessHourController@update')->name('teacher.hoursUpdate');
         });
 
