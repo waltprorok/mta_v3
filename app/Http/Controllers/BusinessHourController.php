@@ -92,8 +92,7 @@ class BusinessHourController extends Controller
             }
 
             $hours = BusinessHours::query()
-                ->where('teacher_id', '=', Auth::id())
-                ->where('day', '=', $value['day'])
+                ->where(['teacher_id' => Auth::id(), 'day' => $value['day']])
                 ->first();
             $hours->teacher_id = Auth::id();
             $hours->day = $value['day'];
