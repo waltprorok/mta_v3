@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BusinessHours;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -20,11 +21,7 @@ class BusinessHourController extends Controller
     {
         $hours = BusinessHours::query()->where('teacher_id', Auth::id())->first();
 
-        if ($hours == null) {
-            return $this->create();
-        }
-
-        return $this->show();
+        return $hours == null ? $this->create() : $this->show();
     }
 
     /**
@@ -32,8 +29,11 @@ class BusinessHourController extends Controller
      */
     public function create()
     {
-        return view('webapp.teacher.hours');
+        $hours = $this->getSelectHours();
+
+        return view('webapp.teacher.hours', compact('hours', $hours));
     }
+
 
     /**
      * @param Request $request
@@ -71,7 +71,9 @@ class BusinessHourController extends Controller
 
         $totalHours = $this->getTotalHours($hours);
 
-        return view('webapp.teacher.hoursView', compact('hours', $hours, 'totalHours', $totalHours));
+        $selectHours = $this->getSelectHours();
+
+        return view('webapp.teacher.hoursView', compact('hours', $hours, 'totalHours', $totalHours, 'selectHours', $selectHours));
     }
 
     /**
@@ -89,7 +91,10 @@ class BusinessHourController extends Controller
                 $active = $value['active'];
             }
 
-            $hours = BusinessHours::where('teacher_id', '=', Auth::id())->where('day', '=', $value['day'])->first();
+            $hours = BusinessHours::query()
+                ->where('teacher_id', '=', Auth::id())
+                ->where('day', '=', $value['day'])
+                ->first();
             $hours->teacher_id = Auth::id();
             $hours->day = $value['day'];
             $hours->active = $active;
@@ -99,6 +104,25 @@ class BusinessHourController extends Controller
         }
 
         return redirect()->back()->with('success', 'Business hours updated successfully!');
+    }
+
+    /**
+     * @return array
+     */
+    private function getSelectHours(): array
+    {
+        $startPeriod = Carbon::parse('8:00');
+        $endPeriod = Carbon::parse('22:00');
+
+        $period = CarbonPeriod::create($startPeriod, '30 minutes', $endPeriod);
+
+        $hours = [];
+
+        foreach ($period as $date) {
+            $hours[] = $date->format('H:i');
+        }
+
+        return $hours;
     }
 
     /**

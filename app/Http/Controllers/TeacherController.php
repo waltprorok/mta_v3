@@ -37,11 +37,12 @@ class TeacherController extends Controller
     {
         $teacher = User::with('getTeacher')->findOrFail(Auth::id());
 
-        if ($teacher->getTeacher == null) {
-            return view('webapp.teacher.studioindex')->with('warning', 'Please fill out your studio settings.');
-        }
+        return $teacher->getTeacher == null ? $this->create() : $this->edit();
+    }
 
-        return redirect()->route('teacher.editSettings');
+    public function create()
+    {
+        return view('webapp.teacher.studioIndex');
     }
 
     /**
@@ -75,7 +76,7 @@ class TeacherController extends Controller
 
         $studio->save();
 
-        return redirect()->route('teacher.editSettings')->with('success', 'You successfully saved your settings');
+        return redirect()->back()->with('success', 'You successfully saved your settings');
     }
 
     /**
