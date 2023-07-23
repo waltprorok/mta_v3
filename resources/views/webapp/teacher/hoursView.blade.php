@@ -76,7 +76,7 @@
                                 </td>
                                 <td>
                                     @if ($hour->active)
-                                        {{ $carbon::createFromTimestamp(strtotime($hour->open_time))->diff($hour->close_time)->format('%h:%I') }}
+                                        <strong>{{ $carbon::createFromTimestamp(strtotime($hour->open_time))->diff($hour->close_time)->format('%h:%I') }}</strong>
                                     @else
                                         0:00
                                     @endif
