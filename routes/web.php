@@ -109,8 +109,7 @@ Route::group(['middleware' => ['auth']], function () {
         });
 
         Route::prefix('teacher')->group(function () {
-            Route::get('/', 'TeacherController@index')->name('teacher.studioIndex');
-            Route::get('edit', 'TeacherController@edit')->name('teacher.editSettings');
+            Route::get('studio', 'TeacherController@index')->name('teacher.studioIndex');
             Route::put('update', 'TeacherController@update')->name('teacher.studioUpdate');
             Route::post('store', 'TeacherController@store')->name('save.studioSettings');
             Route::get('profile', 'TeacherController@profile')->name('teacher.profile');

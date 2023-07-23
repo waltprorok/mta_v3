@@ -58,35 +58,9 @@
                                     <div class="form-group">
                                         <select id="single-select" name="rows[{{ $hour->day }}][open_time]" class="form-control">
                                             <option value="{{ $hour->open_time }}">{{ $hour->hour_open_time }}</option>
-                                            <option value="08:00">8:00 am</option>
-                                            <option value="08:30">8:30 am</option>
-                                            <option value="09:00">9:00 am</option>
-                                            <option value="09:30">9:30 am</option>
-                                            <option value="10:00">10:00 am</option>
-                                            <option value="10:30">10:30 am</option>
-                                            <option value="11:00">11:00 am</option>
-                                            <option value="11:30">11:30 am</option>
-                                            <option value="12:00">12:00 pm</option>
-                                            <option value="12:30">12:30 pm</option>
-                                            <option value="13:00">1:00 pm</option>
-                                            <option value="13:30">1:30 pm</option>
-                                            <option value="14:00">2:00 pm</option>
-                                            <option value="14:30">2:30 pm</option>
-                                            <option value="15:00">3:00 pm</option>
-                                            <option value="15:30">3:30 pm</option>
-                                            <option value="16:00">4:00 pm</option>
-                                            <option value="16:30">4:30 pm</option>
-                                            <option value="17:00">5:00 pm</option>
-                                            <option value="17:30">5:30 pm</option>
-                                            <option value="18:00">6:00 pm</option>
-                                            <option value="18:30">6:30 pm</option>
-                                            <option value="19:00">7:00 pm</option>
-                                            <option value="19:30">7:30 pm</option>
-                                            <option value="20:00">8:00 pm</option>
-                                            <option value="20:30">8:30 pm</option>
-                                            <option value="21:00">9:00 pm</option>
-                                            <option value="21:30">9:30 pm</option>
-                                            <option value="22:00">10:00 pm</option>
+                                            @foreach($selectHours as $sHour)
+                                                <option value="{{ $sHour }}">{{ \Carbon\Carbon::parse($sHour)->format('g:i a') }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </td>
@@ -94,41 +68,15 @@
                                     <div class="form-group">
                                         <select id="single-select" name="rows[{{ $hour->day }}][close_time]" class="form-control">
                                             <option value="{{ $hour->close_time }}">{{ $hour->hour_close_time }}</option>
-                                            <option value="08:00">8:00 am</option>
-                                            <option value="08:30">8:30 am</option>
-                                            <option value="09:00">9:00 am</option>
-                                            <option value="09:30">9:30 am</option>
-                                            <option value="10:00">10:00 am</option>
-                                            <option value="10:30">10:30 am</option>
-                                            <option value="11:00">11:00 am</option>
-                                            <option value="11:30">11:30 am</option>
-                                            <option value="12:00">12:00 pm</option>
-                                            <option value="12:30">12:30 pm</option>
-                                            <option value="13:00">1:00 pm</option>
-                                            <option value="13:30">1:30 pm</option>
-                                            <option value="14:00">2:00 pm</option>
-                                            <option value="14:30">2:30 pm</option>
-                                            <option value="15:00">3:00 pm</option>
-                                            <option value="15:30">3:30 pm</option>
-                                            <option value="16:00">4:00 pm</option>
-                                            <option value="16:30">4:30 pm</option>
-                                            <option value="17:00">5:00 pm</option>
-                                            <option value="17:30">5:30 pm</option>
-                                            <option value="18:00">6:00 pm</option>
-                                            <option value="18:30">6:30 pm</option>
-                                            <option value="19:00">7:00 pm</option>
-                                            <option value="19:30">7:30 pm</option>
-                                            <option value="20:00">8:00 pm</option>
-                                            <option value="20:30">8:30 pm</option>
-                                            <option value="21:00">9:00 pm</option>
-                                            <option value="21:30">9:30 pm</option>
-                                            <option value="22:00">10:00 pm</option>
+                                            @foreach($selectHours as $sHour)
+                                                <option value="{{ $sHour }}">{{ \Carbon\Carbon::parse($sHour)->format('g:i a') }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </td>
                                 <td>
                                     @if ($hour->active)
-                                        {{ $carbon::createFromTimestamp(strtotime($hour->open_time))->diff($hour->close_time)->format('%h:%I') }}
+                                        <strong>{{ $carbon::createFromTimestamp(strtotime($hour->open_time))->diff($hour->close_time)->format('%h:%I') }}</strong>
                                     @else
                                         0:00
                                     @endif
