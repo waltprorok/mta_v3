@@ -2,7 +2,6 @@
 
 /** @var Factory $factory */
 
-use App\Model;
 use App\Models\BusinessHours;
 use Carbon\Carbon;
 use Faker\Generator as Faker;
