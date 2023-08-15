@@ -27,7 +27,7 @@ class StoreBillingRateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => 'required',
+            'type' => 'required|string',
             'amount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'description' => 'string|nullable',
         ];
