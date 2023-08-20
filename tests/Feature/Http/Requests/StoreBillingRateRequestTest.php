@@ -38,43 +38,33 @@ class StoreBillingRateRequestTest extends TestCase
         $this->assertTrue($validator->passes());
     }
 
-    public function test_type_fail()
+    /**
+     * @return array[]
+     */
+    public function requestDataProvider(): array
     {
-        $validator = Validator::make([
-            'type' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('type', $validator->errors()->keys());
+        return [
+            'Type null fail' =>
+                ['type', null],
+            'Type fail' =>
+                ['type', 1],
+            'Amount null fail' =>
+                ['amount', null],
+            'Amount format fail' =>
+                ['amount', 10.101],
+        ];
     }
 
-    public function test_type_num_fail()
+    /**
+     * @dataProvider requestDataProvider
+     */
+    public function test_request_fail($key, $value)
     {
         $validator = Validator::make([
-            'type' => 1,
+            $key => $value,
         ], $this->request->rules());
 
         $this->assertFalse($validator->passes());
-        $this->assertContains('type', $validator->errors()->keys());
-    }
-
-    public function test_amount_fail()
-    {
-        $validator = Validator::make([
-            'amount' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('amount', $validator->errors()->keys());
-    }
-
-    public function test_amount_format_fail()
-    {
-        $validator = Validator::make([
-            'amount' => 10.101,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('amount', $validator->errors()->keys());
+        $this->assertContains($key, $validator->errors()->keys());
     }
 }

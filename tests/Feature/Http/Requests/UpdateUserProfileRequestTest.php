@@ -38,43 +38,33 @@ class UpdateUserProfileRequestTest extends TestCase
         $this->assertTrue($validator->passes());
     }
 
-    public function test_first_name_fail()
+    /**
+     * @return array[]
+     */
+    public function requestDataProvider(): array
     {
-        $validator = Validator::make([
-            'first_name' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('first_name', $validator->errors()->keys());
+        return [
+            'First name fail' =>
+                ['first_name', null],
+            'Last name fail' =>
+                ['last_name', null],
+            'Email fail' =>
+                ['email', 'john.snow'],
+            'Email null fail' =>
+                ['email', null],
+        ];
     }
 
-    public function test_last_name_fail()
+    /**
+     * @dataProvider requestDataProvider
+     */
+    public function test_request_fail($key, $value)
     {
         $validator = Validator::make([
-            'last_name' => null,
+            $key => $value,
         ], $this->request->rules());
 
         $this->assertFalse($validator->passes());
-        $this->assertContains('last_name', $validator->errors()->keys());
-    }
-
-    public function test_email_fail()
-    {
-        $validator = Validator::make([
-            'email' => 'john.snow',
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('email', $validator->errors()->keys());
-    }
-
-    public function test_email_null_fail()
-    {
-        $validator = Validator::make([
-            'email' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('email', $validator->errors()->keys());
+        $this->assertContains($key, $validator->errors()->keys());
     }
 }

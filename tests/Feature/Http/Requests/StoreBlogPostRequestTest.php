@@ -38,43 +38,31 @@ class StoreBlogPostRequestTest extends TestCase
         $this->assertTrue($validator->passes());
     }
 
-    public function test_title_fail()
+    /**
+     * @return array[]
+     */
+    public function requestDataProvider(): array
     {
-        $validator = Validator::make([
-            'title' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('title', $validator->errors()->keys());
+        return [
+            'Slug null fail' =>
+                ['slug', null],
+            'Body null fail' =>
+                ['body', null],
+            'Released on null fail' =>
+                ['released_on', null],
+        ];
     }
 
-    public function test_slug_fail()
+    /**
+     * @dataProvider requestDataProvider
+     */
+    public function test_request_fail($key, $value)
     {
         $validator = Validator::make([
-            'slug' => null,
+            $key => $value,
         ], $this->request->rules());
 
         $this->assertFalse($validator->passes());
-        $this->assertContains('slug', $validator->errors()->keys());
-    }
-
-    public function test_body_fail()
-    {
-        $validator = Validator::make([
-            'body' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('body', $validator->errors()->keys());
-    }
-
-    public function test_released_on_fail()
-    {
-        $validator = Validator::make([
-            'released_on' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('released_on', $validator->errors()->keys());
+        $this->assertContains($key, $validator->errors()->keys());
     }
 }

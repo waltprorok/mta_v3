@@ -38,33 +38,31 @@ class ScheduleUpdateRequestTest extends TestCase
         $this->assertTrue($validator->passes());
     }
 
-    public function test_title_fail()
+    /**
+     * @return array[]
+     */
+    public function requestDataProvider(): array
     {
-        $validator = Validator::make([
-            'title' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('title', $validator->errors()->keys());
+        return [
+            'Title fail' =>
+                ['title', null],
+            'Start date fail' =>
+                ['start_date', null],
+            'End time fail' =>
+                ['end_time', null],
+        ];
     }
 
-    public function test_start_date_fail()
+    /**
+     * @dataProvider requestDataProvider
+     */
+    public function test_request_fail($key, $value)
     {
         $validator = Validator::make([
-            'start_date' => null,
+            $key => $value,
         ], $this->request->rules());
 
         $this->assertFalse($validator->passes());
-        $this->assertContains('start_date', $validator->errors()->keys());
-    }
-
-    public function test_end_time_fail()
-    {
-        $validator = Validator::make([
-            'end_time' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('end_time', $validator->errors()->keys());
+        $this->assertContains($key, $validator->errors()->keys());
     }
 }

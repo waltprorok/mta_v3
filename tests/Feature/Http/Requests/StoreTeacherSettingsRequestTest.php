@@ -54,83 +54,62 @@ class StoreTeacherSettingsRequestTest extends TestCase
         $this->assertContains('studio_name', $validator->errors()->keys());
     }
 
-    public function test_first_name_fail()
+    /**
+     * @return array[]
+     */
+    public function requestDataProvider(): array
     {
-        $validator = Validator::make([
-            'first_name' => 1,
-        ], $this->request->rules());
+        return [
+            'Studio name required fail' =>
+                ['studio_name', null],
+            'Studio name string fail' =>
+                ['studio_name', 1],
+            'First name fail' =>
+                ['first_name', null],
+            'First name string  fail' =>
+                ['first_name', 1],
+            'Last name fail' =>
+                ['last_name', null],
+            'Last name string fail' =>
+                ['last_name', 1],
+            'Address fail' =>
+                ['address', null],
+            'Address string fail' =>
+                ['address', 1],
+            'City fail' =>
+                ['city', null],
+            'City string fail' =>
+                ['city', 1],
+            'State fail' =>
+                ['state', null],
+            'State string fail' =>
+                ['state', 1],
+            'Zip fail' =>
+                ['zip', null],
+            'Zip min fail' =>
+                ['zip', 1234],
+            'Email fail' =>
+                ['email', 'john.snow'],
+            'Email null fail' =>
+                ['email', null],
+            'Phone not string fail' =>
+                ['phone', 5551231234],
+            'Logo fail' =>
+                ['logo', 'test.docx'],
 
-        $this->assertFalse($validator->passes());
-        $this->assertContains('first_name', $validator->errors()->keys());
+        ];
     }
 
-    public function test_last_name_fail()
+    /**
+     * @dataProvider requestDataProvider
+     */
+    public function test_request_fail($key, $value)
     {
         $validator = Validator::make([
-            'last_name' => 1,
+            $key => $value,
         ], $this->request->rules());
 
         $this->assertFalse($validator->passes());
-        $this->assertContains('last_name', $validator->errors()->keys());
-    }
-
-    public function test_address_fail()
-    {
-        $validator = Validator::make([
-            'address' => 1,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('address', $validator->errors()->keys());
-    }
-
-    public function test_city_fail()
-    {
-        $validator = Validator::make([
-            'city' => 1,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('city', $validator->errors()->keys());
-    }
-
-    public function test_state_fail()
-    {
-        $validator = Validator::make([
-            'state' => 1,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('state', $validator->errors()->keys());
-    }
-
-    public function test_zip_fail()
-    {
-        $validator = Validator::make([
-            'zip' => 123456,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('zip', $validator->errors()->keys());
-    }
-
-    public function test_email_fail()
-    {
-        $validator = Validator::make([
-            'email' => 'john.snow',
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('email', $validator->errors()->keys());
-    }
-
-    public function test_phone_fail()
-    {
-        $validator = Validator::make([
-            'phone' => 5551231234,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('phone', $validator->errors()->keys());
+        $this->assertContains($key, $validator->errors()->keys());
     }
 }

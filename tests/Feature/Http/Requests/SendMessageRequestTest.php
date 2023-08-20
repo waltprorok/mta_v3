@@ -38,33 +38,31 @@ class SendMessageRequestTest extends TestCase
         $this->assertTrue($validator->passes());
     }
 
-    public function test_to_fail()
+    /**
+     * @return array[]
+     */
+    public function requestDataProvider(): array
     {
-        $validator = Validator::make([
-            'to' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('to', $validator->errors()->keys());
+        return [
+            'To fail' =>
+                ['to', null],
+            'Subject fail' =>
+                ['subject', null],
+            'Message fail' =>
+                ['message', null],
+        ];
     }
 
-    public function test_subject_fail()
+    /**
+     * @dataProvider requestDataProvider
+     */
+    public function test_request_fail($key, $value)
     {
         $validator = Validator::make([
-            'subject' => null,
+            $key => $value,
         ], $this->request->rules());
 
         $this->assertFalse($validator->passes());
-        $this->assertContains('subject', $validator->errors()->keys());
-    }
-
-    public function test_message_fail()
-    {
-        $validator = Validator::make([
-            'message' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('message', $validator->errors()->keys());
+        $this->assertContains($key, $validator->errors()->keys());
     }
 }
