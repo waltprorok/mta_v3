@@ -38,7 +38,7 @@ class StoreStudentRequest extends FormRequest
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()
-            ->json([ 'error' => $validator->errors()], Response::HTTP_UNAUTHORIZED)
+            ->json(['error' => $validator->errors()], Response::HTTP_UNAUTHORIZED)
         );
     }
 }
