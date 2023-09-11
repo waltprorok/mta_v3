@@ -43,14 +43,36 @@ class StoreStudentRequestTest extends TestCase
         $this->assertTrue($validator->passes());
     }
 
-    public function test_first_name_fail()
+    /**
+     * @return array[]
+     */
+    public function requestDataProvider(): array
+    {
+        return [
+            'First name fail' =>
+                ['first_name', null],
+            'Last name fail' =>
+                ['last_name', null],
+            'Email fail' =>
+                ['email', 'john.snow'],
+            'Email null fail' =>
+                ['email', null],
+            'Status name fail' =>
+                ['status', 5],
+        ];
+    }
+
+    /**
+     * @dataProvider requestDataProvider
+     */
+    public function test_request_fail($key, $value)
     {
         $validator = Validator::make([
-            'first_name' => null,
+            $key => $value,
         ], $this->request->rules());
 
         $this->assertFalse($validator->passes());
-        $this->assertContains('first_name', $validator->errors()->keys());
+        $this->assertContains($key, $validator->errors()->keys());
     }
 
     public function test_last_name_fail()

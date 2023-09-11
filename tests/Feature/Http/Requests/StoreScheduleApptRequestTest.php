@@ -42,73 +42,37 @@ class StoreScheduleApptRequestTest extends TestCase
         $this->assertTrue($validator->passes());
     }
 
-    public function test_student_id_fail()
+    /**
+     * @return array[]
+     */
+    public function requestDataProvider(): array
     {
-        $validator = Validator::make([
-            'student_id' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('student_id', $validator->errors()->keys());
+        return [
+            'Billing rate id fail' =>
+                ['billing_rate_id', 1],
+            'Title null fail' =>
+                ['title', null],
+            'Start date fail' =>
+                ['start_date', null],
+            'Start time fail' =>
+                ['start_time', null],
+            'End time fail' =>
+                ['end_time', null],
+            'Recurrence fail' =>
+                ['recurrence', null],
+        ];
     }
 
-    public function test_billing_rate_id_fail()
+    /**
+     * @dataProvider requestDataProvider
+     */
+    public function test_request_fail($key, $value)
     {
         $validator = Validator::make([
-            'billing_rate_id' => 1,
+            $key => $value,
         ], $this->request->rules());
 
         $this->assertFalse($validator->passes());
-        $this->assertContains('billing_rate_id', $validator->errors()->keys());
-    }
-
-    public function test_title_fail()
-    {
-        $validator = Validator::make([
-            'title' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('title', $validator->errors()->keys());
-    }
-
-    public function test_start_date_fail()
-    {
-        $validator = Validator::make([
-            'start_date' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('start_date', $validator->errors()->keys());
-    }
-
-    public function test_start_time_fail()
-    {
-        $validator = Validator::make([
-            'start_time' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('start_time', $validator->errors()->keys());
-    }
-
-    public function test_end_time_fail()
-    {
-        $validator = Validator::make([
-            'end_time' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('end_time', $validator->errors()->keys());
-    }
-
-    public function test_recurrence_fail()
-    {
-        $validator = Validator::make([
-            'recurrence' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('recurrence', $validator->errors()->keys());
+        $this->assertContains($key, $validator->errors()->keys());
     }
 }

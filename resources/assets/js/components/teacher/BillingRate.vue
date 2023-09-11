@@ -78,8 +78,7 @@ export default {
         },
 
         /**
-         *
-         * @param row
+         * @param {Object} row
          * @property {Object} billing_rate
          * @returns {boolean}
          */

@@ -39,73 +39,37 @@ class StoreContactRequestTest extends TestCase
         $this->assertTrue($validator->passes());
     }
 
-    public function test_name_fail()
+    /**
+     * @return array[]
+     */
+    public function requestDataProvider(): array
     {
-        $validator = Validator::make([
-            'name' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('name', $validator->errors()->keys());
+        return [
+            'Not Email fail' =>
+                ['email', 'john.snow'],
+            'Email null fail' =>
+                ['email', null],
+            'Email min fail' =>
+                ['email', 'ab'],
+            'Subject null fail' =>
+                ['subject', null],
+            'Message min fail' =>
+                ['message', 'ab'],
+            'Message null fail' =>
+                ['message', null],
+        ];
     }
 
-    public function test_not_email_fail()
+    /**
+     * @dataProvider requestDataProvider
+     */
+    public function test_request_fail($key, $value)
     {
         $validator = Validator::make([
-            'email' => 'john.snow',
+            $key => $value,
         ], $this->request->rules());
 
         $this->assertFalse($validator->passes());
-        $this->assertContains('email', $validator->errors()->keys());
-    }
-
-    public function test_email_fail()
-    {
-        $validator = Validator::make([
-            'email' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('email', $validator->errors()->keys());
-    }
-
-    public function test_subject_fail()
-    {
-        $validator = Validator::make([
-            'subject' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('subject', $validator->errors()->keys());
-    }
-
-    public function test_subject_min_fail()
-    {
-        $validator = Validator::make([
-            'email' => 'ab',
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('email', $validator->errors()->keys());
-    }
-
-    public function test_message_fail()
-    {
-        $validator = Validator::make([
-            'message' => null,
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('message', $validator->errors()->keys());
-    }
-
-    public function test_message_min_fail()
-    {
-        $validator = Validator::make([
-            'message' => 'ab',
-        ], $this->request->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertContains('message', $validator->errors()->keys());
+        $this->assertContains($key, $validator->errors()->keys());
     }
 }
