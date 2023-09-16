@@ -96,7 +96,6 @@ class StoreTeacherSettingsRequestTest extends TestCase
                 ['phone', 5551231234],
             'Logo fail' =>
                 ['logo', 'test.docx'],
-
         ];
     }
 
