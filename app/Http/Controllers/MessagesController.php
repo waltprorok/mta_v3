@@ -26,7 +26,8 @@ class MessagesController extends Controller
      */
     public function index(): View
     {
-        $messages = Message::with('userFrom')
+        $messages = Message::query()
+            ->with('userFrom')
             ->where('user_id_to', Auth::id())
             ->notDeleted()
             ->orderBy('created_at', 'desc')
@@ -72,7 +73,8 @@ class MessagesController extends Controller
      */
     public function sent(): View
     {
-        $messages = Message::with('userTo')
+        $messages = Message::query()
+            ->with('userTo')
             ->where('user_id_from', Auth::id())
             ->notDeleted()
             ->orderBy('created_at', 'desc')
@@ -87,7 +89,9 @@ class MessagesController extends Controller
      */
     public function read(int $id): View
     {
-        $message = Message::with('userFrom')->find($id);
+        $message = Message::query()
+            ->with('userFrom')
+            ->find($id);
 
         if ($message->user_id_from != Auth::id()) {
             $message->read = true;
@@ -103,7 +107,7 @@ class MessagesController extends Controller
      */
     public function delete(int $id): RedirectResponse
     {
-        $message = Message::find($id);
+        $message = Message::query()->find($id);
         $message->deleted = true;
         $message->save();
 
@@ -115,7 +119,8 @@ class MessagesController extends Controller
      */
     public function deleted(): View
     {
-        $messages = Message::with('userFrom')
+        $messages = Message::query()
+            ->with('userFrom')
             ->where('user_id_to', Auth::id())
             ->isDeleted()
             ->get();
@@ -129,7 +134,7 @@ class MessagesController extends Controller
      */
     public function return(int $id): RedirectResponse
     {
-        $message = Message::find($id);
+        $message = Message::query()->find($id);
         $message->deleted = false;
         $message->save();
 

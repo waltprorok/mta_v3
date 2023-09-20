@@ -21,13 +21,13 @@ class ParentController extends Controller
         $lessons = [];
         $studentIds = [];
 
-        $parent = User::with('parentOfStudent')->findOrFail(Auth::id()); // uses pivot table
+        $parent = User::query()->with('parentOfStudent')->findOrFail(Auth::id()); // uses pivot table
 
         foreach ($parent->parentOfStudent as $studentId) {
             $studentIds[] = $studentId->id;
         }
 
-        $data = Lesson::whereIn('student_id', $studentIds)->get();
+        $data = Lesson::query()->whereIn('student_id', $studentIds)->get();
 
         if ($data->count()) {
             foreach ($data as $value) {
@@ -70,7 +70,9 @@ class ParentController extends Controller
         $teacher = [];
 
         foreach ($students as $student) {
-            $teacher = Teacher::where('teacher_id', $student->teacher_id)->first();
+            $teacher = Teacher::query()
+                ->where('teacher_id', $student->teacher_id)
+                ->first();
         }
 
         return view('webapp.parent.household')

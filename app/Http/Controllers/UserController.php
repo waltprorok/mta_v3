@@ -13,7 +13,7 @@ class UserController extends Controller
      */
     public function adminUsers(): AnonymousResourceCollection
     {
-        $users = User::orderBy('first_name')->get();
+        $users = User::query()->orderBy('first_name')->get();
 
         return UserResource::collection($users);
     }

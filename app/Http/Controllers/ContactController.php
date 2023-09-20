@@ -18,7 +18,7 @@ class ContactController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return ContactResource::collection(Contact::orderBy('created_at', 'desc')->get());
+        return ContactResource::collection(Contact::query()->orderBy('created_at', 'desc')->get());
     }
 
     /**

@@ -42,5 +42,5 @@ Route::prefix('teacher')->group(function () {
 });
 
 Route::prefix('reports')->group(function () {
-    Route::view('list', 'webapp.reports.index')->name('reports.index');
+    Route::view('status', 'webapp.reports.index')->name('reports.index');
 });

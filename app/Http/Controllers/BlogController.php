@@ -22,7 +22,7 @@ class BlogController extends Controller
      */
     public function index(): View
     {
-        $blogs = Blog::with('author')
+        $blogs = Blog::query()->with('author')
             ->published()
             ->latestFirst()
             ->paginate($this->blogLimit)
@@ -37,7 +37,8 @@ class BlogController extends Controller
      */
     public function list(): JsonResponse
     {
-        $blogs = Blog::latestFirst()
+        $blogs = Blog::query()
+            ->latestFirst()
             ->published()
             ->get();
 

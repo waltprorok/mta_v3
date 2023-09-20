@@ -20,7 +20,7 @@ class BillingRateController extends Controller
         $billingRate = collect();
 
         try {
-            $billingRate = BillingRate::where('teacher_id', Auth::id())->with('billingRate')->get();
+            $billingRate = BillingRate::query()->where('teacher_id', Auth::id())->with('billingRate')->get();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }

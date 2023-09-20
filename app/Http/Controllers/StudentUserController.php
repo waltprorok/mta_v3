@@ -21,13 +21,15 @@ class StudentUserController extends Controller
         $lessons = [];
         $studentId = [];
 
-        $getStudent = Student::where('student_id', Auth::id())->get();
+        $getStudent = Student::query()
+            ->where('student_id', Auth::id())
+            ->get();
 
         foreach ($getStudent as $student) {
             $studentId[] = $student->id;
         }
 
-        $data = Lesson::where('student_id', $studentId)->get();
+        $data = Lesson::query()->where('student_id', $studentId)->get();
 
         if ($data->count()) {
             foreach ($data as $value) {

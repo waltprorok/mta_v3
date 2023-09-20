@@ -13,14 +13,17 @@ class StudentListController extends Controller
      */
     public function adminStudents(): JsonResponse
     {
-        $students = Student::orderBy('first_name')->get();
+        $students = Student::query()
+            ->orderBy('first_name')
+            ->get();
 
         return response()->json($students);
     }
 
     public function active(): JsonResponse
     {
-        $students = Student::with('hasOneFutureLesson')
+        $students = Student::query()
+            ->with('hasOneFutureLesson')
             ->where('teacher_id', Auth::id())
             ->where('status', Student::ACTIVE)
             ->firstNameAsc()
@@ -31,7 +34,8 @@ class StudentListController extends Controller
 
     public function waitlist(): JsonResponse
     {
-        $waitlists = Student::where('teacher_id', Auth::id())
+        $waitlists = Student::query()
+            ->where('teacher_id', Auth::id())
             ->where('status', Student::WAITLIST)
             ->firstNameAsc()
             ->get();
@@ -41,7 +45,8 @@ class StudentListController extends Controller
 
     public function leads(): JsonResponse
     {
-        $leads = Student::where('teacher_id', Auth::id())
+        $leads = Student::query()
+            ->where('teacher_id', Auth::id())
             ->where('status', Student::LEAD)
             ->firstNameAsc()
             ->get();
@@ -51,7 +56,8 @@ class StudentListController extends Controller
 
     public function inactive(): JsonResponse
     {
-        $inactives = Student::where('teacher_id', Auth::id())
+        $inactives = Student::query()
+            ->where('teacher_id', Auth::id())
             ->where('status', Student::INACTIVE)
             ->firstNameAsc()
             ->get();
