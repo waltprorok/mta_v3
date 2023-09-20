@@ -10,6 +10,7 @@ Route::prefix('web')->group(function () {
     Route::get('inactive', 'StudentListController@inactive')->name('student.inactive');
     Route::resource('billing-rate', 'BillingRateController');
     Route::post('student-save', 'StudentController@store');
+    Route::get('status', 'ReportController@status');
 });
 
 Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
@@ -41,5 +42,5 @@ Route::prefix('teacher')->group(function () {
 });
 
 Route::prefix('reports')->group(function () {
-    Route::get('/', 'ReportController@all')->name('reports.all');
+    Route::view('list', 'webapp.reports.index')->name('reports.index');
 });
