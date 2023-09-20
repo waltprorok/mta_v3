@@ -3,6 +3,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
+
 Route::prefix('web')->group(function () {
     Route::get('active', 'StudentListController@active')->name('student.active');
     Route::get('leads', 'StudentListController@leads')->name('student.leads');
@@ -12,8 +14,6 @@ Route::prefix('web')->group(function () {
     Route::post('student-save', 'StudentController@store');
     Route::get('status', 'ReportController@status');
 });
-
-Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
 
 Route::prefix('students')->group(function () {
     Route::view('/', 'webapp.student.index')->name('student.index');

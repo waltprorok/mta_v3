@@ -234,23 +234,12 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fa fa-line-chart"></i> Financial Reports
-                                </a>
-                            </li>
-
                             {{--                            <li class="nav-item">--}}
                             {{--                                <a href="#" class="nav-link">--}}
-                            {{--                                    <i class="fa fa-bar-chart"></i> Student Reports--}}
+                            {{--                                    <i class="fa fa-line-chart"></i> Financial Reports--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}
 
-                            {{--                            <li class="nav-item">--}}
-                            {{--                                <a href="#" class="nav-link">--}}
-                            {{--                                    <i class="fa fa-calendar-check-o"></i> Calendar Reports--}}
-                            {{--                                </a>--}}
-                            {{--                            </li>--}}
                         </ul>
                     </li>
                 @endif

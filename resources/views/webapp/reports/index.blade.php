@@ -20,6 +20,16 @@
                     </div>
                 </div>
             </div>
+
+            {{--            <div class="col-md-6">--}}
+            {{--                <div class="card">--}}
+            {{--                    <div class="card-header bg-light">Pie Chart</div>--}}
+
+            {{--                    <div class="card-body">--}}
+            {{--                        <canvas id="pie-chart" width="100%" height="50"></canvas>--}}
+            {{--                    </div>--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
         </div>
 
 

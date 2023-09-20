@@ -39,7 +39,6 @@ Route::group(['middleware' => ['guest']], function () {
 
 // Routes for authorized users
 Route::group(['middleware' => ['auth']], function () {
-
     Route::prefix('account')->group(function () {
         Route::get('subscription', 'SubscriptionController@index')->name('account.subscription');
         Route::get('subscription/invoices', 'SubscriptionController@invoices')->name('subscription.invoices');
@@ -85,7 +84,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 // middleware guard for subscribed users
-Route::group(['middleware' => ['subscribed']], function () {
+// Route::group(['middleware' => ['subscribed']], function () {
 // Example of single route with middleware
 // Route::get('/', 'LessonController@index')->name('calendar.index')->middleware('subscribed');
-});
+// });
