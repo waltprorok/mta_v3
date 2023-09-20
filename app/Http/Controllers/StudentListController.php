@@ -31,8 +31,7 @@ class StudentListController extends Controller
 
     public function waitlist(): JsonResponse
     {
-        $waitlists = Student::with('teacher')
-            ->where('teacher_id', Auth::id())
+        $waitlists = Student::where('teacher_id', Auth::id())
             ->where('status', Student::WAITLIST)
             ->firstNameAsc()
             ->get();
@@ -42,8 +41,7 @@ class StudentListController extends Controller
 
     public function leads(): JsonResponse
     {
-        $leads = Student::with('teacher')
-            ->where('teacher_id', Auth::id())
+        $leads = Student::where('teacher_id', Auth::id())
             ->where('status', Student::LEAD)
             ->firstNameAsc()
             ->get();
@@ -53,8 +51,7 @@ class StudentListController extends Controller
 
     public function inactive(): JsonResponse
     {
-        $inactives = Student::with('teacher')
-            ->where('teacher_id', Auth::id())
+        $inactives = Student::where('teacher_id', Auth::id())
             ->where('status', Student::INACTIVE)
             ->firstNameAsc()
             ->get();

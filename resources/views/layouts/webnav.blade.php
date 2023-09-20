@@ -106,7 +106,8 @@
 
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="{{ route('student.index') }}" class="nav-link {{ Route::currentRouteName() == 'student.index' || Route::currentRouteName() == 'student.schedule.edit'|| Route::currentRouteName() == 'student.schedule' || Route::currentRouteName() == 'student.edit' || Route::currentRouteName() ==  'student.profile' ? 'active' : '' }}">
+                                <a href="{{ route('student.index') }}"
+                                   class="nav-link {{ Route::currentRouteName() == 'student.index' || Route::currentRouteName() == 'student.schedule.edit'|| Route::currentRouteName() == 'student.schedule' || Route::currentRouteName() == 'student.edit' || Route::currentRouteName() ==  'student.profile' ? 'active' : '' }}">
                                     <i class="fa fa-list" aria-hidden="true"></i> Student List
                                 </a>
                             </li>
@@ -117,29 +118,29 @@
                                 </a>
                             </li>
 
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="#" class="nav-link">--}}
-{{--                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Practice Log--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            {{--                            <li class="nav-item">--}}
+                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Practice Log--}}
+                            {{--                                </a>--}}
+                            {{--                            </li>--}}
 
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="#" class="nav-link">--}}
-{{--                                    <i class="fa fa-book" aria-hidden="true"></i> Lending Library--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            {{--                            <li class="nav-item">--}}
+                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                    <i class="fa fa-book" aria-hidden="true"></i> Lending Library--}}
+                            {{--                                </a>--}}
+                            {{--                            </li>--}}
 
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="#" class="nav-link">--}}
-{{--                                    <i class="fa fa-pencil" aria-hidden="true"></i> Repertoire Tracker--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            {{--                            <li class="nav-item">--}}
+                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                    <i class="fa fa-pencil" aria-hidden="true"></i> Repertoire Tracker--}}
+                            {{--                                </a>--}}
+                            {{--                            </li>--}}
 
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="#" class="nav-link">--}}
-{{--                                    <i class="fa fa-bullhorn" aria-hidden="true"></i> Push Announcements--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            {{--                            <li class="nav-item">--}}
+                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                    <i class="fa fa-bullhorn" aria-hidden="true"></i> Push Announcements--}}
+                            {{--                                </a>--}}
+                            {{--                            </li>--}}
                         </ul>
                     </li>
 
@@ -188,35 +189,35 @@
                                 </a>
                             </li>
 
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="#" class="nav-link">--}}
-{{--                                    <i class="fa fa-list-ul"></i> List Fees &amp; Credits--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            {{--                            <li class="nav-item">--}}
+                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                    <i class="fa fa-list-ul"></i> List Fees &amp; Credits--}}
+                            {{--                                </a>--}}
+                            {{--                            </li>--}}
 
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="#" class="nav-link">--}}
-{{--                                    <i class="fa fa-plus-square"></i> Change Fee / Issue Credit--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            {{--                            <li class="nav-item">--}}
+                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                    <i class="fa fa-plus-square"></i> Change Fee / Issue Credit--}}
+                            {{--                                </a>--}}
+                            {{--                            </li>--}}
 
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="#" class="nav-link">--}}
-{{--                                    <i class="fa fa-exchange"></i> Expenses &amp; Other Income--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            {{--                            <li class="nav-item">--}}
+                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                    <i class="fa fa-exchange"></i> Expenses &amp; Other Income--}}
+                            {{--                                </a>--}}
+                            {{--                            </li>--}}
 
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="#" class="nav-link">--}}
-{{--                                    <i class="fa fa-envelope"></i> Invoicing--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            {{--                            <li class="nav-item">--}}
+                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                    <i class="fa fa-envelope"></i> Invoicing--}}
+                            {{--                                </a>--}}
+                            {{--                            </li>--}}
 
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="#" class="nav-link">--}}
-{{--                                    <i class="fa fa-car"></i> Mileage Tracker--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            {{--                            <li class="nav-item">--}}
+                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                    <i class="fa fa-car"></i> Mileage Tracker--}}
+                            {{--                                </a>--}}
+                            {{--                            </li>--}}
 
                         </ul>
                     </li>
@@ -228,28 +229,17 @@
 
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="{{ route('reports.all') }}" class="nav-link {{ Route::currentRouteName() == 'reports.all' ? 'active' : '' }}">
-                                    <i class="fa fa-area-chart"></i> All Reports
+                                <a href="{{ route('reports.index') }}" class="nav-link {{ Route::currentRouteName() == 'reports.index' ? 'active' : '' }}">
+                                    <i class="fa fa-area-chart"></i> Student Status
                                 </a>
                             </li>
 
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fa fa-line-chart"></i> Financial Reports
-                                </a>
-                            </li>
+                            {{--                            <li class="nav-item">--}}
+                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                    <i class="fa fa-line-chart"></i> Financial Reports--}}
+                            {{--                                </a>--}}
+                            {{--                            </li>--}}
 
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="#" class="nav-link">--}}
-{{--                                    <i class="fa fa-bar-chart"></i> Student Reports--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="#" class="nav-link">--}}
-{{--                                    <i class="fa fa-calendar-check-o"></i> Calendar Reports--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
                         </ul>
                     </li>
                 @endif

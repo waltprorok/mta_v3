@@ -20,24 +20,25 @@ Route::middleware(ProtectAgainstSpam::class)->group(function () {
 });
 
 // Routes for marketing
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('pricing', 'HomeController@pricing')->name('pricing');
-Route::get('contact', 'HomeController@contact')->name('contact');
-Route::post('contact', 'HomeController@createContact')->middleware(ProtectAgainstSpam::class);
-Route::get('privacy', 'HomeController@privacy')->name('privacy');
-Route::get('faq', 'HomeController@faq')->name('faq');
-Route::get('terms', 'HomeController@terms')->name('terms');
-Route::post('newsletter', 'NewsletterController@store')->name('newsletter')->middleware(ProtectAgainstSpam::class);
+Route::group(['middleware' => ['guest']], function () {
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('pricing', 'HomeController@pricing')->name('pricing');
+    Route::get('contact', 'HomeController@contact')->name('contact');
+    Route::post('contact', 'HomeController@createContact')->middleware(ProtectAgainstSpam::class);
+    Route::get('privacy', 'HomeController@privacy')->name('privacy');
+    Route::get('faq', 'HomeController@faq')->name('faq');
+    Route::get('terms', 'HomeController@terms')->name('terms');
+    Route::post('newsletter', 'NewsletterController@store')->name('newsletter')->middleware(ProtectAgainstSpam::class);
 
 // Routes for blog
-Route::prefix('blog')->group(function () {
-    Route::get('/', 'BlogController@index')->name('blog.index');
-    Route::get('{blog}', 'BlogController@show')->name('blog.show');
+    Route::prefix('blog')->group(function () {
+        Route::get('/', 'BlogController@index')->name('blog.index');
+        Route::get('{blog}', 'BlogController@show')->name('blog.show');
+    });
 });
 
 // Routes for authorized users
 Route::group(['middleware' => ['auth']], function () {
-
     Route::prefix('account')->group(function () {
         Route::get('subscription', 'SubscriptionController@index')->name('account.subscription');
         Route::get('subscription/invoices', 'SubscriptionController@invoices')->name('subscription.invoices');
@@ -83,7 +84,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 // middleware guard for subscribed users
-Route::group(['middleware' => ['subscribed']], function () {
+// Route::group(['middleware' => ['subscribed']], function () {
 // Example of single route with middleware
 // Route::get('/', 'LessonController@index')->name('calendar.index')->middleware('subscribed');
-});
+// });
