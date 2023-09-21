@@ -20,7 +20,7 @@ class HomeController extends Controller
 
     public function pricing()
     {
-        $plans = Plan::all();
+        $plans = Plan::all(['id', 'name', 'slug', 'cost']);
 
         return view('marketing.pricing', compact('plans'));
     }
