@@ -37,7 +37,7 @@ class ContactController extends Controller
     public function store(StoreContactRequest $request): JsonResponse
     {
         try {
-            Contact::create($request->all());
+            Contact::query()->create($request->all());
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }

@@ -56,7 +56,7 @@ class MessagesController extends Controller
      */
     public function send(SendMessageRequest $request): RedirectResponse
     {
-        Message::create([
+        Message::query()->create([
             'user_id_from' => Auth::id(),
             'user_id_to' => $request->input('to'),
             'subject' => $request->input('subject'),

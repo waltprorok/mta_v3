@@ -22,7 +22,8 @@ class BlogController extends Controller
      */
     public function index(): View
     {
-        $blogs = Blog::query()->with('author')
+        $blogs = Blog::query()
+            ->with('author')
             ->published()
             ->latestFirst()
             ->paginate($this->blogLimit)

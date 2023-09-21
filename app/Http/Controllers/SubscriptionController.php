@@ -57,11 +57,11 @@ class SubscriptionController extends Controller
         foreach ($plans as $plan) {
             if ($plan->stripe_plan == $user->subscription('premium')->stripe_plan) {
                 if ($plan->id == 1) {
-                    $newPlan = Plan::findOrFail(2);
+                    $newPlan = Plan::query()->findOrFail(2);
                     $user->subscription(self::PREMIUM)->swap($newPlan->stripe_plan);
                     break;
                 } elseif ($plan->id == 2) {
-                    $newPlan = Plan::findOrFail(1);
+                    $newPlan = Plan::query()->findOrFail(1);
                     $user->subscription(self::PREMIUM)->swap($newPlan->stripe_plan);
                     break;
                 }

@@ -20,7 +20,10 @@ class BillingRateController extends Controller
         $billingRate = collect();
 
         try {
-            $billingRate = BillingRate::query()->where('teacher_id', Auth::id())->with('billingRate')->get();
+            $billingRate = BillingRate::query()
+                ->where('teacher_id', Auth::id())
+                ->with('billingRate')
+                ->get();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }
@@ -44,7 +47,7 @@ class BillingRateController extends Controller
     public function store(StoreBillingRateRequest $request): JsonResponse
     {
         try {
-            BillingRate::create([
+            BillingRate::query()->create([
                 'teacher_id' => Auth::id(),
                 'type' => $request->get('type'),
                 'amount' => $request->get('amount'),
