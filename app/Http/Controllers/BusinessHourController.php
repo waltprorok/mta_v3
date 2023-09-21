@@ -50,7 +50,7 @@ class BusinessHourController extends Controller
                 $active = $value['active'];
             }
 
-            BusinessHours::create([
+            BusinessHours::query()->create([
                 'teacher_id' => Auth::id(),
                 'day' => $value['day'],
                 'active' => $active,
@@ -67,7 +67,10 @@ class BusinessHourController extends Controller
      */
     public function show()
     {
-        $hours = BusinessHours::query()->where('teacher_id', Auth::id())->get();
+        $hours = BusinessHours::query()
+            ->where('teacher_id', Auth::id())
+            ->orderBy('day')
+            ->get();
 
         $totalHours = $this->getTotalHours($hours);
 

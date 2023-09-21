@@ -57,7 +57,7 @@ class HomeController extends Controller
     public function createContact(StoreContactSubmissionRequest $request): RedirectResponse
     {
         try {
-            Contact::create([
+            Contact::query()->create([
                 'name' => $request->get('name'),
                 'email' => $request->get('email'),
                 'subject' => $request->get('subject'),

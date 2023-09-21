@@ -18,7 +18,7 @@ class ContactController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return ContactResource::collection(Contact::orderBy('created_at', 'desc')->get());
+        return ContactResource::collection(Contact::query()->orderBy('created_at', 'desc')->get());
     }
 
     /**
@@ -37,7 +37,7 @@ class ContactController extends Controller
     public function store(StoreContactRequest $request): JsonResponse
     {
         try {
-            Contact::create($request->all());
+            Contact::query()->create($request->all());
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }

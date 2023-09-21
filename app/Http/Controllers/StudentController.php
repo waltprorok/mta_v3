@@ -46,7 +46,10 @@ class StudentController extends Controller
      */
     public function index(int $id): JsonResponse
     {
-        $student = Student::query()->where(['id' => $id, 'teacher_id' => Auth::id()])->with('hasOneFutureLesson')->first();
+        $student = Student::query()
+            ->where(['id' => $id, 'teacher_id' => Auth::id()])
+            ->with('hasOneFutureLesson')
+            ->first();
 
         return response()->json($student);
     }
@@ -111,7 +114,7 @@ class StudentController extends Controller
         } elseif ($request->get('parent_email') !== null && $parentEmail === null && $student->parent_email === null) {
             try {
                 // create new parent user
-                $user = User::firstOrCreate([
+                $user = User::query()->firstOrCreate([
                     'first_name' => $request->get('first_name'),
                     'last_name' => $request->get('last_name'),
                     'email' => $request->get('parent_email'),

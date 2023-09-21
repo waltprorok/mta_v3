@@ -74,11 +74,11 @@ class LessonController extends Controller
 
     private function getAllLessonsForAdmin(): AnonymousResourceCollection
     {
-        return LessonResource::collection(Lesson::with('lessonTeacherId')->orderBy('title')->orderBy('start_date')->get());
+        return LessonResource::collection(Lesson::query()->with('lessonTeacherId')->orderBy('title')->orderBy('start_date')->get());
     }
 
     private function getLessonsForTeacherId(): AnonymousResourceCollection
     {
-        return LessonResource::collection(Lesson::where('teacher_id', Auth::id())->orderBy('title')->orderBy('start_date')->get());
+        return LessonResource::collection(Lesson::query()->where('teacher_id', Auth::id())->orderBy('title')->orderBy('start_date')->get());
     }
 }

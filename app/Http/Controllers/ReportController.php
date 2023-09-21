@@ -10,19 +10,23 @@ class ReportController extends Controller
 {
     public function status(): JsonResponse
     {
-        $studentActiveCount = Student::where('teacher_id', Auth::id())
+        $studentActiveCount = Student::query()
+            ->where('teacher_id', Auth::id())
             ->where('status', Student::ACTIVE)
             ->count();
 
-        $studentInActiveCount = Student::where('teacher_id', Auth::id())
+        $studentInActiveCount = Student::query()
+            ->where('teacher_id', Auth::id())
             ->where('status', Student::INACTIVE)
             ->count();
 
-        $studentLeadCount = Student::where('teacher_id', Auth::id())
+        $studentLeadCount = Student::query()
+            ->where('teacher_id', Auth::id())
             ->where('status', Student::LEAD)
             ->count();
 
-        $studentWaitlistCount = Student::where('teacher_id', Auth::id())
+        $studentWaitlistCount = Student::query()
+            ->where('teacher_id', Auth::id())
             ->where('status', Student::WAITLIST)
             ->count();
 
