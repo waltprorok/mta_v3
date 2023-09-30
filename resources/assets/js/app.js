@@ -38,9 +38,9 @@ Vue.component('billingRate', require('./components/teacher/BillingRate.vue').def
 Vue.component('blogs', require('./components/admin/blog/Blogs.vue').default);
 Vue.component('contacts', require('./components/admin/contact/Contacts.vue').default);
 Vue.component('lessons', require('./components/Lessons.vue').default);
-Vue.component('profile', require('./components/students/Profile.vue').default);
+Vue.component('profile', require('./components/student/Profile.vue').default);
 Vue.component('students', require('./components/admin/student/Students.vue').default);
-Vue.component('studentList', require('./components/students/StudentList.vue').default);
+Vue.component('studentList', require('./components/student/StudentList.vue').default);
 Vue.component('teachers', require('./components/admin/teacher/Teachers.vue').default);
 Vue.component('users', require('./components/admin/user/Users.vue').default);
 Vue.component('reportStudentStatus', require('./components/reports/StudentStatus.vue').default);
