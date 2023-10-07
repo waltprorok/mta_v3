@@ -41,8 +41,8 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('body') ? ' has-error' : '' }}">
-                                <label for="body">Body</label>
-                                <textarea class="form-control" name="body" rows="18">{{ $update->body }}</textarea>
+                                <label for="body">Body</label>&nbsp;<small>*Markdown Available</small>
+                                <textarea class="form-control" name="body" rows="24">{{ $update->body }}</textarea>
 
                                 @if ($errors->has('body'))
                                     <span class="help-block">
