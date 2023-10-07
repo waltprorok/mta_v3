@@ -12,7 +12,7 @@ class BlogTableDataSeeder extends Seeder
      */
     public function run()
     {
-        Blog::insert([
+        Blog::query()->insert([
             [
                 'id' => '1',
                 'author_id' => '1',
