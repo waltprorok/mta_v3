@@ -90,6 +90,22 @@ class Student extends Model
     }
 
     /**
+     * @return HasOne
+     */
+    public function invoice(): HasOne
+    {
+        return $this->hasOne(Invoice::class, 'student_id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class, 'student_id');
+    }
+
+    /**
      * @return BelongsTo
      */
     public function lesson(): BelongsTo

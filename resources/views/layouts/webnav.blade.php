@@ -160,6 +160,12 @@
 
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
+                                <a href="{{ route('invoice') }}" class="nav-link {{ Route::currentRouteName() == 'invoice' ? 'active' : '' }}">
+                                    <i class="fa fa-calculator" aria-hidden="true"></i> Invoice
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="fa fa-pencil"></i> Transaction Log
                                 </a>
