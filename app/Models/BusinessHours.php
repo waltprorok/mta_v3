@@ -32,7 +32,7 @@ class BusinessHours extends Model
      */
     public function getHourCloseTimeAttribute(): string
     {
-        return is_null($this->close_time) ? '' :  date('g:i a', strtotime($this->close_time));
+        return is_null($this->close_time) ? '' : date('g:i a', strtotime($this->close_time));
     }
 
     /**
@@ -40,6 +40,6 @@ class BusinessHours extends Model
      */
     public function getHourOpenTimeAttribute(): string
     {
-        return is_null($this->open_time) ? '' :  date('g:i a', strtotime($this->open_time));
+        return is_null($this->open_time) ? '' : date('g:i a', strtotime($this->open_time));
     }
 }
