@@ -38,10 +38,18 @@
                 <div class="row pb-5 p-5">
                     <div class="col-md-6">
                         <p class="font-weight-bold mb-4">Client Information</p>
-                        <p class="mb-1">{{ $data->first_name }} {{ $data->last_name }}</p>
-                        <p class="mb-1">{{ $data->address }} {{ $data->address_2 }}</p>
-                        <p class="mb-1">{{ $data->city }}, {{ $data->state }} {{ $data->zip }}</p>
-                        <p class="mb-1">{{ $data->email }}</p>
+                        <p class="mb-1">@if ($data->first_name)
+                                {{ $data->first_name }} {{ $data->last_name }}
+                            @else @endif</p>
+                        <p class="mb-1">@if ($data->address)
+                                {{ $data->address }} {{ $data->address_2 }}
+                            @else @endif</p>
+                        <p class="mb-1">@if ($data->city || $data->state || $data->zip)
+                                {{ $data->city }}, {{ $data->state }} {{ $data->zip }}
+                            @else @endif</p>
+                        <p class="mb-1">@if ($data->email)
+                                {{ $data->email }}
+                            @else @endif</p>
                     </div>
 
                     {{--                    <div class="col-md-6 text-right">--}}
@@ -59,6 +67,7 @@
                             <thead>
                             <tr>
                                 <th class="border-0 text-uppercase small font-weight-bold">ID</th>
+                                <th class="border-0 text-uppercase small font-weight-bold">Complete</th>
                                 <th class="border-0 text-uppercase small font-weight-bold">Title</th>
                                 <th class="border-0 text-uppercase small font-weight-bold">Start Date</th>
                                 <th class="border-0 text-uppercase small font-weight-bold">End Date</th>
@@ -71,6 +80,11 @@
                             @foreach($data->lessons as $lesson)
                                 <tr>
                                     <td>{{ $lesson->id }}</td>
+                                    <td>@if($lesson->complete)
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                        @else
+                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                        @endif</td>
                                     <td>{{ $lesson->title }}</td>
                                     <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('m-d-Y g:i a') }}</td>
                                     <td>{{ Carbon\Carbon::parse($lesson->end_date)->format('m-d-Y g:i a') }}</td>

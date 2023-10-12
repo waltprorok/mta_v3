@@ -9,7 +9,7 @@ class InvoiceController extends Controller
     public function index()
     {
         $student = Student::with('lessons', 'studentTeacher')
-            ->where('first_name', '=', 'Antonio')
+            ->where('first_name', '=', 'Alden')
             ->get();
 
         $subTotal = 0;
