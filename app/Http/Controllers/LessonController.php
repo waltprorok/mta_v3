@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\LessonResource;
 use App\Models\Lesson;
+use Carbon\Carbon;
 use DateTime;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -20,7 +21,7 @@ class LessonController extends Controller
     public function index()
     {
         $lessons = [];
-        $data = Lesson::where('teacher_id', Auth::id())->get();
+        $data = Lesson::query()->where('teacher_id', Auth::id())->get();
 
         if ($data->count()) {
             foreach ($data as $value) {
@@ -53,9 +54,14 @@ class LessonController extends Controller
         return view('webapp.calendar.index', compact('calendar'));
     }
 
-    public function list(): AnonymousResourceCollection
+    /**
+     * @param string $fromDate
+     * @param string $toDate
+     * @return AnonymousResourceCollection
+     */
+    public function list(string $fromDate, string $toDate): AnonymousResourceCollection
     {
-        return Auth::user()->isAdmin() ? $this->getAllLessonsForAdmin() : $this->getLessonsForTeacherId();
+        return Auth::user()->isAdmin() ? $this->getAllLessonsForAdmin($fromDate, $toDate) : $this->getLessonsForTeacherId($fromDate, $toDate);
     }
 
     /**
@@ -72,13 +78,36 @@ class LessonController extends Controller
         return response()->json($lesson);
     }
 
-    private function getAllLessonsForAdmin(): AnonymousResourceCollection
+    private function getAllLessonsForAdmin(string $fromDate, string $toDate): AnonymousResourceCollection
     {
-        return LessonResource::collection(Lesson::query()->with('lessonTeacherId')->orderBy('title')->orderBy('start_date')->get());
+        $fromDate = Carbon::createFromFormat('D M d Y', $fromDate)->format('Y-m-d');
+        $toDate = Carbon::createFromFormat('D M d Y', $toDate)->format('Y-m-d');
+
+        return LessonResource::collection(Lesson::query()
+            ->with('lessonTeacherId')
+            ->whereDate('start_date', '>=', $fromDate)
+            ->whereDate('start_date', '<=', $toDate)
+            ->orderBy('title')
+            ->orderBy('start_date')
+            ->get());
     }
 
-    private function getLessonsForTeacherId(): AnonymousResourceCollection
+    /**
+     * @param string $fromDate
+     * @param string $toDate
+     * @return AnonymousResourceCollection
+     */
+    private function getLessonsForTeacherId(string $fromDate, string $toDate): AnonymousResourceCollection
     {
-        return LessonResource::collection(Lesson::query()->where('teacher_id', Auth::id())->orderBy('title')->orderBy('start_date')->get());
+        $fromDate = Carbon::createFromFormat('D M d Y', $fromDate)->format('Y-m-d');
+        $toDate = Carbon::createFromFormat('D M d Y', $toDate)->format('Y-m-d');
+
+        return LessonResource::collection(Lesson::query()
+            ->where('teacher_id', Auth::id())
+            ->whereDate('start_date', '>=', $fromDate)
+            ->whereDate('start_date', '<=', $toDate)
+            ->orderBy('title')
+            ->orderBy('start_date')
+            ->get());
     }
 }

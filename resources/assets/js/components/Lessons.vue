@@ -15,7 +15,7 @@
             </div>
             <div class="form-group pull-right form-inline p-1">
                 <label for="end date" class="control-label p-1">To</label>
-                <v-date-picker v-model="dateEnd.date" mode="date">
+                <v-date-picker v-model="dateEnd.toDate" mode="date">
                     <template v-slot="{ inputValue, inputEvents }">
                         <input
                             class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
@@ -27,7 +27,7 @@
             </div>
             <div class="form-group pull-right form-inline p-1">
                 <label for="start date" class="control-label p-1">From</label>
-                <v-date-picker v-model="dateStart.date" mode="date">
+                <v-date-picker v-model="dateStart.fromDate" mode="date">
                     <template v-slot="{ inputValue, inputEvents }">
                         <input
                             class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
@@ -67,22 +67,17 @@ import {dateParse} from "@vuejs-community/vue-filter-date-parse";
 import {dateFormat} from "vue-filter-date-format";
 
 let today = new Date();
-let firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-let lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+let firstDay = new Date(today.getFullYear(), today.getMonth(), 1).toDateString();
+let lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).toDateString();
 
 export default {
-
     data() {
         return {
-            // range: {
-            //     start: new Date(),
-            //     end: new Date()
-            // },
             dateStart: {
-                date: firstDay.toString(),
+                fromDate: firstDay,
             },
             dateEnd: {
-                date: lastDay.toString(),
+                toDate: lastDay,
             },
             filter: '',
             columns: [
@@ -107,6 +102,22 @@ export default {
         }
     },
 
+    watch: {
+        dateStart: {
+            handler: function () {
+                this.fetchLessonList();
+            },
+            deep: true,
+        },
+
+        dateEnd: {
+            handler: function () {
+                this.fetchLessonList();
+            },
+            deep: true,
+        },
+    },
+
     mounted() {
         this.fetchLessonList();
     },
@@ -119,7 +130,10 @@ export default {
         dateFormat,
         dateParse,
         fetchLessonList: function () {
-            axios.get('lessons/list')
+            let from = new Date(this.dateStart.fromDate).toDateString();
+            let to = new Date(this.dateEnd.toDate).toDateString();
+
+            axios.get('lessons/list/' + from + '/' + to)
                 .then((response) => {
                     this.list = response.data.data;
                 }).catch((error) => {
@@ -137,8 +151,6 @@ export default {
             let self = this;
             self.lesson.id = id;
             self.lesson.complete = !complete;
-            console.log(self.dateStart);
-            console.log(self.dateEnd);
             let params = Object.assign({}, self.lesson);
 
             axios.patch('lessons/update/' + id, params)
