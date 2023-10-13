@@ -11,6 +11,7 @@ import VueFilterDateParse from '@vuejs-community/vue-filter-date-parse';
 import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
 import {VuejsDatatableFactory} from 'vuejs-datatable';
 import 'vuejs-datatable/dist/themes/bootstrap-3.esm';
+import VCalendar from 'v-calendar';
 
 require('./bootstrap');
 
@@ -23,6 +24,10 @@ Vue.use(VueFilterDateParse);
 Vue.use(VueFilterDateFormat);
 Vue.use(VuejsDatatableFactory);
 Vue.use(Notifications);
+Vue.use(VCalendar, {
+    // Use <vc-calendar /> instead of <v-calendar />
+    // ...other defaults
+});
 
 const router = new VueRouter({
     mode: 'history',

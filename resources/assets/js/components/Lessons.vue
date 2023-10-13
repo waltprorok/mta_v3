@@ -13,6 +13,30 @@
             <div class="form-group pull-right">
                 <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
             </div>
+            <div class="form-group pull-right form-inline p-1">
+                <label for="end date" class="control-label p-1">To</label>
+                <v-date-picker v-model="dateEnd.date" mode="date">
+                    <template v-slot="{ inputValue, inputEvents }">
+                        <input
+                            class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
+                            :value="inputValue"
+                            v-on="inputEvents"
+                        />
+                    </template>
+                </v-date-picker>
+            </div>
+            <div class="form-group pull-right form-inline p-1">
+                <label for="start date" class="control-label p-1">From</label>
+                <v-date-picker v-model="dateStart.date" mode="date">
+                    <template v-slot="{ inputValue, inputEvents }">
+                        <input
+                            class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
+                            :value="inputValue"
+                            v-on="inputEvents"
+                        />
+                    </template>
+                </v-date-picker>
+            </div>
             <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
                     <tr>
@@ -42,9 +66,24 @@ import TotalEntries from "./TotalEntries";
 import {dateParse} from "@vuejs-community/vue-filter-date-parse";
 import {dateFormat} from "vue-filter-date-format";
 
+let today = new Date();
+let firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+let lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
 export default {
+
     data() {
         return {
+            // range: {
+            //     start: new Date(),
+            //     end: new Date()
+            // },
+            dateStart: {
+                date: firstDay.toString(),
+            },
+            dateEnd: {
+                date: lastDay.toString(),
+            },
             filter: '',
             columns: [
                 {label: 'Completed', field: 'complete',},
@@ -98,6 +137,8 @@ export default {
             let self = this;
             self.lesson.id = id;
             self.lesson.complete = !complete;
+            console.log(self.dateStart);
+            console.log(self.dateEnd);
             let params = Object.assign({}, self.lesson);
 
             axios.patch('lessons/update/' + id, params)
