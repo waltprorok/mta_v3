@@ -18,9 +18,9 @@ class CreateStudentsTable extends Migration
         Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->increments('id');
             $table->integer('student_id')->unsigned();
-            $table->foreign('student_id')->references('id')->on(CreateUsersTable::TABLE_NAME);
+            $table->foreign('student_id')->references('id')->on('users');
             $table->integer('teacher_id')->unsigned();
-            $table->foreign('teacher_id')->references('id')->on(CreateUsersTable::TABLE_NAME);
+            $table->foreign('teacher_id')->references('id')->on('users');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->nullable()->unique();
