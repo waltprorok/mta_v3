@@ -17,8 +17,6 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
-let axios = require('axios');
-
 Vue.use(VueRouter);
 Vue.use(VueFilterDateParse);
 Vue.use(VueFilterDateFormat);
