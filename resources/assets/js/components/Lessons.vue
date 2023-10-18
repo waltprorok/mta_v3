@@ -37,7 +37,7 @@
                     </template>
                 </v-date-picker>
             </div>
-            <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
+            <datatable class="table table-responsive-md table-hover table-condensed" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
                     <tr>
                         <td>
@@ -109,7 +109,6 @@ export default {
             },
             deep: true,
         },
-
         dateEnd: {
             handler: function () {
                 this.fetchLessonList();
