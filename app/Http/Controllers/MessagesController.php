@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SendMessageRequest;
+use App\Mail\MessageTo;
 use App\Models\Message;
+use App\Models\User;
 use App\Services\MessageService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class MessagesController extends Controller
@@ -64,6 +67,10 @@ class MessagesController extends Controller
             'read' => 0,
             'deleted' => 0,
         ]);
+
+        $toUser = User::find($request->get('to'));
+
+        Mail::to($toUser->email)->send(new MessageTo($request, $toUser));
 
         return redirect()->route('message.inbox')->with('success', 'Message sent successfully!');
     }

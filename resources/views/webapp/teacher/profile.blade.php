@@ -6,7 +6,7 @@
         <h4>Teacher Profile</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('teacher.editSettings') }}">Settings</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('teacher.studioIndex') }}">Settings</a></li>
             <li class="breadcrumb-item active">Profile</li>
         </ul>
 
