@@ -19,7 +19,6 @@
     Support
 @endcomponent
 
-
 Happy Teaching,<br>
 {{ config('app.name') }}
 @endcomponent

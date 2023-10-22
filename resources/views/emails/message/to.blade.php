@@ -1,9 +1,11 @@
 @component('mail::message')
+# Incoming Messaging
 
-<h2>Incoming Messaging:</h2>
-
-<p>Hello {{$user['first_name']}},</p>
+@component('mail::panel')
+Hello {{$user['first_name']}},
 
 {{$request['message']}}
+
+@endcomponent
 
 @endcomponent

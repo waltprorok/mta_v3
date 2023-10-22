@@ -68,7 +68,7 @@ class MessagesController extends Controller
             'deleted' => 0,
         ]);
 
-        $toUser = User::find($request->get('to'));
+        $toUser = User::query()->find($request->get('to'));
 
         Mail::to($toUser->email)->send(new MessageTo($request, $toUser));
 
