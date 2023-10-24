@@ -184,16 +184,30 @@ class User extends Authenticatable
     {
         $lessonsInMonth = self::lessonsThisMonth();
         $billingRate = self::getBillingRates();
-        // TODO improve this logic there can be more than one rate
-        // Is Rate (lesson, hourly, weekly, monthly, yearly)?
-        // Get lessons for the month
-        // check which rate is assigned to the lesson
-        // ** add column and relationship for lesson and rate
-        // ** add option during lesson schedule
-        // Break down the rate vs lesson
+
         foreach ($billingRate as $rate) {
             if ($rate->type == 'lesson') {
                 $monthlyAmount = ($rate->amount * $lessonsInMonth);
+                break;
+            }
+
+            if ($rate->type == 'hourly') {
+                $monthlyAmount = ($rate->amount * $lessonsInMonth / 2);
+                break;
+            }
+
+            if ($rate->type == 'weekly') {
+                $monthlyAmount = ($rate->amount * $lessonsInMonth);
+                break;
+            }
+
+            if ($rate->type == 'monthly') {
+                $monthlyAmount = ($rate->amount * $lessonsInMonth / 4);
+                break;
+            }
+
+            if ($rate->type == 'yearly') {
+                $monthlyAmount = ($rate->amount / 52 * $lessonsInMonth);
                 break;
             }
         }
