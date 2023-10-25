@@ -160,7 +160,7 @@
 
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="{{ route('invoice') }}" class="nav-link {{ Route::currentRouteName() == 'invoice' ? 'active' : '' }}">
+                                <a href="{{ route('invoice.index') }}" class="nav-link {{ Route::currentRouteName() == 'invoice.index' ? 'active' : '' }}">
                                     <i class="fa fa-calculator" aria-hidden="true"></i> Invoice
                                 </a>
                             </li>

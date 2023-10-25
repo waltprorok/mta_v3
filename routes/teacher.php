@@ -13,6 +13,12 @@ Route::prefix('web')->group(function () {
     Route::resource('billing-rate', 'BillingRateController');
     Route::post('student-save', 'StudentController@store');
     Route::get('status', 'ReportController@status');
+    Route::get('invoice', 'InvoiceController@index');
+});
+
+Route::prefix('invoice')->group(function () {
+    Route::view('/', 'webapp.invoice.index')->name('invoice.index');
+    Route::get('/show/{id}', 'InvoiceController@show')->name('invoice.show');
 });
 
 Route::prefix('students')->group(function () {

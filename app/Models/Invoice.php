@@ -48,5 +48,4 @@ class Invoice extends Model
         return $this->belongsTo(Teacher::class);
     }
 
-
 }

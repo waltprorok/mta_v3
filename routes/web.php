@@ -75,10 +75,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('return/{id}', 'MessagesController@return')->name('message.return');
     });
 
-    Route::prefix('invoice')->group(function () {
-        Route::get('/', 'InvoiceController@index')->name('invoice');
-    });
-
     Route::group(['middleware' => ['household']], function () {
         Route::get('household', 'ParentController@household')->name('parent.household');
         Route::get('household/calendar', 'ParentController@calendar')->name('parent.calendar');

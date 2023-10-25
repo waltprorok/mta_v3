@@ -22,14 +22,14 @@ class CreateInvoicesTable extends Migration
             $table->integer('teacher_id')->unsigned();
             $table->foreign('teacher_id')->references('id')->on('users');
             $table->string('lesson_id')->nullable(); // array of lesson_ids
-            $table->decimal('subtotal')->default('0.0');
-            $table->decimal('discount')->default('0.0');
-            $table->decimal('total')->default('0.0');
-            $table->decimal('balance_due')->default('0.0');
-            $table->decimal('payment')->default('0.0');
-            $table->integer('payment_type_id')->unsigned();
+            $table->decimal('subtotal')->default(0.0);
+            $table->decimal('discount')->default(0.0);
+            $table->decimal('total')->default(0.0);
+            $table->decimal('balance_due')->default(0.0);
+            $table->decimal('payment')->default(0.0);
+            $table->integer('payment_type_id')->unsigned()->nullable();
             $table->foreign('payment_type_id')->references('id')->on('payment_types');
-            $table->decimal('adjustments')->default('0.0');
+            $table->decimal('adjustments')->default(0.0);
             $table->date('due_date')->nullable();
             $table->softDeletes();
             $table->timestamps();
