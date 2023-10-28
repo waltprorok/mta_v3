@@ -1,6 +1,9 @@
 @component('mail::message')
+
 # Your subscription has resumed
+
 @component('mail::panel')
+
 Hello {{ $user['first_name'] }},
 
 Thank you for choosing {{ config('app.name') }}!
@@ -11,5 +14,6 @@ Your subscription to {{ config('app.name') }} has resumed.
 
 @endcomponent
 
-{{ config('app.name') }}
+**{{ config('app.name') }}**
+
 @endcomponent

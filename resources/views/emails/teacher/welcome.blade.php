@@ -1,7 +1,8 @@
 @component('mail::message')
+
 # Welcome to Music Teachers Aid
 
-Hey {{$user['first_name']}},
+Greetings {{$user['first_name']}},
 
 We are excited that you signed up for Music Teachers Aid.
 
@@ -23,6 +24,7 @@ To unlock the full potential of the software please sign up for a <a href="{{ ro
 Get a Premium Account
 @endcomponent
 
-Thanks,<br>
+Thanks,<br/>
 {{ config('app.name') }}
+
 @endcomponent

@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'admin@musicteachersaid.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'waltprorok@gmail.com'),
         'name' => env('MAIL_FROM_NAME', 'Music Teachers Aid'),
     ],
 

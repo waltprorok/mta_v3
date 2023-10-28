@@ -1,6 +1,9 @@
 @component('mail::message')
+
 # Changes Have Been Made To Your Account
+
 @component('mail::panel')
+
 Hello {{ $user['first_name'] }},
 
 Thank you for choosing {{ config('app.name') }}!
@@ -11,5 +14,6 @@ Your email was recently changed to **{{ $user['email'] }}**
 
 @endcomponent
 
-{{ config('app.name') }}
+**{{ config('app.name') }}**
+
 @endcomponent
