@@ -8,11 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>
-        @if(View::hasSection('title'))
-            @yield('title') | MTA
-        @else
-            MTA
-        @endif
+        @if(View::hasSection('title')) @yield('title') | MTA @else MTA @endif
     </title>
 
     <!-- Favicons -->

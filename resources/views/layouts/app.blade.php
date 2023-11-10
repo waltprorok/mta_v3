@@ -215,7 +215,7 @@
 <script type="text/javascript" src="{{ asset('marketing/js/main.js') }}"></script>
 
 <!-- Scripts -->
-{{--<script src="{{ asset('js/app.js') }}"></script>--}}
+{{--<script src="{{ mix('js/app.js') }}"></script>--}}
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146819127-1"></script>
