@@ -86,7 +86,7 @@ class Student extends Model
      */
     public function hasOneLesson(): HasOne
     {
-        return $this->hasOne(Lesson::class);
+        return $this->hasOne(Lesson::class)->latest();
     }
 
     /**
