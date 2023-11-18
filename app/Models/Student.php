@@ -86,7 +86,23 @@ class Student extends Model
      */
     public function hasOneLesson(): HasOne
     {
-        return $this->hasOne(Lesson::class);
+        return $this->hasOne(Lesson::class)->latest();
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function invoice(): HasOne
+    {
+        return $this->hasOne(Invoice::class, 'student_id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class, 'student_id');
     }
 
     /**
@@ -123,11 +139,17 @@ class Student extends Model
         return $query->orderBy('first_name', 'asc');
     }
 
+    /**
+     * @return HasOne
+     */
     public function studentTeacher(): HasOne
     {
         return $this->hasOne(Teacher::class, 'teacher_id', 'teacher_id');
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function studentUsers(): BelongsTo
     {
         return $this->belongsTo(User::class);

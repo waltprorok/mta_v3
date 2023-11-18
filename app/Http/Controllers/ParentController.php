@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Lesson;
 use App\Models\Teacher;
 use App\Models\User;
+use Asdfx\LaravelFullcalendar\Facades\Calendar;
 use DateTime;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use MaddHatter\LaravelFullcalendar\Facades\Calendar;
 
 class ParentController extends Controller
 {

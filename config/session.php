@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'lifetime' => 720,
+    'lifetime' => 1440,
 
     'expire_on_close' => false,
 
@@ -124,7 +124,7 @@ return [
 
     'cookie' => env(
         'SESSION_COOKIE',
-        str_slug(env('APP_NAME', 'laravel'), '_').'_session'
+        str_slug(env('APP_NAME', 'laravel'), '_') . '_session'
     ),
 
     /*

@@ -11,18 +11,21 @@ import VueFilterDateParse from '@vuejs-community/vue-filter-date-parse';
 import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
 import {VuejsDatatableFactory} from 'vuejs-datatable';
 import 'vuejs-datatable/dist/themes/bootstrap-3.esm';
+import VCalendar from 'v-calendar';
 
 require('./bootstrap');
 
 window.Vue = require('vue').default;
-
-let axios = require('axios');
 
 Vue.use(VueRouter);
 Vue.use(VueFilterDateParse);
 Vue.use(VueFilterDateFormat);
 Vue.use(VuejsDatatableFactory);
 Vue.use(Notifications);
+Vue.use(VCalendar, {
+    // Use <vc-calendar /> instead of <v-calendar />
+    // ...other defaults
+});
 
 const router = new VueRouter({
     mode: 'history',
@@ -37,13 +40,14 @@ const router = new VueRouter({
 Vue.component('billingRate', require('./components/teacher/BillingRate.vue').default);
 Vue.component('blogs', require('./components/admin/blog/Blogs.vue').default);
 Vue.component('contacts', require('./components/admin/contact/Contacts.vue').default);
+Vue.component('invoiceList', require('./components/invoice/InvoiceList.vue').default);
 Vue.component('lessons', require('./components/Lessons.vue').default);
-Vue.component('profile', require('./components/students/Profile.vue').default);
+Vue.component('profile', require('./components/student/Profile.vue').default);
 Vue.component('students', require('./components/admin/student/Students.vue').default);
-Vue.component('studentList', require('./components/students/StudentList.vue').default);
+Vue.component('studentList', require('./components/student/StudentList.vue').default);
 Vue.component('teachers', require('./components/admin/teacher/Teachers.vue').default);
 Vue.component('users', require('./components/admin/user/Users.vue').default);
-Vue.component('reportStudentStatus', require('./components/reports/StudentStatus.vue').default);
+Vue.component('reportStudentStatusBar', require('./components/reports/StudentStatusBar.vue').default);
 
 
 const app = new Vue({

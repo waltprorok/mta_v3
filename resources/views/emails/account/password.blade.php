@@ -1,6 +1,9 @@
 @component('mail::message')
+
 # Changes Have Been Made To Your Account
+
 @component('mail::panel')
+
 Hello {{ $user['first_name'] }},
 
 Thank you for choosing {{ config('app.name') }}!
@@ -17,5 +20,6 @@ If you did not change it, please reset the password to protect your account.
 
 @endcomponent
 
-{{ config('app.name') }}
+**{{ config('app.name') }}**
+
 @endcomponent

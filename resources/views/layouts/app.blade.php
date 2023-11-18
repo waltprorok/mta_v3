@@ -143,17 +143,17 @@
                     </ul>
                 </div>
             </div>
-{{--            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6">--}}
-{{--                <div class="footer-widget ">--}}
-{{--                    <div class="footer-title">Social</div>--}}
-{{--                    <ul class="list-unstyled">--}}
-{{--                        <li><a href="#">Facebook</a></li>--}}
-{{--                        <li><a href="#">Twitter</a></li>--}}
-{{--                        <li><a href="#">LinkedIn</a></li>--}}
-{{--                        <li><a href="#">YouTube</a></li>--}}
-{{--                    </ul>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            {{--            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6">--}}
+            {{--                <div class="footer-widget ">--}}
+            {{--                    <div class="footer-title">Social</div>--}}
+            {{--                    <ul class="list-unstyled">--}}
+            {{--                        <li><a href="#">Facebook</a></li>--}}
+            {{--                        <li><a href="#">Twitter</a></li>--}}
+            {{--                        <li><a href="#">LinkedIn</a></li>--}}
+            {{--                        <li><a href="#">YouTube</a></li>--}}
+            {{--                    </ul>--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
             <div class="col-xl-3 col-lg-4 col-md-12 col-sm-6 col-6 col-lg-offset-2">
                 <div class="footer-widget ">
                     <h3 class="footer-title">Subscribe to Our News Letter</h3>
@@ -175,7 +175,7 @@
             <div class="col-md-12">
                 <!-- footer logo -->
                 <div class="footer-logo">
-                    <a href="{{ route('home') }}"><img src="/marketing/img/logo-alt1.png" alt="logo"></a>
+                    <a href="{{ route('home') }}"><img src="{{ asset('marketing/img/logo-alt1.png') }}" alt="logo"></a>
                 </div>
                 <!-- /footer logo -->
                 <!-- footer copyright -->
@@ -215,7 +215,7 @@
 <script type="text/javascript" src="{{ asset('marketing/js/main.js') }}"></script>
 
 <!-- Scripts -->
-{{--<script src="{{ asset('js/app.js') }}"></script>--}}
+{{--<script src="{{ mix('js/app.js') }}"></script>--}}
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146819127-1"></script>

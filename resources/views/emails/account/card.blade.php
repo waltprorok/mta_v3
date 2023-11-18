@@ -1,6 +1,9 @@
 @component('mail::message')
+
 # Your Credit Card on file was recently updated
+
 @component('mail::panel')
+
 Hello {{ $user['first_name'] }},
 
 Thank you for choosing {{ config('app.name') }}!
@@ -15,5 +18,5 @@ Your credit card on file was recently changed to:
 
 @endcomponent
 
-{{ config('app.name') }}
+**{{ config('app.name') }}**
 @endcomponent

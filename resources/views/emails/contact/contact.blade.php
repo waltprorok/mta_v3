@@ -1,4 +1,5 @@
 @component('mail::message')
+
 # New Contact Message
 
 ### {{ $subject }}
@@ -11,5 +12,6 @@
     Reply to this Email
 @endcomponent
 
-{{ config('app.name') }}
+**{{ config('app.name') }}**
+
 @endcomponent

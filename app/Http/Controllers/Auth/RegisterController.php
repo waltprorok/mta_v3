@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 
+use App\Events\RegisterUserEvent;
 use App\Http\Controllers\Controller;
-use App\Mail\WelcomeMail;
-use App\Models\Teacher;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -50,13 +51,13 @@ class RegisterController extends Controller
      * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make($data, [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed',
             'terms' => 'required|int:1',
         ]);
     }
@@ -65,11 +66,11 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param array $data
-     * @return User
+     * @return Builder|Model
      */
-    protected function create(array $data): User
+    protected function create(array $data)
     {
-        $user = User::create([
+        $user = User::query()->create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
@@ -79,15 +80,9 @@ class RegisterController extends Controller
             'terms' => $data['terms'],
         ]);
 
-        Teacher::create([
-            'teacher_id' => $user->id,
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-        ]);
 
-        Mail::to($data['email'])->send(new WelcomeMail($user));
+        Event::dispatch(new RegisterUserEvent($data, $user));
 
-        return $user;
+       return $user;
     }
 }

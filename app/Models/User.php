@@ -138,9 +138,9 @@ class User extends Authenticatable
         return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
     }
 
-    public static function lessonsThisMonth(): int
+    public static function getLessonsThisMonth()
     {
-        return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
+        return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
     }
 
     public function messages(): HasMany
@@ -182,21 +182,36 @@ class User extends Authenticatable
 
     public static function monthlyIncome(): int
     {
-        $lessonsInMonth = self::lessonsThisMonth();
+        $lessonsInMonth = self::getLessonsThisMonth();
         $billingRate = self::getBillingRates();
-        // TODO improve this logic there can be more than one rate
-        // Is Rate (lesson, hourly, weekly, monthly, yearly)?
-        // Get lessons for the month
-        // check which rate is assigned to the lesson
-        // ** add column and relationship for lesson and rate
-        // ** add option during lesson schedule
-        // Break down the rate vs lesson
+
         foreach ($billingRate as $rate) {
             if ($rate->type == 'lesson') {
-                $monthlyAmount = ($rate->amount * $lessonsInMonth);
+                $monthlyAmount = ($rate->amount * $lessonsInMonth->count());
+                break;
+            }
+
+            if ($rate->type == 'hourly') {
+                $monthlyAmount = ($lessonsInMonth->sum('interval') / 60 * $rate->amount);
+                break;
+            }
+
+            if ($rate->type == 'weekly') {
+                $monthlyAmount = ($rate->amount * $lessonsInMonth->count());
+                break;
+            }
+
+            if ($rate->type == 'monthly') {
+                $monthlyAmount = ($rate->amount * $lessonsInMonth->count() / 4);
+                break;
+            }
+
+            if ($rate->type == 'yearly') {
+                $monthlyAmount = ($rate->amount / 52 * $lessonsInMonth->count());
                 break;
             }
         }
+
 
         return $monthlyAmount ?? 0;
     }

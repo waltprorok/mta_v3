@@ -1,6 +1,9 @@
 @component('mail::message')
+
 # Your subscription plan has changed
+
 @component('mail::panel')
+
 Hello {{ $user['first_name'] }},
 
 Thank you for choosing {{ config('app.name') }}!
@@ -11,5 +14,6 @@ Your subscription plan to {{ config('app.name') }} has changed to a **{{ ucfirst
 
 @endcomponent
 
-{{ config('app.name') }}
+**{{ config('app.name') }}**
+
 @endcomponent

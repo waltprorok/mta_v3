@@ -18,7 +18,7 @@ class CreateTeachersTable extends Migration
         Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->increments('id');
             $table->integer('teacher_id')->unsigned();
-            $table->foreign('teacher_id')->references('id')->on(CreateUsersTable::TABLE_NAME)->onDelete('cascade');
+            $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('studio_name')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();

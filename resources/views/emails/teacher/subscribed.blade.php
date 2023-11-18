@@ -1,25 +1,24 @@
 @component('mail::message')
+
 # Music Teachers Aid | Premium Subscription Email
 
-<p>Hello {{$user['first_name']}},</p>
+Hello {{$user['first_name']}},
 
-<p>Thank you for your purchase of the Premium Subscription with Music Teachers Aid.</p>
+Thank you for your purchase of the **Premium** Subscription with Music Teachers Aid.
 
-<p>Now you can enjoy all the benefits of the Premium Account</p>
+Now you can enjoy all the benefits of the Premium Account:
 
-<ul>
-    <li>Unlimited Students</li>
-    <li>Scheduling Notifications</li>
-    <li>Automatic Payments</li>
-</ul>
+* Unlimited Students
+* Scheduling Notifications
+* Automatic Payments
 
-<p>Under Account click Subscription Tab click <b>Download Invoices</b> to view the PDF invoice.</p>
+Under Account click Subscription Tab click **Download Invoices** to view the PDF invoice.
 
 @component('mail::button', ['url' => route('contact')])
     Support
 @endcomponent
 
-
-Happy Teaching,<br>
+Happy Teaching,<br/>
 {{ config('app.name') }}
+
 @endcomponent

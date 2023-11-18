@@ -13,7 +13,31 @@
             <div class="form-group pull-right">
                 <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
             </div>
-            <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
+            <div class="form-group pull-right form-inline p-1">
+                <label for="end date" class="control-label p-1">To</label>
+                <v-date-picker v-model="dateEnd.toDate" mode="date">
+                    <template v-slot="{ inputValue, inputEvents }">
+                        <input
+                            class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
+                            :value="inputValue"
+                            v-on="inputEvents"
+                        />
+                    </template>
+                </v-date-picker>
+            </div>
+            <div class="form-group pull-right form-inline p-1">
+                <label for="start date" class="control-label p-1">From</label>
+                <v-date-picker v-model="dateStart.fromDate" mode="date">
+                    <template v-slot="{ inputValue, inputEvents }">
+                        <input
+                            class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
+                            :value="inputValue"
+                            v-on="inputEvents"
+                        />
+                    </template>
+                </v-date-picker>
+            </div>
+            <datatable class="table table-responsive-md table-hover table-condensed" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
                     <tr>
                         <td>
@@ -42,9 +66,19 @@ import TotalEntries from "./TotalEntries";
 import {dateParse} from "@vuejs-community/vue-filter-date-parse";
 import {dateFormat} from "vue-filter-date-format";
 
+let today = new Date();
+let firstDay = new Date(today.getFullYear(), today.getMonth(), 1).toDateString();
+let lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).toDateString();
+
 export default {
     data() {
         return {
+            dateStart: {
+                fromDate: firstDay,
+            },
+            dateEnd: {
+                toDate: lastDay,
+            },
             filter: '',
             columns: [
                 {label: 'Completed', field: 'complete',},
@@ -68,6 +102,21 @@ export default {
         }
     },
 
+    watch: {
+        dateStart: {
+            handler: function () {
+                this.fetchLessonList();
+            },
+            deep: true,
+        },
+        dateEnd: {
+            handler: function () {
+                this.fetchLessonList();
+            },
+            deep: true,
+        },
+    },
+
     mounted() {
         this.fetchLessonList();
     },
@@ -80,7 +129,10 @@ export default {
         dateFormat,
         dateParse,
         fetchLessonList: function () {
-            axios.get('lessons/list')
+            let from = new Date(this.dateStart.fromDate).toDateString();
+            let to = new Date(this.dateEnd.toDate).toDateString();
+
+            axios.get('lessons/list/' + from + '/' + to)
                 .then((response) => {
                     this.list = response.data.data;
                 }).catch((error) => {

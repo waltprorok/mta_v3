@@ -102,7 +102,8 @@
                                         @if($startDate)
                                             <input class="date form-control" title="Please select a date" autocomplete="off" type="text" id="editLessonDate" name="start_date" value="{{ $startDate }}">
                                         @else
-                                            <input class="date form-control" title="Please select a date" autocomplete="off" type="text" id="editLessonDate" name="start_date" value="{{ date('Y-m-d', strtotime($lesson->start_date)) }}">
+                                            <input class="date form-control" title="Please select a date" autocomplete="off" type="text" id="editLessonDate" name="start_date"
+                                                   value="{{ date('Y-m-d', strtotime($lesson->start_date)) }}">
                                         @endif
                                         @if ($errors->has('start_date'))
                                             <span class="help-block"><strong>{{ $errors->first('start_date') }}</strong></span>
@@ -186,7 +187,8 @@
                                             <label for="billing_rate" class="control-label">Billing Rate</label>
                                             <select class="form-control" id="billing_rate" name="billing_rate_id">
                                                 @if($lesson->billingRate)
-                                                    <option value="{{ $lesson->billingRate->id }}">${{ number_format($lesson->billingRate->amount, 2) }} | {{ ucfirst($lesson->billingRate->type) }}</option>
+                                                    <option value="{{ $lesson->billingRate->id }}">${{ number_format($lesson->billingRate->amount, 2) }}
+                                                        | {{ ucfirst($lesson->billingRate->type) }}</option>
                                                 @endif
                                                 @foreach($billingRates as $billingRate)
                                                     <option value="{{ $billingRate->id }}">${{ $billingRate->amount }} | {{ ucfirst($billingRate->type) }}</option>

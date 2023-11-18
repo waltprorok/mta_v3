@@ -21,11 +21,9 @@ class StudentLessonController extends Controller
         $students = Student::query()->where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::query()->where('teacher_id', Auth::id())->get();
         $billingRates = BillingRate::query()->where('teacher_id', Auth::id())->get();
-        $lessons = Lesson::query()->where('teacher_id', Auth::id())->whereDate('start_date', $day)->orderBy('start_date', 'asc')->get();
+        $lessons = Lesson::query()->where('teacher_id', Auth::id())->whereDate('start_date', $day)->orderBy('start_date')->get();
         $lastLesson = Student::with('hasOneLesson')
-            ->where('id', $id)
-            ->where('teacher_id', Auth::id())
-            ->where('status', Student::ACTIVE)
+            ->where(['id' => $id, 'teacher_id' => Auth::id(), 'status' => Student::ACTIVE])
             ->get();
 
         $startDate = $day;
@@ -50,7 +48,7 @@ class StudentLessonController extends Controller
     {
         $students = Student::query()->where(['id' => $student_id, 'teacher_id' => Auth::id()])->get();
         $businessHours = BusinessHours::query()->where('teacher_id', Auth::id())->get();
-        $lessons = Lesson::query()->where(['student_id' => $student_id, 'id' => $id, 'teacher_id' => Auth::id()])->orderBy('start_date', 'asc')->with('billingRate')->get();
+        $lessons = Lesson::query()->where(['student_id' => $student_id, 'id' => $id, 'teacher_id' => Auth::id()])->orderBy('start_date')->with('billingRate')->get();
         $billingRates = BillingRate::query()->where('teacher_id', Auth::id())->get();
 
         $startDate = $day;
@@ -61,10 +59,10 @@ class StudentLessonController extends Controller
                 $day = Carbon::parse($lesson->start_date)->format('l');
                 $lessonStartDate = Carbon::parse($lesson->start_date)->format('Y-m-d');
             }
-            $allLessons = Lesson::query()->where('teacher_id', Auth::id())->whereDate('start_date', $lessonStartDate)->orderBy('start_date', 'asc')->get();
+            $allLessons = Lesson::query()->where('teacher_id', Auth::id())->whereDate('start_date', $lessonStartDate)->orderBy('start_date')->get();
         } else {
             $day = Carbon::parse($day)->format('l');
-            $allLessons = Lesson::query()->where('teacher_id', Auth::id())->whereDate('start_date', $startDate)->orderBy('start_date', 'asc')->get();
+            $allLessons = Lesson::query()->where('teacher_id', Auth::id())->whereDate('start_date', $startDate)->orderBy('start_date')->get();
         }
 
         $allTimes = $this->getAllTimes($day, $businessHours);
@@ -119,6 +117,9 @@ class StudentLessonController extends Controller
         return null;
     }
 
+    /**
+     * @throws Exception
+     */
     public function destroy(Request $request, Lesson $id)
     {
         if ($request->input('action') == 'delete') {
@@ -170,6 +171,8 @@ class StudentLessonController extends Controller
             case "Sunday":
                 $today = 6;
                 break;
+            default:
+                $today = 0;
         }
 
         return $today;
@@ -193,7 +196,9 @@ class StudentLessonController extends Controller
     {
         $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
 
-        $lesson = Lesson::query()->where(['student_id' => $request->get('student_id'), 'teacher_id' => Auth::id(), 'id' => $request->get('id')])->first();
+        $lesson = Lesson::query()
+            ->where(['student_id' => $request->get('student_id'), 'teacher_id' => Auth::id(), 'id' => $request->get('id')])
+            ->first();
         $lesson->id = $request->get('id');
         $lesson->student_id = $request->get('student_id');
         $lesson->teacher_id = Auth::id();

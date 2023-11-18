@@ -15,24 +15,13 @@
                     <div class="card-header bg-light">Student Status</div>
                     <div class="card-body">
                         <div id="app">
-                            <report-student-status></report-student-status>
+                            <report-student-status-bar></report-student-status-bar>
                         </div>
                     </div>
                 </div>
             </div>
-
-            {{--            <div class="col-md-6">--}}
-            {{--                <div class="card">--}}
-            {{--                    <div class="card-header bg-light">Pie Chart</div>--}}
-
-            {{--                    <div class="card-body">--}}
-            {{--                        <canvas id="pie-chart" width="100%" height="50"></canvas>--}}
-            {{--                    </div>--}}
-            {{--                </div>--}}
-            {{--            </div>--}}
         </div>
 
-
-        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ mix('js/app.js') }}"></script>
 
 @endsection

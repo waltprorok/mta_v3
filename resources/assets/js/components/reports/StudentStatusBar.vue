@@ -21,7 +21,7 @@ export default {
                             datasets: [
                                 {
                                     label: 'Students',
-                                    backgroundColor: ['green', 'red', 'blue', 'orange'],
+                                    backgroundColor: ['green', 'purple', 'blue', 'orange'],
                                     data: this.data
                                 }
                             ]
