@@ -29,7 +29,7 @@ class Invoice extends Model
      */
     public function paymentType(): BelongsTo
     {
-        return $this->belongsTo(PaymentType::class);
+        return $this->belongsTo(PaymentType::class, 'payment_type_id');
     }
 
     /**
