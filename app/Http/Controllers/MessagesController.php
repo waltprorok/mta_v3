@@ -7,6 +7,7 @@ use App\Mail\MessageTo;
 use App\Models\Message;
 use App\Models\User;
 use App\Services\MessageService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -25,9 +26,9 @@ class MessagesController extends Controller
     }
 
     /**
-     * @return View
+     * @return JsonResponse
      */
-    public function index(): View
+    public function index()
     {
         $messages = Message::query()
             ->with('userFrom')
@@ -36,7 +37,7 @@ class MessagesController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('webapp.messages.inbox')->with('messages', $messages);
+        return response()->json($messages);
     }
 
     /**

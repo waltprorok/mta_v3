@@ -108,7 +108,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('student.index') }}"
                                    class="nav-link {{ Route::currentRouteName() == 'student.index' || Route::currentRouteName() == 'student.schedule.edit'|| Route::currentRouteName() == 'student.schedule' || Route::currentRouteName() == 'student.edit' || Route::currentRouteName() ==  'student.profile' ? 'active' : '' }}">
-                                    <i class="fa fa-list" aria-hidden="true"></i> Student List
+                                    <i class="fa fa-list" aria-hidden="true"></i> List
                                 </a>
                             </li>
 
