@@ -12,7 +12,7 @@
             <div class="form-group pull-right pr-2">
                 <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
             </div>
-            <datatable class="table table-responsive-md table-hover" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
+            <datatable class="table table-condensed table-hover" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
                     <tr @click="onRowClick(row.id)">
                         <td v-if="row.read == 1"><span class="badge badge-success">READ</span></td>
@@ -20,7 +20,7 @@
                         <td>{{ row.user_from.first_name }} {{ row.user_from.last_name }}</td>
                         <td v-text="row.user_from.email"></td>
                         <td v-text="row.subject"></td>
-                        <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
+                        <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                     </tr>
                 </template>
             </datatable>

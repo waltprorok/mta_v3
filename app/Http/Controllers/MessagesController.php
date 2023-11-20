@@ -15,6 +15,10 @@ use Illuminate\View\View;
 
 class MessagesController extends Controller
 {
+    protected $casts = [
+        'read' => 'boolean',
+    ];
+
     /**
      * @var MessageService
      */
