@@ -84,7 +84,7 @@
                     <td><a :href="'mailto:' + row.email" v-text="row.email"></a></td>
                     <td v-text="row.subject"></td>
                     <td v-text="row.message.substring(0, 100) + '...'"></td>
-                    <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
+                    <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                     <td class="text-nowrap">
                         <button @click="showContact(row.id, true)" class="btn btn-outline-primary btn-sm" title="read"><i class="fa fa-envelope-open"></i></button>
                         <button @click="showContact(row.id, false)" class="btn btn-outline-secondary btn-sm" title="edit"><i class="fa fa-edit"></i></button>

@@ -25,9 +25,9 @@
                     </td>
                     <td v-text="row.title"></td>
                     <td v-text="row.slug"></td>
-                    <td>{{ row.released_on | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
-                    <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
-                    <td>{{ row.updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
+                    <td>{{ row.released_on | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
+                    <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
+                    <td>{{ row.updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                     <td class="text-nowrap">
                             <span class="align-baseline">
                                 <a :href="`/admin/blog/${row.id}/edit`" class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
