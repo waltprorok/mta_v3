@@ -43,7 +43,6 @@ import {dateFormat} from "vue-filter-date-format";
 export default {
     data: function () {
         return {
-            class_error: '',
             filter: '',
             columns: [
                 {label: 'Status', field: 'read',},
@@ -56,7 +55,6 @@ export default {
             page: 1,
             per_page: 10,
             pages: [10, 25, 50, 100],
-
         }
     },
 
