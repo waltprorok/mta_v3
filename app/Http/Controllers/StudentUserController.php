@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Lesson;
 use App\Models\Student;
-use Asdfx\LaravelFullcalendar\Facades\Calendar;
 use DateTime;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use MaddHatter\LaravelFullcalendar\Facades\Calendar;
 
 class StudentUserController extends Controller
 {

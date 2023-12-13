@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\LessonResource;
 use App\Models\Lesson;
-use Asdfx\LaravelFullcalendar\Facades\Calendar;
 use Carbon\Carbon;
 use DateTime;
 use Exception;
@@ -12,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
+use MaddHatter\LaravelFullcalendar\Facades\Calendar;
 
 class LessonController extends Controller
 {

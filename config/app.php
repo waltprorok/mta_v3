@@ -167,7 +167,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         MaddHatter\LaravelFullcalendar\ServiceProvider::class,
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
-//        Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
 
         /*
