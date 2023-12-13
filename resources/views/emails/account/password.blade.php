@@ -18,8 +18,8 @@ If you did not change it, please reset the password to protect your account.
     Reset Password
 @endcomponent
 
-@endcomponent
-
 **{{ config('app.name') }}**
+
+@endcomponent
 
 @endcomponent
