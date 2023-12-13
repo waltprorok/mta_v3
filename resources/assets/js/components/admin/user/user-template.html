@@ -22,7 +22,7 @@
                     <td v-html="getUserType(row.teacher)"></td>
                     <td v-html="getUserType(row.student)"></td>
                     <td v-html="getUserType(row.parent)"></td>
-                    <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY hh:mm a') }}</td>
+                    <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                 </tr>
             </template>
         </datatable>
