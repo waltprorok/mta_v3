@@ -12,6 +12,4 @@
     Reply to this Email
 @endcomponent
 
-**{{ config('app.name') }}**
-
 @endcomponent

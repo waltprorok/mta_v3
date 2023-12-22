@@ -14,6 +14,4 @@ Your email was recently changed to **{{ $user['email'] }}**
 
 @endcomponent
 
-**{{ config('app.name') }}**
-
 @endcomponent

@@ -20,8 +20,6 @@ If you did not change it, please reset the password to protect your account.
 
 @endcomponent
 
-**{{ config('app.name') }}**
-
 @endcomponent
 
 

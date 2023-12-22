@@ -2,6 +2,8 @@
 
 # Welcome to Music Teachers Aid
 
+@component('mail::panel')
+
 Greetings {{$user['first_name']}},
 
 You have been added to this service by your music teacher.
@@ -22,8 +24,9 @@ If you have any questions or concerns please use the support link after you log 
     Support
 @endcomponent
 
-
 Thanks,<br/>
 {{ config('app.name') }}
+
+@endcomponent
 
 @endcomponent

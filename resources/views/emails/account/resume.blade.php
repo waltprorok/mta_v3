@@ -14,6 +14,4 @@ Your subscription to {{ config('app.name') }} has resumed.
 
 @endcomponent
 
-**{{ config('app.name') }}**
-
 @endcomponent

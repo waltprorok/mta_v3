@@ -14,6 +14,4 @@ Your subscription to {{ config('app.name') }} has been cancelled.
 
 @endcomponent
 
-**{{ config('app.name') }}**
-
 @endcomponent

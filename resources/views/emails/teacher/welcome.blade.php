@@ -2,6 +2,8 @@
 
 # Welcome to Music Teachers Aid
 
+@component('mail::panel')
+
 Greetings {{$user['first_name']}},
 
 We are excited that you signed up for Music Teachers Aid.
@@ -26,5 +28,7 @@ Get a Premium Account
 
 Thanks,<br/>
 {{ config('app.name') }}
+
+@endcomponent
 
 @endcomponent

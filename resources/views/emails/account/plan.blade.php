@@ -14,6 +14,4 @@ Your subscription plan to {{ config('app.name') }} has changed to a **{{ ucfirst
 
 @endcomponent
 
-**{{ config('app.name') }}**
-
 @endcomponent

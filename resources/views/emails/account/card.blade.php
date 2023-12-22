@@ -18,5 +18,4 @@ Your credit card on file was recently changed to:
 
 @endcomponent
 
-**{{ config('app.name') }}**
 @endcomponent

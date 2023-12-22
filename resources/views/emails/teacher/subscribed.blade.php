@@ -2,6 +2,8 @@
 
 # Music Teachers Aid | Premium Subscription Email
 
+@component('mail::panel')
+
 Hello {{$user['first_name']}},
 
 Thank you for your purchase of the **Premium** Subscription with Music Teachers Aid.
@@ -20,5 +22,7 @@ Under Account click Subscription Tab click **Download Invoices** to view the PDF
 
 Happy Teaching,<br/>
 {{ config('app.name') }}
+
+@endcomponent
 
 @endcomponent

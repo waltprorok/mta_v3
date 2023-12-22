@@ -37,6 +37,6 @@ class ContactForm extends Mailable
     {
         return $this->from($this->email, $this->name)
             ->subject($this->subject)
-            ->markdown('emails.contact');
+            ->markdown('emails.contact.contact');
     }
 }
