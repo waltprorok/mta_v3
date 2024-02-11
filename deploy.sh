@@ -7,7 +7,7 @@ composer install --prefer-dist --optimize-autoloader --no-dev -o
 php artisan optimize:clear
 php artisan route:cache
 php artisan view:cache
-php artisan route:cache
+php artisan event:cache
 npm install
 npm run production
 php artisan up
