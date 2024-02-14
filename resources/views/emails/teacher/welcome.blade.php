@@ -1,14 +1,12 @@
 @component('mail::message')
 
-# Welcome to Music Teachers Aid
-
 @component('mail::panel')
 
 Greetings {{$user['first_name']}},
 
-We are excited that you signed up for Music Teachers Aid.
+We are excited that you signed up for {{ config('app.name') }}.
 
-Music Teachers Aid is built by a former music teacher and Berklee College of Music attendee.
+{{ config('app.name') }} is built by a former music teacher and Berklee College of Music attendee.
 
 We hope that you love our software as much as we do.
 
@@ -26,8 +24,8 @@ To unlock the full potential of the software please sign up for a <a href="{{ ro
 Get a Premium Account
 @endcomponent
 
-Thanks,<br/>
-{{ config('app.name') }}
+Thanks!<br/>
+- {{ config('app.name') }}
 
 @endcomponent
 

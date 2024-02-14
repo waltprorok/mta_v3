@@ -1,16 +1,15 @@
 @component('mail::message')
 
-# Your subscription has resumed
-
 @component('mail::panel')
 
 Hello {{ $user['first_name'] }},
 
-Thank you for choosing {{ config('app.name') }}!
+Your subscription to {{ config('app.name') }} has resumed.
 
 This message is a confirmation of recent changes to your account.
 
-Your subscription to {{ config('app.name') }} has resumed.
+Thanks!
+- {{ config('app.name') }}
 
 @endcomponent
 

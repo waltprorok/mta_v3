@@ -1,7 +1,5 @@
 @component('mail::message')
 
-# Welcome to Music Teachers Aid
-
 @component('mail::panel')
 
 Greetings {{$user['first_name']}},
@@ -24,8 +22,8 @@ If you have any questions or concerns please use the support link after you log 
     Support
 @endcomponent
 
-Thanks,<br/>
-{{ config('app.name') }}
+Thanks!<br/>
+- {{ config('app.name') }}
 
 @endcomponent
 

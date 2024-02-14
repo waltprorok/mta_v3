@@ -1,7 +1,5 @@
 @component('mail::message')
 
-# Music Teachers Aid | Premium Subscription Email
-
 @component('mail::panel')
 
 Hello {{$user['first_name']}},
@@ -20,8 +18,8 @@ Under Account click Subscription Tab click **Download Invoices** to view the PDF
     Support
 @endcomponent
 
-Happy Teaching,<br/>
-{{ config('app.name') }}
+Happy Teaching!<br/>
+- {{ config('app.name') }}
 
 @endcomponent
 
