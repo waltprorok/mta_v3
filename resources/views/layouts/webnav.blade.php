@@ -108,13 +108,13 @@
                             <li class="nav-item">
                                 <a href="{{ route('student.index') }}"
                                    class="nav-link {{ Route::currentRouteName() == 'student.index' || Route::currentRouteName() == 'student.schedule.edit'|| Route::currentRouteName() == 'student.schedule' || Route::currentRouteName() == 'student.edit' || Route::currentRouteName() ==  'student.profile' ? 'active' : '' }}">
-                                    <i class="fa fa-list" aria-hidden="true"></i> List
+                                    <i class="fa fa-list ml-3" aria-hidden="true"></i> List
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="{{ route('complete.lessons') }}" class="nav-link {{ Route::currentRouteName() == 'complete.lessons' ? 'active' : '' }}">
-                                    <i class="fa fa-music" aria-hidden="true"></i> Lessons
+                                    <i class="fa fa-music ml-3" aria-hidden="true"></i> Lessons
                                 </a>
                             </li>
 
@@ -161,37 +161,37 @@
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
                                 <a href="{{ route('invoice.index') }}" class="nav-link {{ Route::currentRouteName() == 'invoice.index' ? 'active' : '' }}">
-                                    <i class="fa fa-calculator" aria-hidden="true"></i> Invoice
+                                    <i class="fa fa-calculator ml-3" aria-hidden="true"></i> Invoice
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="fa fa-pencil"></i> Transaction Log
+                                    <i class="fa fa-pencil ml-3"></i> Transaction Log
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="fa fa-money"></i> Payments Received
+                                    <i class="fa fa-money ml-3"></i> Payments Received
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="fa fa-list-alt"></i> List Payments
+                                    <i class="fa fa-list-alt ml-3"></i> List Payments
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="fa fa-keyboard-o"></i> Enter a Payment
+                                    <i class="fa fa-keyboard-o ml-3"></i> Enter a Payment
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="fa fa-check-square-o"></i> Fees &amp; Credits
+                                    <i class="fa fa-check-square-o ml-3"></i> Fees &amp; Credits
                                 </a>
                             </li>
 
@@ -236,7 +236,7 @@
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
                                 <a href="{{ route('reports.index') }}" class="nav-link {{ Route::currentRouteName() == 'reports.index' ? 'active' : '' }}">
-                                    <i class="fa fa-area-chart"></i> Student Status
+                                    <i class="fa fa-area-chart ml-3"></i> Student Status
                                 </a>
                             </li>
 
