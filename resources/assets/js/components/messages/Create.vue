@@ -1,61 +1,56 @@
 <template>
     <div>
-        <div class="card">
-            <div class="form-control">
-                <form action="#" @submit.prevent="createMessage()">
-                    <div class="row mt-2">
-                        <div class="col-md-10">
-                            <div class="form-group pull-left input-group col-2" v-if="showDropDown">
-                                <span class="input-group-text"><i class="fa fa-user"></i></span>
-                                <div class="input-group-prepend"></div>
-                                <select id=users class="form-control" @change="getOnChangeList($event)">
-                                    <option value="1" selected>Active</option>
-                                    <option value="3">Leads</option>
-                                    <option value="2">Wait List</option>
-                                    <option value="4">Inactive</option>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="form-control">
+                    <form action="#" @submit.prevent="createMessage()">
+                        <div class="row mt-2">
+                            <div class="col-md-10">
+                                <div class="form-group pull-left input-group col-4" v-if="showDropDown">
+                                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                    <div class="input-group-prepend"></div>
+                                    <select id=users class="form-control" @change="getOnChangeList($event)">
+                                        <option :value="status.active" selected>Active</option>
+                                        <option :value="status.leads">Leads</option>
+                                        <option :value="status.wait_list">Wait List</option>
+                                        <option :value="status.inactive">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2" v-if="showDropDown">
+                                <div class="toggle-switch" data-ts-color="primary">
+                                    <label for="ts2" class="ts-label">Email All</label>
+                                    <input id="ts2" type="checkbox" hidden="hidden" v-model="message.all">
+                                    <label for="ts2" class="ts-helper"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group" :class="error_to && classError">
+                                <label for="to">To <span class="text-danger">*</span></label>
+                                <select class="form-control" id="to" v-model="message.to">
+                                    <option v-for="user in list" :value="getUserIdValue(user)">
+                                        {{ showUserNameDisplay(user) }}
+                                    </option>
                                 </select>
+                                <small>{{ error_to }}</small>
                             </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="toggle-switch" data-ts-color="primary">
-                                <label for="ts2" class="ts-label">Email All</label>
-                                <input id="ts2" type="checkbox" hidden="hidden" v-model="message.all">
-                                <label for="ts2" class="ts-helper"></label>
+                            <div class="form-group" :class="error_subject && classError">
+                                <label for="subject">Subject <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" placeholder="Enter subject" v-model="message.subject">
+                                <small>{{ error_subject }}</small>
                             </div>
-
+                            <div class="form-group" :class="error_message && classError">
+                                <label for="message">Message <span class="text-danger">*</span></label>
+                                <textarea class="form-control" rows="8" v-model="message.message"></textarea>
+                                <small>{{ error_message }}</small>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send</button>
                         </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <div class="form-group" :class="error_to && classError">
-                            <label for="to">To <span class="text-danger">*</span></label>
-                            <select class="form-control" id="to" v-model="message.to">
-                                <option v-for="user in list" :value="user?.teacher_id ?? user?.student_teacher?.teacher_id ?? user?.id">
-                                    {{ user?.student_teacher?.first_name ?? user?.first_name }} {{ user?.student_teacher?.last_name ?? user?.last_name }}
-                                </option>
-                            </select>
-                            <small>{{ error_to }}</small>
-                        </div>
-
-                        <div class="form-group" :class="error_subject && classError">
-                            <label for="subject">Subject <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" placeholder="Enter subject" v-model="message.subject">
-                            <small>{{ error_subject }}</small>
-
-                        </div>
-
-                        <div class="form-group" :class="error_message && classError">
-                            <label for="message">Message <span class="text-danger">*</span></label>
-                            <textarea class="form-control" rows="6" v-model="message.message"></textarea>
-                            <small>{{ error_message }}</small>
-
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Send</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <notifications position="bottom right"/>
             </div>
-            <notifications position="bottom right"/>
         </div>
     </div>
 </template>
@@ -77,6 +72,12 @@ export default {
             error_subject: '',
             error_message: '',
             showDropDown: false,
+            status: {
+                active: 1,
+                leads: 3,
+                wait_list: 2,
+                inactive: 4,
+            }
         }
     },
 
@@ -126,7 +127,6 @@ export default {
             axios.get('/web/messages/status/1')
                 .then((response) => {
                     this.list = response.data.users;
-                    console.log(response.data.teacher);
                     this.showDropDown = response.data.teacher;
                 })
                 .catch((error) => {
@@ -164,6 +164,20 @@ export default {
                     duration: 10000,
                 });
             });
+        },
+
+        getUserIdValue: function (user) {
+            return user?.teacher_id ?? user?.student_teacher?.teacher_id ?? user?.id;
+        },
+
+        showUserNameDisplay: function (user) {
+            if (user?.student_teacher?.first_name && user?.student_teacher?.last_name) {
+                return user.student_teacher.first_name + ' ' + user.student_teacher.last_name;
+            }
+            if (user?.first_name && user?.last_name) {
+                return user.first_name + ' ' + user.last_name;
+            }
+            return '';
         },
     }
 }

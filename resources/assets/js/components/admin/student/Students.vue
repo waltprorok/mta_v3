@@ -20,8 +20,6 @@ export default {
                 {label: 'Email', field: 'email',},
                 {label: 'Instrument', field: 'instrument',},
                 {label: 'Status', field: 'status',},
-
-
             ],
             student: {
                 id: null,
