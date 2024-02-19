@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Response;
 
 class SendMessageRequest extends FormRequest
 {
@@ -25,8 +28,15 @@ class SendMessageRequest extends FormRequest
     {
         return [
             'to' => 'required',
-            'subject' => 'required',
-            'message' => 'required',
+            'subject' => 'required|min:2',
+            'message' => 'required|min:3',
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()
+            ->json(['error' => $validator->errors()], Response::HTTP_UNAUTHORIZED)
+        );
     }
 }

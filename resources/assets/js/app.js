@@ -49,6 +49,7 @@ Vue.component('teachers', require('./components/admin/teacher/Teachers.vue').def
 Vue.component('users', require('./components/admin/user/Users.vue').default);
 Vue.component('reportStudentStatusBar', require('./components/reports/StudentStatusBar.vue').default);
 Vue.component('inbox', require('./components/messages/Inbox.vue').default);
+Vue.component('create', require('./components/messages/Create.vue').default);
 
 
 const app = new Vue({

@@ -43,21 +43,25 @@ class MessageService
      */
     public function getStudentTeacher()
     {
-        return Student::with('studentTeacher')->where('student_id', Auth::id())->get();
+        return Student::with('studentTeacher')
+            ->where('student_id', Auth::id())
+            ->get();
+
     }
 
     /**
      * @param int $id
+     * @param int $status
      * @return mixed
      */
-    public function getStudentUsers(int $id): object
+    public function getStudentUsers(int $id, int $status): object
     {
         $this->setId($id);
 
         if ($this->getId() === 0) {
-            $users = User::whereHas('studentUsers', function ($query) {
-                $query->where('teacher_id', Auth::id());
-            })->firstNameAsc()->get();
+            $users = User::whereHas('studentUsers', function ($query) use ($status) {
+                $query->where('teacher_id', Auth::id())->where('status', $status); // pass a status id
+            })->firstNameAsc()->select(['id', 'first_name', 'last_name', 'email', 'student'])->get();
         } else {
             $users = User::where('id', $id)->get();
         }
@@ -103,19 +107,22 @@ class MessageService
                 $teacherId[] = $student->teacher_id;
             }
 
-            return Teacher::whereIn('teacher_id', $teacherId)->firstNameAsc()->get();
+            return Teacher::whereIn('teacher_id', $teacherId)->firstNameAsc()
+                ->select(['id', 'teacher_id', 'first_name', 'last_name', 'email'])
+                ->get();
         }
     }
 
     /**
      * @param int $id
+     * @param int $status
      * @return Student[]|Builder[]|Collection|mixed|object|null
      */
-    public function getUsers(int $id)
+    public function getUsers(int $id, int $status)
     {
         switch (true) {
             case Auth::user()->teacher:
-                return $this->getStudentUsers($id);
+                return $this->getStudentUsers($id, $status);
             case Auth::user()->student:
                 return $this->getStudentTeacher();
             case Auth::user()->parent:

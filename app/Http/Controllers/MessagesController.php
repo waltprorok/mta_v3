@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SendMessageRequest;
 use App\Mail\MessageTo;
 use App\Models\Message;
+use App\Models\Student;
 use App\Models\User;
 use App\Services\MessageService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
@@ -44,40 +47,59 @@ class MessagesController extends Controller
         return response()->json($messages);
     }
 
-    /**
-     * @param int $id
-     * @param string $subject
-     * @param bool $new
-     * @return View
-     */
-    public function create(int $id = 0, string $subject = '', bool $new = false): View
-    {
-        $users = $this->messageService->getUsers($id);
-        $subject = $this->messageService->getSubjectString($subject, $new);
+//    /**
+//     * @param int $id
+//     * @param string $subject
+//     * @param bool $new
+//     * @param int $status
+//     * @return View
+//     */
+//    public function create(int $id = 0, string $subject = '', bool $new = false, int $status = Student::ACTIVE): View
+//    {
+//        $users = $this->messageService->getUsers($id, $status);
+//        $subject = $this->messageService->getSubjectString($subject, $new);
+//
+//        return view('webapp.messages.create')->with(['users' => $users, 'subject' => $subject, 'new' => $new]);
+//    }
 
-        return view('webapp.messages.create')->with(['users' => $users, 'subject' => $subject, 'new' => $new]);
+    public function status(int $status = Student::ACTIVE)
+    {
+        $id = 0;
+        $users = $this->messageService->getUsers($id, $status);
+        $isTeacher = Auth::user()->teacher;
+        return response()->json(['users' => $users, 'teacher' => $isTeacher]);
     }
 
     /**
      * @param SendMessageRequest $request
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function send(SendMessageRequest $request): RedirectResponse
+    public function send(SendMessageRequest $request): JsonResponse
     {
-        Message::query()->create([
-            'user_id_from' => Auth::id(),
-            'user_id_to' => $request->input('to'),
-            'subject' => $request->input('subject'),
-            'body' => $request->input('message'),
-            'read' => 0,
-            'deleted' => 0,
-        ]);
+        // $request->get('all')
+        // get all users by current status
+        // loop through to create each record
+        // loop through to email each user
 
-        $toUser = User::query()->find($request->get('to'));
+        try {
+            Message::query()->create([
+                'user_id_from' => Auth::id(),
+                'user_id_to' => $request->get('to'),
+                'subject' => $request->get('subject'),
+                'body' => $request->get('message'),
+                'read' => 0,
+                'deleted' => 0,
+            ]);
 
-        Mail::to($toUser->email)->send(new MessageTo($request, $toUser));
+            $toUser = User::query()->find($request->get('to'));
 
-        return redirect()->route('message.inbox')->with('success', 'Message sent successfully!');
+            Mail::to($toUser->email)->send(new MessageTo($request, $toUser));
+
+        } catch (\Exception $exception) {
+            Log::info($exception->getMessage());
+        }
+
+        return response()->json([], Response::HTTP_CREATED);
     }
 
     /**
