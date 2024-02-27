@@ -126,6 +126,7 @@ export default {
         fetchUsersList: function () {
             axios.get('/web/messages/status/1')
                 .then((response) => {
+                    console.log(response.data);
                     this.list = response.data.users;
                     this.showDropDown = response.data.teacher;
                 })

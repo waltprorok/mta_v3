@@ -66,9 +66,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('messages')->group(function () {
         Route::view('inbox', 'webapp.messages.inbox')->name('message.inbox');
-//        Route::get('create/{id?}/{subject?}/{new?}', 'MessagesController@create')->name('message.create');
+        Route::get('reply/{id?}/{subject?}/{new?}', 'MessagesController@reply')->name('message.reply');
         Route::view('create', 'webapp.messages.create')->name('message.create');
         Route::post('send', 'MessagesController@send')->name('message.send');
+        Route::post('send-reply', 'MessagesController@sendReply')->name('message.sendReply');
         Route::get('sent', 'MessagesController@sent')->name('message.sent');
         Route::get('read/{id}', 'MessagesController@read')->name('message.read');
         Route::get('delete/{id}', 'MessagesController@delete')->name('message.delete');
@@ -78,7 +79,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('web')->group(function () {
         Route::get('messages/inbox', 'MessagesController@index');
-        Route::get('messages/status/{value?}', 'MessagesController@status');
+        Route::get('messages/status/{status?}', 'MessagesController@status');
     });
 
     Route::group(['middleware' => ['household']], function () {

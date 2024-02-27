@@ -8,8 +8,11 @@ use App\Models\Message;
 use App\Models\Student;
 use App\Models\User;
 use App\Services\MessageService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -47,27 +50,60 @@ class MessagesController extends Controller
         return response()->json($messages);
     }
 
-//    /**
-//     * @param int $id
-//     * @param string $subject
-//     * @param bool $new
-//     * @param int $status
-//     * @return View
-//     */
-//    public function create(int $id = 0, string $subject = '', bool $new = false, int $status = Student::ACTIVE): View
-//    {
-//        $users = $this->messageService->getUsers($id, $status);
-//        $subject = $this->messageService->getSubjectString($subject, $new);
-//
-//        return view('webapp.messages.create')->with(['users' => $users, 'subject' => $subject, 'new' => $new]);
-//    }
+    /**
+     * @param int $id
+     * @param string $subject
+     * @param bool $new
+     * @param int $status
+     * @return Application|Factory|View
+     */
+    public function reply(int $id = 0, string $subject = '', bool $new = false, int $status = Student::ACTIVE): View
+    {
+        $users = $this->messageService->getUsers($id, $status);
+        $subject = $this->messageService->getSubjectString($subject, $new);
 
-    public function status(int $status = Student::ACTIVE)
+        return view('webapp.messages.reply')->with(['users' => $users, 'subject' => $subject, 'new' => $new]);
+    }
+
+    /**
+     * @param int $status
+     * @return JsonResponse
+     */
+    public function status(int $status = Student::ACTIVE): JsonResponse
     {
         $id = 0;
         $users = $this->messageService->getUsers($id, $status);
         $isTeacher = Auth::user()->teacher;
+
         return response()->json(['users' => $users, 'teacher' => $isTeacher]);
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function sendReply(Request $request)
+    {
+        $request->validate([
+            'to' => 'required',
+            'subject' => 'required|min:2',
+            'message' => 'required|min:3',
+        ]);
+
+        Message::query()->create([
+            'user_id_from' => Auth::id(),
+            'user_id_to' => $request->input('to'),
+            'subject' => $request->input('subject'),
+            'body' => $request->input('message'),
+            'read' => 0,
+            'deleted' => 0,
+        ]);
+
+        $toUser = User::query()->find($request->get('to'));
+
+        Mail::to($toUser->email)->send(new MessageTo($request, $toUser));
+
+        return redirect()->route('message.inbox')->with('success', 'Message sent successfully!');
     }
 
     /**
