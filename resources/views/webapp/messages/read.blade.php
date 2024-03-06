@@ -21,7 +21,7 @@
                                         <tbody>
                                         <tr>
                                             <th class="border-0" style="padding: .0rem;">From:</th>
-                                            <td class="border-0" style="padding: .0rem;">{{ $message->userFrom->email }}</td>
+                                            <td class="border-0" style="padding: .0rem;"><strong>{{ $message->userFrom->full_name }}</strong> | {{ $message->userFrom->email }}</td>
                                         </tr>
                                         <tr>
                                             <th class="border-0" style="padding: .0rem;">To:</th>
