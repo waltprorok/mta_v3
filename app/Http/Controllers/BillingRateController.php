@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBillingRateRequest;
 use App\Models\BillingRate;
+use App\Models\Plan;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -91,5 +92,12 @@ class BillingRateController extends Controller
         }
 
         return response()->json($billingRate);
+    }
+
+    public function billingPlans()
+    {
+        $plans = Plan::all(['id', 'name', 'slug', 'stripe_plan', 'cost', 'description', 'created_at']);
+
+        return response()->json($plans);
     }
 }

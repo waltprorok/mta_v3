@@ -46,6 +46,13 @@
                             <i class="fa fa-users"></i> Users
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.billing.plan.list') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'admin.billing.plan.list' ? 'active' : '' }}">
+                            <i class="fa fa-credit-card-alt"></i> Plans
+                        </a>
+                    </li>
                 @endif
 
                 @if(Auth::user()->parent)
