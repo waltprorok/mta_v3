@@ -6,7 +6,7 @@ use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Throwable;
 
-class ExampleTest extends DuskTestCase
+class MarketingTest extends DuskTestCase
 {
     /**
      * A basic browser test example.
@@ -14,7 +14,7 @@ class ExampleTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testBasicExample()
+    public function test_basic_example()
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/')

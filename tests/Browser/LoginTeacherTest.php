@@ -13,7 +13,7 @@ class LoginTeacherTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testLoginShowDashboard()
+    public function test_login_show_dashboard()
     {
         $this->browse(function ($browser) {
             $browser->visit('/login')

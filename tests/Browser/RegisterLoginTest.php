@@ -14,7 +14,7 @@ class RegisterLoginTest extends DuskTestCase
     /**
      * @throws Throwable
      */
-    public function testUserCanRegisterCorrectly()
+    public function test_user_can_register_correctly()
     {
         $user = factory(User::class)->create();
 
