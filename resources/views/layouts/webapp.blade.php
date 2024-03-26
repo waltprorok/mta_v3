@@ -37,7 +37,10 @@
         {{--        <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">--}}
         {{--            <i class="fa fa-bars"></i>--}}
         {{--        </a>--}}
-        <a class="navbar-brand" href="{{ route('dashboard') }}">
+        <a class="navbar-brand"
+           href="@if(Auth::user()->isAdmin()) {{ route('admin.blog.list') }}
+           @elseif(Auth::user()->isParent()) {{ route('parent.household') }}
+           @else{{ route('dashboard') }}@endif">
             <img src="{{ asset('webapp/img/logo-mta1.png') }}" alt="mta_logo">
         </a>
 
@@ -54,22 +57,24 @@
             {{--                    </a>--}}
             {{--                </div>--}}
             {{--            </li>--}}
-            <li class="nav-item dropdown">
-                <a class="nav-link" href="#" role="button" title="Messages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-envelope-open"></i>
-                    <span class="badge badge-pill badge-danger">{{ \App\Models\User::unreadMessagesCount() }}</span>
-                    <span class="small ml-1 d-md-down-none"></span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="{{ route('message.inbox') }}" class="dropdown-item">
-                        <i class="fa fa-envelope"></i>@if (\App\Models\User::unreadMessagesCount() > 0)
-                            You Got Mail
-                        @else
-                            No Mail Today
-                        @endif
+            @if(! Auth::user()->isAdmin())
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" role="button" title="Messages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-envelope-open"></i>
+                        <span class="badge badge-pill badge-danger">{{ \App\Models\User::unreadMessagesCount() }}</span>
+                        <span class="small ml-1 d-md-down-none"></span>
                     </a>
-                </div>
-            </li>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="{{ route('message.inbox') }}" class="dropdown-item">
+                            <i class="fa fa-envelope"></i>@if (\App\Models\User::unreadMessagesCount() > 0)
+                                You Got Mail
+                            @else
+                                No Mail Today
+                            @endif
+                        </a>
+                    </div>
+                </li>
+            @endif
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" title="Account and Settings" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-user fa-lg" aria-hidden="true"></i>
@@ -84,9 +89,11 @@
                             <i class="fa fa-wrench"></i>Settings
                         </a>
                     @endif
-                    <a href="{{ route('contact') }}" class="dropdown-item">
-                        <i class="fa fa-life-ring"></i>Support
-                    </a>
+                    @if(! Auth::user()->isAdmin())
+                        <a href="{{ route('contact') }}" class="dropdown-item">
+                            <i class="fa fa-life-ring"></i>Support
+                        </a>
+                    @endif
                     <a id="logout-link" class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
