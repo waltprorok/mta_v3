@@ -54,7 +54,7 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="image">Current Image</label>
+                                <label for="image">Featured Image</label>
                                 @if ($update->image_url)
                                     <div class="text-center">
                                         <img src="{{ $update->image_url }}" alt="{{ $update->image }}" width="100%">
