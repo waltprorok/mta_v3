@@ -5,7 +5,7 @@
             <div class="form-group pull-right pr-2">
                 <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
             </div>
-            <datatable class="table table-condensed table-hover table-responsive" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
+            <datatable class="table table-hover table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
                     <tr>
                         <td v-text="row.name"></td>
