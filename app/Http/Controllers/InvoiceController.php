@@ -32,6 +32,11 @@ class InvoiceController extends Controller
             foreach ($data->lessons as $lesson) {
                 $subTotal += $lesson->billingRate->amount;
                 $total += $lesson->billingRate->amount;
+
+                if ($lesson->billingRate->type == 'monthly') {
+                    break;
+                }
+
             }
         }
 

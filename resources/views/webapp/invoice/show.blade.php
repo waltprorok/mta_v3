@@ -48,8 +48,12 @@
                                 {{ $data->city }}, {{ $data->state }} {{ $data->zip }}
                             @else @endif</p>
                         <p class="mb-1">@if ($data->email)
-                                {{ $data->email }}
+                                Email: {{ $data->email }}
                             @else @endif</p>
+                        <p class="mb-1">@if ($data->parent_email)
+                                Parent: {{ $data->parent_email }}
+                            @else @endif</p>
+
                     </div>
 
                     {{--                    <div class="col-md-6 text-right">--}}
