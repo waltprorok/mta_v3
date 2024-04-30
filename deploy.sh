@@ -8,6 +8,7 @@ php artisan optimize:clear
 php artisan route:cache
 php artisan view:cache
 php artisan event:cache
+php artisan config:cache
 npm install
 npm run production
 php artisan queue:restart

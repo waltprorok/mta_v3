@@ -87,7 +87,7 @@ class BlogController extends Controller
      */
     public function edit(Blog $id): View
     {
-        return view('webapp.admin.blog.edit')->with('update', $id);
+        return view('webapp.admin.blog.edit')->with('blog', $id);
     }
 
     /**

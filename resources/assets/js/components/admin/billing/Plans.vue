@@ -42,6 +42,7 @@ export default {
                 {label: 'Created', field: 'created_at', sortable: false},
             ],
             list: [],
+            per_page: 10,
         }
     },
 
