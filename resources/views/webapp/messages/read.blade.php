@@ -54,7 +54,9 @@
                     @if ($message->userFrom->id != Auth::id())
                         <a href="{{ route('message.reply', [$message->userFrom->id, $message->subject]) }}" class="btn btn-primary">Reply</a>
                     @endif
-                    <a href="{{ route('message.delete', $message->id) }}" class="btn btn-danger float-right">Delete</a>
+                    @if (! $message->read)
+                        <a href="{{ route('message.delete', $message->id) }}" class="btn btn-danger float-right">Delete</a>
+                    @endif
                 </div>
             </div>
         </div>

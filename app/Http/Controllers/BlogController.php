@@ -145,7 +145,6 @@ class BlogController extends Controller
         $blog->title = $request->get('title');
         $blog->slug = $request->get('slug');
         $blog->body = $request->get('body');
-        $blog->image = $request->get('updateImage');
         $blog->released_on = $request->get('released_on') . ' ' . $request->get('release_time');
     }
 }
