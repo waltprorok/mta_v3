@@ -10,4 +10,5 @@ php artisan view:cache
 php artisan event:cache
 npm install
 npm run production
+php artisan queue:restart
 php artisan up
