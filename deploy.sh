@@ -5,7 +5,10 @@ git pull
 php artisan migrate
 composer install --prefer-dist --optimize-autoloader --no-dev -o --no-interaction
 php artisan optimize:clear
-php artisan optimize
+php artisan route:cache
+php artisan view:cache
+php artisan event:cache
+php artisan config:cache
 npm install
 npm run production
 php artisan queue:restart
