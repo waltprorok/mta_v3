@@ -25,6 +25,7 @@
                     </td>
                     <td v-text="row.title"></td>
                     <td v-text="row.slug"></td>
+                    <td v-text="row.author_name"></td>
                     <td>{{ row.released_on | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                     <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                     <td>{{ row.updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>

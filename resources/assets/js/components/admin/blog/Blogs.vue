@@ -14,6 +14,7 @@ export default {
                 {label: 'Image', field: 'image',},
                 {label: 'Title', field: 'title',},
                 {label: 'Slug', field: 'slug',},
+                {label: 'Author', field: 'author_name',},
                 {label: 'Released On', field: 'released_on',},
                 {label: 'Created', field: 'created_at',},
                 {label: 'Updated', field: 'updated_at',},

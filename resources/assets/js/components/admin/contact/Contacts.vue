@@ -102,15 +102,16 @@ export default {
             axios.get('/web/contact')
                 .then((response) => {
                     this.list = response.data.data;
-                }).catch((error) => {
-                console.log(error);
-                this.$notify({
-                    type: 'error',
-                    title: 'Error',
-                    text: 'Could not load contact list.',
-                    duration: 10000,
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load contact list.',
+                        duration: 10000,
+                    });
                 });
-            });
         },
 
         createContact: function () {
