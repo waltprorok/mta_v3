@@ -26,7 +26,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('first_name') ? 'has-error' : '' }}">
                                         <label class="control-label">First Name</label>
-                                        <input for="first_name" name="first_name" class="form-control" value="{{ Auth::user()->first_name }}">
+                                        <input name="first_name" class="form-control" value="{{ Auth::user()->first_name }}">
                                         @if ($errors->has('first_name'))
                                             <span class="help-block">
                                                 <strong>{{ $errors->first('first_name') }}</strong>
@@ -115,7 +115,7 @@
                     </div>
                     <hr/>
                     <button type="submit" class="btn btn-primary">Save</button>
-                    <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+                    <a href="{{ Auth::user()->isAdmin() ? route('admin.blog.list') : route('dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
                 </form>
             </div>
         </div>
