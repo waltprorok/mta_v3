@@ -2,7 +2,7 @@
 php artisan down
 git reset --hard
 git pull
-yes | php artisan migrate
+php artisan migrate
 composer install --prefer-dist --optimize-autoloader --no-dev -o --no-interaction
 php artisan optimize:clear
 php artisan route:cache
