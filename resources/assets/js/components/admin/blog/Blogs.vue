@@ -11,13 +11,13 @@ export default {
             classError: '',
             filter: '',
             columns: [
+                {label: 'ID', field: 'id',},
                 {label: 'Image', field: 'image',},
                 {label: 'Title', field: 'title',},
                 {label: 'Slug', field: 'slug',},
                 {label: 'Author', field: 'author_name',},
-                {label: 'Released On', field: 'released_on',},
+                {label: 'Published', field: 'released_on',},
                 {label: 'Created', field: 'created_at',},
-                {label: 'Updated', field: 'updated_at',},
                 {label: 'Actions', filterable: false,}
             ],
             showModal: false,

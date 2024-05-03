@@ -20,15 +20,15 @@
         <datatable class="table table-responsive-md table-hover" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
             <template v-slot="{ columns, row }">
                 <tr>
+                    <td v-text="row.id"></td>
                     <td>
                         <img style="width:30px;" :src="'/storage/blog/' + row.image" @error="$event.target.src='/webapp/img/sheet-music.jpg'" :alt="row.image"/>
                     </td>
                     <td v-text="row.title"></td>
                     <td v-text="row.slug"></td>
-                    <td v-text="row.author_name"></td>
+                    <td><span class="badge badge-pill badge-primary">{{ row.author_name }}</span></td>
                     <td>{{ row.released_on | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                     <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
-                    <td>{{ row.updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                     <td class="text-nowrap">
                             <span class="align-baseline">
                                 <a :href="`/admin/blog/${row.id}/edit`" class="btn btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
