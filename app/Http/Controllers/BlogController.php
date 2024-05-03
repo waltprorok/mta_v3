@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBlogPostRequest;
+use App\Http\Resources\BlogResource;
 use App\Models\Blog;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -38,10 +39,13 @@ class BlogController extends Controller
      */
     public function list(): JsonResponse
     {
-        $blogs = Blog::query()
-            ->latestFirst()
-            ->published()
-            ->get();
+        $blogs = BlogResource::collection(
+            Blog::query()
+                ->with('author')
+                ->latestFirst()
+                ->published()
+                ->get()
+        );
 
         return response()->json($blogs);
     }

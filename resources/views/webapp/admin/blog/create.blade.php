@@ -40,7 +40,7 @@
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="form-group{{ $errors->has('released_on') ? ' has-error' : '' }}">
-                                <label for="released_on" class="control-label">Release Date</label>
+                                <label for="released_on" class="control-label">Publish Date</label>
                                 <input type="text" class="form-control" name="released_on" id="blogRelease"
                                        autocomplete="off">
 
@@ -54,7 +54,7 @@
 
                         <div class="col-sm-3">
                             <div class="form-group{{ $errors->has('start_time') ? ' has-error' : '' }}">
-                                <label for="start_time" class="control-label">Release Time</label>
+                                <label for="start_time" class="control-label">Publish Time</label>
                                 <select class="form-control" id="release_time" name="release_time">
                                     <option value="09:00:00">9:00 am</option>
                                     <option value="12:00:00">12:00 pm</option>

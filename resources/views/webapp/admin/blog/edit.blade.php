@@ -71,8 +71,38 @@
 
                     <div class="row">
                         <div class="col-sm-3">
+                            <div class="form-group{{ $errors->has('created_at') ? ' has-error' : '' }}">
+                                <label for="released_on">Created</label>
+                                <p class="form-control">{{ date('Y-m-d g:i a', strtotime($blog->created_at)) }}</p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group{{ $errors->has('updated_at') ? ' has-error' : '' }}">
+                                <label for="released_on">Updated</label>
+                                <p class="form-control">{{ date('Y-m-d g:i a', strtotime($blog->updated_at)) }}</p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
+                                <label for="image">Update Image</label>
+                                <input type="file" class="form-control" name="image">
+
+                                @if ($errors->has('image'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('image') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3">
                             <div class="form-group{{ $errors->has('released_on') ? ' has-error' : '' }}">
-                                <label for="released_on">Release Date</label>
+                                <label for="released_on">Published Date</label>
                                 <input type="text" class="form-control" name="released_on" id="blogRelease"
                                        autocomplete="off" value="{{ date('Y-m-d', strtotime($blog->released_on)) }}">
 
@@ -86,7 +116,7 @@
 
                         <div class="col-sm-3">
                             <div class="form-group{{ $errors->has('release_time') ? ' has-error' : '' }}">
-                                <label for="start_time" class="control-label">Release Time</label>
+                                <label for="start_time" class="control-label">Published Time</label>
                                 <select class="form-control" id="release_time" name="release_time">
                                     <option value="{{ $blog->date_blog_raw }}">{{ $blog->date_hour_min }}</option>
                                     <option value="09:00:00">9:00 AM</option>
@@ -97,19 +127,6 @@
                                 @if ($errors->has('release_time'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('release_time') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
-                                <label for="image">Update Image</label>
-                                <input type="file" class="form-control" name="image">
-
-                                @if ($errors->has('image'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('image') }}</strong>
                                     </span>
                                 @endif
                             </div>
