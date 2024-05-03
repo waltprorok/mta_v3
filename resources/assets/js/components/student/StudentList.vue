@@ -126,7 +126,8 @@ export default {
             axios.get('/web/' + event.target.value)
                 .then((response) => {
                     this.list = response.data;
-                }).catch((error) => {
+                })
+                .catch((error) => {
                 console.log(error);
                 this.$notify({
                     type: 'error',

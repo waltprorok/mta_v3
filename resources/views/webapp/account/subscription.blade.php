@@ -12,7 +12,7 @@
 
         @include('partials.accountTabs')
         <div class="card">
-            <div class="card-header bg-light">Subscription Details - <b>{{ ucfirst(Auth::user()->subscriptions()->first()->name) }}</b></div>
+            <div class="card-header bg-light">Subscription Details - <span class="badge badge-pill badge-primary">{{ ucfirst(Auth::user()->subscriptions()->first()->name) }}</span></div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
@@ -55,7 +55,7 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    By click the <b>Cancel Subscription Button</b> you are here by confirming your account will be
+                    By clicking the <b>Cancel Subscription Button</b> you are here by confirming your account will be
                     cancelled. Don't worry you can always resume your subscription if you change your mind.
                 </div>
 
