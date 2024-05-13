@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class StudentListController extends Controller
 {
-    /**
-     * @return JsonResponse
-     */
     public function adminStudents(): JsonResponse
     {
         $students = Student::query()

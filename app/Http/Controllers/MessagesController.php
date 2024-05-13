@@ -8,8 +8,6 @@ use App\Models\Message;
 use App\Models\Student;
 use App\Models\User;
 use App\Services\MessageService;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -35,10 +33,7 @@ class MessagesController extends Controller
         $this->messageService = $messageService;
     }
 
-    /**
-     * @return JsonResponse
-     */
-    public function index()
+    public function index(): JsonResponse
     {
         $messages = Message::query()
             ->with('userFrom')
@@ -50,13 +45,6 @@ class MessagesController extends Controller
         return response()->json($messages);
     }
 
-    /**
-     * @param int $id
-     * @param string $subject
-     * @param bool $new
-     * @param int $status
-     * @return Application|Factory|View
-     */
     public function reply(int $id = 0, string $subject = '', bool $new = false, int $status = Student::ACTIVE): View
     {
         $users = $this->messageService->getUsers($id, $status);
@@ -65,10 +53,6 @@ class MessagesController extends Controller
         return view('webapp.messages.reply')->with(['users' => $users, 'subject' => $subject, 'new' => $new]);
     }
 
-    /**
-     * @param int $status
-     * @return JsonResponse
-     */
     public function status(int $status = Student::ACTIVE): JsonResponse
     {
         $id = 0;
@@ -78,11 +62,7 @@ class MessagesController extends Controller
         return response()->json(['users' => $users, 'teacher' => $isTeacher]);
     }
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
-    public function sendReply(Request $request)
+    public function sendReply(Request $request): RedirectResponse
     {
         $request->validate([
             'to' => 'required',
@@ -106,10 +86,6 @@ class MessagesController extends Controller
         return redirect()->route('message.inbox')->with('success', 'Message sent successfully!');
     }
 
-    /**
-     * @param SendMessageRequest $request
-     * @return JsonResponse
-     */
     public function send(SendMessageRequest $request): JsonResponse
     {
         // $request->get('all')
@@ -138,9 +114,6 @@ class MessagesController extends Controller
         return response()->json([], Response::HTTP_CREATED);
     }
 
-    /**
-     * @return View
-     */
     public function sent(): View
     {
         $messages = Message::query()
@@ -153,10 +126,6 @@ class MessagesController extends Controller
         return view('webapp.messages.sent')->with('messages', $messages);
     }
 
-    /**
-     * @param int $id
-     * @return View
-     */
     public function read(int $id): View
     {
         $message = Message::query()
@@ -171,10 +140,6 @@ class MessagesController extends Controller
         return view('webapp.messages.read')->with('message', $message);
     }
 
-    /**
-     * @param int $id
-     * @return RedirectResponse
-     */
     public function delete(int $id): RedirectResponse
     {
         $message = Message::query()->find($id);
@@ -184,9 +149,6 @@ class MessagesController extends Controller
         return redirect()->route('message.inbox')->with('success', 'Message deleted successfully');
     }
 
-    /**
-     * @return View
-     */
     public function deleted(): View
     {
         $messages = Message::query()
@@ -198,10 +160,6 @@ class MessagesController extends Controller
         return view('webapp.messages.deleted')->with('messages', $messages);
     }
 
-    /**
-     * @param int $id
-     * @return RedirectResponse
-     */
     public function return(int $id): RedirectResponse
     {
         $message = Message::query()->find($id);

@@ -34,11 +34,6 @@ class BusinessHourController extends Controller
         return view('webapp.teacher.hours', compact('hours', $hours));
     }
 
-
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
     public function store(Request $request): RedirectResponse
     {
         $input = $request->all();
@@ -79,10 +74,6 @@ class BusinessHourController extends Controller
         return view('webapp.teacher.hoursView', compact('hours', $hours, 'totalHours', $totalHours, 'selectHours', $selectHours));
     }
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
     public function update(Request $request): RedirectResponse
     {
         $input = $request->all();
@@ -108,9 +99,6 @@ class BusinessHourController extends Controller
         return redirect()->back()->with('success', 'Business hours updated successfully!');
     }
 
-    /**
-     * @return array
-     */
     private function getSelectHours(): array
     {
         $startPeriod = Carbon::parse('8:00');

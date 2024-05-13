@@ -8,9 +8,6 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserController extends Controller
 {
-    /**
-     * @return AnonymousResourceCollection
-     */
     public function adminUsers(): AnonymousResourceCollection
     {
         $users = User::query()->orderBy('first_name')->get();

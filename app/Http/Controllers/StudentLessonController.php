@@ -10,13 +10,16 @@ use App\Models\Lesson;
 use App\Models\Student;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class StudentLessonController extends Controller
 {
-    public function index($id, $day = null)
+    public function index(int $id, $day = null)
     {
         $students = Student::query()->where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::query()->where('teacher_id', Auth::id())->get();
@@ -44,7 +47,13 @@ class StudentLessonController extends Controller
             ->with('billingRates', $billingRates);
     }
 
-    public function show($student_id, $id, $day = null)
+    /**
+     * @param int $student_id
+     * @param int $id
+     * @param $day
+     * @return Application|Factory|View
+     */
+    public function show(int $student_id, int $id, $day = null): View
     {
         $students = Student::query()->where(['id' => $student_id, 'teacher_id' => Auth::id()])->get();
         $businessHours = BusinessHours::query()->where('teacher_id', Auth::id())->get();
@@ -143,10 +152,6 @@ class StudentLessonController extends Controller
         return null;
     }
 
-    /**
-     * @param string $day
-     * @return int
-     */
     private function dayOfWeek(string $day): int
     {
         switch ($day) {
@@ -192,7 +197,7 @@ class StudentLessonController extends Controller
         return $start_datetime->diff($end_datetime)->format('%i');
     }
 
-    private function scheduleUpdate(Request $request)
+    private function scheduleUpdate(Request $request): void
     {
         $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
 
@@ -211,7 +216,7 @@ class StudentLessonController extends Controller
         $lesson->update();
     }
 
-    private function scheduleUpdateAll(Request $request)
+    private function scheduleUpdateAll(Request $request): void
     {
         $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
         $begin = Carbon::parse($request->get('start_date'));
@@ -236,7 +241,7 @@ class StudentLessonController extends Controller
      * @param $lesson
      * @return void
      */
-    private function destroyOne($lesson)
+    private function destroyOne($lesson): void
     {
         $lesson->delete();
     }
@@ -245,7 +250,7 @@ class StudentLessonController extends Controller
      * @param $lessons
      * @return void
      */
-    private function destroyAll($lessons)
+    private function destroyAll($lessons): void
     {
         Lesson::query()
             ->where(['student_id' => $lessons->student_id, 'teacher_id' => Auth::id()])
@@ -257,7 +262,7 @@ class StudentLessonController extends Controller
      * @return void
      * @throws Exception
      */
-    private function destroyRemaining($lessons)
+    private function destroyRemaining($lessons): void
     {
         Lesson::query()->where('student_id', $lessons->student_id)
             ->where('teacher_id', Auth::id())
