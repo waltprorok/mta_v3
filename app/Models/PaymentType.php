@@ -12,17 +12,11 @@ class PaymentType extends Model
         'name'
     ];
 
-    /**
-     * @return HasOne
-     */
     public function invoice(): HasOne
     {
         return $this->hasOne(Invoice::class, 'invoice_id');
     }
 
-    /**
-     * @return HasMany
-     */
     public function invoices(): HasMany
     {
         return $this->hasMany(Invoice::class, 'invoice_id');

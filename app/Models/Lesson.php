@@ -38,17 +38,11 @@ class Lesson extends Model
         return $this->belongsTo(BillingRate::class, 'billing_rate_id');
     }
 
-    /**
-     * @return HasOne
-     */
     public function lessonTeacherId(): HasOne
     {
         return $this->hasOne(Teacher::class, 'teacher_id', 'teacher_id');
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);

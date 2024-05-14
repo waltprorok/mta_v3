@@ -49,25 +49,16 @@ class Teacher extends Model
         $this->phoneNumberService = $phoneNumberService;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPhoneNumberAttribute(): ?string
     {
         return $this->phoneNumberService->getPhoneNumberFormat($this->phone);
     }
 
-    /**
-     * @return HasOne
-     */
     public function invoice(): HasOne
     {
         return $this->hasOne(Invoice::class, 'teacher_id');
     }
 
-    /**
-     * @return HasMany
-     */
     public function invoices(): HasMany
     {
         return $this->hasMany(Invoice::class, 'teacher_id');
@@ -82,17 +73,11 @@ class Teacher extends Model
         return $query->orderBy('first_name', 'asc');
     }
 
-    /**
-     * @return HasMany
-     */
     public function student(): HasMany
     {
         return $this->hasMany(Student::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function teacher(): BelongsTo
     {
         return $this->belongsTo(User::class, 'teacher_id');

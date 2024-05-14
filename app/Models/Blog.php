@@ -28,25 +28,16 @@ class Blog extends Model
         'released_on',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    /**
-     * @return string|null
-     */
     public function getBodyHtmlAttribute(): ?string
     {
         return $this->body ? Markdown::convertToHtml(e($this->body)) : null;
     }
 
-    /**
-     * @return string|null
-     */
     public function getBodyShortAttribute(): ?string
     {
         return $this->body ? Str::limit($this->body, 260) : null;
@@ -60,33 +51,21 @@ class Blog extends Model
 //        return is_null($this->released_on) ? '' : $this->released_on->diffForHumans();
 //    }
 
-    /**
-     * @return string
-     */
     public function getDateTimeAttribute(): string
     {
         return is_null($this->released_on) ? '' : date('F j, Y', strtotime($this->released_on));
     }
 
-    /**
-     * @return string
-     */
     public function getDateBlogRawAttribute(): string
     {
         return is_null($this->released_on) ? '' : date('H:i:s', strtotime($this->released_on));
     }
 
-    /**
-     * @return string
-     */
     public function getDateHourMinAttribute(): string
     {
         return is_null($this->released_on) ? '' : date('h:i A', strtotime($this->released_on));
     }
 
-    /**
-     * @return string
-     */
     public function getImageUrlAttribute(): string
     {
         $imageUrl = '';
