@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -6,6 +6,7 @@ use App\Models\Invoice;
 use App\Models\Student;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class InvoiceController extends Controller
 {
@@ -18,7 +19,7 @@ class InvoiceController extends Controller
         return response()->json($students);
     }
 
-    public function show($id)
+    public function show(int $id): View
     {
         $student = Student::with('lessons', 'studentTeacher')
             ->where('student_id', $id)

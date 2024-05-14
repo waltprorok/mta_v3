@@ -8,10 +8,6 @@ use Newsletter;
 
 class NewsletterController extends Controller
 {
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
     public function store(Request $request): RedirectResponse
     {
         if (empty($request->input('email'))) {

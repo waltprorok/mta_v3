@@ -13,27 +13,16 @@ use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
-    /**
-     * @return AnonymousResourceCollection
-     */
     public function index(): AnonymousResourceCollection
     {
         return ContactResource::collection(Contact::query()->orderBy('created_at', 'desc')->get());
     }
 
-    /**
-     * @param Contact $contact
-     * @return JsonResponse
-     */
     public function show(Contact $contact): JsonResponse
     {
         return response()->json($contact);
     }
 
-    /**
-     * @param StoreContactRequest $request
-     * @return JsonResponse
-     */
     public function store(StoreContactRequest $request): JsonResponse
     {
         try {
@@ -45,11 +34,6 @@ class ContactController extends Controller
         return response()->json([], Response::HTTP_CREATED);
     }
 
-    /**
-     * @param StoreContactRequest $request
-     * @param Contact $contact
-     * @return JsonResponse
-     */
     public function update(StoreContactRequest $request, Contact $contact): JsonResponse
     {
         try {
@@ -62,8 +46,6 @@ class ContactController extends Controller
     }
 
     /**
-     * @param Contact $contact
-     * @return JsonResponse
      * @throws Exception
      */
     public function destroy(Contact $contact): JsonResponse

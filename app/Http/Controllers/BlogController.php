@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBlogPostRequest;
 use App\Http\Resources\BlogResource;
 use App\Models\Blog;
-use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -17,10 +16,6 @@ class BlogController extends Controller
 {
     protected $blogLimit = 6;
 
-    /**
-     * Display a listing of the resource.
-     * @return View
-     */
     public function index(): View
     {
         $blogs = Blog::query()
@@ -35,7 +30,6 @@ class BlogController extends Controller
 
     /**
      * Admin list of blog posts
-     * @return JsonResponse
      */
     public function list(): JsonResponse
     {
@@ -50,19 +44,11 @@ class BlogController extends Controller
         return response()->json($blogs);
     }
 
-    /**
-     * Show the form for creating a new blog post.
-     * @return View
-     */
     public function create(): View
     {
         return view('webapp.admin.blog.create');
     }
 
-    /**
-     * @param StoreBlogPostRequest $request
-     * @return RedirectResponse
-     */
     public function store(StoreBlogPostRequest $request): RedirectResponse
     {
         $blog = new Blog();
@@ -72,33 +58,18 @@ class BlogController extends Controller
         return redirect(route('admin.blog.list'))->with('success', 'Your blog article has been saved.');
     }
 
-    /**
-     * Display the specified resource.
-     * @param $slug
-     * @return View
-     */
-    public function show($slug): View
+    public function show(string $slug): View
     {
         $blog = Blog::query()->where('slug', $slug)->firstOrFail();
 
         return view('blog.show', compact('blog'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param Blog $id
-     * @return View
-     */
     public function edit(Blog $id): View
     {
         return view('webapp.admin.blog.edit')->with('blog', $id);
     }
 
-    /**
-     * @param StoreBlogPostRequest $request
-     * @param Blog $id
-     * @return RedirectResponse
-     */
     public function update(StoreBlogPostRequest $request, Blog $id): RedirectResponse
     {
         $this->saveBlogPost($id, $request);
@@ -106,12 +77,6 @@ class BlogController extends Controller
         return back()->with('success', 'Your news article has been updated.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param Blog $id
-     * @return JsonResponse
-     * @throws Exception
-     */
     public function destroy(Blog $id): JsonResponse
     {
         $id->delete();
@@ -119,11 +84,6 @@ class BlogController extends Controller
         return response()->json();
     }
 
-    /**
-     * @param $editBlog
-     * @param StoreBlogPostRequest $request
-     * @return void
-     */
     private function saveBlogPost($editBlog, StoreBlogPostRequest $request): void
     {
         $this->setBlogPost($editBlog, $request);
@@ -138,11 +98,6 @@ class BlogController extends Controller
         $editBlog->save();
     }
 
-    /**
-     * @param Blog $blog
-     * @param StoreBlogPostRequest $request
-     * @return void
-     */
     private function setBlogPost(Blog $blog, StoreBlogPostRequest $request): void
     {
         $blog->author_id = Auth::id();

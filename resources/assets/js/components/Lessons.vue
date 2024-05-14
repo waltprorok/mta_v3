@@ -37,13 +37,16 @@
                     </template>
                 </v-date-picker>
             </div>
-            <datatable class="table table-responsive-md table-hover table-condensed" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
+            <datatable class="table table-responsive-md table-condensed" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
                     <tr>
                         <td>
-                            <button class="btn btn-default btn-rounded" v-if="!row.complete" @click="updateLesson(row.id, row.complete)">Click to Complete</button>
+                            <button class="btn btn-default btn-outline-secondary btn-rounded" v-if="!row.complete" @click="updateLesson(row.id, row.complete)">Click to Complete</button>
                             <button class="btn btn-success btn-rounded" v-if="row.complete" @click="updateLesson(row.id, row.complete)">Completed</button>
                         </td>
+                        <td v-if="lessonDayStatus(row.end_date) && pastLesson"><span class="badge badge-pill badge-danger">Past</span></td>
+                        <td v-else-if="lessonDayStatus(row.end_date) && todayLesson"><span class="badge badge-pill badge-success">Today</span></td>
+                        <td v-else><span class="badge badge-pill badge-primary">Upcoming</span></td>
                         <td v-text="row.title"></td>
                         <td>{{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                         <td>{{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
@@ -82,12 +85,15 @@ export default {
             filter: '',
             columns: [
                 {label: 'Completed', field: 'complete',},
+                {label: 'Status', field: 'end_date',},
                 {label: 'Name', field: 'title',},
                 {label: 'Start Date', field: 'start_date',},
                 {label: 'End Date', field: 'end_date',},
                 {label: 'Duration', field: 'interval',},
             ],
             list: [],
+            todayLesson: false,
+            pastLesson: false,
             page: 1,
             per_page: 10,
             pages: [10, 25, 50, 100],
@@ -128,6 +134,22 @@ export default {
     methods: {
         dateFormat,
         dateParse,
+        /**
+         * @param endDate
+         */
+        lessonDayStatus: function(endDate) {
+            // let currentDay = new Date();
+            let lessonEndDate = new Date(endDate);
+
+            if (lessonEndDate.toDateString() === today.toDateString()) {
+                return this.todayLesson = true;
+            }
+
+            if (lessonEndDate.getTime() < today.getTime()) {
+                return this.pastLesson = true;
+            }
+        },
+
         fetchLessonList: function () {
             let from = new Date(this.dateStart.fromDate).toDateString();
             let to = new Date(this.dateEnd.toDate).toDateString();
@@ -135,7 +157,8 @@ export default {
             axios.get('lessons/list/' + from + '/' + to)
                 .then((response) => {
                     this.list = response.data.data;
-                }).catch((error) => {
+                })
+                .catch((error) => {
                 console.log(error);
                 this.$notify({
                     type: 'error',

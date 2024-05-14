@@ -25,9 +25,6 @@ class TeacherController extends Controller
         $this->phoneNumberService = $phoneNumberService;
     }
 
-    /**
-     * @return JsonResponse
-     */
     public function adminTeachers(): JsonResponse
     {
         return response()->json(Teacher::all());
@@ -79,9 +76,6 @@ class TeacherController extends Controller
         return redirect()->back()->with('success', 'You successfully saved your settings');
     }
 
-    /**
-     * @return View
-     */
     public function edit(): View
     {
         $setting = User::with('getTeacher')->findOrFail(Auth::id());
@@ -89,10 +83,6 @@ class TeacherController extends Controller
         return view('webapp.teacher.studiosettings', compact('setting', $setting));
     }
 
-    /**
-     * @param StoreTeacherSettingsRequest $request
-     * @return RedirectResponse
-     */
     public function update(StoreTeacherSettingsRequest $request): RedirectResponse
     {
         $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
@@ -122,9 +112,6 @@ class TeacherController extends Controller
         return redirect()->back()->with('success', 'You successfully updated your settings');
     }
 
-    /**
-     * @return View
-     */
     public function profile(): View
     {
         $teacher = User::with('getTeacher')->find(Auth::id());

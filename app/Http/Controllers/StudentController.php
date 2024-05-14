@@ -8,8 +8,6 @@ use App\Mail\WelcomeNewUserMail;
 use App\Models\Student;
 use App\Models\User;
 use App\Services\PhoneNumberService;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
@@ -40,9 +38,6 @@ class StudentController extends Controller
 
     /**
      * Student Profile Page
-     *
-     * @param int $id
-     * @return JsonResponse
      */
     public function index(int $id): JsonResponse
     {
@@ -54,10 +49,6 @@ class StudentController extends Controller
         return response()->json($student);
     }
 
-    /**
-     * @param StoreStudentRequest $request
-     * @return JsonResponse
-     */
     public function store(StoreStudentRequest $request): JsonResponse
     {
         try {
@@ -93,11 +84,8 @@ class StudentController extends Controller
 
     /**
      * Edit Student Record
-     *
-     * @param int $id
-     * @return Application|Factory|View
      */
-    public function show(int $id)
+    public function show(int $id): View
     {
         $students = Student::query()->where(['id' => $id, 'teacher_id' => Auth::id()])->get();
 

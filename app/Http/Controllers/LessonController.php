@@ -54,21 +54,11 @@ class LessonController extends Controller
         return view('webapp.calendar.index', compact('calendar'));
     }
 
-    /**
-     * @param string $fromDate
-     * @param string $toDate
-     * @return AnonymousResourceCollection
-     */
     public function list(string $fromDate, string $toDate): AnonymousResourceCollection
     {
         return Auth::user()->isAdmin() ? $this->getAllLessonsForAdmin($fromDate, $toDate) : $this->getLessonsForTeacherId($fromDate, $toDate);
     }
 
-    /**
-     * @param Request $request
-     * @param Lesson $lesson
-     * @return JsonResponse
-     */
     public function update(Request $request, Lesson $lesson): JsonResponse
     {
         $lesson->complete = $request->get('complete');
@@ -92,11 +82,6 @@ class LessonController extends Controller
             ->get());
     }
 
-    /**
-     * @param string $fromDate
-     * @param string $toDate
-     * @return AnonymousResourceCollection
-     */
     private function getLessonsForTeacherId(string $fromDate, string $toDate): AnonymousResourceCollection
     {
         $fromDate = Carbon::createFromFormat('D M d Y', $fromDate)->format('Y-m-d');

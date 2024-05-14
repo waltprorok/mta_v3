@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Log;
 
 class BillingRateController extends Controller
 {
-    /**
-     * @return JsonResponse
-     */
     public function index(): JsonResponse
     {
         $billingRate = collect();
@@ -32,19 +29,11 @@ class BillingRateController extends Controller
         return response()->json($billingRate);
     }
 
-    /**
-     * @param BillingRate $billingRate
-     * @return JsonResponse
-     */
     public function show(BillingRate $billingRate): JsonResponse
     {
         return response()->json($billingRate);
     }
 
-    /**
-     * @param StoreBillingRateRequest $request
-     * @return JsonResponse
-     */
     public function store(StoreBillingRateRequest $request): JsonResponse
     {
         try {
@@ -62,11 +51,6 @@ class BillingRateController extends Controller
         return response()->json([], Response::HTTP_CREATED);
     }
 
-    /**
-     * @param StoreBillingRateRequest $request
-     * @param BillingRate $billingRate
-     * @return JsonResponse
-     */
     public function update(StoreBillingRateRequest $request, BillingRate $billingRate): JsonResponse
     {
         try {
@@ -79,8 +63,6 @@ class BillingRateController extends Controller
     }
 
     /**
-     * @param BillingRate $billingRate
-     * @return JsonResponse
      * @throws Exception
      */
     public function destroy(BillingRate $billingRate): JsonResponse

@@ -60,9 +60,6 @@ class ParentController extends Controller
         return view('webapp.calendar.index')->with('calendar', $calendar);
     }
 
-    /**
-     * @return View
-     */
     public function household(): View
     {
         $parent = User::with('parentOfStudent')->findOrFail(Auth::id()); // uses pivot table

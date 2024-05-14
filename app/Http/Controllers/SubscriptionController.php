@@ -25,9 +25,6 @@ class SubscriptionController extends Controller
     protected $receiptLimit = 12;
     const PREMIUM = 'premium';
 
-    /**
-     * @return RedirectResponse
-     */
     public function cancel(): RedirectResponse
     {
         /** @var User $user */
@@ -43,9 +40,6 @@ class SubscriptionController extends Controller
         return redirect()->back()->with('warning', 'Your subscription account has been cancelled.');
     }
 
-    /**
-     * @return RedirectResponse
-     */
     public function changePlan(): RedirectResponse
     {
         /** @var Plan $plans */
@@ -73,10 +67,6 @@ class SubscriptionController extends Controller
         return redirect()->back()->with('success', 'Your subscription plan has been updated.');
     }
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
     public function create(Request $request): RedirectResponse
     {
         $teacher = Auth::user()->getTeacher()->first();
@@ -102,17 +92,11 @@ class SubscriptionController extends Controller
         return redirect()->back()->with('success', 'Thank you for subscribing to our service.');
     }
 
-    /**
-     * @return View
-     */
     public function creditCard(): View
     {
         return view('webapp.account.card');
     }
 
-    /**
-     * @return View
-     */
     public function index(): View
     {
         /** @var User $user */
@@ -126,9 +110,6 @@ class SubscriptionController extends Controller
         }
     }
 
-    /**
-     * @return View
-     */
     public function invoices(): View
     {
         /** @var User $user */
@@ -139,9 +120,6 @@ class SubscriptionController extends Controller
         return view('webapp.account.invoices', compact('invoices'));
     }
 
-    /**
-     * @return View
-     */
     public function listPlanChange(): View
     {
         /** @var Plan $plans */
@@ -185,17 +163,11 @@ class SubscriptionController extends Controller
         ]);
     }
 
-    /**
-     * @return View
-     */
     public function profile(): View
     {
         return view('webapp.account.profile');
     }
 
-    /**
-     * @return RedirectResponse
-     */
     public function resume(): RedirectResponse
     {
         /** @var User $user */
@@ -210,18 +182,11 @@ class SubscriptionController extends Controller
         return redirect()->back()->with('success', 'Your subscription account has been reinstated.');
     }
 
-    /**
-     * @return View
-     */
     public function subscribed(): View
     {
         return view('webapp.account.subscription');
     }
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
     public function updateCreditCard(Request $request): RedirectResponse
     {
         /** @var User $user */
@@ -236,10 +201,6 @@ class SubscriptionController extends Controller
         return redirect()->back()->with('success', 'Credit card updated successfully.');
     }
 
-    /**
-     * @param UpdateUserProfileRequest $request
-     * @return RedirectResponse
-     */
     public function updateProfile(UpdateUserProfileRequest $request): RedirectResponse
     {
         /** @var User $user */

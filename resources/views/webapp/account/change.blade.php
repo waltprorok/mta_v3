@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <div class="col-sm-6">
                             <button class="btn btn-primary" type="submit">Change Subscription Billing</button>
-                            <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+                            <a href="{{ URL::previous() }}" class="btn btn-outline-secondary">Back</a>
                         </div>
                     </div>
             </form>
