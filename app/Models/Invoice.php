@@ -24,25 +24,16 @@ class Invoice extends Model
         'due_date',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function paymentType(): BelongsTo
     {
         return $this->belongsTo(PaymentType::class, 'payment_type_id');
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function teacher(): BelongsTo
     {
         return $this->belongsTo(Teacher::class);

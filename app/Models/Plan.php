@@ -18,9 +18,6 @@ class Plan extends Model
         'description'
     ];
 
-    /**
-     * @return string
-     */
     public function getRouteKeyName(): string
     {
         return 'slug';

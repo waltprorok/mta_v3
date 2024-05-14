@@ -65,57 +65,36 @@ class Student extends Model
         $this->phoneNumberService = $phoneNumberService;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPhoneNumberAttribute(): ?string
     {
         return $this->phoneNumberService->getPhoneNumberFormat($this->phone);
     }
 
-    /**
-     * @return HasOne
-     */
     public function hasOneFutureLesson(): HasOne
     {
         return $this->hasOne(Lesson::class)->where('start_date', '>', Carbon::now()->format('Y-m-d H:i:s'));
     }
 
-    /**
-     * @return HasOne
-     */
     public function hasOneLesson(): HasOne
     {
         return $this->hasOne(Lesson::class)->latest();
     }
 
-    /**
-     * @return HasOne
-     */
     public function invoice(): HasOne
     {
         return $this->hasOne(Invoice::class, 'student_id');
     }
 
-    /**
-     * @return HasMany
-     */
     public function invoices(): HasMany
     {
         return $this->hasMany(Invoice::class, 'student_id');
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function lesson(): BelongsTo
     {
         return $this->belongsTo(Lesson::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class);
@@ -139,25 +118,16 @@ class Student extends Model
         return $query->orderBy('first_name', 'asc');
     }
 
-    /**
-     * @return HasOne
-     */
     public function studentTeacher(): HasOne
     {
         return $this->hasOne(Teacher::class, 'teacher_id', 'teacher_id');
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function studentUsers(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function teacher(): BelongsTo
     {
         return $this->belongsTo(Teacher::class);

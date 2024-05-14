@@ -40,17 +40,11 @@ class Message extends Model
         return $query->where('deleted', true);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function userFrom(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id_from');
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function userTo(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id_to');
