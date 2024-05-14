@@ -37,11 +37,11 @@
                     </template>
                 </v-date-picker>
             </div>
-            <datatable class="table table-responsive-md table-hover table-condensed" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
+            <datatable class="table table-responsive-md table-condensed" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
                     <tr>
                         <td>
-                            <button class="btn btn-default btn-rounded" v-if="!row.complete" @click="updateLesson(row.id, row.complete)">Click to Complete</button>
+                            <button class="btn btn-default btn-outline-secondary btn-rounded" v-if="!row.complete" @click="updateLesson(row.id, row.complete)">Click to Complete</button>
                             <button class="btn btn-success btn-rounded" v-if="row.complete" @click="updateLesson(row.id, row.complete)">Completed</button>
                         </td>
                         <td v-if="lessonDayStatus(row.end_date) && pastLesson"><span class="badge badge-pill badge-danger">Past</span></td>
