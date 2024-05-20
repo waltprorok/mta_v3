@@ -38,11 +38,11 @@ class BlogController extends Controller
     public function list(): JsonResponse
     {
         $blogs = Blog::query()
-                ->select('id', 'author_id', 'image', 'title', 'slug', 'released_on', 'created_at', 'updated_at')
-                ->with('author:id,first_name,last_name')
-                ->latestFirst()
-                ->published()
-                ->get();
+            ->select('id', 'author_id', 'image', 'title', 'slug', 'released_on', 'created_at', 'updated_at')
+            ->with('author:id,first_name,last_name')
+            ->latestFirst()
+            ->published()
+            ->get();
 
         return response()->json($blogs);
     }
