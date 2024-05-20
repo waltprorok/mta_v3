@@ -15,7 +15,7 @@ export default {
                 {label: 'Image', field: 'image',},
                 {label: 'Title', field: 'title',},
                 {label: 'Slug', field: 'slug',},
-                {label: 'Author', field: 'author_name',},
+                {label: 'Author', field: 'author',},
                 {label: 'Published', field: 'released_on',},
                 {label: 'Created', field: 'created_at',},
                 {label: 'Actions', filterable: false,}

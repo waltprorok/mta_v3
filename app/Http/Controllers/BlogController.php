@@ -16,10 +16,14 @@ class BlogController extends Controller
 {
     protected $blogLimit = 6;
 
+    /**
+     * Marketing blog list page
+     * @return View
+     */
     public function index(): View
     {
         $blogs = Blog::query()
-            ->with('author')
+            ->with('author:id,first_name,last_name')
             ->published()
             ->latestFirst()
             ->paginate($this->blogLimit)
@@ -33,13 +37,12 @@ class BlogController extends Controller
      */
     public function list(): JsonResponse
     {
-        $blogs = BlogResource::collection(
-            Blog::query()
-                ->with('author')
+        $blogs = Blog::query()
+                ->select('id', 'author_id', 'image', 'title', 'slug', 'released_on', 'created_at', 'updated_at')
+                ->with('author:id,first_name,last_name')
                 ->latestFirst()
                 ->published()
-                ->get()
-        );
+                ->get();
 
         return response()->json($blogs);
     }
