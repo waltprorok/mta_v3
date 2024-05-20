@@ -51,7 +51,7 @@ export default {
         fetchUserList: function () {
             axios.get('/web/user')
                 .then((response) => {
-                    this.list = response.data.data;
+                    this.list = response.data;
                 }).catch((error) => {
                 console.log(error);
                 this.$notify({

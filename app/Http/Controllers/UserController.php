@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserController extends Controller
 {
-    public function adminUsers(): AnonymousResourceCollection
+    public function adminUsers()
     {
-        $users = User::query()->orderBy('first_name')->get();
-
-        return UserResource::collection($users);
+        return User::query()
+            ->select('id',
+                'first_name',
+                'last_name',
+                'email',
+                'admin',
+                'teacher',
+                'student',
+                'parent',
+                'created_at')
+            ->orderBy('first_name')
+            ->get();
     }
 }
