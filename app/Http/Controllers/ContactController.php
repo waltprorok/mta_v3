@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreContactRequest;
-use App\Http\Resources\ContactResource;
 use App\Models\Contact;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
-    public function index(): AnonymousResourceCollection
+    public function index()
     {
-        return ContactResource::collection(Contact::query()->orderBy('created_at', 'desc')->get());
+        return Contact::query()
+            ->select('id', 'name', 'email', 'subject', 'message', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
 
     public function show(Contact $contact): JsonResponse
