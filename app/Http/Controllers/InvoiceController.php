@@ -19,8 +19,30 @@ class InvoiceController extends Controller
         return response()->json($students);
     }
 
+    public function getStudentSelected(int $id): JsonResponse
+    {
+        $student = Student::where('student_id', $id)
+            ->with('lessons:id,student_id,teacher_id,billing_rate_id,start_date,end_date,complete')
+            ->with('lessons.billingRate')
+            ->with('studentTeacher')
+            ->first();
+
+        return response()->json($student);
+    }
+
+    public function createInvoice()
+    {
+        $student = Student::query()
+            ->where('status', Student::ACTIVE)
+            ->with('lessons:id,student_id,teacher_id,billing_rate_id,start_date,end_date,complete')
+            ->get();
+
+        return response()->json($student);
+    }
+
     public function show(int $id): View
     {
+        // show formatted invoice template
         $student = Student::with('lessons', 'studentTeacher')
             ->where('student_id', $id)
             ->get();

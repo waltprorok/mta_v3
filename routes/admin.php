@@ -4,7 +4,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
-// web API endpoints for admin
+    // web API endpoints for admin
     Route::prefix('web')->group(function () {
         Route::resource('contact', 'ContactController');
         Route::get('teacher', 'TeacherController@adminTeachers');
