@@ -16,42 +16,43 @@
                     <div class="col-md-6">
                         <img src="{{ asset('marketing/img/logo1.png') }}" alt="mta logo">
                     </div>
-                    @foreach($student as $data)
-                        <div class="col-md-6 text-right">
-                            <p class="font-weight-bold mb-1">Invoice #550</p>
-                            <p class="text-muted mb-1">Date: {{ Carbon\Carbon::now()->format('m/d/Y') }}</p>
-                            <p class="text-muted mb-1">Due: {{ Carbon\Carbon::now()->addDays(15)->format('m/d/Y') }}</p>
-                        </div>
 
-                        <div class="col-md-6 text-left">
-                            <p class="font-weight-bold mb-4">Billing Information</p>
-                            <p class="mb-1"><span class="text-muted"></span><strong>{{ $data->studentTeacher->studio_name}}</strong></p>
-                            <p class="mb-1"><span class="text-muted"></span>{{ $data->studentTeacher->first_name }} {{ $data->studentTeacher->last_name }}</p>
-                            <p class="mb-1"><span class="text-muted"></span>{{ $data->studentTeacher->address }} {{ $data->studentTeacher->address_2 }}
-                                <br>{{ $data->studentTeacher->city }}, {{ $data->studentTeacher->state }} {{ $data->studentTeacher->zip }}</p>
-                            <p class="mb-1"><span class="text-muted"></span>{{ $data->studentTeacher->email }}</p>
-                            <p class="mb-1"><span class="text-muted"></span>{{ $data->studentTeacher->phone_number }}</p>
-                        </div>
+                    <div class="col-md-6 text-right">
+                        <p class="font-weight-bold mb-1">Invoice #{{ $invoice->id }}</p>
+                        <p class="text-muted mb-1">Date: {{ $invoice->created_at->format('m/d/Y') }}</p>
+                        <p class="text-muted mb-1">Due: {{ $invoice->due_date ? \Carbon\Carbon::parse($invoice->due_date)->format('m/d/Y') : $invoice->created_at->endOfMonth()->format('m/d/Y') }}</p>
+                    </div>
+
+                    <div class="col-md-6 text-left">
+                        <p class="font-weight-bold mb-4">Billing Information</p>
+                        <p class="mb-1"><span class="text-muted"></span><strong>{{ $invoice->student->studentTeacher->studio_name}}</strong></p>
+                        <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->studentTeacher->first_name }} {{ $invoice->student->studentTeacher->last_name }}</p>
+                        <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->studentTeacher->address }} {{ $invoice->student->studentTeacher->address_2 }}
+                            <br>{{ $invoice->student->studentTeacher->city }}, {{ $invoice->student->studentTeacher->state }} {{ $invoice->student->studentTeacher->zip }}</p>
+                        <br/>
+                        <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->studentTeacher->email }}</p>
+                        <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->studentTeacher->phone_number }}</p>
+                    </div>
                 </div>
 
                 <hr class="my-1">
                 <div class="row pb-5 p-5">
                     <div class="col-md-6">
                         <p class="font-weight-bold mb-4">Client Information</p>
-                        <p class="mb-1">@if ($data->first_name)
-                                {{ $data->first_name }} {{ $data->last_name }}
+                        <p class="mb-1">@if ($invoice->student->first_name)
+                                {{ $invoice->student->first_name }} {{ $invoice->student->last_name }}
                             @else @endif</p>
-                        <p class="mb-1">@if ($data->address)
-                                {{ $data->address }} {{ $data->address_2 }}
+                        <p class="mb-1">@if ($invoice->student->address)
+                                {{ $invoice->student->address }} {{ $invoice->student->address_2 }}
                             @else @endif</p>
-                        <p class="mb-1">@if ($data->city || $data->state || $data->zip)
-                                {{ $data->city }}, {{ $data->state }} {{ $data->zip }}
+                        <p class="mb-1">@if ($invoice->student->city || $invoice->student->state || $invoice->student->zip)
+                                {{ $invoice->student->city }}, {{ $invoice->student->state }} {{ $invoice->student->zip }}
                             @else @endif</p>
-                        <p class="mb-1">@if ($data->email)
-                                Email: {{ $data->email }}
+                        <p class="mb-1">@if ($invoice->student->email)
+                                Email: {{ $invoice->student->email }}
                             @else @endif</p>
-                        <p class="mb-1">@if ($data->parent_email)
-                                Parent: {{ $data->parent_email }}
+                        <p class="mb-1">@if ($invoice->student->parent_email)
+                                Parent: {{ $invoice->student->parent_email }}
                             @else @endif</p>
 
                     </div>
@@ -81,7 +82,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($data->lessons as $lesson)
+                            @foreach($lessons as $lesson)
                                 <tr>
                                     <td>{{ $lesson->id }}</td>
                                     <td>@if($lesson->complete)
@@ -102,7 +103,7 @@
                         <p class="pt-2 text-left">Thank you for your business.</p>
                     </div>
                 </div>
-                @endforeach
+
                 <div class="d-flex flex-row-reverse bg-dark text-white p-4">
                     <div class="py-3 px-5 text-right">
                         <div class="mb-2"><strong>Balance Due</strong></div>

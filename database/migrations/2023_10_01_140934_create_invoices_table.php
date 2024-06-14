@@ -31,6 +31,7 @@ class CreateInvoicesTable extends Migration
             $table->unsignedBigInteger('payment_type_id');
             $table->foreign('payment_type_id')->references('id')->on('payment_types');
             $table->date('due_date')->nullable();
+            $table->tinyInteger('is_paid')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

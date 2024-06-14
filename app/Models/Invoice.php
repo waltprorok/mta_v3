@@ -22,6 +22,11 @@ class Invoice extends Model
         'payment_type_id',
         'adjustments',
         'due_date',
+        'is_paid',
+    ];
+
+    protected $casts = [
+        'is_paid' => 'boolean',
     ];
 
     public function paymentType(): BelongsTo

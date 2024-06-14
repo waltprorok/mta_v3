@@ -115,10 +115,6 @@
                     </div>
 
                     <div class="row">
-
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="normal-input" class="form-control-label">Due Date</label>
@@ -131,28 +127,28 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="normal-input" class="form-control-label">Sub Total</label>
-                                <input id="normal-input" class="form-control" v-model="subtotal" type="text">
+                                <input id="normal-input" class="form-control" v-model="subtotal" type="number">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="normal-input" class="form-control-label">Discount</label>
-                                <input id="normal-input" class="form-control" v-model="discount" type="text">
+                                <input id="normal-input" class="form-control" v-model="discount" type="number">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="normal-input" class="form-control-label">Total</label>
-                                <input id="normal-input" class="form-control" v-model="total" type="text">
+                                <input id="normal-input" class="form-control" v-model="total" type="number">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="normal-input" class="form-control-label">Balance Due</label>
-                                <input id="normal-input" class="form-control" v-model="balanceDue" type="text">
+                                <input id="normal-input" class="form-control" v-model="balanceDue" type="number">
                             </div>
                         </div>
 
@@ -162,7 +158,6 @@
                 <div class="form-group pull-right">
                     <button @click="clearForm()" class="btn btn-default">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save</button>
-                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div>
