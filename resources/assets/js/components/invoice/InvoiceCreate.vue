@@ -2,16 +2,14 @@
     <div class="card">
         <!-- vue js data table -->
         <div class="form-control">
-            <form action="#" @submit.prevent="">
-
+            <form action="#" @submit.prevent="createInvoice()">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="single-select">Students</label>
                             <select id="single-select" class="form-control" @change="getSelectedStudent($event)">
                                 <option>-- Select --</option>
-                                <option v-for="row in list"
-                                        :value="row.student_id">
+                                <option v-for="row in list" :value="row.student_id">
                                     {{ row.first_name }} {{ row.last_name }}
                                 </option>
                             </select>
@@ -118,7 +116,14 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="normal-input" class="form-control-label">Due Date</label>
-                                <input id="normal-input" class="form-control" v-model="dueDate" type="date">
+                                <input id="normal-input" class="form-control" v-model="invoice.due_date" type="date">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="normal-input" class="form-control-label">Adjustments</label>
+                                <input id="normal-input" class="form-control" v-model="invoice.adjustments" type="number">
                             </div>
                         </div>
                     </div>
@@ -127,28 +132,28 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="normal-input" class="form-control-label">Sub Total</label>
-                                <input id="normal-input" class="form-control" v-model="subtotal" type="number">
+                                <input id="normal-input" class="form-control" v-model="invoice.subtotal" type="number">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="normal-input" class="form-control-label">Discount</label>
-                                <input id="normal-input" class="form-control" v-model="discount" type="number">
+                                <input id="normal-input" class="form-control" v-model="invoice.discount" type="number">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="normal-input" class="form-control-label">Total</label>
-                                <input id="normal-input" class="form-control" v-model="total" type="number">
+                                <input id="normal-input" class="form-control" v-model="invoice.total" type="number">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="normal-input" class="form-control-label">Balance Due</label>
-                                <input id="normal-input" class="form-control" v-model="balanceDue" type="number">
+                                <input id="normal-input" class="form-control" v-model="invoice.balance_due" type="number">
                             </div>
                         </div>
 
@@ -161,13 +166,14 @@
                 </div>
             </form>
         </div>
+        <notifications position="bottom right"/>
     </div>
 </template>
 
 
 <script>
-import {dateFormat} from "vue-filter-date-format";
-import {dateParse} from "@vuejs-community/vue-filter-date-parse";
+// import {dateParse} from "@vuejs-community/vue-filter-date-parse";
+// import {dateFormat} from "vue-filter-date-format";
 
 export default {
     data() {
@@ -185,11 +191,6 @@ export default {
             classError: false,
             list: [],
             student: [],
-            total: 0,
-            discount: 0,
-            subtotal: 0,
-            balanceDue: 0,
-            dueDate: null,
             selected: false,
             todayLesson: false,
             pastLesson: false,
@@ -197,17 +198,16 @@ export default {
             per_page: 10,
             pages: [10, 25, 50, 100],
             invoice: {
-                id: null,
                 student_id: null,
                 teacher_id: null,
                 lesson_id: null,
-                subtotal: null,
-                discount: null,
-                total: null,
-                balance_due: null,
-                payment: null,
-                adjustments: null,
-                payment_type_id: null,
+                subtotal: 0,
+                discount: 0,
+                total: 0,
+                balance_due: 0,
+                payment: 0,
+                adjustments: 0,
+                payment_type_id: 1,
                 due_date: null,
             },
         }
@@ -218,6 +218,37 @@ export default {
     },
 
     methods: {
+        createInvoice: function () {
+            let self = this;
+            let lessons = [];
+            this.student.lessons.forEach((lesson) => lessons.push(lesson.id));
+            self.invoice.student_id = self.student.id;
+            self.invoice.teacher_id = self.student.student_teacher.teacher_id;
+            self.invoice.lesson_id = lessons.toString();
+            let params = Object.assign({}, self.invoice);
+            axios.post('/web/invoice-post', params)
+                .then(() => {
+                    // self.clearRateData()
+                    // self.clearErrorData();
+                    // self.fetchRateList();
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'Invoice created.',
+                        duration: 10000,
+                    });
+                })
+                .catch((error) => {
+                    self.getErrorMessage(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not create invoice.',
+                        duration: 10000,
+                    });
+                });
+        },
+
         clearForm: function () {
             let self = this;
             self.student.first_name = null;
@@ -273,6 +304,5 @@ export default {
         },
     },
 }
-
 
 </script>

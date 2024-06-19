@@ -138,7 +138,6 @@ export default {
          * @param endDate
          */
         lessonDayStatus: function(endDate) {
-            // let currentDay = new Date();
             let lessonEndDate = new Date(endDate);
 
             if (lessonEndDate.toDateString() === today.toDateString()) {

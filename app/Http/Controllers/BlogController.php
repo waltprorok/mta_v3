@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBlogPostRequest;
-use App\Http\Resources\BlogResource;
 use App\Models\Blog;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;

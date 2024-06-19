@@ -16,6 +16,7 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::get('status', 'ReportController@status');
         Route::get('invoice', 'InvoiceController@index');
         Route::get('invoice-create', 'InvoiceController@createInvoice');
+        Route::post('invoice-post', 'InvoiceController@store');
         Route::get('invoice-get-student/{id}', 'InvoiceController@getStudentSelected');
     });
 

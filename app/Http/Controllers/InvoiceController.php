@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use App\Models\Lesson;
 use App\Models\Student;
+use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class InvoiceController extends Controller
@@ -52,7 +56,7 @@ class InvoiceController extends Controller
         $lessons = Lesson::whereIn('id', $lessonIds)->get();
 
         $subTotal = 0;
-        $discount = 0;
+        $discount = $invoice->discount;
         $total = 0;
 
         foreach ($lessons as $lesson) {
@@ -72,6 +76,18 @@ class InvoiceController extends Controller
         $balanceDue = $total;
 
         return view('webapp.invoice.show', compact('invoice', 'lessons', 'subTotal', 'discount', 'total', 'balanceDue'));
+    }
+
+    public function store(Request $request): JsonResponse
+    {
+
+        try {
+            Invoice::query()->create($request->all());
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+        }
+
+        return response()->json([], Response::HTTP_CREATED);
     }
 
 }
