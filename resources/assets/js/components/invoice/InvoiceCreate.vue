@@ -1,85 +1,52 @@
 <template>
     <div class="card">
-        <!-- vue js data table -->
         <div class="form-control">
-            <form action="#" @submit.prevent="createInvoice()">
-                <div class="row">
+            <form action="#" @submit.prevent>
+                <div class="row pl-5 pt-2">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="single-select">Students</label>
                             <select id="single-select" class="form-control" @change="getSelectedStudent($event)">
-                                <option>-- Select --</option>
-                                <option v-for="row in list" :value="row.student_id" :key="row.id">
-                                    {{ row.first_name }} {{ row.last_name }}
+                                <option>-- Select Student --</option>
+                                <option v-for="data in list" :value="data.student_id" :key="data.id">
+                                    {{ data.first_name }} {{ data.last_name }}
                                 </option>
                             </select>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <hr/>
-                </div>
-
                 <div v-show="selected">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="normal-input" class="form-control-label">First Name</label>
-                                <p class="form-control-plaintext">{{ student.first_name }}</p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="normal-input" class="form-control-label">Last Name</label>
-                                <p class="form-control-plaintext">{{ student.last_name }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="normal-input" class="form-control-label">Email</label>
-                                <p class="form-control-plaintext">{{ student.email }}</p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="normal-input" class="form-control-label">Parent Email</label>
-                                <input id="normal-input" class="form-control" v-model.trim="student.parent_email" type="email">
-                            </div>
+                    <div class="row p-5">
+                        <div class="col-md-6 text-left" v-if="selected">
+                            <p class="font-weight-bold mb-4">Teacher Information</p>
+                            <p class="mb-1"><span class="text-muted"></span><strong>{{ student.student_teacher.studio_name }}</strong></p>
+                            <p class="mb-1"><span class="text-muted"></span>{{ student.student_teacher.first_name }} {{ student.student_teacher.last_name }}</p>
+                            <p class="mb-1"><span class="text-muted"></span>{{ student.student_teacher.address }} {{ student.student_teacher.address_2 }}
+                                <br>{{ student.student_teacher.city }}, {{ student.student_teacher.state }} {{ student.student_teacher.zip }}</p>
+                            <br/>
+                            <p class="mb-1"><span class="text-muted"></span>{{ student.student_teacher.email }}</p>
+                            <p class="mb-1"><span class="text-muted"></span>
+                                <phone-number-format v-bind:data="student.student_teacher"></phone-number-format>
+                            </p>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="normal-input" class="form-control-label">Phone</label>
-                                <p class="form-control-plaintext" v-if="selected"><phone-number-format v-bind:data="student"></phone-number-format></p>
-                            </div>
-                        </div>
+                    <hr class="my-1">
 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="normal-input" class="form-control-label">Date of Birth</label>
-                                <p class="form-control-plaintext">{{ student.date_of_birth }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="normal-input" class="form-control-label">Instrument</label>
-                                <p class="form-control-plaintext">{{ student.instrument }}</p>
-                            </div>
+                    <div class="row p-5 pb-1">
+                        <div class="col-md-6">
+                            <p class="font-weight-bold mb-4">Student Information</p>
+                            <p class="mb-1">{{ student.first_name }} {{ student.last_name }}</p>
+                            <p class="mb-1" v-if="selected">
+                                <phone-number-format v-bind:data="student"></phone-number-format>
+                            </p>
+                            <p class="mb-1">{{ student.email }}</p>
+                            <p class="mb-1">{{ student.parent_email }}</p>
+                            <p class="mb-1">{{ student.instrument }}</p>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row pl-5">
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="normal-input" class="form-control-label">Lesson Start Date</label>
@@ -123,7 +90,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row pl-5">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="normal-input" class="form-control-label">Due Date</label>
@@ -131,32 +98,39 @@
                             </div>
                         </div>
 
-                        <!--                        <div class="col-md-3">-->
-                        <!--                            <div class="form-group">-->
-                        <!--                                <label for="normal-input" class="form-control-label">Adjustments</label>-->
-                        <!--                                <input id="normal-input" class="form-control" v-model.number="invoice.adjustments" type="number" @input="updateTotal">-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="normal-input" class="form-control-label">Sub Total</label>
-                                <p class="form-control-plaintext">{{ invoice.subtotal | toCurrency }}</p>
+                                <div class="form-group">
+                                    <label for="normal-input" class="form-control-label">Send to Email</label>
+                                    <input id="normal-input" class="form-control" v-model.trim="student.additional_email" type="email" placeholder="Send to this email">
+                                </div>
                             </div>
                         </div>
+                    </div>
 
+                    <div class="row d-flex flex-row bg-dark text-white pl-5 pt-3 pb-2">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="normal-input" class="form-control-label">Discount</label>
                                 <div class="input-group mb-3">
-                                    <input id="normal-input" class="form-control" v-model="invoice.discount" type="number" @input="updateTotal">
+                                    <input id="normal-input"
+                                           class="form-control"
+                                           v-model="invoice.discount"
+                                           type="number"
+                                           min="0"
+                                           max="100"
+                                           @input="updateTotal()">
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="normal-input" class="form-control-label">Sub Total</label>
+                                <p class="form-control-plaintext">{{ invoice.subtotal | toCurrency }}</p>
                             </div>
                         </div>
 
@@ -175,13 +149,12 @@
                                 <!--                                <input id="normal-input" class="form-control" v-model.number="invoice.balance_due" type="number" readonly>-->
                             </div>
                         </div>
-
                     </div>
-                </div>
 
-                <div class="form-group pull-right">
-                    <button @click="clearForm()" class="btn btn-default">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <div class="form-group pull-right pt-4 pr-5">
+                        <button @click="clearForm()" class="btn btn-default">Cancel</button>
+                        <button @click="createInvoice()" type="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -222,10 +195,6 @@ export default {
                 payment_type_id: 1,
                 due_date: null,
             },
-            // dueDateConfig: {
-            //     type: 'string',
-            //     mask: 'YYYY-MM-DD',
-            // },
         }
     },
 
@@ -299,7 +268,7 @@ export default {
             // $subTotal * ($discount / 100)
         },
 
-        calculate: function () {
+        calculateTotal: function () {
             this.student.lessons.map((i) => {
                 this.invoice.balance_due = i.billing_rate.amount;
                 this.invoice.total = i.billing_rate.amount;
@@ -357,7 +326,7 @@ export default {
                     this.selected = true;
                 })
                 .then(() => {
-                    this.calculate();
+                    this.calculateTotal();
                 })
                 .catch((error) => {
                     console.log(error);

@@ -21,10 +21,11 @@
                         <p class="font-weight-bold mb-1">Invoice #{{ $invoice->id }}</p>
                         <p class="text-muted mb-1">Date: {{ $invoice->created_at->format('m/d/Y') }}</p>
                         <p class="text-muted mb-1">Due: {{ $invoice->due_date ? \Carbon\Carbon::parse($invoice->due_date)->format('m/d/Y') : $invoice->created_at->endOfMonth()->format('m/d/Y') }}</p>
+                        <p class="text-muted mb-1">Status: {{ $invoice->is_paid ? 'Paid' : 'Not Paid' }}</p>
                     </div>
 
                     <div class="col-md-6 text-left">
-                        <p class="font-weight-bold mb-4">Billing Information</p>
+                        <p class="font-weight-bold mb-4">Teacher Information</p>
                         <p class="mb-1"><span class="text-muted"></span><strong>{{ $invoice->student->studentTeacher->studio_name}}</strong></p>
                         <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->studentTeacher->first_name }} {{ $invoice->student->studentTeacher->last_name }}</p>
                         <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->studentTeacher->address }} {{ $invoice->student->studentTeacher->address_2 }}
@@ -38,7 +39,7 @@
                 <hr class="my-1">
                 <div class="row pb-5 p-5">
                     <div class="col-md-6">
-                        <p class="font-weight-bold mb-4">Client Information</p>
+                        <p class="font-weight-bold mb-4">Student Information</p>
                         <p class="mb-1">@if ($invoice->student->first_name)
                                 {{ $invoice->student->first_name }} {{ $invoice->student->last_name }}
                             @else @endif</p>
@@ -47,6 +48,9 @@
                             @else @endif</p>
                         <p class="mb-1">@if ($invoice->student->city || $invoice->student->state || $invoice->student->zip)
                                 {{ $invoice->student->city }}, {{ $invoice->student->state }} {{ $invoice->student->zip }}
+                            @else @endif</p>
+                        <p class="mb-1">@if ($invoice->student->phone)
+                                Phone: {{ $invoice->student->phone_number }}
                             @else @endif</p>
                         <p class="mb-1">@if ($invoice->student->email)
                                 Email: {{ $invoice->student->email }}
