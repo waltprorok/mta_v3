@@ -81,7 +81,7 @@
                                 <th class="border-0 text-uppercase small font-weight-bold">Start Date</th>
                                 <th class="border-0 text-uppercase small font-weight-bold">End Date</th>
                                 <th class="border-0 text-uppercase small font-weight-bold">Quantity</th>
-                                <th class="border-0 text-uppercase small font-weight-bold">Description</th>
+                                <th class="border-0 text-uppercase small font-weight-bold">Billing Rate</th>
                                 <th class="border-0 text-uppercase small font-weight-bold">Amount</th>
                             </tr>
                             </thead>
@@ -99,7 +99,7 @@
                                     <td>{{ Carbon\Carbon::parse($lesson->end_date)->format('m-d-Y g:i a') }}</td>
                                     <td>{{ $lesson->interval }} minutes</td>
                                     <td>{{ $lesson->billingRate->description }}</td>
-                                    <td>${{ $lesson->billingRate->amount }}</td>
+                                    <td>${{ $lesson->billingRate->amount / $lessons->count() }}</td>
                                 </tr>
                             @endforeach
                             </tbody>

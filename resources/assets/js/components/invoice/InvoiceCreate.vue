@@ -51,17 +51,16 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th class="border-0 text-uppercase small font-weight-bold">Lesson Start Date</th>
-                                    <th class="border-0 text-uppercase small font-weight-bold">Lesson End Date</th>
                                     <th class="border-0 text-uppercase small font-weight-bold">Completed</th>
-                                    <th class="border-0 text-uppercase small font-weight-bold">Rate Type</th>
+                                    <th class="border-0 text-uppercase small font-weight-bold">Start Date</th>
+                                    <th class="border-0 text-uppercase small font-weight-bold">End Date</th>
+                                    <th class="border-0 text-uppercase small font-weight-bold">Quantity</th>
+                                    <th class="border-0 text-uppercase small font-weight-bold">Billing Rate</th>
                                     <th class="border-0 text-uppercase small font-weight-bold">Amount</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr v-for="lesson in student.lessons">
-                                    <td>{{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
-                                    <td>{{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                                     <td>
                                         <select id="single-select" class="form-control" @change="updateLesson(lesson.id, $event)">
                                             <option :value="lesson.complete" v-model="lesson.complete">
@@ -72,8 +71,11 @@
                                             </option>
                                         </select>
                                     </td>
-                                    <td>{{ lesson.billing_rate.description }}</td>
-                                    <td>{{ lesson.billing_rate.amount | toCurrency }}</td>
+                                    <td>{{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
+                                    <td>{{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
+                                    <td>{{ lesson.interval }} minutes</td>
+                                    <td>{{ lesson.billing_rate.description }} <i class="fa fa-money" :title="'$' + lesson.billing_rate.amount"></i></td>
+                                    <td>{{ lesson.billing_rate.amount / student.lessons.length | toCurrency }}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -235,25 +237,25 @@ export default {
             self.invoice.teacher_id = self.student.student_teacher.teacher_id;
             self.invoice.lesson_id = lessons.toString();
             console.log(self.invoice);
-            // let params = Object.assign({}, self.invoice);
-            // axios.post('/web/invoice-post', params)
-            //     .then(() => {
-            //         this.$notify({
-            //             type: 'success',
-            //             title: 'Success',
-            //             text: 'Invoice created.',
-            //             duration: 10000,
-            //         });
-            //     })
-            //     .catch((error) => {
-            //         self.getErrorMessage(error);
-            //         this.$notify({
-            //             type: 'error',
-            //             title: 'Error',
-            //             text: 'Could not create invoice.',
-            //             duration: 10000,
-            //         });
-            //     });
+            let params = Object.assign({}, self.invoice);
+            axios.post('/web/invoice-post', params)
+                .then(() => {
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'Invoice created.',
+                        duration: 10000,
+                    });
+                })
+                .catch((error) => {
+                    self.getErrorMessage(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not create invoice.',
+                        duration: 10000,
+                    });
+                });
         },
 
         updateTotal: function () {
@@ -275,11 +277,12 @@ export default {
 
         clearForm: function () {
             let self = this;
+            self.student.student_id = null;
             self.student.first_name = null;
             self.student.last_name = null;
             self.student.email = null;
+            self.student.parent_email = null;
             self.student.phone = null;
-            self.student.student_id = null;
             self.student.teacher_id = null;
             self.student.lesson_id = null;
             self.student.subtotal = null;
