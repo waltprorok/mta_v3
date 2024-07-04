@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="form-group pull-right">
-            <button type="button" class="form-control btn btn-primary">Create Invoice</button>
+            <a :href="`/invoice/create`" class="btn btn-primary" role="button" title="create invoice">Create Invoice</a>
         </div>
 
 
@@ -19,6 +19,8 @@
         <datatable class="table table-responsive-md table-hover" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
             <template v-slot="{ columns, row }">
                 <tr>
+                    <td v-if="row.is_paid === false"><span class="btn btn-sm btn-danger btn-rounded"><i class="fa fa-times"></i></span></td>
+                    <td v-if="row.is_paid === true"><span class="btn btn-sm btn-success btn-rounded"><i class="fa fa-check"></i></span></td>
                     <td>{{ row.student.first_name }}</td>
                     <td>{{ row.student.last_name }}</td>
                     <td>
@@ -27,7 +29,7 @@
                     <td>{{ row.student.email }}</td>
                     <td>{{ row.balance_due | toCurrency }}</td>
                     <td class="text-nowrap">
-                        <a :href="`/invoice/show/${row.student.student_id}`" class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-file-pdf-o"></i></a>
+                        <a :href="`/invoice/show/${row.id}`" class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-file-pdf-o"></i></a>
                     </td>
                 </tr>
             </template>

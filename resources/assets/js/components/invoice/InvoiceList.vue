@@ -13,6 +13,7 @@ export default {
             per_page: 10,
             pages: [10, 25, 50, 100],
             columns: [
+                {label: 'Paid', field: 'is_paid',},
                 {label: 'First Name', field: 'first_name',},
                 {label: 'Last Name', field: 'last_name',},
                 {label: 'Phone', field: 'phone', sortable: false},

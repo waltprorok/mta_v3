@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth', 'teacher']], function () {
     Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
-// web API endpoints for teacher
+    // web API endpoints for teacher
     Route::prefix('web')->group(function () {
         Route::get('active', 'StudentListController@active')->name('student.active');
         Route::get('leads', 'StudentListController@leads')->name('student.leads');
@@ -15,11 +15,15 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::post('student-save', 'StudentController@store');
         Route::get('status', 'ReportController@status');
         Route::get('invoice', 'InvoiceController@index');
+        Route::get('invoice-create', 'InvoiceController@createInvoice');
+        Route::post('invoice-post', 'InvoiceController@store');
+        Route::get('invoice-get-student/{id}', 'InvoiceController@getStudentSelected');
     });
 
     Route::prefix('invoice')->group(function () {
         Route::view('/', 'webapp.invoice.index')->name('invoice.index');
         Route::get('/show/{id}', 'InvoiceController@show')->name('invoice.show');
+        Route::view('/create', 'webapp.invoice.create')->name('invoice.create');
     });
 
     Route::prefix('students')->group(function () {
