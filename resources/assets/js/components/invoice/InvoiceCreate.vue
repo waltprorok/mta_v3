@@ -32,6 +32,12 @@ export default {
         }
     },
 
+    computed: {
+        isDisabled: function () {
+            return this?.student?.lessons?.length === 0;
+        },
+    },
+
     components: {
         PhoneNumberFormat
     },
@@ -63,7 +69,7 @@ export default {
     },
 
     methods: {
-        calculateLessonAmount: function(lesson) {
+        calculateLessonAmount: function (lesson) {
             if (lesson.billing_rate.type === 'lesson') {
                 return 1 // per lesson
             }
