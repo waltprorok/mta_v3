@@ -17,7 +17,7 @@
             <div v-show="selected">
                 <div class="row pl-4">
                     <div class="col-md-6 text-left" v-if="selected">
-                        <p class="font-weight-bold mb-4">Teacher Information</p>
+                        <p class="font-weight-bold mb-4">Billed By:</p>
                         <p class="mb-1"><span class="text-muted"></span><strong>{{ student.student_teacher.studio_name }}</strong></p>
                         <p class="mb-1"><span class="text-muted"></span>{{ student.student_teacher.first_name }} {{ student.student_teacher.last_name }}</p>
                         <p class="mb-1"><span class="text-muted"></span>{{ student.student_teacher.address }} {{ student.student_teacher.address_2 }}
@@ -34,7 +34,7 @@
 
                 <div class="row p-4 pb-1">
                     <div class="col-md-6">
-                        <p class="font-weight-bold mb-4">Student Information</p>
+                        <p class="font-weight-bold mb-4">Billed To:</p>
                         <p class="mb-1">{{ student.first_name }} {{ student.last_name }}</p>
                         <p class="mb-1" v-if="selected">
                             <phone-number-format v-bind:data="student"></phone-number-format>
@@ -47,7 +47,7 @@
 
                 <div class="row pl-4">
                     <div class="col-md-12">
-                        <table class="table" v-if="student?.lessons?.length > 0">
+                        <table class="table">
                             <thead>
                             <tr>
                                 <th class="border-0 text-uppercase small font-weight-bold">Completed</th>
@@ -59,7 +59,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="lesson in student.lessons">
+                            <tr v-for="lesson in lessons" :key="lesson.id">
                                 <td>
                                     <select id="single-select" class="form-control" @change="updateLesson(lesson.id, $event)">
                                         <option :value="lesson.complete" v-model="lesson.complete">
@@ -74,7 +74,7 @@
                                 <td>{{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                                 <td>{{ lesson.interval }} minutes</td>
                                 <td>{{ '$' + lesson.billing_rate.amount }} | {{ lesson.billing_rate.description }}</td>
-                                <td>{{ lesson.billing_rate.amount / calculateLessonAmount(lesson) | toCurrency }}</td>
+                                <td>{{ calculateLessonAmount(lesson) | toCurrency }}</td>
                             </tr>
                             </tbody>
                         </table>

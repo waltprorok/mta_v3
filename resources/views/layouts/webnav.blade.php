@@ -168,7 +168,7 @@
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
                                 <a href="{{ route('invoice.index') }}" class="nav-link {{ Route::currentRouteName() == 'invoice.index' ? 'active' : '' }}">
-                                    <i class="fa fa-calculator ml-3" aria-hidden="true"></i>Invoice
+                                    <i class="fa fa-calculator ml-3" aria-hidden="true"></i>Invoices
                                 </a>
                             </li>
 

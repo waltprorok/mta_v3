@@ -74,7 +74,7 @@ class LessonController extends Controller
         $toDate = Carbon::createFromFormat('D M d Y', $toDate)->format('Y-m-d');
 
         return LessonResource::collection(Lesson::query()
-            ->with('lessonTeacherId')
+            ->with('lessonTeacher')
             ->whereDate('start_date', '>=', $fromDate)
             ->whereDate('start_date', '<=', $toDate)
             ->orderBy('title')

@@ -9,6 +9,7 @@ export default {
             // classError: false,
             list: [],
             student: [],
+            lessons: [],
             selected: false,
             lesson: {
                 id: null,
@@ -34,7 +35,7 @@ export default {
 
     computed: {
         isDisabled: function () {
-            return this?.student?.lessons?.length === 0;
+            return this?.lessons?.length === 0;
         },
     },
 
@@ -71,34 +72,32 @@ export default {
     methods: {
         calculateLessonAmount: function (lesson) {
             if (lesson.billing_rate.type === 'lesson') {
-                return 1 // per lesson
-            }
-
-            if (lesson.billing_rate.type === 'weekly') {
-                return 1; // per weekly
+                return lesson.billing_rate.amount;
             }
 
             if (lesson.billing_rate.type === 'hourly') {
-                return lesson.billing_rate.amount / lesson.interval;  // test
+                let lessonInterval = (lesson.interval / 60);
+                return lesson.billing_rate.amount * lessonInterval;
             }
 
             if (lesson.billing_rate.type === 'monthly') {
-                return 4; // per month
+                let numberOfLessons = this.lessons.length;
+                return lesson.billing_rate.amount / numberOfLessons;
             }
 
             if (lesson.billing_rate.type === 'yearly') {
-                return 52; // per year
+                return lesson.billing_rate.amount / 52;
             }
         },
 
         createInvoice: function () {
             let self = this;
             let lessons = [];
-            this.student.lessons.forEach((lesson) => lessons.push(lesson.id));
+            this.lessons.forEach((lesson) => lessons.push(lesson.id));
             self.invoice.student_id = self.student.id;
             self.invoice.teacher_id = self.student.student_teacher.teacher_id;
             self.invoice.lesson_id = lessons.toString();
-            console.log(self.invoice);
+            // console.log(self.invoice);
             let params = Object.assign({}, self.invoice);
             axios.post('/web/invoice-post', params)
                 .then(() => {
@@ -129,19 +128,19 @@ export default {
 
         calculateTotal: function () {
             this.invoice.discount = 0;
-            this.student.lessons.map((lesson) => {
-                if (lesson.billing_rate.type === 'lesson' || lesson.billing_rate.type === 'weekly') {
-                    let numberOfLessons = this.student.lessons.length;
+            this.lessons.map((lesson) => {
+                let numberOfLessons = this.lessons.length;
+                if (lesson.billing_rate.type === 'lesson') {
                     this.invoice.total = lesson.billing_rate.amount * numberOfLessons;
                     this.invoice.subtotal = lesson.billing_rate.amount * numberOfLessons;
                     this.invoice.balance_due = lesson.billing_rate.amount * numberOfLessons;
                 }
 
                 if (lesson.billing_rate.type === 'hourly') {
-                    let lessonInterval = this.student.lessons.interval;
-                    this.invoice.total = lesson.billing_rate.amount / lessonInterval;
-                    this.invoice.subtotal = lesson.billing_rate.amount / lessonInterval;
-                    this.invoice.balance_due = lesson.billing_rate.amount / lessonInterval;
+                    let lessonInterval = (lesson.interval / 60);
+                    this.invoice.total = lesson.billing_rate.amount * lessonInterval * numberOfLessons;
+                    this.invoice.subtotal = lesson.billing_rate.amount * lessonInterval * numberOfLessons;
+                    this.invoice.balance_due = lesson.billing_rate.amount * lessonInterval * numberOfLessons;
                 }
 
                 if (lesson.billing_rate.type === 'monthly') {
@@ -151,7 +150,7 @@ export default {
                 }
 
                 if (lesson.billing_rate.type === 'yearly') {
-                    const weeksInYear = 52
+                    const weeksInYear = 52.14
                     this.invoice.total = lesson.billing_rate.amount / weeksInYear;
                     this.invoice.subtotal = lesson.billing_rate.amount / weeksInYear;
                     this.invoice.balance_due = lesson.billing_rate.amount / weeksInYear;
@@ -205,7 +204,8 @@ export default {
             this.clearForm();
             axios.get('/web/invoice-get-student/' + event.target.value)
                 .then((response) => {
-                    this.student = response.data;
+                    this.student = response.data.studentTeacher;
+                    this.lessons = response.data.lessons;
                     this.selected = true;
                 })
                 .then(() => {

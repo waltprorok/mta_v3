@@ -27,12 +27,20 @@ class InvoiceController extends Controller
     public function getStudentSelected(int $id): JsonResponse
     {
         $student = Student::where('student_id', $id)
-            ->with('lessons:id,student_id,teacher_id,billing_rate_id,start_date,end_date,complete')
+            ->with('lessons:id,student_id,teacher_id,billing_rate_id,invoice_id,start_date,end_date,complete')
             ->with('lessons.billingRate')
+            ->with('lessons.invoice')
+            ->first();
+
+        $teacher = Student::where('student_id', $id)
             ->with('studentTeacher')
             ->first();
 
-        return response()->json($student);
+        $filteredLessons = $student->lessons->filter(function ($lesson) {
+            return is_null($lesson->invoice);
+        })->values();
+
+        return response()->json(['lessons' => $filteredLessons, 'studentTeacher' => $teacher]);
     }
 
     public function createInvoice()
@@ -59,15 +67,57 @@ class InvoiceController extends Controller
         $discount = $invoice->discount;
         $total = 0;
 
+        // 1. calculate totals first
         foreach ($lessons as $lesson) {
-            $subTotal += $lesson->billingRate->amount;
-            $total += $lesson->billingRate->amount;
+            if ($lesson->billingRate->type == 'lesson') {
+                $subTotal += $lesson->billingRate->amount;
+                $total += $lesson->billingRate->amount;
+            }
+
+            if ($lesson->billingRate->type == 'hourly') {
+                $minutes = $lesson->interval / 60;
+                $subTotal += $lesson->billingRate->amount * $minutes;
+                $total += $lesson->billingRate->amount * $minutes;
+            }
 
             if ($lesson->billingRate->type == 'monthly') {
+                $subTotal += $lesson->billingRate->amount;
+                $total += $lesson->billingRate->amount;
                 break;
             }
 
+            if ($lesson->billingRate->type == 'yearly') {
+                $subTotal += $lesson->billingRate->amount / 52.14;
+                $total += $lesson->billingRate->amount / 52.14;
+            }
         }
+
+        // 2. calculate each lesson amount
+        $lessons->map(function ($lesson) use ($lessons) {
+            if ($lesson->billingRate->type == 'hourly') {
+                $minutes = $lesson->interval / 60;
+                $amount = $lesson->billingRate->amount * $minutes;
+                return [
+                    $lesson->billingRate->amount = $amount,
+                ];
+            }
+
+            if ($lesson->billingRate->type == 'monthly') {
+                $amount = $lesson->billingRate->amount / count($lessons);
+                return [
+                    $lesson->billingRate->amount = $amount,
+                ];
+            }
+
+            if ($lesson->billingRate->type == 'yearly') {
+                $amount = $lesson->billingRate->amount / 52.14;
+                return [
+                    $lesson->billingRate->amount = $amount,
+                ];
+            }
+
+            return $lesson;
+        });
 
         $subTotalCalculation = $subTotal * ($discount / 100);
 
@@ -80,9 +130,13 @@ class InvoiceController extends Controller
 
     public function store(Request $request): JsonResponse
     {
+        $lessonIds = explode(',', $request->lesson_id);
 
         try {
-            Invoice::query()->create($request->all());
+            $newInvoice = Invoice::query()->create($request->all());
+            foreach ($lessonIds as $lessonId) {
+                Lesson::query()->findOrFail($lessonId)->update(['invoice_id' => $newInvoice->id]);
+            }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }
