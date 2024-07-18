@@ -101,6 +101,9 @@ export default {
             let params = Object.assign({}, self.invoice);
             axios.post('/web/invoice-post', params)
                 .then(() => {
+                    this.clearForm();
+                })
+                .then(() => {
                     this.$notify({
                         type: 'success',
                         title: 'Success',
@@ -160,6 +163,7 @@ export default {
 
         clearForm: function () {
             let self = this;
+            self.list = [];
             self.student.student_id = null;
             self.student.first_name = null;
             self.student.last_name = null;
@@ -181,6 +185,7 @@ export default {
             self.invoice.subtotal = null;
             self.invoice.total = null;
             self.invoice.balance_due = null;
+            this.fetchInvoiceData();
         },
 
         fetchInvoiceData: function () {

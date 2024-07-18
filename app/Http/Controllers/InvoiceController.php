@@ -120,23 +120,23 @@ class InvoiceController extends Controller
         });
 
         $subTotalCalculation = $subTotal * ($discount / 100);
-
         $total = $total - $subTotalCalculation;
-
         $balanceDue = $total;
 
         return view('webapp.invoice.show', compact('invoice', 'lessons', 'subTotal', 'discount', 'total', 'balanceDue'));
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(Request $request)
     {
         $lessonIds = explode(',', $request->lesson_id);
 
         try {
             $newInvoice = Invoice::query()->create($request->all());
+
             foreach ($lessonIds as $lessonId) {
                 Lesson::query()->findOrFail($lessonId)->update(['invoice_id' => $newInvoice->id]);
             }
+
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }
