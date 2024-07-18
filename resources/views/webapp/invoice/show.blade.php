@@ -75,7 +75,6 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th class="border-0 text-uppercase small font-weight-bold">ID</th>
                                 <th class="border-0 text-uppercase small font-weight-bold">Complete</th>
                                 <th class="border-0 text-uppercase small font-weight-bold">Title</th>
                                 <th class="border-0 text-uppercase small font-weight-bold">Start Date</th>
@@ -88,11 +87,10 @@
                             <tbody>
                             @foreach($lessons as $lesson)
                                 <tr>
-                                    <td>{{ $lesson->id }}</td>
                                     <td>@if($lesson->complete)
-                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                            <i class="fa fa-check ml-4" aria-hidden="true"></i>
                                         @else
-                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                            <i class="fa fa-times ml-4" aria-hidden="true"></i>
                                         @endif</td>
                                     <td>{{ $lesson->title }}</td>
                                     <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('m-d-Y g:i a') }}</td>
