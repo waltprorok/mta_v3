@@ -106,7 +106,7 @@ class SubscriptionController extends Controller
             return view('webapp.account.subscription');
         } else {
             $plans = Plan::all();
-            return view('webapp.account.index', compact('plans'));
+            return view('webapp.account.index')->with('plans', $plans);
         }
     }
 
@@ -117,7 +117,7 @@ class SubscriptionController extends Controller
 
         $invoices = $user->invoices();
 
-        return view('webapp.account.invoices', compact('invoices'));
+        return view('webapp.account.invoices')->with('invoices', $invoices);
     }
 
     public function listPlanChange(): View
@@ -143,7 +143,7 @@ class SubscriptionController extends Controller
             }
         }
 
-        return view('webapp.account.change', compact('plan'));
+        return view('webapp.account.change')->with('plan', $plan);
     }
 
     /**
