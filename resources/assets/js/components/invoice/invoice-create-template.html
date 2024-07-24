@@ -73,7 +73,7 @@
                                 <td>{{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                                 <td>{{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                                 <td>{{ lesson.interval }} minutes</td>
-                                <td>{{ '$' + lesson.billing_rate.amount }} | {{ lesson.billing_rate.description }}</td>
+                                <td>{{ '$' + lesson.billing_rate.amount }} {{ lesson.billing_rate.description ? '| ' +  lesson.billing_rate.description : '' }}</td>
                                 <td>{{ calculateLessonAmount(lesson) | toCurrency }}</td>
                             </tr>
                             </tbody>
