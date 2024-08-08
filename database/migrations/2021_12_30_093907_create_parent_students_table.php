@@ -16,7 +16,7 @@ class CreateParentStudentsTable extends Migration
     public function up()
     {
         Schema::create(self::TABLE_NAME, function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->integer('parent_id')->unsigned()->index();
             $table->foreign('parent_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('student_id')->unsigned()->index();
