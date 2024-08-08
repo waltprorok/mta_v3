@@ -16,7 +16,7 @@ class CreateBusinessHoursTable extends Migration
     public function up()
     {
         Schema::create(self::TABLE_NAME, function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->integer('teacher_id')->unsigned();
             $table->foreign('teacher_id')->references('id')->on('users');
             $table->integer('day')->nullable();
