@@ -2,19 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\LessonsInvoice;
 use App\Models\Invoice;
 use App\Models\Lesson;
 use App\Models\Student;
+use Barryvdh\DomPDF\PDF;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class InvoiceController extends Controller
 {
+    public function storePDF(Invoice $newInvoice)
+    {
+        $invoice = Invoice::with('student.studentTeacher')
+            ->with('lessons.billingRate')
+            ->find($newInvoice->id);
+
+        $pdf = app(PDF::class);
+        $pdf->setPaper('A4');
+
+        $pdfFile = $pdf->loadView('webapp.invoice.pdf_view', ['invoice' => $invoice]);
+        Storage::disk('invoice')->put('Invoice_MTA_' . $invoice->id . '.pdf', $pdfFile->output());
+
+        return $invoice;
+//        return $pdfFile->download('Invoice_MTA_' . $invoice->id . '.pdf');
+    }
+
     public function index(): JsonResponse
     {
         $students = Invoice::with('student', 'teacher')
@@ -136,6 +156,10 @@ class InvoiceController extends Controller
             foreach ($lessonIds as $lessonId) {
                 Lesson::query()->findOrFail($lessonId)->update(['invoice_id' => $newInvoice->id]);
             }
+
+            $invoice = $this->storePDF($newInvoice);
+
+            Mail::to($invoice->student->email)->send(new LessonsInvoice($invoice));
 
         } catch (Exception $exception) {
             Log::info($exception->getMessage());

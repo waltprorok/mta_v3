@@ -14,11 +14,11 @@
             <div class="card-body p-0">
                 <div class="row p-5">
                     <div class="col-md-6">
-                        <img src="{{ asset('marketing/img/logo1.png') }}" alt="mta logo">
+                        <img src="{{ asset('webapp/img/logo-mta1.png') }}" alt="mta logo">
                     </div>
 
                     <div class="col-md-6 text-right">
-                        <p class="font-weight-bold mb-2">Invoice #{{ $invoice->id }}</p>
+                        <p class="font-weight-bold mb-2">Invoice: {{ $invoice->id }}</p>
                         <p class="text-muted mb-1"><span class="text-muted">Date: </span>{{ $invoice->created_at->format('m/d/Y') }}</p>
                         <p class="text-muted mb-1"><span class="text-muted">Due: </span>{{ $invoice->due_date ? \Carbon\Carbon::parse($invoice->due_date)->format('m/d/Y') : $invoice->created_at->endOfMonth()->format('m/d/Y') }}</p>
                         <p class="text-muted mb-1"><span class="text-muted">Status: </span><span class="{{ $invoice->is_paid ? '' : 'badge-danger' }}">{{ $invoice->is_paid ? 'Paid' : 'Not Paid' }}</span></p>

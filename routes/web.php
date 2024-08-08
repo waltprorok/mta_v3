@@ -19,6 +19,8 @@ Route::middleware(ProtectAgainstSpam::class)->group(function () {
     Auth::routes();
 });
 
+//Route::get('/test/pdf', 'InvoiceController@printPDF')->name('test.pdf');
+
 // Routes for marketing
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('pricing', 'HomeController@pricing')->name('pricing');
@@ -90,6 +92,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 // middleware guard for subscribed users
 // Route::group(['middleware' => ['subscribed']], function () {
-// Example of single route with middleware
+//// Example of single route with middleware
 // Route::get('/', 'LessonController@index')->name('calendar.index')->middleware('subscribed');
 // });
