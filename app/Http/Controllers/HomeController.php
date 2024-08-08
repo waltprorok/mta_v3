@@ -22,7 +22,7 @@ class HomeController extends Controller
     {
         $plans = Plan::all(['id', 'name', 'slug', 'cost']);
 
-        return view('marketing.pricing', compact('plans'));
+        return view('marketing.pricing')->with('plans', $plans);
     }
 
     public function terms()

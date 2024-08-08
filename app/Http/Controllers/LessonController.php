@@ -51,7 +51,7 @@ class LessonController extends Controller
                 'height' => 840,
             ]);
 
-        return view('webapp.calendar.index', compact('calendar'));
+        return view('webapp.calendar.index')->with('calendar', $calendar);
     }
 
     public function list(string $fromDate, string $toDate): AnonymousResourceCollection
@@ -74,7 +74,7 @@ class LessonController extends Controller
         $toDate = Carbon::createFromFormat('D M d Y', $toDate)->format('Y-m-d');
 
         return LessonResource::collection(Lesson::query()
-            ->with('lessonTeacherId')
+            ->with('lessonTeacher')
             ->whereDate('start_date', '>=', $fromDate)
             ->whereDate('start_date', '<=', $toDate)
             ->orderBy('title')

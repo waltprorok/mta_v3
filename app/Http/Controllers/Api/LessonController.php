@@ -14,7 +14,7 @@ class LessonController extends Controller
 //    public function index(): AnonymousResourceCollection
 //    {
 //        return LessonResource::collection(
-//            Lesson::with('lessonTeacherId')
+//            Lesson::with('lessonTeacher')
 //                ->orderBy('title')
 //                ->orderBy('start_date')
 //                ->get()

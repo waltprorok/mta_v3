@@ -9,7 +9,8 @@
                                 <div class="form-group pull-left input-group col-4" v-if="showDropDown">
                                     <span class="input-group-text"><i class="fa fa-user"></i></span>
                                     <div class="input-group-prepend"></div>
-                                    <select id=users class="form-control" @change="getOnChangeList($event)">
+                                    <select id=users class="form-control" @change="getOnChangeList($event)"
+                                            v-on:keydown.enter.prevent>
                                         <option :value="status.active" selected>Active</option>
                                         <option :value="status.leads">Leads</option>
                                         <option :value="status.wait_list">Wait List</option>
@@ -28,7 +29,8 @@
                         <div class="col-sm-12">
                             <div class="form-group" :class="error_to && classError">
                                 <label for="to">To <span class="text-danger">*</span></label>
-                                <select class="form-control" id="to" v-model="message.to">
+                                <select class="form-control" id="to" v-model="message.to"
+                                        v-on:keydown.enter.prevent>
                                     <option v-for="user in list" :value="getUserIdValue(user)">
                                         {{ showUserNameDisplay(user) }}
                                     </option>
@@ -37,12 +39,13 @@
                             </div>
                             <div class="form-group" :class="error_subject && classError">
                                 <label for="subject">Subject <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" placeholder="Enter subject" v-model="message.subject">
+                                <input type="text" class="form-control" placeholder="Enter subject" v-model="message.subject"
+                                       v-on:keydown.enter.prevent>
                                 <small>{{ error_subject }}</small>
                             </div>
                             <div class="form-group" :class="error_message && classError">
                                 <label for="message">Message <span class="text-danger">*</span></label>
-                                <textarea class="form-control" rows="16" v-model="message.message"></textarea>
+                                <textarea class="form-control" rows="16" v-model="message.message" v-on:keydown.enter.prevent></textarea>
                                 <small>{{ error_message }}</small>
                             </div>
                             <button type="submit" class="btn btn-primary">Send</button>

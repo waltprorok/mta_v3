@@ -23,6 +23,8 @@ class CreateLessonsTable extends Migration
             $table->foreign('teacher_id')->references('id')->on('users');
             $table->integer('billing_rate_id')->unsigned()->nullable();
             $table->foreign('billing_rate_id')->references('id')->on('billing_rates');
+            $table->integer('invoice_id')->unsigned()->nullable();
+            $table->foreign('invoice_id')->references('id')->on('invoices');
             $table->string('title');
             $table->string('color');
             $table->datetime('start_date');

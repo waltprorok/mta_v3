@@ -18,7 +18,7 @@ export default {
                 {label: 'Created', field: 'created_at',},
                 {label: 'Actions', filterable: false}
             ],
-            types: ['lesson', 'hourly', 'weekly', 'monthly', 'yearly'],
+            types: ['lesson', 'hourly', 'monthly', 'yearly'],
             edit: false,
             showForm: false,
             read: false,

@@ -28,7 +28,7 @@ class BlogController extends Controller
             ->paginate($this->blogLimit)
             ->onEachSide(3);
 
-        return view('blog.index', compact('blogs'));
+        return view('blog.index')->with('blogs', $blogs);
     }
 
     /**

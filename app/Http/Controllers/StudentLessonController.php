@@ -321,17 +321,16 @@ class StudentLessonController extends Controller
 
             if ($allLessonsDay == $studentLessonStart || $allLessonsDay == $startDate) {
                 $lessonStart = Carbon::parse($allLesson->start_date)->format('H:i:s');
-                $lesson15Minutes = Carbon::parse($allLesson->start_date)->addMinute(15)->format('H:i:s');
-                $lesson30Minutes = Carbon::parse($allLesson->start_date)->addMinute(30)->format('H:i:s');
-                $lesson45Minutes = Carbon::parse($allLesson->start_date)->addMinute(45)->format('H:i:s');
-                $lesson60Minutes = Carbon::parse($allLesson->start_date)->addMinute(60)->format('H:i:s');
+                $lesson15Minutes = Carbon::parse($allLesson->start_date)->addMinutes(15)->format('H:i:s');
+                $lesson30Minutes = Carbon::parse($allLesson->start_date)->addMinutes(30)->format('H:i:s');
+                $lesson45Minutes = Carbon::parse($allLesson->start_date)->addMinutes(45)->format('H:i:s');
+                $lesson60Minutes = Carbon::parse($allLesson->start_date)->addMinutes(60)->format('H:i:s');
 
                 $lessonStartParse = Carbon::parse($allLesson->start_date);
                 $lessonEndParse = Carbon::parse($allLesson->end_date);
                 $diffInTime = $lessonEndParse->diffInSeconds($lessonStartParse);
 
                 $lessonTimes[] = $lessonStart;
-
                 switch ($diffInTime) {
                     case 900:
                         break;
@@ -403,6 +402,7 @@ class StudentLessonController extends Controller
                     if ($allTime == $lessonStartTime && $lessonInterval == 60) {
                         unset($allTimes[$allTimeKey]);
                         unset($allTimes[$allTimeKey + 1]);
+                        unset($allTimes[$allTimeKey + 2]);
                     }
 
                     if ($allTime == $lessonEndTime) {

@@ -16,7 +16,7 @@ If you have any questions or concerns please use the support link after you log 
     Support
 @endcomponent
 
-Your registered email is **{{$user['email']}}**
+Your registered email is **{{ $user['email'] }}**
 
 To unlock the full potential of the software please sign up for a <a href="{{ route('account.subscription') }}" target="_blank">Premium Account</a> to unlock all the system features.
 

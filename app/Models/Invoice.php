@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Invoice extends Model
@@ -28,6 +30,16 @@ class Invoice extends Model
     protected $casts = [
         'is_paid' => 'boolean',
     ];
+
+    public function lessons(): HasMany
+    {
+        return $this->hasMany(Lesson::class);
+    }
+
+    public function lesson(): HasOne
+    {
+        return $this->hasOne(Lesson::class);
+    }
 
     public function paymentType(): BelongsTo
     {

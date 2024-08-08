@@ -62,6 +62,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'invoice' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/invoice'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
         'student' => [
             'driver' => 'local',
             'root' => storage_path('app/public/student'),
