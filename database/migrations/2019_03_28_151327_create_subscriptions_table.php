@@ -24,7 +24,7 @@ class CreateSubscriptionsTable extends Migration
 
         Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->integer('user_id')->unsigned();
             $table->string('name');
             $table->string('stripe_id')->collation('utf8mb4_bin');
             $table->string('stripe_plan');
