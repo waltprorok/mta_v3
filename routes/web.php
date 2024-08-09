@@ -19,7 +19,7 @@ Route::middleware(ProtectAgainstSpam::class)->group(function () {
     Auth::routes();
 });
 
-//Route::get('/test/pdf', 'InvoiceController@printPDF')->name('test.pdf');
+//Route::get('/test/pdf/{id}', 'InvoiceController@storePDF')->name('test.pdf');
 
 // Routes for marketing
 Route::get('/', 'HomeController@index')->name('home');
