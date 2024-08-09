@@ -24,6 +24,7 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::view('/', 'webapp.invoice.index')->name('invoice.index');
         Route::get('/show/{id}', 'InvoiceController@show')->name('invoice.show');
         Route::view('/create', 'webapp.invoice.create')->name('invoice.create');
+        Route::get('/download/pdf/{id}', 'InvoiceController@downloadPDF')->name('invoice.download.pdf');
     });
 
     Route::prefix('students')->group(function () {

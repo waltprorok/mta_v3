@@ -40,7 +40,7 @@ class LessonsInvoice extends Mailable implements ShouldQueue
 
             $pdfInvoiceName = 'Invoice_MTA_' . $this->invoice->id . '.pdf';
 
-            return $this->subject('Music Teachers Aid | Lessons Invoice')
+            return $this->subject('Lessons Invoice | Music Teachers Aid ')
                 ->markdown('emails.invoice.lessons')
                 ->attachData($pdfFile->output(), $pdfInvoiceName, [
                     'as' => $pdfInvoiceName,
