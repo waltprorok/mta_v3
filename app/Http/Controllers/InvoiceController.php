@@ -23,11 +23,20 @@ class InvoiceController extends Controller
     {
         $invoice = $this->getInvoiceStudentTeacherBillingRate($id);
 
+        if (is_null($invoice)) {
+            return null;
+        }
+
         $pdf = app(PDF::class);
         $pdf->setPaper('A4');
 
+        $pdfFileExists = Storage::disk('invoice')->exists('Invoice_MTA_' . $invoice->id . '.pdf');
+
         $pdfFile = $pdf->loadView('webapp.invoice.pdf_view', ['invoice' => $invoice]);
-        Storage::disk('invoice')->put('Invoice_MTA_' . $invoice->id . '.pdf', $pdfFile->output());
+
+        if (! $pdfFileExists) {
+            Storage::disk('invoice')->put('Invoice_MTA_' . $invoice->id . '.pdf', $pdfFile->output());
+        }
 
         return $pdfFile->download('Invoice_MTA_' . $invoice->id . '.pdf');
     }
@@ -38,9 +47,9 @@ class InvoiceController extends Controller
 
         $pdf = app(PDF::class);
         $pdf->setPaper('A4');
+        $pdf->loadView('webapp.invoice.pdf_view', ['invoice' => $invoice]);
 
-        $pdfFile = $pdf->loadView('webapp.invoice.pdf_view', ['invoice' => $invoice]);
-        Storage::disk('invoice')->put('Invoice_MTA_' . $invoice->id . '.pdf', $pdfFile->output());
+        Storage::disk('invoice')->put('Invoice_MTA_' . $invoice->id . '.pdf', $pdf->output());
 
         return $invoice;
     }
@@ -188,7 +197,7 @@ class InvoiceController extends Controller
         return Invoice::with('student.studentTeacher')
             ->with('lessons.billingRate')
             ->where('teacher_id', Auth::id())
-            ->find($id->id);
+            ->findOrFail($id->id);
     }
 
 }
