@@ -15,8 +15,8 @@
         </td>
         <td class="w-half">
             <h4 style="text-align: right;">Invoice: {{ $invoice->id }}</h4>
-            <div style="text-align: right;">Date: {{ $invoice->created_at->format('m/d/Y') }}</div>
-            <div style="text-align: right;">Due: {{ $invoice->due_date ? \Carbon\Carbon::parse($invoice->due_date)->format('m/d/Y') : $invoice->created_at->endOfMonth()->format('m/d/Y') }}</div>
+            <div style="text-align: right;">Issue Date: {{ $invoice->created_at->format('m/d/Y') }}</div>
+            <div style="text-align: right;">Due Date: {{ $invoice->due_date ? \Carbon\Carbon::parse($invoice->due_date)->format('m/d/Y') : $invoice->created_at->endOfMonth()->format('m/d/Y') }}</div>
             <div style="text-align: right;">Status: {{ $invoice->is_paid ? 'Paid' : 'Not Paid' }}</div>
         </td>
     </tr>
@@ -26,14 +26,14 @@
     <table class="w-full">
         <tr>
             <td class="w-half">
-                <div><h4>Billed To:</h4></div>
-                <div>{{ $invoice->student->first_name }}&nbsp;{{ $invoice->student->last_name }}</div>
-                <div>{{ $invoice->student->email }} </div>
-            </td>
-            <td class="w-half">
                 <div><h4>Billed By:</h4></div>
                 <div>{{ $invoice->student->studentTeacher->first_name }}&nbsp;{{ $invoice->student->studentTeacher->last_name }}</div>
                 <div>{{ $invoice->student->studentTeacher->email }}</div>
+            </td>
+            <td class="w-half">
+                <div><h4>Billed To:</h4></div>
+                <div>{{ $invoice->student->first_name }}&nbsp;{{ $invoice->student->last_name }}</div>
+                <div>{{ $invoice->student->email }} </div>
             </td>
         </tr>
     </table>

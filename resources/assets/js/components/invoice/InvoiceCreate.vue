@@ -29,6 +29,7 @@ export default {
                 adjustments: 0,
                 payment_type_id: 1,
                 due_date: null,
+                additional_email: '',
             },
         }
     },
@@ -185,6 +186,7 @@ export default {
             self.invoice.subtotal = null;
             self.invoice.total = null;
             self.invoice.balance_due = null;
+            self.invoice.additional_email = null;
             this.fetchInvoiceData();
         },
 

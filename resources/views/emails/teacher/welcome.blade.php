@@ -2,7 +2,7 @@
 
 @component('mail::panel')
 
-Greetings {{$user['first_name']}},
+Greetings {{ $user['first_name'] }},
 
 We are excited that you signed up for {{ config('app.name') }}.
 
@@ -23,6 +23,11 @@ To unlock the full potential of the software please sign up for a <a href="{{ ro
 @component('mail::button', ['url' => route('account.subscription')])
 Get a Premium Account
 @endcomponent
+
+From the Profile Icon (top right) click Settings
+* Fill out your Studio Information
+* Set your Business Hours
+* Create a Billing Rate(s)
 
 Thanks!<br/>
 - {{ config('app.name') }}

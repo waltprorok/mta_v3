@@ -19,20 +19,39 @@ use Illuminate\View\View;
 
 class InvoiceController extends Controller
 {
-    public function storePDF(Invoice $id)
+    public function downloadPDF(Invoice $id)
     {
-        $invoice = Invoice::with('student.studentTeacher')
-            ->with('lessons.billingRate')
-            ->find($id->id);
+        $invoice = $this->getInvoiceStudentTeacherBillingRate($id);
+
+        if (is_null($invoice)) {
+            return null;
+        }
 
         $pdf = app(PDF::class);
         $pdf->setPaper('A4');
 
+        $pdfFileExists = Storage::disk('invoice')->exists('Invoice_MTA_' . $invoice->id . '.pdf');
+
         $pdfFile = $pdf->loadView('webapp.invoice.pdf_view', ['invoice' => $invoice]);
-        Storage::disk('invoice')->put('Invoice_MTA_' . $invoice->id . '.pdf', $pdfFile->output());
+
+        if (! $pdfFileExists) {
+            Storage::disk('invoice')->put('Invoice_MTA_' . $invoice->id . '.pdf', $pdfFile->output());
+        }
+
+        return $pdfFile->download('Invoice_MTA_' . $invoice->id . '.pdf');
+    }
+
+    public function storePDF(Invoice $id)
+    {
+        $invoice = $this->getInvoiceStudentTeacherBillingRate($id);
+
+        $pdf = app(PDF::class);
+        $pdf->setPaper('A4');
+        $pdf->loadView('webapp.invoice.pdf_view', ['invoice' => $invoice]);
+
+        Storage::disk('invoice')->put('Invoice_MTA_' . $invoice->id . '.pdf', $pdf->output());
 
         return $invoice;
-//        return $pdfFile->download('Invoice_MTA_' . $invoice->id . '.pdf');
     }
 
     public function index(): JsonResponse
@@ -149,6 +168,7 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $lessonIds = explode(',', $request->lesson_id);
+        $additionalEmail = $request->get('additional_email') ?? null;
 
         try {
             $newInvoice = Invoice::query()->create($request->all());
@@ -159,13 +179,25 @@ class InvoiceController extends Controller
 
             $invoice = $this->storePDF($newInvoice);
 
-            Mail::to($invoice->student->email)->send(new LessonsInvoice($invoice));
+            if ($additionalEmail) {
+                Mail::to($invoice->student->email)->cc($additionalEmail)->send(new LessonsInvoice($invoice));
+            } else {
+                Mail::to($invoice->student->email)->send(new LessonsInvoice($invoice));
+            }
 
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }
 
         return response()->json([], Response::HTTP_CREATED);
+    }
+
+    private function getInvoiceStudentTeacherBillingRate(Invoice $id)
+    {
+        return Invoice::with('student.studentTeacher')
+            ->with('lessons.billingRate')
+            ->where('teacher_id', Auth::id())
+            ->findOrFail($id->id);
     }
 
 }
