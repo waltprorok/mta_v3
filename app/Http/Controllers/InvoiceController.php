@@ -19,11 +19,11 @@ use Illuminate\View\View;
 
 class InvoiceController extends Controller
 {
-    public function storePDF(Invoice $newInvoice)
+    public function storePDF(Invoice $id)
     {
         $invoice = Invoice::with('student.studentTeacher')
             ->with('lessons.billingRate')
-            ->find($newInvoice->id);
+            ->find($id->id);
 
         $pdf = app(PDF::class);
         $pdf->setPaper('A4');
