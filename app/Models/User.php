@@ -223,8 +223,8 @@ class User extends Authenticatable
         $businessHours = Auth::user()->businessHours->where('active', true);
 
         foreach ($businessHours as $businessHour) {
-            $closeTime = Carbon::createFromFormat('H:i', $businessHour->close_time);
-            $openTime = Carbon::createFromFormat('H:i', $businessHour->open_time);
+            $closeTime = Carbon::createFromFormat('H:i:s', $businessHour->close_time);
+            $openTime = Carbon::createFromFormat('H:i:s', $businessHour->open_time);
             $minutesInDay += $closeTime->diffInMinutes($openTime);
         }
 
