@@ -109,7 +109,7 @@ class BusinessHourController extends Controller
         $hours = [];
 
         foreach ($period as $date) {
-            $hours[] = $date->format('H:i');
+            $hours[] = $date->format('H:i:s');
         }
 
         return $hours;

@@ -24,9 +24,9 @@ An amazing ORM, painless routing, powerful queue library, and simple authenticat
 
 For the security and basic peace of mind we went with an Amazing Framework that keeps getting better with every release.',
                 'image' => 'MTA_20200221_120201.jpg',
-                'released_on' => '2020-12-02 09:00:00',
-                'created_at' => '2020-12-02 09:00:00',
-                'updated_at' => '2020-12-02 09:00:00',
+                'released_on' => '2024-01-20 09:00:00',
+                'created_at' => '2024-01-20 09:00:00',
+                'updated_at' => '2024-01-20 09:00:00',
             ],
             [
                 'id' => '2',
@@ -47,9 +47,9 @@ With MusicTeachersAid we aid in all of those areas. Once the initial students an
 
 We are currently building out the product and will be available in the near future.',
                 'image' => 'MTA_20210317_110314.jpeg',
-                'released_on' => '2021-01-06 09:00:00',
-                'created_at' => '2021-01-06 09:00:00',
-                'updated_at' => '2021-01-06 09:00:00',
+                'released_on' => '2024-03-14 09:00:00',
+                'created_at' => '2024-03-14 09:00:00',
+                'updated_at' => '2024-03-14 09:00:00',
             ],
             [
                 'id' => '3',
@@ -62,9 +62,9 @@ Once the developer has coded and tested the new feature we then put it in the ha
 
 We are always open to new ideas but put a lot of time and effort into refining are special sauce.  Making the experience as great as it can be for you and your users.',
                 'image' => 'MTA_20200221_120217.jpeg',
-                'released_on' => '2021-02-03 09:00:00',
-                'created_at' => '2021-02-03 09:00:00',
-                'updated_at' => '2021-02-03 09:00:00',
+                'released_on' => '2024-05-08 09:00:00',
+                'created_at' => '2024-05-08 09:00:00',
+                'updated_at' => '2024-05-08 09:00:00',
             ],
             [
                 'id' => '4',
@@ -84,9 +84,9 @@ We have come up with a smart calendar that will automatically notify the next st
 Let the application do the boring mundane tasks that we as teachers don\'t really like to do but is part of running a successful business.  With automation we can cut out hours spent calling or emailing students trying to fit their schedule with your schedule and it all becomes a difficult puzzle.
                 ',
                 'image' => 'MTA_20200527_060533.jpg',
-                'released_on' => '2021-03-17 09:00:00',
-                'created_at' => '2021-03-17 09:00:00',
-                'updated_at' => '2021-03-17 09:00:00',
+                'released_on' => '2024-07-11 09:00:00',
+                'created_at' => '2024-07-11 09:00:00',
+                'updated_at' => '2024-07-11 09:00:00',
             ],
         ]);
     }

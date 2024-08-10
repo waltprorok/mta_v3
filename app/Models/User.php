@@ -196,11 +196,6 @@ class User extends Authenticatable
                 break;
             }
 
-            if ($rate->type == 'weekly') {
-                $monthlyAmount = ($rate->amount * $lessonsInMonth->count());
-                break;
-            }
-
             if ($rate->type == 'monthly') {
                 $monthlyAmount = ($rate->amount * $lessonsInMonth->count() / 4);
                 break;
@@ -211,7 +206,6 @@ class User extends Authenticatable
                 break;
             }
         }
-
 
         return $monthlyAmount ?? 0;
     }
