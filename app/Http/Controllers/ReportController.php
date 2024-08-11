@@ -31,6 +31,11 @@ class ReportController extends Controller
             ->count();
 
         return response()
-            ->json([$studentActiveCount, $studentInActiveCount, $studentLeadCount, $studentWaitlistCount]);
+            ->json([
+                $studentActiveCount,
+                $studentInActiveCount,
+                $studentLeadCount,
+                $studentWaitlistCount
+            ]);
     }
 }
