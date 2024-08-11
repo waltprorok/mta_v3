@@ -104,7 +104,6 @@ export default {
         fetchData: function () {
             axios.get('/web/dashboard')
                 .then((response) => {
-                    console.log(response);
                     this.activeStudentCount = response.data.activeStudentCount;
                     this.monthlyIncome = response.data.monthlyIncome;
                     this.lessonsThisWeek = response.data.lessonsThisWeek;
