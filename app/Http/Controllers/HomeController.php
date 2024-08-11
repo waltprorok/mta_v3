@@ -40,11 +40,6 @@ class HomeController extends Controller
         return view('marketing.faq');
     }
 
-    public function dashboard()
-    {
-        return view('webapp.index');
-    }
-
     public function contact()
     {
         return view('marketing.contact');

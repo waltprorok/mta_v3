@@ -40,6 +40,7 @@ const router = new VueRouter({
 Vue.component('billingRate', require('./components/teacher/BillingRate.vue').default);
 Vue.component('blogs', require('./components/admin/blog/Blogs.vue').default);
 Vue.component('contacts', require('./components/admin/contact/Contacts.vue').default);
+Vue.component('dashboard', require('./components/Dashboard.vue').default);
 Vue.component('invoiceCreate', require('./components/invoice/InvoiceCreate.vue').default);
 Vue.component('invoiceList', require('./components/invoice/InvoiceList.vue').default);
 Vue.component('lessons', require('./components/Lessons.vue').default);
