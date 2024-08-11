@@ -59,14 +59,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * @return mixed
-     */
-    public static function activeStudentCount(): int
-    {
-        return Auth::user()->students->where('status', Student::ACTIVE)->count();
-    }
-
-    /**
      * @return HasMany
      */
     public function blogArticle(): HasMany
@@ -133,16 +125,6 @@ class User extends Authenticatable
         return $this->hasMany(Lesson::class, 'teacher_id');
     }
 
-    public static function lessonsThisWeek(): int
-    {
-        return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
-    }
-
-    public static function getLessonsThisMonth()
-    {
-        return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
-    }
-
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class, 'user_id_to');
@@ -178,51 +160,6 @@ class User extends Authenticatable
     public function studentUsers(): HasMany
     {
         return $this->hasMany(Student::class, 'student_id');
-    }
-
-    public static function monthlyIncome(): int
-    {
-        $lessonsInMonth = self::getLessonsThisMonth();
-        $billingRate = self::getBillingRates();
-
-        foreach ($billingRate as $rate) {
-            if ($rate->type == 'lesson') {
-                $monthlyAmount = ($rate->amount * $lessonsInMonth->count());
-                break;
-            }
-
-            if ($rate->type == 'hourly') {
-                $monthlyAmount = ($lessonsInMonth->sum('interval') / 60 * $rate->amount);
-                break;
-            }
-
-            if ($rate->type == 'monthly') {
-                $monthlyAmount = ($rate->amount * $lessonsInMonth->count() / 4);
-                break;
-            }
-
-            if ($rate->type == 'yearly') {
-                $monthlyAmount = ($rate->amount / 52 * $lessonsInMonth->count());
-                break;
-            }
-        }
-
-        return $monthlyAmount ?? 0;
-    }
-
-    public static function openTimeBlocks(): int
-    {
-        $minutesInDay = 0;
-        $lessonsInWeek = self::lessonsThisWeek() * 30;
-        $businessHours = Auth::user()->businessHours->where('active', true);
-
-        foreach ($businessHours as $businessHour) {
-            $closeTime = Carbon::createFromFormat('H:i:s', $businessHour->close_time);
-            $openTime = Carbon::createFromFormat('H:i:s', $businessHour->open_time);
-            $minutesInDay += $closeTime->diffInMinutes($openTime);
-        }
-
-        return ($minutesInDay - $lessonsInWeek) / 30 ?? 0;
     }
 
     public static function unreadMessagesCount(): int
