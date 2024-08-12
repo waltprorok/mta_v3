@@ -2,35 +2,35 @@ $(document).ready(function () {
     /**
      * Line Chart
      */
-    var lineChart = $('#line-chart');
-
-    if (lineChart.length > 0) {
-        new Chart(lineChart, {
-            type: 'line',
-            data: {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                datasets: [{
-                    label: 'Lessons',
-                    data: [90, 88, 92, 89, 88, 81, 83, 72, 90, 88, 80, 75],
-                    backgroundColor: 'rgba(66, 165, 245, 0.5)',
-                    borderColor: '#2196F3',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                legend: {
-                    display: false
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-    }
+    // var lineChart = $('#line-chart');
+    //
+    // if (lineChart.length > 0) {
+    //     new Chart(lineChart, {
+    //         type: 'line',
+    //         data: {
+    //             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    //             datasets: [{
+    //                 label: 'Lessons',
+    //                 data: [90, 88, 92, 89, 88, 81, 83, 72, 90, 88, 80, 75],
+    //                 backgroundColor: 'rgba(66, 165, 245, 0.5)',
+    //                 borderColor: '#2196F3',
+    //                 borderWidth: 1
+    //             }]
+    //         },
+    //         options: {
+    //             legend: {
+    //                 display: false
+    //             },
+    //             scales: {
+    //                 yAxes: [{
+    //                     ticks: {
+    //                         beginAtZero: true
+    //                     }
+    //                 }]
+    //             }
+    //         }
+    //     });
+    // }
 
     /**
      * Bar Chart

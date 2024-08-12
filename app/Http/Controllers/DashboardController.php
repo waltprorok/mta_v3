@@ -11,21 +11,49 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
-        $activeStudentCount = Auth::user()->students->where('status', Student::ACTIVE)->count();
-        $monthlyIncome = $this->monthlyIncome();
-        $lessonsThisWeek = Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
-        $openTimeBlocks = $this->openTimeBlocks();
-
+        $activeStudentCount = $this->getActiveStudentCount();
+        $monthlyIncome = $this->getMonthlyIncome();
+        $lessonsThisWeek = $this->getLessonsThisWeek();
+        $openTimeBlocks = $this->getOpenTimeBlocks();
 
         return response()->json([
             'activeStudentCount' => $activeStudentCount,
             'monthlyIncome' => $monthlyIncome,
             'lessonsThisWeek' => $lessonsThisWeek,
-            'openTimeBlocks' => $openTimeBlocks
+            'openTimeBlocks' => $openTimeBlocks,
         ]);
     }
 
-    private function openTimeBlocks(): int
+    public function getCompletedLessonsData()
+    {
+        $period = Carbon::now()->subMonths(11)->monthsUntil(now());
+
+        $data = [];
+
+        foreach ($period as $date) {
+            $data[] = [
+                'month' => $date->shortMonthName,
+                'year' => $date->year,
+                'completed' => Lesson::whereBetween('start_date', [
+                    $date->startOfMonth()->format('Y-m-d H:i:s'),
+                    $date->endOfMonth()->format('Y-m-d H:i:s')
+                ])
+                    ->where('complete', 1)
+                    ->where('teacher_id', Auth::id())
+                    ->count(),
+            ];
+        }
+
+        return response()->json(['getCompletedLessonsData' => $data]);
+    }
+
+    private function getActiveStudentCount() {
+        return Student::where('status', Student::ACTIVE)
+            ->where('teacher_id', Auth::id())
+            ->count();
+    }
+
+    private function getOpenTimeBlocks(): int
     {
         $minutesInDay = 0;
         $lessonsInWeek = $this->getLessonsThisWeek() * 30;
@@ -42,9 +70,8 @@ class DashboardController extends Controller
 
     private function getLessonsThisWeek(): int
     {
-        return Auth::user()
-            ->lessons
-            ->whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+        return Lesson::whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->where('teacher_id', Auth::id())
             ->count();
     }
 
@@ -56,7 +83,7 @@ class DashboardController extends Controller
             ->get();
     }
 
-    private function monthlyIncome(): int
+    private function getMonthlyIncome(): int
     {
         $lessonsInMonth = $this->getLessonsThisMonth();
         $monthlyAmount = 0;
@@ -64,22 +91,18 @@ class DashboardController extends Controller
         foreach ($lessonsInMonth as $lesson) {
             if ($lesson->billingRate->type == 'lesson') {
                 $monthlyAmount += ($lesson->billingRate->amount);
-
             }
 
             if ($lesson->billingRate->type == 'hourly') {
                 $monthlyAmount += ($lesson->interval / 60 * $lesson->billingRate->amount);
-
             }
 
             if ($lesson->billingRate->type == 'monthly') {
                 $monthlyAmount += ($lesson->billingRate->amount / 4);
-
             }
 
             if ($lesson->billingRate->type == 'yearly') {
                 $monthlyAmount += ($lesson->billingRate->amount / 52);
-
             }
         }
 

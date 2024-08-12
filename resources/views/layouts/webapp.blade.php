@@ -116,7 +116,6 @@
 <script src="{{ asset('webapp/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('webapp/vendor/chart.js/chart.min.js') }}"></script>
 <script src="{{ asset('webapp/js/carbon.js') }}"></script>
-<script src="{{ asset('webapp/js/demo.js') }}"></script>
 @yield('scripts')
 <script src="{{ asset('webapp/js/jquery-ui.js') }}"></script>
 <script type="text/javascript" src="{{ asset('webapp/js/datepicker.js') }}"></script>
