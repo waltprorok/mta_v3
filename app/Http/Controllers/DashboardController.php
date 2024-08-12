@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lesson;
 use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,7 @@ class DashboardController extends Controller
     private function openTimeBlocks(): int
     {
         $minutesInDay = 0;
-        $lessonsInWeek = $this->lessonsThisWeek() * 30;
+        $lessonsInWeek = $this->getLessonsThisWeek() * 30;
         $businessHours = Auth::user()->businessHours->where('active', true);
 
         foreach ($businessHours as $businessHour) {
@@ -39,40 +40,46 @@ class DashboardController extends Controller
         return ($minutesInDay - $lessonsInWeek) / 30 ?? 0;
     }
 
-    private function lessonsThisWeek(): int
+    private function getLessonsThisWeek(): int
     {
-        return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
+        return Auth::user()
+            ->lessons
+            ->whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->count();
     }
 
     private function getLessonsThisMonth()
     {
-        return Auth::user()->lessons->whereBetween('start_date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
+        return Lesson::with('billingRate:id,type,amount')
+            ->whereBetween('start_date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+            ->where('teacher_id', Auth::id())
+            ->get();
     }
 
     private function monthlyIncome(): int
     {
         $lessonsInMonth = $this->getLessonsThisMonth();
-        $billingRate = Auth::user()->getTeacherPaymentRate;
+        $monthlyAmount = 0;
 
-        foreach ($billingRate as $rate) {
-            if ($rate->type == 'lesson') {
-                $monthlyAmount = ($rate->amount * $lessonsInMonth->count());
-                break;
+        foreach ($lessonsInMonth as $lesson) {
+            if ($lesson->billingRate->type == 'lesson') {
+                $monthlyAmount += ($lesson->billingRate->amount);
+
             }
 
-            if ($rate->type == 'hourly') {
-                $monthlyAmount = ($lessonsInMonth->sum('interval') / 60 * $rate->amount);
-                break;
+            if ($lesson->billingRate->type == 'hourly') {
+                $monthlyAmount += ($lesson->interval / 60 * $lesson->billingRate->amount);
+
             }
 
-            if ($rate->type == 'monthly') {
-                $monthlyAmount = ($rate->amount * $lessonsInMonth->count() / 4);
-                break;
+            if ($lesson->billingRate->type == 'monthly') {
+                $monthlyAmount += ($lesson->billingRate->amount / 4);
+
             }
 
-            if ($rate->type == 'yearly') {
-                $monthlyAmount = ($rate->amount / 52 * $lessonsInMonth->count());
-                break;
+            if ($lesson->billingRate->type == 'yearly') {
+                $monthlyAmount += ($lesson->billingRate->amount / 52);
+
             }
         }
 
