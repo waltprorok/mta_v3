@@ -19,6 +19,7 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::post('invoice-post', 'InvoiceController@store');
         Route::get('invoice-get-student/{id}', 'InvoiceController@getStudentSelected');
         Route::get('dashboard', 'DashboardController@dashboard');
+        Route::get('dashboard/completed-lessons', 'DashboardController@getCompletedLessonsData');
     });
 
     Route::prefix('invoice')->group(function () {

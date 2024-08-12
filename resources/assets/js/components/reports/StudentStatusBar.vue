@@ -27,7 +27,18 @@ export default {
                             ]
                         }, {
                             responsive: true,
-                            maintainAspectRatio: false
+                            maintainAspectRatio: false,
+                            legend: {
+                                display: false
+                            },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true,
+                                        stepSize: 1,
+                                    }
+                                }]
+                            }
                         })
                     }
                 }).catch((error) => {

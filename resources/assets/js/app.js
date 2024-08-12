@@ -49,6 +49,7 @@ Vue.component('students', require('./components/admin/student/Students.vue').def
 Vue.component('studentList', require('./components/student/StudentList.vue').default);
 Vue.component('teachers', require('./components/admin/teacher/Teachers.vue').default);
 Vue.component('users', require('./components/admin/user/Users.vue').default);
+Vue.component('reportCompletedLessonsLine', require('./components/reports/CompletedLessonsLine.vue').default);
 Vue.component('reportStudentStatusBar', require('./components/reports/StudentStatusBar.vue').default);
 Vue.component('inbox', require('./components/messages/Inbox.vue').default);
 Vue.component('create', require('./components/messages/Create.vue').default);
