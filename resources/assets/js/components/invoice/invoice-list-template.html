@@ -29,7 +29,7 @@
                     <td>{{ row.student.email }}</td>
                     <td>{{ row.balance_due | toCurrency }}</td>
                     <td class="text-nowrap">
-                        <a :href="`/invoice/show/${row.id}`" class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-file-pdf-o"></i></a>
+                        <a :href="`/invoice/show/${row.id}`" class="btn btn-sm btn-outline-primary" role="button" title="view"><i class="fa fa-file-pdf-o"></i></a>
                         <a :href="`/invoice/download/pdf/${row.id}`" class="btn btn-sm btn-outline-secondary" role="button" title="download invoice"><i class="fa fa-download"></i></a>
                     </td>
                 </tr>

@@ -3,15 +3,18 @@
     <div class="card">
         <!-- vue js data table -->
         <div class="form-control">
-            <div class="form-group pull-left">
+            <div class="form-group pull-left m-1">
                 <div class="form-group">
                     <select id="single-select" v-model="per_page" class="form-control">
                         <option v-for="page in pages" :value="page">{{ page }}</option>
                     </select>
                 </div>
             </div>
-            <div class="form-group pull-right">
+            <div class="form-group pull-right m-1">
                 <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
+            </div>
+            <div class="form-group pull-right m-1">
+                <button class="btn btn-link" title="reset calendar" v-on:click="resetDates"><i class="fa fa-calendar" aria-hidden="true"></i></button>
             </div>
             <div class="form-group pull-right form-inline p-1">
                 <label for="end date" class="control-label p-1">To</label>
@@ -166,6 +169,12 @@ export default {
                     duration: 10000,
                 });
             });
+        },
+
+        resetDates: function () {
+            let today = new Date();
+            this.dateStart.fromDate = new Date(today.getFullYear(), today.getMonth(), 1).toDateString();
+            this.dateEnd.toDate = new Date(today.getFullYear(), today.getMonth() + 1, 0).toDateString();
         },
 
         updateLesson: function (id, complete) {

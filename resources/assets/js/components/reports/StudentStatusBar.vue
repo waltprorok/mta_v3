@@ -9,6 +9,11 @@ export default {
             data: ''
         }
     },
+
+    mounted() {
+        this.getReportStudentStatus();
+    },
+
     methods: {
         getReportStudentStatus: function () {
             axios.get(this.url)
@@ -53,9 +58,5 @@ export default {
         },
 
     },
-
-    mounted() {
-        this.getReportStudentStatus();
-    }
 }
 </script>

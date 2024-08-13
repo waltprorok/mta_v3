@@ -33,13 +33,14 @@ table.products tr {
 table.products th {
     color: #ffffff;
     padding: 0.3rem;
-    border: 1px solid #b6b3b3;
+    /*border: 1px solid #b6b3b3;*/
 }
 table tr.items {
+    text-align: center;
     background-color: rgb(241 245 249);
 }
 table tr.items td {
-    border: 1px solid #b6b3b3;
+    /*border: 1px solid #b6b3b3;*/
     padding: 0.3rem;
 }
 .total {

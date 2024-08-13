@@ -25,7 +25,6 @@ export default {
                         this.months.push(row.month);
                         this.completed.push(row.completed);
                     }
-
                     if (this.getCompletedLessonsData) {
                         this.renderChart({
                                 labels: this.months,
@@ -59,7 +58,7 @@ export default {
                 this.$notify({
                     type: 'error',
                     title: 'Error',
-                    text: 'Could not load student status report.',
+                    text: 'Could not load completed lessons report.',
                     duration: 10000,
                 });
             });
