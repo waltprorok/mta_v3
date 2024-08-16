@@ -192,6 +192,31 @@ class InvoiceController extends Controller
         return response()->json([], Response::HTTP_CREATED);
     }
 
+    /**
+     * @param Request $request
+     * @param Invoice $id
+     * @return JsonResponse
+     */
+    public function update(Request $request, Invoice $id): JsonResponse
+    {
+        $invoice = $id;
+        try {
+            $invoice->update([
+                'balance_due' => $id->balance_due - $request->payment,
+                'payment' => $request->payment,
+                'payment_type_id' => $request->payment_type_id,
+                'check_number' => $request->check_number,
+                'payment_information' => $request->payment_information,
+                'is_paid' => true,
+
+            ]);
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+        }
+
+        return response()->json();
+    }
+
     private function getInvoiceStudentTeacherBillingRate(Invoice $id)
     {
         return Invoice::with('student.studentTeacher')

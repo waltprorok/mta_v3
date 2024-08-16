@@ -114,7 +114,6 @@
 {{--Controls Dashboard UI conflicting with Calendar--}}
 <script src="{{ asset('webapp/vendor/popper.js/popper.min.js') }}"></script>
 <script src="{{ asset('webapp/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('webapp/vendor/chart.js/chart.min.js') }}"></script>
 <script src="{{ asset('webapp/js/carbon.js') }}"></script>
 @yield('scripts')
 <script src="{{ asset('webapp/js/jquery-ui.js') }}"></script>

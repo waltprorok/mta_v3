@@ -30,6 +30,8 @@ class CreateInvoicesTable extends Migration
             $table->decimal('adjustments')->default(0.0);
             $table->integer('payment_type_id')->unsigned();
             $table->foreign('payment_type_id')->references('id')->on('payment_types');
+            $table->text('check_number')->nullable();
+            $table->text('payment_information')->nullable();
             $table->date('due_date')->nullable();
             $table->tinyInteger('is_paid')->default(0);
             $table->softDeletes();

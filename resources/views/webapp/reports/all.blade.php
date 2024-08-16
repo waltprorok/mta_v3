@@ -53,4 +53,7 @@
             </div>
         </div>
 
+        <script src="{{ asset('webapp/vendor/chart.js/chart.min.js') }}"></script>
+        <script src="{{ asset('webapp/js/demo.js') }}"></script>
+
 @endsection

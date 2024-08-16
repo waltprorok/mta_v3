@@ -18,6 +18,9 @@ h4 {
     font-size: 0.775rem;
     padding: 1rem;
     background-color: rgb(241 245 249);
+    position: fixed;
+    width: 50%;
+    bottom: 10px;
 }
 table {
     width: 100%;
@@ -28,19 +31,27 @@ table.products {
     font-size: 0.775rem;
 }
 table.products tr {
-    background-color: rgb(17, 61, 126);
+    /*background-color: rgb(17, 61, 126);*/
+    background-color: #ffffff;
 }
 table.products th {
-    color: #ffffff;
+    /*color: #ffffff;*/
     padding: 0.3rem;
-    border: 1px solid #b6b3b3;
 }
 table tr.items {
+    text-align: center;
     background-color: rgb(241 245 249);
 }
 table tr.items td {
-    border: 1px solid #b6b3b3;
+    /*border: 1px solid #b6b3b3;*/
+    border-top: 1px solid #b6b3b3;
     padding: 0.3rem;
+}
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(68, 68, 68, .1)
 }
 .total {
     text-align: right;

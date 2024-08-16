@@ -21,14 +21,17 @@ class Invoice extends Model
         'total',
         'balance_due',
         'payment',
-        'payment_type_id',
         'adjustments',
+        'payment_type_id',
+        'check_number',
+        'payment_information',
         'due_date',
         'is_paid',
     ];
 
     protected $casts = [
         'is_paid' => 'boolean',
+        'payment_type_id' => 'integer'
     ];
 
     public function lessons(): HasMany

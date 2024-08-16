@@ -25,13 +25,28 @@
 <div class="margin-top">
     <table class="w-full">
         <tr>
-            <td class="w-half">
-                <div><h4>Billed By:</h4></div>
+            <td class="w-full">
+                <div>Billed By:</div>
+                <br>
+                <div><h4>{{ $invoice->student->studentTeacher->studio_name }}</h4></div>
                 <div>{{ $invoice->student->studentTeacher->first_name }}&nbsp;{{ $invoice->student->studentTeacher->last_name }}</div>
+                <div>{{ $invoice->student->studentTeacher->address }}</div>
+                <div>{{ $invoice->student->studentTeacher->city }}, {{ $invoice->student->studentTeacher->state }} {{ $invoice->student->studentTeacher->zip }}</div>
+                <br>
                 <div>{{ $invoice->student->studentTeacher->email }}</div>
             </td>
-            <td class="w-half">
-                <div><h4>Billed To:</h4></div>
+        </tr>
+    </table>
+</div>
+
+<hr>
+
+<div class="margin-top">
+    <table class="w-full">
+        <tr>
+            <td class="w-full">
+                <div>Billed To:</div>
+                <br>
                 <div>{{ $invoice->student->first_name }}&nbsp;{{ $invoice->student->last_name }}</div>
                 <div>{{ $invoice->student->email }} </div>
             </td>
@@ -66,6 +81,8 @@
     </table>
 </div>
 
+<hr/>
+
 <div class="total">
     <table>
         <tr style="text-align: right">
@@ -88,7 +105,6 @@
 </div>
 
 <div class="footer margin-top">
-    <div>Thank you</div>
     <div>&copy; Music Teachers Aid</div>
 </div>
 </body>
