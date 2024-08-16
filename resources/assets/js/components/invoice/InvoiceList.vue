@@ -28,7 +28,12 @@ export default {
                 discount: null,
                 total: null,
                 balance_due: null,
+                payment: null,
+                check_number: null,
+                payment_information: null,
                 adjustments: null,
+                payment_type_id: null,
+                is_paid: null,
             },
             student: {
                 id: null,
@@ -39,6 +44,21 @@ export default {
                 instrument: null,
                 status: null,
             },
+            types: [
+                {label: 'Cash', type: 1,},
+                {label: 'Check', type: 2,},
+                {label: 'Credit Card', type: 3,},
+                {label: 'Debit Card', type: 4,},
+                {label: 'Stripe', type: 5,},
+                {label: 'PayPal', type: 6,},
+                {label: 'Cash App', type: 7,},
+                {label: 'Zelle', type: 8,},
+            ],
+            showCheckField: false,
+            showModal: false,
+            placeholderValue: 'Notes about transaction',
+            paymentPlaceHolderValue: 'Enter a positive amount',
+            disableSave: true,
         }
     },
 
@@ -89,6 +109,61 @@ export default {
                     });
                 });
         },
+
+        cancelForm: function () {
+            this.invoice.payment_type_id = null;
+            this.invoice.payment = null;
+            this.invoice.check_number = null;
+            this.showCheckField = false;
+            this.invoice.payment_information = null;
+            this.disableSave = true;
+            this.showModal = false;
+        },
+
+        createInvoicePayment: function () {
+            let self = this;
+            let params = Object.assign({}, self.invoice);
+            axios.patch('/web/invoice/update/' + self.invoice.id, params)
+                .then(() => {
+                    self.cancelForm();
+                    self.fetchInvoiceList();
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'Invoice payment successful.',
+                        duration: 10000,
+                    });
+                })
+                .catch((error) => {
+                    self.getErrorMessage(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not update invoice payment.',
+                        duration: 10000,
+                    });
+                });
+        },
+
+        hasPaymentAmount: function () {
+            if (this.invoice.amount !== null) {
+                this.disableSave = false;
+            }
+        },
+
+        showInvoice: function (id) {
+            let self = this;
+            self.invoice.id = id
+            self.showModal = true;
+        },
+
+        showCheckInput: function (event) {
+            this.showCheckField = event.target.value === '2';
+            if (event.target.value !== '2') {
+                this.invoice.check_number = null;
+            }
+        },
+
     },
 }
 </script>

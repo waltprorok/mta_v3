@@ -17,6 +17,7 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::get('invoice', 'InvoiceController@index');
         Route::get('invoice-create', 'InvoiceController@createInvoice');
         Route::post('invoice-post', 'InvoiceController@store');
+        Route::patch('invoice/update/{id}', 'InvoiceController@update');
         Route::get('invoice-get-student/{id}', 'InvoiceController@getStudentSelected');
         Route::get('dashboard', 'DashboardController@dashboard');
         Route::get('dashboard/completed-lessons', 'DashboardController@getCompletedLessonsData');
