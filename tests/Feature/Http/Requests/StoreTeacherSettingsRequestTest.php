@@ -38,7 +38,7 @@ class StoreTeacherSettingsRequestTest extends TestCase
             'state' => $this->faker->state,
             'zip' => 15116,
             'email' => $this->faker->unique()->email,
-            'phone' => $this->faker->phoneNumber,
+            'phone' => $this->faker->numerify('###-###-####'),
         ], $this->request->rules());
 
         $this->assertTrue($validator->passes());
