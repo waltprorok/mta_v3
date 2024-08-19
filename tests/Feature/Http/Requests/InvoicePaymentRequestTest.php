@@ -52,7 +52,7 @@ class InvoicePaymentRequestTest extends TestCase
             'Type null fail' =>
                 ['payment_type_id', null],
             'Type fail' =>
-                ['payment_type_id', 1],
+                ['payment_type_id', 2],
             'Amount null fail' =>
                 ['payment', null],
             'Amount format fail' =>
