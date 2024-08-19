@@ -17,7 +17,7 @@
                                 <form class="form-horizontal" action="#" @submit.prevent="createInvoicePayment(invoice.id)">
                                     <div class="row">
                                         <div class="col-md-6 offset-3">
-                                            <div class="form-group">
+                                            <div class="form-group" :class="error_payment_type_id && classError">
                                                 <label for="payment_type">Payment Type</label>
                                                 <select id="single-select" @change="showCheckInput($event)"
                                                         class="form-control"
@@ -27,7 +27,7 @@
                                                         {{ type.label }}
                                                     </option>
                                                 </select>
-                                                <small></small>
+                                                <small>{{ error_payment_type_id }}</small>
                                             </div>
                                             <div class="form-group" v-if="showCheckField">
                                                 <label for="check">Check Number</label>
@@ -51,7 +51,7 @@
                                                 </div>
                                                 <small></small>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" :class="error_payment && classError">
                                                 <label for="amount">Payment Amount</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
@@ -65,7 +65,7 @@
                                                            @click="hasPaymentAmount"
                                                            v-on:keydown.enter.prevent>
                                                 </div>
-                                                <small></small>
+                                                <small>{{ error_payment }}</small>
                                             </div>
                                         </div>
                                     </div>
@@ -116,10 +116,10 @@
                     <td class="text-nowrap">
                         <a :href="`/invoice/show/${row.id}`" class="btn btn-sm btn-outline-primary" role="button" title="view"><i class="fa fa-file-pdf-o"></i></a>
                         <a :href="`/invoice/download/pdf/${row.id}`" class="btn btn-sm btn-outline-secondary" role="button" title="download invoice"><i class="fa fa-download"></i></a>
-                        <button @click="showInvoice(row.id)"
+                        <button @click="showInvoicePaymentModal(row.id)"
                                 class="btn btn-outline-success btn-sm"
                                 title="make payment"
-                                v-if="row.balance_due !== '0'">
+                                v-if="disableButton(row)">
                             <i class="fa fa-dollar"></i>
                         </button>
                     </td>

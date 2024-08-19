@@ -59,6 +59,10 @@ export default {
             placeholderValue: 'Notes about transaction',
             paymentPlaceHolderValue: 'Enter a positive amount',
             disableSave: true,
+            error_payment: '',
+            error_payment_type_id: '',
+            classError: '',
+
         }
     },
 
@@ -94,6 +98,12 @@ export default {
     },
 
     methods: {
+        cancelForm: function () {
+            let self = this;
+            self.clearErrorData();
+            self.clearInvoicePaymentData();
+        },
+
         fetchInvoiceList: function () {
             axios.get('/web/invoice')
                 .then((response) => {
@@ -110,7 +120,7 @@ export default {
                 });
         },
 
-        cancelForm: function () {
+        clearInvoicePaymentData: function () {
             this.invoice.payment_type_id = null;
             this.invoice.payment = null;
             this.invoice.check_number = null;
@@ -145,13 +155,31 @@ export default {
                 });
         },
 
+        clearErrorData: function () {
+            let self = this;
+            self.classError = '';
+            self.error_payment_type_id = '';
+            self.error_payment = '';
+        },
+
+        disableButton: function (row) {
+            return row.balance_due !== 0 && row.is_paid !== true;
+        },
+
+        getErrorMessage: function (error) {
+            let self = this;
+            self.error_payment_type_id = error.response.data.error.payment_type_id;
+            self.error_payment = error.response.data.error.payment;
+            self.classError = 'has-error';
+        },
+
         hasPaymentAmount: function () {
             if (this.invoice.amount !== null) {
                 this.disableSave = false;
             }
         },
 
-        showInvoice: function (id) {
+        showInvoicePaymentModal: function (id) {
             let self = this;
             self.invoice.id = id
             self.showModal = true;

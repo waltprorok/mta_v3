@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InvoicePaymentRequest;
 use App\Mail\LessonsInvoice;
 use App\Models\Invoice;
 use App\Models\Lesson;
@@ -193,20 +194,21 @@ class InvoiceController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param InvoicePaymentRequest $request
      * @param Invoice $id
      * @return JsonResponse
      */
-    public function update(Request $request, Invoice $id): JsonResponse
+    public function update(InvoicePaymentRequest $request, Invoice $id): JsonResponse
     {
         $invoice = $id;
+
         try {
             $invoice->update([
-                'balance_due' => $id->balance_due - $request->payment,
-                'payment' => $request->payment,
-                'payment_type_id' => $request->payment_type_id,
-                'check_number' => $request->check_number,
-                'payment_information' => $request->payment_information,
+                'balance_due' => $id->balance_due - $request->get('payment'),
+                'payment' => $request->get('payment'),
+                'payment_type_id' => $request->get('payment_type_id'),
+                'check_number' => $request->get('check_number'),
+                'payment_information' => $request->get('payment_information'),
                 'is_paid' => true,
 
             ]);
