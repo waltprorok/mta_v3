@@ -49,13 +49,13 @@ class InvoicePaymentRequestTest extends TestCase
     public function requestDataProvider(): array
     {
         return [
-            'Type null fail' =>
+            'Payment Type null fail' =>
                 ['payment_type_id', null],
-            'Type fail' =>
+            'Payment Type ID fail' =>
                 ['payment_type_id', 2],
-            'Amount null fail' =>
+            'Payment null fail' =>
                 ['payment', null],
-            'Amount format fail' =>
+            'Payment format fail' =>
                 ['payment', 10.101],
         ];
     }
