@@ -47,9 +47,9 @@
                             <button class="btn btn-default btn-outline-secondary btn-rounded" v-if="!row.complete" @click="updateLesson(row.id, row.complete)">Click to Complete</button>
                             <button class="btn btn-success btn-rounded" v-if="row.complete" @click="updateLesson(row.id, row.complete)">Completed</button>
                         </td>
-                        <td v-if="lessonDayStatus(row.end_date) && pastLesson"><span class="badge badge-pill badge-danger">Past</span></td>
-                        <td v-else-if="lessonDayStatus(row.end_date) && todayLesson"><span class="badge badge-pill badge-success">Today</span></td>
-                        <td v-else><span class="badge badge-pill badge-primary">Upcoming</span></td>
+                        <td v-if="lessonDayStatusPast(row.end_date) && pastLesson"><span class="badge badge-pill badge-danger">Past</span></td>
+                        <td v-if="lessonDayStatusToday(row.end_date) && todayLesson"><span class="badge badge-pill badge-success">Today</span></td>
+                        <td v-if="lessonDayStatusUpcoming(row.end_date) && upComing"><span class="badge badge-pill badge-primary">Upcoming</span></td>
                         <td v-text="row.title"></td>
                         <td>{{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                         <td>{{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
@@ -97,6 +97,7 @@ export default {
             list: [],
             todayLesson: false,
             pastLesson: false,
+            upComing: false,
             page: 1,
             per_page: 10,
             pages: [10, 25, 50, 100],
@@ -137,18 +138,30 @@ export default {
     methods: {
         dateFormat,
         dateParse,
-        /**
-         * @param endDate
-         */
-        lessonDayStatus: function(endDate) {
+        lessonDayStatusPast: function(endDate) {
+            let self = this;
+            let lessonEndDate = new Date(endDate);
+
+            if (lessonEndDate.toDateString() < today.toDateString()) {
+                return self.pastLesson = true;
+            }
+        },
+
+        lessonDayStatusToday: function(endDate) {
+            let self = this;
             let lessonEndDate = new Date(endDate);
 
             if (lessonEndDate.toDateString() === today.toDateString()) {
-                return this.todayLesson = true;
+                return self.todayLesson = true;
             }
+        },
 
-            if (lessonEndDate.getTime() < today.getTime()) {
-                return this.pastLesson = true;
+        lessonDayStatusUpcoming: function(endDate) {
+            let self = this;
+            let lessonEndDate = new Date(endDate);
+
+            if (lessonEndDate.toDateString() > today.toDateString()) {
+                return self.upComing = true;
             }
         },
 
