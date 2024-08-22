@@ -179,9 +179,10 @@ export default {
             }
         },
 
-        showInvoicePaymentModal: function (id) {
+        showInvoicePaymentModal: function (id, total) {
             let self = this;
-            self.invoice.id = id
+            self.invoice.id = id;
+            self.invoice.total = total;
             self.showModal = true;
         },
 

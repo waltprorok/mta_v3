@@ -43,6 +43,7 @@ Vue.component('contacts', require('./components/admin/contact/Contacts.vue').def
 Vue.component('dashboard', require('./components/Dashboard.vue').default);
 Vue.component('invoiceCreate', require('./components/invoice/InvoiceCreate.vue').default);
 Vue.component('invoiceList', require('./components/invoice/InvoiceList.vue').default);
+Vue.component('listOfPayments', require('./components/invoice/ListOfPayments.vue').default);
 Vue.component('lessons', require('./components/Lessons.vue').default);
 Vue.component('profile', require('./components/student/Profile.vue').default);
 Vue.component('students', require('./components/admin/student/Students.vue').default);

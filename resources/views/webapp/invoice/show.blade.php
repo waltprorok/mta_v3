@@ -106,10 +106,16 @@
                     </div>
                 </div>
 
+                @if($invoice->is_paid && $balanceDue == 0)
+                    <div class="px-5 mr-5 col-md-12">
+                        <h3 class="text-danger text-right">-- PAID --</h3>
+                    </div>
+                @endif
+
                 <div class="d-flex flex-row-reverse bg-dark text-white p-4">
                     <div class="py-3 px-5 text-right">
                         <div class="mb-2"><strong>Balance Due</strong></div>
-                        <div class="h2 font-weight-light">${{ number_format($balanceDue,2 ) }}</div>
+                        <div class="h2 font-weight-light">${{ number_format($balanceDue, 2) }}</div>
                     </div>
 
                     <div class="py-3 px-5 text-right">

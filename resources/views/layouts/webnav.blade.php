@@ -185,7 +185,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{ route('invoice.list_of_payments') }}" class="nav-link {{ Route::currentRouteName() == 'invoice.list_of_payments' ? 'active' : '' }}">
                                     <i class="fa fa-list-alt ml-3"></i>List Payments
                                 </a>
                             </li>

@@ -59,6 +59,7 @@ class InvoiceController extends Controller
     {
         $students = Invoice::with('student', 'teacher')
             ->where('teacher_id', Auth::id())
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return response()->json($students);
@@ -161,7 +162,12 @@ class InvoiceController extends Controller
 
         $subTotalCalculation = $subTotal * ($discount / 100);
         $total = $total - $subTotalCalculation;
-        $balanceDue = $total;
+
+        if ($invoice->is_paid && $invoice->balance_due == 0) {
+            $balanceDue = $invoice->balance_due;
+        } else {
+            $balanceDue = $total;
+        }
 
         return view('webapp.invoice.show', compact('invoice', 'lessons', 'subTotal', 'discount', 'total', 'balanceDue'));
     }
@@ -227,4 +233,22 @@ class InvoiceController extends Controller
             ->findOrFail($id->id);
     }
 
+    public function getListOfPayments()
+    {
+        $payments = Invoice::with('paymentType:id,name')
+            ->where('is_paid', true)
+            ->where('teacher_id', 3)
+            ->orderBy('created_at', 'desc')
+            ->get([
+                'id',
+                'teacher_id',
+                'payment_type_id',
+                'payment',
+                'balance_due',
+                'is_paid',
+                'updated_at',
+            ]);
+
+        return response()->json($payments);
+    }
 }
