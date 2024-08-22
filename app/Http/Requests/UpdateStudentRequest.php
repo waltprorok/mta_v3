@@ -30,6 +30,8 @@ class UpdateStudentRequest extends FormRequest
             'phone' => 'string|max:30|nullable',
             'parent_email' => 'string|email|max:255|nullable',
             'zip' => 'integer|digits:5|nullable',
+            'instrument' => 'string|nullable',
+            'level' => 'string|nullable',
         ];
     }
 }

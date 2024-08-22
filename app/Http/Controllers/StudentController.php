@@ -134,6 +134,7 @@ class StudentController extends Controller
         $student->state = $request->get('state');
         $student->zip = $request->get('zip');
         $student->instrument = $request->get('instrument');
+        $student->level = $request->get('level');
         $student->status = $request->get('status');
 
         if ($request->hasFile('photo')) {
