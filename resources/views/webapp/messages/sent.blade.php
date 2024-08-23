@@ -26,11 +26,14 @@
                         <tbody>
                         @foreach($messages as $message)
                             <tr class="table-row" data-href="{{route('message.read', $message->id)}}">
-                                <th scope="row">@if ($message->read) <span class="badge badge-success">READ</span> @endif</th>
+                                <th scope="row">
+                                    @if ($message->read) <span class="badge badge-success">Read</span> @endif
+                                    @if (! $message->read) <span class="badge badge-secondary">Sent</span> @endif
+                                </th>
                                 <td>{{ $message->userTo->first_name }}&nbsp;{{ $message->userTo->last_name }}</td>
                                 <td>{{ $message->userTo->email }}</td>
                                 <td>{{ $message->subject }}</td>
-                                <td>@if (isset($message->created_at)) {{$message->created_at->format('M d h:i a')}} @endif</td>
+                                <td>{{ $message->created_at->format('M d h:i a') }}</td>
                             </tr>
                         @endforeach
                         </tbody>

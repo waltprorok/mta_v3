@@ -15,8 +15,8 @@
             <datatable class="table table-condensed table-hover" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
                     <tr @click="onRowClick(row.id)">
-                        <td v-if="row.read == 1"><span class="badge badge-success">READ</span></td>
-                        <td v-if="row.read == 0"></td>
+                        <td v-if="row.read === '1'"><span class="badge badge-success">Read</span></td>
+                        <td v-if="row.read === '0'"><span class="badge badge-primary">New</span></td>
                         <td>{{ row.user_from.first_name }} {{ row.user_from.last_name }}</td>
                         <td v-text="row.user_from.email"></td>
                         <td v-text="row.subject"></td>
@@ -30,7 +30,6 @@
             </div>
             <notifications position="bottom right"/>
         </div>
-
     </div>
 </template>
 
