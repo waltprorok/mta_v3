@@ -45,16 +45,16 @@
                             </div>
                             <div class="form-group" :class="error_message && classError">
                                 <label for="message">Message <span class="text-danger">*</span></label>
-                                <textarea class="form-control" rows="16" v-model="message.message" v-on:keydown.enter.prevent></textarea>
+                                <wysiwyg v-model="message.message" />
                                 <small>{{ error_message }}</small>
                             </div>
                             <button type="submit" class="btn btn-primary">Send</button>
                         </div>
                     </form>
                 </div>
-                <notifications position="bottom right"/>
             </div>
         </div>
+        <notifications position="bottom right"/>
     </div>
 </template>
 
@@ -186,5 +186,7 @@ export default {
     }
 }
 </script>
-
+<style>
+@import "~vue-wysiwyg/dist/vueWysiwyg.css";
+</style>
 

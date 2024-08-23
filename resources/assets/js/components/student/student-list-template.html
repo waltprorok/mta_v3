@@ -109,13 +109,13 @@
                 <template v-slot="{ columns, row }">
                     <tr>
                         <td v-show="!hasOneLesson(row) && !getStatusData(row)">
-                            <span class="btn btn-sm btn-danger btn-rounded"><i class="fa fa-times"></i></span>
+                            <span class="btn btn-sm btn-danger"><i class="fa fa-times"></i></span>
                         </td>
                         <td v-show="hasOneLesson(row) && !getStatusData(row)">
-                            <span class="btn btn-sm btn-success btn-rounded"><i class="fa fa-check"></i></span>
+                            <span class="btn btn-sm btn-success"><i class="fa fa-check"></i></span>
                         </td>
                         <td v-show="getStatusData(row)">
-                            <span class="btn btn-sm btn-default btn-rounded"><i class="fa fa-calendar-minus-o"></i></span>
+                            <span class="btn btn-sm btn-default"><i class="fa fa-calendar-minus-o"></i></span>
                         </td>
                         <td v-text="row.first_name"></td>
                         <td v-text="row.last_name"></td>

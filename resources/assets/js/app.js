@@ -5,6 +5,7 @@
  */
 
 import Notifications from 'vue-notification'
+import wysiwyg from "vue-wysiwyg";
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueFilterDateParse from '@vuejs-community/vue-filter-date-parse';
@@ -17,6 +18,22 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+Vue.use(wysiwyg, {
+    // { [module]: boolean (set true to hide) }
+    hideModules: { 'image': true, 'underline': true, 'code': true, },
+    forcePlainTextOnPaste: true,
+    maxHeight: "400px"
+    // you can override icons too, if desired
+    // just keep in mind that you may need custom styles in your application to get everything to align
+    // iconOverrides: { "bold": "<i class="your-custom-icon"></i>" },
+    // if the image option is not set, images are inserted as base64
+    // image: {
+    //     uploadURL: "/api/myEndpoint",
+    //     dropzoneOptions: {}
+    // },
+    // limit content height if you wish. If not set, editor size will grow with content.
+    // maxHeight: "1000px"
+});
 Vue.use(VueRouter);
 Vue.use(VueFilterDateParse);
 Vue.use(VueFilterDateFormat);
@@ -43,6 +60,7 @@ Vue.component('contacts', require('./components/admin/contact/Contacts.vue').def
 Vue.component('dashboard', require('./components/Dashboard.vue').default);
 Vue.component('invoiceCreate', require('./components/invoice/InvoiceCreate.vue').default);
 Vue.component('invoiceList', require('./components/invoice/InvoiceList.vue').default);
+Vue.component('listOfPayments', require('./components/invoice/ListOfPayments.vue').default);
 Vue.component('lessons', require('./components/Lessons.vue').default);
 Vue.component('profile', require('./components/student/Profile.vue').default);
 Vue.component('students', require('./components/admin/student/Students.vue').default);
@@ -53,6 +71,7 @@ Vue.component('reportCompletedLessonsLine', require('./components/reports/Comple
 Vue.component('reportStudentStatusBar', require('./components/reports/StudentStatusBar.vue').default);
 Vue.component('inbox', require('./components/messages/Inbox.vue').default);
 Vue.component('create', require('./components/messages/Create.vue').default);
+Vue.component('read', require('./components/messages/Read.vue').default);
 Vue.component('plans', require('./components/admin/billing/Plans.vue').default);
 
 

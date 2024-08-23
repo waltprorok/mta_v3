@@ -44,6 +44,7 @@ class Student extends Model
         'state',
         'zip',
         'instrument',
+        'level',
         'status',
         'photo',
     ];

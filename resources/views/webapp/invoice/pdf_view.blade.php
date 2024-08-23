@@ -103,6 +103,11 @@
         </tr>
     </table>
 </div>
+@if($invoice->is_paid && $invoice->balance_due == 0)
+    <div class="total">
+        <p style="color:red">-- PAID --</p>
+    </div>
+@endif
 
 <div class="footer margin-top">
     <div>&copy; Music Teachers Aid</div>

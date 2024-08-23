@@ -17,7 +17,7 @@ class PaymentTypeTableSeeder extends Seeder
                 ['name' => 'Cash', 'created_at' => now(), 'updated_at' => now()],
                 ['name' => 'Check', 'created_at' => now(), 'updated_at' => now()],
                 ['name' => 'Credit Card', 'created_at' => now(), 'updated_at' => now()],
-                ['name' => 'Debit Card', 'created_at' => now(), 'updated_at' => now()],
+                ['name' => 'Apple Pay', 'created_at' => now(), 'updated_at' => now()],
                 ['name' => 'Stripe', 'created_at' => now(), 'updated_at' => now()],
                 ['name' => 'PayPal', 'created_at' => now(), 'updated_at' => now()],
                 ['name' => 'Cash App', 'created_at' => now(), 'updated_at' => now()],

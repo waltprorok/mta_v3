@@ -126,18 +126,19 @@ class MessagesController extends Controller
         return view('webapp.messages.sent')->with('messages', $messages);
     }
 
-    public function read(int $id): View
+    public function read(int $id): JsonResponse
     {
         $message = Message::query()
-            ->with('userFrom')
-            ->find($id);
+            ->with('userFrom:id,first_name,last_name,email')
+            ->with('userTo:id,email')
+            ->findOrFail($id);
 
         if ($message->user_id_from != Auth::id()) {
             $message->read = true;
             $message->save();
         }
 
-        return view('webapp.messages.read')->with('message', $message);
+        return response()->json(['message' => $message, 'author' => Auth::id()]);
     }
 
     public function delete(int $id): RedirectResponse

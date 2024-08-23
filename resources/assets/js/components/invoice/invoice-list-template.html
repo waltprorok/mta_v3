@@ -12,11 +12,13 @@
                                     <span aria-hidden="true" @click="cancelForm()">&times;</span>
                                 </button>
                             </div>
-
                             <div class="modal-body">
                                 <form class="form-horizontal" action="#" @submit.prevent="createInvoicePayment(invoice.id)">
                                     <div class="row">
                                         <div class="col-md-6 offset-3">
+                                            <div class="form-group">
+                                                <label for="check">Total:</label> <strong>{{ invoice.total | toCurrency }}</strong>
+                                            </div>
                                             <div class="form-group" :class="error_payment_type_id && classError">
                                                 <label for="payment_type">Payment Type</label>
                                                 <select id="single-select" @change="showCheckInput($event)"
@@ -38,7 +40,6 @@
                                                            v-model="invoice.check_number"
                                                            v-on:keydown.enter.prevent>
                                                 </div>
-                                                <small></small>
                                             </div>
                                             <div class="form-group">
                                                 <label for="payment_information">Payment Information</label>
@@ -49,7 +50,6 @@
                                                            v-model="invoice.payment_information"
                                                            v-on:keydown.enter.prevent>
                                                 </div>
-                                                <small></small>
                                             </div>
                                             <div class="form-group" :class="error_payment && classError">
                                                 <label for="amount">Payment Amount</label>
@@ -96,16 +96,14 @@
         <div class="form-group pull-right">
             <a :href="`/invoice/create`" class="btn btn-primary" role="button" title="create invoice">Create Invoice</a>
         </div>
-
-
         <div class="form-group pull-right pr-2">
             <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
         </div>
         <datatable class="table table-responsive-md table-hover" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
             <template v-slot="{ columns, row }">
                 <tr>
-                    <td v-if="row.is_paid === false"><span class="btn btn-sm btn-danger btn-rounded"><i class="fa fa-times"></i></span></td>
-                    <td v-if="row.is_paid === true"><span class="btn btn-sm btn-success btn-rounded"><i class="fa fa-check"></i></span></td>
+                    <td v-if="row.is_paid === false"><span class="btn btn-sm btn-danger"><i class="fa fa-times"></i></span></td>
+                    <td v-if="row.is_paid === true"><span class="btn btn-sm btn-success"><i class="fa fa-check"></i></span></td>
                     <td>{{ row.student.first_name }}</td>
                     <td>{{ row.student.last_name }}</td>
                     <td>
@@ -113,10 +111,12 @@
                     </td>
                     <td>{{ row.student.email }}</td>
                     <td>{{ row.balance_due | toCurrency }}</td>
+                    <td v-if="hasDueDate(row)">{{ row.due_date | dateParse('YYYY-MM-DD') | dateFormat('MM-DD-YYYY') }}</td>
+                    <td v-else></td>
                     <td class="text-nowrap">
                         <a :href="`/invoice/show/${row.id}`" class="btn btn-sm btn-outline-primary" role="button" title="view"><i class="fa fa-file-pdf-o"></i></a>
                         <a :href="`/invoice/download/pdf/${row.id}`" class="btn btn-sm btn-outline-secondary" role="button" title="download invoice"><i class="fa fa-download"></i></a>
-                        <button @click="showInvoicePaymentModal(row.id)"
+                        <button @click="showInvoicePaymentModal(row.id, row.total)"
                                 class="btn btn-outline-success btn-sm"
                                 title="make payment"
                                 v-if="disableButton(row)">

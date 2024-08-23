@@ -44,12 +44,12 @@
                 <template v-slot="{ columns, row }">
                     <tr>
                         <td>
-                            <button class="btn btn-default btn-outline-secondary btn-rounded" v-if="!row.complete" @click="updateLesson(row.id, row.complete)">Click to Complete</button>
-                            <button class="btn btn-success btn-rounded" v-if="row.complete" @click="updateLesson(row.id, row.complete)">Completed</button>
+                            <button class="btn btn-rounded btn-outline-secondary" v-if="!row.complete" @click="updateLesson(row.id, row.complete)">Click to Complete</button>
+                            <button class="btn btn-rounded btn-outline-primary" v-if="row.complete" @click="updateLesson(row.id, row.complete)">Completed</button>
                         </td>
-                        <td v-if="lessonDayStatus(row.end_date) && pastLesson"><span class="badge badge-pill badge-danger">Past</span></td>
-                        <td v-else-if="lessonDayStatus(row.end_date) && todayLesson"><span class="badge badge-pill badge-success">Today</span></td>
-                        <td v-else><span class="badge badge-pill badge-primary">Upcoming</span></td>
+                        <td v-if="lessonDayStatusPast(row.end_date) && pastLesson"><span class="badge badge-pill badge-danger">Past</span></td>
+                        <td v-if="lessonDayStatusToday(row.end_date) && todayLesson"><span class="badge badge-pill badge-primary">Today</span></td>
+                        <td v-if="lessonDayStatusUpcoming(row.end_date) && upComing"><span class="badge badge-pill badge-warning">Upcoming</span></td>
                         <td v-text="row.title"></td>
                         <td>{{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                         <td>{{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
@@ -97,6 +97,7 @@ export default {
             list: [],
             todayLesson: false,
             pastLesson: false,
+            upComing: false,
             page: 1,
             per_page: 10,
             pages: [10, 25, 50, 100],
@@ -137,18 +138,26 @@ export default {
     methods: {
         dateFormat,
         dateParse,
-        /**
-         * @param endDate
-         */
-        lessonDayStatus: function(endDate) {
+        lessonDayStatusPast: function (endDate) {
+            let lessonEndDate = new Date(endDate);
+            if (lessonEndDate < today) {
+                return this.pastLesson = true;
+            }
+        },
+
+        lessonDayStatusToday: function (endDate) {
             let lessonEndDate = new Date(endDate);
 
-            if (lessonEndDate.toDateString() === today.toDateString()) {
+            if (lessonEndDate === today) {
                 return this.todayLesson = true;
             }
+        },
 
-            if (lessonEndDate.getTime() < today.getTime()) {
-                return this.pastLesson = true;
+        lessonDayStatusUpcoming: function (endDate) {
+            let lessonEndDate = new Date(endDate);
+
+            if (lessonEndDate > today) {
+                return this.upComing = true;
             }
         },
 
@@ -161,14 +170,14 @@ export default {
                     this.list = response.data.data;
                 })
                 .catch((error) => {
-                console.log(error);
-                this.$notify({
-                    type: 'error',
-                    title: 'Error',
-                    text: 'Could not load lessons list.',
-                    duration: 10000,
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load lessons list.',
+                        duration: 10000,
+                    });
                 });
-            });
         },
 
         resetDates: function () {

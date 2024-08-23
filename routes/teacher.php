@@ -16,6 +16,7 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::get('status', 'ReportController@status');
         Route::get('invoice', 'InvoiceController@index');
         Route::get('invoice-create', 'InvoiceController@createInvoice');
+        Route::get('invoice/list-of-payments', 'InvoiceController@getListOfPayments');
         Route::post('invoice-post', 'InvoiceController@store');
         Route::patch('invoice/update/{id}', 'InvoiceController@update');
         Route::get('invoice-get-student/{id}', 'InvoiceController@getStudentSelected');
@@ -27,6 +28,7 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::view('/', 'webapp.invoice.index')->name('invoice.index');
         Route::get('/show/{id}', 'InvoiceController@show')->name('invoice.show');
         Route::view('/create', 'webapp.invoice.create')->name('invoice.create');
+        Route::view('/list-of-payments', 'webapp.invoice.list_of_payments')->name('invoice.list_of_payments');
         Route::get('/download/pdf/{id}', 'InvoiceController@downloadPDF')->name('invoice.download.pdf');
     });
 
