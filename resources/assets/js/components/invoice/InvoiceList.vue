@@ -3,6 +3,8 @@
 <script>
 import TotalEntries from "../TotalEntries";
 import PhoneNumberFormat from "../PhoneNumberFormat";
+import {dateParse} from "@vuejs-community/vue-filter-date-parse";
+import {dateFormat} from "vue-filter-date-format";
 
 export default {
     data: function () {
@@ -19,6 +21,7 @@ export default {
                 {label: 'Phone', field: 'phone', sortable: false},
                 {label: 'Email', field: 'email',},
                 {label: 'Balance', field: 'balance_due',},
+                {label: 'Due Date', field: 'due_date',},
                 {label: 'Actions', filterable: false},
             ],
             invoice: {
@@ -33,6 +36,7 @@ export default {
                 payment_information: null,
                 adjustments: null,
                 payment_type_id: null,
+                due_date: null,
                 is_paid: null,
             },
             student: {
@@ -48,7 +52,7 @@ export default {
                 {label: 'Cash', type: 1,},
                 {label: 'Check', type: 2,},
                 {label: 'Credit Card', type: 3,},
-                {label: 'Debit Card', type: 4,},
+                {label: 'Apple Pay', type: 4,},
                 {label: 'Stripe', type: 5,},
                 {label: 'PayPal', type: 6,},
                 {label: 'Cash App', type: 7,},
@@ -62,7 +66,6 @@ export default {
             error_payment: '',
             error_payment_type_id: '',
             classError: '',
-
         }
     },
 
@@ -98,6 +101,8 @@ export default {
     },
 
     methods: {
+        dateFormat,
+        dateParse,
         cancelForm: function () {
             let self = this;
             self.clearErrorData();
@@ -164,6 +169,13 @@ export default {
 
         disableButton: function (row) {
             return row.balance_due !== 0 && row.is_paid !== true;
+        },
+
+        hasDueDate: function (row) {
+            if (row.due_date !== null) {
+                return row.due_date;
+            }
+            return false;
         },
 
         getErrorMessage: function (error) {
