@@ -24,7 +24,7 @@
                                     </tr>
                                     <tr>
                                         <th class="border-0" style="padding: .0rem;">Sent:</th>
-                                        <td class="border-0" style="padding: .0rem;">{{ message.created_at | dateParse('YYYY-MM-DD') | dateFormat(' MM-DD-YYYY h:mm a') }}</td>
+                                        <td class="border-0" style="padding: .0rem;">{{ message.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat(' MM-DD-YYYY h:mm a') }}</td>
                                     </tr>
                                     </tbody>
                                 </table>

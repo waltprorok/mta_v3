@@ -100,7 +100,6 @@ export default {
                     this.fromUser = response.data.user;
                     this.message.subject = response.data.subject;
                     this.body = response.data.body;
-                    console.log(this.fromUser);
                 })
                 .catch((error) => {
                     console.log(error);

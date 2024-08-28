@@ -62,7 +62,7 @@ class MessageService
                 $query->where('teacher_id', Auth::id())->where('status', $status); // pass a status id
             })
                 ->firstNameAsc()
-                ->get(['id', 'first_name', 'last_name', 'email', 'student', 'student', 'teacher', 'parent', 'admin']);
+                ->get(['student_id', 'first_name', 'last_name', 'email', 'parent_email', 'student', 'teacher', 'parent', 'admin']);
         } else {
             $users = User::where('id', $id)->get([
                 'id', 'first_name', 'last_name', 'email', 'student', 'teacher', 'parent', 'admin'
@@ -102,9 +102,11 @@ class MessageService
         $this->setId($id);
 
         if ($this->getId() > 0) {
-            return User::where('id', $this->getId())->get();
+            return User::where('id', $this->getId())
+                ->get();
         } else {
-            $students = User::with('parentOfStudent')->findOrFail(Auth::id());
+            $students = User::with('parentOfStudent:id,parent_id,first_name,last_name,email,teacher')
+                ->findOrFail(Auth::id());
 
             foreach ($students->parentOfStudent as $student) {
                 $teacherId[] = $student->teacher_id;

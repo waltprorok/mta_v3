@@ -18,13 +18,6 @@
                                     </select>
                                 </div>
                             </div>
-<!--                            <div class="col-md-2" v-if="showDropDown">-->
-<!--                                <div class="toggle-switch" data-ts-color="primary">-->
-<!--                                    <label for="ts2" class="ts-label">Email All</label>-->
-<!--                                    <input id="ts2" type="checkbox" hidden="hidden" v-model="message.all">-->
-<!--                                    <label for="ts2" class="ts-helper"></label>-->
-<!--                                </div>-->
-<!--                            </div>-->
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group" :class="error_to && classError">
@@ -45,7 +38,7 @@
                             </div>
                             <div class="form-group" :class="error_message && classError">
                                 <label for="message">Message <span class="text-danger">*</span></label>
-                                <wysiwyg v-model="message.body" />
+                                <wysiwyg v-model="message.body"/>
                                 <small>{{ error_message }}</small>
                             </div>
                             <button type="submit" class="btn btn-primary">Send</button>
@@ -179,7 +172,6 @@ export default {
             if (user?.first_name && user?.last_name) {
                 return user.first_name + ' ' + user.last_name;
             }
-            // TODO: added for parent
             return '';
         },
     }
