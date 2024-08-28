@@ -32,7 +32,7 @@ class SendMessageRequestTest extends TestCase
         $validator = Validator::make([
             'to' => 1,
             'subject' => $this->faker->text,
-            'message' => $this->faker->sentences,
+            'body' => $this->faker->sentences,
         ], $this->request->rules());
 
         $this->assertTrue($validator->passes());
@@ -49,7 +49,7 @@ class SendMessageRequestTest extends TestCase
             'Subject fail' =>
                 ['subject', null],
             'Message fail' =>
-                ['message', null],
+                ['body', null],
         ];
     }
 
