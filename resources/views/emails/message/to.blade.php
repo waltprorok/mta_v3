@@ -4,7 +4,7 @@
 
 Hello {{$user['first_name']}},
 
-{{$request['message']}}
+{!! $request['body'] !!}
 
 @endcomponent
 

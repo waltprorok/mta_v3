@@ -31,7 +31,7 @@
                                 <label for="to">To <span class="text-danger">*</span></label>
                                 <select class="form-control" id="to" v-model="message.to"
                                         v-on:keydown.enter.prevent>
-                                    <option v-for="user in list" :value="getUserIdValue(user)">
+                                    <option v-for="user in users" :value="getUserIdValue(user)">
                                         {{ showUserNameDisplay(user) }}
                                     </option>
                                 </select>
@@ -45,7 +45,7 @@
                             </div>
                             <div class="form-group" :class="error_message && classError">
                                 <label for="message">Message <span class="text-danger">*</span></label>
-                                <wysiwyg v-model="message.message" />
+                                <wysiwyg v-model="message.body" />
                                 <small>{{ error_message }}</small>
                             </div>
                             <button type="submit" class="btn btn-primary">Send</button>
@@ -63,12 +63,11 @@
 export default {
     data: function () {
         return {
-            list: [],
+            users: [],
             message: {
-                all: false,
                 to: null,
                 subject: null,
-                message: null,
+                body: null,
             },
             classError: '',
             error_to: '',
@@ -101,13 +100,13 @@ export default {
             let self = this;
             self.message.to = null;
             self.message.subject = null;
-            self.message.message = null;
+            self.message.body = null;
         },
 
         createMessage: function () {
             let self = this;
             let params = Object.assign({}, self.message);
-            axios.post('/messages/send', params)
+            axios.post('/web/messages/send', params)
                 .then(() => {
                     self.clearMessageData()
                     self.clearErrorData();
@@ -129,8 +128,7 @@ export default {
         fetchUsersList: function () {
             axios.get('/web/messages/status/1')
                 .then((response) => {
-                    console.log(response.data);
-                    this.list = response.data.users;
+                    this.users = response.data.users;
                     this.showDropDown = response.data.teacher;
                 })
                 .catch((error) => {
@@ -138,7 +136,7 @@ export default {
                     this.$notify({
                         type: 'error',
                         title: 'Error',
-                        text: 'Could not load users list.',
+                        text: 'Could not load users.',
                         duration: 10000,
                     });
                 });
@@ -181,6 +179,7 @@ export default {
             if (user?.first_name && user?.last_name) {
                 return user.first_name + ' ' + user.last_name;
             }
+            // TODO: added for parent
             return '';
         },
     }

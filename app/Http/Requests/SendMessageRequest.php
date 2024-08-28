@@ -29,7 +29,7 @@ class SendMessageRequest extends FormRequest
         return [
             'to' => 'required',
             'subject' => 'required|min:2',
-            'message' => 'required|min:3',
+            'body' => 'required|min:3',
         ];
     }
 
