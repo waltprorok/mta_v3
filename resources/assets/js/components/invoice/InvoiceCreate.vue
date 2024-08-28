@@ -98,7 +98,6 @@ export default {
             self.invoice.student_id = self.student.id;
             self.invoice.teacher_id = self.student.student_teacher.teacher_id;
             self.invoice.lesson_id = lessons.toString();
-            // console.log(self.invoice);
             let params = Object.assign({}, self.invoice);
             axios.post('/web/invoice-post', params)
                 .then(() => {

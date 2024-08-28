@@ -24,7 +24,7 @@
                                     </tr>
                                     <tr>
                                         <th class="border-0" style="padding: .0rem;">Sent:</th>
-                                        <td class="border-0" style="padding: .0rem;">{{ message.created_at | dateParse('YYYY-MM-DD') | dateFormat(' MM-DD-YYYY h:mm a') }}</td>
+                                        <td class="border-0" style="padding: .0rem;">{{ message.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat(' MM-DD-YYYY h:mm a') }}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -58,16 +58,16 @@ export default {
             author: 0,
             message: {
                 user_from: {
-                    id: '',
-                    first_name: '',
-                    last_name: '',
-                    email: '',
+                    id: null,
+                    first_name: null,
+                    last_name: null,
+                    email: null,
                 },
                 user_to: {
-                    email: '',
+                    email: null,
                 },
-                subject: '',
-                body: '',
+                subject: null,
+                body: null,
                 read: false,
                 created_at: '1970-01-01 00:00:00',
             },
@@ -105,8 +105,7 @@ export default {
         },
 
         replayToMessage: function (message) {
-            //message.user_from.id, message.subject
-            window.location.href = `/messages/reply/${message.user_from.id}/${message.subject}`;
+            window.location.href = `/messages/reply/${message.id}`;
         },
     },
 }
