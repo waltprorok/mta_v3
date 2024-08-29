@@ -12,11 +12,11 @@
             <div class="form-group pull-right pr-2">
                 <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
             </div>
-            <datatable class="table table-condensed table-hover" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
+            <datatable class="table table-condensed table-hover" :columns="columns" :data="messages" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
                     <tr @click="onRowClick(row.id)">
-                        <td v-if="row.read === '1'"><span class="badge badge-success">Read</span></td>
-                        <td v-if="row.read === '0'"><span class="badge badge-primary">New</span></td>
+                        <td v-if="row.read === true"><span class="badge badge-success">Read</span></td>
+                        <td v-if="row.read === false"><span class="badge badge-primary">New</span></td>
                         <td>{{ row.user_from.first_name }} {{ row.user_from.last_name }}</td>
                         <td v-text="row.user_from.email"></td>
                         <td v-text="row.subject"></td>
@@ -50,7 +50,7 @@ export default {
                 {label: 'Subject', field: 'subject',},
                 {label: 'Sent', field: 'created_at',},
             ],
-            list: [],
+            messages: [],
             page: 1,
             per_page: 10,
             pages: [10, 25, 50, 100],
@@ -71,14 +71,14 @@ export default {
         fetchMessageList: function () {
             axios.get('/web/messages/inbox')
                 .then((response) => {
-                    this.list = response.data;
+                    this.messages = response.data;
                 })
                 .catch((error) => {
                     console.log(error);
                     this.$notify({
                         type: 'error',
                         title: 'Error',
-                        text: 'Could not load message list.',
+                        text: 'Could not load messages.',
                         duration: 10000,
                     });
                 });

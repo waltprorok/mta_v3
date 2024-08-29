@@ -9,7 +9,7 @@ export default {
     data: function () {
         return {
             filter: '',
-            list: [],
+            users: [],
             page: 1,
             per_page: 10,
             pages: [10, 25, 50, 100],
@@ -49,26 +49,22 @@ export default {
         dateFormat,
         dateParse,
         fetchUserList: function () {
-            axios.get('/web/user')
+            axios.get('/web/users')
                 .then((response) => {
-                    this.list = response.data;
+                    this.users = response.data;
                 }).catch((error) => {
                 console.log(error);
                 this.$notify({
                     type: 'error',
                     title: 'Error',
-                    text: 'Could not load user list.',
+                    text: 'Could not load users.',
                     duration: 10000,
                 });
             });
         },
 
-        getUserType: function (row) {
-            if (row) {
-                return "&#10004;";
-            } else {
-                return '';
-            }
+        isUserType: function (row) {
+            return row ? '<i class="fa fa-check"></i>' : '';
         }
 
         // updateUser: function (id, complete) {

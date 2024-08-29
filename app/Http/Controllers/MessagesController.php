@@ -47,6 +47,7 @@ class MessagesController extends Controller
     public function reply(Message $message, int $status = Student::ACTIVE)
     {
         $users = $this->messageService->getUsers($message->user_id_from, $status);
+
         $subject = $this->messageService->getSubjectString($message->subject);
 
         return response()->json([

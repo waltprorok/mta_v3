@@ -12,16 +12,16 @@
         <div class="form-group pull-right">
             <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
         </div>
-        <datatable class="table table-responsive-md table-hover" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
+        <datatable class="table table-responsive-md table-hover" :columns="columns" :data="users" :filter="filter" :per-page="per_page">
             <template v-slot="{ columns, row }">
                 <tr>
                     <td v-text="row.first_name"></td>
                     <td v-text="row.last_name"></td>
                     <td v-text="row.email"></td>
-                    <td v-html="getUserType(row.admin)"></td>
-                    <td v-html="getUserType(row.teacher)"></td>
-                    <td v-html="getUserType(row.student)"></td>
-                    <td v-html="getUserType(row.parent)"></td>
+                    <td v-html="isUserType(row.admin)"></td>
+                    <td v-html="isUserType(row.teacher)"></td>
+                    <td v-html="isUserType(row.student)"></td>
+                    <td v-html="isUserType(row.parent)"></td>
                     <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                 </tr>
             </template>

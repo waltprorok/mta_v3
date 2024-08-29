@@ -12,16 +12,16 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::get('waitlist', 'StudentListController@waitlist')->name('student.waitlist');
         Route::get('inactive', 'StudentListController@inactive')->name('student.inactive');
         Route::resource('billing-rate', 'BillingRateController');
-        Route::post('student-save', 'StudentController@store');
-        Route::get('status', 'ReportController@status');
+        Route::get('dashboard', 'DashboardController@dashboard');
+        Route::get('dashboard/completed-lessons', 'DashboardController@getCompletedLessonsData');
         Route::get('invoice', 'InvoiceController@index');
         Route::get('invoice-create', 'InvoiceController@createInvoice');
         Route::get('invoice/list-of-payments', 'InvoiceController@getListOfPayments');
         Route::post('invoice-post', 'InvoiceController@store');
         Route::patch('invoice/update/{id}', 'InvoiceController@update');
         Route::get('invoice-get-student/{id}', 'InvoiceController@getStudentSelected');
-        Route::get('dashboard', 'DashboardController@dashboard');
-        Route::get('dashboard/completed-lessons', 'DashboardController@getCompletedLessonsData');
+        Route::post('student-save', 'StudentController@store');
+        Route::get('status', 'ReportController@status');
     });
 
     Route::prefix('invoice')->group(function () {

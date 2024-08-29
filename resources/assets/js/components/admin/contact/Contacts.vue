@@ -13,8 +13,8 @@ export default {
             columns: [
                 {label: 'Name', field: 'name',},
                 {label: 'Email', field: 'email',},
-                {label: 'Subject', field: 'subject',},
-                {label: 'Message', field: 'message',},
+                {label: 'Subject', field: 'subject', sortable: false},
+                {label: 'Message', field: 'message', sortable: false},
                 {label: 'Created', field: 'created_at',},
                 {label: 'Actions', filterable: false}
             ],
@@ -99,7 +99,7 @@ export default {
         },
 
         fetchContactList: function () {
-            axios.get('/web/contact')
+            axios.get('/web/contacts')
                 .then((response) => {
                     this.list = response.data;
                 })
@@ -108,7 +108,7 @@ export default {
                     this.$notify({
                         type: 'error',
                         title: 'Error',
-                        text: 'Could not load contact list.',
+                        text: 'Could not load contacts.',
                         duration: 10000,
                     });
                 });
@@ -117,7 +117,7 @@ export default {
         createContact: function () {
             let self = this;
             let params = Object.assign({}, self.contact);
-            axios.post('/web/contact', params)
+            axios.post('/web/contacts', params)
                 .then(() => {
                     self.clearContactData()
                     self.clearErrorData();
@@ -140,7 +140,7 @@ export default {
             let self = this;
             self.showForm = true;
             self.read = read;
-            axios.get('/web/contact/' + id)
+            axios.get('/web/contacts/' + id)
                 .then((response) => {
                     self.contact.id = response.data.id;
                     self.contact.name = response.data.name;
@@ -154,7 +154,7 @@ export default {
         updateContact: function (id) {
             let self = this;
             let params = Object.assign({}, self.contact);
-            axios.patch('/web/contact/' + id, params)
+            axios.patch('/web/contacts/' + id, params)
                 .then(() => {
                     self.clearContactData();
                     self.clearErrorData();
@@ -164,7 +164,7 @@ export default {
                     this.$notify({
                         type: 'warn',
                         title: 'Updated',
-                        text: 'The contact was updated.',
+                        text: 'The contact record was updated.',
                         duration: 10000,
                     })
                 })
@@ -182,7 +182,7 @@ export default {
         deleteContact: function (id) {
             let self = this;
             let params = Object.assign({}, self.contact);
-            axios.delete('/web/contact/' + id, params)
+            axios.delete('/web/contacts/' + id, params)
                 .then(() => {
                     self.showModal = false;
                     self.fetchContactList();
@@ -200,7 +200,7 @@ export default {
                     this.$notify({
                         type: 'error',
                         title: 'Error',
-                        text: 'Could not load delete contact.',
+                        text: 'Could not delete contact.',
                         duration: 10000,
                     });
                 });

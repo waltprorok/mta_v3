@@ -146,9 +146,10 @@ export default {
         getOnChangeList: function (event) {
             this.clearErrorData();
             this.clearMessageData();
-            axios.get('/web/messages/status/' + event.target.value)
+            let id = event.target.value;
+            axios.get('/web/messages/status/' + id)
                 .then((response) => {
-                    this.list = response.data.users;
+                    this.users = response.data.users;
                     this.showDropDown = response.data.teacher;
                 }).catch((error) => {
                 console.log(error);
