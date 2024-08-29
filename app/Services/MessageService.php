@@ -62,11 +62,10 @@ class MessageService
                 $query->where('teacher_id', Auth::id())->where('status', $status); // pass a status id
             })
                 ->firstNameAsc()
-                ->get(['student_id', 'first_name', 'last_name', 'email', 'parent_email', 'student', 'teacher', 'parent', 'admin']);
+                ->get(['id', 'first_name', 'last_name', 'email', 'student', 'teacher', 'parent', 'admin']);
         } else {
-            $users = User::where('id', $id)->get([
-                'id', 'first_name', 'last_name', 'email', 'student', 'teacher', 'parent', 'admin'
-            ]);
+            $users = User::where('id', $id)
+                ->get(['id', 'first_name', 'last_name', 'email', 'student', 'teacher', 'parent', 'admin']);
         }
 
         return $users;
