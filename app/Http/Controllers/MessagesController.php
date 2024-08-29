@@ -18,10 +18,6 @@ use Illuminate\View\View;
 
 class MessagesController extends Controller
 {
-    protected $casts = [
-        'read' => 'boolean',
-    ];
-
     /**
      * @var MessageService
      */
@@ -62,7 +58,10 @@ class MessagesController extends Controller
         $users = $this->messageService->getUsers($id, $status);
         $isTeacher = Auth::user()->teacher;
 
-        return response()->json(['users' => $users, 'teacher' => $isTeacher]);
+        return response()->json([
+            'users' => $users,
+            'teacher' => $isTeacher
+        ]);
     }
 
     public function send(SendMessageRequest $request): JsonResponse

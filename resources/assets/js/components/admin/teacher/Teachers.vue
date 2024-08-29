@@ -49,7 +49,7 @@ export default {
 
     methods: {
         fetchTeacherList: function () {
-            axios.get('/web/teacher')
+            axios.get('/web/teachers')
                 .then((response) => {
                     this.list = response.data;
                 }).catch((error) => {
@@ -62,22 +62,6 @@ export default {
                 })
             });
         },
-
-        // updateTeacher: function (id, complete) {
-        //     let self = this;
-        //     self.lesson.id = id;
-        //     self.lesson.complete = !complete;
-        //     let params = Object.assign({}, self.lesson);
-        //
-        //     axios.patch('lessons/update/' + id, params)
-        //         .then(function () {
-        //             self.fetchLessonList();
-        //         })
-        //         .catch(function (error) {
-        //             self.fetchLessonList();
-        //             console.log(error);
-        //         });
-        // },
     },
 }
 </script>

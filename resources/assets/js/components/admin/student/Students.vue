@@ -17,7 +17,7 @@ export default {
                 {label: 'First Name', field: 'first_name',},
                 {label: 'Last Name', field: 'last_name',},
                 {label: 'Phone', field: 'phone', sortable: false},
-                {label: 'Email', field: 'email',},
+                {label: 'Email', field: 'email', sortable: false},
                 {label: 'Instrument', field: 'instrument',},
                 {label: 'Status', field: 'status',},
             ],
@@ -44,7 +44,7 @@ export default {
 
     methods: {
         fetchStudentList: function () {
-            axios.get('/web/student')
+            axios.get('/web/students')
                 .then((response) => {
                     this.list = response.data;
                 })
