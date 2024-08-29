@@ -11,7 +11,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Message extends Model
 {
-//    use SoftDeletes;
+    protected $casts = [
+        'read' => 'boolean',
+        'deleted' => 'boolean',
+    ];
 
     protected $fillable = [
         'user_id_from',
@@ -22,19 +25,11 @@ class Message extends Model
         'deleted'
     ];
 
-    /**
-     * @param $query
-     * @return mixed
-     */
     public function scopeNotDeleted($query)
     {
         return $query->where('deleted', false);
     }
 
-    /**
-     * @param $query
-     * @return mixed
-     */
     public function scopeIsDeleted($query)
     {
         return $query->where('deleted', true);
