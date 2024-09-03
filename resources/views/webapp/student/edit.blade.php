@@ -169,6 +169,8 @@
                                         @endif
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('parent_email') ? ' has-error' : '' }}">
                                         <label for="email" class="control-label">Parent or Guardian Email (enter if child is a minor)</label>
@@ -179,6 +181,20 @@
                                         @if ($errors->has('parent_email'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('parent_email') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('parent_phone') ? ' has-error' : '' }}">
+                                        <label for="parent_phone" class="control-label">Parent or Guardian Phone</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                            <input type="tel" class="form-control" name="parent_phone" placeholder="(___) ___-____" value="{{ $student->parent_phone_number }}">
+                                        </div>
+                                        @if ($errors->has('parent_phone'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('parent_phone') }}</strong>
                                     </span>
                                         @endif
                                     </div>

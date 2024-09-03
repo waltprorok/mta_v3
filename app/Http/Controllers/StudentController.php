@@ -120,13 +120,15 @@ class StudentController extends Controller
         }
 
         $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
+        $parentPhoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('parent_phone'));
 
         // update student record
         $student->first_name = $request->get('first_name');
         $student->last_name = $request->get('last_name');
         $student->email = $request->get('email');
-        $student->parent_email = $request->get('parent_email');
         $student->phone = $phoneNumber;
+        $student->parent_email = $request->get('parent_email');
+        $student->parent_phone = $parentPhoneNumber;
         $student->date_of_birth = $request->get('date_of_birth');
         $student->address = $request->get('address');
         $student->address_2 = $request->get('address_2');
