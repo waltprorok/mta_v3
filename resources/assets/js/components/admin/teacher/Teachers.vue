@@ -57,7 +57,7 @@ export default {
                 this.$notify({
                     type: 'error',
                     title: 'Error',
-                    text: 'Could not load teacher list.',
+                    text: 'Could not load teachers.',
                     duration: 10000,
                 })
             });

@@ -36,6 +36,7 @@ class Student extends Model
         'last_name',
         'email',
         'parent_email',
+        'parent_phone',
         'phone',
         'date_of_birth',
         'address',
@@ -69,6 +70,11 @@ class Student extends Model
     public function getPhoneNumberAttribute(): ?string
     {
         return $this->phoneNumberService->getPhoneNumberFormat($this->phone);
+    }
+
+    public function getParentPhoneNumberAttribute(): ?string
+    {
+        return $this->phoneNumberService->getPhoneNumberFormat($this->parent_phone);
     }
 
     public function hasOneFutureLesson(): HasOne
