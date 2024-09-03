@@ -38,7 +38,7 @@ class UsersTableDataSeeder extends Seeder
             [
                 'id' => '2',
                 'first_name' => 'Admin',
-                'last_name' => 'Test',
+                'last_name' => 'User',
                 'email' => 'admin@domain.com',
                 'email_verified_at' => null,
                 'password' => bcrypt('Admin213!'),
