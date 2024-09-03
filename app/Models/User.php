@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -46,6 +47,8 @@ class User extends Authenticatable
     protected $guarded = [
         'admin'
     ];
+
+    const ADMIN_ID = 2;
 
     /**
      * The attributes that should be hidden for arrays.

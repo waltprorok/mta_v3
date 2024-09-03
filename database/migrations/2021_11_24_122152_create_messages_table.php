@@ -23,8 +23,8 @@ class CreateMessagesTable extends Migration
             $table->foreign('user_id_to')->references('id')->on('users');
             $table->string('subject');
             $table->text('body');
-            $table->boolean('read');
-            $table->boolean('deleted');
+            $table->boolean('read')->default(false);
+            $table->boolean('deleted')->default(false);
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ git pull
 php artisan migrate
 composer install --prefer-dist --optimize-autoloader --no-dev -o --no-interaction
 php artisan optimize:clear
+php artisan event:clear
 php artisan route:cache
 php artisan view:cache
 php artisan event:cache

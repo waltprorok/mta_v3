@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Events\RegisterUserEvent;
 use App\Listeners\CreateTeacherListener;
+use App\Listeners\SendNewTeacherMessageListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -14,7 +15,10 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        RegisterUserEvent::class => [CreateTeacherListener::class],
+        RegisterUserEvent::class => [
+            CreateTeacherListener::class,
+            SendNewTeacherMessageListener::class,
+        ],
     ];
 
     /**
