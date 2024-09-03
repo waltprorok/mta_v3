@@ -12,7 +12,7 @@
             <div class="form-group pull-right pr-2">
                 <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
             </div>
-            <datatable class="table table-condensed table-hover" :columns="columns" :data="messages" :filter="filter" :per-page="per_page">
+            <datatable class="table table-condensed table-hover" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
                     <tr @click="onRowClick(row.id)">
                         <td v-if="row.read === true"><span class="badge badge-success">Read</span></td>
@@ -50,7 +50,7 @@ export default {
                 {label: 'Subject', field: 'subject',},
                 {label: 'Sent', field: 'created_at',},
             ],
-            messages: [],
+            list: [],
             page: 1,
             per_page: 10,
             pages: [10, 25, 50, 100],
@@ -71,7 +71,7 @@ export default {
         fetchMessageList: function () {
             axios.get('/web/messages/inbox')
                 .then((response) => {
-                    this.messages = response.data;
+                    this.list = response.data;
                 })
                 .catch((error) => {
                     console.log(error);

@@ -6,7 +6,6 @@ import PhoneNumberFormat from "../PhoneNumberFormat.vue";
 export default {
     data() {
         return {
-            // classError: false,
             list: [],
             student: [],
             lessons: [],

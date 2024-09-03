@@ -9,7 +9,7 @@ export default {
     data: function () {
         return {
             filter: '',
-            users: [],
+            list: [],
             page: 1,
             per_page: 10,
             pages: [10, 25, 50, 100],
@@ -51,7 +51,7 @@ export default {
         fetchUserList: function () {
             axios.get('/web/users')
                 .then((response) => {
-                    this.users = response.data;
+                    this.list = response.data;
                 }).catch((error) => {
                 console.log(error);
                 this.$notify({
