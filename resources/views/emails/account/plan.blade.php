@@ -9,7 +9,7 @@ Your subscription plan to {{ config('app.name') }} has changed to a **{{ ucfirst
 This message is a confirmation of recent changes to your account.
 
 Thanks!
-- {{ config('app.name') }}
+{{ config('app.name') }}
 
 @endcomponent
 

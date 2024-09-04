@@ -30,7 +30,7 @@ From the Profile Icon (top right) click Settings
 * Create a Billing Rate(s)
 
 Thanks!<br/>
-- {{ config('app.name') }}
+{{ config('app.name') }}
 
 @endcomponent
 
