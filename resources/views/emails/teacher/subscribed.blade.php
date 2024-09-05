@@ -19,7 +19,7 @@ Under Account click Subscription Tab click **Download Invoices** to view the PDF
 @endcomponent
 
 Happy Teaching!<br/>
-- {{ config('app.name') }}
+{{ config('app.name') }}
 
 @endcomponent
 

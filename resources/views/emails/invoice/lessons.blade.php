@@ -13,7 +13,7 @@ Attached you will find our invoice {{ 'Invoice_MTA_' . $invoice['id'] }}
 @endcomponent
 
 Thanks!<br/>
-- {{ config('app.name') }}
+{{ config('app.name') }}
 
 @endcomponent
 
