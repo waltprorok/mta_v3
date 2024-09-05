@@ -22,7 +22,8 @@ If you have any questions or concerns please use the support link after you log 
     Support
 @endcomponent
 
-Thanks!<br/>
+Thanks!
+
 {{ config('app.name') }}
 
 @endcomponent

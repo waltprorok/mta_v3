@@ -12,7 +12,8 @@ Attached you will find our invoice {{ 'Invoice_MTA_' . $invoice['id'] }}
     Support
 @endcomponent
 
-Thanks!<br/>
+Thanks!
+
 {{ config('app.name') }}
 
 @endcomponent

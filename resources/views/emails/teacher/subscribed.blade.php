@@ -18,7 +18,8 @@ Under Account click Subscription Tab click **Download Invoices** to view the PDF
     Support
 @endcomponent
 
-Happy Teaching!<br/>
+Happy Teaching!
+
 {{ config('app.name') }}
 
 @endcomponent

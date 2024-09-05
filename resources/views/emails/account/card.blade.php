@@ -12,6 +12,7 @@ Your credit card on file was recently changed to:
 This message is a confirmation of recent changes to your account.
 
 Thanks!
+
 {{ config('app.name') }}
 
 @endcomponent
