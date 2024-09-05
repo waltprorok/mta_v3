@@ -29,7 +29,8 @@ From the Profile Icon (top right) click Settings
 * Set your Business Hours
 * Create a Billing Rate(s)
 
-Thanks!<br/>
+Thanks!
+
 {{ config('app.name') }}
 
 @endcomponent
