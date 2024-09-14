@@ -88,6 +88,7 @@ class InvoiceController extends Controller
     {
         $student = Student::query()
             ->where('status', Student::ACTIVE)
+            ->where('teacher_id', Auth::id())
             ->with('lessons:id,student_id,teacher_id,billing_rate_id,start_date,end_date,complete')
             ->orderBy('first_name')
             ->get();
@@ -201,16 +202,14 @@ class InvoiceController extends Controller
 
     /**
      * @param InvoicePaymentRequest $request
-     * @param Invoice $id
+     * @param Invoice $invoice
      * @return JsonResponse
      */
-    public function update(InvoicePaymentRequest $request, Invoice $id): JsonResponse
+    public function update(InvoicePaymentRequest $request, Invoice $invoice): JsonResponse
     {
-        $invoice = $id;
-
         try {
             $invoice->update([
-                'balance_due' => $id->balance_due - $request->get('payment'),
+                'balance_due' => $invoice->balance_due - $request->get('payment'),
                 'payment' => $request->get('payment'),
                 'payment_type_id' => $request->get('payment_type_id'),
                 'check_number' => $request->get('check_number'),
@@ -218,6 +217,12 @@ class InvoiceController extends Controller
                 'is_paid' => true,
 
             ]);
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+        }
+
+        try {
+            Mail::to($invoice->student->email)->send(new LessonsInvoice($invoice));
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }
