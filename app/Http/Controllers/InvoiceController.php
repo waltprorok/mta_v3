@@ -242,7 +242,7 @@ class InvoiceController extends Controller
     {
         $payments = Invoice::with('paymentType:id,name')
             ->where('is_paid', true)
-            ->where('teacher_id', 3)
+            ->where('teacher_id', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get([
                 'id',
