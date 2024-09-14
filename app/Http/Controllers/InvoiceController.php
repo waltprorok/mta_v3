@@ -88,6 +88,7 @@ class InvoiceController extends Controller
     {
         $student = Student::query()
             ->where('status', Student::ACTIVE)
+            ->where('teacher_id', Auth::id())
             ->with('lessons:id,student_id,teacher_id,billing_rate_id,start_date,end_date,complete')
             ->orderBy('first_name')
             ->get();
