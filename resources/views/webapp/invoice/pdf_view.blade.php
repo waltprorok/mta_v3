@@ -25,8 +25,11 @@
 <div class="margin-top">
     <table class="w-full">
         <tr>
-            <td class="w-full">
-                <div>Billed By:</div>
+            <th style="text-align: left">Billed By:</th>
+            <th style="text-align: left">Billed To:</th>
+        </tr>
+        <tr>
+            <td class="w-half">
                 <br>
                 <div><h4>{{ $invoice->student->studentTeacher->studio_name }}</h4></div>
                 <div>{{ $invoice->student->studentTeacher->first_name }}&nbsp;{{ $invoice->student->studentTeacher->last_name }}</div>
@@ -35,24 +38,23 @@
                 <br>
                 <div>{{ $invoice->student->studentTeacher->email }}</div>
             </td>
+
+            <td class="w-half">
+                <div>{{ $invoice->student->first_name }}&nbsp;{{ $invoice->student->last_name }}</div>
+                @if ($invoice->student->address)
+                    <div>{{ $invoice->student->address }}</div>
+                    <div>{{ $invoice->student->city }}, {{ $invoice->student->state }} {{ $invoice->student->zip }}</div>
+                @endif
+                <br>
+                <div>{{ $invoice->student->email }} </div>
+                <div>{{ $invoice->student->parent_email }} </div>
+            </td>
         </tr>
     </table>
 </div>
 
 <hr>
 
-<div class="margin-top">
-    <table class="w-full">
-        <tr>
-            <td class="w-full">
-                <div>Billed To:</div>
-                <br>
-                <div>{{ $invoice->student->first_name }}&nbsp;{{ $invoice->student->last_name }}</div>
-                <div>{{ $invoice->student->email }} </div>
-            </td>
-        </tr>
-    </table>
-</div>
 
 <div class="margin-top">
     <table class="products">
@@ -102,12 +104,14 @@
             <td>${{ number_format($invoice->balance_due, 2) }}</td>
         </tr>
     </table>
+    @if($invoice->is_paid && $invoice->balance_due == 0)
+        <div class="total">
+            <p style="color:red">-- PAID --</p>
+        </div>
+    @endif
 </div>
-@if($invoice->is_paid && $invoice->balance_due == 0)
-    <div class="total">
-        <p style="color:red">-- PAID --</p>
-    </div>
-@endif
+
+<p class="text-left">Thank you for your business.</p>
 
 <div class="footer margin-top">
     <div>&copy; Music Teachers Aid</div>
