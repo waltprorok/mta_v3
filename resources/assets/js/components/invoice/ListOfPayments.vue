@@ -52,7 +52,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>ID: {{ row.id }}</p>
+                                    <p>Invoice ID: {{ row.id }}</p>
                                     <p>Payment Type: {{ row.payment_type.name }}</p>
                                     <p v-if="row.check_number">Check Number: {{ row.check_number }}</p>
                                     <p>Payment Information: {{ row.payment_information }}</p>
