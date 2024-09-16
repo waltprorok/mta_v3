@@ -1,5 +1,5 @@
 @extends('layouts.webapp')
-@section('title', 'Show Invoice')
+@section('title', 'Invoice')
 @section('content')
 
     <div class="col-12">
@@ -49,29 +49,21 @@
                         <p class="mb-1">@if ($invoice->student->city || $invoice->student->state || $invoice->student->zip)
                                 {{ $invoice->student->city }}, {{ $invoice->student->state }} {{ $invoice->student->zip }}
                             @else @endif</p>
-                        <p class="mb-1">@if ($invoice->student->phone)
-                                {{ $invoice->student->phone_number }}
-                            @else @endif</p>
+                        <br/>
                         <p class="mb-1">@if ($invoice->student->email)
                                 {{ $invoice->student->email }}
                             @else @endif</p>
                         <p class="mb-1">@if ($invoice->student->parent_email)
                                 {{ $invoice->student->parent_email }}
                             @else @endif</p>
+                        <p class="mb-1">@if ($invoice->student->phone)
+                                {{ $invoice->student->phone_number }}
+                            @else @endif</p>
 
                     </div>
                 </div>
 
                 <hr class="my-1">
-
-{{--                <div class="col-md-6 text-right">--}}
-{{--                    <p class="font-weight-bold mb-4">Payment Details</p>--}}
-{{--                    <p class="mb-1"><span class="text-muted">VAT: </span> 1425782</p>--}}
-{{--                    <p class="mb-1"><span class="text-muted">VAT ID: </span> 10253642</p>--}}
-{{--                    <p class="mb-1"><span class="text-muted">Payment Type: </span> Root</p>--}}
-{{--                    <p class="mb-1"><span class="text-muted">Name: </span> John Snow</p>--}}
-{{--                </div>--}}
-            </div>
 
                 <div class="row p-5">
                     <div class="col-md-12">

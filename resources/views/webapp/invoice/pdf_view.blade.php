@@ -104,12 +104,14 @@
             <td>${{ number_format($invoice->balance_due, 2) }}</td>
         </tr>
     </table>
+    @if($invoice->is_paid && $invoice->balance_due == 0)
+        <div class="total">
+            <p style="color:red">-- PAID --</p>
+        </div>
+    @endif
 </div>
-@if($invoice->is_paid && $invoice->balance_due == 0)
-    <div class="total">
-        <p style="color:red">-- PAID --</p>
-    </div>
-@endif
+
+<p class="text-left">Thank you for your business.</p>
 
 <div class="footer margin-top">
     <div>&copy; Music Teachers Aid</div>
