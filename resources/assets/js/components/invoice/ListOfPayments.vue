@@ -27,12 +27,7 @@
                         <td class="text-nowrap">
                             <a :href="`/invoice/show/${row.id}`" class="btn btn-sm btn-outline-primary" role="button" title="view"><i class="fa fa-file-pdf-o"></i></a>
                             <a :href="`/invoice/download/pdf/${row.id}`" class="btn btn-sm btn-outline-secondary" role="button" title="download invoice"><i class="fa fa-download"></i></a>
-                            <!--                    <button @click="showInvoicePaymentModal(row.id)"-->
-                            <!--                            class="btn btn-outline-success btn-sm"-->
-                            <!--                            title="make payment"-->
-                            <!--                            v-if="disableButton(row)">-->
-                            <!--                        <i class="fa fa-dollar"></i>-->
-                            <!--                    </button>-->
+                            <button @click="showModal(row)" class="btn btn-outline-success btn-sm" title="click to show"><i class="fa fa-money" aria-hidden="true"></i></button>
                         </td>
                     </tr>
                 </template>
@@ -43,6 +38,38 @@
             </div>
         </div>
         <!-- end of vue js data table -->
+        <!-- modal payment -->
+        <div v-if="showModalPayment">
+            <transition name="modal">
+                <div class="modal-mask">
+                    <div class="modal-wrapper">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Invoice Payment Information</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" @click="showModalPayment=false">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>ID: {{ row.id }}</p>
+                                    <p>Payment Type: {{ row.payment_type.name }}</p>
+                                    <p v-if="row.check_number">Check Number: {{ row.check_number }}</p>
+                                    <p>Payment Information: {{ row.payment_information }}</p>
+                                    <p>Amount Paid: {{ row.payment | toCurrency }}</p>
+                                    <p>Date: {{ row.updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</p>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" @click="showModalPayment=false">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+        </div>
+        <!-- end of modal -->
         <notifications position="bottom right"/>
     </div>
 </template>
@@ -62,6 +89,7 @@ export default {
             page: 1,
             per_page: 10,
             pages: [10, 25, 50, 100],
+            showModalPayment: false,
             columns: [
                 // {label: 'Paid', field: 'is_paid',},
                 {label: 'Invoice', field: 'id',},
@@ -115,6 +143,12 @@ export default {
                         duration: 10000,
                     });
                 });
+        },
+
+        showModal: function (row) {
+            let self = this;
+            self.showModalPayment = true;
+            self.row = row;
         },
     }
 }

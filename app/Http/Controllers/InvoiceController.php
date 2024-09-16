@@ -250,6 +250,8 @@ class InvoiceController extends Controller
                 'payment_type_id',
                 'payment',
                 'balance_due',
+                'payment_information',
+                'check_number',
                 'is_paid',
                 'updated_at',
             ]);
