@@ -34,8 +34,8 @@ class CreateInvoicesTable extends Migration
             $table->text('payment_information')->nullable();
             $table->date('due_date')->nullable();
             $table->tinyInteger('is_paid')->default(0);
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
