@@ -51,7 +51,7 @@
                                                            v-on:keydown.enter.prevent>
                                                 </div>
                                             </div>
-                                            <small v-show="edit">* Changing a rate will effect outstanding lessons.</small>
+                                            <small v-show="edit">* Changing a rate will effect outstanding lessons and invoices.</small>
                                         </div>
                                     </div>
 
@@ -127,13 +127,13 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Delete Rate Record</h5>
+                                <h5 class="modal-title">Delete Billing Rate</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true" @click="showModal=false">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <p>Do you want to delete this rate record?</p>
+                                <p>Do you want to delete this billing rate?</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-secondary" @click="showModal = false">Cancel</button>

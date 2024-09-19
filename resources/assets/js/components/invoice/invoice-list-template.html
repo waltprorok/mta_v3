@@ -41,16 +41,6 @@
                                                            v-on:keydown.enter.prevent>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="payment_information">Payment Information</label>
-                                                <div class="input-group mb-3">
-                                                    <input class="form-control"
-                                                           type="text" id="payment_information"
-                                                           :placeholder="placeholderValue"
-                                                           v-model="invoice.payment_information"
-                                                           v-on:keydown.enter.prevent>
-                                                </div>
-                                            </div>
                                             <div class="form-group" :class="error_payment && classError">
                                                 <label for="amount">Payment Amount</label>
                                                 <div class="input-group mb-3">
@@ -66,6 +56,16 @@
                                                            v-on:keydown.enter.prevent>
                                                 </div>
                                                 <small>{{ error_payment }}</small>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="payment_information">Payment Information</label>
+                                                <div class="input-group mb-3">
+                                                    <input class="form-control"
+                                                           type="text" id="payment_information"
+                                                           :placeholder="placeholderValue"
+                                                           v-model="invoice.payment_information"
+                                                           v-on:keydown.enter.prevent>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

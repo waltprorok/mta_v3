@@ -24,7 +24,7 @@
                                     class="text-muted">Due Date: </span>{{ $invoice->due_date ? \Carbon\Carbon::parse($invoice->due_date)->format('m/d/Y') : $invoice->created_at->endOfMonth()->format('m/d/Y') }}
                         </p>
                         <p class="text-muted mb-1"><span class="text-muted">Status: </span><span
-                                    class="{{ $invoice->is_paid ? '' : 'badge-danger' }}">{{ $invoice->is_paid ? 'Paid' : 'Not Paid' }}</span></p>
+                                    class="{{ $invoice->is_paid ? 'font-weight-bold' : 'badge-danger' }}">{{ $invoice->is_paid ? 'Paid' : 'Not Paid' }}</span></p>
                     </div>
 
                     <div class="col-md-6 text-left">
@@ -93,6 +93,7 @@
                                     <td>{{ $lesson->interval }} minutes</td>
                                     <td>{{ $lesson->billingRate->description }}</td>
                                     <td>${{ number_format($lesson->billingRate->amount, 2) }}</td>
+
                                 </tr>
                             @endforeach
                             </tbody>
