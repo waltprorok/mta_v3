@@ -6,6 +6,7 @@ use App\Http\Requests\InvoicePaymentRequest;
 use App\Mail\LessonsInvoice;
 use App\Models\Invoice;
 use App\Models\Lesson;
+use App\Models\PaymentType;
 use App\Models\Student;
 use Barryvdh\DomPDF\PDF;
 use Exception;
@@ -260,5 +261,12 @@ class InvoiceController extends Controller
             ]);
 
         return response()->json($payments);
+    }
+
+    public function getPaymentTypes()
+    {
+        $paymentTypes = PaymentType::get(['id', 'name']);
+
+        return response()->json($paymentTypes);
     }
 }
