@@ -32,7 +32,6 @@ class CreateLessonsTable extends Migration
             $table->integer('interval');
             $table->integer('complete')->default(0);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
