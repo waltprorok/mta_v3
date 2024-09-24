@@ -6,6 +6,7 @@ use App\Http\Requests\ScheduleUpdateRequest;
 use App\Http\Requests\StoreScheduleApptRequest;
 use App\Models\BillingRate;
 use App\Models\BusinessHours;
+use App\Models\Invoice;
 use App\Models\Lesson;
 use App\Models\Student;
 use Carbon\Carbon;
@@ -238,33 +239,41 @@ class StudentLessonController extends Controller
     }
 
     /**
-     * @param $lesson
+     * @param Lesson $lesson
      * @return void
+     * @throws Exception
      */
-    private function destroyOne($lesson): void
+    private function destroyOne(Lesson $lesson): void
     {
+        $this->deleteUnPaidCreatedInvoices($lesson);
+
         $lesson->delete();
     }
 
     /**
-     * @param $lessons
+     * @param Lesson $lesson
      * @return void
+     * @throws Exception
      */
-    private function destroyAll($lessons): void
+    private function destroyAll(Lesson $lesson): void
     {
+        $this->deleteUnPaidCreatedInvoices($lesson);
+
         Lesson::query()
-            ->where(['student_id' => $lessons->student_id, 'teacher_id' => Auth::id()])
+            ->where(['student_id' => $lesson->student_id, 'teacher_id' => Auth::id()])
             ->delete();
     }
 
     /**
-     * @param $lessons
+     * @param $lesson
      * @return void
      * @throws Exception
      */
-    private function destroyRemaining($lessons): void
+    private function destroyRemaining($lesson): void
     {
-        Lesson::query()->where('student_id', $lessons->student_id)
+        $this->deleteUnPaidCreatedInvoices($lesson);
+
+        Lesson::query()->where('student_id', $lesson->student_id)
             ->where('teacher_id', Auth::id())
             ->whereDate('start_date', '>=', date('Y-m-d'))
             ->delete();
@@ -414,5 +423,23 @@ class StudentLessonController extends Controller
         }
 
         return array($studentScheduled, $allTimes);
+    }
+
+    /**
+     * @param Lesson $lesson
+     * @return void
+     * @throws Exception
+     */
+    private function deleteUnPaidCreatedInvoices(Lesson $lesson): void
+    {
+        $invoices = Invoice::with('lessons')->whereHas('lessons', function ($query) use ($lesson) {
+            $query->where(['student_id' => $lesson->student_id, 'teacher_id' => Auth::id(), 'is_paid' => false, 'payment' => '0']);
+        })->get();
+
+        if ($invoices) {
+            foreach ($invoices as $invoice) {
+                $invoice->delete();
+            }
+        }
     }
 }

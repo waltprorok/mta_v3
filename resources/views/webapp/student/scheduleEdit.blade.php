@@ -188,10 +188,10 @@
                                             <select class="form-control" id="billing_rate" name="billing_rate_id">
                                                 @if($lesson->billingRate)
                                                     <option value="{{ $lesson->billingRate->id }}">${{ number_format($lesson->billingRate->amount, 2) }}
-                                                        | {{ ucfirst($lesson->billingRate->type) }}</option>
+                                                        | {{ ucfirst($lesson->billingRate->type) }} - {{ ucfirst($lesson->billingRate->description) }}</option>
                                                 @endif
                                                 @foreach($billingRates as $billingRate)
-                                                    <option value="{{ $billingRate->id }}">${{ $billingRate->amount }} | {{ ucfirst($billingRate->type) }}</option>
+                                                    <option value="{{ $billingRate->id }}">${{ $billingRate->amount }} | {{ ucfirst($billingRate->type) }} - {{ ucfirst($billingRate->description) }}</option>
                                                 @endforeach
                                             </select>
                                         @endif
