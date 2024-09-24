@@ -9,12 +9,12 @@ use App\Models\BusinessHours;
 use App\Models\Invoice;
 use App\Models\Lesson;
 use App\Models\Student;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -92,8 +92,11 @@ class StudentLessonController extends Controller
     public function store(StoreScheduleApptRequest $request): RedirectResponse
     {
         $begin = Carbon::parse($request->get('start_date'));
+        $end = Carbon::parse($request->get('start_date'));
+        $endOfMonth = Carbon::parse($end)->endOfMonth();
+        $diffInDays = $begin->diffInDays($endOfMonth);
         $duration = date('H:i:s', strtotime($request->get('start_time') . ' +' . $request->get('end_time') . ' minutes'));
-        $recurrence = (int)$request->get('recurrence');
+        $recurrence = $request->get('recurrence') == 'one' ? 1 : $diffInDays;
         $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
 
         for ($i = $begin; $i <= $end; $i->modify('+7 day')) {
@@ -221,7 +224,15 @@ class StudentLessonController extends Controller
     {
         $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
         $begin = Carbon::parse($request->get('start_date'));
-        $lessons = Lesson::all()->where('student_id', $request->get('student_id'))->where('teacher_id', Auth::id());
+
+        $lessons = Lesson::where('student_id', $request->get('student_id'))
+            ->where('teacher_id', Auth::id())
+            ->whereMonth('start_date', $begin)
+            ->get();
+
+//        if($lessons->count() > $numberOfWeeksInMonth) {
+//            $lessons = $lessons->slice(0, -1);
+//        }
 
         foreach ($lessons as $lesson) {
             $lesson->id = $lesson->id;

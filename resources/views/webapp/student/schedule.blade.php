@@ -146,8 +146,8 @@
                                         <label for="end_time" class="control-label">Recurrence</label>
                                         <select class="form-control" id="recurrence" name="recurrence">
                                             <option value="{{ old('recurrence') }}">{{ old('recurrence') }}</option>
-                                            <option value="1">One Time</option>
-                                            <option value="21">One Month</option>
+                                            <option value="one">One Time</option>
+                                            <option value="month">One Month</option>
                                         </select>
                                         @if ($errors->has('recurrence'))
                                             <span class="help-block">
