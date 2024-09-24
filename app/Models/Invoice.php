@@ -6,12 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Invoice extends Model
 {
-    use SoftDeletes;
-
     protected $fillable = [
         'student_id',
         'teacher_id',
@@ -36,12 +33,12 @@ class Invoice extends Model
 
     public function lessons(): HasMany
     {
-        return $this->hasMany(Lesson::class);
+        return $this->hasMany(Lesson::class, 'invoice_id');
     }
 
     public function lesson(): HasOne
     {
-        return $this->hasOne(Lesson::class);
+        return $this->hasOne(Lesson::class, 'invoice_id');
     }
 
     public function paymentType(): BelongsTo

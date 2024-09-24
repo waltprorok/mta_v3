@@ -87,6 +87,7 @@ class InvoiceController extends Controller
 
     public function createInvoice()
     {
+        // TODO: get by month
         $student = Student::query()
             ->where('status', Student::ACTIVE)
             ->where('teacher_id', Auth::id())
@@ -99,12 +100,13 @@ class InvoiceController extends Controller
 
     public function show(int $id): View
     {
+        // TODO: get by month
         $invoice = Invoice::with('student', 'student.studentTeacher')
             ->where('id', $id)
             ->firstOrFail();
 
         $lessonIds = explode(',', $invoice->lesson_id);
-        $lessons = Lesson::whereIn('id', $lessonIds)->get();
+        $lessons = Lesson::whereIn('id', $lessonIds)->withTrashed()->get();
 
         $subTotal = 0;
         $discount = $invoice->discount;
@@ -129,10 +131,10 @@ class InvoiceController extends Controller
                 break;
             }
 
-            if ($lesson->billingRate->type == 'yearly') {
-                $subTotal += $lesson->billingRate->amount / 52.14;
-                $total += $lesson->billingRate->amount / 52.14;
-            }
+//            if ($lesson->billingRate->type == 'yearly') {
+//                $subTotal += $lesson->billingRate->amount / 52.14;
+//                $total += $lesson->billingRate->amount / 52.14;
+//            }
         }
 
         // 2. calculate each lesson amount
@@ -152,12 +154,12 @@ class InvoiceController extends Controller
                 ];
             }
 
-            if ($lesson->billingRate->type == 'yearly') {
-                $amount = $lesson->billingRate->amount / 52.14;
-                return [
-                    $lesson->billingRate->amount = $amount,
-                ];
-            }
+//            if ($lesson->billingRate->type == 'yearly') {
+//                $amount = $lesson->billingRate->amount / 52.14;
+//                return [
+//                    $lesson->billingRate->amount = $amount,
+//                ];
+//            }
 
             return $lesson;
         });
@@ -263,7 +265,7 @@ class InvoiceController extends Controller
         return response()->json($payments);
     }
 
-    public function getPaymentTypes()
+    public function getPaymentTypes(): JsonResponse
     {
         $paymentTypes = PaymentType::get(['id', 'name']);
 

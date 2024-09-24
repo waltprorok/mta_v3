@@ -24,7 +24,7 @@ class CreateLessonsTable extends Migration
             $table->integer('billing_rate_id')->unsigned()->nullable();
             $table->foreign('billing_rate_id')->references('id')->on('billing_rates');
             $table->integer('invoice_id')->unsigned()->nullable();
-            $table->foreign('invoice_id')->references('id')->on('invoices');
+            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->string('title');
             $table->string('color');
             $table->datetime('start_date');
@@ -32,6 +32,7 @@ class CreateLessonsTable extends Migration
             $table->integer('interval');
             $table->integer('complete')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

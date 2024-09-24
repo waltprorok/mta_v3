@@ -22,6 +22,7 @@ class PaymentTypeTableSeeder extends Seeder
                 ['name' => 'Google Pay', 'created_at' => now(), 'updated_at' => now()],
                 ['name' => 'Stripe', 'created_at' => now(), 'updated_at' => now()],
                 ['name' => 'PayPal', 'created_at' => now(), 'updated_at' => now()],
+                ['name' => 'Venmo', 'created_at' => now(), 'updated_at' => now()],
                 ['name' => 'Zelle', 'created_at' => now(), 'updated_at' => now()],
             ]
         );

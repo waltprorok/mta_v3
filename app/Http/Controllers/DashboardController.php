@@ -80,6 +80,7 @@ class DashboardController extends Controller
         return Lesson::with('billingRate:id,type,amount')
             ->whereBetween('start_date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
             ->where('teacher_id', Auth::id())
+            ->withTrashed()
             ->get();
     }
 
@@ -101,9 +102,9 @@ class DashboardController extends Controller
                 $monthlyAmount += ($lesson->billingRate->amount / 4);
             }
 
-            if ($lesson->billingRate->type == 'yearly') {
-                $monthlyAmount += ($lesson->billingRate->amount / 52);
-            }
+//            if ($lesson->billingRate->type == 'yearly') {
+//                $monthlyAmount += ($lesson->billingRate->amount / 52);
+//            }
         }
 
         return $monthlyAmount ?? 0;

@@ -15,7 +15,7 @@
             </div>
 
             <div v-show="selected">
-                <div class="row pl-4">
+                <div class="row pl-4 pt-4 pb-4">
                     <div class="col-md-6 text-left" v-if="selected">
                         <p class="font-weight-bold mb-4">Billed By:</p>
                         <p class="mb-1"><span class="text-muted"></span><strong>{{ student.student_teacher.studio_name }}</strong></p>
@@ -28,14 +28,11 @@
                             <phone-number-format v-bind:data="student.student_teacher"></phone-number-format>
                         </p>
                     </div>
-                </div>
 
-                <hr class="my-1">
-
-                <div class="row p-4 pb-1">
                     <div class="col-md-6">
                         <p class="font-weight-bold mb-4">Billed To:</p>
                         <p class="mb-1">{{ student.first_name }} {{ student.last_name }}</p>
+
                         <p class="mb-1" v-if="selected">
                             <phone-number-format v-bind:data="student"></phone-number-format>
                         </p>
@@ -44,6 +41,8 @@
                         <p class="mb-1">{{ student.instrument }}</p>
                     </div>
                 </div>
+
+                <hr class="my-1">
 
                 <div class="row pl-4">
                     <div class="col-md-12">

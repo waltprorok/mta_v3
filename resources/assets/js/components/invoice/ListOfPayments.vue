@@ -63,7 +63,7 @@
                                     <p>Date: {{ row.updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-secondary" @click="showModalPayment=false">Cancel</button>
+                                    <button type="button" class="btn btn-outline-secondary" @click="showModalPayment=false">Close</button>
                                 </div>
                             </div>
                         </div>

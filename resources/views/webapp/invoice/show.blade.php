@@ -91,7 +91,7 @@
                                     <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('m-d-Y g:i a') }}</td>
                                     <td>{{ Carbon\Carbon::parse($lesson->end_date)->format('m-d-Y g:i a') }}</td>
                                     <td>{{ $lesson->interval }} minutes</td>
-                                    <td>{{ $lesson->billingRate->description }}</td>
+                                    <td>{{ ucfirst($lesson->billingRate->type) }}</td>
                                     <td>${{ number_format($lesson->billingRate->amount, 2) }}</td>
 
                                 </tr>

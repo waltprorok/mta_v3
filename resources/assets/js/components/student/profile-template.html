@@ -59,6 +59,15 @@
                 <hr>
                 <div class="row">
                     <div class="col-sm-3">
+                        <h6 class="mb-0">Phone</h6>
+                    </div>
+                    <div class="col-sm-9">
+                        <phone-number-format v-bind:data="profile"></phone-number-format>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
                         <h6 class="mb-0">Email</h6>
                     </div>
                     <div class="col-sm-9">
@@ -72,15 +81,6 @@
                     </div>
                     <div class="col-sm-9" v-if="profile.parent_email">
                         <a v-bind:href="'mailto:' + profile.parent_email">{{ profile.parent_email }}</a>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <h6 class="mb-0">Phone</h6>
-                    </div>
-                    <div class="col-sm-9">
-                        <phone-number-format v-bind:data="profile"></phone-number-format>
                     </div>
                 </div>
                 <hr>
