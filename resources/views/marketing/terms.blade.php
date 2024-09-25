@@ -343,47 +343,47 @@
 
                 <p>You may not transmit, upload, post or display Content that is profane, obscene, hateful,
                     threatening, libelous, slanderous, defamatory, threatening, private or confidential,
-                    harassing, or which creates a risk to anyone’s privacy or safety;</p>
+                    harassing, or which creates a risk to anyone’s privacy or safety.</p>
                 <p>You may not transmit, upload or post Content that is violent, nude, partially nude,
                     discriminatory, unlawful, infringing, hateful, including without limitation, pornographic or
-                    sexually suggestive photos or other material;</p>
+                    sexually suggestive photos or other material.</p>
                 <p>You may not promote, engage in or further any unlawful, misleading, discriminatory or
                     malicious activity, and you will not stalk, bully, abuse, harass, threaten, impersonate,
-                    intimidate or harm any person or entity;</p>
+                    intimidate or harm any person or entity.</p>
                 <p>You may not solicit personal information from anyone under 18 years of age, and you will not
-                    solicit, collect or use the login credentials of other users;</p>
+                    solicit, collect or use the login credentials of other users.</p>
                 <p>You may not transmit, upload, post or display any person’s (including your own) credit card
                     information, social security or alternate national identity numbers, non-public phone
-                    numbers or non-public email addresses;</p>
+                    numbers or non-public email addresses.</p>
                 <p>You may not transmit, upload, post or display unsolicited commercial messages such as spam,
-                    junk mail, pyramid schemes, chain letters or similar materials or information;</p>
+                    junk mail, pyramid schemes, chain letters or similar materials or information.</p>
                 <p>You may not transmit, upload, post or display viruses, worms, “Trojan Horses” or other
-                    malicious code;</p>
+                    malicious code.</p>
                 <p>You may not transmit, upload, post or display photographs, graphics, works of art or other
                     material obtained without permission from another source that would violate or infringe the
                     intellectual property rights of any person or entity, including, without limitation, pirated
                     or counterfeit works, including unlicensed stock photographs, information to circumvent
                     copyright protection devices or links to such works or information, or other material that
-                    would violate the copyright, trademark, patent and trade secret rights of others;</p>
+                    would violate the copyright, trademark, patent and trade secret rights of others.</p>
                 <p>You may not use the Site or the Services to violate or infringe the privacy or publicity
                     rights of another, such as impersonating another person or entity or posting images of an
-                    individual, without permission;</p>
+                    individual, without permission.</p>
                 <p>You may not forge or otherwise manipulate headers, tags or identifiers in order to disguise
                     the origin of any message or transmittal that you send or receive on or through the Site or
                     the Services, and you may not change, modify, or alter the Site or Services so as to falsely
                     express or imply that MusicTeachersAid sponsors, endorses or is otherwise affiliated or
-                    associated with you or a third party;</p>
+                    associated with you or a third party.</p>
                 <p>You may not interfere with, circumvent, disable or attempt to interfere with, circumvent or
                     disable the Site or the Services, the proper working of the Site or the Services, security
                     features of the Site or the Services, or the equipment connected to the Site or the
-                    Services;</p>
+                    Services.</p>
                 <p>You may not impose an unreasonable or disproportionately large load on the infrastructure of
-                    the Site or the MusicTeachersAid systems or networks; restrict or inhibit any other person
+                    the Site or the MusicTeachersAid systems or networks. restrict or inhibit any other person
                     from using the Site or the Services (including without limitation by hacking or defacing any
                     portion of the Site); or create a database by downloading and storing the Content or any
-                    part thereof;</p>
+                    part thereof.</p>
                 <p>You may not violate the Terms of Service or encourage or assist anyone else to violate the
-                    Terms of Service;</p>
+                    Terms of Service.</p>
                 <p>You agree to comply with all laws, rules and regulations (for example, federal, state, local
                     and provincial) applicable to your use of the Site or Services and the Content, including
                     without limitation, the export laws and regulations of the U.S. Department of Commerce, the
