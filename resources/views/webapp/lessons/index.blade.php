@@ -5,9 +5,12 @@
     <div class="col-12">
         <h4>Lessons</h4>
         <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#">Students</a></li>
-            <li class="breadcrumb-item active">Lessons</li>
+            @if(! Auth::user()->isAdmin())
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
+                <li class="breadcrumb-item active">Lessons</li>
+            @endif
+
         </ul>
 
         <div id="app">
