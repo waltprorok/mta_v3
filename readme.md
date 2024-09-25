@@ -1,6 +1,6 @@
 ## Music Teachers Aid
 
-Music Teachers Aid is a web application for private music teachers.
+Music Teachers Aid is a web application for private / independent music teachers.
 * Studio information
 * Business hours
 * Schedule students

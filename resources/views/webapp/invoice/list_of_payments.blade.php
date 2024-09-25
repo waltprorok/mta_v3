@@ -6,7 +6,7 @@
         <h4>List of Payments</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#">Billing</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('invoice.index') }}">Billing</a></li>
             <li class="breadcrumb-item active"><a href="#">List of Payments</a></li>
         </ul>
 
