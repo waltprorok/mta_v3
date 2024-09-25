@@ -33,7 +33,7 @@ class DashboardController extends Controller
     private function getSubscriptionType(): string
     {
         if ($this->isSubscriptionCancelled()) {
-            return 'danger';
+            return 'error';
         }
 
         if ($this->isSubscriptionTrialExpired()) {
@@ -42,6 +42,10 @@ class DashboardController extends Controller
 
         if ($this->isSubscriptionOnFreeTrial()) {
             return 'info';
+        }
+
+        if ($this->isSubscribed()) {
+            return 'success';
         }
 
         return '';
@@ -61,13 +65,17 @@ class DashboardController extends Controller
             return 'Enjoy your free trial.';
         }
 
+        if ($this->isSubscribed()) {
+            return 'Enjoy your subscription.';
+        }
+
         return '';
     }
 
     private function getSubscriptionMessage(): string
     {
         if ($this->isSubscriptionCancelled()) {
-            return 'Subscription ended at ' . Auth::user()->subscription('premium')->ends_at->format('m/d/Y');
+            return 'Subscription ends at ' . Auth::user()->subscription('premium')->ends_at->format('m/d/Y');
         }
 
         if ($this->isSubscriptionTrialExpired()) {
@@ -76,6 +84,10 @@ class DashboardController extends Controller
 
         if ($this->isSubscriptionOnFreeTrial()) {
             return '<a href="/account/subscription" style="color:white">Don\'t forget to subscribe.</a>';
+        }
+
+        if ($this->isSubscribed()) {
+            return 'Thank you for subscribing!';
         }
 
         return '';
@@ -177,5 +189,10 @@ class DashboardController extends Controller
     private function isSubscriptionOnFreeTrial(): bool
     {
         return (Carbon::now() < Auth::user()->trial_ends_at && ! Auth::user()->subscribed('premium') && ! Auth::user()->admin);
+    }
+
+    private function isSubscribed(): bool
+    {
+        return Auth::user()->subscribed('premium');
     }
 }
