@@ -2,14 +2,13 @@
 
 Music Teachers Aid is a web application for private music teachers.
 * Studio information
-* Teacher information
+* Business hours
 * Schedule students
-* Automate payments
+* Payment tracking
 * Professional invoices
-* Email and text messages reminders
+* Email reminders
 
 #### Software
-* PHP 7.2
-* Laravel 5.8
-* MySQL
-
+* PHP 7.2.24
+* Laravel 5.8.38
+* MySQL | MariaDB 10.1.48
