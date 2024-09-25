@@ -15,13 +15,70 @@ class DashboardController extends Controller
         $monthlyIncome = $this->getMonthlyIncome();
         $lessonsThisWeek = $this->getLessonsThisWeek();
         $openTimeBlocks = $this->getOpenTimeBlocks();
+        $subscriptionType = $this->getSubscriptionType();
+        $subscriptionText = $this->getSubscriptionText();
+        $subscriptionMessage = $this->getSubscriptionMessage();
 
         return response()->json([
             'activeStudentCount' => $activeStudentCount,
             'monthlyIncome' => $monthlyIncome,
             'lessonsThisWeek' => $lessonsThisWeek,
             'openTimeBlocks' => $openTimeBlocks,
+            'subscriptionType' => $subscriptionType,
+            'subscriptionText' => $subscriptionText,
+            'subscriptionMessage' => $subscriptionMessage,
         ]);
+    }
+
+    private function getSubscriptionType(): string
+    {
+        if ($this->isSubscriptionCancelled()) {
+            return 'danger';
+        }
+
+        if ($this->isSubscriptionTrialExpired()) {
+            return 'warn';
+        }
+
+        if ($this->isSubscriptionOnFreeTrial()) {
+            return 'info';
+        }
+
+        return '';
+    }
+
+    private function getSubscriptionText(): string
+    {
+        if ($this->isSubscriptionCancelled()) {
+            return 'Your subscription has been cancelled!';
+        }
+
+        if ($this->isSubscriptionTrialExpired()) {
+            return 'Your free trial has expired!';
+        }
+
+        if ($this->isSubscriptionOnFreeTrial()) {
+            return 'Enjoy your free trial.';
+        }
+
+        return '';
+    }
+
+    private function getSubscriptionMessage(): string
+    {
+        if ($this->isSubscriptionCancelled()) {
+            return 'Subscription ended at ' . Auth::user()->subscription('premium')->ends_at->format('m/d/Y');
+        }
+
+        if ($this->isSubscriptionTrialExpired()) {
+            return '<a href="/account/subscription" style="color:white">Don\'t forget to subscribe.</a>';
+        }
+
+        if ($this->isSubscriptionOnFreeTrial()) {
+            return '<a href="/account/subscription" style="color:white">Don\'t forget to subscribe.</a>';
+        }
+
+        return '';
     }
 
     public function getCompletedLessonsData()
@@ -47,7 +104,8 @@ class DashboardController extends Controller
         return response()->json(['getCompletedLessonsData' => $data]);
     }
 
-    private function getActiveStudentCount() {
+    private function getActiveStudentCount()
+    {
         return Student::where('status', Student::ACTIVE)
             ->where('teacher_id', Auth::id())
             ->count();
@@ -101,12 +159,23 @@ class DashboardController extends Controller
             if ($lesson->billingRate->type == 'monthly') {
                 $monthlyAmount += ($lesson->billingRate->amount / 4);
             }
-
-//            if ($lesson->billingRate->type == 'yearly') {
-//                $monthlyAmount += ($lesson->billingRate->amount / 52);
-//            }
         }
 
         return $monthlyAmount ?? 0;
+    }
+
+    private function isSubscriptionCancelled(): bool
+    {
+        return (Auth::user()->subscription('premium') != null && Auth::user()->subscription('premium')->cancelled());
+    }
+
+    private function isSubscriptionTrialExpired(): bool
+    {
+        return (Carbon::now() > Auth::user()->trial_ends_at && ! Auth::user()->subscribed('premium') && ! Auth::user()->admin && ! Auth::user()->parent && ! Auth::user()->student);
+    }
+
+    private function isSubscriptionOnFreeTrial(): bool
+    {
+        return (Carbon::now() < Auth::user()->trial_ends_at && ! Auth::user()->subscribed('premium') && ! Auth::user()->admin);
     }
 }

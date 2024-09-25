@@ -92,6 +92,9 @@ export default {
             monthlyIncome: 0,
             lessonsThisWeek: 0,
             openTimeBlocks: 0,
+            subscriptionType: '',
+            subscriptionText: '',
+            subscriptionMessage: '',
         }
     },
 
@@ -107,6 +110,12 @@ export default {
                     this.monthlyIncome = response.data.monthlyIncome;
                     this.lessonsThisWeek = response.data.lessonsThisWeek;
                     this.openTimeBlocks = response.data.openTimeBlocks;
+                    this.$notify({
+                        type: this.subscriptionType = response.data.subscriptionType,
+                        title: this.subscriptionText = response.data.subscriptionText,
+                        text: this.subscriptionMessage = response.data.subscriptionMessage,
+                        duration: 30000,
+                    })
                 })
                 .catch((error) => {
                     console.log(error);
