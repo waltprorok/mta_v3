@@ -90,7 +90,7 @@
                         </a>
                     @endif
                     @if(! Auth::user()->isAdmin())
-                        <a href="{{ route('contact') }}" class="dropdown-item">
+                        <a href="{{ route('support') }}" class="dropdown-item">
                             <i class="fa fa-life-ring"></i>Support
                         </a>
                     @endif

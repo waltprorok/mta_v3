@@ -83,6 +83,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('messages/send', 'MessagesController@send');
     });
 
+    Route::get('support', 'SupportController@index')->name('support');
+    Route::post('support', 'SupportController@store')->middleware(ProtectAgainstSpam::class);
+
     Route::group(['middleware' => ['household']], function () {
         Route::get('household', 'ParentController@household')->name('parent.household');
         Route::get('household/calendar', 'ParentController@calendar')->name('parent.calendar');

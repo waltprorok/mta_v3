@@ -11,11 +11,11 @@ export default {
             classError: '',
             filter: '',
             columns: [
-                {label: 'Name', field: 'name',},
-                {label: 'Email', field: 'email',},
+                {label: 'Name', field: 'name', sortable: false},
+                {label: 'Email', field: 'email', sortable: false},
                 {label: 'Subject', field: 'subject', sortable: false},
                 {label: 'Message', field: 'message', sortable: false},
-                {label: 'Created', field: 'created_at',},
+                {label: 'Created', field: 'created_at', sortable: false},
                 {label: 'Actions', filterable: false}
             ],
             edit: false,
