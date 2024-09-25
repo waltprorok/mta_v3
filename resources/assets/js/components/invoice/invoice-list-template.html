@@ -25,8 +25,8 @@
                                                         class="form-control"
                                                         v-model="invoice.payment_type_id"
                                                         v-on:keydown.enter.prevent>
-                                                    <option v-for="type in types" :key="type.id" :value="type.type" :selected="type.id">
-                                                        {{ type.label }}
+                                                    <option v-for="type in paymentTypes" :key="type.id" :value="type.id" :selected="type.id">
+                                                        {{ type.name }}
                                                     </option>
                                                 </select>
                                                 <small>{{ error_payment_type_id }}</small>
@@ -38,16 +38,6 @@
                                                     <input class="form-control"
                                                            type="text" id="check"
                                                            v-model="invoice.check_number"
-                                                           v-on:keydown.enter.prevent>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="payment_information">Payment Information</label>
-                                                <div class="input-group mb-3">
-                                                    <input class="form-control"
-                                                           type="text" id="payment_information"
-                                                           :placeholder="placeholderValue"
-                                                           v-model="invoice.payment_information"
                                                            v-on:keydown.enter.prevent>
                                                 </div>
                                             </div>
@@ -66,6 +56,16 @@
                                                            v-on:keydown.enter.prevent>
                                                 </div>
                                                 <small>{{ error_payment }}</small>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="payment_information">Payment Information</label>
+                                                <div class="input-group mb-3">
+                                                    <input class="form-control"
+                                                           type="text" id="payment_information"
+                                                           :placeholder="placeholderValue"
+                                                           v-model="invoice.payment_information"
+                                                           v-on:keydown.enter.prevent>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

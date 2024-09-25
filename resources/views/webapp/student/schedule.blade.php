@@ -146,9 +146,8 @@
                                         <label for="end_time" class="control-label">Recurrence</label>
                                         <select class="form-control" id="recurrence" name="recurrence">
                                             <option value="{{ old('recurrence') }}">{{ old('recurrence') }}</option>
-                                            <option value="1">One Time</option>
-                                            <option value="21">One Month</option>
-                                            <option value="365">One Year</option>
+                                            <option value="one">One Time</option>
+                                            <option value="month">One Month</option>
                                         </select>
                                         @if ($errors->has('recurrence'))
                                             <span class="help-block">
@@ -203,7 +202,7 @@
                                             <label for="billing_rate" class="control-label">Billing Rate</label>
                                             <select class="form-control" id="billing_rate" name="billing_rate_id">
                                                 @foreach($billingRates as $billingRate)
-                                                    <option value="{{ $billingRate->id }}">${{ number_format($billingRate->amount, 2) }} | {{ ucfirst($billingRate->type) }}</option>
+                                                    <option value="{{ $billingRate->id }}">${{ number_format($billingRate->amount, 2) }} | {{ ucfirst($billingRate->type) }} - {{ ucfirst($billingRate->description) }}</option>
                                                 @endforeach
                                             </select>
                                         @endif

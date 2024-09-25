@@ -104,7 +104,7 @@ class MessageService
             return User::where('id', $this->getId())
                 ->get();
         } else {
-            $students = User::with('parentOfStudent:id,parent_id,first_name,last_name,email,teacher')
+            $students = User::with('parentOfStudent')
                 ->findOrFail(Auth::id());
 
             foreach ($students->parentOfStudent as $student) {

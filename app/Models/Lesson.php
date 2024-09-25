@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -45,6 +46,11 @@ class Lesson extends Model
         return $this->belongsTo(Invoice::class, 'invoice_id');
     }
 
+    public function invoices(): HasMany
+    {
+        return $this->HasMany(Invoice::class);
+    }
+
     public function lessonTeacher(): HasOne
     {
         return $this->hasOne(Teacher::class, 'teacher_id', 'teacher_id');
@@ -52,6 +58,6 @@ class Lesson extends Model
 
     public function student(): BelongsTo
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class, 'student_id');
     }
 }

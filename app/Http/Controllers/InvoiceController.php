@@ -6,6 +6,7 @@ use App\Http\Requests\InvoicePaymentRequest;
 use App\Mail\LessonsInvoice;
 use App\Models\Invoice;
 use App\Models\Lesson;
+use App\Models\PaymentType;
 use App\Models\Student;
 use Barryvdh\DomPDF\PDF;
 use Exception;
@@ -86,6 +87,7 @@ class InvoiceController extends Controller
 
     public function createInvoice()
     {
+        // TODO: get by month
         $student = Student::query()
             ->where('status', Student::ACTIVE)
             ->where('teacher_id', Auth::id())
@@ -98,12 +100,13 @@ class InvoiceController extends Controller
 
     public function show(int $id): View
     {
+        // TODO: get by month
         $invoice = Invoice::with('student', 'student.studentTeacher')
             ->where('id', $id)
             ->firstOrFail();
 
         $lessonIds = explode(',', $invoice->lesson_id);
-        $lessons = Lesson::whereIn('id', $lessonIds)->get();
+        $lessons = Lesson::whereIn('id', $lessonIds)->withTrashed()->get();
 
         $subTotal = 0;
         $discount = $invoice->discount;
@@ -127,11 +130,6 @@ class InvoiceController extends Controller
                 $total += $lesson->billingRate->amount;
                 break;
             }
-
-            if ($lesson->billingRate->type == 'yearly') {
-                $subTotal += $lesson->billingRate->amount / 52.14;
-                $total += $lesson->billingRate->amount / 52.14;
-            }
         }
 
         // 2. calculate each lesson amount
@@ -146,13 +144,6 @@ class InvoiceController extends Controller
 
             if ($lesson->billingRate->type == 'monthly') {
                 $amount = $lesson->billingRate->amount / count($lessons);
-                return [
-                    $lesson->billingRate->amount = $amount,
-                ];
-            }
-
-            if ($lesson->billingRate->type == 'yearly') {
-                $amount = $lesson->billingRate->amount / 52.14;
                 return [
                     $lesson->billingRate->amount = $amount,
                 ];
@@ -249,6 +240,9 @@ class InvoiceController extends Controller
                 'teacher_id',
                 'payment_type_id',
                 'payment',
+                'discount',
+                'total',
+                'subtotal',
                 'balance_due',
                 'payment_information',
                 'check_number',
@@ -257,5 +251,12 @@ class InvoiceController extends Controller
             ]);
 
         return response()->json($payments);
+    }
+
+    public function getPaymentTypes(): JsonResponse
+    {
+        $paymentTypes = PaymentType::get(['id', 'name']);
+
+        return response()->json($paymentTypes);
     }
 }

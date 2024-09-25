@@ -6,14 +6,15 @@ use App\Http\Requests\ScheduleUpdateRequest;
 use App\Http\Requests\StoreScheduleApptRequest;
 use App\Models\BillingRate;
 use App\Models\BusinessHours;
+use App\Models\Invoice;
 use App\Models\Lesson;
 use App\Models\Student;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -91,8 +92,11 @@ class StudentLessonController extends Controller
     public function store(StoreScheduleApptRequest $request): RedirectResponse
     {
         $begin = Carbon::parse($request->get('start_date'));
+        $end = Carbon::parse($request->get('start_date'));
+        $endOfMonth = Carbon::parse($end)->endOfMonth();
+        $diffInDays = $begin->diffInDays($endOfMonth);
         $duration = date('H:i:s', strtotime($request->get('start_time') . ' +' . $request->get('end_time') . ' minutes'));
-        $recurrence = (int)$request->get('recurrence');
+        $recurrence = $request->get('recurrence') == 'one' ? 1 : $diffInDays;
         $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
 
         for ($i = $begin; $i <= $end; $i->modify('+7 day')) {
@@ -220,7 +224,15 @@ class StudentLessonController extends Controller
     {
         $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
         $begin = Carbon::parse($request->get('start_date'));
-        $lessons = Lesson::all()->where('student_id', $request->get('student_id'))->where('teacher_id', Auth::id());
+
+        $lessons = Lesson::where('student_id', $request->get('student_id'))
+            ->where('teacher_id', Auth::id())
+            ->whereMonth('start_date', $begin)
+            ->get();
+
+//        if($lessons->count() > $numberOfWeeksInMonth) {
+//            $lessons = $lessons->slice(0, -1);
+//        }
 
         foreach ($lessons as $lesson) {
             $lesson->id = $lesson->id;
@@ -238,33 +250,41 @@ class StudentLessonController extends Controller
     }
 
     /**
-     * @param $lesson
+     * @param Lesson $lesson
      * @return void
+     * @throws Exception
      */
-    private function destroyOne($lesson): void
+    private function destroyOne(Lesson $lesson): void
     {
+        $this->deleteUnPaidCreatedInvoices($lesson);
+
         $lesson->delete();
     }
 
     /**
-     * @param $lessons
+     * @param Lesson $lesson
      * @return void
+     * @throws Exception
      */
-    private function destroyAll($lessons): void
+    private function destroyAll(Lesson $lesson): void
     {
+        $this->deleteUnPaidCreatedInvoices($lesson);
+
         Lesson::query()
-            ->where(['student_id' => $lessons->student_id, 'teacher_id' => Auth::id()])
+            ->where(['student_id' => $lesson->student_id, 'teacher_id' => Auth::id()])
             ->delete();
     }
 
     /**
-     * @param $lessons
+     * @param $lesson
      * @return void
      * @throws Exception
      */
-    private function destroyRemaining($lessons): void
+    private function destroyRemaining($lesson): void
     {
-        Lesson::query()->where('student_id', $lessons->student_id)
+        $this->deleteUnPaidCreatedInvoices($lesson);
+
+        Lesson::query()->where('student_id', $lesson->student_id)
             ->where('teacher_id', Auth::id())
             ->whereDate('start_date', '>=', date('Y-m-d'))
             ->delete();
@@ -414,5 +434,23 @@ class StudentLessonController extends Controller
         }
 
         return array($studentScheduled, $allTimes);
+    }
+
+    /**
+     * @param Lesson $lesson
+     * @return void
+     * @throws Exception
+     */
+    private function deleteUnPaidCreatedInvoices(Lesson $lesson): void
+    {
+        $invoices = Invoice::with('lessons')->whereHas('lessons', function ($query) use ($lesson) {
+            $query->where(['student_id' => $lesson->student_id, 'teacher_id' => Auth::id(), 'is_paid' => false, 'payment' => '0']);
+        })->get();
+
+        if ($invoices) {
+            foreach ($invoices as $invoice) {
+                $invoice->delete();
+            }
+        }
     }
 }

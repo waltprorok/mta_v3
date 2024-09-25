@@ -48,16 +48,7 @@ export default {
                 instrument: null,
                 status: null,
             },
-            types: [
-                {label: 'Cash', type: 1,},
-                {label: 'Check', type: 2,},
-                {label: 'Credit Card', type: 3,},
-                {label: 'Apple Pay', type: 4,},
-                {label: 'Stripe', type: 5,},
-                {label: 'PayPal', type: 6,},
-                {label: 'Cash App', type: 7,},
-                {label: 'Zelle', type: 8,},
-            ],
+            paymentTypes: [],
             showCheckField: false,
             showModal: false,
             placeholderValue: 'Notes about transaction',
@@ -71,6 +62,7 @@ export default {
 
     mounted: function () {
         this.fetchInvoiceList();
+        this.getPaymentTypes();
     },
 
     components: {
@@ -107,6 +99,13 @@ export default {
             let self = this;
             self.clearErrorData();
             self.clearInvoicePaymentData();
+        },
+
+        getPaymentTypes: function () {
+            axios.get('/web/payment-types')
+                .then((response) => {
+                    this.paymentTypes = response.data;
+                });
         },
 
         fetchInvoiceList: function () {

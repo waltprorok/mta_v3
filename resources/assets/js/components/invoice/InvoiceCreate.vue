@@ -84,10 +84,6 @@ export default {
                 let numberOfLessons = this.lessons.length;
                 return lesson.billing_rate.amount / numberOfLessons;
             }
-
-            if (lesson.billing_rate.type === 'yearly') {
-                return lesson.billing_rate.amount / 52;
-            }
         },
 
         createInvoice: function () {
@@ -149,13 +145,6 @@ export default {
                     this.invoice.total = lesson.billing_rate.amount;
                     this.invoice.subtotal = lesson.billing_rate.amount;
                     this.invoice.balance_due = lesson.billing_rate.amount;
-                }
-
-                if (lesson.billing_rate.type === 'yearly') {
-                    const weeksInYear = 52.14
-                    this.invoice.total = lesson.billing_rate.amount / weeksInYear;
-                    this.invoice.subtotal = lesson.billing_rate.amount / weeksInYear;
-                    this.invoice.balance_due = lesson.billing_rate.amount / weeksInYear;
                 }
             });
         },

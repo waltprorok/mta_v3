@@ -27,7 +27,7 @@
                         <td class="text-nowrap">
                             <a :href="`/invoice/show/${row.id}`" class="btn btn-sm btn-outline-primary" role="button" title="view"><i class="fa fa-file-pdf-o"></i></a>
                             <a :href="`/invoice/download/pdf/${row.id}`" class="btn btn-sm btn-outline-secondary" role="button" title="download invoice"><i class="fa fa-download"></i></a>
-                            <button @click="showModal(row)" class="btn btn-outline-success btn-sm" title="click to show"><i class="fa fa-money" aria-hidden="true"></i></button>
+                            <button @click="showModal(row)" class="btn btn-outline-info btn-sm" title="click to show"><i class="fa fa-folder-open-o" aria-hidden="true"></i></button>
                         </td>
                     </tr>
                 </template>
@@ -56,12 +56,14 @@
                                     <p>Payment Type: {{ row.payment_type.name }}</p>
                                     <p v-if="row.check_number">Check Number: {{ row.check_number }}</p>
                                     <p>Payment Information: {{ row.payment_information }}</p>
+                                    <hr />
+                                    <p>Invoice Amount: {{ row.total | toCurrency  }}</p>
+                                    <p>Discount: {{ row.discount | toCurrency  }}</p>
                                     <p>Amount Paid: {{ row.payment | toCurrency }}</p>
                                     <p>Date: {{ row.updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</p>
-
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-secondary" @click="showModalPayment=false">Cancel</button>
+                                    <button type="button" class="btn btn-outline-secondary" @click="showModalPayment=false">Close</button>
                                 </div>
                             </div>
                         </div>

@@ -28,10 +28,11 @@
                                     @if($student->instrument != null)
                                         <p class="mb-1">{{ $student->instrument }}</p>
                                     @endif
-                                    @if($teacher != null)
-                                        <a href="{{ route('message.reply', ['id' => $teacher->teacher_id, 'subject' => $student->first_name . ' ' . $student->last_name, 'new' => true]) }}"
-                                           class="btn btn-sm btn-outline-primary">Message Teacher</a>
-                                    @endif
+                                    {{-- TODO: fix reply to teacher link in controller --}}
+{{--                                    @if($teacher != null)--}}
+{{--                                        <a href="{{ route('message.reply', ['id' => $teacher->teacher_id, 'subject' => $student->first_name . ' ' . $student->last_name, 'new' => true]) }}"--}}
+{{--                                           class="btn btn-sm btn-outline-primary">Message Teacher</a>--}}
+{{--                                    @endif--}}
 
                                     {{--<button class="btn btn-primary">Follow</button>--}}
                                     {{--<button class="btn btn-outline-primary">Message</button>--}}
