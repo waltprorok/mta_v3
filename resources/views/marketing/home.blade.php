@@ -31,10 +31,12 @@
                     <div class="about">
                         <h5 style="line-height: 32px;">Have you ever wished for an easier way to track how much each
                             student owes you? Do your students or their parents ever forget about a lesson?
-                            <br/><br>
-                            Music Teacher's Aid is on-line software that takes the frustration out of managing your studio.
-                            Handling everything from billing and lesson schedules, to automatic reminders and reports, you'll wonder how you
-                            ever got by without it!
+                            <br><br>
+                            Music Teacher's Aid is on-line software that takes the frustration out of managing your
+                            independent music teaching studio.
+                            <br><br>
+                            Handling everything from billing and lesson schedules,
+                            to automatic reminders and reports, you'll wonder how you ever got by without it!
                         </h5>
                     </div>
                 </div>
@@ -49,11 +51,12 @@
                     <div class="section-header text-center">
                         <h2 class="title">Spend more time teaching</h2>
                     </div>
+{{--  <br/><br/>Accept credit card and even set up recurring charges so you never miss a payment again.  --}}
                     <h5 style="line-height: 32px;" class="">Be confident about your rates with professional
-                        looking invoices that can be sent automatically with payment reminders.<br/><br/>Accept credit card and
-                        even set up recurring charges so you never miss a payment again.<br/><br/>
-                        And now that you're spending less time managing your teaching studio, you'll have time to increase
-                        your student roster and earn more!</h5>
+                        looking invoices that can be sent automatically with payment reminders.<br><br>
+                        Automatically schedule students each month with a click of a button.<br><br>
+                        And now that you're spending less time managing your independent music teaching studio,
+                        you'll have time to increase your student roster and earn more!</h5>
                     <hr/>
                     <div class="feature">
                         <i class="fa fa-check"></i>
@@ -61,11 +64,11 @@
                     </div>
                     <div class="feature">
                         <i class="fa fa-check"></i>
-                        <p>Easily accept payments.</p>
+                        <p>Easily track payments.</p>
                     </div>
                     <div class="feature">
                         <i class="fa fa-check"></i>
-                        <p>Automate billing and reporting.</p>
+                        <p>Automate student schedules and reporting.</p>
                     </div>
                     <div class="feature">
                         <i class="fa fa-check"></i>
@@ -185,8 +188,7 @@
                     <div class="about">
 {{--  Accept credit card and even set up recurring charges so you never miss a payment again. --}}
                         <h5 style="line-height: 32px;">Be confident about your rates with professional looking invoices
-                            that can be sent automatically with payment reminders. Accept credit card and even set up
-                            recurring charges so you never miss a payment again.<br><br>
+                            that can be sent automatically with payment reminders.<br><br>
                             And now that you're spending less time managing your teaching studio, you'll have time to
                             increase your student roster and earn more!</h5>
                     </div>

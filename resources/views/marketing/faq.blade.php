@@ -25,8 +25,8 @@
                             <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                 <div class="panel-body">
                                     Music Teachers Aid is software that aids private music teachers.
-                                    The software keeps track of students, lesson, payments, gives feedback to
-                                    parents, and transactions.
+                                    The software keeps track of students, lessons, payments, give feedback to
+                                    parents, and professional invoicing.
                                 </div>
                             </div>
                         </div>
