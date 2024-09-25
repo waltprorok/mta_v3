@@ -26,7 +26,7 @@
                                 <div class="panel-body">
                                     Music Teachers Aid is software that aids private music teachers.
                                     The software keeps track of students, lesson, payments, gives feedback to
-                                    parents, and automates transactions.
+                                    parents, and transactions.
                                 </div>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                             <div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
                                  aria-labelledby="headingFour">
                                 <div class="panel-body">
-                                    This is a great question. Two words, administrative work. Keeping tracking of
+                                    This is a great question. Two words, Administrative Work. Keeping tracking of
                                     students, scheduling, rescheduling, and getting paid is the bottom line. We want
                                     that experience to be as pleasant as possible for you the instructor and the
                                     student. We want to help take your level of professionalism up a notch.

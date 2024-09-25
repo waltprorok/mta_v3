@@ -20,19 +20,19 @@
                         </div>
                         <ul class="price-content">
                             <li>
-                                <p>10 Students</p>
+                                <p>Unlimited Students</p>
                             </li>
                             <li>
-                                <p>Keep Track of Scheduling</p>
+                                <p>Automatic Scheduling</p>
                             </li>
                             <li>
-                                <p>Manual Payments</p>
-                            </li>
-                            <li>
-                                <p>SSL Encryption</p>
+                                <p>Track Payments</p>
                             </li>
                             <li>
                                 <p>Upgrade Anytime</p>
+                            </li>
+                            <li>
+                                <p>30 Day Free Trial</p>
                             </li>
                         </ul>
 
@@ -56,10 +56,10 @@
                                     <p>Unlimited Students</p>
                                 </li>
                                 <li>
-                                    <p>Scheduling Notifications</p>
+                                    <p>Automatic Scheduling</p>
                                 </li>
                                 <li>
-                                    <p>Automate Payments</p>
+                                    <p>Track Payments</p>
                                 </li>
                                 <li>
                                     <p>SSL Encryption</p>

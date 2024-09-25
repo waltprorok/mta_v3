@@ -11,7 +11,7 @@
                     <div class="col-md-10 col-md-offset-1">
                         <div class="home-content">
                             <h1 class="white-text">You teach. We'll do the rest!</h1>
-                            <h4 class="white-text">The easiest way to manage your music teaching studio.</h4>
+                            <h4 class="white-text">The easiest way to manage your independent music teaching studio.</h4>
                             <a href="{{ route('register') }}" class="main-btn">Get Started Today!</a>
                             <a href="{{ url('/#about') }}" class="white-btn">Learn More</a>
                         </div>
@@ -30,8 +30,8 @@
                 <div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1">
                     <div class="about">
                         <h5 style="line-height: 32px;">Have you ever wished for an easier way to track how much each
-                            student owes you? Do your students or their parents ever forget about a lesson or recital?
-                            Or did you ever lend out a book to a student, and never get it back?<br/><br>
+                            student owes you? Do your students or their parents ever forget about a lesson?
+                            <br/><br>
                             Music Teacher's Aid is on-line software that takes the frustration out of managing your studio.
                             Handling everything from billing and lesson schedules, to automatic reminders and reports, you'll wonder how you
                             ever got by without it!
@@ -99,7 +99,7 @@
                     <div class="service">
                         <i class="fa fa-credit-card"></i>
                         <h3>Payments</h3>
-                        <p>Accept credit card payments.</p>
+                        <p>Track all your payments.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6">
@@ -115,7 +115,7 @@
                     <div class="service">
                         <i class="fa fa-envelope-o"></i>
                         <h3>Communication</h3>
-                        <p>Email and text messaging.</p>
+                        <p>Email reminders and invoicing.</p>
                     </div>
                 </div>
             </div>
@@ -183,6 +183,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1">
                     <div class="about">
+{{--  Accept credit card and even set up recurring charges so you never miss a payment again. --}}
                         <h5 style="line-height: 32px;">Be confident about your rates with professional looking invoices
                             that can be sent automatically with payment reminders. Accept credit card and even set up
                             recurring charges so you never miss a payment again.<br><br>
