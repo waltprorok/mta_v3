@@ -9,7 +9,7 @@
                     <h2 class="title">Privacy Policy</h2>
                 </div>
 
-                <h3>Last updated: March 30, 2020</h3>
+                <h3>Last updated: May 20, 2024</h3>
 
                 <h3>Introduction</h3>
 
