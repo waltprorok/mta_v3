@@ -62,14 +62,14 @@
                                     <p>Track Payments</p>
                                 </li>
                                 <li>
-                                    <p>SSL Encryption</p>
+                                    <p>Professional Invoicing</p>
                                 </li>
                                 <li>
                                     <p>Cancel Anytime</p>
                                 </li>
                             </ul>
                             <div class="price-btn">
-                                <a href="{{ route('register') }}" class="outline-btn">Start Free Trial</a>
+                                <a href="{{ route('register') }}" class="outline-btn">Get Started</a>
                             </div>
                         </div>
                     </div>
