@@ -130,11 +130,6 @@ class InvoiceController extends Controller
                 $total += $lesson->billingRate->amount;
                 break;
             }
-
-//            if ($lesson->billingRate->type == 'yearly') {
-//                $subTotal += $lesson->billingRate->amount / 52.14;
-//                $total += $lesson->billingRate->amount / 52.14;
-//            }
         }
 
         // 2. calculate each lesson amount
@@ -153,13 +148,6 @@ class InvoiceController extends Controller
                     $lesson->billingRate->amount = $amount,
                 ];
             }
-
-//            if ($lesson->billingRate->type == 'yearly') {
-//                $amount = $lesson->billingRate->amount / 52.14;
-//                return [
-//                    $lesson->billingRate->amount = $amount,
-//                ];
-//            }
 
             return $lesson;
         });
