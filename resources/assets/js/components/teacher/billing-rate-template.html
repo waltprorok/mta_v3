@@ -1,10 +1,10 @@
-<div class="card">
+<div class="card" v-on:keydown.esc="cancelForm()">
     <div v-if="showForm">
         <!-- modal create read edit -->
         <transition name="modal">
             <div class="modal-mask">
                 <div class="modal-wrapper">
-                    <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-dialog modal-md" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" v-show="edit">Edit Rate Record</h5>
@@ -13,11 +13,10 @@
                                     <span aria-hidden="true" @click="cancelForm()">&times;</span>
                                 </button>
                             </div>
-
                             <div class="modal-body" v-show="!read">
                                 <form class="form-horizontal" action="#" @submit.prevent="edit ? updateRate(rate.id) : createBillingRate()">
                                     <div class="row">
-                                        <div class="col-md-6 offset-3">
+                                        <div class="col-md-10 offset-1">
                                             <div class="form-group" :class="error_type && classError">
                                                 <label for="single-select">Rate Types</label>
                                                 <select id="single-select" class="form-control" v-model="rate.type"
@@ -54,9 +53,7 @@
                                             <small v-show="edit">* Changing a rate will effect outstanding lessons and invoices.</small>
                                         </div>
                                     </div>
-
                                     <hr/>
-
                                     <div class="form-group pull-right">
                                         <button @click="cancelForm()" class="btn btn-default">Cancel</button>
                                         <button v-show="!edit" type="submit" class="btn btn-primary">Save</button>
@@ -118,7 +115,6 @@
         </div>
     </div>
     <!-- end of vue js data table -->
-
     <!-- modal delete contact -->
     <div v-if="showModal">
         <transition name="modal">
