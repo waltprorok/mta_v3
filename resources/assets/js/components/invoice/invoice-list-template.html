@@ -1,10 +1,10 @@
-<div class="card">
+<div class="card" v-on:keydown.esc="cancelForm()">
     <div v-if="showModal">
         <!-- modal create read edit -->
         <transition name="modal">
             <div class="modal-mask">
                 <div class="modal-wrapper">
-                    <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-dialog modal-md" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Payment for Invoice</h5>
@@ -15,7 +15,7 @@
                             <div class="modal-body">
                                 <form class="form-horizontal" action="#" @submit.prevent="createInvoicePayment(invoice.id)">
                                     <div class="row">
-                                        <div class="col-md-6 offset-3">
+                                        <div class="col-md-12 offset-0">
                                             <div class="form-group">
                                                 <label for="check">Total:</label> <strong>{{ invoice.total | toCurrency }}</strong>
                                             </div>
@@ -34,7 +34,6 @@
                                             <div class="form-group" v-if="showCheckField">
                                                 <label for="check">Check Number</label>
                                                 <div class="input-group mb-3">
-
                                                     <input class="form-control"
                                                            type="text" id="check"
                                                            v-model="invoice.check_number"
