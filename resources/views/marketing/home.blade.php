@@ -35,8 +35,8 @@
                             Music Teacher's Aid is on-line software that takes the frustration out of managing your
                             independent music teaching studio.
                             <br><br>
-                            Handling everything from billing and lesson schedules,
-                            to automatic reminders and reports, you'll wonder how you ever got by without it!
+                            Handling everything from billing and lesson schedules, to automatic reminders and reports.
+                            You'll wonder how you ever got by without it!
                         </h5>
                     </div>
                 </div>
