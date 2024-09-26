@@ -1,5 +1,5 @@
 <!--suppress JSUnresolvedReference -->
-<div class="card">
+<div class="card" v-on:keydown.esc="showModal=false">
     <!-- vue js data table -->
     <div class="form-control">
         <div class="form-group pull-left">
@@ -46,6 +46,7 @@
     </div>
     <!-- end of vue js data table -->
 
+    <!-- modal delete blog -->
     <div v-if="showModal">
         <transition name="modal">
             <div class="modal-mask">
@@ -71,4 +72,5 @@
             </div>
         </transition>
     </div>
+    <!-- end of modal delete blog -->
 </div>
