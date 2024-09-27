@@ -87,34 +87,36 @@
 
 <div class="total">
     <table>
-        <tr style="text-align: right">
+        <tr>
             <td>Subtotal</td>
             <td>${{ number_format($invoice->subtotal, 2) }}</td>
         </tr>
-        <tr style="text-align: right">
+        <tr>
             <td>Discount</td>
             <td>${{ number_format($invoice->discount, 2) }}</td>
         </tr>
-        <tr style="text-align: right">
+        <tr>
             <td><strong>Total</strong></td>
             <td><strong>${{ number_format($invoice->total, 2) }}</strong></td>
         </tr>
-        <tr style="text-align: right">
+        <tr>
             <td>Balance Due</td>
             <td>${{ number_format($invoice->balance_due, 2) }}</td>
         </tr>
     </table>
     @if($invoice->is_paid && $invoice->balance_due == 0)
-        <div class="total">
-            <p style="color:red">-- PAID --</p>
+        <div class="paid">
+            <p>-- PAID --</p>
         </div>
     @endif
 </div>
 
-<p class="text-left">Thank you for your business.</p>
+<div class="notes">
+    <p>Thank you for your business.</p>
+</div>
 
 <div class="footer margin-top">
-    <div>&copy; Music Teachers Aid</div>
+    <div>&copy; MusicTeachersAid.com</div>
 </div>
 </body>
 </html>

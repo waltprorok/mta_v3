@@ -32,7 +32,6 @@
                     <div class="col-md-6">
                         <p class="font-weight-bold mb-4">Billed To:</p>
                         <p class="mb-1">{{ student.first_name }} {{ student.last_name }}</p>
-
                         <p class="mb-1" v-if="selected">
                             <phone-number-format v-bind:data="student"></phone-number-format>
                         </p>
@@ -72,8 +71,16 @@
                                 <td>{{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                                 <td>{{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                                 <td>{{ lesson.interval }} minutes</td>
-                                <td>{{ '$' + lesson.billing_rate.amount }} {{ lesson.billing_rate.description ? '| ' +  lesson.billing_rate.description : '' }}</td>
+                                <td>{{ '$' + lesson.billing_rate.amount }} {{ lesson.billing_rate.description ? '| ' + lesson.billing_rate.description : '' }}</td>
                                 <td>{{ calculateLessonAmount(lesson) | toCurrency }}</td>
+                            </tr>
+                            <tr v-if="selected && lastInvoice.balance_due !== '0' && lastInvoice.is_paid === false">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Previous Balance</td>
+                                <td>{{ lastInvoice.balance_due | toCurrency }}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -131,17 +138,24 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="subtotal" class="form-control-label">Sub Total</label>
                             <p class="form-control-plaintext h4">{{ invoice.subtotal | toCurrency }}</p>
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="total" class="form-control-label">Total</label>
                             <p class="form-control-plaintext h4">{{ invoice.total | toCurrency }}</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group" v-if="selected && lastInvoice.balance_due !== '0' && lastInvoice.is_paid === false">
+                            <label for="total" class="form-control-label">Previous Balance</label>
+                            <p class="form-control-plaintext h4">{{ lastInvoice.balance_due | toCurrency }}</p>
                         </div>
                     </div>
 
@@ -153,12 +167,13 @@
                     </div>
                 </div>
 
-                <div class="form-group pull-right pt-4 pr-md-4">
+                <div class="form-group pull-left pt-4 pr-md-4">
                     <button @click="clearForm()" class="btn btn-default">Cancel</button>
                     <button @click="createInvoice()"
                             class="btn btn-primary"
                             type="submit"
-                            :disabled="isDisabled">Save</button>
+                            :disabled="isDisabled">Save
+                    </button>
                 </div>
             </div>
         </form>

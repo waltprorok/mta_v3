@@ -82,7 +82,9 @@ class InvoiceController extends Controller
             return is_null($lesson->invoice);
         })->values();
 
-        return response()->json(['lessons' => $filteredLessons, 'studentTeacher' => $teacher]);
+        $lastInvoice = Invoice::where('student_id', $student->id)->orderBy('created_at', 'desc')->first();
+
+        return response()->json(['lessons' => $filteredLessons, 'studentTeacher' => $teacher, 'lastInvoice' => $lastInvoice]);
     }
 
     public function createInvoice()
@@ -198,6 +200,8 @@ class InvoiceController extends Controller
      */
     public function update(InvoicePaymentRequest $request, Invoice $invoice): JsonResponse
     {
+        $isPaid = $invoice->balance_due - $request->get('payment') == 0;
+
         try {
             $invoice->update([
                 'balance_due' => $invoice->balance_due - $request->get('payment'),
@@ -205,7 +209,7 @@ class InvoiceController extends Controller
                 'payment_type_id' => $request->get('payment_type_id'),
                 'check_number' => $request->get('check_number'),
                 'payment_information' => $request->get('payment_information'),
-                'is_paid' => true,
+                'is_paid' => $isPaid,
 
             ]);
         } catch (Exception $exception) {
