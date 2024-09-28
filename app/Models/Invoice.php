@@ -27,6 +27,7 @@ class Invoice extends Model
     ];
 
     protected $casts = [
+        'balance_due' => 'integer',
         'is_paid' => 'boolean',
         'payment_type_id' => 'integer'
     ];

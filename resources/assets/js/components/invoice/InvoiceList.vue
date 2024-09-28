@@ -16,10 +16,10 @@ export default {
             pages: [10, 25, 50, 100],
             columns: [
                 {label: 'Paid', field: 'is_paid',},
-                {label: 'First Name', field: 'first_name',},
-                {label: 'Last Name', field: 'last_name',},
-                {label: 'Phone', field: 'phone', sortable: false},
-                {label: 'Email', field: 'email',},
+                {label: 'First Name', field: 'student.first_name',},
+                {label: 'Last Name', field: 'student.last_name',},
+                {label: 'Phone', field: 'student.phone', sortable: false},
+                {label: 'Email', field: 'student.email',},
                 {label: 'Balance', field: 'balance_due',},
                 {label: 'Due Date', field: 'due_date',},
                 {label: 'Actions', filterable: false},
@@ -190,13 +190,6 @@ export default {
             }
         },
 
-        showInvoicePaymentModal: function (id, total) {
-            let self = this;
-            self.invoice.id = id;
-            self.invoice.total = total;
-            self.showModal = true;
-        },
-
         showCheckInput: function (event) {
             this.showCheckField = event.target.value === '2';
             if (event.target.value !== '2') {
@@ -204,6 +197,12 @@ export default {
             }
         },
 
+        showInvoicePaymentModal: function (id, total) {
+            let self = this;
+            self.invoice.id = id;
+            self.invoice.total = total;
+            self.showModal = true;
+        },
     },
 }
 </script>

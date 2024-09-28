@@ -16,6 +16,7 @@ export default {
                 start_date: null,
                 end_date: null,
             },
+            lastInvoice: {},
             invoice: {
                 student_id: null,
                 teacher_id: null,
@@ -122,6 +123,9 @@ export default {
             let discount = subTotal * (this.invoice.discount / 100);
             this.invoice.total = subTotal - discount;
             this.invoice.balance_due = subTotal - discount;
+            if (this.lastInvoice != null && this.lastInvoice.balance_due) {
+                this.invoice.balance_due = Number(this.invoice.balance_due) + Number(this.lastInvoice.balance_due);
+            }
         },
 
         calculateTotal: function () {
@@ -132,6 +136,9 @@ export default {
                     this.invoice.total = lesson.billing_rate.amount * numberOfLessons;
                     this.invoice.subtotal = lesson.billing_rate.amount * numberOfLessons;
                     this.invoice.balance_due = lesson.billing_rate.amount * numberOfLessons;
+                    if (this.lastInvoice != null && this.lastInvoice.balance_due) {
+                        this.invoice.balance_due = Number(this.invoice.balance_due) + Number(this.lastInvoice.balance_due);
+                    }
                 }
 
                 if (lesson.billing_rate.type === 'hourly') {
@@ -139,12 +146,18 @@ export default {
                     this.invoice.total = lesson.billing_rate.amount * lessonInterval * numberOfLessons;
                     this.invoice.subtotal = lesson.billing_rate.amount * lessonInterval * numberOfLessons;
                     this.invoice.balance_due = lesson.billing_rate.amount * lessonInterval * numberOfLessons;
+                    if (this.lastInvoice != null && this.lastInvoice.balance_due) {
+                        this.invoice.balance_due = Number(this.invoice.balance_due) + Number(this.lastInvoice.balance_due);
+                    }
                 }
 
                 if (lesson.billing_rate.type === 'monthly') {
                     this.invoice.total = lesson.billing_rate.amount;
                     this.invoice.subtotal = lesson.billing_rate.amount;
-                    this.invoice.balance_due = lesson.billing_rate.amount;
+                    this.invoice.balance_due = Number(lesson.billing_rate.amount);
+                    if (this.lastInvoice != null && this.lastInvoice.balance_due) {
+                        this.invoice.balance_due = Number(this.invoice.balance_due) + Number(this.lastInvoice.balance_due);
+                    }
                 }
             });
         },
@@ -200,6 +213,7 @@ export default {
                 .then((response) => {
                     this.student = response.data.studentTeacher;
                     this.lessons = response.data.lessons;
+                    this.lastInvoice = response.data.lastInvoice;
                     this.selected = true;
                 })
                 .then(() => {

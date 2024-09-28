@@ -12,6 +12,7 @@ class ContactForm extends Mailable
 
     public $email;
     public $name;
+    public $support = false;
     public $subject;
     public $message;
 
@@ -24,6 +25,7 @@ class ContactForm extends Mailable
     {
         $this->email = $request->email;
         $this->name = $request->name;
+        $this->support = $request->support;
         $this->subject = $request->subject;
         $this->message = $request->message;
     }
