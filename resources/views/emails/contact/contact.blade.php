@@ -1,6 +1,6 @@
 @component('mail::message')
 
-## New Contact Message
+## New {{ $support ? 'Support' : 'Contact' }} Message
 
 ### {{ $subject }}
 
