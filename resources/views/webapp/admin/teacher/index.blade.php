@@ -5,8 +5,7 @@
     <div class="col-12">
         <h4>Teachers</h4>
         <ul class="breadcrumb">
-            {{--<li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>--}}
-            {{--<li class="breadcrumb-item">Teachers</li>--}}
+            <li class="breadcrumb-item"></li>
         </ul>
 
         <div id="app">

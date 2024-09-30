@@ -6,7 +6,9 @@ export default {
     data() {
         return {
             url: '/web/status',
-            data: ''
+            backgroundColor: ['green', 'purple', 'blue', 'orange'],
+            data: [],
+            labels: ['Active', 'Inactive', 'Leads', 'Waitlist'],
         }
     },
 
@@ -22,11 +24,11 @@ export default {
 
                     if (this.data) {
                         this.renderChart({
-                            labels: ['Active', 'Inactive', 'Leads', 'Waitlist'],
+                            labels: this.labels,
                             datasets: [
                                 {
                                     label: 'Students',
-                                    backgroundColor: ['green', 'purple', 'blue', 'orange'],
+                                    backgroundColor: this.backgroundColor,
                                     data: this.data
                                 }
                             ]
@@ -51,7 +53,7 @@ export default {
                 this.$notify({
                     type: 'error',
                     title: 'Error',
-                    text: 'Could not load student status report.',
+                    text: 'Could not load student statuses report.',
                     duration: 10000,
                 });
             });

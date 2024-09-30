@@ -10,7 +10,6 @@
                 <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
                 <li class="breadcrumb-item active">Lessons</li>
             @endif
-
         </ul>
 
         <div id="app">
