@@ -26,7 +26,8 @@ class Student extends Model
 
     protected $casts = [
         'student_id' => 'integer',
-        'status' => 'integer'
+        'status' => 'integer',
+        'auto_schedule' => 'boolean',
     ];
 
     protected $fillable = [
@@ -47,6 +48,7 @@ class Student extends Model
         'zip',
         'instrument',
         'level',
+        'auto_schedule',
         'status',
         'photo',
     ];

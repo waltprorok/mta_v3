@@ -35,6 +35,7 @@ class CreateStudentsTable extends Migration
             $table->integer('zip')->nullable();
             $table->string('instrument')->nullable();
             $table->string('level')->nullable();
+            $table->boolean('auto_schedule')->default(false);
             $table->integer('status')->nullable();
             $table->string('photo')->nullable();
             $table->timestamps();
