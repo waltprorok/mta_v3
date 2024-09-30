@@ -50,7 +50,6 @@
         </div>
     </div>
 
-
     <script src="https://js.stripe.com/v3/"></script>
     <script>let stripe = Stripe('{{ config('services.stripe.key') }}');</script>
     <script src="{{ asset('webapp/js/stripe.js') }}"></script>
