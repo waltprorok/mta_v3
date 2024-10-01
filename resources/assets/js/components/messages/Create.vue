@@ -163,12 +163,12 @@ export default {
         },
 
         getUserIdValue: function (user) {
-            return user?.teacher_id ?? user?.student_teacher?.teacher_id ?? user?.id;
+            return user?.teacher_id ?? user?.get_teacher?.teacher_id ?? user?.id;
         },
 
         showUserNameDisplay: function (user) {
-            if (user?.student_teacher?.first_name && user?.student_teacher?.last_name) {
-                return user.student_teacher.first_name + ' ' + user.student_teacher.last_name;
+            if (user?.get_teacher?.first_name && user?.get_teacher?.last_name) {
+                return user.get_teacher.first_name + ' ' + user.get_teacher.last_name;
             }
             if (user?.first_name && user?.last_name) {
                 return user.first_name + ' ' + user.last_name;

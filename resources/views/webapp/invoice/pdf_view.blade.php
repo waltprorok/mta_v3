@@ -31,12 +31,12 @@
         <tr>
             <td class="w-half">
                 <br>
-                <div><h4>{{ $invoice->student->studentTeacher->studio_name }}</h4></div>
-                <div>{{ $invoice->student->studentTeacher->first_name }}&nbsp;{{ $invoice->student->studentTeacher->last_name }}</div>
-                <div>{{ $invoice->student->studentTeacher->address }}</div>
-                <div>{{ $invoice->student->studentTeacher->city }}, {{ $invoice->student->studentTeacher->state }} {{ $invoice->student->studentTeacher->zip }}</div>
+                <div><h4>{{ $invoice->student->getTeacher->studio_name }}</h4></div>
+                <div>{{ $invoice->student->getTeacher->first_name }}&nbsp;{{ $invoice->student->getTeacher->last_name }}</div>
+                <div>{{ $invoice->student->getTeacher->address }}</div>
+                <div>{{ $invoice->student->getTeacher->city }}, {{ $invoice->student->getTeacher->state }} {{ $invoice->student->getTeacher->zip }}</div>
                 <br>
-                <div>{{ $invoice->student->studentTeacher->email }}</div>
+                <div>{{ $invoice->student->getTeacher->email }}</div>
             </td>
 
             <td class="w-half">

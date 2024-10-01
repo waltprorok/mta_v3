@@ -73,7 +73,7 @@ class Teacher extends Model
         return $query->orderBy('first_name', 'asc');
     }
 
-    public function student(): HasMany
+    public function students(): HasMany
     {
         return $this->hasMany(Student::class);
     }
@@ -83,7 +83,7 @@ class Teacher extends Model
         return $this->belongsTo(User::class, 'teacher_id');
     }
 
-    public function teacherStudent(): BelongsTo
+    public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class, 'teacher_id');
     }

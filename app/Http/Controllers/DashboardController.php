@@ -127,7 +127,7 @@ class DashboardController extends Controller
     {
         $minutesInDay = 0;
         $lessonsInWeek = $this->getLessonsThisWeek() * 30;
-        $businessHours = Auth::user()->businessHours->where('active', true);
+        $businessHours = Auth::user()->getBusinessHours->where('active', true);
 
         foreach ($businessHours as $businessHour) {
             $closeTime = Carbon::createFromFormat('H:i:s', $businessHour->close_time);

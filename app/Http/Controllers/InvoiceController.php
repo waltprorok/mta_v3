@@ -75,7 +75,7 @@ class InvoiceController extends Controller
             ->first();
 
         $teacher = Student::where('student_id', $id)
-            ->with('studentTeacher')
+            ->with('getTeacher')
             ->first();
 
         $filteredLessons = $student->lessons->filter(function ($lesson) {
@@ -84,7 +84,7 @@ class InvoiceController extends Controller
 
         $lastInvoice = Invoice::where('student_id', $student->id)->orderBy('created_at', 'desc')->first();
 
-        return response()->json(['lessons' => $filteredLessons, 'studentTeacher' => $teacher, 'lastInvoice' => $lastInvoice]);
+        return response()->json(['lessons' => $filteredLessons, 'teacher' => $teacher, 'lastInvoice' => $lastInvoice]);
     }
 
     public function createInvoice()
@@ -103,7 +103,7 @@ class InvoiceController extends Controller
     public function show(int $id): View
     {
         // TODO: get by month
-        $invoice = Invoice::with('student', 'student.studentTeacher')
+        $invoice = Invoice::with('student', 'student.getTeacher')
             ->where('id', $id)
             ->firstOrFail();
 
@@ -227,7 +227,7 @@ class InvoiceController extends Controller
 
     private function getInvoiceStudentTeacherBillingRate(Invoice $id)
     {
-        return Invoice::with('student.studentTeacher')
+        return Invoice::with('student.getTeacher')
             ->with('lessons.billingRate')
             ->where('teacher_id', Auth::id())
             ->findOrFail($id->id);
