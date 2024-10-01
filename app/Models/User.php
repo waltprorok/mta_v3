@@ -61,7 +61,7 @@ class User extends Authenticatable
     /**
      * @return HasMany
      */
-    public function blogArticle(): HasMany
+    public function getBlogs(): HasMany
     {
         return $this->hasMany(Blog::class, 'author_id');
     }
@@ -69,7 +69,7 @@ class User extends Authenticatable
     /**
      * @return HasMany
      */
-    public function businessHours(): HasMany
+    public function getBusinessHours(): HasMany
     {
         return $this->hasMany(BusinessHours::class, 'teacher_id');
     }

@@ -18,14 +18,14 @@
                 <div class="row pl-4 pt-4 pb-4">
                     <div class="col-md-6 text-left" v-if="selected">
                         <p class="font-weight-bold mb-4">Billed By:</p>
-                        <p class="mb-1"><span class="text-muted"></span><strong>{{ student.student_teacher.studio_name }}</strong></p>
-                        <p class="mb-1"><span class="text-muted"></span>{{ student.student_teacher.first_name }} {{ student.student_teacher.last_name }}</p>
-                        <p class="mb-1"><span class="text-muted"></span>{{ student.student_teacher.address }} {{ student.student_teacher.address_2 }}
-                            <br>{{ student.student_teacher.city }}, {{ student.student_teacher.state }} {{ student.student_teacher.zip }}</p>
+                        <p class="mb-1"><span class="text-muted"></span><strong>{{ student.get_teacher.studio_name }}</strong></p>
+                        <p class="mb-1"><span class="text-muted"></span>{{ student.get_teacher.first_name }} {{ student.get_teacher.last_name }}</p>
+                        <p class="mb-1"><span class="text-muted"></span>{{ student.get_teacher.address }} {{ student.get_teacher.address_2 }}
+                            <br>{{ student.get_teacher.city }}, {{ student.get_teacher.state }} {{ student.get_teacher.zip }}</p>
                         <br/>
-                        <p class="mb-1"><span class="text-muted"></span>{{ student.student_teacher.email }}</p>
+                        <p class="mb-1"><span class="text-muted"></span>{{ student.get_teacher.email }}</p>
                         <p class="mb-1"><span class="text-muted"></span>
-                            <phone-number-format v-bind:data="student.student_teacher"></phone-number-format>
+                            <phone-number-format v-bind:data="student.get_teacher"></phone-number-format>
                         </p>
                     </div>
 
@@ -74,7 +74,7 @@
                                 <td>{{ '$' + lesson.billing_rate.amount }} {{ lesson.billing_rate.description ? '| ' + lesson.billing_rate.description : '' }}</td>
                                 <td>{{ calculateLessonAmount(lesson) | toCurrency }}</td>
                             </tr>
-                            <tr v-if="selected && lastInvoice.balance_due !== '0' && lastInvoice.is_paid === false">
+                            <tr v-if="selected && lastInvoice !== null && lastInvoice.balance_due !== '0' && lastInvoice.is_paid === false">
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -153,7 +153,7 @@
                     </div>
 
                     <div class="col-md-2">
-                        <div class="form-group" v-if="selected && lastInvoice.balance_due !== '0' && lastInvoice.is_paid === false">
+                        <div class="form-group" v-if="selected && lastInvoice !== null && lastInvoice.balance_due !== '0' && lastInvoice.is_paid === false">
                             <label for="total" class="form-control-label">Previous Balance</label>
                             <p class="form-control-plaintext h4">{{ lastInvoice.balance_due | toCurrency }}</p>
                         </div>

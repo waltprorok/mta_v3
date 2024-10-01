@@ -92,7 +92,7 @@ export default {
             let lessons = [];
             this.lessons.forEach((lesson) => lessons.push(lesson.id));
             self.invoice.student_id = self.student.id;
-            self.invoice.teacher_id = self.student.student_teacher.teacher_id;
+            self.invoice.teacher_id = self.student.get_teacher.teacher_id;
             self.invoice.lesson_id = lessons.toString();
             let params = Object.assign({}, self.invoice);
             axios.post('/web/invoice-post', params)
@@ -211,7 +211,7 @@ export default {
             this.clearForm();
             axios.get('/web/invoice-get-student/' + event.target.value)
                 .then((response) => {
-                    this.student = response.data.studentTeacher;
+                    this.student = response.data.teacher;
                     this.lessons = response.data.lessons;
                     this.lastInvoice = response.data.lastInvoice;
                     this.selected = true;

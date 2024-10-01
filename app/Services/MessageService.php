@@ -43,7 +43,7 @@ class MessageService
      */
     public function getStudentTeacher()
     {
-        return Student::with('studentTeacher:id,teacher_id,first_name,last_name,email')
+        return Student::with('getTeacher:id,teacher_id,first_name,last_name,email')
             ->where('student_id', Auth::id())
             ->get();
     }

@@ -127,7 +127,7 @@ class Student extends Model
         return $query->orderBy('first_name', 'asc');
     }
 
-    public function studentTeacher(): HasOne
+    public function getTeacher(): HasOne
     {
         return $this->hasOne(Teacher::class, 'teacher_id', 'teacher_id');
     }
@@ -139,7 +139,7 @@ class Student extends Model
 
     public function teacher(): BelongsTo
     {
-        return $this->belongsTo(Teacher::class);
+        return $this->belongsTo(Teacher::class, 'teacher_id');
     }
 
     public function parent(): BelongsTo

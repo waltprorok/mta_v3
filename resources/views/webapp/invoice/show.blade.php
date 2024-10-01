@@ -29,13 +29,13 @@
 
                     <div class="col-md-6 text-left">
                         <p class="font-weight-bold mb-4">Billed By:</p>
-                        <p class="mb-1"><span class="text-muted"></span><strong>{{ $invoice->student->studentTeacher->studio_name}}</strong></p>
-                        <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->studentTeacher->first_name }} {{ $invoice->student->studentTeacher->last_name }}</p>
-                        <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->studentTeacher->address }} {{ $invoice->student->studentTeacher->address_2 }}
-                            <br>{{ $invoice->student->studentTeacher->city }}, {{ $invoice->student->studentTeacher->state }} {{ $invoice->student->studentTeacher->zip }}</p>
+                        <p class="mb-1"><span class="text-muted"></span><strong>{{ $invoice->student->getTeacher->studio_name}}</strong></p>
+                        <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->getTeacher->first_name }} {{ $invoice->student->getTeacher->last_name }}</p>
+                        <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->getTeacher->address }} {{ $invoice->student->getTeacher->address_2 }}
+                            <br>{{ $invoice->student->getTeacher->city }}, {{ $invoice->student->getTeacher->state }} {{ $invoice->student->getTeacher->zip }}</p>
                         <br/>
-                        <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->studentTeacher->email }}</p>
-                        <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->studentTeacher->phone_number }}</p>
+                        <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->getTeacher->email }}</p>
+                        <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->getTeacher->phone_number }}</p>
                     </div>
 
                     <div class="col-md-6">
