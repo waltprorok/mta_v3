@@ -33,7 +33,6 @@ class UpdateStudentRequest extends FormRequest
             'parent_first_name' => 'required_with:parent_email|string|max:50|nullable',
             'parent_last_name' => 'required_with:parent_email,|string|max:50|nullable',
             'parent_email' => 'required_with:parent_first_name|required_with:parent_last_name|email|nullable',
-
             'parent_phone' => 'string|max:30|nullable',
             'address' => 'string|max:100|nullable',
             'address_2' => 'string|max:100|nullable',
