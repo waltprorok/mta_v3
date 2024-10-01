@@ -21,9 +21,9 @@ class ParentController extends Controller
         $lessons = [];
         $studentIds = [];
 
-        $parent = User::query()->with('parentOfStudent')->findOrFail(Auth::id()); // uses pivot table
+        $parent = User::query()->with('parentOfStudents')->findOrFail(Auth::id());
 
-        foreach ($parent->parentOfStudent as $studentId) {
+        foreach ($parent->parentOfStudents as $studentId) {
             $studentIds[] = $studentId->id;
         }
 
@@ -62,11 +62,11 @@ class ParentController extends Controller
 
     public function household(): View
     {
-        $parent = User::with('parentOfStudent')->findOrFail(Auth::id()); // uses pivot table
-        $students = $parent->parentOfStudent()->get();
+        $parent = User::with('parentOfStudents')->findOrFail(Auth::id());
+//        $students = $parent->parentOfStudents()->get();
         $teacher = [];
 
-        foreach ($students as $student) {
+        foreach ($parent->parentOfStudents as $student) {
             $teacher = Teacher::query()
                 ->where('teacher_id', $student->teacher_id)
                 ->first();

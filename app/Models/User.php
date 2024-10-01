@@ -3,9 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -132,21 +130,14 @@ class User extends Authenticatable
         return $this->hasMany(Message::class, 'user_id_to');
     }
 
-    public function parentOfStudent(): HasManyThrough
+    public function parentOfStudent(): HasOne
     {
-        return $this->hasManyThrough(
-            Student::class,
-            ParentStudent::class,
-            'parent_id',
-            'id',
-            'id',
-            'student_id'
-        );
+        return $this->hasOne(Student::class, 'parent_id');
     }
 
-    public function parentStudentPivot(): BelongsToMany
+    public function parentOfStudents(): HasMany
     {
-        return $this->belongsToMany(Student::class, 'parent_students', 'parent_id');
+        return $this->hasMany(Student::class, 'parent_id');
     }
 
     public function scopeFirstNameAsc($query)

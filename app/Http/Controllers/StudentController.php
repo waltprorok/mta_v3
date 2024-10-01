@@ -67,23 +67,30 @@ class StudentController extends Controller
      */
     public function show(int $id): View
     {
-        $student = Student::query()->where(['id' => $id, 'teacher_id' => Auth::id()])->first();
-        $parent = User::query()->where('email', $student->parent_email)->first();
+        $student = Student::query()
+            ->with('parent:id,first_name,last_name,email,parent')
+            ->where(['id' => $id, 'teacher_id' => Auth::id()])
+            ->first();
 
-        return view('webapp.student.edit')
-            ->with('student', $student)
-            ->with('parent', $parent);
+        return view('webapp.student.edit')->with('student', $student);
     }
 
     public function update(UpdateStudentRequest $request): RedirectResponse
     {
-        $student = Student::query()->where('id', $request->get('student_id'))->first();
-        $parentEmail = User::query()->where('email', $request->get('parent_email'))->first();
+        $student = Student::query()
+            ->with('parent')
+            ->where('id', $request->get('student_id'))
+            ->first();
 
-        if ($parentEmail !== null && $student->parent_email !== null) {
-            $parentEmail->parentStudentPivot()->toggle($student);
+        if ($request->get('parent_email') !== $student->parent->email) {
+            $parent = User::query()->where('email', $student->parent->email)->first();
+            $parent->email = $request->get('parent_email');
+            $parent->save();
+
+            Mail::to($parent->email)->send(new WelcomeNewUserMail($parent));
         }
-        if ($request->get('parent_email') !== null && $parentEmail === null && $student->parent_email === null) {
+
+        if ($request->get('parent_email') !== null && $student->parent === null) {
             try {
                 // create new parent user
                 $parentUser = User::firstOrCreate(
@@ -95,8 +102,9 @@ class StudentController extends Controller
                     'parent' => true,
                     'terms' => true,
                 ]);
-                // create new parent student pivot record
-                $parentUser->parentStudentPivot()->toggle($student);
+                $student->parent_id = $parentUser->id;
+                $student->save();
+
                 Mail::to($parentUser->email)->send(new WelcomeNewUserMail($parentUser));
             } catch (\Exception $exception) {
                 Log::info($exception->getMessage());
@@ -110,7 +118,10 @@ class StudentController extends Controller
         $student->last_name = $request->get('last_name');
         $student->email = $request->get('email');
         $student->phone = $phoneNumber;
-        $student->parent_email = $request->get('parent_email');
+        $student->status = $request->get('status');
+        $student->instrument = $request->get('instrument');
+        $student->level = $request->get('level');
+        $student->auto_schedule = $request->get('auto_schedule');
         $student->parent_phone = $parentPhoneNumber;
         $student->date_of_birth = $request->get('date_of_birth');
         $student->address = $request->get('address');
@@ -118,10 +129,6 @@ class StudentController extends Controller
         $student->city = $request->get('city');
         $student->state = $request->get('state');
         $student->zip = $request->get('zip');
-        $student->instrument = $request->get('instrument');
-        $student->level = $request->get('level');
-        $student->auto_schedule = $request->get('auto_schedule');
-        $student->status = $request->get('status');
 
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
@@ -131,7 +138,6 @@ class StudentController extends Controller
         }
 
         $student->save();
-
         $this->createUserStudentEmail($request);
 
         return redirect()->back()->with('success', 'You successfully updated the student.');
@@ -198,19 +204,17 @@ class StudentController extends Controller
                 $user = $this->createUserStudentEmail($request);
 
                 // create student
-                $student = Student::create([
+                Student::create([
                     'student_id' => $user ? $user->id : $parentUser->id,
                     'teacher_id' => Auth::id(),
+                    'parent_id' => $parentUser->id,
                     'first_name' => $request->get('first_name'),
                     'last_name' => $request->get('last_name'),
                     'phone' => $phoneNumber,
                     'email' => $request->get('email'),
-                    'parent_email' => $parentUser->email,
                     'status' => $request->get('status'),
                 ]);
 
-                // link parent and student
-                $parentUser->parentStudentPivot()->toggle($student);
                 // send email
                 Mail::to($parentUser->email)->send(new WelcomeNewUserMail($parentUser));
             } catch (\Exception $exception) {

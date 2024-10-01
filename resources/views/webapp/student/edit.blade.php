@@ -196,7 +196,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('parent_first_name') ? ' has-error' : '' }}">
                                         <label for="parent_first_name" class="control-label">Parent First Name <span class="text-danger">*</span></label>
-                                        <input id="parent_first_name" type="text" class="form-control" name="parent_first_name" value="{{ $parent->first_name ?? old('parent_first_name') }}">
+                                        <input id="parent_first_name" type="text" class="form-control" name="parent_first_name" value="{{ $student->parent->first_name ?? old('parent_first_name') }}">
                                         @if ($errors->has('parent_first_name'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('parent_first_name') }}</strong>
@@ -208,7 +208,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('parent_last_name') ? ' has-error' : '' }}">
                                         <label for="parent_last_name" class="control-label">Parent Last Name <span class="text-danger">*</span></label>
-                                        <input id="parent_last_name" type="text" class="form-control" name="parent_last_name" value="{{ $parent->last_name ?? old('parent_last_name') }}">
+                                        <input id="parent_last_name" type="text" class="form-control" name="parent_last_name" value="{{ $student->parent->last_name ?? old('parent_last_name') }}">
                                         @if ($errors->has('parent_last_name'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('parent_last_name') }}</strong>
@@ -223,7 +223,7 @@
                                         <label for="email" class="control-label">Parent or Guardian Email (enter if child is a minor)</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-                                            <input id="parent_email" type="email" class="form-control" name="parent_email" value="{{ $parent->email ?? old('parent_email') }}">
+                                            <input id="parent_email" type="email" class="form-control" name="parent_email" value="{{ $student->parent->email ?? old('parent_email') }}">
                                         </div>
                                         @if ($errors->has('parent_email'))
                                             <span class="help-block">

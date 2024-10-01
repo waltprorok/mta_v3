@@ -11,11 +11,12 @@
 
         <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
-                @forelse($parent->parentOfStudent as $student)
+                @forelse($parent->parentOfStudents as $student)
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                @if($student->photo != null)
+
+                                @if($student->photo !== null)
                                     <img src="/storage/student/{{ $student->photo }}" alt="{{ $student->photo }}"
                                          class="rounded-circle" width="120">
                                 @else
@@ -49,7 +50,7 @@
             </div>
 
             <div class="col-md-8">
-                @foreach($parent->parentOfStudent as $student)
+                @foreach($parent->parentOfStudents as $student)
                     <div class="card mb-3">
                         <div class="card-body">
                             <div class="row">
