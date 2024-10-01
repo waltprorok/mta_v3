@@ -37,9 +37,8 @@ class Student extends Model
         'first_name',
         'last_name',
         'email',
-        'parent_email',
-        'parent_phone',
         'phone',
+        'parent_phone',
         'date_of_birth',
         'address',
         'address_2',
@@ -141,5 +140,10 @@ class Student extends Model
     public function teacher(): BelongsTo
     {
         return $this->belongsTo(Teacher::class);
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'parent_id');
     }
 }

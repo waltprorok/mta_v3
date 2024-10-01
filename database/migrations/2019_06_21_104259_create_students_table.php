@@ -21,12 +21,13 @@ class CreateStudentsTable extends Migration
             $table->foreign('student_id')->references('id')->on('users');
             $table->integer('teacher_id')->unsigned();
             $table->foreign('teacher_id')->references('id')->on('users');
+            $table->integer('parent_id')->unsigned()->nullable();
+            $table->foreign('parent_id')->references('id')->on('users');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->nullable()->unique();
             $table->string('phone')->nullable();
             $table->date('date_of_birth')->nullable();
-            $table->string('parent_email')->nullable();
             $table->string('parent_phone')->nullable();
             $table->string('address')->nullable();
             $table->string('address_2')->nullable();
