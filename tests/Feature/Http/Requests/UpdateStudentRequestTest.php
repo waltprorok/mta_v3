@@ -30,10 +30,13 @@ class UpdateStudentRequestTest extends TestCase
     public function test_request_pass()
     {
         $validator = Validator::make([
+
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
             'phone' => $this->faker->phoneNumber,
+            'parent_first_name' => $this->faker->firstName,
+            'parent_last_name' => $this->faker->lastName,
             'parent_email' => $this->faker->unique()->safeEmail,
             'zip' => 15116,
         ], $this->request->rules());
@@ -53,8 +56,8 @@ class UpdateStudentRequestTest extends TestCase
                 ['last_name', null],
             'Email fail' =>
                 ['email', 'john.snow'],
-            'Email null fail' =>
-                ['email', null],
+            'Email integer fail' =>
+                ['email', 1234],
             'Phone not string fail' =>
                 ['phone', 5551231234],
             'Zip min fail' =>

@@ -19,7 +19,7 @@ export default {
                 {label: 'Actions', filterable: false}
             ],
             show_form: false,
-            show_modal: false,
+            show_parent: false,
             list: [],
             page: 1,
             per_page: 10,
@@ -33,10 +33,17 @@ export default {
                 phone: null,
                 instrument: null,
                 status: 1,
+                add_parent: false,
+                parent_first_name: null,
+                parent_last_name: null,
+                parent_email: null,
             },
             error_first_name: '',
             error_last_name: '',
             error_email: '',
+            error_parent_first_name: '',
+            error_parent_last_name: '',
+            error_parent_email: '',
             error_phone: '',
             error_status: '',
         }
@@ -64,6 +71,11 @@ export default {
             self.student.phone = null;
             self.student.status = 1;
             self.show_form = false;
+            self.student.add_parent = false;
+            self.show_parent = false;
+            self.student.parent_first_name = null;
+            self.student.parent_last_name = null;
+            self.student.parent_email = null;
             self.clearErrorData();
         },
 
@@ -74,6 +86,9 @@ export default {
             self.error_last_name = '';
             self.error_email = '';
             self.error_phone = '';
+            self.error_parent_first_name = '';
+            self.error_parent_last_name = '';
+            self.error_parent_email = '';
             self.error_status = '';
         },
 
@@ -84,6 +99,11 @@ export default {
             self.student.email = null;
             self.student.phone = null;
             self.student.status = 1;
+            self.student.add_parent = false;
+            self.show_parent = false;
+            self.student.parent_first_name = null;
+            self.student.parent_last_name = null;
+            self.student.parent_email = null;
             self.show_form = false;
         },
 
@@ -115,6 +135,9 @@ export default {
             self.error_last_name = error.response.data.error.last_name;
             self.error_phone = error.response.data.error.phone;
             self.error_email = error.response.data.error.email;
+            self.error_parent_first_name = error.response.data.error.parent_first_name;
+            self.error_parent_last_name = error.response.data.error.parent_last_name;
+            self.error_parent_email = error.response.data.error.parent_email;
             self.class_error = 'has-error';
         },
 
@@ -128,14 +151,14 @@ export default {
                     this.list = response.data;
                 })
                 .catch((error) => {
-                console.log(error);
-                this.$notify({
-                    type: 'error',
-                    title: 'Error',
-                    text: 'Could not load student list.',
-                    duration: 10000,
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load student list.',
+                        duration: 10000,
+                    });
                 });
-            });
         },
 
         fetchStudentList: function () {
@@ -153,6 +176,15 @@ export default {
                     });
                 });
         },
+
+        showParent: function () {
+            this.show_parent = !this.show_parent;
+            if (this.show_parent === false) {
+                this.student.parent_first_name = null;
+                this.student.parent_last_name = null;
+                this.student.parent_email = null;
+            }
+        }
     },
 }
 </script>

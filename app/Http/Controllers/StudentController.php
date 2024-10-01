@@ -8,8 +8,10 @@ use App\Mail\WelcomeNewUserMail;
 use App\Models\Student;
 use App\Models\User;
 use App\Services\PhoneNumberService;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -51,33 +53,11 @@ class StudentController extends Controller
 
     public function store(StoreStudentRequest $request): JsonResponse
     {
-        try {
-            $user = User::firstOrCreate(
-                ['email' => $request->get('email')],
-                ['first_name' => $request->get('first_name'),
-                    'last_name' => $request->get('last_name'),
-                    'email' => $request->get('email'),
-                    'password' => Hash::make(Str::random(10)),
-                    'student' => true,
-                    'terms' => true]
-            );
+        $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
 
-            $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
+        $this->ifParentOptionIsFalse($request, $phoneNumber);
 
-            Student::create([
-                'student_id' => $user->id,
-                'teacher_id' => Auth::id(),
-                'first_name' => $request->get('first_name'),
-                'last_name' => $request->get('last_name'),
-                'phone' => $phoneNumber,
-                'email' => $request->get('email'),
-                'status' => $request->get('status'),
-            ]);
-
-            Mail::to($user->email)->send(new WelcomeNewUserMail($user));
-        } catch (\Exception $exception) {
-            Log::info($exception->getMessage());
-        }
+        $this->ifCheckParentAndOrEmailIsTrue($request, $phoneNumber);
 
         return response()->json([], Response::HTTP_CREATED);
     }
@@ -87,9 +67,12 @@ class StudentController extends Controller
      */
     public function show(int $id): View
     {
-        $students = Student::query()->where(['id' => $id, 'teacher_id' => Auth::id()])->get();
+        $student = Student::query()->where(['id' => $id, 'teacher_id' => Auth::id()])->first();
+        $parent = User::query()->where('email', $student->parent_email)->first();
 
-        return view('webapp.student.edit')->with('students', $students);
+        return view('webapp.student.edit')
+            ->with('student', $student)
+            ->with('parent', $parent);
     }
 
     public function update(UpdateStudentRequest $request): RedirectResponse
@@ -97,23 +80,24 @@ class StudentController extends Controller
         $student = Student::query()->where('id', $request->get('student_id'))->first();
         $parentEmail = User::query()->where('email', $request->get('parent_email'))->first();
 
-        if ($parentEmail !== null && $student->parent_email === null) {
+        if ($parentEmail !== null && $student->parent_email !== null) {
             $parentEmail->parentStudentPivot()->toggle($student);
-        } elseif ($request->get('parent_email') !== null && $parentEmail === null && $student->parent_email === null) {
+        }
+        if ($request->get('parent_email') !== null && $parentEmail === null && $student->parent_email === null) {
             try {
                 // create new parent user
-                $user = User::query()->firstOrCreate([
-                    'first_name' => $request->get('first_name'),
-                    'last_name' => $request->get('last_name'),
+                $parentUser = User::firstOrCreate(
+                    ['email' => $request->get('parent_email')],
+                    ['first_name' => $request->get('parent_first_name'),
+                    'last_name' => $request->get('parent_last_name'),
                     'email' => $request->get('parent_email'),
                     'password' => Hash::make($request->get('last_name')),
                     'parent' => true,
                     'terms' => true,
                 ]);
                 // create new parent student pivot record
-                $user->parentStudentPivot()->toggle($student);
-
-                Mail::to($user->email)->send(new WelcomeNewUserMail($user));
+                $parentUser->parentStudentPivot()->toggle($student);
+                Mail::to($parentUser->email)->send(new WelcomeNewUserMail($parentUser));
             } catch (\Exception $exception) {
                 Log::info($exception->getMessage());
             }
@@ -121,7 +105,6 @@ class StudentController extends Controller
 
         $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
         $parentPhoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('parent_phone'));
-
         // update student record
         $student->first_name = $request->get('first_name');
         $student->last_name = $request->get('last_name');
@@ -137,6 +120,7 @@ class StudentController extends Controller
         $student->zip = $request->get('zip');
         $student->instrument = $request->get('instrument');
         $student->level = $request->get('level');
+        $student->auto_schedule = $request->get('auto_schedule');
         $student->status = $request->get('status');
 
         if ($request->hasFile('photo')) {
@@ -148,6 +132,122 @@ class StudentController extends Controller
 
         $student->save();
 
+        $this->createUserStudentEmail($request);
+
         return redirect()->back()->with('success', 'You successfully updated the student.');
+    }
+
+    /**
+     * @param StoreStudentRequest $request
+     * @param string|null $phoneNumber
+     * @return void
+     */
+    private function ifParentOptionIsFalse(StoreStudentRequest $request, ?string $phoneNumber): void
+    {
+        if (! $request->get('add_parent') && $request->get('parent_email') == null) {
+            // create new user
+            try {
+                $studentUser = User::firstOrCreate(
+                    ['email' => $request->get('email')],
+                    ['first_name' => $request->get('first_name'),
+                        'last_name' => $request->get('last_name'),
+                        'email' => $request->get('email'),
+                        'password' => Hash::make(Str::random(10)),
+                        'student' => true,
+                        'terms' => true,
+                    ]
+                );
+                // create new student
+                Student::create([
+                    'student_id' => $studentUser->id,
+                    'teacher_id' => Auth::id(),
+                    'first_name' => $request->get('first_name'),
+                    'last_name' => $request->get('last_name'),
+                    'phone' => $phoneNumber,
+                    'email' => $request->get('email'),
+                    'status' => $request->get('status'),
+                ]);
+                // send email
+                Mail::to($studentUser->email)->send(new WelcomeNewUserMail($studentUser));
+            } catch (\Exception $exception) {
+                Log::info($exception->getMessage());
+            }
+        }
+    }
+
+    /**
+     * @param StoreStudentRequest $request
+     * @param string|null $phoneNumber
+     * @return void
+     */
+    private function ifCheckParentAndOrEmailIsTrue(StoreStudentRequest $request, ?string $phoneNumber): void
+    {
+        if ($request->get('add_parent') && $request->get('parent_email')) {
+            try {
+                // create new parent user
+                $parentUser = User::firstOrCreate(
+                    ['email' => $request->get('parent_email')],
+                    ['first_name' => $request->get('parent_first_name'),
+                        'last_name' => $request->get('parent_last_name'),
+                        'email' => $request->get('parent_email'),
+                        'password' => Hash::make(Str::random(10)),
+                        'parent' => true,
+                        'terms' => true]
+                );
+
+                $user = $this->createUserStudentEmail($request);
+
+                // create student
+                $student = Student::create([
+                    'student_id' => $user ? $user->id : $parentUser->id,
+                    'teacher_id' => Auth::id(),
+                    'first_name' => $request->get('first_name'),
+                    'last_name' => $request->get('last_name'),
+                    'phone' => $phoneNumber,
+                    'email' => $request->get('email'),
+                    'parent_email' => $parentUser->email,
+                    'status' => $request->get('status'),
+                ]);
+
+                // link parent and student
+                $parentUser->parentStudentPivot()->toggle($student);
+                // send email
+                Mail::to($parentUser->email)->send(new WelcomeNewUserMail($parentUser));
+            } catch (\Exception $exception) {
+                Log::info($exception->getMessage());
+            }
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return User|array|Model
+     */
+    private function createUserStudentEmail(Request $request)
+    {
+        $userExists = User::where('email', $request->get('email'))->exists();
+        $user = [];
+
+        if ($userExists) {
+            return $user;
+        }
+
+        // create student user
+        if ($request->get('email') && $request->get('email') != null && ! $userExists) {
+            $user = User::firstOrCreate(
+                ['email' => $request->get('email')],
+                ['first_name' => $request->get('first_name'),
+                    'last_name' => $request->get('last_name'),
+                    'email' => $request->get('email'),
+                    'password' => Hash::make(Str::random(10)),
+                    'student' => true,
+                    'terms' => true,
+                ]
+            );
+            // send email to new student user
+            Mail::to($user->email)->send(new WelcomeNewUserMail($user));
+        }
+
+        return $user;
     }
 }

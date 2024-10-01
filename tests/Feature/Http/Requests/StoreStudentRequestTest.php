@@ -68,6 +68,7 @@ class StoreStudentRequestTest extends TestCase
     public function test_request_fail($key, $value)
     {
         $validator = Validator::make([
+            'add_parent' => false,
             $key => $value,
         ], $this->request->rules());
 
@@ -98,6 +99,7 @@ class StoreStudentRequestTest extends TestCase
     public function test_email_null_fail()
     {
         $validator = Validator::make([
+            'add_parent' => false,
             'email' => null,
         ], $this->request->rules());
 

@@ -4,7 +4,6 @@
 
     <div class="col-12">
         <h4>Edit Student</h4>
-        @foreach ($students as $student)
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
@@ -13,7 +12,7 @@
             @include('partials.studentTabs', $data = ['id' => $student->id])
             <div class="card">
                 <div class="card-body">
-                    @if(count($students) <= 0)
+                    @if($student == null)
                         <div class="text-center">
                             <p>That student record does not exist.</p>
                         </div>
@@ -48,7 +47,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                        <label for="email" class="control-label">Email <span class="text-danger">*</span></label>
+                                        <label for="email" class="control-label">Email</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                                             <input id="email" type="email" class="form-control" name="email" value="{{ $student->email }}">
@@ -150,6 +149,28 @@
                                     </span>
                                     @endif
                                 </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('auto_schedule') ? ' has-error' : '' }}">
+                                        <label for="level" class="control-label">Automatically Schedule</label>
+                                        <select class="form-control" id="auto_schedule" name="auto_schedule">
+                                            @if ($student->auto_schedule)
+                                                <option value="{{ $student->auto_schedule }}">Yes</option>
+                                            @elseif (! $student->auto_schedule)
+                                                <option value="0">No</option>
+                                            @else
+                                                <option value="" selected="selected">Choose an option</option>
+                                            @endif
+                                                <option value="1">Yes</option>
+                                                <option value="0">No</option>
+                                        </select>
+                                    </div>
+
+                                    @if ($errors->has('auto_schedule'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('auto_schedule') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                             </div>
                             <hr/>
                             <div class="row">
@@ -170,13 +191,39 @@
                                     </div>
                                 </div>
                             </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('parent_first_name') ? ' has-error' : '' }}">
+                                        <label for="parent_first_name" class="control-label">Parent First Name <span class="text-danger">*</span></label>
+                                        <input id="parent_first_name" type="text" class="form-control" name="parent_first_name" value="{{ $parent->first_name ?? old('parent_first_name') }}">
+                                        @if ($errors->has('parent_first_name'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('parent_first_name') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ $errors->has('parent_last_name') ? ' has-error' : '' }}">
+                                        <label for="parent_last_name" class="control-label">Parent Last Name <span class="text-danger">*</span></label>
+                                        <input id="parent_last_name" type="text" class="form-control" name="parent_last_name" value="{{ $parent->last_name ?? old('parent_last_name') }}">
+                                        @if ($errors->has('parent_last_name'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('parent_last_name') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group{{ $errors->has('parent_email') ? ' has-error' : '' }}">
                                         <label for="email" class="control-label">Parent or Guardian Email (enter if child is a minor)</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-                                            <input id="parent_email" type="email" class="form-control" name="parent_email" value="{{ $student->parent_email }}">
+                                            <input id="parent_email" type="email" class="form-control" name="parent_email" value="{{ $parent->email ?? old('parent_email') }}">
                                         </div>
                                         @if ($errors->has('parent_email'))
                                             <span class="help-block">
@@ -338,7 +385,6 @@
                         </form>
                 </div>
             </div>
-        @endforeach
     </div>
 
 @endsection

@@ -29,8 +29,12 @@ class StoreStudentRequest extends FormRequest
         return [
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
-            'email' => 'required:phone|email|max:50|unique:students',
+            'email' => 'required_if:add_parent,false|email|max:50|nullable',
             'phone' => 'max:32',
+            'add_parent' => 'boolean',
+            'parent_first_name' => 'required_if:add_parent,true|string|max:50|nullable',
+            'parent_last_name' => 'required_if:add_parent,true|string|max:50|nullable',
+            'parent_email' => 'required_if:add_parent,true|email|max:50|nullable',
             'status' => 'required|int|max:4',
         ];
     }
