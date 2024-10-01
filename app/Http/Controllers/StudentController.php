@@ -67,9 +67,12 @@ class StudentController extends Controller
      */
     public function show(int $id): View
     {
-        $students = Student::query()->where(['id' => $id, 'teacher_id' => Auth::id()])->get();
+        $student = Student::query()->where(['id' => $id, 'teacher_id' => Auth::id()])->first();
+        $parent = User::query()->where('email', $student->parent_email)->first();
 
-        return view('webapp.student.edit')->with('students', $students);
+        return view('webapp.student.edit')
+            ->with('student', $student)
+            ->with('parent', $parent);
     }
 
     public function update(UpdateStudentRequest $request): RedirectResponse
