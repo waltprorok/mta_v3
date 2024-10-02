@@ -51,6 +51,14 @@
                                                 </div>
                                             </div>
                                             <small v-show="edit">* Changing a rate will effect outstanding lessons and invoices.</small>
+                                            <hr>
+                                            <div class="form-group">
+                                                <div class="toggle-switch" data-ts-color="primary">
+                                                    <label for="default" class="ts-label">Default</label>
+                                                    <input id="default" type="checkbox" hidden="hidden" v-model="rate.default">
+                                                    <label for="default" class="ts-helper"></label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <hr/>
@@ -102,8 +110,13 @@
                         <button @click="showModalDelete(row.id)"
                                 v-show="showDeleteIcon(row)"
                                 class="btn btn-outline-danger btn-sm"
-                                title="click to delete">
+                                title="delete">
                             <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                        <button v-show="showDefaultIcon(row)"
+                                class="btn btn-outline-success btn-sm"
+                                title="default payment">
+                            <i class="fa fa-check-circle"></i>
                         </button>
                     </td>
                 </tr>

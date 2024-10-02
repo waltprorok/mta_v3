@@ -211,7 +211,7 @@ export default {
             this.clearForm();
             axios.get('/web/invoice-get-student/' + event.target.value)
                 .then((response) => {
-                    this.student = response.data.teacher;
+                    this.student = response.data.studentTeacher;
                     this.lessons = response.data.lessons;
                     this.lastInvoice = response.data.lastInvoice;
                     this.selected = true;

@@ -12,11 +12,11 @@ export default {
             classError: '',
             filter: '',
             columns: [
-                {label: 'Type', field: 'type',},
-                {label: 'Amount', field: 'amount',},
-                {label: 'Description', filterable: false},
-                {label: 'Created', field: 'created_at',},
-                {label: 'Actions', filterable: false}
+                {label: 'Type', field: 'type', sortable: false},
+                {label: 'Amount', field: 'amount', sortable: false},
+                {label: 'Description', filterable: false, sortable: false},
+                {label: 'Created', filterable: false, sortable: false},
+                {label: 'Actions', filterable: false, sortable: false}
             ],
             types: ['lesson', 'hourly', 'monthly'],
             edit: false,
@@ -32,6 +32,7 @@ export default {
                 type: null,
                 amount: null,
                 description: null,
+                default: false,
             },
             error_type: '',
             error_amount: '',
@@ -77,21 +78,6 @@ export default {
             self.clearRateData();
         },
 
-        /**
-         * @param {Object} row
-         * @property {Object} billing_rate
-         * @returns {boolean}
-         */
-        showDeleteIcon: function (row) {
-            return row.billing_rate === null;
-        },
-
-        showModalDelete: function (id) {
-            let self = this;
-            self.showModal = true;
-            self.id = id;
-        },
-
         clearErrorData: function () {
             let self = this;
             self.classError = '';
@@ -105,30 +91,8 @@ export default {
             self.rate.type = null;
             self.rate.amount = null;
             self.rate.description = null;
+            self.rate.default = false;
             self.edit = false;
-        },
-
-        getErrorMessage: function (error) {
-            let self = this;
-            self.error_type = error.response.data.error.type;
-            self.error_amount = error.response.data.error.amount;
-            self.classError = 'has-error';
-        },
-
-        fetchRateList: function () {
-            axios.get('/web/billing-rate')
-                .then((response) => {
-                    this.list = response.data;
-                })
-                .catch((error) => {
-                    console.log(error);
-                    this.$notify({
-                        type: 'error',
-                        title: 'Error',
-                        text: 'Could not load billing rate list.',
-                        duration: 10000,
-                    });
-                });
         },
 
         createBillingRate: function () {
@@ -157,6 +121,73 @@ export default {
                 });
         },
 
+        deleteRate: function (id) {
+            let self = this;
+            let params = Object.assign({}, self.rate);
+            axios.delete('/web/billing-rate/' + id, params)
+                .then(() => {
+                    self.showModal = false;
+                    self.fetchRateList();
+                    this.$notify({
+                        type: 'warn',
+                        title: 'Deleted',
+                        text: 'Billing rate was deleted.',
+                        duration: 10000,
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not delete billing rate.',
+                        duration: 10000,
+                    });
+                });
+        },
+
+        getErrorMessage: function (error) {
+            let self = this;
+            self.error_type = error.response.data.error.type;
+            self.error_amount = error.response.data.error.amount;
+            self.classError = 'has-error';
+        },
+
+        fetchRateList: function () {
+            axios.get('/web/billing-rate')
+                .then((response) => {
+                    this.list = response.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load billing rates.',
+                        duration: 10000,
+                    });
+                });
+        },
+
+        showDefaultIcon: function (row) {
+            return row.default === true;
+        },
+
+        /**
+         * @param {Object} row
+         * @property {Object} billing_rate
+         * @returns {boolean}
+         */
+        showDeleteIcon: function (row) {
+            return row.billing_rate === null;
+        },
+
+        showModalDelete: function (id) {
+            let self = this;
+            self.showModal = true;
+            self.id = id;
+        },
+
         showRate: function (id, read) {
             let self = this;
             self.showForm = true;
@@ -168,6 +199,7 @@ export default {
                     self.rate.type = response.data.type;
                     self.rate.amount = response.data.amount;
                     self.rate.description = response.data.description;
+                    self.rate.default = response.data.default;
                 })
             self.edit = true;
         },
@@ -193,31 +225,6 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not update billing rate.',
-                        duration: 10000,
-                    });
-                });
-        },
-
-        deleteRate: function (id) {
-            let self = this;
-            let params = Object.assign({}, self.rate);
-            axios.delete('/web/billing-rate/' + id, params)
-                .then(() => {
-                    self.showModal = false;
-                    self.fetchRateList();
-                    this.$notify({
-                        type: 'warn',
-                        title: 'Deleted',
-                        text: 'Billing rate was deleted.',
-                        duration: 10000,
-                    });
-                })
-                .catch((error) => {
-                    console.log(error);
-                    this.$notify({
-                        type: 'error',
-                        title: 'Error',
-                        text: 'Could not delete billing rate.',
                         duration: 10000,
                     });
                 });

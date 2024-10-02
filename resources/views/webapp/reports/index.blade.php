@@ -6,7 +6,8 @@
         <h4>Reports</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item">Reports</li>
+            <li class="breadcrumb-item"><a href="{{ route('reports.index') }}">Reports</a></li>
+            <li class="breadcrumb-item active">Students Status</li>
         </ul>
 
         <div class="row">
