@@ -1,5 +1,5 @@
 @extends('layouts.webapp')
-@section('title', 'Payment Processing')
+@section('title', 'Billing Rates')
 @section('content')
 
     <div class="col-12">

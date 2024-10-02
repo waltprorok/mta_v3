@@ -21,6 +21,7 @@ class BillingRateController extends Controller
             $billingRate = BillingRate::query()
                 ->where('teacher_id', Auth::id())
                 ->with('billingRate')
+                ->orderBy('type')
                 ->get();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
@@ -42,6 +43,7 @@ class BillingRateController extends Controller
                 'type' => $request->get('type'),
                 'amount' => $request->get('amount'),
                 'description' => $request->get('description'),
+                'default' => $request->get('default'),
             ]);
 
         } catch (Exception $exception) {

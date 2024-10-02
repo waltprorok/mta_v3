@@ -74,7 +74,7 @@ class InvoiceController extends Controller
             ->with('lessons.invoice')
             ->first();
 
-        $teacher = Student::where('student_id', $id)
+        $studentTeacher = Student::where('student_id', $id)
             ->with('getTeacher')
             ->first();
 
@@ -84,7 +84,7 @@ class InvoiceController extends Controller
 
         $lastInvoice = Invoice::where('student_id', $student->id)->orderBy('created_at', 'desc')->first();
 
-        return response()->json(['lessons' => $filteredLessons, 'teacher' => $teacher, 'lastInvoice' => $lastInvoice]);
+        return response()->json(['lessons' => $filteredLessons, 'studentTeacher' => $studentTeacher, 'lastInvoice' => $lastInvoice]);
     }
 
     public function createInvoice()

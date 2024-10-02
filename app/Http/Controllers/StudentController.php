@@ -46,6 +46,7 @@ class StudentController extends Controller
         $student = Student::query()
             ->where(['id' => $id, 'teacher_id' => Auth::id()])
             ->with('hasOneFutureLesson')
+            ->with('parent:id,email')
             ->first();
 
         return response()->json($student);
