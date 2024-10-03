@@ -23,6 +23,7 @@ class CreateBillingRatesTable extends Migration
             $table->decimal('amount')->nullable();
             $table->string('description')->nullable();
             $table->boolean('default')->default(false);
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

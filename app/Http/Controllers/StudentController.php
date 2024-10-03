@@ -55,9 +55,7 @@ class StudentController extends Controller
     public function store(StoreStudentRequest $request): JsonResponse
     {
         $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
-
         $this->ifParentOptionIsFalse($request, $phoneNumber);
-
         $this->ifCheckParentAndOrEmailIsTrue($request, $phoneNumber);
 
         return response()->json([], Response::HTTP_CREATED);
@@ -83,12 +81,14 @@ class StudentController extends Controller
             ->where('id', $request->get('student_id'))
             ->first();
 
-        if ($request->get('parent_email') !== $student->parent->email) {
-            $parent = User::query()->where('email', $student->parent->email)->first();
-            $parent->email = $request->get('parent_email');
-            $parent->save();
+        if ($student->parent !== null) {
+            if ($request->get('parent_email') !== $student->parent->email) {
+                $parent = User::query()->where('email', $student->parent->email)->first();
+                $parent->email = $request->get('parent_email');
+                $parent->save();
 
-            Mail::to($parent->email)->send(new WelcomeNewUserMail($parent));
+                Mail::to($parent->email)->send(new WelcomeNewUserMail($parent));
+            }
         }
 
         if ($request->get('parent_email') !== null && $student->parent === null) {
@@ -173,6 +173,7 @@ class StudentController extends Controller
                     'phone' => $phoneNumber,
                     'email' => $request->get('email'),
                     'status' => $request->get('status'),
+                    'auto_schedule' => $this->isStatusActive($request),
                 ]);
                 // send email
                 Mail::to($studentUser->email)->send(new WelcomeNewUserMail($studentUser));
@@ -180,6 +181,10 @@ class StudentController extends Controller
                 Log::info($exception->getMessage());
             }
         }
+    }
+
+    private function isStatusActive($request) {
+        return $request->get('status') == 1;
     }
 
     /**
@@ -214,6 +219,7 @@ class StudentController extends Controller
                     'phone' => $phoneNumber,
                     'email' => $request->get('email'),
                     'status' => $request->get('status'),
+                    'auto_schedule' => $this->isStatusActive($request),
                 ]);
 
                 // send email

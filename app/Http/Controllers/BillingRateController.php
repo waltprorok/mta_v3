@@ -15,16 +15,15 @@ class BillingRateController extends Controller
 {
     public function index(): JsonResponse
     {
-        $billingRate = collect();
-
         try {
             $billingRate = BillingRate::query()
                 ->where('teacher_id', Auth::id())
                 ->with('billingRate')
-                ->orderBy('type')
+                ->orderBy('active', 'desc')
                 ->get();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json($billingRate);
@@ -44,10 +43,12 @@ class BillingRateController extends Controller
                 'amount' => $request->get('amount'),
                 'description' => $request->get('description'),
                 'default' => $request->get('default'),
+                'active' => $request->get('active'),
             ]);
 
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json([], Response::HTTP_CREATED);
@@ -59,6 +60,7 @@ class BillingRateController extends Controller
             $billingRate->update($request->all());
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json();
@@ -73,6 +75,7 @@ class BillingRateController extends Controller
             $billingRate->delete();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json($billingRate);
@@ -80,7 +83,12 @@ class BillingRateController extends Controller
 
     public function billingPlans()
     {
-        $plans = Plan::all(['id', 'name', 'slug', 'stripe_plan', 'cost', 'description', 'created_at']);
+        try {
+            $plans = Plan::all(['id', 'name', 'slug', 'stripe_plan', 'cost', 'description', 'created_at']);
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
+        }
 
         return response()->json($plans);
     }

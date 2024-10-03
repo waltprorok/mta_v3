@@ -51,12 +51,22 @@
                                                 </div>
                                             </div>
                                             <small v-show="edit">* Changing a rate will effect outstanding lessons and invoices.</small>
+<!--                                            <small v-show="edit">* TIP: Set the rate to inactive and create a new rate.</small>-->
                                             <hr>
-                                            <div class="form-group">
-                                                <div class="toggle-switch" data-ts-color="primary">
-                                                    <label for="default" class="ts-label">Default</label>
-                                                    <input id="default" type="checkbox" hidden="hidden" v-model="rate.default">
-                                                    <label for="default" class="ts-helper"></label>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="toggle-switch" data-ts-color="primary">
+                                                        <label for="active" class="ts-label">Active</label>
+                                                        <input id="active" type="checkbox" hidden="hidden" v-model="rate.active">
+                                                        <label for="active" class="ts-helper"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="toggle-switch" data-ts-color="primary">
+                                                        <label for="default" class="ts-label">Default</label>
+                                                        <input id="default" type="checkbox" hidden="hidden" v-model="rate.default">
+                                                        <label for="default" class="ts-helper"></label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -96,11 +106,30 @@
         <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
             <template v-slot="{ columns, row }">
                 <tr>
+                    <td class="text-nowrap">
+                        <button v-show="row.active === true"
+                                class="btn btn-outline-primary btn-sm"
+                                title="active rate">
+                            <i class="fa fa-check-circle"></i>
+                        </button>
+                        <button v-show="row.active === false"
+                                class="btn btn-outline-danger btn-sm"
+                                title="not active rate">
+                            <i class="fa fa-times-circle"></i>
+                        </button>
+                    </td>
                     <td>{{ row.type | capitalising }}</td>
                     <td>{{ row.amount | toCurrency }}</td>
                     <td v-text="row.description"></td>
                     <!--suppress JSUnresolvedReference -->
                     <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
+                    <td class="text-nowrap">
+                        <button v-show="showDefaultIcon(row)"
+                                class="btn btn-outline-success btn-sm"
+                                title="default payment">
+                            <i class="fa fa-money"></i>
+                        </button>
+                    </td>
                     <td class="text-nowrap">
                         <button @click="showRate(row.id, false)"
                                 class="btn btn-outline-primary btn-sm"
@@ -112,11 +141,6 @@
                                 class="btn btn-outline-danger btn-sm"
                                 title="delete">
                             <i class="fa fa-trash" aria-hidden="true"></i>
-                        </button>
-                        <button v-show="showDefaultIcon(row)"
-                                class="btn btn-outline-success btn-sm"
-                                title="default payment">
-                            <i class="fa fa-check-circle"></i>
                         </button>
                     </td>
                 </tr>
