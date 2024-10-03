@@ -101,7 +101,7 @@ export default {
                 {label: 'Paid', field: 'payment',},
                 {label: 'Balance', field: 'balance',},
                 {label: 'Date', field: 'date',},
-                {label: 'Actions', filterable: false},
+                {label: 'Action', filterable: false},
             ],
         }
     },

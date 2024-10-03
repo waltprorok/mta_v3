@@ -16,7 +16,7 @@ export default {
                 {label: 'Phone', field: 'phone', sortable: false},
                 {label: 'Email', field: 'email',},
                 {label: 'Instrument', field: 'instrument',},
-                {label: 'Actions', filterable: false}
+                {label: 'Action', filterable: false}
             ],
             show_form: false,
             show_parent: false,

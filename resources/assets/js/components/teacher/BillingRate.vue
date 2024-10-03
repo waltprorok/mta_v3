@@ -18,7 +18,7 @@ export default {
                 {label: 'Description', filterable: false, sortable: false},
                 {label: 'Created', filterable: false, sortable: false},
                 {label: 'Default', filterable: false, sortable: false},
-                {label: 'Actions', filterable: false, sortable: false},
+                {label: 'Action', filterable: false, sortable: false},
             ],
             types: ['lesson', 'hourly', 'monthly'],
             edit: false,
