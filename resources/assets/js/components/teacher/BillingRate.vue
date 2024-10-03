@@ -12,11 +12,13 @@ export default {
             classError: '',
             filter: '',
             columns: [
+                {label: 'Active', filterable: false, sortable: false},
                 {label: 'Type', field: 'type', sortable: false},
                 {label: 'Amount', field: 'amount', sortable: false},
                 {label: 'Description', filterable: false, sortable: false},
                 {label: 'Created', filterable: false, sortable: false},
-                {label: 'Actions', filterable: false, sortable: false}
+                {label: 'Default', filterable: false, sortable: false},
+                {label: 'Action', filterable: false, sortable: false},
             ],
             types: ['lesson', 'hourly', 'monthly'],
             edit: false,
@@ -33,6 +35,7 @@ export default {
                 amount: null,
                 description: null,
                 default: false,
+                active: true,
             },
             error_type: '',
             error_amount: '',
@@ -92,6 +95,7 @@ export default {
             self.rate.amount = null;
             self.rate.description = null;
             self.rate.default = false;
+            self.rate.active = true;
             self.edit = false;
         },
 
@@ -170,7 +174,7 @@ export default {
         },
 
         showDefaultIcon: function (row) {
-            return row.default === true;
+            return row.default === true && row.active ===true;
         },
 
         /**
@@ -200,6 +204,7 @@ export default {
                     self.rate.amount = response.data.amount;
                     self.rate.description = response.data.description;
                     self.rate.default = response.data.default;
+                    self.rate.active = response.data.active;
                 })
             self.edit = true;
         },

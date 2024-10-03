@@ -188,6 +188,7 @@ class InvoiceController extends Controller
 
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json([], Response::HTTP_CREATED);
@@ -214,12 +215,14 @@ class InvoiceController extends Controller
             ]);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
         try {
             Mail::to($invoice->student->email)->send(new LessonsInvoice($invoice));
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json();

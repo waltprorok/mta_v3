@@ -18,7 +18,7 @@ export default {
                 {label: 'Author', field: 'author',},
                 {label: 'Published', field: 'released_on',},
                 {label: 'Created', field: 'created_at',},
-                {label: 'Actions', filterable: false,}
+                {label: 'Action', filterable: false,}
             ],
             showModal: false,
             list: [],

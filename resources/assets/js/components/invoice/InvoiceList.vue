@@ -22,7 +22,7 @@ export default {
                 {label: 'Email', field: 'student.email',},
                 {label: 'Balance', field: 'balance_due',},
                 {label: 'Due Date', field: 'due_date',},
-                {label: 'Actions', filterable: false},
+                {label: 'Action', filterable: false},
             ],
             invoice: {
                 id: null,

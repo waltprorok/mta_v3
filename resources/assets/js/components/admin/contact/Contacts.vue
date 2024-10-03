@@ -16,7 +16,7 @@ export default {
                 {label: 'Subject', field: 'subject', sortable: false},
                 {label: 'Message', field: 'message', sortable: false},
                 {label: 'Created', field: 'created_at', sortable: false},
-                {label: 'Actions', filterable: false}
+                {label: 'Action', filterable: false}
             ],
             edit: false,
             showForm: false,

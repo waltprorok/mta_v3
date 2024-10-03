@@ -30,6 +30,7 @@ class ContactController extends Controller
             Contact::query()->create($request->all());
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json([], Response::HTTP_CREATED);
@@ -41,6 +42,7 @@ class ContactController extends Controller
             $contact->update($request->all());
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json();
@@ -55,6 +57,7 @@ class ContactController extends Controller
             $contact->delete();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json();

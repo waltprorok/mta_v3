@@ -19,11 +19,13 @@ class BillingRate extends Model
         'amount',
         'description',
         'default',
+        'active',
     ];
 
     protected $casts = [
         'amount' => 'decimal:2',
         'default' => 'boolean',
+        'active' => 'boolean',
     ];
 
     public function billingRate(): HasOne
