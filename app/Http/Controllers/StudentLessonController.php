@@ -24,7 +24,10 @@ class StudentLessonController extends Controller
     {
         $students = Student::query()->where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::query()->where('teacher_id', Auth::id())->get();
-        $billingRates = BillingRate::query()->where('teacher_id', Auth::id())->get();
+        $billingRates = BillingRate::query()->where('teacher_id', Auth::id())
+            ->where('active', true)
+            ->orderBy('default', 'desc')
+            ->get();
         $lessons = Lesson::query()->where('teacher_id', Auth::id())->whereDate('start_date', $day)->orderBy('start_date')->get();
         $lastLesson = Student::with('hasOneLesson')
             ->where(['id' => $id, 'teacher_id' => Auth::id(), 'status' => Student::ACTIVE])
@@ -59,7 +62,10 @@ class StudentLessonController extends Controller
         $students = Student::query()->where(['id' => $student_id, 'teacher_id' => Auth::id()])->get();
         $businessHours = BusinessHours::query()->where('teacher_id', Auth::id())->get();
         $lessons = Lesson::query()->where(['student_id' => $student_id, 'id' => $id, 'teacher_id' => Auth::id()])->orderBy('start_date')->with('billingRate')->get();
-        $billingRates = BillingRate::query()->where('teacher_id', Auth::id())->get();
+        $billingRates = BillingRate::query()->where('teacher_id', Auth::id())
+            ->where('active', true)
+            ->orderBy('default', 'desc')
+            ->get();
 
         $startDate = $day;
 
@@ -222,6 +228,12 @@ class StudentLessonController extends Controller
 
     private function scheduleUpdateAll(Request $request): void
     {
+//        $begin = Carbon::parse($request->get('start_date'));
+//        $end = Carbon::parse($request->get('start_date'));
+//        $endOfMonth = $end->endOfMonth()->weekOfYear;
+//        $weekOfMonth = $begin->weekOfYear;
+//        $numberOfWeeksInMonth = $endOfMonth - $weekOfMonth;
+
         $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
         $begin = Carbon::parse($request->get('start_date'));
 
