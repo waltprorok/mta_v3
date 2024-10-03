@@ -97,12 +97,12 @@ class StudentController extends Controller
                 $parentUser = User::firstOrCreate(
                     ['email' => $request->get('parent_email')],
                     ['first_name' => $request->get('parent_first_name'),
-                    'last_name' => $request->get('parent_last_name'),
-                    'email' => $request->get('parent_email'),
-                    'password' => Hash::make($request->get('last_name')),
-                    'parent' => true,
-                    'terms' => true,
-                ]);
+                        'last_name' => $request->get('parent_last_name'),
+                        'email' => $request->get('parent_email'),
+                        'password' => Hash::make($request->get('last_name')),
+                        'parent' => true,
+                        'terms' => true,
+                    ]);
                 $student->parent_id = $parentUser->id;
                 $student->save();
 
@@ -122,7 +122,7 @@ class StudentController extends Controller
         $student->status = $request->get('status');
         $student->instrument = $request->get('instrument');
         $student->level = $request->get('level');
-        $student->auto_schedule = $request->get('auto_schedule');
+        $student->auto_schedule = $request->get('auto_schedule') ?? 0;
         $student->parent_phone = $parentPhoneNumber;
         $student->date_of_birth = $request->get('date_of_birth');
         $student->address = $request->get('address');
@@ -183,7 +183,8 @@ class StudentController extends Controller
         }
     }
 
-    private function isStatusActive($request) {
+    private function isStatusActive($request)
+    {
         return $request->get('status') == 1;
     }
 
