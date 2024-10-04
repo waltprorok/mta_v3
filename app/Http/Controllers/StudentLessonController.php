@@ -364,16 +364,16 @@ class StudentLessonController extends Controller
 
                 $lessonTimes[] = $lessonStart;
                 switch ($diffInTime) {
-                    case 900:
+                    case 900: // 15 minutes
                         break;
-                    case 1800:
+                    case 1800: // 30 minutes
                         $lessonTimes[] = $lesson15Minutes;
                         break;
-                    case 2700:
+                    case 2700:  // 45 minutes
                         $lessonTimes[] = $lesson15Minutes;
                         $lessonTimes[] = $lesson30Minutes;
                         break;
-                    case 3600:
+                    case 3600: // 60 minutes
                         $lessonTimes[] = $lesson15Minutes;
                         $lessonTimes[] = $lesson30Minutes;
                         $lessonTimes[] = $lesson45Minutes;
