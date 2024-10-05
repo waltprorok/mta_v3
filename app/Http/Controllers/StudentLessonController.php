@@ -16,6 +16,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
@@ -106,7 +107,7 @@ class StudentLessonController extends Controller
         $duration = date('H:i:s', strtotime($request->get('start_time') . ' +' . $request->get('end_time') . ' minutes'));
         $recurrence = $request->get('recurrence') == 'one' ? 1 : $diffInDays;
         $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
-        $student = Student::query()->with('getTeacher')->findOrFail($request->get('student_id')); // needed for email
+        $student = Student::query()->with('getTeacher')->with('parent')->findOrFail($request->get('student_id')); // needed for email
         $lessons = collect();
 
         for ($i = $begin; $i <= $end; $i->modify('+7 day')) {
@@ -122,9 +123,8 @@ class StudentLessonController extends Controller
             $lesson->save();
             $lessons[] = $lesson;
         }
-        // $student->notify(new LessonConfirmation($student->first_name, $lesson->start_date)); // text message does not work at the moment
 
-        Mail::to($student->email)->send(new LessonsScheduled($student, $lessons));
+        $this->emailLessonsToStudentParent($student, $lessons);
 
         return redirect()->back()->with('success', ' The student has been scheduled successfully.');
     }
@@ -471,6 +471,33 @@ class StudentLessonController extends Controller
             foreach ($invoices as $invoice) {
                 $invoice->delete();
             }
+        }
+    }
+
+    /**
+     * @param $student
+     * @param Collection $lessons
+     * @return void
+     */
+    private function emailLessonsToStudentParent($student, Collection $lessons): void
+    {
+        // student has an email and parent has an email
+        if ($student->email && $student->parent) {
+            if ($student->parent->email) {
+                Mail::to($student->email)->cc($student->parent->email)->send(new LessonsScheduled($student, $lessons));
+            }
+        }
+
+        // student does NOT have an email and parent has an email
+        if ($student->email == null && $student->parent) {
+            if ($student->parent->email) {
+                Mail::to($student->parent->email)->send(new LessonsScheduled($student, $lessons));
+            }
+        }
+
+        // student has an email and parent does not have an email
+        if ($student->email && $student->parent == null) {
+            Mail::to($student->email)->send(new LessonsScheduled($student, $lessons));
         }
     }
 }

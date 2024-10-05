@@ -4,10 +4,10 @@
 
 Greetings {{$student->first_name }},
 
-Your teacher {{ $teacher->first_name }} {{ $teacher->last_name }} has scheduled your {{ $student->instrument }} lessons for the following days.
+Your teacher {{ $teacher->first_name }} {{ $teacher->last_name }} has scheduled your {{ $student->instrument }} lessons for the following day(s).
 
 @foreach($lessons as $lesson)
-* {{ date('l, F j | g:i a', strtotime($lesson->start_date)) }} to {{ date('g:i a', strtotime($lesson->end_date)) }}
+* {{ date('l M d, Y | g:ia', strtotime($lesson->start_date)) }} - {{ date('g:ia', strtotime($lesson->end_date)) }}
 @endforeach
 
 {{ $teacher->studio_name }} <br />

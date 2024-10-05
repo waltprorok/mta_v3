@@ -32,30 +32,16 @@ class LessonsScheduled extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): LessonsScheduled
     {
         return $this->from(Auth::user()->email)
             ->subject('New Lesson(s) Scheduled for ' . $this->getLessonMonthName())
             ->markdown('emails.lessons.scheduled');
     }
 
-    public function getLessonMonthName()
+    private function getLessonMonthName()
     {
         $month = $this->lessons->first();
         return date('F Y', strtotime($month->start_date));
     }
-
-    public function getLessonsStart()
-    {
-        $start = $this->lessons->first();
-        return date('l M j, g:i a', strtotime($start->start_date));
-    }
-
-    public function getLessonsEnd()
-    {
-        $end = $this->lessons->last();
-        return date('M j, g:i a', strtotime($end->start_date));
-    }
-
-
 }
