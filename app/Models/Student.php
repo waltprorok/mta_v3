@@ -110,12 +110,12 @@ class Student extends Model
     }
 
     /**
-     * @param $notification
+     * @param $notifiable
      * @return string
      */
-    public function routeNotificationForNexmo($notification): string
+    public function routeNotificationForNexmo($notifiable): string
     {
-        return '+1' . $this->phone;
+        return '1' . $this->phone;
     }
 
     /**
