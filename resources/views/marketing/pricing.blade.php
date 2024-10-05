@@ -26,6 +26,9 @@
                                 <p>Automatic Scheduling</p>
                             </li>
                             <li>
+                                <p>Professional Invoicing</p>
+                            </li>
+                            <li>
                                 <p>Track Payments</p>
                             </li>
                             <li>
@@ -63,6 +66,9 @@
                                 </li>
                                 <li>
                                     <p>Track Payments</p>
+                                </li>
+                                <li>
+                                    <p>Student Portal for Families</p>
                                 </li>
                                 <li>
                                     <p>Cancel Anytime</p>

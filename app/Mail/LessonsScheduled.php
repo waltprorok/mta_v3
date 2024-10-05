@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
+
+class LessonsScheduled extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $student;
+    public $teacher;
+    public $lessons;
+
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct($student, $lessons)
+    {
+        $this->student = $student;
+        $this->teacher = $student->getTeacher;
+        $this->lessons = $lessons;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->from(Auth::user()->email)
+            ->subject('New Lesson(s) Scheduled for ' . $this->getLessonMonthName())
+            ->markdown('emails.lessons.scheduled');
+    }
+
+    public function getLessonMonthName()
+    {
+        $month = $this->lessons->first();
+        return date('F Y', strtotime($month->start_date));
+    }
+
+    public function getLessonsStart()
+    {
+        $start = $this->lessons->first();
+        return date('l M j, g:i a', strtotime($start->start_date));
+    }
+
+    public function getLessonsEnd()
+    {
+        $end = $this->lessons->last();
+        return date('M j, g:i a', strtotime($end->start_date));
+    }
+
+
+}

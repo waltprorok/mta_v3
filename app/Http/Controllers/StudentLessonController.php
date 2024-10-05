@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ScheduleUpdateRequest;
 use App\Http\Requests\StoreScheduleApptRequest;
+use App\Mail\LessonsScheduled;
 use App\Models\BillingRate;
 use App\Models\BusinessHours;
 use App\Models\Invoice;
@@ -16,6 +17,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class StudentLessonController extends Controller
@@ -104,6 +106,8 @@ class StudentLessonController extends Controller
         $duration = date('H:i:s', strtotime($request->get('start_time') . ' +' . $request->get('end_time') . ' minutes'));
         $recurrence = $request->get('recurrence') == 'one' ? 1 : $diffInDays;
         $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
+        $student = Student::query()->with('getTeacher')->findOrFail($request->get('student_id')); // needed for email
+        $lessons = collect();
 
         for ($i = $begin; $i <= $end; $i->modify('+7 day')) {
             $lesson = new Lesson();
@@ -116,7 +120,11 @@ class StudentLessonController extends Controller
             $lesson->end_date = $i->format('Y-m-d') . ' ' . $duration;
             $lesson->interval = (int)$request->get('end_time');
             $lesson->save();
+            $lessons[] = $lesson;
         }
+        // $student->notify(new LessonConfirmation($student->first_name, $lesson->start_date)); // text message does not work at the moment
+
+        Mail::to($student->email)->send(new LessonsScheduled($student, $lessons));
 
         return redirect()->back()->with('success', ' The student has been scheduled successfully.');
     }
