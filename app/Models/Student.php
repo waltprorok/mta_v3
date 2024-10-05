@@ -115,7 +115,7 @@ class Student extends Model
      */
     public function routeNotificationForNexmo($notification): string
     {
-        return '+1' . $this->phone;
+        return '1' . $this->phone;
     }
 
     /**

@@ -6,8 +6,10 @@ use App\Events\RegisterUserEvent;
 use App\Mail\WelcomeMail;
 use App\Models\Teacher;
 use Exception;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Newsletter;
 
 class CreateTeacherListener
 {
@@ -49,6 +51,15 @@ class CreateTeacherListener
             Mail::to($data['email'])->send(new WelcomeMail($user));
         } catch (Exception $exception) {
             Log::warning($exception->getMessage());
+        }
+
+        if (App::environment('production')) {
+            // sign new user up for newsletter
+            try {
+                Newsletter::subscribePending($data['email']);
+            } catch (Exception $exception) {
+                Log::warning($exception->getMessage());
+            }
         }
     }
 }

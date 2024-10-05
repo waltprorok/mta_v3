@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ScheduleUpdateRequest;
 use App\Http\Requests\StoreScheduleApptRequest;
+use App\Mail\LessonsScheduled;
 use App\Models\BillingRate;
 use App\Models\BusinessHours;
 use App\Models\Invoice;
@@ -15,7 +16,9 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class StudentLessonController extends Controller
@@ -104,6 +107,8 @@ class StudentLessonController extends Controller
         $duration = date('H:i:s', strtotime($request->get('start_time') . ' +' . $request->get('end_time') . ' minutes'));
         $recurrence = $request->get('recurrence') == 'one' ? 1 : $diffInDays;
         $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
+        $student = Student::query()->with('getTeacher')->with('parent')->findOrFail($request->get('student_id')); // needed for email
+        $lessons = collect();
 
         for ($i = $begin; $i <= $end; $i->modify('+7 day')) {
             $lesson = new Lesson();
@@ -116,7 +121,10 @@ class StudentLessonController extends Controller
             $lesson->end_date = $i->format('Y-m-d') . ' ' . $duration;
             $lesson->interval = (int)$request->get('end_time');
             $lesson->save();
+            $lessons[] = $lesson;
         }
+
+        $this->emailLessonsToStudentParent($student, $lessons);
 
         return redirect()->back()->with('success', ' The student has been scheduled successfully.');
     }
@@ -364,16 +372,16 @@ class StudentLessonController extends Controller
 
                 $lessonTimes[] = $lessonStart;
                 switch ($diffInTime) {
-                    case 900:
+                    case 900: // 15 minutes
                         break;
-                    case 1800:
+                    case 1800: // 30 minutes
                         $lessonTimes[] = $lesson15Minutes;
                         break;
-                    case 2700:
+                    case 2700:  // 45 minutes
                         $lessonTimes[] = $lesson15Minutes;
                         $lessonTimes[] = $lesson30Minutes;
                         break;
-                    case 3600:
+                    case 3600: // 60 minutes
                         $lessonTimes[] = $lesson15Minutes;
                         $lessonTimes[] = $lesson30Minutes;
                         $lessonTimes[] = $lesson45Minutes;
@@ -463,6 +471,33 @@ class StudentLessonController extends Controller
             foreach ($invoices as $invoice) {
                 $invoice->delete();
             }
+        }
+    }
+
+    /**
+     * @param $student
+     * @param Collection $lessons
+     * @return void
+     */
+    private function emailLessonsToStudentParent($student, Collection $lessons): void
+    {
+        // student has an email and parent has an email
+        if ($student->email && $student->parent) {
+            if ($student->parent->email) {
+                Mail::to($student->email)->cc($student->parent->email)->send(new LessonsScheduled($student, $lessons));
+            }
+        }
+
+        // student does NOT have an email and parent has an email
+        if ($student->email == null && $student->parent) {
+            if ($student->parent->email) {
+                Mail::to($student->parent->email)->send(new LessonsScheduled($student, $lessons));
+            }
+        }
+
+        // student has an email and parent does not have an email
+        if ($student->email && $student->parent == null) {
+            Mail::to($student->email)->send(new LessonsScheduled($student, $lessons));
         }
     }
 }

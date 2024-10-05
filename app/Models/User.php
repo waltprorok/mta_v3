@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Cashier\Billable;
 
@@ -16,7 +15,7 @@ use Laravel\Cashier\Billable;
  */
 class User extends Authenticatable
 {
-    use Notifiable, Billable, SoftDeletes;
+    use Billable, SoftDeletes;
 
     protected $casts = [
         'admin' => 'boolean',
@@ -58,17 +57,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * @return HasMany
-     */
     public function getBlogs(): HasMany
     {
         return $this->hasMany(Blog::class, 'author_id');
     }
 
-    /**
-     * @return HasMany
-     */
     public function getBusinessHours(): HasMany
     {
         return $this->hasMany(BusinessHours::class, 'teacher_id');
@@ -84,9 +77,6 @@ class User extends Authenticatable
         return "{$this->first_name} {$this->last_name}";
     }
 
-    /**
-     * @return HasOne
-     */
     public function getTeacher(): HasOne
     {
         return $this->hasOne(Teacher::class, 'teacher_id');
@@ -117,9 +107,6 @@ class User extends Authenticatable
         return $this->teacher && $this->teacher !== null;
     }
 
-    /**
-     * @return HasMany
-     */
     public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class, 'teacher_id');
