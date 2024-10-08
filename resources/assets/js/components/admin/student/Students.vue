@@ -70,7 +70,7 @@ export default {
                 case 4:
                     return 'Active';
                 default:
-                    return 'this';
+                    return '-';
             }
         }
 
