@@ -132,6 +132,11 @@ class User extends Authenticatable
         return $query->orderBy('first_name', 'asc');
     }
 
+    public function student(): HasOne
+    {
+        return $this->hasOne(Student::class, 'student_id');
+    }
+
     public function students(): HasMany
     {
         return $this->hasMany(Student::class, 'teacher_id');

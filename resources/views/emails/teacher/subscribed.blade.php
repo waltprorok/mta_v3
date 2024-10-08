@@ -2,7 +2,7 @@
 
 @component('mail::panel')
 
-Hello {{$user['first_name']}},
+Hello {{ $user['first_name'] }},
 
 Thank you for your purchase of the **Premium** Subscription with Music Teachers Aid.
 

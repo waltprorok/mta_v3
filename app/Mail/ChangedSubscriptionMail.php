@@ -30,7 +30,7 @@ class ChangedSubscriptionMail extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): ChangedSubscriptionMail
     {
         return $this->subject('Your subscription plan has changed')
             ->markdown('emails.account.plan');

@@ -69,6 +69,11 @@ class Student extends Model
         $this->phoneNumberService = $phoneNumberService;
     }
 
+    public function getFullNameAttribute(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
     public function getPhoneNumberAttribute(): ?string
     {
         return $this->phoneNumberService->getPhoneNumberFormat($this->phone);
@@ -77,6 +82,11 @@ class Student extends Model
     public function getParentPhoneNumberAttribute(): ?string
     {
         return $this->phoneNumberService->getPhoneNumberFormat($this->parent_phone);
+    }
+
+    public function getTeacher(): HasOne
+    {
+        return $this->hasOne(Teacher::class, 'teacher_id', 'teacher_id');
     }
 
     public function hasOneFutureLesson(): HasOne
@@ -127,14 +137,9 @@ class Student extends Model
         return $query->orderBy('first_name', 'asc');
     }
 
-    public function getTeacher(): HasOne
-    {
-        return $this->hasOne(Teacher::class, 'teacher_id', 'teacher_id');
-    }
-
     public function studentUsers(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'student_id');
     }
 
     public function teacher(): BelongsTo

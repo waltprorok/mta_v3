@@ -21,7 +21,7 @@ $factory->define(Student::class, function (Faker $faker) {
     return [
         'student_id' => $faker->unique()->numberBetween(8, 108),
         'teacher_id' => $faker->numberBetween(3, 4),
-        'first_name' => $faker->firstName(),
+        'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'phone' => $faker->numerify('##########'),

@@ -49,6 +49,11 @@ class Teacher extends Model
         $this->phoneNumberService = $phoneNumberService;
     }
 
+    public function getFullNameAttribute(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
     public function getPhoneNumberAttribute(): ?string
     {
         return $this->phoneNumberService->getPhoneNumberFormat($this->phone);
