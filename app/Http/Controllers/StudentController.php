@@ -87,7 +87,7 @@ class StudentController extends Controller
                 $parent->email = $request->get('parent_email');
                 $parent->save();
 
-                Mail::to($parent->email)->send(new WelcomeNewUserMail($parent));
+                Mail::send(new WelcomeNewUserMail($parent));
             }
         }
 

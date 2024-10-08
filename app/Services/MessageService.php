@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Message;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
@@ -12,10 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class MessageService
 {
     private $id = 0;
-
     private $subject = '';
-
-    private $new = false;
 
     /**
      * @return int
@@ -23,11 +21,6 @@ class MessageService
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getNewFlag(): bool
-    {
-        return $this->new;
     }
 
     /**
@@ -38,14 +31,12 @@ class MessageService
         return $this->subject;
     }
 
-    /**
-     * @return Student[]|Builder[]|Collection
-     */
-    public function getStudentTeacher()
+    public function getStudentTeacher(string $id)
     {
-        return Student::with('getTeacher:id,teacher_id,first_name,last_name,email')
-            ->where('student_id', Auth::id())
-            ->get();
+        $message = Message::where('user_id_from', $id)->first();
+
+        return Teacher::where('teacher_id', $message->user_id_from)
+            ->get(['id', 'teacher_id', 'first_name', 'last_name', 'email']);
     }
 
     /**
@@ -55,6 +46,14 @@ class MessageService
      */
     public function getStudentUsers(int $id, int $status): object
     {
+        if ($status == Student::PARENT) {
+            return User::whereHas('parentOfStudent', function ($query) use ($status) {
+                $query->where('teacher_id', Auth::id());
+            })
+                ->firstNameAsc()
+                ->get(['id', 'first_name', 'last_name', 'email']);
+        }
+
         $this->setId($id);
 
         if ($this->getId() === 0) {
@@ -62,10 +61,10 @@ class MessageService
                 $query->where('teacher_id', Auth::id())->where('status', $status); // pass a status id
             })
                 ->firstNameAsc()
-                ->get(['id', 'first_name', 'last_name', 'email', 'student', 'teacher', 'parent', 'admin']);
+                ->get(['id', 'first_name', 'last_name', 'email']);
         } else {
             $users = User::where('id', $id)
-                ->get(['id', 'first_name', 'last_name', 'email', 'student', 'teacher', 'parent', 'admin']);
+                ->get(['id', 'first_name', 'last_name', 'email']);
         }
 
         return $users;
@@ -128,7 +127,7 @@ class MessageService
             case Auth::user()->teacher:
                 return $this->getStudentUsers($id, $status);
             case Auth::user()->student:
-                return $this->getStudentTeacher();
+                return $this->getStudentTeacher($id);
             case Auth::user()->parent:
                 return $this->getParentTeacher($id);
             default:

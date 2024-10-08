@@ -15,6 +15,7 @@
                                         <option :value="status.leads">Leads</option>
                                         <option :value="status.wait_list">Wait List</option>
                                         <option :value="status.inactive">Inactive</option>
+                                        <option :value="status.parent">Parents</option>
                                     </select>
                                 </div>
                             </div>
@@ -72,6 +73,7 @@ export default {
                 leads: 3,
                 wait_list: 2,
                 inactive: 4,
+                parent: 5,
             }
         }
     },

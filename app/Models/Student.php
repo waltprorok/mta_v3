@@ -23,6 +23,7 @@ class Student extends Model
     const WAITLIST = 2;
     const LEAD = 3;
     const INACTIVE = 4;
+    const PARENT = 5;
 
     protected $casts = [
         'student_id' => 'integer',

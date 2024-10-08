@@ -56,14 +56,10 @@ export default {
             },
             fromUser: [{
                 id: 1,
-                student_id: 1,
                 teacher_id: 1,
                 first_name: 'John',
                 last_name: 'Nolan',
                 email: 'email@example.com',
-                student: true,
-                teacher: false,
-                parent: false,
             }],
             classError: '',
             error_to: '',
@@ -92,6 +88,28 @@ export default {
             self.message.to = null;
             self.message.subject = null;
             self.message.body = null;
+            self.body = '';
+        },
+
+        createMessage: function () {
+            let self = this;
+            let params = Object.assign({}, self.message);
+            axios.post('/web/messages/send', params)
+                .then(() => {
+                    self.clearMessageData()
+                    self.clearErrorData();
+                })
+                .then(() => {
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'The reply message was created and emailed.',
+                        duration: 10000,
+                    })
+                })
+                .catch((error) => {
+                    self.getErrorMessage(error);
+                });
         },
 
         fetchReplyMessage: function () {
@@ -120,39 +138,12 @@ export default {
             self.classError = 'has-error';
         },
 
-        createMessage: function () {
-            let self = this;
-            let params = Object.assign({}, self.message);
-            axios.post('/web/messages/send', params)
-                .then(() => {
-                    self.clearMessageData()
-                    self.clearErrorData();
-                })
-                .then(() => {
-                    this.$notify({
-                        type: 'success',
-                        title: 'Success',
-                        text: 'The reply message was created and emailed.',
-                        duration: 10000,
-                    })
-                })
-                .catch((error) => {
-                    self.getErrorMessage(error);
-                });
-        },
-
         getUserIdValue: function (user) {
-            return user?.teacher_id ?? user?.student_teacher?.teacher_id ?? user?.id;
+            return user.teacher_id ? user.teacher_id : user.id;
         },
 
         showUserNameDisplay: function (user) {
-            if (user?.student_teacher?.first_name && user?.student_teacher?.last_name) {
-                return user.student_teacher.first_name + ' ' + user.student_teacher.last_name;
-            }
-            if (user?.first_name && user?.last_name) {
-                return user.first_name + ' ' + user.last_name;
-            }
-            return '';
+            return user.first_name + ' ' + user.last_name;
         },
     },
 }
