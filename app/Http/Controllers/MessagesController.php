@@ -30,14 +30,56 @@ class MessagesController extends Controller
 
     public function index(): JsonResponse
     {
-        $messages = Message::query()
-            ->with('userFrom')
+        $user = Auth::id();
+
+        $persons = Message::query()
+            ->with('userFrom:id,first_name,last_name')
             ->where('user_id_to', Auth::id())
             ->notDeleted()
             ->orderBy('created_at', 'desc')
+            ->groupBy(['user_id_from'])
             ->get();
 
-        return response()->json($messages);
+        $messagesA = Message::query()
+            ->with('userFrom:id,first_name,last_name,student,teacher,parent')
+            ->where('user_id_to', $user)
+            ->where('user_id_from', $persons->first()->user_id_from)
+            ->notDeleted()
+            ->get();
+
+        $messagesB = Message::query()
+            ->with('userFrom:id,first_name,last_name,student,teacher,parent')
+            ->where('user_id_to', $persons->first()->user_id_from)
+            ->where('user_id_from', $user)
+            ->notDeleted()
+            ->get();
+
+        $messages = $messagesA->merge($messagesB)->sortBy('id')->values();
+
+        return response()->json(['persons' => $persons, 'messages' => $messages, 'user' => $user]);
+    }
+
+    public function getPersonMessages($id): JsonResponse
+    {
+        $user = Auth::id();
+
+        $messagesFromA = Message::query()
+            ->with('userFrom:id,first_name,last_name,student,teacher,parent')
+            ->where('user_id_from', $user)
+            ->where('user_id_to', $id)
+            ->notDeleted()
+            ->get();
+
+        $messagesFromB = Message::query()
+            ->with('userFrom:id,first_name,last_name,student,teacher,parent')
+            ->where('user_id_from', $id)
+            ->where('user_id_to', $user)
+            ->notDeleted()
+            ->get();
+
+        $messages = $messagesFromA->merge($messagesFromB)->sortBy('id')->values();
+
+        return response()->json(['messages' => $messages->sortByDesc('id'), 'user' => $user]);
     }
 
     public function reply(Message $message, int $status = Student::ACTIVE)

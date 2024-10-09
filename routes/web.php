@@ -65,6 +65,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('messages')->group(function () {
+        Route::view('index', 'webapp.messages.index')->name('message.index');
+
         Route::view('inbox', 'webapp.messages.inbox')->name('message.inbox');
         Route::view('create', 'webapp.messages.create')->name('message.create');
         Route::view('read/{id}', 'webapp.messages.read')->name('message.read');
@@ -76,6 +78,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('web')->group(function () {
+        Route::get('messages/index/{id}', 'MessagesController@getPersonMessages');
+
         Route::get('messages/inbox', 'MessagesController@index');
         Route::get('messages/read/{id}', 'MessagesController@read');
         Route::get('messages/status/{status?}', 'MessagesController@status');

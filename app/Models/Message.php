@@ -14,6 +14,7 @@ class Message extends Model
     protected $casts = [
         'read' => 'boolean',
         'deleted' => 'boolean',
+        'created_at' => 'datetime:h:i a | M d',
     ];
 
     protected $fillable = [

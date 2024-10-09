@@ -47,7 +47,7 @@ class MessageService
     public function getStudentUsers(int $id, int $status): object
     {
         if ($status == Student::PARENT) {
-            return User::whereHas('parentOfStudent', function ($query) use ($status) {
+            return User::whereHas('parentOfStudent', function ($query) {
                 $query->where('teacher_id', Auth::id());
             })
                 ->firstNameAsc()
