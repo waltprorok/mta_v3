@@ -170,7 +170,7 @@ img {
 
 .outgoing_msg {
     overflow: hidden;
-    margin: 26px 0 26px;
+    margin: 4px 0 4px;
 }
 
 .sent_msg {
@@ -183,6 +183,7 @@ img {
     border: medium none;
     color: #4c4c4c;
     font-size: 15px;
+    height: 120px;
     min-height: 48px;
     width: 100%;
 }
@@ -194,7 +195,7 @@ img {
 }
 
 .msg_send_btn {
-    background: #05728f none repeat scroll 0 0;
+    background: #42a5f5 none repeat scroll 0 0;
     border: medium none;
     border-radius: 50%;
     color: #fff;

@@ -49,22 +49,27 @@
                                             <span class="time_date">{{ message.created_at }}</span></div>
                                     </div>
                                 </div>
-                                <div class="type_msg">
-                                    <div class="input_msg_write">
-                                        <input type="text" class="write_msg" v-model="message.body" placeholder="Type a message..."/>
-                                        <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                                <form action="#" @submit.prevent="createMessage()">
+                                    <div class="type_msg">
+                                        <div class="input_msg_write">
+                                            <textarea class="form-control" rows="4" v-model="message.body" placeholder="Type a message..."></textarea>
+<!--                                            <input type="text" class="write_msg" v-model="message.body" placeholder="Type a message..."/>-->
+                                            <button class="btn btn-rounded btn-primary pull-right mt-2" type="submit">Send</button>
+<!--                                            <button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>-->
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <notifications position="bottom right"/>
     </div>
 </template>
 <script>
-//https://bootsnipp.com/snippets/1ea0N
+// Example Code Template: https://bootsnipp.com/snippets/1ea0N
 import {dateFormat} from "vue-filter-date-format";
 import {dateParse} from "@vuejs-community/vue-filter-date-parse";
 
@@ -99,12 +104,36 @@ export default {
         dateFormat,
         dateParse,
 
+        createMessage: function () {
+            let self = this;
+            let params = Object.assign({}, self.message);
+            console.log(params)
+            axios.post('/web/messages/send', params)
+                .then(() => {
+                    this.fetchMessages();
+                    this.message = {};
+                })
+                .then(() => {
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'The message was created.',
+                        duration: 5000,
+                    })
+                })
+                .catch((error) => {
+                    self.getErrorMessage(error);
+                });
+        },
+
         fetchMessages: function () {
             axios.get('/web/messages/inbox')
                 .then((response) => {
                     this.persons = response.data.persons;
                     this.messages = response.data.messages;
                     this.user = response.data.user;
+                    this.message.user_id_from =this.user;
+                    this.message.user_id_to = this.persons[0].user_id_from;
 
                 })
                 .catch((error) => {
@@ -126,6 +155,9 @@ export default {
                     this.messages = response.data.messages;
                     this.user = null;
                     this.user = response.data.user;
+                    this.message.user_id_from = this.user;
+                    this.message.user_id_to = id;
+                    console.log(this.message);
                 })
                 .catch((error) => {
                     console.log(error);
