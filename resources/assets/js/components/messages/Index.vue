@@ -144,7 +144,8 @@ export default {
         dateParse,
 
         createMessage: function () {
-            if (this.message.body === null) {
+            if (this.message.body === '') {
+                this.message.body = null;
                 return;
             }
             let self = this;
