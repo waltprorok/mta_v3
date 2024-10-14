@@ -45,7 +45,7 @@
                                         </div>
                                     </div>
                                     <div v-for="(person, index) in persons" :key="index" v-if="fromList">
-                                        <div class="chat_list" @click="fetchConversationMessages(person.id, index)" :class="{active_chat: active_person_chat_id === index}">
+                                        <div class="chat_list" @click="fetchConversationMessages(person.teacher_id, index)" :class="{active_chat: active_person_chat_id === index}">
                                             <div class="chat_people">
                                                 <div class="chat_img"><img src="/webapp/img/avatar.jpeg" alt="avatar"></div>
                                                 <div class="chat_ib">
@@ -216,6 +216,7 @@ export default {
         },
 
         fetchConversationMessages: function (id, index) {
+            console.log(id);
             axios.get('/web/messages/index/' + id)
                 .then((response) => {
                     this.user = response.data.user;
