@@ -4,7 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-import Notifications from 'vue-notification'
+import Notifications from 'vue-notification';
 import wysiwyg from "vue-wysiwyg";
 import Vue from 'vue';
 import VueRouter from 'vue-router';
@@ -13,6 +13,7 @@ import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
 import {VuejsDatatableFactory} from 'vuejs-datatable';
 import 'vuejs-datatable/dist/themes/bootstrap-3.esm';
 import VCalendar from 'v-calendar';
+import VueChatScroll from 'vue-chat-scroll';
 
 require('./bootstrap');
 
@@ -34,6 +35,7 @@ Vue.use(wysiwyg, {
     // limit content height if you wish. If not set, editor size will grow with content.
     // maxHeight: "1000px"
 });
+Vue.use(VueChatScroll);
 Vue.use(VueRouter);
 Vue.use(VueFilterDateParse);
 Vue.use(VueFilterDateFormat);

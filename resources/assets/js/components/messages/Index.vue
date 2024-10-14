@@ -7,18 +7,33 @@
                         <div class="inbox_msg">
                             <div class="inbox_people">
                                 <div class="headind_srch">
-                                    <div class="recent_heading">
-                                        <h4>Recent</h4>
+<!--                                    <div class="recent_heading">-->
+<!--                                        <h4>Users</h4>-->
+<!--                                    </div>-->
+                                    <div class="form-group pull-left input-group col-6">
+                                        <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                        <div class="input-group-prepend"></div>
+                                        <select id=users class="form-control" @change="getOnChangeList($event)"
+                                                v-on:keydown.enter.prevent v-cloak>
+                                            <option :value="status.inbox" selected>Inbox</option>
+                                            <option :value="status.active" v-show="user.teacher">Active</option>
+                                            <option :value="status.leads" v-show="user.teacher">Leads</option>
+                                            <option :value="status.wait_list" v-show="user.teacher">Wait List</option>
+                                            <option :value="status.inactive" v-show="user.teacher">Inactive</option>
+                                            <option :value="status.parent" v-show="user.teacher">Parents</option>
+                                            <option :value="status.teacher" v-show="user.parent || user.student">Teacher</option>
+                                        </select>
                                     </div>
+
                                     <div class="srch_bar">
                                         <div class="stylish-input-group">
-                                            <input type="text" class="search-bar" placeholder="Search">
-                                            <span class="input-group-addon"><button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button></span>
+                                            <!--                                            <input type="text" class="search-bar" placeholder="Search">-->
+                                            <!--                                            <span class="input-group-addon"><button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button></span>-->
                                         </div>
                                     </div>
                                 </div>
                                 <div class="inbox_chat">
-                                    <div v-for="(person, index) in persons" :key="index">
+                                    <div v-for="(person, index) in persons" :key="index" v-if="!fromList">
                                         <div class="chat_list" @click="fetchConversationMessages(person.user_id_from, index)" :class="{active_chat: active_person_chat_id === index}">
                                             <div class="chat_people">
                                                 <div class="chat_img"><img src="/webapp/img/avatar.jpeg" alt="avatar"></div>
@@ -29,9 +44,19 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div v-for="(person, index) in persons" :key="index" v-if="fromList">
+                                        <div class="chat_list" @click="fetchConversationMessages(person.id, index)" :class="{active_chat: active_person_chat_id === index}">
+                                            <div class="chat_people">
+                                                <div class="chat_img"><img src="/webapp/img/avatar.jpeg" alt="avatar"></div>
+                                                <div class="chat_ib">
+                                                    <h5>{{ person.first_name }} {{ person.last_name }}<span class="chat_date">{{ person.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</span></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="mesgs">
+                            <div class="mesgs" v-chat-scroll="{always: false, smooth: true}">
                                 <div class="msg_history" v-for="message in messages">
                                     <div class="incoming_msg" v-show="message.user_from.parent || message.user_from.student">
                                         <div class="incoming_msg_img"><img src="/webapp/img/avatar.jpeg" alt="avatar"></div>
@@ -52,10 +77,8 @@
                                 <form action="#" @submit.prevent="createMessage()">
                                     <div class="type_msg">
                                         <div class="input_msg_write">
-                                            <textarea class="form-control" rows="4" v-model="message.body" placeholder="Type a message..."></textarea>
-<!--                                            <input type="text" class="write_msg" v-model="message.body" placeholder="Type a message..."/>-->
-                                            <button class="btn btn-rounded btn-primary pull-right mt-2" type="submit">Send</button>
-<!--                                            <button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>-->
+                                            <textarea class="form-control" rows="3" v-model="message.body" placeholder="Write a message..."></textarea>
+                                            <button class="btn btn-rounded btn-primary pull-right mt-2" type="submit" :class="{disabled: message.body === null}">Send</button>
                                         </div>
                                     </div>
                                 </form>
@@ -76,7 +99,8 @@ import {dateParse} from "@vuejs-community/vue-filter-date-parse";
 export default {
     data: function () {
         return {
-            active_person_chat_id: null,
+            active_person_chat_id: 0,
+            fromList: false,
             messages: [],
             persons: [],
             message: {
@@ -85,14 +109,24 @@ export default {
                 body: null,
                 read: false,
             },
-
+            showDropDown: false,
+            users: [],
             user: null,
+            status: {
+                inbox: 0,
+                active: 1,
+                leads: 3,
+                wait_list: 2,
+                inactive: 4,
+                parent: 5,
+                teacher: 6,
+            },
         }
     },
 
     filters: {
         short: function (value) {
-            return value.substr(0, 80) + '...';
+            return value.substr(0, 90) + '...';
         }
     },
 
@@ -105,25 +139,48 @@ export default {
         dateParse,
 
         createMessage: function () {
+            if (this.message.body === null) {
+                return;
+            }
             let self = this;
             let params = Object.assign({}, self.message);
-            console.log(params)
             axios.post('/web/messages/send', params)
                 .then(() => {
-                    this.fetchMessages();
-                    this.message = {};
-                })
-                .then(() => {
-                    this.$notify({
-                        type: 'success',
-                        title: 'Success',
-                        text: 'The message was created.',
-                        duration: 5000,
-                    })
+                    this.fetchConversationMessages(self.message.user_id_to, this.active_person_chat_id);
+                    this.message.body = null;
                 })
                 .catch((error) => {
-                    self.getErrorMessage(error);
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not save message.',
+                        duration: 10000,
+                    });
                 });
+        },
+
+        getOnChangeList: function (event) {
+            let id = event.target.value;
+            if (id === '0') {
+                this.fromList = false;
+                return this.fetchMessages();
+            }
+            axios.get('/web/messages/status/' + id)
+                .then((response) => {
+                    this.fromList = true;
+                    this.persons = [];
+                    this.persons = response.data.persons;
+                    this.showDropDown = response.data.teacher;
+                }).catch((error) => {
+                console.log(error);
+                this.$notify({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Could not load users list.',
+                    duration: 10000,
+                });
+            });
         },
 
         fetchMessages: function () {
@@ -132,9 +189,10 @@ export default {
                     this.persons = response.data.persons;
                     this.messages = response.data.messages;
                     this.user = response.data.user;
-                    this.message.user_id_from =this.user;
-                    this.message.user_id_to = this.persons[0].user_id_from;
-
+                    this.message.user_id_from = this.user.id;
+                    if (this.persons) {
+                        this.message.user_id_to = this.persons[0].user_id_from;
+                    }
                 })
                 .catch((error) => {
                     console.log(error);
@@ -150,14 +208,11 @@ export default {
         fetchConversationMessages: function (id, index) {
             axios.get('/web/messages/index/' + id)
                 .then((response) => {
-                    this.active_person_chat_id = index
-                    this.messages = [];
-                    this.messages = response.data.messages;
-                    this.user = null;
                     this.user = response.data.user;
-                    this.message.user_id_from = this.user;
+                    this.active_person_chat_id = index;
+                    this.messages = response.data.messages;
+                    this.message.user_id_from = this.user.id;
                     this.message.user_id_to = id;
-                    console.log(this.message);
                 })
                 .catch((error) => {
                     console.log(error);

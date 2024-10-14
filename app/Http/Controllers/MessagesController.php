@@ -27,23 +27,25 @@ class MessagesController extends Controller
 
     public function index(): JsonResponse
     {
-        $user = Auth::id();
+        $user = Auth::user();
 
         $persons = Message::query()
             ->with('userFrom:id,first_name,last_name')
-            ->where('user_id_to', Auth::id())
+            ->where('user_id_to', $user->id)
             ->notDeleted()
-            ->orderBy('created_at', 'desc')
+//            ->orderBy('created_at', 'desc')
             ->groupBy(['user_id_from'])
+            ->latest()
             ->get();
 
+
         if ($persons->isEmpty()) {
-            return response()->json();
+            return response()->json(['messages' => [], 'user' => $user]);
         }
 
         $messagesA = Message::query()
             ->with('userFrom:id,first_name,last_name,student,teacher,parent')
-            ->where('user_id_to', $user)
+            ->where('user_id_to', $user->id)
             ->where('user_id_from', $persons->first()->user_id_from)
             ->notDeleted()
             ->get();
@@ -51,22 +53,22 @@ class MessagesController extends Controller
         $messagesB = Message::query()
             ->with('userFrom:id,first_name,last_name,student,teacher,parent')
             ->where('user_id_to', $persons->first()->user_id_from)
-            ->where('user_id_from', $user)
+            ->where('user_id_from', $user->id)
             ->notDeleted()
             ->get();
 
-        $messages = $messagesA->merge($messagesB)->sortBy('id')->values() ?? [];
+        $messages = $messagesA->merge($messagesB)->sortBy('created_at')->values() ?? [];
 
         return response()->json(['persons' => $persons, 'messages' => $messages, 'user' => $user]);
     }
 
     public function getPersonMessages($id): JsonResponse
     {
-        $user = Auth::id();
+        $user = Auth::user();
 
         $messagesFromA = Message::query()
             ->with('userFrom:id,first_name,last_name,student,teacher,parent')
-            ->where('user_id_from', $user)
+            ->where('user_id_from', $user->id)
             ->where('user_id_to', $id)
             ->notDeleted()
             ->get();
@@ -74,7 +76,7 @@ class MessagesController extends Controller
         $messagesFromB = Message::query()
             ->with('userFrom:id,first_name,last_name,student,teacher,parent')
             ->where('user_id_from', $id)
-            ->where('user_id_to', $user)
+            ->where('user_id_to', $user->id)
             ->notDeleted()
             ->get();
 
@@ -98,11 +100,11 @@ class MessagesController extends Controller
     public function status(int $status = Student::ACTIVE): JsonResponse
     {
         $id = 0;
-        $users = $this->messageService->getUsers($id, $status);
+        $persons = $this->messageService->getUsers($id, $status);
         $isTeacher = Auth::user()->teacher;
 
         return response()->json([
-            'users' => $users,
+            'persons' => $persons,
             'teacher' => $isTeacher
         ]);
     }
