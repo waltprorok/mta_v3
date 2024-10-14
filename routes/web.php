@@ -78,8 +78,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('web')->group(function () {
-        Route::get('messages/index/{id}', 'MessagesController@getPersonMessages');
-
+        Route::get('messages/index/{id}', 'MessagesController@show');
         Route::get('messages/inbox', 'MessagesController@index');
         Route::get('messages/read/{id}', 'MessagesController@read');
         Route::get('messages/status/{status?}', 'MessagesController@status');

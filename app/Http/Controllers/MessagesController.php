@@ -62,7 +62,7 @@ class MessagesController extends Controller
         return response()->json(['persons' => $persons, 'messages' => $messages, 'user' => $user]);
     }
 
-    public function getPersonMessages($id): JsonResponse
+    public function show($id): JsonResponse
     {
         $user = Auth::user();
 
@@ -81,6 +81,10 @@ class MessagesController extends Controller
             ->get();
 
         $messages = $messagesFromA->merge($messagesFromB)->sortBy('id')->values();
+
+        foreach ($messagesFromB as $message) {
+            $message->update(['read' => true]);
+        }
 
         return response()->json(['messages' => $messages->sortByDesc('id'), 'user' => $user]);
     }

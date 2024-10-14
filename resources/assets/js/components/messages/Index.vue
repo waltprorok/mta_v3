@@ -65,14 +65,17 @@
                                             <div class="received_withd_msg">
                                                 <span class="time_date">{{ message.user_from.first_name }}</span>
                                                 <p>{{ message.body }}</p>
-                                                <span class="time_date">{{ message.created_at }}</span></div>
+                                                <span class="time_date">{{ message.created_at }}<span v-if="message.read">&nbsp;|&nbsp;<strong>Read</strong></span></span>
+
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="outgoing_msg" v-show="message.user_from.teacher">
                                         <div class="sent_msg">
                                             <span class="time_date">{{ message.user_from.first_name }}</span>
                                             <p>{{ message.body }}</p>
-                                            <span class="time_date">{{ message.created_at }}</span></div>
+                                            <span class="time_date">{{ message.created_at }}</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <form action="#" @submit.prevent="createMessage()">
