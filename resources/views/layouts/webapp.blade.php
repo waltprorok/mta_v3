@@ -65,11 +65,11 @@
                         <span class="small ml-1 d-md-down-none"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="{{ route('message.inbox') }}" class="dropdown-item">
+                        <a href="{{ route('message.index') }}" class="dropdown-item">
                             <i class="fa fa-envelope"></i>@if (\App\Models\User::unreadMessagesCount() > 0)
-                                You Got Mail
+                                You Got Messages
                             @else
-                                No Mail Today
+                                No Messages Today
                             @endif
                         </a>
                     </div>
