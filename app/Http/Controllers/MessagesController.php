@@ -40,7 +40,7 @@ class MessagesController extends Controller
 
 
         if ($persons->isEmpty()) {
-            return response()->json(['messages' => [], 'user' => $user]);
+            return response()->json(['user' => $user, 'messages' => []]);
         }
 
         $messagesA = Message::query()

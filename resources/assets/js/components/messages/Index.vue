@@ -7,21 +7,21 @@
                         <div class="inbox_msg">
                             <div class="inbox_people">
                                 <div class="headind_srch">
-<!--                                    <div class="recent_heading">-->
-<!--                                        <h4>Users</h4>-->
-<!--                                    </div>-->
+                                    <!--                                    <div class="recent_heading">-->
+                                    <!--                                        <h4>Users</h4>-->
+                                    <!--                                    </div>-->
                                     <div class="form-group pull-left input-group col-6">
                                         <span class="input-group-text"><i class="fa fa-user"></i></span>
                                         <div class="input-group-prepend"></div>
                                         <select id=users class="form-control" @change="getOnChangeList($event)"
                                                 v-on:keydown.enter.prevent v-cloak>
                                             <option :value="status.inbox" selected>Inbox</option>
-                                            <option :value="status.active" v-show="user.teacher">Active</option>
-                                            <option :value="status.leads" v-show="user.teacher">Leads</option>
-                                            <option :value="status.wait_list" v-show="user.teacher">Wait List</option>
-                                            <option :value="status.inactive" v-show="user.teacher">Inactive</option>
-                                            <option :value="status.parent" v-show="user.teacher">Parents</option>
-                                            <option :value="status.teacher" v-show="user.parent || user.student">Teacher</option>
+                                            <option :value="status.active" v-if="user.teacher">Active</option>
+                                            <option :value="status.leads" v-if="user.teacher">Leads</option>
+                                            <option :value="status.wait_list" v-if="user.teacher">Wait List</option>
+                                            <option :value="status.inactive" v-if="user.teacher">Inactive</option>
+                                            <option :value="status.parent" v-if="user.teacher">Parents</option>
+                                            <option :value="status.teacher" v-if="user.parent || user.student">Teacher</option>
                                         </select>
                                     </div>
 
@@ -49,7 +49,8 @@
                                             <div class="chat_people">
                                                 <div class="chat_img"><img src="/webapp/img/avatar.jpeg" alt="avatar"></div>
                                                 <div class="chat_ib">
-                                                    <h5>{{ person.first_name }} {{ person.last_name }}<span class="chat_date">{{ person.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</span></h5>
+                                                    <h5>{{ person.first_name }} {{ person.last_name }}<span
+                                                        class="chat_date">{{ person.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</span></h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -111,7 +112,11 @@ export default {
             },
             showDropDown: false,
             users: [],
-            user: null,
+            user: {
+                teacher: false,
+                student: false,
+                parent: false,
+            },
             status: {
                 inbox: 0,
                 active: 1,
@@ -164,6 +169,7 @@ export default {
             let id = event.target.value;
             if (id === '0') {
                 this.fromList = false;
+                this.persons = [];
                 return this.fetchMessages();
             }
             axios.get('/web/messages/status/' + id)
