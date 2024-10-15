@@ -130,7 +130,6 @@ export default {
     methods: {
         dateFormat,
         dateParse,
-
         createMessage: function () {
             if (this.message.body === '') {
                 this.message.body = null;
@@ -166,6 +165,9 @@ export default {
                     this.fromList = true;
                     this.persons = [];
                     this.persons = response.data.persons;
+                    if (this.persons) {
+                        this.message.user_id_to = this.persons[0].user_id_from ?? this.persons[0].id;
+                    }
                 }).catch((error) => {
                 console.log(error);
                 this.$notify({

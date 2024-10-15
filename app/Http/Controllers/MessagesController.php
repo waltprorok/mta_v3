@@ -109,7 +109,6 @@ class MessagesController extends Controller
             ]);
 
 //            $toUser = User::query()->find($request->get('to'));
-//
 //            Mail::to($toUser->email)->send(new MessageTo($request, $toUser));
 
         } catch (\Exception $exception) {
@@ -120,32 +119,4 @@ class MessagesController extends Controller
         return response()->json([], Response::HTTP_CREATED);
     }
 
-//    public function delete(int $id): RedirectResponse
-//    {
-//        $message = Message::query()->find($id);
-//        $message->deleted = true;
-//        $message->save();
-//
-//        return redirect()->route('message.inbox')->with('success', 'Message deleted successfully');
-//    }
-
-//    public function deleted(): View
-//    {
-//        $messages = Message::query()
-//            ->with('userFrom')
-//            ->where('user_id_to', Auth::id())
-//            ->isDeleted()
-//            ->get();
-//
-//        return view('webapp.messages.deleted')->with('messages', $messages);
-//    }
-
-//    public function return(int $id): RedirectResponse
-//    {
-//        $message = Message::query()->find($id);
-//        $message->deleted = false;
-//        $message->save();
-//
-//        return redirect()->to('/messages/inbox');
-//    }
 }
