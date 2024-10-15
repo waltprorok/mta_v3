@@ -65,25 +65,14 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('messages')->group(function () {
-        Route::view('index', 'webapp.messages.index')->name('message.index');
-
-        Route::view('inbox', 'webapp.messages.inbox')->name('message.inbox');
-        Route::view('create', 'webapp.messages.create')->name('message.create');
-        Route::view('read/{id}', 'webapp.messages.read')->name('message.read');
-        Route::view('reply/{id}', 'webapp.messages.reply')->name('message.reply');
-        Route::get('sent', 'MessagesController@sent')->name('message.sent');
-        Route::get('delete/{id}', 'MessagesController@delete')->name('message.delete');
-        Route::get('deleted', 'MessagesController@deleted')->name('message.deleted');
-        Route::get('return/{id}', 'MessagesController@return')->name('message.return');
+        Route::view('/', 'webapp.messages.index')->name('message.index');
     });
 
     Route::prefix('web')->group(function () {
-        Route::get('messages/index/{id}', 'MessagesController@show');
         Route::get('messages/inbox', 'MessagesController@index');
-        Route::get('messages/read/{id}', 'MessagesController@read');
+        Route::get('messages/index/{id}', 'MessagesController@show');
         Route::get('messages/status/{status?}', 'MessagesController@status');
-        Route::get('messages/reply/{message}', 'MessagesController@reply');
-        Route::post('messages/send', 'MessagesController@send');
+        Route::post('messages/store', 'MessagesController@store');
     });
 
     Route::get('support', 'SupportController@index')->name('support');
