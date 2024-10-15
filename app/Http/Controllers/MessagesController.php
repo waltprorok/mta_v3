@@ -6,12 +6,10 @@ use App\Models\Message;
 use App\Models\Student;
 use App\Services\MessageService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\View\View;
 
 class MessagesController extends Controller
 {
@@ -33,7 +31,6 @@ class MessagesController extends Controller
             ->with('userFrom:id,first_name,last_name')
             ->where('user_id_to', $user->id)
             ->notDeleted()
-//            ->orderBy('created_at', 'desc')
             ->groupBy(['user_id_from'])
             ->latest()
             ->get();
@@ -86,34 +83,21 @@ class MessagesController extends Controller
             $message->update(['read' => true]);
         }
 
-        return response()->json(['messages' => $messages->sortByDesc('id'), 'user' => $user]);
-    }
+        $messages->sortByDesc('id');
 
-//    public function reply(Message $message, int $status = Student::ACTIVE)
-//    {
-//        $users = $this->messageService->getUsers($message->user_id_from, $status);
-//        $subject = $this->messageService->getSubjectString($message->subject);
-//
-//        return response()->json([
-//            'user' => $users,
-//            'subject' => $subject,
-//            'body' => $message->body,
-//        ]);
-//    }
+        return response()->json(['messages' => $messages, 'user' => $user]);
+    }
 
     public function status(int $status = Student::ACTIVE): JsonResponse
     {
-        $id = 0;
-        $persons = $this->messageService->getUsers($id, $status);
-        $isTeacher = Auth::user()->teacher;
+        $persons = $this->messageService->getUsers($status);
 
         return response()->json([
             'persons' => $persons,
-            'teacher' => $isTeacher
         ]);
     }
 
-    public function send(Request $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
         try {
             Message::query()->create([
@@ -136,52 +120,25 @@ class MessagesController extends Controller
         return response()->json([], Response::HTTP_CREATED);
     }
 
-//    public function sent(): View
+//    public function delete(int $id): RedirectResponse
 //    {
-//        $messages = Message::query()
-//            ->with('userTo')
-//            ->where('user_id_from', Auth::id())
-//            ->notDeleted()
-//            ->orderBy('created_at', 'desc')
-//            ->get();
+//        $message = Message::query()->find($id);
+//        $message->deleted = true;
+//        $message->save();
 //
-//        return view('webapp.messages.sent')->with('messages', $messages);
+//        return redirect()->route('message.inbox')->with('success', 'Message deleted successfully');
 //    }
 
-    public function read(int $id): JsonResponse
-    {
-        $message = Message::query()
-            ->with('userFrom:id,first_name,last_name,email')
-            ->with('userTo:id,email')
-            ->findOrFail($id);
-
-        if ($message->user_id_from != Auth::id()) {
-            $message->read = true;
-            $message->save();
-        }
-
-        return response()->json(['message' => $message, 'author' => Auth::id()]);
-    }
-
-    public function delete(int $id): RedirectResponse
-    {
-        $message = Message::query()->find($id);
-        $message->deleted = true;
-        $message->save();
-
-        return redirect()->route('message.inbox')->with('success', 'Message deleted successfully');
-    }
-
-    public function deleted(): View
-    {
-        $messages = Message::query()
-            ->with('userFrom')
-            ->where('user_id_to', Auth::id())
-            ->isDeleted()
-            ->get();
-
-        return view('webapp.messages.deleted')->with('messages', $messages);
-    }
+//    public function deleted(): View
+//    {
+//        $messages = Message::query()
+//            ->with('userFrom')
+//            ->where('user_id_to', Auth::id())
+//            ->isDeleted()
+//            ->get();
+//
+//        return view('webapp.messages.deleted')->with('messages', $messages);
+//    }
 
 //    public function return(int $id): RedirectResponse
 //    {

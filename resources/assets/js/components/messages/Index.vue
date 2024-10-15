@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-10 col-md-offset-1">
+    <div class="col-md-10">
         <div class="card">
             <div class="card-body">
                 <div class="container">
@@ -45,7 +45,7 @@
                                         </div>
                                     </div>
                                     <div v-for="(person, index) in persons" :key="index" v-if="fromList">
-                                        <div class="chat_list" @click="fetchConversationMessages(person.teacher_id, index)" :class="{active_chat: active_person_chat_id === index}">
+                                        <div class="chat_list" @click="fetchConversationMessages(person.id, index)" :class="{active_chat: active_person_chat_id === index}">
                                             <div class="chat_people">
                                                 <div class="chat_img"><img src="/webapp/img/avatar.jpeg" alt="avatar"></div>
                                                 <div class="chat_ib">
@@ -113,7 +113,6 @@ export default {
                 body: null,
                 read: false,
             },
-            showDropDown: false,
             users: [],
             user: {
                 teacher: false,
@@ -153,7 +152,7 @@ export default {
             }
             let self = this;
             let params = Object.assign({}, self.message);
-            axios.post('/web/messages/send', params)
+            axios.post('/web/messages/store', params)
                 .then(() => {
                     this.fetchConversationMessages(self.message.user_id_to, this.active_person_chat_id);
                     this.message.body = null;
@@ -216,7 +215,6 @@ export default {
         },
 
         fetchConversationMessages: function (id, index) {
-            console.log(id);
             axios.get('/web/messages/index/' + id)
                 .then((response) => {
                     this.user = response.data.user;
@@ -224,6 +222,7 @@ export default {
                     this.messages = response.data.messages;
                     this.message.user_id_from = this.user.id;
                     this.message.user_id_to = id;
+                    console.log(this.message)
                 })
                 .catch((error) => {
                     console.log(error);
