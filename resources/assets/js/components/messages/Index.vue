@@ -166,7 +166,6 @@ export default {
                     this.fromList = true;
                     this.persons = [];
                     this.persons = response.data.persons;
-                    this.showDropDown = response.data.teacher;
                 }).catch((error) => {
                 console.log(error);
                 this.$notify({
@@ -208,7 +207,6 @@ export default {
                     this.messages = response.data.messages;
                     this.message.user_id_from = this.user.id;
                     this.message.user_id_to = id;
-                    console.log(this.message)
                 })
                 .catch((error) => {
                     console.log(error);

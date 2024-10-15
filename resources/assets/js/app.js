@@ -71,10 +71,6 @@ Vue.component('teachers', require('./components/admin/teacher/Teachers.vue').def
 Vue.component('users', require('./components/admin/user/Users.vue').default);
 Vue.component('reportCompletedLessonsLine', require('./components/reports/CompletedLessonsLine.vue').default);
 Vue.component('reportStudentStatusBar', require('./components/reports/StudentStatusBar.vue').default);
-Vue.component('inbox', require('./components/messages/Inbox.vue').default);
-Vue.component('create', require('./components/messages/Create.vue').default);
-Vue.component('read', require('./components/messages/Read.vue').default);
-Vue.component('reply', require('./components/messages/Reply.vue').default);
 Vue.component('index', require('./components/messages/Index.vue').default);
 Vue.component('plans', require('./components/admin/billing/Plans.vue').default);
 
