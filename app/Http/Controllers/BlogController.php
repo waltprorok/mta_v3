@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBlogPostRequest;
 use App\Models\Blog;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -51,13 +55,17 @@ class BlogController extends Controller
         return view('webapp.admin.blog.create');
     }
 
-    public function store(StoreBlogPostRequest $request): RedirectResponse
+    public function store(StoreBlogPostRequest $request)
     {
-        $blog = new Blog();
+        try {
+            $blog = new Blog();
+            $this->saveBlogPost($blog, $request);
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
+        }
 
-        $this->saveBlogPost($blog, $request);
-
-        return redirect(route('admin.blog.list'))->with('success', 'Your blog article has been saved.');
+        return response()->json([], Response::HTTP_CREATED);
     }
 
     public function show(string $slug): View
@@ -102,10 +110,12 @@ class BlogController extends Controller
 
     private function setBlogPost(Blog $blog, StoreBlogPostRequest $request): void
     {
+        $releaseDate = Carbon::parse($request->get('released_on'))->format('Y-m-d');
+
         $blog->author_id = Auth::id();
         $blog->title = $request->get('title');
         $blog->slug = $request->get('slug');
         $blog->body = $request->get('body');
-        $blog->released_on = $request->get('released_on') . ' ' . $request->get('release_time');
+        $blog->released_on = $releaseDate . ' ' . $request->get('release_time');
     }
 }

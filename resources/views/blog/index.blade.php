@@ -27,10 +27,10 @@
                                         <div class="blog-content">
                                             <h3 class="md-heading">{{ $blog->title }}</h3>
                                             <ul class="blog-meta">
-                                                <li><i class="fa fa-user"></i>{{ $blog->author->first_name . ' ' . $blog->author->last_name }}</li>
+                                                <li><i class="fa fa-user"></i>{{ $blog->author->full_name }}</li>
                                                 <li><i class="fa fa-clock-o"></i>{{ $blog->date_time }}</li>
                                             </ul>
-                                            <p>{{ $blog->body_short }}</p>
+                                            <p>{!! $blog->body_short !!}</p>
                                             <p class="text-right">
                                                 <a href="{{ route('blog.show', $blog->slug) }}" class="btn btn-default">Read More</a>
                                             </p>

@@ -15,7 +15,7 @@
                         <ul class="blog-meta">
                             <li><i class="fa fa-clock-o"></i>{{ $blog->date_time }}</li>
                             <li>
-                                <i class="fa fa-user"></i>{{ $blog->author->first_name . ' ' . $blog->author->last_name }}
+                                <i class="fa fa-user"></i>{{ $blog->author->full_name }}
                             </li>
                         </ul>
                     </div>
@@ -28,8 +28,7 @@
                     @endif
                     <div class="blog-content">
                         <br/>
-                        <h4>{{ $blog->title }}</h4>
-                        <p>{!! $blog->body_html !!}</p>
+                        <p>{!! $blog->body !!}</p>
                         <br/>
                     </div>
                 </div>
