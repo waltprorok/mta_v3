@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factory;
 
 $factory->define(Contact::class, function (Faker $faker) {
     return [
-        'name' => $faker->firstName(),
+        'name' => $faker->firstName . ' ' . $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'subject' => $faker->text(32),
         'message' => $faker->text(250),

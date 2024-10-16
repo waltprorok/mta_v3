@@ -11,13 +11,13 @@
 
         @include('partials.accountTabs')
         <div class="card">
-            <div class="card-header bg-light">Update Profile Information</div>
+            <div class="card-header bg-light">Update User Profile Information</div>
             <div class="card-body">
                 <form class="form-horizontal" method="POST" action="{{ route('account.updateProfile') }}">
                     @csrf
                     <div class="row mb-5">
                         <div class="col-md-4 mb-4">
-                            <div>Profile Information</div>
+                            <div>User Profile Information</div>
                             <div class="text-muted small">Update first name, last name, and email.</div>
                         </div>
 

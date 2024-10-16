@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Response;
 
 class StoreBlogPostRequest extends FormRequest
 {
@@ -26,9 +29,16 @@ class StoreBlogPostRequest extends FormRequest
         return [
             'title' => 'required|string|max:100',
             'slug' => 'required|string|max:100',
-            'body' => 'required',
-            'image' => 'mimes:jpg,png,jpeg,gif,svg|max:2048',
             'released_on' => 'required',
+            'release_time' => 'required',
+            'body' => 'required',
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()
+            ->json(['error' => $validator->errors()], Response::HTTP_UNAUTHORIZED)
+        );
     }
 }

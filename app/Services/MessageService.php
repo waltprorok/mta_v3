@@ -3,154 +3,63 @@
 namespace App\Services;
 
 use App\Models\Student;
-use App\Models\Teacher;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class MessageService
 {
-    private $id = 0;
-
-    private $subject = '';
-
-    private $new = false;
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function getNewFlag(): bool
-    {
-        return $this->new;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSubject(): string
-    {
-        return $this->subject;
-    }
-
-    /**
-     * @return Student[]|Builder[]|Collection
-     */
     public function getStudentTeacher()
     {
-        return Student::with('getTeacher:id,teacher_id,first_name,last_name,email')
-            ->where('student_id', Auth::id())
-            ->get();
+        $teacher = Student::where('student_id', Auth::id())->firstOrFail(['id', 'student_id', 'teacher_id']);
+
+        return User::whereHas('getTeacher', function ($query) use ($teacher) {
+            $query->where('teacher_id', $teacher->teacher_id);
+        })
+            ->firstNameAsc()
+            ->get(['id', 'first_name', 'last_name', 'created_at', 'teacher', 'student', 'parent']);
     }
 
-    /**
-     * @param int $id
-     * @param int $status
-     * @return mixed
-     */
-    public function getStudentUsers(int $id, int $status): object
+    public function getStudentUsers(int $status)
     {
-        $this->setId($id);
-
-        if ($this->getId() === 0) {
-            $users = User::whereHas('studentUsers', function ($query) use ($status) {
-                $query->where('teacher_id', Auth::id())->where('status', $status); // pass a status id
+        if ($status == Student::PARENT) {
+            return User::whereHas('parentOfStudent', function ($query) {
+                $query->where('teacher_id', Auth::id());
             })
                 ->firstNameAsc()
-                ->get(['id', 'first_name', 'last_name', 'email', 'student', 'teacher', 'parent', 'admin']);
-        } else {
-            $users = User::where('id', $id)
-                ->get(['id', 'first_name', 'last_name', 'email', 'student', 'teacher', 'parent', 'admin']);
+                ->get(['id', 'first_name', 'last_name', 'created_at', 'teacher', 'student', 'parent']);
         }
 
-        return $users;
+        return User::whereHas('studentUsers', function ($query) use ($status) {
+            $query->where('teacher_id', Auth::id())->where('status', $status);
+        })
+            ->firstNameAsc()
+            ->get(['id', 'first_name', 'last_name', 'created_at', 'teacher', 'student', 'parent']);
     }
 
-    /**
-     * @param string $subject
-     * @param bool $new
-     * @return string
-     */
-    public function getSubjectString(string $subject, bool $new = false): string
+    private function getParentTeacher(): Collection
     {
-        $this->setSubject($subject);
+        $students = User::with('parentOfStudent:id,student_id,teacher_id,parent_id')
+            ->findOrFail(Auth::id());
 
-        if ($new) {
-            return $this->subject;
-        }
-
-        if ($this->getSubject() !== '') {
-            return $this->subject = 'RE: ' . $subject;
-        }
-
-        return $this->subject;
+        return User::whereHas('getTeacher', function ($query) use ($students) {
+            $query->where('teacher_id', $students->parentOfStudent->teacher_id);
+        })
+            ->firstNameAsc()
+            ->get(['id', 'first_name', 'last_name', 'created_at', 'teacher', 'student', 'parent']);
     }
 
-    /**
-     * @return Teacher[]|Collection
-     */
-    private function getParentTeacher(int $id): Collection
-    {
-        $teacherId = [];
-
-        $this->setId($id);
-
-        if ($this->getId() > 0) {
-            return User::where('id', $this->getId())
-                ->get();
-        } else {
-            $students = User::with('parentOfStudents')
-                ->findOrFail(Auth::id());
-
-            foreach ($students->parentOfStudents as $student) {
-                $teacherId[] = $student->teacher_id;
-            }
-
-            return Teacher::whereIn('teacher_id', $teacherId)
-                ->firstNameAsc()
-                ->get(['id', 'teacher_id', 'first_name', 'last_name', 'email']);
-        }
-    }
-
-    /**
-     * @param $id
-     * @param int $status
-     * @return Student[]|Builder[]|Collection|mixed|object|null
-     */
-    public function getUsers($id, int $status)
+    public function getUsers(int $status)
     {
         switch (true) {
             case Auth::user()->teacher:
-                return $this->getStudentUsers($id, $status);
+                return $this->getStudentUsers($status);
             case Auth::user()->student:
                 return $this->getStudentTeacher();
             case Auth::user()->parent:
-                return $this->getParentTeacher($id);
+                return $this->getParentTeacher();
             default:
                 return null;
         }
-    }
-
-    /**
-     * @param int $id
-     * @return void
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @param string $subject
-     * @return void
-     */
-    public function setSubject(string $subject): void
-    {
-        $this->subject = $subject;
     }
 }

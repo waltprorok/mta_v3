@@ -4,7 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-import Notifications from 'vue-notification'
+import Notifications from 'vue-notification';
 import wysiwyg from "vue-wysiwyg";
 import Vue from 'vue';
 import VueRouter from 'vue-router';
@@ -13,6 +13,7 @@ import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
 import {VuejsDatatableFactory} from 'vuejs-datatable';
 import 'vuejs-datatable/dist/themes/bootstrap-3.esm';
 import VCalendar from 'v-calendar';
+import VueChatScroll from 'vue-chat-scroll';
 
 require('./bootstrap');
 
@@ -22,7 +23,6 @@ Vue.use(wysiwyg, {
     // { [module]: boolean (set true to hide) }
     hideModules: { 'image': true, 'underline': true, 'code': true, },
     forcePlainTextOnPaste: true,
-    maxHeight: "400px"
     // you can override icons too, if desired
     // just keep in mind that you may need custom styles in your application to get everything to align
     // iconOverrides: { "bold": "<i class="your-custom-icon"></i>" },
@@ -34,6 +34,7 @@ Vue.use(wysiwyg, {
     // limit content height if you wish. If not set, editor size will grow with content.
     // maxHeight: "1000px"
 });
+Vue.use(VueChatScroll);
 Vue.use(VueRouter);
 Vue.use(VueFilterDateParse);
 Vue.use(VueFilterDateFormat);
@@ -56,6 +57,8 @@ const router = new VueRouter({
 
 Vue.component('billingRate', require('./components/teacher/BillingRate.vue').default);
 Vue.component('blogs', require('./components/admin/blog/Blogs.vue').default);
+Vue.component('createBlog', require('./components/admin/blog/Create.vue').default);
+Vue.component('editBlog', require('./components/admin/blog/Edit.vue').default);
 Vue.component('contacts', require('./components/admin/contact/Contacts.vue').default);
 Vue.component('dashboard', require('./components/Dashboard.vue').default);
 Vue.component('invoiceCreate', require('./components/invoice/InvoiceCreate.vue').default);
@@ -69,10 +72,7 @@ Vue.component('teachers', require('./components/admin/teacher/Teachers.vue').def
 Vue.component('users', require('./components/admin/user/Users.vue').default);
 Vue.component('reportCompletedLessonsLine', require('./components/reports/CompletedLessonsLine.vue').default);
 Vue.component('reportStudentStatusBar', require('./components/reports/StudentStatusBar.vue').default);
-Vue.component('inbox', require('./components/messages/Inbox.vue').default);
-Vue.component('create', require('./components/messages/Create.vue').default);
-Vue.component('read', require('./components/messages/Read.vue').default);
-Vue.component('reply', require('./components/messages/Reply.vue').default);
+Vue.component('index', require('./components/messages/Index.vue').default);
 Vue.component('plans', require('./components/admin/billing/Plans.vue').default);
 
 

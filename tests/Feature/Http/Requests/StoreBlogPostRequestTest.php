@@ -31,8 +31,9 @@ class StoreBlogPostRequestTest extends TestCase
         $validator = Validator::make([
             'title' => $this->faker->word,
             'slug' => $this->faker->word,
-            'body' => $this->faker->paragraphs,
+            'body' => $this->faker->paragraph,
             'released_on' => $this->faker->dateTime()->format('Y-m-d H:i:s'),
+            'release_time' => $this->faker->dateTime()->format('H:i:s'),
         ], $this->request->rules());
 
         $this->assertTrue($validator->passes());

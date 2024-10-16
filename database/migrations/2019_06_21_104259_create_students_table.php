@@ -37,6 +37,8 @@ class CreateStudentsTable extends Migration
             $table->string('instrument')->nullable();
             $table->string('level')->nullable();
             $table->boolean('auto_schedule')->default(false);
+//            $table->boolean('at_home')->default(false);
+//            $table->boolean('at_studio')->default(false);
             $table->integer('status')->nullable();
             $table->string('photo')->nullable();
             $table->timestamps();

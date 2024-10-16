@@ -26,7 +26,6 @@ export default {
         fetchProfile() {
             let parameters = this.$route.fullPath
             let id = parameters.split('/').pop()
-
             axios.get('/students/' + id + '/profile')
                 .then((response) => {
                     this.profile = response.data;

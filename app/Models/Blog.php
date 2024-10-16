@@ -40,7 +40,7 @@ class Blog extends Model
 
     public function getBodyShortAttribute(): ?string
     {
-        return $this->body ? Str::limit($this->body, 260) : null;
+        return $this->body ? Str::limit($this->body, 220) : null;
     }
 
     /**

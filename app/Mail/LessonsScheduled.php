@@ -5,7 +5,6 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Auth;
 
 class LessonsScheduled extends Mailable
 {
@@ -34,7 +33,7 @@ class LessonsScheduled extends Mailable
      */
     public function build(): LessonsScheduled
     {
-        return $this->from(Auth::user()->email)
+        return $this->from($this->teacher->email, $this->teacher->full_name)
             ->subject('New Lesson(s) Scheduled for ' . $this->getLessonMonthName())
             ->markdown('emails.lessons.scheduled');
     }

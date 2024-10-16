@@ -21,7 +21,6 @@ class CreateMessagesTable extends Migration
             $table->foreign('user_id_from')->references('id')->on('users');
             $table->integer('user_id_to')->unsigned();
             $table->foreign('user_id_to')->references('id')->on('users');
-            $table->string('subject');
             $table->text('body');
             $table->boolean('read')->default(false);
             $table->boolean('deleted')->default(false);

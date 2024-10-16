@@ -26,7 +26,7 @@ class UpdateStudentRequest extends FormRequest
         return [
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
-            'email' => 'string|email|max:50|nullable',
+            'email' => 'string|email|max:100|nullable',
             'phone' => 'string|max:30|nullable',
             'instrument' => 'string|nullable',
             'level' => 'string|nullable',

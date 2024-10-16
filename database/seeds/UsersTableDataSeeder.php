@@ -58,7 +58,7 @@ class UsersTableDataSeeder extends Seeder
             [
                 'id' => '3',
                 'first_name' => 'Teacher',
-                'last_name' => 'Test',
+                'last_name' => 'Zero',
                 'email' => 'teacher@domain.com',
                 'email_verified_at' => null,
                 'password' => bcrypt('123456'),

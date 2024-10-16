@@ -1,4 +1,3 @@
-<!--suppress JSUnresolvedReference -->
 <template>
     <div class="card">
         <!-- vue js data table -->
@@ -147,7 +146,6 @@ export default {
 
         lessonDayStatusToday: function (endDate) {
             let lessonEndDate = new Date(endDate);
-
             if (lessonEndDate === today) {
                 return this.todayLesson = true;
             }
@@ -155,7 +153,6 @@ export default {
 
         lessonDayStatusUpcoming: function (endDate) {
             let lessonEndDate = new Date(endDate);
-
             if (lessonEndDate > today) {
                 return this.upComing = true;
             }
@@ -164,7 +161,6 @@ export default {
         fetchLessonList: function () {
             let from = new Date(this.dateStart.fromDate).toDateString();
             let to = new Date(this.dateEnd.toDate).toDateString();
-
             axios.get('lessons/list/' + from + '/' + to)
                 .then((response) => {
                     this.list = response.data.data;
@@ -191,7 +187,6 @@ export default {
             self.lesson.id = id;
             self.lesson.complete = !complete;
             let params = Object.assign({}, self.lesson);
-
             axios.patch('lessons/update/' + id, params)
                 .then(() => {
                     self.fetchLessonList();

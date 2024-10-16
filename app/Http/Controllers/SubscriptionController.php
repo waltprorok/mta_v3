@@ -233,7 +233,7 @@ class SubscriptionController extends Controller
 
             $user->save();
 
-            Mail::to($user->email)->send(new UserPasswordUpdatedMail($user));
+            Mail::send(new UserPasswordUpdatedMail($user));
 
             return redirect()->back()->with('success', 'Password changed successfully!');
         }

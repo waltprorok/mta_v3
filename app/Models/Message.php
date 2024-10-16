@@ -14,12 +14,12 @@ class Message extends Model
     protected $casts = [
         'read' => 'boolean',
         'deleted' => 'boolean',
+        'created_at' => 'datetime:g:i a | M d D',
     ];
 
     protected $fillable = [
         'user_id_from',
         'user_id_to',
-        'subject',
         'body',
         'read',
         'deleted'

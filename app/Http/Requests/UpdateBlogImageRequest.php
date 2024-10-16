@@ -7,14 +7,14 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 
-class SendMessageRequest extends FormRequest
+class UpdateBlogImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
@@ -27,9 +27,7 @@ class SendMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'to' => 'required',
-            'subject' => 'required|min:2',
-            'body' => 'required|min:3',
+            'image' => 'mimes:jpg,png,jpeg,gif,svg|max:2048|nullable'
         ];
     }
 
