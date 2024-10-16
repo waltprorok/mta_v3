@@ -27,6 +27,16 @@ class MessagesController extends Controller
     {
         $user = Auth::user();
 
+        $checkMessages = Message::query()
+            ->with('userFrom:id,first_name,last_name')
+            ->where('user_id_to', $user->id)
+            ->notDeleted()
+            ->get();
+
+        if ($checkMessages->isEmpty()) {
+            return response()->json(['user' => $user, 'messages' => []]);
+        }
+
         $persons = Message::query()
             ->with('userFrom:id,first_name,last_name')
             ->where('user_id_to', $user->id)
@@ -34,11 +44,6 @@ class MessagesController extends Controller
             ->groupBy(['user_id_from'])
             ->latest()
             ->get();
-
-
-        if ($persons->isEmpty()) {
-            return response()->json(['user' => $user, 'messages' => []]);
-        }
 
         $messagesA = Message::query()
             ->with('userFrom:id,first_name,last_name,student,teacher,parent')
