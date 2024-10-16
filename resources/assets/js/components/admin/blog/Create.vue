@@ -127,7 +127,6 @@ export default {
             let self = this;
             this.blog.slug = this.slug;
             let params = Object.assign({}, self.blog);
-            console.log(params);
             axios.post('/web/blog', params, config)
                 .then(() => {
                     self.cancelForm()

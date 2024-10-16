@@ -7,14 +7,14 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 
-class StoreBlogPostRequest extends FormRequest
+class UpdateBlogImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
@@ -27,11 +27,7 @@ class StoreBlogPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:100',
-            'slug' => 'required|string|max:100',
-            'released_on' => 'required',
-            'release_time' => 'required',
-            'body' => 'required',
+            'image' => 'mimes:jpg,png,jpeg,gif,svg|max:2048|nullable'
         ];
     }
 

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBlogPostRequest;
+use App\Http\Requests\UpdateBlogImageRequest;
 use App\Models\Blog;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -50,11 +50,6 @@ class BlogController extends Controller
         return response()->json($blogs);
     }
 
-    public function create(): View
-    {
-        return view('webapp.admin.blog.create');
-    }
-
     public function store(StoreBlogPostRequest $request)
     {
         try {
@@ -75,16 +70,33 @@ class BlogController extends Controller
         return view('blog.show', compact('blog'));
     }
 
-    public function edit(Blog $id): View
+    public function edit(Blog $blog)
     {
-        return view('webapp.admin.blog.edit')->with('blog', $id);
+        return response()->json($blog);
     }
 
-    public function update(StoreBlogPostRequest $request, Blog $id): RedirectResponse
+    public function update(StoreBlogPostRequest $request, Blog $blog): JsonResponse
     {
-        $this->saveBlogPost($id, $request);
+        try {
+            $this->saveBlogPost($blog, $request, true);
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
+        }
 
-        return back()->with('success', 'Your news article has been updated.');
+        return response()->json([], Response::HTTP_CREATED);
+    }
+
+    public function updateImage(UpdateBlogImageRequest $request, Blog $blog): JsonResponse
+    {
+        try {
+            $blog = $this->updateBlogImage($request, $blog);
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
+        }
+
+        return response()->json(['image' => $blog->image], Response::HTTP_CREATED);
     }
 
     public function destroy(Blog $id): JsonResponse
@@ -94,7 +106,20 @@ class BlogController extends Controller
         return response()->json();
     }
 
-    private function saveBlogPost($editBlog, StoreBlogPostRequest $request): void
+    private function updateBlogImage($request, $blog)
+    {
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = 'MTA_' . date('Ymd_hms') . "." . $file->getClientOriginalExtension();
+            Storage::disk('blog')->put($fileName, File::get($file));
+            $blog->image = $fileName;
+            $blog->update();
+        }
+
+        return $blog;
+    }
+
+    private function saveBlogPost($editBlog, $request, $update = false): void
     {
         $this->setBlogPost($editBlog, $request);
 
@@ -105,10 +130,10 @@ class BlogController extends Controller
             $editBlog->image = $fileName;
         }
 
-        $editBlog->save();
+        $update ? $editBlog->update() : $editBlog->save();
     }
 
-    private function setBlogPost(Blog $blog, StoreBlogPostRequest $request): void
+    private function setBlogPost(Blog $blog, $request): void
     {
         $releaseDate = Carbon::parse($request->get('released_on'))->format('Y-m-d');
 

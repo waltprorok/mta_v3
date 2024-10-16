@@ -7,6 +7,7 @@
         <ul class="breadcrumb">
             <li class="breadcrumb-item"></li>
         </ul>
+
         <div id="app">
             <create-blog></create-blog>
         </div>
