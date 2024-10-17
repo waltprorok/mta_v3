@@ -97,6 +97,10 @@ class MessagesController extends Controller
     {
         $persons = $this->messageService->getUsers($status);
 
+        if ($persons->isEmpty()) {
+            return response()->json();
+        }
+
         return response()->json([
             'persons' => $persons,
         ]);
