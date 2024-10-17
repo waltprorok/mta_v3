@@ -2,7 +2,7 @@
 php artisan down
 git reset --hard
 git pull
-php artisan migrate
+php artisan migrate --no-interaction
 export COMPOSER_ALLOW_SUPERUSER=1
 composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
 php artisan optimize:clear

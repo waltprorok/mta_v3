@@ -87,7 +87,12 @@
                            aria-haspopup="true" v-pre>Account
                         </a>
                         <ul class="dropdown">
-                            <li><a href="{{ route('dashboard') }}"> Dashboard </a></li>
+                            @if(Auth::user()->admin)
+                                <li><a href="{{ route('admin.blog.list') }}"> Admin Section </a></li>
+                            @endif
+                            @if(Auth::user()->teacher || Auth::user()->student || Auth::user()->parent)
+                                <li><a href="{{ route('dashboard') }}"> Dashboard </a></li>
+                            @endif
                             <li>
                                 <a id="logout-link" href="{{ route('logout') }}"
                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -106,7 +111,6 @@
         </div>
     </nav>
     <!-- /Nav -->
-
 </header>
 
 <!-- /Header -->

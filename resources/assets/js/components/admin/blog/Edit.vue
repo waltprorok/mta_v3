@@ -99,7 +99,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="update_image" class="control-label">Update Image</label>
-                                <button class="btn btn-outline-secondary form-control" type="button" @click="imageModal=true">Update</button>
+                                <button class="btn btn-outline-secondary form-control" type="button" @click="imageModal=true">Click to Choose Image</button>
                             </div>
                         </div>
                     </div>

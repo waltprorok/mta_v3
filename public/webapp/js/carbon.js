@@ -44,12 +44,12 @@ $(document).ready(function ($) {
     /**
      * Create Slug Tag
      */
-    $('[name="title"]').keyup(function () {
-        var title = $(this).val();
-        title = title.toLowerCase();
-        title = title.replace(/[^a-zA-Z0-9]+/g, '-');
-        $('[name="slug"]').val(title);
-    });
+    // $('[name="title"]').keyup(function () {
+    //     var title = $(this).val();
+    //     title = title.toLowerCase();
+    //     title = title.replace(/[^a-zA-Z0-9]+/g, '-');
+    //     $('[name="slug"]').val(title);
+    // });
 
     $('#btnEdit').click(function () {
         /*Clear textarea using id */
