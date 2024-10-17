@@ -42,7 +42,7 @@ class MessagesController extends Controller
             ->where('user_id_to', $user->id)
             ->notDeleted()
             ->groupBy(['user_id_from'])
-            ->latest()
+            ->orderByDesc('created_at')
             ->get();
 
         $messagesA = Message::query()
