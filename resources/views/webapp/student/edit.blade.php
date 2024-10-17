@@ -31,7 +31,6 @@
                                     @endif
                                 </div>
                             </div>
-
                             <div class="col-sm-6">
                                 <div class="form-group {{ $errors->has('last_name') ? 'has-error' : '' }}">
                                     <label for="last_name" class="control-label">Last Name <span class="text-danger">*</span></label>
@@ -123,7 +122,6 @@
                                         <option value="Piano">Piano</option>
                                     </select>
                                 </div>
-
                                 @if ($errors->has('instrument'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('instrument') }}</strong>
@@ -146,7 +144,6 @@
                                         <option value="Advance">Advance</option>
                                     </select>
                                 </div>
-
                                 @if ($errors->has('level'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('level') }}</strong>
@@ -155,7 +152,9 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group {{ $errors->has('auto_schedule') ? 'has-error' : '' }}">
-                                    <label for="auto_schedule" class="control-label">Auto Schedule</label>
+                                    <label for="auto_schedule" class="control-label">Auto Schedule Lessons
+                                        <span><i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="While an active student"></i></span>
+                                    </label>
                                     <div class="col-md-6">
                                         <div class="toggle-switch mt-2" data-ts-color="primary">
                                             <input id="auto_schedule" type="checkbox" hidden="hidden" name="auto_schedule"
@@ -164,7 +163,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 @if ($errors->has('auto_schedule'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('auto_schedule') }}</strong>
@@ -204,7 +202,6 @@
                                     @endif
                                 </div>
                             </div>
-
                             <div class="col-sm-6">
                                 <div class="form-group {{ $errors->has('parent_last_name') ? 'has-error' : '' }}">
                                     <label for="parent_last_name" class="control-label">Parent Last Name <span class="text-danger">*</span></label>
@@ -248,6 +245,42 @@
                             </div>
                         </div>
                         <hr/>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group {{ $errors->has('at_studio') ? 'has-error' : '' }}">
+                                    <label for="at_studio" class="control-label">Lessons At Studio</label>
+                                    <div class="col-md-6">
+                                        <div class="toggle-switch mt-2" data-ts-color="primary">
+                                            <input id="at_studio" type="checkbox" hidden="hidden" name="at_studio"
+                                                   value="1" {{ $student->at_studio ? 'checked' : '' }}>
+                                            <label for="at_studio" class="ts-helper"></label>
+                                        </div>
+                                    </div>
+                                    @if ($errors->has('at_studio'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('at_studio') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group {{ $errors->has('at_home') ? 'has-error' : '' }}">
+                                    <label for="at_home" class="control-label">Lessons At Home</label>
+                                    <div class="col-md-6">
+                                        <div class="toggle-switch mt-2" data-ts-color="primary">
+                                            <input id="at_home" type="checkbox" hidden="hidden" name="at_home"
+                                                   value="1" {{ $student->at_home ? 'checked' : '' }}>
+                                            <label for="at_home" class="ts-helper"></label>
+                                        </div>
+                                    </div>
+                                    @if ($errors->has('at_home'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('at_home') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
@@ -362,7 +395,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="photo" class="control-label">Update Picture</label>
+                                    <label for="photo" class="control-label">Add Picture</label>
                                     <input id="photo" type="file" class="form-control" name="photo">
                                 </div>
                             </div>

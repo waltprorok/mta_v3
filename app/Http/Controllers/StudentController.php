@@ -125,6 +125,8 @@ class StudentController extends Controller
         $student->auto_schedule = $request->get('auto_schedule') ?? 0;
         $student->parent_phone = $parentPhoneNumber;
         $student->date_of_birth = $request->get('date_of_birth');
+        $student->at_home = $request->get('at_home') ?? 0;
+        $student->at_studio = $request->get('at_studio') ?? 0;
         $student->address = $request->get('address');
         $student->address_2 = $request->get('address_2');
         $student->city = $request->get('city');
