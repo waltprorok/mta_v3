@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-on:keydown.esc="closeModal()">
         <div v-if="imageModal">
             <!-- modal create read edit -->
             <transition name="modal">
@@ -87,7 +87,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group" :class="error_release_time && classError">
-                                <label for="release_time" class="control-label">Publish Time</label>{{blog.release_time}}
+                                <label for="release_time" class="control-label">Publish Time</label>
                                 <select class="form-control" id="release_time" v-model="blog.release_time">
                                     <option value="09:00:00" selected>9:00 am</option>
                                     <option value="12:00:00">12:00 pm</option>
@@ -99,7 +99,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="update_image" class="control-label">Update Image</label>
-                                <button class="btn btn-primary form-control" type="button" @click="imageModal=true">Update</button>
+                                <button class="btn btn-outline-secondary form-control" type="button" @click="imageModal=true">Update</button>
                             </div>
                         </div>
                     </div>
