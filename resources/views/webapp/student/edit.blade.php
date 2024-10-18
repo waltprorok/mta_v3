@@ -153,7 +153,10 @@
                             <div class="col-sm-6">
                                 <div class="form-group {{ $errors->has('auto_schedule') ? 'has-error' : '' }}">
                                     <label for="auto_schedule" class="control-label">Auto Schedule Lessons
-                                        <span><i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="While an active student"></i></span>
+                                        <span><i class="fa fa-question-circle" aria-hidden="true"
+                                                 data-toggle="tooltip" data-placement="top"
+                                                 title="While an active student"></i>
+                                        </span>
                                     </label>
                                     <div class="col-md-6">
                                         <div class="toggle-switch mt-2" data-ts-color="primary">
