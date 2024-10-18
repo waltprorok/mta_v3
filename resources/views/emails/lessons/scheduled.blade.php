@@ -11,14 +11,14 @@ Your teacher {{ $teacher->first_name }} {{ $teacher->last_name }} has scheduled 
 @endforeach
 
 @if($student->at_studio)
-Where:
+Where:<br />
 {{ $teacher->studio_name }} <br />
 {{ $teacher->address }} {{ $teacher->address_2 }} <br />
 {{ $teacher->city }}, {{ $teacher->state }} {{ $teacher->zip }}
 @endif
 
 @if($student->at_home)
-Where:
+Where:<br />
 {{ $student->address }} {{ $student->address_2 }} <br />
 {{ $student->city }}, {{ $student->state }} {{ $student->zip }}
 @endif

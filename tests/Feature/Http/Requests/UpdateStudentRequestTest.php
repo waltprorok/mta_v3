@@ -38,6 +38,8 @@ class UpdateStudentRequestTest extends TestCase
             'parent_first_name' => $this->faker->firstName,
             'parent_last_name' => $this->faker->lastName,
             'parent_email' => $this->faker->unique()->safeEmail,
+            'at_home' => false,
+            'at_studio' => true,
             'zip' => 15116,
         ], $this->request->rules());
 
