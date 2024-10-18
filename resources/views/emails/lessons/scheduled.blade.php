@@ -10,9 +10,19 @@ Your teacher {{ $teacher->first_name }} {{ $teacher->last_name }} has scheduled 
 * {{ date('l M d, Y | g:ia', strtotime($lesson->start_date)) }} - {{ date('g:ia', strtotime($lesson->end_date)) }}
 @endforeach
 
+@if($student->at_studio)
+Where:<br />
 {{ $teacher->studio_name }} <br />
 {{ $teacher->address }} {{ $teacher->address_2 }} <br />
 {{ $teacher->city }}, {{ $teacher->state }} {{ $teacher->zip }}
+@endif
+
+@if($student->at_home)
+Where:<br />
+{{ $student->address }} {{ $student->address_2 }} <br />
+{{ $student->city }}, {{ $student->state }} {{ $student->zip }}
+@endif
+
 
 Phone: {{ $teacher->phone }} <br />
 Email: {{ $teacher->email }}

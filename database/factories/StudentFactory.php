@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Student;
+use App\Models\User;
 use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factory;
 
@@ -19,12 +20,21 @@ use Illuminate\Database\Eloquent\Factory;
 
 $factory->define(Student::class, function (Faker $faker) {
     return [
-        'student_id' => $faker->unique()->numberBetween(8, 108),
+        'student_id' => function () {
+            return factory(User::class)->create()->id;
+        },
         'teacher_id' => $faker->numberBetween(3, 4),
-        'first_name' => $faker->firstName,
-        'last_name' => $faker->lastName,
-        'email' => $faker->unique()->safeEmail,
+        'first_name' => function ($student) {
+            return App\Models\User::find($student['student_id'])->first_name;
+        },
+        'last_name' => function ($student) {
+            return App\Models\User::find($student['student_id'])->last_name;
+        },
+        'email' => function ($student) {
+            return App\Models\User::find($student['student_id'])->email;
+        },
         'phone' => $faker->numerify('##########'),
         'status' => $faker->numberBetween(1, 4),
     ];
 });
+

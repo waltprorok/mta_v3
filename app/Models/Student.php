@@ -49,6 +49,8 @@ class Student extends Model
         'instrument',
         'level',
         'auto_schedule',
+        'at_home',
+        'at_studio',
         'status',
         'photo',
     ];
@@ -56,6 +58,8 @@ class Student extends Model
     protected $hidden = [
         'teacher_id'
     ];
+
+    protected $touches = ['studentUsers'];
 
     private $phoneNumberService;
 

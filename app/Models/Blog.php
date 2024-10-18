@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,11 +30,6 @@ class Blog extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
-    }
-
-    public function getBodyHtmlAttribute(): ?string
-    {
-        return $this->body ? Markdown::convertToHtml(e($this->body)) : null;
     }
 
     public function getBodyShortAttribute(): ?string

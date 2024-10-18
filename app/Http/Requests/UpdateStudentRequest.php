@@ -30,15 +30,18 @@ class UpdateStudentRequest extends FormRequest
             'phone' => 'string|max:30|nullable',
             'instrument' => 'string|nullable',
             'level' => 'string|nullable',
+            'auto_schedule' => 'boolean',
             'parent_first_name' => 'required_with:parent_email|string|max:50|nullable',
             'parent_last_name' => 'required_with:parent_email|string|max:50|nullable',
             'parent_email' => 'required_with:parent_first_name|required_with:parent_last_name|email|nullable',
             'parent_phone' => 'string|max:30|nullable',
-            'address' => 'string|max:100|nullable',
+            'at_home' => 'required_without:at_studio|boolean',
+            'at_studio' => 'required_without:at_home|boolean',
+            'address' => 'string|max:100|nullable|required_if:at_home,1',
             'address_2' => 'string|max:100|nullable',
-            'city' => 'string|max:50|nullable',
-            'state' => 'string|max:50|nullable',
-            'zip' => 'integer|digits:5|nullable',
+            'city' => 'string|max:50|nullable|required_if:at_home,1',
+            'state' => 'string|max:50|nullable|required_if:at_home,1',
+            'zip' => 'integer|digits:5|nullable|required_if:at_home,1',
         ];
     }
 }

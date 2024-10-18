@@ -65,6 +65,18 @@ $(document).ready(function ($) {
         });
     });
 
+    $("#at_home").change(function() {
+        if ($(this).is(":checked")) {
+            $("#at_studio").prop("checked", false);
+        }
+    });
+
+    $("#at_studio").change(function() {
+        if ($(this).is(":checked")) {
+            $("#at_home").prop("checked", false);
+        }
+    });
+
     $(".table-row").click(function () {
         window.document.location = $(this).data("href");
     });
