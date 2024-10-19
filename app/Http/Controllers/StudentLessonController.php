@@ -235,6 +235,9 @@ class StudentLessonController extends Controller
         $lesson->update();
     }
 
+    /**
+     * @throws Exception
+     */
     private function scheduleUpdateRemaining(Request $request): void
     {
         $getLesson = Lesson::where('id', $request->get('id'))->get();
@@ -243,7 +246,7 @@ class StudentLessonController extends Controller
         $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
 
         // keep to email parents and students
-//        $student = Student::query()->with('getTeacher')->with('parent')->findOrFail($request->get('student_id')); // needed for email
+        // $student = Student::query()->with('getTeacher')->with('parent')->findOrFail($request->get('student_id')); // needed for email
 
         $lessonsToBeUpdated = Lesson::query()
             ->where('student_id', $request->get('student_id'))
@@ -257,21 +260,23 @@ class StudentLessonController extends Controller
         $modifyDate = Carbon::parse($request->get('start_date'));
 
         foreach ($updateTheseLessons as $lesson) {
-            // trash last record is not in month
-            // but don't update start_date
-            // restore if there is one more week in month
-            // add this logic 10-18-2024
-            if ($modifyDate > $endOfMonth) {
-                $lesson->delete();
-            }
             $lesson->billing_rate_id = $request->get('billing_rate_id');
             $lesson->color = $request->get('color');
             $lesson->start_date = $modifyDate->format('Y-m-d') . ' ' . $request->get('start_time');
             $lesson->end_date = $modifyDate->format('Y-m-d') . ' ' . $duration;
             $lesson->interval = (int)$request->get('end_time');
-            $lesson->update();
 
             $modifyDate = $modifyDate->modify('+7 day');
+
+            if ($lesson->deleted_at != null) {
+                $lesson->restore();
+            }
+
+            if ($lesson->end_date > $endOfMonth) {
+                $lesson->delete();
+            } else {
+                $lesson->update();
+            }
         }
     }
 

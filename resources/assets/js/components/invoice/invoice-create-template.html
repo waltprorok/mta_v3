@@ -37,7 +37,7 @@
                         </p>
                         <p class="mb-1">{{ student.email }}</p>
                         <p class="mb-1">{{ student.parent_email }}</p>
-                        <p class="mb-1">{{ student.instrument }}</p>
+                        <p class="mb-1" v-if="student.instrument ">{{ student.instrument }} Lessons</p>
                     </div>
                 </div>
 
