@@ -12,17 +12,21 @@
     @endif
     @if(Route::currentRouteName() == 'teacher.hours')
         <li class="nav-item">
-            <a class="nav-link {{ Route::currentRouteName() == 'teacher.hours' ? 'active' : '' }}"
+            <a class="nav-link {{ Route::currentRouteName() == 'teacher.hours' ? 'active' : '' }}" id="hours"
                href="{{ route('teacher.hours') }}">Hours</a>
         </li>
     @else
         <li class="nav-item">
-            <a class="nav-link {{ Route::currentRouteName() == 'teacher.hoursView' ? 'active' : '' }}"
+            <a class="nav-link {{ Route::currentRouteName() == 'teacher.hoursView' ? 'active' : '' }}" id="hours"
                href="{{ route('teacher.hours') }}">Hours</a>
         </li>
     @endif
-        <li class="nav-item">
-            <a class="nav-link {{ Route::currentRouteName() == 'teacher.billing' ? 'active' : '' }}"
-               href="{{ route('teacher.billing') }}">Billing</a>
-        </li>
+    <li class="nav-item">
+        <a class="nav-link {{ Route::currentRouteName() == 'teacher.instruments' ? 'active' : '' }}" id="instruments"
+           href="{{ route('teacher.instruments') }}">Instruments</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ Route::currentRouteName() == 'teacher.billing' ? 'active' : '' }}" id="billing"
+           href="{{ route('teacher.billing') }}">Billing</a>
+    </li>
 </ul>

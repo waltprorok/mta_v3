@@ -61,6 +61,7 @@ Vue.component('createBlog', require('./components/admin/blog/Create.vue').defaul
 Vue.component('editBlog', require('./components/admin/blog/Edit.vue').default);
 Vue.component('contacts', require('./components/admin/contact/Contacts.vue').default);
 Vue.component('dashboard', require('./components/Dashboard.vue').default);
+Vue.component('instruments', require('./components/instrument/Instruments.vue').default);
 Vue.component('invoiceCreate', require('./components/invoice/InvoiceCreate.vue').default);
 Vue.component('invoiceList', require('./components/invoice/InvoiceList.vue').default);
 Vue.component('listOfPayments', require('./components/invoice/ListOfPayments.vue').default);

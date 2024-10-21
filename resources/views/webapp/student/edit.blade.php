@@ -115,11 +115,17 @@
                                         @else
                                             <option value="" selected="selected">Select an instrument</option>
                                         @endif
-                                        <option value="Guitar">Guitar</option>
-                                        <option value="Bass">Bass</option>
-                                        <option value="Drums">Drums</option>
-                                        <option value="Voice">Voice</option>
-                                        <option value="Piano">Piano</option>
+                                        @if($instruments->isEmpty())
+                                            <option value="Guitar">Guitar</option>
+                                            <option value="Bass">Bass</option>
+                                            <option value="Drums">Drums</option>
+                                            <option value="Voice">Voice</option>
+                                            <option value="Piano">Piano</option>
+                                        @else
+                                            @foreach($instruments as $instrument)
+                                                <option value="{{$instrument->name}}">{{$instrument->name}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                                 @if ($errors->has('instrument'))
