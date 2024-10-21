@@ -1,4 +1,4 @@
-<template src="./billing-rate-template.html"></template>
+<template src="./instrument-template.html"></template>
 
 <script>
 import TotalEntries from "../TotalEntries";
@@ -6,39 +6,29 @@ import {dateParse} from "@vuejs-community/vue-filter-date-parse";
 import {dateFormat} from "vue-filter-date-format";
 
 export default {
-    name: 'BillingRate',
+    name: 'Instruments',
     data: function () {
         return {
             classError: '',
-            error_type: '',
-            error_amount: '',
+            filter: '',
             columns: [
-                {label: 'Active', filterable: false, sortable: false},
-                {label: 'Type', field: 'type', sortable: false},
-                {label: 'Amount', field: 'amount', sortable: false},
-                {label: 'Description', filterable: false, sortable: false},
+                {label: 'Name', field: 'name', sortable: false},
                 {label: 'Created', filterable: false, sortable: false},
-                {label: 'Default', filterable: false, sortable: false},
                 {label: 'Action', filterable: false, sortable: false},
             ],
-            types: ['lesson', 'hourly', 'monthly'],
             edit: false,
-            filter: '',
+            id: null,
             showForm: false,
-            read: false,
             showModal: false,
             list: [],
             page: 1,
             per_page: 10,
-            pages: [10, 25, 50, 100],
-            rate: {
+            pages: [10, 25],
+            instrument: {
                 id: null,
-                type: null,
-                amount: null,
-                description: null,
-                default: false,
-                active: true,
+                name: null,
             },
+            error_name: '',
         }
     },
 
@@ -57,19 +47,10 @@ export default {
             });
             return capitalized.join(' ');
         },
-
-        toCurrency: function (value) {
-            let formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD'
-            });
-
-            return formatter.format(value);
-        }
     },
 
     mounted: function () {
-        this.fetchRateList();
+        this.fetchInstrumentList();
     },
 
     methods: {
@@ -78,39 +59,34 @@ export default {
         cancelForm: function () {
             let self = this;
             self.clearErrorData();
-            self.clearRateData();
+            self.clearInstrumentData();
         },
 
         clearErrorData: function () {
             let self = this;
             self.classError = '';
-            self.error_type = '';
-            self.error_amount = '';
+            self.error_name = '';
         },
 
-        clearRateData: function () {
+        clearInstrumentData: function () {
             let self = this;
             self.showForm = false;
-            self.rate.type = null;
-            self.rate.amount = null;
-            self.rate.description = null;
-            self.rate.default = false;
-            self.rate.active = true;
+            self.instrument.name = null;
             self.edit = false;
         },
 
-        createBillingRate: function () {
+        createInstrument: function () {
             let self = this;
-            let params = Object.assign({}, self.rate);
-            axios.post('/web/billing-rate', params)
+            let params = Object.assign({}, self.instrument);
+            axios.post('/web/instrument', params)
                 .then(() => {
-                    self.clearRateData()
+                    self.clearInstrumentData();
                     self.clearErrorData();
-                    self.fetchRateList();
+                    self.fetchInstrumentList();
                     this.$notify({
                         type: 'success',
                         title: 'Success',
-                        text: 'Billing rate created.',
+                        text: 'Instrument was created.',
                         duration: 10000,
                     });
                 })
@@ -119,23 +95,23 @@ export default {
                     this.$notify({
                         type: 'error',
                         title: 'Error',
-                        text: 'Could not create billing rate.',
+                        text: 'Could not create instrument.',
                         duration: 10000,
                     });
                 });
         },
 
-        deleteRate: function (id) {
+        deleteInstrument: function (id) {
             let self = this;
-            let params = Object.assign({}, self.rate);
-            axios.delete('/web/billing-rate/' + id, params)
+            let params = Object.assign({}, self.instrument);
+            axios.delete('/web/instrument/' + id, params)
                 .then(() => {
                     self.showModal = false;
-                    self.fetchRateList();
+                    self.fetchInstrumentList();
                     this.$notify({
                         type: 'warn',
                         title: 'Deleted',
-                        text: 'Billing rate was deleted.',
+                        text: 'Instrument was deleted.',
                         duration: 10000,
                     });
                 })
@@ -144,7 +120,7 @@ export default {
                     this.$notify({
                         type: 'error',
                         title: 'Error',
-                        text: 'Could not delete billing rate.',
+                        text: 'Could not delete instrument.',
                         duration: 10000,
                     });
                 });
@@ -152,13 +128,12 @@ export default {
 
         getErrorMessage: function (error) {
             let self = this;
-            self.error_type = error.response.data.error.type;
-            self.error_amount = error.response.data.error.amount;
+            self.error_name = error.response.data.error.name;
             self.classError = 'has-error';
         },
 
-        fetchRateList: function () {
-            axios.get('/web/billing-rate')
+        fetchInstrumentList: function () {
+            axios.get('/web/instrument')
                 .then((response) => {
                     this.list = response.data;
                 })
@@ -167,23 +142,10 @@ export default {
                     this.$notify({
                         type: 'error',
                         title: 'Error',
-                        text: 'Could not load billing rates.',
+                        text: 'Could not load instruments.',
                         duration: 10000,
                     });
                 });
-        },
-
-        showDefaultIcon: function (row) {
-            return row.default === true && row.active ===true;
-        },
-
-        /**
-         * @param {Object} row
-         * @property {Object} billing_rate
-         * @returns {boolean}
-         */
-        showDeleteIcon: function (row) {
-            return row.billing_rate === null;
         },
 
         showModalDelete: function (id) {
@@ -192,35 +154,38 @@ export default {
             self.id = id;
         },
 
-        showRate: function (id, read) {
+        showInstrument: function (id) {
             let self = this;
             self.showForm = true;
-            self.read = read;
             self.edit = true;
-            axios.get('/web/billing-rate/' + id)
+            axios.get('/web/instrument/' + id)
                 .then((response) => {
-                    self.rate.id = response.data.id;
-                    self.rate.type = response.data.type;
-                    self.rate.amount = response.data.amount;
-                    self.rate.description = response.data.description;
-                    self.rate.default = response.data.default;
-                    self.rate.active = response.data.active;
+                    self.instrument.id = response.data.id;
+                    self.instrument.name = response.data.name;
                 })
-            self.edit = true;
+                .catch((error) => {
+                    self.getErrorMessage(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not show instrument.',
+                        duration: 10000,
+                    });
+                });
         },
 
-        updateRate: function (id) {
+        updateInstrument: function (id) {
             let self = this;
-            let params = Object.assign({}, self.rate);
-            axios.patch('/web/billing-rate/' + id, params)
+            let params = Object.assign({}, self.instrument);
+            axios.patch('/web/instrument/' + id, params)
                 .then(() => {
-                    self.clearRateData();
+                    self.clearInstrumentData();
                     self.clearErrorData();
-                    self.fetchRateList();
+                    self.fetchInstrumentList();
                     this.$notify({
                         type: 'success',
                         title: 'Success',
-                        text: 'Updated billing rate.',
+                        text: 'Updated instrument.',
                         duration: 10000,
                     });
                 })
@@ -229,7 +194,7 @@ export default {
                     this.$notify({
                         type: 'error',
                         title: 'Error',
-                        text: 'Could not update billing rate.',
+                        text: 'Could not update instrument.',
                         duration: 10000,
                     });
                 });

@@ -207,8 +207,8 @@
                                     <button type="submit" name="action" value="update" class="btn btn-primary">
                                         Update
                                     </button>
-                                    <button type="submit" name="action" value="updateAll" class="btn btn-warning">
-                                        Update All
+                                    <button type="submit" name="action" value="updateRemaining" class="btn btn-warning">
+                                        Update Remaining
                                     </button>
                                 @endif
                                 <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancel</a>

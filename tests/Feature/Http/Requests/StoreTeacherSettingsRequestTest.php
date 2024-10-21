@@ -36,7 +36,7 @@ class StoreTeacherSettingsRequestTest extends TestCase
             'address' => $this->faker->streetAddress,
             'city' => $this->faker->city,
             'state' => $this->faker->state,
-            'zip' => 15116,
+            'zip' => $this->faker->postcode,
             'email' => $this->faker->unique()->email,
             'phone' => $this->faker->numerify('###-###-####'),
         ], $this->request->rules());

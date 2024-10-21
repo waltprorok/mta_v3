@@ -41,7 +41,7 @@ class UpdateStudentRequest extends FormRequest
             'address_2' => 'string|max:100|nullable',
             'city' => 'string|max:50|nullable|required_if:at_home,1',
             'state' => 'string|max:50|nullable|required_if:at_home,1',
-            'zip' => 'integer|digits:5|nullable|required_if:at_home,1',
+            'zip' => 'string|max:10|nullable|required_if:at_home,1',
         ];
     }
 }

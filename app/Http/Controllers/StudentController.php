@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Mail\WelcomeNewUserMail;
+use App\Models\Instrument;
 use App\Models\Student;
 use App\Models\User;
 use App\Services\PhoneNumberService;
@@ -71,7 +72,11 @@ class StudentController extends Controller
             ->where(['id' => $id, 'teacher_id' => Auth::id()])
             ->first();
 
-        return view('webapp.student.edit')->with('student', $student);
+        $instruments = Instrument::query()->where('teacher_id', Auth::id())->get();
+
+        return view('webapp.student.edit')
+            ->with('student', $student)
+            ->with('instruments', $instruments);
     }
 
     public function update(UpdateStudentRequest $request): RedirectResponse

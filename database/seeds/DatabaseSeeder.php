@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TeachersTableDataSeeder::class);
         $this->call(BusinessHoursTableDataSeeder::class);
         $this->call(PaymentTypeTableSeeder::class);
+        $this->call(BillingRateDataSeeder::class);
     }
 }

@@ -136,8 +136,8 @@ class StudentLessonController extends Controller
             return redirect()->back()->with('success', 'You successfully updated the student\'s lesson.');
         }
 
-        if ($request->input('action') == 'updateAll') {
-            $this->scheduleUpdateAll($request);
+        if ($request->input('action') == 'updateRemaining') {
+            $this->scheduleUpdateRemaining($request);
             return redirect()->back()->with('success', 'You successfully updated all the student\'s lessons.');
         }
 
@@ -220,13 +220,14 @@ class StudentLessonController extends Controller
         $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
 
         $lesson = Lesson::query()
-            ->where(['student_id' => $request->get('student_id'), 'teacher_id' => Auth::id(), 'id' => $request->get('id')])
+            ->where([
+                'student_id' => $request->get('student_id'),
+                'teacher_id' => Auth::id(),
+                'id' => $request->get('id')
+            ])
             ->first();
-        $lesson->id = $request->get('id');
-        $lesson->student_id = $request->get('student_id');
-        $lesson->teacher_id = Auth::id();
+
         $lesson->billing_rate_id = $request->get('billing_rate_id');
-        $lesson->title = $request->get('title');
         $lesson->color = $request->get('color');
         $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
         $lesson->end_date = $request->get('start_date') . ' ' . $duration;
@@ -234,38 +235,48 @@ class StudentLessonController extends Controller
         $lesson->update();
     }
 
-    private function scheduleUpdateAll(Request $request): void
+    /**
+     * @throws Exception
+     */
+    private function scheduleUpdateRemaining(Request $request): void
     {
-//        $begin = Carbon::parse($request->get('start_date'));
-//        $end = Carbon::parse($request->get('start_date'));
-//        $endOfMonth = $end->endOfMonth()->weekOfYear;
-//        $weekOfMonth = $begin->weekOfYear;
-//        $numberOfWeeksInMonth = $endOfMonth - $weekOfMonth;
-
+        $getLesson = Lesson::where('id', $request->get('id'))->get();
+        $lessonDate = Carbon::parse($request->get('start_date'));
+        $endOfMonth = Carbon::parse($lessonDate)->endOfMonth();
         $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
-        $begin = Carbon::parse($request->get('start_date'));
 
-        $lessons = Lesson::where('student_id', $request->get('student_id'))
+        // keep to email parents and students
+        // $student = Student::query()->with('getTeacher')->with('parent')->findOrFail($request->get('student_id')); // needed for email
+
+        $lessonsToBeUpdated = Lesson::query()
+            ->where('student_id', $request->get('student_id'))
             ->where('teacher_id', Auth::id())
-            ->whereMonth('start_date', $begin)
+            ->whereBetween('start_date', [$lessonDate, $endOfMonth])
+            ->withTrashed()
             ->get();
 
-//        if($lessons->count() > $numberOfWeeksInMonth) {
-//            $lessons = $lessons->slice(0, -1);
-//        }
+        $updateTheseLessons = $getLesson->merge($lessonsToBeUpdated);
 
-        foreach ($lessons as $lesson) {
-            $lesson->id = $lesson->id;
-            $lesson->student_id = $request->get('student_id');
-            $lesson->teacher_id = Auth::id();
+        $modifyDate = Carbon::parse($request->get('start_date'));
+
+        foreach ($updateTheseLessons as $lesson) {
             $lesson->billing_rate_id = $request->get('billing_rate_id');
-            $lesson->title = $request->get('title');
             $lesson->color = $request->get('color');
-            $lesson->start_date = $begin->format('Y-m-d') . ' ' . $request->get('start_time');
-            $lesson->end_date = $begin->format('Y-m-d') . ' ' . $duration;
+            $lesson->start_date = $modifyDate->format('Y-m-d') . ' ' . $request->get('start_time');
+            $lesson->end_date = $modifyDate->format('Y-m-d') . ' ' . $duration;
             $lesson->interval = (int)$request->get('end_time');
-            $lesson->update();
-            $begin = $begin->modify('+7 day');
+
+            $modifyDate = $modifyDate->modify('+7 day');
+
+            if ($lesson->deleted_at != null) {
+                $lesson->restore();
+            }
+
+            if ($lesson->end_date > $endOfMonth) {
+                $lesson->delete();
+            } else {
+                $lesson->update();
+            }
         }
     }
 

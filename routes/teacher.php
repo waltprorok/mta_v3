@@ -14,6 +14,7 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::resource('billing-rate', 'BillingRateController');
         Route::get('dashboard', 'DashboardController@dashboard');
         Route::get('dashboard/completed-lessons', 'DashboardController@getCompletedLessonsData');
+        Route::resource('instrument', 'InstrumentController');
         Route::get('invoice', 'InvoiceController@index');
         Route::get('invoice-create', 'InvoiceController@createInvoice');
         Route::get('invoice/list-of-payments', 'InvoiceController@getListOfPayments');
@@ -54,6 +55,7 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::post('store', 'TeacherController@store')->name('save.studioSettings');
         Route::get('profile', 'TeacherController@profile')->name('teacher.profile');
         Route::view('rates', 'webapp.teacher.billing')->name('teacher.billing');
+        Route::view('instruments', 'webapp.teacher.instrument')->name('teacher.instruments');
         Route::get('hours', 'BusinessHourController@index')->name('teacher.hours');
         Route::post('hours', 'BusinessHourController@store')->name('teacher.hoursSave');
         Route::put('hours/update', 'BusinessHourController@update')->name('teacher.hoursUpdate');

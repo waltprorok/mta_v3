@@ -115,11 +115,17 @@
                                         @else
                                             <option value="" selected="selected">Select an instrument</option>
                                         @endif
-                                        <option value="Guitar">Guitar</option>
-                                        <option value="Bass">Bass</option>
-                                        <option value="Drums">Drums</option>
-                                        <option value="Voice">Voice</option>
-                                        <option value="Piano">Piano</option>
+                                        @if($instruments->isEmpty())
+                                            <option value="Guitar">Guitar</option>
+                                            <option value="Bass">Bass</option>
+                                            <option value="Drums">Drums</option>
+                                            <option value="Voice">Voice</option>
+                                            <option value="Piano">Piano</option>
+                                        @else
+                                            @foreach($instruments as $instrument)
+                                                <option value="{{$instrument->name}}">{{$instrument->name}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                                 @if ($errors->has('instrument'))
@@ -153,7 +159,10 @@
                             <div class="col-sm-6">
                                 <div class="form-group {{ $errors->has('auto_schedule') ? 'has-error' : '' }}">
                                     <label for="auto_schedule" class="control-label">Auto Schedule Lessons
-                                        <span><i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="While an active student"></i></span>
+                                        <span><i class="fa fa-question-circle" aria-hidden="true"
+                                                 data-toggle="tooltip" data-placement="top"
+                                                 title="While an active student"></i>
+                                        </span>
                                     </label>
                                     <div class="col-md-6">
                                         <div class="toggle-switch mt-2" data-ts-color="primary">
