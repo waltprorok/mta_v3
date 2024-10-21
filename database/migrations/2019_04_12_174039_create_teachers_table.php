@@ -26,7 +26,7 @@ class CreateTeachersTable extends Migration
             $table->string('address_2')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
-            $table->integer('zip')->nullable();
+            $table->string('zip')->nullable();
             $table->string('email')->nullable()->unique();
             $table->string('phone')->nullable();
             $table->string('logo')->nullable();

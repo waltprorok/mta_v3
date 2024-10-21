@@ -31,7 +31,7 @@ class StoreTeacherSettingsRequest extends FormRequest
             'address_2' => 'max:120',
             'city' => 'required|string|max:100',
             'state' => 'required|string|max:50',
-            'zip' => 'required|integer|digits:5',
+            'zip' => 'required|string|max:10',
             'email' => 'required|string|email|max:100',
             'phone' => 'required|string|max:20',
             'logo' => 'mimes:jpeg,jpg,png|max:3400'

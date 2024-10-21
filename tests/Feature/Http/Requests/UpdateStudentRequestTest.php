@@ -40,7 +40,7 @@ class UpdateStudentRequestTest extends TestCase
             'parent_email' => $this->faker->unique()->safeEmail,
             'at_home' => false,
             'at_studio' => true,
-            'zip' => 15116,
+            'zip' => $this->faker->postcode,
         ], $this->request->rules());
 
         $this->assertTrue($validator->passes());
