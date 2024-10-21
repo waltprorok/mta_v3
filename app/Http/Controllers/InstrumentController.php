@@ -18,7 +18,7 @@ class InstrumentController extends Controller
         try {
             $instruments = Instrument::query()
                 ->where('teacher_id', Auth::id())
-                ->orderBy('name`')
+                ->orderBy('name')
                 ->get();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
