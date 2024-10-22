@@ -121,6 +121,8 @@ img {
 }
 
 .active_chat {
+    border-left-style: solid;
+    border-left-color: #42a5f5;
     background: #ebebeb;
 }
 

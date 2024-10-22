@@ -44,8 +44,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="persons === null">
-                                <p class="text-center">Add Students</p>
+                            <div v-if="!persons">
+                                <p class="text-center mt-4">Start a conversation</p>
                             </div>
                         </div>
                     </div>
