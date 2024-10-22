@@ -36,6 +36,8 @@ class UserLogInTest extends TestCase
     {
         config()->set('honeypot.enabled', false);
 
+        factory(User::class)->create(['id' => 2, 'first_name' => 'Admin', 'last_name' => 'User']);
+
         $user = factory(User::class)->make();
 
         $response = $this->post('/register', [

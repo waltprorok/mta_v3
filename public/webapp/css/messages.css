@@ -3,6 +3,14 @@
     margin: auto;
 }
 
+.sent_msg a {
+    color: #cccccc;
+}
+
+.sent_msg a:hover {
+    color: white;
+}
+
 img {
     max-width: 100%;
 }
@@ -208,7 +216,7 @@ img {
 }
 
 .messaging {
-    padding: 0 0 50px 0;
+    padding: 0;
 }
 
 .msg_history {
