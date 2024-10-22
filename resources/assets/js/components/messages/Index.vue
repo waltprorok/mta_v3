@@ -44,16 +44,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <div v-if="persons === null">
+                                <p class="text-center">Add Students</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="mesgs" v-chat-scroll="{always: false, smooth: true}">
+                    <div class="mesgs" v-chat-scroll>
                         <div class="msg_history" v-for="message in messages">
-                            <div class="incoming_msg" v-show="message.user_from.parent || message.user_from.student">
+                            <div class="incoming_msg" v-show="message.user_from.parent || message.user_from.student || message.user_from.admin">
                                 <div class="incoming_msg_img"><img src="/webapp/img/avatar.jpeg" alt="avatar"></div>
                                 <div class="received_msg">
                                     <div class="received_withd_msg">
                                         <span class="time_date">{{ message.user_from.first_name }}</span>
-                                        <p>{{ message.body }}</p>
+                                        <p v-html="message.body"></p>
                                         <span class="time_date">{{ message.created_at }}<span v-if="message.read">&nbsp;|&nbsp;<strong>Read</strong></span></span>
 
                                     </div>
@@ -62,7 +65,7 @@
                             <div class="outgoing_msg" v-show="message.user_from.teacher">
                                 <div class="sent_msg">
                                     <span class="time_date">{{ message.user_from.first_name }}</span>
-                                    <p>{{ message.body }}</p>
+                                    <p v-html="message.body"></p>
                                     <span class="time_date">{{ message.created_at }}</span>
                                 </div>
                             </div>
@@ -82,6 +85,7 @@
         <notifications position="bottom right"/>
     </div>
 </template>
+
 <script>
 // Example Code Template: https://bootsnipp.com/snippets/1ea0N
 import {dateFormat} from "vue-filter-date-format";

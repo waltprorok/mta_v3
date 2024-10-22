@@ -26,6 +26,8 @@
                         </a>
                     </li>
 
+                    @include('partials.messageNavBar')
+
                     <li class="nav-item">
                         <a href="{{ route('admin.student.index') }}"
                            class="nav-link {{ Route::currentRouteName() == 'admin.student.index' ? 'active' : '' }}">

@@ -69,14 +69,14 @@ class MessagesController extends Controller
         $user = Auth::user();
 
         $messagesFromA = Message::query()
-            ->with('userFrom:id,first_name,last_name,student,teacher,parent')
+            ->with('userFrom:id,first_name,last_name,student,teacher,parent,admin')
             ->where('user_id_from', $user->id)
             ->where('user_id_to', $id)
             ->notDeleted()
             ->get();
 
         $messagesFromB = Message::query()
-            ->with('userFrom:id,first_name,last_name,student,teacher,parent')
+            ->with('userFrom:id,first_name,last_name,student,teacher,parent,admin')
             ->where('user_id_from', $id)
             ->where('user_id_to', $user->id)
             ->notDeleted()
