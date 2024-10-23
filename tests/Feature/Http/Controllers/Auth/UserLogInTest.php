@@ -58,11 +58,11 @@ class UserLogInTest extends TestCase
             'email' => $user->email,
         ]);
 
-        Mail::assertSent(WelcomeMail::class, function ($mail) use ($user) {
+        Mail::assertQueued(WelcomeMail::class, function ($mail) use ($user) {
             return $mail->hasTo($user->email);
         });
 
-        Mail::assertSent(WelcomeMail::class, 1);
+        Mail::assertQueued(WelcomeMail::class, 1);
     }
 
     public function test_users_can_not_authenticate_with_invalid_password()

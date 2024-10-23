@@ -29,32 +29,32 @@ class SubscriptionControllerTest extends TestCase
 
     public function test_cancel_subscription_email()
     {
-        Mail::to($this->user->email)->send(new CancelledSubscriptionMail($this->user));
+        Mail::to($this->user->email)->queue(new CancelledSubscriptionMail($this->user));
 
-        Mail::assertSent(CancelledSubscriptionMail::class, 1);
+        Mail::assertQueued(CancelledSubscriptionMail::class, 1);
     }
 
     public function test_change_subscription_email()
     {
         $newPlan = factory(Plan::class)->make();
 
-        Mail::to($this->user->email)->send(new ChangedSubscriptionMail($this->user, $newPlan));
+        Mail::to($this->user->email)->queue(new ChangedSubscriptionMail($this->user, $newPlan));
 
-        Mail::assertSent(ChangedSubscriptionMail::class, 1);
+        Mail::assertQueued(ChangedSubscriptionMail::class, 1);
     }
 
     public function test_resume_subscription_email()
     {
-        Mail::to($this->user->email)->send(new ResumeSubscriptionMail($this->user));
+        Mail::to($this->user->email)->queue(new ResumeSubscriptionMail($this->user));
 
-        Mail::assertSent(ResumeSubscriptionMail::class, 1);
+        Mail::assertQueued(ResumeSubscriptionMail::class, 1);
     }
 
     public function test_subscribed_email()
     {
-        Mail::to($this->user->email)->send(new SubscribedMail($this->user));
+        Mail::to($this->user->email)->queue(new SubscribedMail($this->user));
 
-        Mail::assertSent(SubscribedMail::class, 1);
+        Mail::assertQueued(SubscribedMail::class, 1);
     }
 
     public function test_update_user_email()
@@ -67,15 +67,15 @@ class SubscriptionControllerTest extends TestCase
             'email' => $this->user->email,
         ])->assertStatus(302);
 
-        Mail::to($this->user->email)->send(new UserEmailChangedMail($this->user));
+        Mail::to($this->user->email)->queue(new UserEmailChangedMail($this->user));
 
-        Mail::assertSent(UserEmailChangedMail::class, 1);
+        Mail::assertQueued(UserEmailChangedMail::class, 1);
     }
 
     public function test_update_credit_card_email()
     {
-        Mail::to($this->user->email)->send(new UpdatedCreditCardMail($this->user));
+        Mail::to($this->user->email)->queue(new UpdatedCreditCardMail($this->user));
 
-        Mail::assertSent(UpdatedCreditCardMail::class, 1);
+        Mail::assertQueued(UpdatedCreditCardMail::class, 1);
     }
 }

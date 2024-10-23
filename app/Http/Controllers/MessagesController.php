@@ -118,7 +118,7 @@ class MessagesController extends Controller
             ]);
 
 //            $toUser = User::query()->find($request->get('to'));
-//            Mail::to($toUser->email)->send(new MessageTo($request, $toUser));
+//            Mail::to($toUser->email)->queue(new MessageTo($request, $toUser));
 
         } catch (\Exception $exception) {
             Log::info($exception->getMessage());

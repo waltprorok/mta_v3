@@ -111,7 +111,7 @@ class StudentController extends Controller
                 $student->parent_id = $parentUser->id;
                 $student->save();
 
-                Mail::to($parentUser->email)->send(new WelcomeNewUserMail($parentUser));
+                Mail::to($parentUser->email)->queue(new WelcomeNewUserMail($parentUser));
             } catch (\Exception $exception) {
                 Log::info($exception->getMessage());
             }
@@ -183,7 +183,7 @@ class StudentController extends Controller
                     'auto_schedule' => $this->isStatusActive($request),
                 ]);
                 // send email
-                Mail::to($studentUser->email)->send(new WelcomeNewUserMail($studentUser));
+                Mail::to($studentUser->email)->queue(new WelcomeNewUserMail($studentUser));
             } catch (\Exception $exception) {
                 Log::info($exception->getMessage());
             }
@@ -231,7 +231,7 @@ class StudentController extends Controller
                 ]);
 
                 // send email
-                Mail::to($parentUser->email)->send(new WelcomeNewUserMail($parentUser));
+                Mail::to($parentUser->email)->queue(new WelcomeNewUserMail($parentUser));
             } catch (\Exception $exception) {
                 Log::info($exception->getMessage());
             }
@@ -264,7 +264,7 @@ class StudentController extends Controller
                 ]
             );
             // send email to new student user
-            Mail::to($user->email)->send(new WelcomeNewUserMail($user));
+            Mail::to($user->email)->queue(new WelcomeNewUserMail($user));
         }
 
         return $user;
