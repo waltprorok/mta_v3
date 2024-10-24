@@ -105,9 +105,7 @@
                     <td v-if="row.is_paid === true"><span class="btn btn-sm btn-success"><i class="fa fa-check"></i></span></td>
                     <td>{{ row.student.first_name }}</td>
                     <td>{{ row.student.last_name }}</td>
-                    <td>
-                        <phone-number-format v-bind:data="row.student"></phone-number-format>
-                    </td>
+                    <td><phone-number-format v-bind:data="row.student"></phone-number-format></td>
                     <td>{{ row.student.email }}</td>
                     <td>{{ row.balance_due | toCurrency }}</td>
                     <td v-if="hasDueDate(row)">{{ row.due_date | dateParse('YYYY-MM-DD') | dateFormat('MM-DD-YYYY') }}</td>

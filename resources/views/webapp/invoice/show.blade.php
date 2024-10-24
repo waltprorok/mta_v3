@@ -51,13 +51,12 @@
                         <p class="mb-1">@if ($invoice->student->email)
                                 {{ $invoice->student->email }}
                             @else @endif</p>
-                        <p class="mb-1">@if ($invoice->student->parent_email)
-                                {{ $invoice->student->parent_email }}
+                        <p class="mb-1">@if ($invoice->student->parent)
+                                {{ $invoice->student->parent->email }}
                             @else @endif</p>
                         <p class="mb-1">@if ($invoice->student->phone)
                                 {{ $invoice->student->phone_number }}
                             @else @endif</p>
-
                     </div>
                 </div>
 

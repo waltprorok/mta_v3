@@ -143,7 +143,7 @@
             <template v-slot="{ columns, row }">
                 <tr>
                     <td v-show="!hasOneLesson(row) && !getStatusData(row)">
-                        <span class="btn btn-sm btn-outline-danger"><i class="fa fa-times"></i></span>
+                        <span class="btn btn-sm btn-danger"><i class="fa fa-times"></i></span>
                     </td>
                     <td v-show="hasOneLesson(row) && !getStatusData(row)">
                         <span class="btn btn-sm btn-success"><i class="fa fa-check"></i></span>

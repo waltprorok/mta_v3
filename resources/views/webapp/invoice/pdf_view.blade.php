@@ -47,7 +47,7 @@
                 @endif
                 <br>
                 <div>{{ $invoice->student->email }} </div>
-                <div>{{ $invoice->student->parent_email }} </div>
+                <div>{{ $invoice->student->parent->email }} </div>
             </td>
         </tr>
     </table>

@@ -135,6 +135,7 @@ export default {
         },
 
         createInvoicePayment: function () {
+            this.disableSave = true;
             let self = this;
             let params = Object.assign({}, self.invoice);
             axios.patch('/web/invoice/update/' + self.invoice.id, params)

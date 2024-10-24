@@ -73,6 +73,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('messages/index/{id}', 'MessagesController@show');
         Route::get('messages/status/{status?}', 'MessagesController@status');
         Route::post('messages/store', 'MessagesController@store');
+        Route::get('payments', 'PaymentController@index');
+
+    });
+    Route::prefix('payments')->group(function () {
+        Route::view('/', 'webapp.payments.payments')->name('payment.index');
+        Route::get('/download/pdf/{id}', 'InvoiceController@downloadPDF')->name('payments.download.pdf');
+        Route::get('/show/{id}', 'InvoiceController@show')->name('payments.show');
     });
 
     Route::get('support', 'SupportController@index')->name('support');

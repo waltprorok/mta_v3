@@ -36,7 +36,7 @@
                             <phone-number-format v-bind:data="student"></phone-number-format>
                         </p>
                         <p class="mb-1">{{ student.email }}</p>
-                        <p class="mb-1">{{ student.parent_email }}</p>
+                        <p class="mb-1" v-if="student.parent">{{ student.parent.email }}</p>
                         <p class="mb-1" v-if="student.instrument ">{{ student.instrument }} Lessons</p>
                     </div>
                 </div>

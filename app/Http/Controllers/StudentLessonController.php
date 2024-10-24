@@ -317,7 +317,7 @@ class StudentLessonController extends Controller
 
         Lesson::query()->where('student_id', $lesson->student_id)
             ->where('teacher_id', Auth::id())
-            ->whereDate('start_date', '>=', date('Y-m-d'))
+            ->whereDate('start_date', '>=', $lesson->start_date)
             ->delete();
     }
 

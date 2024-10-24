@@ -8,7 +8,7 @@ Thank you for your business.
 
 Attached you will find our invoice {{ 'Invoice_MTA_' . $invoice['id'] }}
 
-@component('mail::button', ['url' => route('contact')])
+@component('mail::button', ['url' => route('support')])
     Support
 @endcomponent
 

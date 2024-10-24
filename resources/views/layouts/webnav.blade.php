@@ -75,8 +75,8 @@
                     @include('partials.messageNavBar')
 
                     <li class="nav-item">
-                        <a href="{{ route('parent.household') }}"
-                           class="nav-link {{ Route::currentRouteName() == '#' ? 'active' : '' }}">
+                        <a href="{{ route('payment.index') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'payment.index' ? 'active' : '' }}">
                             <i class="fa fa-credit-card"></i>Payments
                         </a>
                     </li>
@@ -94,6 +94,13 @@
                         <a href="#"
                            class="nav-link {{ Route::currentRouteName() == '#' ? 'active' : '' }}">
                             <i class="fa fa-music"></i>Sheet Music
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('payment.index') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'payment.index' ? 'active' : '' }}">
+                            <i class="fa fa-credit-card"></i>Payments
                         </a>
                     </li>
 
@@ -174,17 +181,17 @@
                                 </a>
                             </li>
 
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="#" class="nav-link">--}}
-{{--                                    <i class="fa fa-pencil ml-3"></i>Transaction Log--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            {{--                            <li class="nav-item">--}}
+                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                    <i class="fa fa-pencil ml-3"></i>Transaction Log--}}
+                            {{--                                </a>--}}
+                            {{--                            </li>--}}
 
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="#" class="nav-link">--}}
-{{--                                    <i class="fa fa-money ml-3"></i>Payments Received--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            {{--                            <li class="nav-item">--}}
+                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                    <i class="fa fa-money ml-3"></i>Payments Received--}}
+                            {{--                                </a>--}}
+                            {{--                            </li>--}}
 
                             <li class="nav-item">
                                 <a href="{{ route('invoice.list_of_payments') }}" class="nav-link {{ Route::currentRouteName() == 'invoice.list_of_payments' ? 'active' : '' }}">
@@ -192,17 +199,17 @@
                                 </a>
                             </li>
 
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="#" class="nav-link">--}}
-{{--                                    <i class="fa fa-keyboard-o ml-3"></i>Enter a Payment--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            {{--                            <li class="nav-item">--}}
+                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                    <i class="fa fa-keyboard-o ml-3"></i>Enter a Payment--}}
+                            {{--                                </a>--}}
+                            {{--                            </li>--}}
 
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="#" class="nav-link">--}}
-{{--                                    <i class="fa fa-check-square-o ml-3"></i>Fees &amp; Credits--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            {{--                            <li class="nav-item">--}}
+                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                    <i class="fa fa-check-square-o ml-3"></i>Fees &amp; Credits--}}
+                            {{--                                </a>--}}
+                            {{--                            </li>--}}
 
                             {{--                            <li class="nav-item">--}}
                             {{--                                <a href="#" class="nav-link">--}}
