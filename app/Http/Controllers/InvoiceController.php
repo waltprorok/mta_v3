@@ -66,8 +66,6 @@ class InvoiceController extends Controller
 
     public function getStudentSelected(int $id): JsonResponse
     {
-        // TODO: get by month
-        //  ->whereBetween('start_date', [now()->startOfMonth(), now()->endOfMonth()])
         $student = Student::where('student_id', $id)
             ->with('lessons:id,student_id,teacher_id,billing_rate_id,invoice_id,start_date,end_date,complete')
             ->with('lessons.billingRate')
@@ -80,7 +78,7 @@ class InvoiceController extends Controller
             ->first();
 
         $filteredLessons = $student->lessons->filter(function ($lesson) {
-            return is_null($lesson->invoice);
+            return is_null($lesson->invoice) && $lesson->start_date >= now()->startOfMonth() && $lesson->end_date <= now()->endOfMonth();
         })->values();
 
         $lastInvoice = Invoice::where('student_id', $student->id)->orderBy('created_at', 'desc')->first();
@@ -183,16 +181,13 @@ class InvoiceController extends Controller
             // student does not have email but parent does have email
             if (is_null($invoice->student->email) && $additionalEmail) {
                 Mail::to($additionalEmail)->queue(new LessonsInvoice($invoice));
-            }
-            // just parent has email
+            } // just parent has email
             elseif ($additionalEmail) {
                 Mail::to($additionalEmail)->queue(new LessonsInvoice($invoice));
-            }
-            // just the student has an email
+            } // just the student has an email
             elseif (! is_null($invoice->student->email) && is_null($additionalEmail)) {
                 Mail::to($invoice->student->email)->queue(new LessonsInvoice($invoice));
-            }
-            // student and parent have an email
+            } // student and parent have an email
             elseif (! is_null($invoice->student->email && ! is_null($additionalEmail))) {
                 Mail::to($invoice->student->email)->cc($additionalEmail)->queue(new LessonsInvoice($invoice));
             }
