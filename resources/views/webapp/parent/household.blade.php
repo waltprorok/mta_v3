@@ -90,6 +90,24 @@
                                     @endif
                                 </div>
                             </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Parent Email</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <a href="mailto:{{ $student->parent->email }}">{{ $student->parent->email }}</a>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Parent Phone</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <a href="mailto:{{ $student->parent_phone }}">{{ $student->parent_phone }}</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 @endforeach

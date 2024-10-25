@@ -20,7 +20,7 @@ class PaymentController extends Controller
                 'students.parent_id',
                 'students.student_id as s_id',
                 'payment_types.*')
-            ->where('v_is_paid', false) // TODO: set to true
+            ->where('payment', '>', 0)
             ->where('parent_id', Auth::user()->id)
             ->orWhere('s_id', Auth::user()->id)
             ->get();

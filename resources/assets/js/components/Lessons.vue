@@ -44,7 +44,7 @@
                     <tr>
                         <td>
                             <button class="btn btn-rounded btn-outline-secondary" v-if="!row.complete" @click="updateLesson(row.id, row.complete)">Click to Complete</button>
-                            <button class="btn btn-rounded btn-outline-primary" v-if="row.complete" @click="updateLesson(row.id, row.complete)">Completed</button>
+                            <button class="btn btn-rounded btn-primary" v-if="row.complete" @click="updateLesson(row.id, row.complete)">Completed</button>
                         </td>
                         <td v-if="lessonDayStatusPast(row.end_date) && pastLesson"><span class="badge badge-pill badge-danger">Past</span></td>
                         <td v-if="lessonDayStatusToday(row.end_date) && todayLesson"><span class="badge badge-pill badge-primary">Today</span></td>
