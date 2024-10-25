@@ -20,9 +20,10 @@ class PaymentController extends Controller
                 'students.parent_id',
                 'students.student_id as s_id',
                 'payment_types.*')
-            ->where('payment', '>', 0)
+//            ->where('payment', '>', 0)
             ->where('parent_id', Auth::user()->id)
             ->orWhere('s_id', Auth::user()->id)
+            ->orderBy('invoices.id', 'desc')
             ->get();
 
         return response()->json(['invoices' => $payments]);

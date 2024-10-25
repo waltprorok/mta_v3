@@ -21,7 +21,7 @@
                         <td>{{ row.updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                         <td>{{ row.payment_type.name }}</td>
                         <td>{{ row.total | toCurrency }}</td>
-                        <td><span class="badge badge-pill badge-success">{{ row.payment | toCurrency }}</span></td>
+                        <td>{{ row.payment | toCurrency }}</td>
                         <td>{{ row.balance_due | toCurrency }}</td>
                         <td class="text-nowrap">
                             <a :href="`/invoice/show/${row.id}`" class="btn btn-sm btn-outline-primary" role="button" title="view"><i class="fa fa-file-pdf-o"></i></a>

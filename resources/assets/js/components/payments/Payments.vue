@@ -15,17 +15,20 @@
                 <template v-slot="{ columns, row }">
                     <tr>
                         <td>{{ row.v_id }}</td>
-                        <td>{{ row.i_updated_at| dateParse('YYYY-MM-DD') | dateFormat('MM-DD-YYYY') }}</td>
-                        <td v-text="row.name"></td>
+                        <td>{{ row.i_created_at | dateParse('YYYY-MM-DD') | dateFormat('MM-DD-YYYY') }}</td>
+                        <td v-if="row.is_paid === '1'">{{ row.name }}</td>
+                        <td v-else>--</td>
                         <td>{{ row.total | toCurrency }}</td>
-                        <td><span class="badge badge-pill badge-success">{{ row.payment | toCurrency }}</span></td>
+                        <td>{{ row.payment | toCurrency }}</td>
                         <td>{{ row.balance_due | toCurrency }}</td>
                         <td class="text-nowrap">
+                            <a :href="`/payments/invoice/show/${row.v_id}`" class="btn btn-sm btn-outline-primary" role="button" title="view"><i class="fa fa-file-pdf-o"></i></a>
                             <a :href="`/payments/download/pdf/${row.v_id}`" class="btn btn-sm btn-outline-secondary" role="button" title="download invoice"><i class="fa fa-download"></i></a>
                         </td>
                     </tr>
                 </template>
             </datatable>
+
             <total-entries v-bind:list="list"></total-entries>
             <div class="pull-right">
                 <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
@@ -46,7 +49,7 @@ export default {
             filter: '',
             columns: [
                 {label: 'Invoice', field: '',},
-                {label: 'Payment Date', field: '',},
+                {label: 'Created', field: '',},
                 {label: 'Payment Type', field: 'name', sortable: false,},
                 {label: 'Total', field: 'total', sortable: false,},
                 {label: 'Paid', field: 'payment', sortable: false,},

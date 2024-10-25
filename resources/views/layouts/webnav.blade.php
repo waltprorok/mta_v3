@@ -77,7 +77,7 @@
                     <li class="nav-item">
                         <a href="{{ route('payment.index') }}"
                            class="nav-link {{ Route::currentRouteName() == 'payment.index' ? 'active' : '' }}">
-                            <i class="fa fa-credit-card"></i>Payments
+                            <i class="fa fa-credit-card"></i>Billing
                         </a>
                     </li>
                 @endif
