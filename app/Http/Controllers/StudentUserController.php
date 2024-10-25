@@ -7,7 +7,7 @@ use App\Models\Student;
 use DateTime;
 use Exception;
 use Illuminate\Support\Facades\Auth;
-use MaddHatter\LaravelFullcalendar\Facades\Calendar;
+use LaravelFullCalendar\Facades\Calendar;
 
 class StudentUserController extends Controller
 {
