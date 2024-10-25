@@ -75,6 +75,7 @@ Vue.component('reportCompletedLessonsLine', require('./components/reports/Comple
 Vue.component('reportStudentStatusBar', require('./components/reports/StudentStatusBar.vue').default);
 Vue.component('index', require('./components/messages/Index.vue').default);
 Vue.component('plans', require('./components/admin/billing/Plans.vue').default);
+Vue.component('payments', require('./components/payments/Payments.vue').default);
 
 
 const app = new Vue({

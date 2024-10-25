@@ -48,7 +48,7 @@ class CreateTeacherListener
 
         // email new user
         try {
-            Mail::to($data['email'])->send(new WelcomeMail($user));
+            Mail::to($data['email'])->queue(new WelcomeMail($user));
         } catch (Exception $exception) {
             Log::warning($exception->getMessage());
         }

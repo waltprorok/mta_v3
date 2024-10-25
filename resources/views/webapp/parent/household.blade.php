@@ -3,11 +3,14 @@
 @section('content')
 
     <div class="col-12">
+        @if (Auth::user()->isTeacher())
         <h4>Household</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item active">Household</li>
+            <li class="breadcrumb-item"></li>
         </ul>
+        @endif
 
         <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
@@ -24,8 +27,8 @@
                                          class="rounded-circle" width="120">
                                 @endif
                                 <div class="mt-3">
-                                    <h5>{{ $student->first_name }}&nbsp;{{ $student->last_name }}</h5>
-                                    @if($student->instrument != null)
+                                    <h5>{{ $student->full_name }}</h5>
+                                    @if($student->instrument)
                                         <p class="mb-1">{{ $student->instrument }}</p>
                                     @endif
                                     {{-- TODO: fix reply to teacher link in controller --}}
@@ -53,15 +56,15 @@
                 @foreach($parent->parentOfStudents as $student)
                     <div class="card mb-3">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Name</h6>
-                                </div>
-                                <div class="col-sm-9">
-                                    {{ $student->first_name }}&nbsp;{{ $student->last_name }}
-                                </div>
-                            </div>
-                            <hr>
+{{--                            <div class="row">--}}
+{{--                                <div class="col-sm-3">--}}
+{{--                                    <h6 class="mb-0">Name</h6>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-sm-9">--}}
+{{--                                    {{ $student->first_name }}&nbsp;{{ $student->last_name }}--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <hr>--}}
                             <div class="row">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Email</h6>
@@ -79,15 +82,33 @@
                                     {{ $student->phone_number }}
                                 </div>
                             </div>
+{{--                            <hr>--}}
+{{--                            <div class="row">--}}
+{{--                                <div class="col-sm-3">--}}
+{{--                                    <h6 class="mb-0">Birthday</h6>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-sm-9">--}}
+{{--                                    @if($student->date_of_birth != null)--}}
+{{--                                        {{ date('F d, Y', strtotime($student->date_of_birth)) }}--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Birthday</h6>
+                                    <h6 class="mb-0">Parent Email</h6>
                                 </div>
                                 <div class="col-sm-9">
-                                    @if($student->date_of_birth != null)
-                                        {{ date('F d, Y', strtotime($student->date_of_birth)) }}
-                                    @endif
+                                    <a href="mailto:{{ $student->parent->email }}">{{ $student->parent->email }}</a>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Parent Phone</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <a href="mailto:{{ $student->parent_phone }}">{{ $student->parent_phone }}</a>
                                 </div>
                             </div>
                         </div>

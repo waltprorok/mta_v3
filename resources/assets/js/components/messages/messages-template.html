@@ -1,0 +1,85 @@
+<div class="col-md-10">
+    <div class="card">
+        <div class="messaging">
+            <div class="inbox_msg">
+                <div class="inbox_people">
+                    <div class="headind_srch">
+                        <div class="form-group pull-left input-group col-6">
+                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+                            <div class="input-group-prepend"></div>
+                            <select id=users class="form-control" @change="getOnChangeList($event)"
+                                    v-on:keydown.enter.prevent v-cloak>
+                                <option :value="status.inbox" selected>Inbox</option>
+                                <option :value="status.active" v-if="user.teacher">Active</option>
+                                <option :value="status.leads" v-if="user.teacher">Leads</option>
+                                <option :value="status.wait_list" v-if="user.teacher">Wait List</option>
+                                <option :value="status.inactive" v-if="user.teacher">Inactive</option>
+                                <option :value="status.parent" v-if="user.teacher">Parents</option>
+                                <option :value="status.teacher" v-if="user.parent || user.student">Teacher</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="inbox_chat">
+                        <div v-for="(person, index) in persons" :key="index" v-if="!fromList">
+                            <div class="chat_list" @click="fetchConversationMessages(person.user_id_from, index)" :class="{active_chat: active_person_chat_id === index}">
+                                <div class="chat_people">
+                                    <div class="chat_img"><img src="/webapp/img/avatar.jpeg" alt="avatar"></div>
+                                    <div class="chat_ib">
+                                        <h5>{{ person.user_from.first_name }} {{ person.user_from.last_name }}<span class="chat_date">{{ person.created_at }}</span></h5>
+                                        <p>{{ person.body | short }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-for="(person, index) in persons" :key="index" v-if="fromList">
+                            <div class="chat_list" @click="fetchConversationMessages(person.id, index)" :class="{active_chat: active_person_chat_id === index}">
+                                <div class="chat_people">
+                                    <div class="chat_img"><img src="/webapp/img/avatar.jpeg" alt="avatar"></div>
+                                    <div class="chat_ib">
+                                        <h5>{{ person.first_name }} {{ person.last_name }}
+                                            <span class="chat_date">{{ person.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</span>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="!persons">
+                            <p class="text-center mt-4">Start a conversation</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mesgs" v-chat-scroll>
+                    <div class="msg_history" v-for="message in messages">
+                        <div class="incoming_msg" v-show="message.user_from.parent || message.user_from.student || message.user_from.admin">
+                            <div class="incoming_msg_img"><img src="/webapp/img/avatar.jpeg" alt="avatar"></div>
+                            <div class="received_msg">
+                                <div class="received_withd_msg">
+                                    <span class="time_date">{{ message.user_from.first_name }}</span>
+                                    <p v-html="message.body"></p>
+                                    <span class="time_date">{{ message.created_at }}<span v-if="message.read">&nbsp;|&nbsp;<strong>Read</strong></span></span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outgoing_msg" v-show="message.user_from.teacher">
+                            <div class="sent_msg">
+                                <span class="time_date">{{ message.user_from.first_name }}</span>
+                                <p v-html="message.body"></p>
+                                <span class="time_date">{{ message.created_at }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <form action="#" @submit.prevent="createMessage()">
+                        <div class="type_msg">
+                            <div class="input_msg_write">
+                                <textarea class="form-control" rows="3" v-model="message.body" placeholder="Write a message..."></textarea>
+                                <button class="btn btn-rounded btn-primary pull-right mt-2" type="submit" :class="{disabled: message.body === null}">Send</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <notifications position="bottom right"/>
+</div>

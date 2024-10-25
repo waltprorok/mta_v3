@@ -243,7 +243,7 @@
 
                     <button type="submit" class="btn btn-primary">Save</button>
                     <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
-                    <a href="{{ route('teacher.profile') }}" class="btn btn-outline-secondary">Profile</a>
+{{--                    <a href="{{ route('teacher.profile') }}" class="btn btn-outline-secondary">Profile</a>--}}
                 </form>
             </div>
         </div>

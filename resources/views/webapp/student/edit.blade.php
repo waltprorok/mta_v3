@@ -294,7 +294,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
                                     <label for="address" class="control-label">Address</label>
-                                    <input id="address" type="text" class="form-control" name="address" value="{{ $student->address }}">
+                                    <input id="address" type="text" class="form-control" name="address" value="{{ $student->address ?? old('address') }}">
                                     @if ($errors->has('address'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('address') }}</strong>
@@ -305,7 +305,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group {{ $errors->has('address_2') ? 'has-error' : '' }}">
                                     <label for="address_2" class="control-label">Address 2</label>
-                                    <input id="address_2" type="text" class="form-control" placeholder="Apt 34, Suite 123, Building H" name="address_2" value="{{ $student->address_2 }}">
+                                    <input id="address_2" type="text" class="form-control" placeholder="Apt 34, Suite 123, Building H" name="address_2" value="{{ $student->address_2 ?? old('address_2') }}">
                                     @if ($errors->has('address_2'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('address_2') }}</strong>
@@ -318,7 +318,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group {{ $errors->has('city') ? 'has-error' : '' }}">
                                     <label for="city" class="control-label">City</label>
-                                    <input id="city" type="text" class="form-control" name="city" value="{{ $student->city }}">
+                                    <input id="city" type="text" class="form-control" name="city" value="{{ $student->city ?? old('city') }}">
                                     @if ($errors->has('city'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('city') }}</strong>
@@ -331,7 +331,7 @@
                                     <label for="state" class="control-label">State</label>
                                     <select class="form-control" id="state" name="state">
                                         @if ($student->state)
-                                            <option value="{{ $student->state }}">{{ $student->state }}</option>
+                                            <option value="{{ $student->state ?? old('state') }}">{{ $student->state }}</option>
                                         @else
                                             <option value="" selected="selected">Select a State</option>
                                         @endif
@@ -394,7 +394,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group {{ $errors->has('zip') ? 'has-error' : '' }}">
                                     <label for="zip" class="control-label">Zip Code</label>
-                                    <input id="zip" type="text" class="form-control" name="zip" value="{{ $student->zip }}">
+                                    <input id="zip" type="text" class="form-control" name="zip" value="{{ $student->zip ?? old('zip') }}">
                                     @if ($errors->has('zip'))
                                         <span class="help-block"><strong>{{ $errors->first('zip') }}</strong></span>
                                     @endif

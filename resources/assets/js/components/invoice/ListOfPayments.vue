@@ -18,10 +18,11 @@
                 <template v-slot="{ columns, row }">
                     <tr>
                         <td>{{ row.id }}</td>
+                        <td>{{ row.updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                         <td>{{ row.payment_type.name }}</td>
+                        <td>{{ row.total | toCurrency }}</td>
                         <td>{{ row.payment | toCurrency }}</td>
                         <td>{{ row.balance_due | toCurrency }}</td>
-                        <td>{{ row.updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                         <td class="text-nowrap">
                             <a :href="`/invoice/show/${row.id}`" class="btn btn-sm btn-outline-primary" role="button" title="view"><i class="fa fa-file-pdf-o"></i></a>
                             <a :href="`/invoice/download/pdf/${row.id}`" class="btn btn-sm btn-outline-secondary" role="button" title="download invoice"><i class="fa fa-download"></i></a>
@@ -91,16 +92,12 @@ export default {
             pages: [10, 25, 50, 100],
             showModalPayment: false,
             columns: [
-                // {label: 'Paid', field: 'is_paid',},
-                {label: 'Invoice', field: 'id',},
-                // {label: 'First Name', field: 'first_name',},
-                // {label: 'Last Name', field: 'last_name',},
-                // {label: 'Phone', field: 'phone', sortable: false},
-                // {label: 'Email', field: 'email',},
-                {label: 'Payment Type', field: 'payment_type',},
-                {label: 'Paid', field: 'payment',},
-                {label: 'Balance', field: 'balance',},
-                {label: 'Date', field: 'date',},
+                {label: 'Invoice', field: 'id', sortable: false,},
+                {label: 'Payment Date', field: 'date', sortable: false,},
+                {label: 'Payment Type', field: 'payment_type', sortable: false,},
+                {label: 'Total', field: 'total', sortable: false,},
+                {label: 'Paid', field: 'payment', sortable: false,},
+                {label: 'Balance', field: 'balance', sortable: false,},
                 {label: 'Action', filterable: false},
             ],
         }

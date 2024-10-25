@@ -3,12 +3,14 @@
 @section('content')
 
     <div class="col-12">
-        <h4>Invoice</h4>
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('invoice.index') }}">Billing</a></li>
-            <li class="breadcrumb-item active">Invoice</li>
-        </ul>
+        @if(Auth::user()->isTeacher())
+            <h4>Invoice</h4>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('invoice.index') }}">Billing</a></li>
+                <li class="breadcrumb-item active">Invoice</li>
+            </ul>
+        @endif
 
         <div class="card">
             <div class="card-body p-0">
@@ -20,7 +22,9 @@
                     <div class="col-md-6 text-right">
                         <p class="font-weight-bold mb-2">Invoice: {{ $invoice->id }}</p>
                         <p class="text-muted mb-1"><span class="text-muted">Issue Date: </span>{{ $invoice->created_at->format('m/d/Y') }}</p>
-                        <p class="text-muted mb-1"><span class="text-muted">Due Date: </span>{{ $invoice->due_date ? \Carbon\Carbon::parse($invoice->due_date)->format('m/d/Y') : $invoice->created_at->endOfMonth()->format('m/d/Y') }}</p>
+                        <p class="text-muted mb-1">
+                            <span class="text-muted">Due Date: </span>{{ $invoice->due_date ? \Carbon\Carbon::parse($invoice->due_date)->format('m/d/Y') : $invoice->created_at->endOfMonth()->format('m/d/Y') }}
+                        </p>
                         <p class="text-muted mb-1"><span class="text-muted">Status: </span>
                             <span class="{{ $invoice->is_paid ? 'font-weight-bold' : 'badge-danger' }}">{{ $invoice->is_paid ? 'Paid' : 'Not Paid' }}</span></p>
                     </div>
@@ -51,13 +55,12 @@
                         <p class="mb-1">@if ($invoice->student->email)
                                 {{ $invoice->student->email }}
                             @else @endif</p>
-                        <p class="mb-1">@if ($invoice->student->parent_email)
-                                {{ $invoice->student->parent_email }}
+                        <p class="mb-1">@if ($invoice->student->parent)
+                                {{ $invoice->student->parent->email }}
                             @else @endif</p>
                         <p class="mb-1">@if ($invoice->student->phone)
                                 {{ $invoice->student->phone_number }}
                             @else @endif</p>
-
                     </div>
                 </div>
 

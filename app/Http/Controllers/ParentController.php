@@ -9,7 +9,7 @@ use DateTime;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use MaddHatter\LaravelFullcalendar\Facades\Calendar;
+use LaravelFullCalendar\Facades\Calendar;
 
 class ParentController extends Controller
 {

@@ -169,7 +169,6 @@ export default {
             self.student.first_name = null;
             self.student.last_name = null;
             self.student.email = null;
-            self.student.parent_email = null;
             self.student.phone = null;
             self.student.teacher_id = null;
             self.student.lesson_id = null;
@@ -212,6 +211,7 @@ export default {
             axios.get('/web/invoice-get-student/' + event.target.value)
                 .then((response) => {
                     this.student = response.data.studentTeacher;
+                    this.invoice.additional_email = response.data.studentTeacher.parent ? response.data.studentTeacher.parent.email : null;
                     this.lessons = response.data.lessons;
                     this.lastInvoice = response.data.lastInvoice;
                     this.selected = true;
@@ -228,6 +228,10 @@ export default {
                         duration: 10000,
                     });
                 });
+        },
+
+        hasLessons: function (student) {
+            return student.lessons.length > 0;
         },
 
         updateLesson: function (id, event) {

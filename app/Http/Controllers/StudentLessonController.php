@@ -317,7 +317,7 @@ class StudentLessonController extends Controller
 
         Lesson::query()->where('student_id', $lesson->student_id)
             ->where('teacher_id', Auth::id())
-            ->whereDate('start_date', '>=', date('Y-m-d'))
+            ->whereDate('start_date', '>=', $lesson->start_date)
             ->delete();
     }
 
@@ -495,20 +495,20 @@ class StudentLessonController extends Controller
         // student has an email and parent has an email
         if ($student->email && $student->parent) {
             if ($student->parent->email) {
-                Mail::to($student->email)->cc($student->parent->email)->send(new LessonsScheduled($student, $lessons));
+                Mail::to($student->email)->cc($student->parent->email)->queue(new LessonsScheduled($student, $lessons));
             }
         }
 
         // student does NOT have an email and parent has an email
         if ($student->email == null && $student->parent) {
             if ($student->parent->email) {
-                Mail::to($student->parent->email)->send(new LessonsScheduled($student, $lessons));
+                Mail::to($student->parent->email)->queue(new LessonsScheduled($student, $lessons));
             }
         }
 
         // student has an email and parent does not have an email
         if ($student->email && $student->parent == null) {
-            Mail::to($student->email)->send(new LessonsScheduled($student, $lessons));
+            Mail::to($student->email)->queue(new LessonsScheduled($student, $lessons));
         }
     }
 }

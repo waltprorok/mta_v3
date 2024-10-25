@@ -31,9 +31,7 @@ class InvoiceController extends Controller
 
         $pdf = app(PDF::class);
         $pdf->setPaper('A4');
-
         $pdfFileExists = Storage::disk('invoice')->exists('Invoice_MTA_' . $invoice->id . '.pdf');
-
         $pdfFile = $pdf->loadView('webapp.invoice.pdf_view', ['invoice' => $invoice]);
 
         if (! $pdfFileExists) {
@@ -68,6 +66,8 @@ class InvoiceController extends Controller
 
     public function getStudentSelected(int $id): JsonResponse
     {
+        // TODO: get by month
+        //  ->whereBetween('start_date', [now()->startOfMonth(), now()->endOfMonth()])
         $student = Student::where('student_id', $id)
             ->with('lessons:id,student_id,teacher_id,billing_rate_id,invoice_id,start_date,end_date,complete')
             ->with('lessons.billingRate')
@@ -76,6 +76,7 @@ class InvoiceController extends Controller
 
         $studentTeacher = Student::where('student_id', $id)
             ->with('getTeacher')
+            ->with('parent:id,first_name,last_name,email,parent')
             ->first();
 
         $filteredLessons = $student->lessons->filter(function ($lesson) {
@@ -89,11 +90,11 @@ class InvoiceController extends Controller
 
     public function createInvoice()
     {
-        // TODO: get by month
         $student = Student::query()
             ->where('status', Student::ACTIVE)
             ->where('teacher_id', Auth::id())
-            ->with('lessons:id,student_id,teacher_id,billing_rate_id,start_date,end_date,complete')
+            ->with(['lessons:id,student_id,teacher_id,billing_rate_id,start_date,end_date,complete'])
+            ->has('lessons') // TODO: check month to month lessons
             ->orderBy('first_name')
             ->get();
 
@@ -102,7 +103,6 @@ class InvoiceController extends Controller
 
     public function show(int $id): View
     {
-        // TODO: get by month
         $invoice = Invoice::with('student', 'student.getTeacher')
             ->where('id', $id)
             ->firstOrFail();
@@ -180,10 +180,21 @@ class InvoiceController extends Controller
 
             $invoice = $this->storePDF($newInvoice);
 
-            if ($additionalEmail) {
-                Mail::to($invoice->student->email)->cc($additionalEmail)->send(new LessonsInvoice($invoice));
-            } else {
-                Mail::to($invoice->student->email)->send(new LessonsInvoice($invoice));
+            // student does not have email but parent does have email
+            if (is_null($invoice->student->email) && $additionalEmail) {
+                Mail::to($additionalEmail)->queue(new LessonsInvoice($invoice));
+            }
+            // just parent has email
+            elseif ($additionalEmail) {
+                Mail::to($additionalEmail)->queue(new LessonsInvoice($invoice));
+            }
+            // just the student has an email
+            elseif (! is_null($invoice->student->email) && is_null($additionalEmail)) {
+                Mail::to($invoice->student->email)->queue(new LessonsInvoice($invoice));
+            }
+            // student and parent have an email
+            elseif (! is_null($invoice->student->email && ! is_null($additionalEmail))) {
+                Mail::to($invoice->student->email)->cc($additionalEmail)->queue(new LessonsInvoice($invoice));
             }
 
         } catch (Exception $exception) {
@@ -219,7 +230,12 @@ class InvoiceController extends Controller
         }
 
         try {
-            Mail::to($invoice->student->email)->send(new LessonsInvoice($invoice));
+            if (! is_null($invoice->student->email)) {
+                Mail::to($invoice->student->email)->queue(new LessonsInvoice($invoice));
+            }
+            if (! is_null($invoice->student->parent->email)) {
+                Mail::to($invoice->student->parent->email)->queue(new LessonsInvoice($invoice));
+            }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             return response()->json([], Response::HTTP_BAD_REQUEST);
@@ -228,12 +244,12 @@ class InvoiceController extends Controller
         return response()->json();
     }
 
-    private function getInvoiceStudentTeacherBillingRate(Invoice $id)
+    private function getInvoiceStudentTeacherBillingRate(Invoice $invoice)
     {
         return Invoice::with('student.getTeacher')
             ->with('lessons.billingRate')
-            ->where('teacher_id', Auth::id())
-            ->findOrFail($id->id);
+            ->where('teacher_id', $invoice->teacher_id)
+            ->findOrFail($invoice->id);
     }
 
     public function getListOfPayments()

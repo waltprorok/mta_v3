@@ -34,7 +34,7 @@ class SubscriptionController extends Controller
             $subscription = $user->subscription(self::PREMIUM);
             $subscription->cancel();
 
-            Mail::to($user->email)->send(new CancelledSubscriptionMail($user));
+            Mail::to($user->email)->queue(new CancelledSubscriptionMail($user));
         }
 
         return redirect()->back()->with('warning', 'Your subscription account has been cancelled.');
@@ -62,7 +62,7 @@ class SubscriptionController extends Controller
             }
         }
 
-        Mail::to($user->email)->send(new ChangedSubscriptionMail($user, $newPlan));
+        Mail::to($user->email)->queue(new ChangedSubscriptionMail($user, $newPlan));
 
         return redirect()->back()->with('success', 'Your subscription plan has been updated.');
     }
@@ -87,7 +87,7 @@ class SubscriptionController extends Controller
                 'phone' => $teacher->phone,
             ]);
 
-        Mail::to($teacher->email)->send(new SubscribedMail($teacher));
+        Mail::to($teacher->email)->queue(new SubscribedMail($teacher));
 
         return redirect()->back()->with('success', 'Thank you for subscribing to our service.');
     }
@@ -177,7 +177,7 @@ class SubscriptionController extends Controller
 
         $subscription->resume();
 
-        Mail::to($user->email)->send(new ResumeSubscriptionMail($user));
+        Mail::to($user->email)->queue(new ResumeSubscriptionMail($user));
 
         return redirect()->back()->with('success', 'Your subscription account has been reinstated.');
     }
@@ -196,7 +196,7 @@ class SubscriptionController extends Controller
 
         $user->updateCard($ccToken);
 
-        Mail::to($user->email)->send(new UpdatedCreditCardMail($user));
+        Mail::to($user->email)->queue(new UpdatedCreditCardMail($user));
 
         return redirect()->back()->with('success', 'Credit card updated successfully.');
     }
@@ -210,7 +210,7 @@ class SubscriptionController extends Controller
 
         if ($request->get('email') !== $user->email) {
             $user->email = $request->get('email');
-            Mail::to($user->email)->send(new UserEmailChangedMail($user));
+            Mail::to($user->email)->queue(new UserEmailChangedMail($user));
         }
 
         $user->save();

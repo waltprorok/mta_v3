@@ -36,7 +36,7 @@
                             <phone-number-format v-bind:data="student"></phone-number-format>
                         </p>
                         <p class="mb-1">{{ student.email }}</p>
-                        <p class="mb-1">{{ student.parent_email }}</p>
+                        <p class="mb-1" v-if="student.parent">{{ student.parent.email }}</p>
                         <p class="mb-1" v-if="student.instrument ">{{ student.instrument }} Lessons</p>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="normal-input" class="form-control-label">Send to Email</label>
                             <div class="input-group mb-3">
@@ -168,12 +168,12 @@
                 </div>
 
                 <div class="form-group pull-left pt-4 pr-md-4">
-                    <button @click="clearForm()" class="btn btn-default">Cancel</button>
                     <button @click="createInvoice()"
                             class="btn btn-primary"
                             type="submit"
                             :disabled="isDisabled">Save
                     </button>
+                    <button @click="clearForm()" class="btn btn-default">Cancel</button>
                 </div>
             </div>
         </form>
