@@ -59,7 +59,7 @@
                 <hr/>
                 <div class="form-group">
                     <div class="col-sm-6">
-                        <button class="btn btn-primary" type="submit">Sign Up!</button>
+                        <button class="btn btn-primary" type="submit">Subscribe</button>
                         <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
                     </div>
                 </div>
