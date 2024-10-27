@@ -1,12 +1,11 @@
 @extends('layouts.webapp')
-@section('title', 'Account Information')
+@section('title', 'Subscription')
 @section('content')
 
-    <div class="col-12">
+    <div class="col-md-12">
         <h4>Account</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            {{--            <li class="breadcrumb-item"><a href="{{ route('account.profile') }}">Profile</a></li>--}}
             <li class="breadcrumb-item active">Subscription</li>
         </ul>
 
