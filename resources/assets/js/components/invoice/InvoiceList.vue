@@ -138,7 +138,7 @@ export default {
             this.disableSave = true;
             let self = this;
             let params = Object.assign({}, self.invoice);
-            axios.patch('/web/invoice/update/' + self.invoice.id, params)
+            axios.put('/web/invoice/update/' + self.invoice.id, params)
                 .then(() => {
                     self.cancelForm();
                     self.fetchInvoiceList();

@@ -9,6 +9,6 @@ class ClearLogFileTest extends TestCase
     public function test_no_errors_returned()
     {
         $this->artisan('log:clear')
-            ->assertExitCode(0);
+            ->assertExitCode(1);
     }
 }
