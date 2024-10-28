@@ -5,8 +5,10 @@
     <div class="col-md-12">
         <h4>Account</h4>
         <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">Profile</li>
+            @if(! Auth::user()->isAdmin())
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Profile</li>
+            @endif
         </ul>
 
         @include('partials.accountTabs')
