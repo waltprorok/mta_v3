@@ -89,15 +89,6 @@ export default {
         }
     },
 
-    watch: {
-        date: {
-            handler: function () {
-                this.getSelectedStudent()
-            },
-            deep: true,
-        },
-    },
-
     methods: {
         calculateLessonAmount: function (lesson) {
             if (lesson.billing_rate.type === 'lesson') {
