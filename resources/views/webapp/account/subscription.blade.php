@@ -1,12 +1,11 @@
 @extends('layouts.webapp')
-@section('title', 'Account Information')
+@section('title', 'Subscription')
 @section('content')
 
-    <div class="col-12">
+    <div class="col-md-12">
         <h4>Account</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            {{--            <li class="breadcrumb-item"><a href="{{ route('account.profile') }}">Profile</a></li>--}}
             <li class="breadcrumb-item active">Subscription</li>
         </ul>
 
@@ -17,7 +16,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <ul class="list-group">
-                            <li class="list-group-item"><i class="fa fa-credit-card" aria-hidden="true" style="padding-right: 12px;"></i>{{ Auth::user()->card_brand }}
+                            <li class="list-group-item"><i class="fa fa-credit-card" aria-hidden="true" style="padding-right: 12px;"></i>{{ ucfirst(Auth::user()->card_brand) }}
                                 <span class="float-right">**** **** **** {{ Auth::user()->card_last_four }}</span></li>
                             <li class="list-group-item"><i class="fa fa-download" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.invoices') }}">Download Invoices</a></li>
                             <li class="list-group-item"><i class="fa fa-keyboard-o" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.card') }}">Updated Credit Card</a></li>

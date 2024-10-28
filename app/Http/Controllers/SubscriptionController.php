@@ -70,12 +70,12 @@ class SubscriptionController extends Controller
     public function create(Request $request): RedirectResponse
     {
         $teacher = Auth::user()->getTeacher()->first();
-
         $plan = Plan::query()->findOrFail($request->get('plan_id'));
+        $paymentMethod = $request->get('payment_method');
 
         $request->user()
             ->newSubscription($plan->name, $plan->stripe_plan)
-            ->create($request->stripeToken, [
+            ->create($paymentMethod, [
                 'name' => $teacher->first_name . ' ' . $teacher->last_name,
                 'address' => [
                     'line1' => $teacher->address,
@@ -84,6 +84,7 @@ class SubscriptionController extends Controller
                     'state' => $teacher->state,
                     'postal_code' => $teacher->zip,
                 ],
+                'email' => $teacher->email,
                 'phone' => $teacher->phone,
             ]);
 
@@ -94,19 +95,27 @@ class SubscriptionController extends Controller
 
     public function creditCard(): View
     {
-        return view('webapp.account.card');
+        /** @var User $user */
+        $user = Auth::user();
+        $intent = $user->createSetupIntent();
+
+        return view('webapp.account.card')
+            ->with('intent', $intent);
     }
 
     public function index(): View
     {
         /** @var User $user */
         $user = Auth::user();
+        $intent = $user->createSetupIntent();
 
         if ($user->subscriptions()->first() !== null) {
             return view('webapp.account.subscription');
         } else {
             $plans = Plan::all();
-            return view('webapp.account.index')->with('plans', $plans);
+            return view('webapp.account.index')
+                ->with('plans', $plans)
+                ->with('intent', $intent);
         }
     }
 
@@ -114,7 +123,6 @@ class SubscriptionController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-
         $invoices = $user->invoices();
 
         return view('webapp.account.invoices')->with('invoices', $invoices);
@@ -154,7 +162,6 @@ class SubscriptionController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-
         $subscriptionName = ucfirst($user->subscriptions->first()->name);
 
         return $user->downloadInvoice($invoiceId, [
@@ -172,9 +179,7 @@ class SubscriptionController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-
         $subscription = $user->subscription(self::PREMIUM);
-
         $subscription->resume();
 
         Mail::to($user->email)->queue(new ResumeSubscriptionMail($user));
@@ -191,10 +196,8 @@ class SubscriptionController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-
-        $ccToken = $request->input('stripeToken');
-
-        $user->updateCard($ccToken);
+        $paymentMethod = $request->get('payment_method');
+        $user->updateDefaultPaymentMethod($paymentMethod);
 
         Mail::to($user->email)->queue(new UpdatedCreditCardMail($user));
 

@@ -176,7 +176,7 @@ class InvoiceController extends Controller
                 Lesson::query()->findOrFail($lessonId)->update(['invoice_id' => $newInvoice->id]);
             }
 
-            $invoice = $this->storePDF($newInvoice);
+            $invoice = $this->storePDF($newInvoice->id);
 
             // student does not have email but parent does have email
             if (is_null($invoice->student->email) && $additionalEmail) {
@@ -228,7 +228,7 @@ class InvoiceController extends Controller
             if (! is_null($invoice->student->email)) {
                 Mail::to($invoice->student->email)->queue(new LessonsInvoice($invoice));
             }
-            if (! is_null($invoice->student->parent->email)) {
+            if (! is_null($invoice->student->parent)) {
                 Mail::to($invoice->student->parent->email)->queue(new LessonsInvoice($invoice));
             }
         } catch (Exception $exception) {
@@ -273,7 +273,7 @@ class InvoiceController extends Controller
 
     public function getPaymentTypes(): JsonResponse
     {
-        $paymentTypes = PaymentType::get(['id', 'name']);
+        $paymentTypes = PaymentType::query()->get(['id', 'name']);
 
         return response()->json($paymentTypes);
     }

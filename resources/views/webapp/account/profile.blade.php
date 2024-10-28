@@ -2,7 +2,7 @@
 @section('title', 'Profile')
 @section('content')
 
-    <div class="col-12">
+    <div class="col-md-12">
         <h4>Account</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
