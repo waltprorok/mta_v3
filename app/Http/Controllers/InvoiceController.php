@@ -9,6 +9,7 @@ use App\Models\Lesson;
 use App\Models\PaymentType;
 use App\Models\Student;
 use Barryvdh\DomPDF\PDF;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -64,7 +65,7 @@ class InvoiceController extends Controller
         return response()->json($students);
     }
 
-    public function getStudentSelected(int $id): JsonResponse
+    public function getStudentSelected(int $id, string $month): JsonResponse
     {
         $student = Student::where('student_id', $id)
             ->with('lessons:id,student_id,teacher_id,billing_rate_id,invoice_id,start_date,end_date,complete')
@@ -77,8 +78,9 @@ class InvoiceController extends Controller
             ->with('parent:id,first_name,last_name,email,parent')
             ->first();
 
-        $filteredLessons = $student->lessons->filter(function ($lesson) {
-            return is_null($lesson->invoice) && $lesson->start_date >= now()->startOfMonth() && $lesson->end_date <= now()->endOfMonth();
+        $selectedMonth = Carbon::parse($month);
+        $filteredLessons = $student->lessons->filter(function ($lesson) use ($selectedMonth) {
+            return is_null($lesson->invoice) && $lesson->start_date >= $selectedMonth->startOfMonth() && $lesson->end_date <= $selectedMonth->endOfMonth();
         })->values();
 
         $lastInvoice = Invoice::where('student_id', $student->id)->orderBy('created_at', 'desc')->first();

@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="card-element">Cardholder Name</label>
-                                    <input class="StripeElement mb-3 form-control" name="card_holder_name" placeholder="Card holder name" required>
+                                    <input class="StripeElement mb-3 form-control" name="card_holder_name" placeholder="Full name on card" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="card-element">Credit Card</label>

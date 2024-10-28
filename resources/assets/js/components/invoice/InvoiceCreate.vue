@@ -3,13 +3,32 @@
 <script>
 import PhoneNumberFormat from "../PhoneNumberFormat.vue";
 
+let today = new Date();
+const month = today.toLocaleString('default', { month: 'long' });
+
 export default {
     data() {
         return {
+            month: month,
+            months: [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December',
+            ],
             list: [],
             student: [],
             lessons: [],
             selected: false,
+            showStudent: false,
             lesson: {
                 id: null,
                 complete: false,
@@ -68,6 +87,15 @@ export default {
 
             return formatter.format(value);
         }
+    },
+
+    watch: {
+        date: {
+            handler: function () {
+                this.getSelectedStudent()
+            },
+            deep: true,
+        },
     },
 
     methods: {
@@ -206,9 +234,15 @@ export default {
                 });
         },
 
+        getSelectedMonth: function (event) {
+            this.month = event.target.value;
+            this.showStudent = true;
+        },
+
         getSelectedStudent: function (event) {
             this.clearForm();
-            axios.get('/web/invoice-get-student/' + event.target.value)
+            let selectedStudentValue = event.target.value;
+            axios.get('/web/invoice-get-student/' + selectedStudentValue + '/' + this.month)
                 .then((response) => {
                     this.student = response.data.studentTeacher;
                     this.invoice.additional_email = response.data.studentTeacher.parent ? response.data.studentTeacher.parent.email : null;

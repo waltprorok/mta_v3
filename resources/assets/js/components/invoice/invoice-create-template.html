@@ -4,16 +4,29 @@
             <div class="row pl-4 pt-2">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <select id="single-select" class="form-control" @change="getSelectedStudent($event)">
-                            <option>-- Select Student --</option>
-                            <option v-for="row in list" :value="row.student_id" :key="row.id">
-                                {{ row.first_name }} {{ row.last_name }}
+                        <select id="single-select" class="form-control" @change="getSelectedMonth($event)">
+                            <option>-- Select Month --</option>
+                            <option v-for="row in months" :value="row" :key="row.id">
+                                {{ row }}
                             </option>
                         </select>
                     </div>
                 </div>
             </div>
-
+            <div v-show="showStudent">
+                <div class="row pl-4 pt-2">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select id="single-select" class="form-control" @change="getSelectedStudent($event)">
+                                <option>-- Select Student --</option>
+                                <option v-for="row in list" :value="row.student_id" :key="row.id">
+                                    {{ row.first_name }} {{ row.last_name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div v-show="selected">
                 <div class="row pl-4 pt-4 pb-4">
                     <div class="col-md-6 text-left" v-if="selected">
