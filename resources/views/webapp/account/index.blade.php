@@ -11,7 +11,7 @@
 
         @include('partials.accountTabs')
         <div class="card">
-            <form action="{{ route('subscription.create') }}" method="post" id="payment-form">
+            <form action="{{ route('subscription.create') }}" method="post" id="payment-form" class="card-form">
                 @csrf
                 <div class="form-group">
                     <div class="card-header bg-light">Credit Card Billing</div>
@@ -27,6 +27,13 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" name="payment_method" class="payment-method">
+                                </div>
+                                <div class="form-group">
+                                    <label for="card-element">Cardholder Name</label>
+                                    <input class="StripeElement mb-3 form-control" name="card_holder_name" placeholder="Card holder name" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="card-element">Credit Card</label>
@@ -58,7 +65,7 @@
                 <hr/>
                 <div class="form-group">
                     <div class="col-sm-6">
-                        <button class="btn btn-primary" type="submit">Subscribe</button>
+                        <button class="btn btn-primary pay" type="submit">Subscribe</button>
                         <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
                     </div>
                 </div>
@@ -71,5 +78,51 @@
 @section('scripts')
     <script src="https://js.stripe.com/v3/"></script>
     <script>let stripe = Stripe('{{ config('services.stripe.key') }}');</script>
-    <script src="{{ asset('webapp/js/stripe.js') }}"></script>
+    <script>
+        let elements = stripe.elements()
+        let style = {
+            base: {
+                color: '#32325d',
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '16px',
+                '::placeholder': {
+                    color: '#aab7c4'
+                }
+            },
+            invalid: {
+                color: '#fa755a',
+                iconColor: '#fa755a'
+            }
+        }
+        let card = elements.create('card', {style: style})
+        card.mount('#card-element')
+        let paymentMethod = null
+        $('.card-form').on('submit', function (e) {
+            $('button.pay').attr('disabled', true)
+            if (paymentMethod) {
+                return true
+            }
+            stripe.confirmCardSetup(
+                "{{ $intent->client_secret }}",
+                {
+                    payment_method: {
+                        card: card,
+                        billing_details: {name: $('.card_holder_name').val()}
+                    }
+                }
+            ).then(function (result) {
+                if (result.error) {
+                    $('#card-errors').text(result.error.message)
+                    $('button.pay').removeAttr('disabled')
+                } else {
+                    paymentMethod = result.setupIntent.payment_method
+                    $('.payment-method').val(paymentMethod)
+                    $('.card-form').submit()
+                }
+            })
+            return false
+        })
+    </script>
+    {{--    <script src="{{ asset('webapp/js/stripe.js') }}"></script>--}}
 @endsection
