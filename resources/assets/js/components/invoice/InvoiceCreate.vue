@@ -236,6 +236,7 @@ export default {
 
         getSelectedMonth: function (event) {
             this.month = event.target.value;
+            this.clearForm();
             this.showStudent = true;
         },
 
