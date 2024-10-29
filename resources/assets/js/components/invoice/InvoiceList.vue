@@ -92,6 +92,15 @@ export default {
         }
     },
 
+    watch: {
+        invoice: {
+            handler: function () {
+                this.hasPaymentAmount();
+            },
+            deep: true,
+        }
+    },
+
     methods: {
         dateFormat,
         dateParse,
@@ -154,7 +163,7 @@ export default {
                     this.$notify({
                         type: 'error',
                         title: 'Error',
-                        text: 'Could not update invoice payment.',
+                        text: 'Could not save payment.',
                         duration: 10000,
                     });
                 });
@@ -186,9 +195,8 @@ export default {
         },
 
         hasPaymentAmount: function () {
-            if (this.invoice.amount !== null) {
-                this.disableSave = false;
-            }
+            let self = this;
+            self.disableSave = !self.invoice.payment;
         },
 
         showCheckInput: function (event) {

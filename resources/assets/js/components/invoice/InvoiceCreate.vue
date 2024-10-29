@@ -27,6 +27,7 @@ export default {
             list: [],
             student: [],
             lessons: [],
+            disableSaveButton: false,
             selected: false,
             showStudent: false,
             lesson: {
@@ -55,7 +56,7 @@ export default {
 
     computed: {
         isDisabled: function () {
-            return this?.lessons?.length === 0;
+            return this?.lessons?.length === 0 || this.disableSaveButton;
         },
     },
 
@@ -114,6 +115,7 @@ export default {
             self.invoice.teacher_id = self.student.get_teacher.teacher_id;
             self.invoice.lesson_id = lessons.toString();
             let params = Object.assign({}, self.invoice);
+            this.disableSaveButton = true;
             axios.post('/web/invoice-post', params)
                 .then(() => {
                     this.clearForm();
@@ -128,6 +130,7 @@ export default {
                 })
                 .catch((error) => {
                     self.getErrorMessage(error);
+                    this.disableSaveButton = false;
                     this.$notify({
                         type: 'error',
                         title: 'Error',
@@ -205,6 +208,7 @@ export default {
             self.invoice.total = null;
             self.invoice.balance_due = null;
             self.invoice.additional_email = null;
+            self.disableSaveButton = false;
             this.fetchInvoiceData();
         },
 
