@@ -7,7 +7,7 @@ export COMPOSER_ALLOW_SUPERUSER=1
 composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
 php artisan optimize:clear
 php artisan event:clear
-npm install
+npm ci
 npm run production
 php artisan route:cache
 php artisan view:cache
