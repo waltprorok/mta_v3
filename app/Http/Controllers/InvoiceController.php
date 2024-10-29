@@ -178,7 +178,7 @@ class InvoiceController extends Controller
                 Lesson::query()->findOrFail($lessonId)->update(['invoice_id' => $newInvoice->id]);
             }
 
-            $invoice = $this->storePDF($newInvoice->id);
+            $invoice = $this->storePDF($newInvoice);
 
             // student does not have email but parent does have email
             if (is_null($invoice->student->email) && $additionalEmail) {

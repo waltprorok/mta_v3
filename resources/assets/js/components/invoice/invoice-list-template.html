@@ -51,7 +51,6 @@
                                                            v-model="invoice.payment"
                                                            min=".01" step=".01"
                                                            :placeholder="paymentPlaceHolderValue"
-                                                           @click="hasPaymentAmount"
                                                            v-on:keydown.enter.prevent>
                                                 </div>
                                                 <small>{{ error_payment }}</small>
