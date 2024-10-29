@@ -24,6 +24,10 @@ export default {
                 {label: 'Due Date', field: 'due_date',},
                 {label: 'Action', filterable: false},
             ],
+            classError: '',
+            disableSave: true,
+            error_payment: '',
+            error_payment_type_id: '',
             invoice: {
                 id: null,
                 student_id: null,
@@ -53,10 +57,6 @@ export default {
             showModal: false,
             placeholderValue: 'Notes about transaction',
             paymentPlaceHolderValue: 'Enter a positive amount',
-            disableSave: true,
-            error_payment: '',
-            error_payment_type_id: '',
-            classError: '',
         }
     },
 
@@ -87,7 +87,6 @@ export default {
                 style: 'currency',
                 currency: 'USD'
             });
-
             return formatter.format(value);
         }
     },
