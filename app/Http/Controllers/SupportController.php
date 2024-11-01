@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ContactForm;
+use App\Mail\SupportEmail;
 use App\Models\Contact;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -23,11 +24,14 @@ class SupportController extends Controller
         $request->validate([
             'subject' => 'required|min:3',
             'message' => 'required|min:3',
+            'attach' => 'mimes:jpg,jpeg,png,pdf,doc,docx,txt,csv|max:7024|nullable',
         ]);
 
-        $request['name'] = Auth::user()->getFullNameAttribute();;
+
+        $request['name'] = Auth::user()->getFullNameAttribute();
         $request['email'] = Auth::user()->email;
         $request['support'] = true;
+        $request['attach'] = $request->get('attach');
 
         try {
             Contact::query()->create([
@@ -37,7 +41,8 @@ class SupportController extends Controller
                 'message' => $request->get('message'),
             ]);
 
-            Mail::to('waltprorok@gmail.com')->queue(new ContactForm($request));
+            Mail::to('waltprorok@gmail.com')->send(new ContactForm($request));
+            Mail::to($request['email'])->queue(new SupportEmail($request));
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }

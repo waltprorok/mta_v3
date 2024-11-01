@@ -2,10 +2,12 @@
 
 ## New {{ $support ? 'Support' : 'Contact' }} Message
 
-### {{ $subject }}
-
 @component('mail::panel')
-    {{ $message }}
+<b>{{ $name }}</b><br/>
+{{ now()->format('M d, Y, h:iA') }}
+
+{{ $subject }}<br/>
+{{ $message }}
 @endcomponent
 
 @component('mail::button', ['url' => route('contact.index')])
