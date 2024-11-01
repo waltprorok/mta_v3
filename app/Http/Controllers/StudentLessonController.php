@@ -232,6 +232,9 @@ class StudentLessonController extends Controller
         $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
         $lesson->end_date = $request->get('start_date') . ' ' . $duration;
         $lesson->interval = (int)$request->get('end_time');
+        $lesson->notes = $request->get('notes');
+        $lesson->status = $request->get('status');
+        $lesson->status_updated_at = now();
         $lesson->update();
     }
 

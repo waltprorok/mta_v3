@@ -233,7 +233,6 @@ class SubscriptionController extends Controller
             ]);
 
             $user->password = bcrypt($request->get('new_password'));
-
             $user->save();
 
             Mail::queue(new UserPasswordUpdatedMail($user));
