@@ -62,7 +62,7 @@ class StudentLessonController extends Controller
      */
     public function show(int $student_id, int $id, $day = null): View
     {
-        $students = Student::query()->where(['id' => $student_id, 'teacher_id' => Auth::id()])->get();
+        $student = Student::query()->where(['id' => $student_id, 'teacher_id' => Auth::id()])->first();
         $businessHours = BusinessHours::query()->where('teacher_id', Auth::id())->get();
         $lessons = Lesson::query()->where(['student_id' => $student_id, 'id' => $id, 'teacher_id' => Auth::id()])->orderBy('start_date')->with('billingRate')->get();
         $billingRates = BillingRate::query()->where('teacher_id', Auth::id())
@@ -92,7 +92,7 @@ class StudentLessonController extends Controller
 
         return view('webapp.student.scheduleEdit')
             ->with('lessons', $lessons)
-            ->with('students', $students)
+            ->with('student', $student)
             ->with('allTimes', $allAvailableTimes)
             ->with('startDate', $startDate)
             ->with('billingRates', $billingRates);
