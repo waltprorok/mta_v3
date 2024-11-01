@@ -126,12 +126,12 @@ class Student extends Model
 
     public function lesson(): BelongsTo
     {
-        return $this->belongsTo(Lesson::class);
+        return $this->belongsTo(Lesson::class, 'student_id');
     }
 
     public function lessons(): HasMany
     {
-        return $this->hasMany(Lesson::class);
+        return $this->hasMany(Lesson::class, 'student_id');
     }
 
     /**

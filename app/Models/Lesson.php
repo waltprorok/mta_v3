@@ -31,10 +31,19 @@ class Lesson extends Model
         'complete',
         'end_date',
         'interval',
+        'notes',
         'title',
         'start_date',
         'student_id',
         'teacher_id',
+        'status',
+        'status_updated_at',
+    ];
+
+    const STATUS = [
+        'Scheduled',
+        'Re-Scheduled',
+        'Cancelled'
     ];
 
     /**

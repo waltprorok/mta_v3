@@ -46,6 +46,7 @@
                             <button class="btn btn-rounded btn-outline-secondary" v-if="!row.complete" @click="updateLesson(row.id, row.complete)">Click to Complete</button>
                             <button class="btn btn-rounded btn-primary" v-if="row.complete" @click="updateLesson(row.id, row.complete)">Completed</button>
                         </td>
+                        <td>{{ row.status }}</td>
                         <td v-if="lessonDayStatusPast(row.end_date) && pastLesson"><span class="badge badge-pill badge-danger">Past</span></td>
                         <td v-if="lessonDayStatusToday(row.end_date) && todayLesson"><span class="badge badge-pill badge-primary">Today</span></td>
                         <td v-if="lessonDayStatusUpcoming(row.end_date) && upComing"><span class="badge badge-pill badge-warning">Upcoming</span></td>
@@ -86,12 +87,13 @@ export default {
             },
             filter: '',
             columns: [
-                {label: 'Completed', field: 'complete',},
-                {label: 'Status', field: 'end_date',},
-                {label: 'Name', field: 'title',},
-                {label: 'Start Date', field: 'start_date',},
-                {label: 'End Date', field: 'end_date',},
-                {label: 'Duration', field: 'interval',},
+                {label: 'Completed', field: 'complete', sortable: false,},
+                {label: 'Status', field: 'status', sortable: false,},
+                {label: 'State', field: 'end_date', sortable: false,},
+                {label: 'Name', field: 'title', sortable: false,},
+                {label: 'Start Date', field: 'start_date', sortable: false,},
+                {label: 'End Date', field: 'end_date', sortable: false,},
+                {label: 'Duration', field: 'interval', sortable: false,},
             ],
             list: [],
             todayLesson: false,

@@ -103,7 +103,7 @@ class InvoiceController extends Controller
 
     public function show(int $id): View
     {
-        $invoice = Invoice::with('student', 'student.getTeacher')
+        $invoice = Invoice::with('student.getTeacher')
             ->where('id', $id)
             ->firstOrFail();
 

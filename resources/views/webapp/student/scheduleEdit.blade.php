@@ -23,7 +23,7 @@
                             @csrf
                             @method('PUT')
                             <div class="row">
-                                <div class="col-sm-9">
+                                <div class="col-sm-6">
                                     <div class="card mb-3">
                                         <div class="card-body">
                                             <div class="row">
@@ -51,15 +51,6 @@
                                                     </div>
                                                     <div class="col-sm-9" id="phone">
                                                         {{ $student->phone_number }}
-                                                    </div>
-                                                </div>
-                                                <hr>
-                                                <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <h6 class="mb-0">Mobile</h6>
-                                                    </div>
-                                                    <div class="col-sm-9">
-
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -90,6 +81,14 @@
                                                     {{ $lesson->interval }} minutes
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <label for="notes" class="control-label">Lesson Notes</label>
+                                            <textarea class="form-control" name="notes" rows="13">{{ $lesson->notes }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -191,10 +190,22 @@
                                                         | {{ ucfirst($lesson->billingRate->type) }} - {{ ucfirst($lesson->billingRate->description) }}</option>
                                                 @endif
                                                 @foreach($billingRates as $billingRate)
-                                                    <option value="{{ $billingRate->id }}">${{ $billingRate->amount }} | {{ ucfirst($billingRate->type) }} - {{ ucfirst($billingRate->description) }}</option>
+                                                    <option value="{{ $billingRate->id }}">${{ $billingRate->amount }} | {{ ucfirst($billingRate->type) }}
+                                                        - {{ ucfirst($billingRate->description) }}</option>
                                                 @endforeach
                                             </select>
                                         @endif
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="status" class="control-label">Status</label>
+                                        <select class="form-control" id="status" name="status">
+                                            <option value="{{ $lesson->status }}">{{ $lesson->status }}</option>
+                                            @foreach(\App\Models\Lesson::STATUS as $status)
+                                                <option value="{{ $status }}">{{ $status }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -287,7 +298,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <p>Are you sure you want to delete all the scheduled lessons?</p>
+                    <p>Are you sure you want to delete all the scheduled lessons past, present, and future?</p>
                 </div>
 
                 <div class="modal-footer">

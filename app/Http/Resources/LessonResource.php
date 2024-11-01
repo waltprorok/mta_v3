@@ -18,6 +18,7 @@ class LessonResource extends JsonResource
         return [
             'id' => $this->id,
             'complete' => $this->complete,
+            'status' => $this->status,
             'title' => $this->title,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
