@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ContactForm extends Mailable
+class SupportEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -37,20 +37,10 @@ class ContactForm extends Mailable
      *
      * @return $this
      */
-    public function build(): ContactForm
+    public function build(): SupportEmail
     {
-        if ($this->attach)
-            return $this->from($this->email, $this->name)
-                ->subject($this->subject)
-                ->markdown('emails.contact.contact')
-                ->attach($this->attach->getRealPath(), [
-                    'as' => $this->attach->getClientOriginalName(),
-                    'mime' => $this->attach->getMimeType(),
-                ]);
-        else {
-            return $this->from($this->email, $this->name)
-                ->subject($this->subject)
-                ->markdown('emails.contact.contact');
-        }
+        return $this->from('waltprorok@gmail.com', 'Support Desk')
+            ->subject($this->subject)
+            ->markdown('emails.support.ticket');
     }
 }

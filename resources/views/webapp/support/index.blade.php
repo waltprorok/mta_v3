@@ -11,7 +11,7 @@
 
         <div class="card">
             <div class="card-body">
-                <form class="form-horizontal" action="{{ route('support') }}" method="post">
+                <form class="form-horizontal" action="{{ route('support') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @honeypot
                     <div class="row">
@@ -35,6 +35,19 @@
                                 @if ($errors->has('message'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('message') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group {{ $errors->has('attach') ? ' has-error' : '' }}">
+                                <label for="attach" class="control-label">Attach a file</label>
+                                <input name="attach" type="file" class="form-control"/>
+                                @if ($errors->has('attach'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('attach') }}</strong>
                                     </span>
                                 @endif
                             </div>

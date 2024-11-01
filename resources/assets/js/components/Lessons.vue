@@ -43,8 +43,8 @@
                 <template v-slot="{ columns, row }">
                     <tr>
                         <td>
-                            <button class="btn btn-rounded btn-outline-secondary" v-if="!row.complete" @click="updateLesson(row.id, row.complete)">Click to Complete</button>
-                            <button class="btn btn-rounded btn-primary" v-if="row.complete" @click="updateLesson(row.id, row.complete)">Completed</button>
+                            <button class="btn btn-rounded btn-outline-secondary" v-if="!row.complete" @click="updateLesson(row.id, row.complete)" :disabled="isCancelled(row)">Click to Complete</button>
+                            <button class="btn btn-rounded btn-primary" v-if="row.complete" @click="updateLesson(row.id, row.complete)" :disabled="isCancelled(row)">Completed</button>
                         </td>
                         <td>{{ row.status }}</td>
                         <td v-if="lessonDayStatusPast(row.end_date) && pastLesson"><span class="badge badge-pill badge-danger">Past</span></td>
@@ -176,6 +176,10 @@ export default {
                         duration: 10000,
                     });
                 });
+        },
+
+        isCancelled: function (row) {
+            return row.status === 'Cancelled';
         },
 
         resetDates: function () {
