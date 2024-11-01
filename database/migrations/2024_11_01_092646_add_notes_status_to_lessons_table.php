@@ -13,7 +13,7 @@ class AddNotesStatusToLessonsTable extends Migration
      */
     public function up()
     {
-        Schema::table(CreateLessonsTable::TABLE_NAME, function (Blueprint $table) {
+        Schema::table('lessons', function (Blueprint $table) {
             $table->text('notes')->nullable()->after('interval');
             $table->enum('status', ['Scheduled', 'Re-Scheduled', 'Cancelled'])->default('Scheduled')->after('complete');
             $table->dateTime('status_updated_at')->nullable()->after('status');
@@ -27,7 +27,7 @@ class AddNotesStatusToLessonsTable extends Migration
      */
     public function down()
     {
-        Schema::table(CreateLessonsTable::TABLE_NAME, function (Blueprint $table) {
+        Schema::table('lessons', function (Blueprint $table) {
             $table->dropColumn(['notes', 'status']);
         });
     }
