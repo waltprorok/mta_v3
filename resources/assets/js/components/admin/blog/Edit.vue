@@ -43,7 +43,7 @@
                         <div class="col-md-6">
                             <div class="form-group" :class="error_title && classError">
                                 <label for="title">Title</label>
-                                <input id="title" v-model="blog.title" type="text" class="form-control">
+                                <input id="title" v-model.trim="blog.title" type="text" class="form-control">
                                 <small>{{ error_title }}</small>
                             </div>
                         </div>
@@ -88,10 +88,10 @@
                         <div class="col-md-3">
                             <div class="form-group" :class="error_release_time && classError">
                                 <label for="release_time" class="control-label">Publish Time</label>
-                                <select class="form-control" id="release_time" v-model="blog.release_time">
-                                    <option value="09:00:00" selected>9:00 am</option>
-                                    <option value="12:00:00">12:00 pm</option>
-                                    <option value="15:00:00">3:00 pm</option>
+                                <select class="form-control" id="release_time" v-model="release_time">
+                                    <option v-for="option in options" v-bind:value="option.value">
+                                        {{ option.text }}
+                                    </option>
                                 </select>
                                 <small>{{ error_release_time }}</small>
                             </div>
@@ -131,6 +131,12 @@ export default {
                 updated_at: null,
                 deleted_at: null,
             },
+            release_time: '09:00:00',
+            options: [
+                {text: '9:00 am', value: '09:00:00'},
+                {text: '12:00 pm', value: '12:00:00'},
+                {text: '3:00 pm', value: '15:00:00'}
+            ],
             image: null,
             imageModal: false,
             classError: '',
@@ -175,7 +181,7 @@ export default {
             self.error_release_time = '';
         },
 
-        closeModal: function() {
+        closeModal: function () {
             this.imageModal = false;
             this.clearErrorData();
         },
@@ -183,6 +189,7 @@ export default {
         updateBlog: function () {
             let self = this;
             this.blog.slug = this.slug;
+            this.blog.release_time = this.release_time;
             let params = Object.assign({}, self.blog);
             axios.put('/web/blog/' + self.blog.id, params)
                 .then(() => {

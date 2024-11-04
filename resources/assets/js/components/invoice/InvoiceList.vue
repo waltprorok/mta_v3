@@ -19,7 +19,7 @@ export default {
                 {label: 'First Name', field: 'student.first_name',},
                 {label: 'Last Name', field: 'student.last_name',},
                 {label: 'Phone', field: 'student.phone', sortable: false},
-                {label: 'Email', field: 'student.email',},
+                {label: 'Email', field: 'student.email', sortable: false},
                 {label: 'Balance', field: 'balance_due',},
                 {label: 'Due Date', field: 'due_date',},
                 {label: 'Action', filterable: false},

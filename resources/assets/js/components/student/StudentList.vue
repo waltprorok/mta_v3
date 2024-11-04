@@ -10,12 +10,12 @@ export default {
             class_error: '',
             filter: '',
             columns: [
-                {label: 'Scheduled', field: 'has_one_lesson',},
+                {label: 'Scheduled', field: 'has_one_lesson', sortable: false},
                 {label: 'First Name', field: 'first_name',},
                 {label: 'Last Name', field: 'last_name',},
                 {label: 'Phone', field: 'phone', sortable: false},
-                {label: 'Email', field: 'email',},
-                {label: 'Instrument', field: 'instrument',},
+                {label: 'Email', field: 'email', sortable: false},
+                {label: 'Instrument', field: 'instrument', sortable: false},
                 {label: 'Action', filterable: false}
             ],
             show_form: false,

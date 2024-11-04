@@ -27,19 +27,11 @@ class StudentLessonController extends Controller
     {
         $students = Student::query()->where('id', $id)->where('teacher_id', Auth::id())->get();
         $businessHours = BusinessHours::query()->where('teacher_id', Auth::id())->get();
-        $billingRates = BillingRate::query()->where('teacher_id', Auth::id())
-            ->where('active', true)
-            ->orderBy('default', 'desc')
-            ->get();
+        $billingRates = BillingRate::query()->where('teacher_id', Auth::id())->where('active', true)->orderBy('default', 'desc')->get();
         $lessons = Lesson::query()->where('teacher_id', Auth::id())->whereDate('start_date', $day)->orderBy('start_date')->get();
-        $lastLesson = Student::with('hasOneLesson')
-            ->where(['id' => $id, 'teacher_id' => Auth::id(), 'status' => Student::ACTIVE])
-            ->get();
-
+        $lastLesson = Student::with('hasOneLesson')->where(['id' => $id, 'teacher_id' => Auth::id(), 'status' => Student::ACTIVE])->get();
         $startDate = $day;
-
         $day = is_null($day) ? date('l') : Carbon::parse($day)->format('l');
-
         $allTimes = $this->getAllTimes($day, $businessHours);
 
         list($studentScheduled, $allTimes) = $this->getTimes($lessons, $id, $startDate, $day, $allTimes);
@@ -217,13 +209,15 @@ class StudentLessonController extends Controller
 
     private function scheduleUpdate(Request $request): void
     {
-        $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
+        $duration = Carbon::parse($request->get('start_time'))
+            ->addMinutes($request->get('end_time'))
+            ->format('H:i:s');
 
         $lesson = Lesson::query()
             ->where([
+                'id' => $request->get('id'),
                 'student_id' => $request->get('student_id'),
                 'teacher_id' => Auth::id(),
-                'id' => $request->get('id')
             ])
             ->first();
 
