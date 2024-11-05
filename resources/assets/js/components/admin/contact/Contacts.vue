@@ -11,6 +11,7 @@ export default {
             classError: '',
             filter: '',
             columns: [
+                {label: 'Replied', field: 'reply', sortable: false},
                 {label: 'Name', field: 'name', sortable: false},
                 {label: 'Email', field: 'email', sortable: false},
                 {label: 'Subject', field: 'subject', sortable: false},
@@ -32,6 +33,7 @@ export default {
                 email: null,
                 subject: null,
                 message: null,
+                reply: null,
                 created_at: null,
             },
             error_name: '',
@@ -147,6 +149,7 @@ export default {
                     self.contact.email = response.data.email;
                     self.contact.subject = response.data.subject;
                     self.contact.message = response.data.message;
+                    self.contact.reply = response.data.reply;
                 })
             self.edit = true;
         },
@@ -154,7 +157,7 @@ export default {
         updateContact: function (id) {
             let self = this;
             let params = Object.assign({}, self.contact);
-            axios.patch('/web/contacts/' + id, params)
+            axios.put('/web/contacts/' + id, params)
                 .then(() => {
                     self.clearContactData();
                     self.clearErrorData();
@@ -165,6 +168,34 @@ export default {
                         type: 'warn',
                         title: 'Updated',
                         text: 'The contact record was updated.',
+                        duration: 10000,
+                    })
+                })
+                .catch((error) => {
+                    self.getErrorMessage(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not update contact record.',
+                        duration: 10000,
+                    });
+                });
+        },
+
+        updateReply: function (id) {
+            let self = this;
+            self.contact.id = id;
+            self.contact.reply = true;
+            let params = Object.assign({}, self.contact);
+            axios.put('/web/reply-contact/' + id, params)
+                .then(() => {
+                    self.fetchContactList();
+                })
+                .then(() => {
+                    this.$notify({
+                        type: 'success',
+                        title: 'Updated',
+                        text: 'The contact reply was updated.',
                         duration: 10000,
                     })
                 })

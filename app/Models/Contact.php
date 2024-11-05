@@ -19,7 +19,12 @@ class Contact extends Model
         'email',
         'subject',
         'message',
+        'reply',
     ];
+
+    protected $casts = [
+        'reply' => 'boolean',
+        ];
 
     /**
      * @param DateTimeInterface $date

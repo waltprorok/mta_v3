@@ -13,13 +13,13 @@ export default {
             per_page: 10,
             pages: [10, 25, 50, 100],
             columns: [
-                {label: 'Photo', field: 'photo', sortable: false},
+                {label: 'Photo', field: 'photo', sortable: false,},
                 {label: 'First Name', field: 'first_name',},
                 {label: 'Last Name', field: 'last_name',},
-                {label: 'Phone', field: 'phone', sortable: false},
-                {label: 'Email', field: 'email', sortable: false},
-                {label: 'Instrument', field: 'instrument',},
-                {label: 'Status', field: 'status',},
+                {label: 'Phone', field: 'phone', sortable: false,},
+                {label: 'Email', field: 'email', sortable: false,},
+                {label: 'Instrument', field: 'instrument', sortable: false,},
+                {label: 'Status', field: 'status', sortable: false,},
             ],
             student: {
                 id: null,

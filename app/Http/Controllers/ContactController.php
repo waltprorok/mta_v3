@@ -6,6 +6,7 @@ use App\Http\Requests\StoreContactRequest;
 use App\Models\Contact;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
@@ -14,7 +15,7 @@ class ContactController extends Controller
     public function index()
     {
         return Contact::query()
-            ->select('id', 'name', 'email', 'subject', 'message', 'created_at')
+            ->select('id', 'name', 'email', 'subject', 'message', 'reply', 'created_at')
             ->orderBy('created_at', 'desc')
             ->get();
     }
@@ -40,6 +41,18 @@ class ContactController extends Controller
     {
         try {
             $contact->update($request->all());
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
+        }
+
+        return response()->json();
+    }
+
+    public function updateReply(Request $request, Contact $contact): JsonResponse
+    {
+        try {
+            $contact->update(['reply' => $request->get('reply')]);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             return response()->json([], Response::HTTP_BAD_REQUEST);
