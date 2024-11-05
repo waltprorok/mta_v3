@@ -93,8 +93,7 @@ class StudentLessonController extends Controller
     public function store(StoreScheduleApptRequest $request): RedirectResponse
     {
         $begin = Carbon::parse($request->get('start_date'));
-        $end = Carbon::parse($request->get('start_date'));
-        $endOfMonth = Carbon::parse($end)->endOfMonth();
+        $endOfMonth = Carbon::parse($begin)->endOfMonth();
         $diffInDays = $begin->diffInDays($endOfMonth);
         $duration = date('H:i:s', strtotime($request->get('start_time') . ' +' . $request->get('end_time') . ' minutes'));
         $recurrence = $request->get('recurrence') == 'one' ? 1 : $diffInDays;
