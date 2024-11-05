@@ -13,6 +13,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         Route::put('blog/{blog}', 'BlogController@update');
         Route::patch('blog/image/{blog}', 'BlogController@updateImage');
         Route::resource('contacts', 'ContactController');
+        Route::put('reply-contact/{contact}', 'ContactController@updateReply');
         Route::get('students', 'StudentListController@adminStudents');
         Route::get('teachers', 'TeacherController@adminTeachers');
         Route::get('users', 'UserController@adminUsers');

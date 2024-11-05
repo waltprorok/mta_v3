@@ -31,6 +31,7 @@ class StoreContactRequest extends FormRequest
             'email' => 'required|email',
             'subject' => 'required|min:3',
             'message' => 'required|min:3',
+            'reply' => 'boolean'
         ];
     }
 

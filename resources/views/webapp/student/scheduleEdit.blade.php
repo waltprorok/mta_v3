@@ -35,25 +35,23 @@
                                                 </div>
                                             </div>
                                             <hr>
-                                            @foreach ($students as $student)
-                                                <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <h6 class="mb-0">Email</h6>
-                                                    </div>
-                                                    <div class="col-sm-9">
-                                                        <a href="mailto:{{ $student->email }}">{{ $student->email }}</a>
-                                                    </div>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Email</h6>
                                                 </div>
-                                                <hr>
-                                                <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <h6 class="mb-0">Phone</h6>
-                                                    </div>
-                                                    <div class="col-sm-9" id="phone">
-                                                        {{ $student->phone_number }}
-                                                    </div>
+                                                <div class="col-sm-9">
+                                                    <a href="mailto:{{ $student->email }}">{{ $student->email }}</a>
                                                 </div>
-                                            @endforeach
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Phone</h6>
+                                                </div>
+                                                <div class="col-sm-9" id="phone">
+                                                    {{ $student->phone_number }}
+                                                </div>
+                                            </div>
                                             <hr>
                                             <div class="row">
                                                 <div class="col-sm-3">

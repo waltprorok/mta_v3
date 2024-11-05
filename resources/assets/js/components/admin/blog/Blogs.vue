@@ -12,10 +12,10 @@ export default {
             filter: '',
             columns: [
                 {label: 'ID', field: 'id',},
-                {label: 'Image', field: 'image',},
-                {label: 'Title', field: 'title',},
-                {label: 'Slug', field: 'slug',},
-                {label: 'Author', field: 'author',},
+                {label: 'Image', field: 'image', sortable: false,},
+                {label: 'Title', field: 'title', sortable: false,},
+                {label: 'Slug', field: 'slug', sortable: false,},
+                {label: 'Author', field: 'author', sortable: false,},
                 {label: 'Published', field: 'released_on',},
                 {label: 'Created', field: 'created_at',},
                 {label: 'Action', filterable: false,}

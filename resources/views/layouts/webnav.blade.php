@@ -26,7 +26,12 @@
                         </a>
                     </li>
 
-                    @include('partials.messageNavBar')
+                    <li class="nav-item">
+                        <a href="{{ route('message.index') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'message.index' ? 'active' : '' }}">
+                            <i class="fa fa-envelope"></i>Messages
+                        </a>
+                    </li>
 
                     <li class="nav-item">
                         <a href="{{ route('admin.student.index') }}"
@@ -72,7 +77,12 @@
                         </a>
                     </li>
 
-                    @include('partials.messageNavBar')
+                    <li class="nav-item">
+                        <a href="{{ route('message.index') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'message.index' ? 'active' : '' }}">
+                            <i class="fa fa-envelope"></i>Messages
+                        </a>
+                    </li>
 
                     <li class="nav-item">
                         <a href="{{ route('payment.index') }}"
@@ -104,7 +114,12 @@
                         </a>
                     </li>
 
-                    @include('partials.messageNavBar')
+                    <li class="nav-item">
+                        <a href="{{ route('message.index') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'message.index' ? 'active' : '' }}">
+                            <i class="fa fa-envelope"></i>Messages
+                        </a>
+                    </li>
                 @endif
 
                 @if(Auth::user()->teacher)
@@ -167,7 +182,12 @@
                         </a>
                     </li>
 
-                    @include('partials.messageNavBar')
+                    <li class="nav-item">
+                        <a href="{{ route('message.index') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'message.index' ? 'active' : '' }}">
+                            <i class="fa fa-envelope"></i>Messages
+                        </a>
+                    </li>
 
                     <li class="nav-item nav-dropdown" id="#billing">
                         <a href="#billing" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == '#' ? 'active' : '' }}">
