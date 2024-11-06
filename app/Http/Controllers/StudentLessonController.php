@@ -4,25 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ScheduleUpdateRequest;
 use App\Http\Requests\StoreScheduleApptRequest;
-use App\Mail\LessonsScheduled;
 use App\Models\BillingRate;
 use App\Models\BusinessHours;
-use App\Models\Invoice;
 use App\Models\Lesson;
 use App\Models\Student;
+use App\Services\StudentLessonService;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class StudentLessonController extends Controller
 {
+
+    /**
+     * @var StudentLessonService
+     */
+    private $studentLessonService;
+
+    public function __construct(StudentLessonService $studentLessonService)
+    {
+        $this->studentLessonService = $studentLessonService;
+    }
+
     public function index(int $id, $day = null)
     {
         $students = Student::query()->where('id', $id)->where('teacher_id', Auth::id())->get();
@@ -99,6 +107,7 @@ class StudentLessonController extends Controller
         $recurrence = $request->get('recurrence') == 'one' ? 1 : $diffInDays;
         $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
         $student = Student::query()->with('getTeacher')->with('parent')->findOrFail($request->get('student_id')); // needed for email
+
         $lessons = collect();
 
         for ($i = $begin; $i <= $end; $i->modify('+7 day')) {
@@ -115,7 +124,7 @@ class StudentLessonController extends Controller
             $lessons[] = $lesson;
         }
 
-        $this->emailLessonsToStudentParent($student, $lessons);
+        $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
 
         return redirect()->back()->with('success', ' The student has been scheduled successfully.');
     }
@@ -283,7 +292,7 @@ class StudentLessonController extends Controller
      */
     private function destroyOne(Lesson $lesson): void
     {
-        $this->deleteUnPaidCreatedInvoices($lesson);
+        $this->studentLessonService->deleteUnPaidCreatedInvoices($lesson);
 
         $lesson->delete();
     }
@@ -295,7 +304,7 @@ class StudentLessonController extends Controller
      */
     private function destroyAll(Lesson $lesson): void
     {
-        $this->deleteUnPaidCreatedInvoices($lesson);
+        $this->studentLessonService->deleteUnPaidCreatedInvoices($lesson);
 
         Lesson::query()
             ->where(['student_id' => $lesson->student_id, 'teacher_id' => Auth::id()])
@@ -309,7 +318,7 @@ class StudentLessonController extends Controller
      */
     private function destroyRemaining($lesson): void
     {
-        $this->deleteUnPaidCreatedInvoices($lesson);
+        $this->studentLessonService->deleteUnPaidCreatedInvoices($lesson);
 
         Lesson::query()->where('student_id', $lesson->student_id)
             ->where('teacher_id', Auth::id())
@@ -461,50 +470,5 @@ class StudentLessonController extends Controller
         }
 
         return array($studentScheduled, $allTimes);
-    }
-
-    /**
-     * @param Lesson $lesson
-     * @return void
-     * @throws Exception
-     */
-    private function deleteUnPaidCreatedInvoices(Lesson $lesson): void
-    {
-        $invoices = Invoice::with('lessons')->whereHas('lessons', function ($query) use ($lesson) {
-            $query->where(['student_id' => $lesson->student_id, 'teacher_id' => Auth::id(), 'is_paid' => false, 'payment' => '0']);
-        })->get();
-
-        if ($invoices) {
-            foreach ($invoices as $invoice) {
-                $invoice->delete();
-            }
-        }
-    }
-
-    /**
-     * @param $student
-     * @param Collection $lessons
-     * @return void
-     */
-    private function emailLessonsToStudentParent($student, Collection $lessons): void
-    {
-        // student has an email and parent has an email
-        if ($student->email && $student->parent) {
-            if ($student->parent->email) {
-                Mail::to($student->email)->cc($student->parent->email)->queue(new LessonsScheduled($student, $lessons));
-            }
-        }
-
-        // student does NOT have an email and parent has an email
-        if ($student->email == null && $student->parent) {
-            if ($student->parent->email) {
-                Mail::to($student->parent->email)->queue(new LessonsScheduled($student, $lessons));
-            }
-        }
-
-        // student has an email and parent does not have an email
-        if ($student->email && $student->parent == null) {
-            Mail::to($student->email)->queue(new LessonsScheduled($student, $lessons));
-        }
     }
 }
