@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddNotesStatusToLessonsTable extends Migration
+class AddRecurrenceToLessonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,7 @@ class AddNotesStatusToLessonsTable extends Migration
     public function up()
     {
         Schema::table('lessons', function (Blueprint $table) {
-            $table->text('notes')->nullable()->after('interval');
-            $table->enum('status', ['Scheduled', 'Re-Scheduled', 'Cancelled'])->default('Scheduled')->after('complete');
-            $table->dateTime('status_updated_at')->nullable()->after('status');
+            $table->enum('recurrence', ['Monthly', 'Once'])->nullable()->after('interval');
         });
     }
 
@@ -28,7 +26,7 @@ class AddNotesStatusToLessonsTable extends Migration
     public function down()
     {
         Schema::table('lessons', function (Blueprint $table) {
-            $table->dropColumn(['notes', 'status', 'status_updated_at']);
+            $table->dropColumn('recurrence');
         });
     }
 }

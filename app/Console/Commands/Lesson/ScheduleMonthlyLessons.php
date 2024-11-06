@@ -53,6 +53,7 @@ class ScheduleMonthlyLessons extends Command
             ->whereHas('lessons', function (Builder $query) {
                 $query->whereBetween('start_date', [now()->startOfMonth(), now()->endOfMonth()]);
                 $query->where('status', 'Scheduled');
+                $query->where('recurrence', 'Monthly');
             })
             ->with('lessons')
             ->with('getTeacher')
@@ -81,6 +82,7 @@ class ScheduleMonthlyLessons extends Command
                             $lesson->start_date = $i->format('Y-m-d') . ' ' . $startDate->format('H:i:s');
                             $lesson->end_date = $i->format('Y-m-d') . ' ' . $endDate->format('H:i:s');
                             $lesson->interval = $minutes;
+                            $lesson->recurrence = $student->lessons->last()->recurrence;
                             $lesson->save();
                             $lessons[] = $lesson;
 
