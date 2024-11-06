@@ -31,6 +31,7 @@ class Lesson extends Model
         'complete',
         'end_date',
         'interval',
+        'recurrence',
         'notes',
         'title',
         'start_date',
@@ -44,6 +45,11 @@ class Lesson extends Model
         'Scheduled',
         'Re-Scheduled',
         'Cancelled'
+    ];
+
+    const RECURRENCE = [
+        'Once',
+        'Monthly',
     ];
 
     /**

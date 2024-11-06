@@ -120,6 +120,7 @@ class StudentLessonController extends Controller
             $lesson->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
             $lesson->end_date = $i->format('Y-m-d') . ' ' . $duration;
             $lesson->interval = (int)$request->get('end_time');
+            $lesson->recurrence = $request->get('recurrence') == 'one' ? 'Once' : 'Monthly';
             $lesson->save();
             $lessons[] = $lesson;
         }
