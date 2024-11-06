@@ -19,13 +19,19 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param Schedule $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('lessons:schedule-monthly')
+            ->timezone('America/New_York')
+            ->monthlyOn(26, '02:00');
+
+        $schedule->command('inspire')
+            ->timezone('America/New_York')
+            ->dailyAt('12:00')
+            ->appendOutputTo('/var/www/mta_v3/storage/logs/inspire.log');
     }
 
     /**
@@ -35,7 +41,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

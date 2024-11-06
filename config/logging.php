@@ -47,6 +47,13 @@ return [
             'days' => 90,
         ],
 
+        'lessons' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/lessons.log'),
+            'level' => 'debug',
+            'days' => 60,
+        ],
+
         'slack' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),
