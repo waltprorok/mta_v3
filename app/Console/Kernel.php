@@ -27,11 +27,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('lessons:schedule-monthly')
             ->timezone('America/New_York')
             ->monthlyOn(26, '02:00');
-
-        $schedule->command('inspire')
-            ->timezone('America/New_York')
-            ->dailyAt('12:00')
-            ->appendOutputTo('/var/www/mta_v3/storage/logs/inspire.log');
     }
 
     /**
