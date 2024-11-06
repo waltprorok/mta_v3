@@ -82,6 +82,7 @@ class ScheduleMonthlyLessons extends Command
                             $lesson->start_date = $i->format('Y-m-d') . ' ' . $startDate->format('H:i:s');
                             $lesson->end_date = $i->format('Y-m-d') . ' ' . $endDate->format('H:i:s');
                             $lesson->interval = $minutes;
+                            $lesson->recurrence = $student->lessons->last()->recurrence;
                             $lesson->save();
                             $lessons[] = $lesson;
 
