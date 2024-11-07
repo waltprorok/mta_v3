@@ -125,7 +125,7 @@ class StudentLessonController extends Controller
             $lessons[] = $lesson;
         }
 
-//        $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
+        $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
 
         return redirect()->back()->with('success', ' The student has been scheduled successfully.');
     }
