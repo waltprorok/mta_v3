@@ -25,6 +25,7 @@ class LessonController extends Controller
 
         if ($data->count()) {
             foreach ($data as $value) {
+
                 $lessons[] = Calendar::event(
                     $value->title,
                     null,
@@ -62,7 +63,6 @@ class LessonController extends Controller
     public function update(Request $request, Lesson $lesson): JsonResponse
     {
         $lesson->complete = $request->get('complete');
-
         $lesson->save();
 
         return response()->json($lesson);

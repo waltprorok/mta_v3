@@ -1,3 +1,4 @@
+// TODO: remove this code, used for old cashier version
 // Create an instance of Elements.
 var elements = stripe.elements();
 
