@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::post('invoice-post', 'InvoiceController@store');
         Route::put('invoice/update/{invoice}', 'InvoiceController@update');
         Route::get('invoice-get-student/{id}/{month}', 'InvoiceController@getStudentSelected');
+        Route::resource('holiday', 'HolidayController');
         Route::post('student-save', 'StudentController@store');
         Route::get('status', 'ReportController@status');
         Route::get('payment-types', 'InvoiceController@getPaymentTypes');
@@ -55,7 +56,8 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::post('store', 'TeacherController@store')->name('save.studioSettings');
         Route::get('profile', 'TeacherController@profile')->name('teacher.profile');
         Route::view('rates', 'webapp.teacher.billing')->name('teacher.billing');
-        Route::view('instruments', 'webapp.teacher.instrument')->name('teacher.instruments');
+        Route::view('instruments', 'webapp.teacher.holiday')->name('teacher.holidays');
+        Route::view('holiday', 'webapp.teacher.instrument')->name('teacher.instruments');
         Route::get('hours', 'BusinessHourController@index')->name('teacher.hours');
         Route::post('hours', 'BusinessHourController@store')->name('teacher.hoursSave');
         Route::put('hours/update', 'BusinessHourController@update')->name('teacher.hoursUpdate');

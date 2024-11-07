@@ -1,18 +1,17 @@
 @extends('layouts.webapp')
-@section('title', 'Messages')
+@section('title', 'Holidays')
 @section('content')
 
     <div class="col-12">
-        @if(Auth::user()->isTeacher())
-        <h4>Messages</h4>
+        <h4>Studio Settings</h4>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">Messages</li>
+            <li class="breadcrumb-item active">Holidays / Time Off</li>
         </ul>
-        @endif
+        @include('partials.teacherTabs')
 
         <div id="app">
-            <messages></messages>
+            <holiday></holiday>
         </div>
     </div>
 

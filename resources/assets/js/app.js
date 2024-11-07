@@ -65,6 +65,7 @@ Vue.component('instruments', require('./components/instrument/Instruments.vue').
 Vue.component('invoiceCreate', require('./components/invoice/InvoiceCreate.vue').default);
 Vue.component('invoiceList', require('./components/invoice/InvoiceList.vue').default);
 Vue.component('listOfPayments', require('./components/invoice/ListOfPayments.vue').default);
+Vue.component('holiday', require('./components/holiday/Holiday.vue').default);
 Vue.component('lessons', require('./components/Lessons.vue').default);
 Vue.component('profile', require('./components/student/Profile.vue').default);
 Vue.component('students', require('./components/admin/student/Students.vue').default);
@@ -73,7 +74,7 @@ Vue.component('teachers', require('./components/admin/teacher/Teachers.vue').def
 Vue.component('users', require('./components/admin/user/Users.vue').default);
 Vue.component('reportCompletedLessonsLine', require('./components/reports/CompletedLessonsLine.vue').default);
 Vue.component('reportStudentStatusBar', require('./components/reports/StudentStatusBar.vue').default);
-Vue.component('index', require('./components/messages/Index.vue').default);
+Vue.component('messages', require('./components/messages/Index.vue').default);
 Vue.component('plans', require('./components/admin/billing/Plans.vue').default);
 Vue.component('payments', require('./components/payments/Payments.vue').default);
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\LessonResource;
+use App\Models\Holiday;
 use App\Models\Lesson;
 use Carbon\Carbon;
 use DateTime;
@@ -20,13 +21,13 @@ class LessonController extends Controller
      */
     public function index()
     {
-        $lessons = [];
-        $data = Lesson::query()->where('teacher_id', Auth::id())->get();
+        $dates = [];
+        $lessons = Lesson::query()->where('teacher_id', Auth::id())->get();
+        $holidays = Holiday::query()->where('teacher_id', Auth::id())->get();
 
-        if ($data->count()) {
-            foreach ($data as $value) {
-
-                $lessons[] = Calendar::event(
+        if ($lessons->count()) {
+            foreach ($lessons as $value) {
+                $dates[] = Calendar::event(
                     $value->title,
                     null,
                     new DateTime($value->start_date),
@@ -40,7 +41,22 @@ class LessonController extends Controller
             }
         }
 
-        $calendar = Calendar::addEvents($lessons)
+        if ($holidays->count()) {
+            foreach ($holidays as $value) {
+                $dates[] = Calendar::event(
+                    $value->title,
+                    $value->all_day,
+                    new DateTime($value->start_date),
+                    new DateTime($value->end_date),
+                    $value->id,
+                    [
+                        'color' => $value->color,
+                    ]
+                );
+            }
+        }
+
+        $calendar = Calendar::addEvents($dates)
             ->setOptions([
                 'firstDay' => 0,
                 'editable' => false,
