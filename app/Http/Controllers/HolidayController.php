@@ -18,6 +18,7 @@ class HolidayController extends Controller
     {
         return Holiday::query()
             ->select('id', 'title', 'start_date', 'end_date', 'color', 'all_day')
+            ->where('teacher_id', Auth::user()->id)
             ->orderBy('start_date', 'desc')
             ->get();
     }
