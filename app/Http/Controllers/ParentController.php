@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Holiday;
 use App\Models\Lesson;
 use App\Models\Teacher;
 use App\Models\User;
-use DateTime;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -18,24 +19,29 @@ class ParentController extends Controller
      */
     public function calendar()
     {
-        $lessons = [];
+        $dates = [];
         $studentIds = [];
+        $teacherIds = [];
+        $parent = User::query()
+            ->with('parentOfStudents')
+            ->where('id', Auth::user()->id)
+            ->first();
 
-        $parent = User::query()->with('parentOfStudents')->findOrFail(Auth::id());
-
-        foreach ($parent->parentOfStudents as $studentId) {
-            $studentIds[] = $studentId->id;
+        foreach ($parent->parentOfStudents as $student) {
+            $studentIds[] = $student->id;
+            $teacherIds[] = $student->teacher_id;
         }
 
-        $data = Lesson::query()->whereIn('student_id', $studentIds)->get();
+        $lessons = Lesson::query()->whereIn('student_id', $studentIds)->get();
+        $holidays = Holiday::query()->whereIn('teacher_id', $teacherIds)->get();
 
-        if ($data->count()) {
-            foreach ($data as $value) {
-                $lessons[] = Calendar::event(
+        if ($lessons->count()) {
+            foreach ($lessons as $value) {
+                $dates[] = Calendar::event(
                     $value->title,
-                    null,
-                    new DateTime($value->start_date),
-                    new DateTime($value->end_date),
+                    false,
+                    Carbon::parse($value->start_date),
+                    Carbon::parse($value->end_date),
                     $value->id,
                     [
                         'color' => $value->color,
@@ -45,7 +51,22 @@ class ParentController extends Controller
             }
         }
 
-        $calendar = Calendar::addEvents($lessons)
+        if ($holidays->count()) {
+            foreach ($holidays as $value) {
+                $dates[] = Calendar::event(
+                    $value->title,
+                    $value->all_day,
+                    Carbon::parse($value->start_date),
+                    $value->all_day ? Carbon::parse($value->end_date)->addDay() : Carbon::parse($value->end_date),
+                    $value->id,
+                    [
+                        'color' => $value->color,
+                    ]
+                );
+            }
+        }
+
+        $calendar = Calendar::addEvents($dates)
             ->setOptions([
                 'firstDay' => 0,
                 'editable' => false,

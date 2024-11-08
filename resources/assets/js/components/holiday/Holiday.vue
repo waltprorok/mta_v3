@@ -13,10 +13,19 @@ export default {
             filter: '',
             columns: [
                 {label: 'Title', field: 'title', sortable: false},
-                {label: 'Start Date', filterable: false, sortable: false},
+                {label: 'Start Date', field: 'start_date', sortable: true},
                 {label: 'End Date', filterable: false, sortable: false},
                 {label: 'All Day', filterable: false, sortable: false},
                 {label: 'Action', filterable: false, sortable: false},
+            ],
+            colors: [
+                {name: 'Blue', code: '#5499C7'},
+                {name: 'Red', code: '#CD6155'},
+                {name: 'Purple', code: '#A569BD'},
+                {name: 'Green', code: '#52BE80'},
+                {name: 'Yellow', code: '#F4D03F'},
+                {name: 'Orange', code: '#E59866'},
+                {name: 'Grey', code: '#85929E'},
             ],
             edit: false,
             id: null,
@@ -29,7 +38,7 @@ export default {
             holiday: {
                 id: null,
                 title: null,
-                color: null,
+                color: 'Blue',
                 start_date: new Date(),
                 end_date: new Date(),
                 all_day: true,
@@ -80,8 +89,8 @@ export default {
             self.holiday.id = null;
             self.holiday.title = null;
             self.holiday.color = null;
-            self.holiday.start_date = null;
-            self.holiday.end_date = null;
+            self.holiday.start_date = new Date();
+            self.holiday.end_date = new Date();
             self.holiday.all_day = null
             self.edit = false;
         },
@@ -204,7 +213,7 @@ export default {
                     this.$notify({
                         type: 'success',
                         title: 'Success',
-                        text: 'Updated holiday.',
+                        text: 'Updated date.',
                         duration: 10000,
                     });
                 })
@@ -213,7 +222,7 @@ export default {
                     this.$notify({
                         type: 'error',
                         title: 'Error',
-                        text: 'Could not update holiday.',
+                        text: 'Could not update date.',
                         duration: 10000,
                     });
                 });

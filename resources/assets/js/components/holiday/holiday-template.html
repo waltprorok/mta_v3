@@ -24,12 +24,22 @@
                                                            v-model="holiday.title"
                                                            placeholder="Add a title"
                                                            type="text"
+                                                           required
                                                            v-on:keydown.enter.prevent>
                                                 </div>
                                             </div>
                                             <div class="input-group mb-3">
                                                 <label for="start_date" class="control-label p-1"></label>
-                                                <v-date-picker v-model="holiday.start_date" mode="dateTime" :minute-increment="5">
+                                                <v-date-picker v-if="holiday.all_day" v-model="holiday.start_date" mode="date" :minute-increment="5">
+                                                    <template v-slot="{ inputValue, inputEvents }">
+                                                        <input
+                                                                class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
+                                                                :value="inputValue"
+                                                                v-on="inputEvents"
+                                                        />
+                                                    </template>
+                                                </v-date-picker>
+                                                <v-date-picker v-else v-model="holiday.start_date" mode="dateTime" :minute-increment="5">
                                                     <template v-slot="{ inputValue, inputEvents }">
                                                         <input
                                                                 class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
@@ -39,7 +49,16 @@
                                                     </template>
                                                 </v-date-picker>
                                                 <label for="end_date" class="control-label p-1">To</label>
-                                                <v-date-picker v-model="holiday.end_date" mode="dateTime" :minute-increment="5">
+                                                <v-date-picker v-if="holiday.all_day" v-model="holiday.end_date" mode="date" :minute-increment="5">
+                                                    <template v-slot="{ inputValue, inputEvents }">
+                                                        <input
+                                                                class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
+                                                                :value="inputValue"
+                                                                v-on="inputEvents"
+                                                        />
+                                                    </template>
+                                                </v-date-picker>
+                                                <v-date-picker v-else v-model="holiday.start_date" mode="dateTime" :minute-increment="5">
                                                     <template v-slot="{ inputValue, inputEvents }">
                                                         <input
                                                                 class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
@@ -62,11 +81,10 @@
                                                 <div class="input-group mb-3">
                                                     <div class="form-group">
                                                         <label for="color">Color</label>
-                                                        <select id="color" class="form-control">
-                                                            <option>Green</option>
-                                                            <option>Yellow</option>
-                                                            <option>Orange</option>
-                                                            <option>Red</option>
+                                                        <select id="color" class="form-control" v-model="holiday.color">
+                                                            <option v-for="color in colors" :value="color.code" :key="color.id" :selected="holiday.color">
+                                                                {{ color.name }}
+                                                            </option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -111,7 +129,8 @@
                     <td>{{ row.title | capitalising }}</td>
                     <td>{{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                     <td>{{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
-                    <td>{{ row.all_day }}</td>
+                    <td v-if="row.all_day"><i class="fa fa-gift" aria-hidden="true"></i></td>
+                    <td v-else><i class="fa fa-calendar" aria-hidden="true"></i></td>
                     <td class="text-nowrap">
                         <button @click="showHoliday(row.id)"
                                 class="btn btn-outline-primary btn-sm"

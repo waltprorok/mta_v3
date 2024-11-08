@@ -34,7 +34,7 @@ class HolidayController extends Controller
 
         try {
             $holiday = new Holiday();
-            $holiday->teacher_id = Auth::user()->id;
+            $holiday->teacher_id = Auth::id();
             $holiday->title = $request->get('title');
             $holiday->color = $request->get('color');
             $holiday->start_date = $start_date;
@@ -56,7 +56,6 @@ class HolidayController extends Controller
 
         try {
             $holiday->update([
-                'teacher_id' => Auth::user()->id,
                 'title' => $request->get('title'),
                 'color' => $request->get('color'),
                 'start_date' => $start_date,

@@ -6,7 +6,6 @@ use App\Http\Resources\LessonResource;
 use App\Models\Holiday;
 use App\Models\Lesson;
 use Carbon\Carbon;
-use DateTime;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -30,8 +29,8 @@ class LessonController extends Controller
                 $dates[] = Calendar::event(
                     $value->title,
                     false,
-                    new DateTime($value->start_date),
-                    new DateTime($value->end_date),
+                    Carbon::parse($value->start_date),
+                    Carbon::parse($value->end_date),
                     $value->id,
                     [
                         'color' => $value->color,
@@ -46,8 +45,8 @@ class LessonController extends Controller
                 $dates[] = Calendar::event(
                     $value->title,
                     $value->all_day,
-                    new DateTime($value->start_date),
-                    new DateTime($value->end_date),
+                    Carbon::parse($value->start_date),
+                    $value->all_day ? Carbon::parse($value->end_date)->addDay() : Carbon::parse($value->end_date),
                     $value->id,
                     [
                         'color' => $value->color,
