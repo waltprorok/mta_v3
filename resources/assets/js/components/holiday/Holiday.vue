@@ -29,6 +29,7 @@ export default {
             holiday: {
                 id: null,
                 title: null,
+                color: null,
                 start_date: new Date(),
                 end_date: new Date(),
                 all_day: true,
@@ -55,7 +56,7 @@ export default {
     },
 
     mounted: function () {
-        this.fetchList();
+        this.fetchHolidayList();
     },
 
     methods: {
@@ -76,7 +77,9 @@ export default {
         clearData: function () {
             let self = this;
             self.showForm = false;
+            self.holiday.id = null;
             self.holiday.title = null;
+            self.holiday.color = null;
             self.holiday.start_date = null;
             self.holiday.end_date = null;
             self.holiday.all_day = null
@@ -90,7 +93,7 @@ export default {
                 .then(() => {
                     self.clearData();
                     self.clearErrorData();
-                    self.fetchList();
+                    self.fetchHolidayList();
                     this.$notify({
                         type: 'success',
                         title: 'Success',
@@ -112,10 +115,10 @@ export default {
         deleteHoliday: function (id) {
             let self = this;
             let params = Object.assign({}, self.holiday);
-            axios.delete('/web/instrument/' + id, params)
+            axios.delete('/web/holiday/' + id, params)
                 .then(() => {
                     self.showModal = false;
-                    self.fetchInstrumentList();
+                    self.fetchHolidayList();
                     this.$notify({
                         type: 'warn',
                         title: 'Deleted',
@@ -140,7 +143,7 @@ export default {
             self.classError = 'has-error';
         },
 
-        fetchList: function () {
+        fetchHolidayList: function () {
             axios.get('/web/holiday')
                 .then((response) => {
                     this.list = response.data;
@@ -172,11 +175,12 @@ export default {
             self.edit = true;
             axios.get('/web/holiday/' + id)
                 .then((response) => {
-                    self.holiday.id = response.data.id;
-                    self.holiday.title = response.data.title;
-                    self.holiday.start_date = response.data.start_date;
-                    self.holiday.end_date = response.data.end_date;
-                    self.holiday.all_date = response.data.all_date;
+                    this.holiday.id = response.data.id;
+                    this.holiday.title = response.data.title;
+                    this.holiday.color = response.data.color;
+                    this.holiday.start_date = response.data.start_date;
+                    this.holiday.end_date = response.data.end_date;
+                    this.holiday.all_day = response.data.all_day;
                 })
                 .catch((error) => {
                     self.getErrorMessage(error);
@@ -196,7 +200,7 @@ export default {
                 .then(() => {
                     self.clearData();
                     self.clearErrorData();
-                    self.fetchList();
+                    self.fetchHolidayList();
                     this.$notify({
                         type: 'success',
                         title: 'Success',

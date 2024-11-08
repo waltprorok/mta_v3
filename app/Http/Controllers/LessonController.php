@@ -29,7 +29,7 @@ class LessonController extends Controller
             foreach ($lessons as $value) {
                 $dates[] = Calendar::event(
                     $value->title,
-                    null,
+                    false,
                     new DateTime($value->start_date),
                     new DateTime($value->end_date),
                     $value->id,

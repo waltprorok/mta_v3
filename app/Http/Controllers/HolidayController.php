@@ -30,12 +30,13 @@ class HolidayController extends Controller
     public function store(Request $request): JsonResponse
     {
         $start_date = Carbon::parse($request->get('start_date'))->tz('America/New_York')->format('Y-m-d H:i:s');
-        $end_date = Carbon::parse($request->get('start_end'))->tz('America/New_York')->format('Y-m-d H:i:s');
+        $end_date = Carbon::parse($request->get('end_date'))->tz('America/New_York')->format('Y-m-d H:i:s');
 
         try {
             $holiday = new Holiday();
             $holiday->teacher_id = Auth::user()->id;
             $holiday->title = $request->get('title');
+            $holiday->color = $request->get('color');
             $holiday->start_date = $start_date;
             $holiday->end_date = $end_date;
             $holiday->all_day = $request->get('all_day');
@@ -50,8 +51,18 @@ class HolidayController extends Controller
 
     public function update(Request $request, Holiday $holiday): JsonResponse
     {
+        $start_date = Carbon::parse($request->get('start_date'))->tz('America/New_York')->format('Y-m-d H:i:s');
+        $end_date = Carbon::parse($request->get('end_date'))->tz('America/New_York')->format('Y-m-d H:i:s');
+
         try {
-            $holiday->update($request->all());
+            $holiday->update([
+                'teacher_id' => Auth::user()->id,
+                'title' => $request->get('title'),
+                'color' => $request->get('color'),
+                'start_date' => $start_date,
+                'end_date' => $end_date,
+                'all_day' => $request->get('all_day') == null ? false : true
+            ]);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             return response()->json([], Response::HTTP_BAD_REQUEST);
