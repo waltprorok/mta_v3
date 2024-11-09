@@ -5,6 +5,9 @@ import TotalEntries from "../TotalEntries";
 import {dateParse} from "@vuejs-community/vue-filter-date-parse";
 import {dateFormat} from "vue-filter-date-format";
 
+let endDate = new Date();
+endDate.setMinutes(endDate.getMinutes() + 30);
+
 export default {
     name: 'Holidays',
     data: function () {
@@ -40,7 +43,7 @@ export default {
                 title: null,
                 color: 'Blue',
                 start_date: new Date(),
-                end_date: new Date(),
+                end_date: endDate,
                 all_day: true,
             },
             error_name: '',
