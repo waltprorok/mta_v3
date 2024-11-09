@@ -93,8 +93,8 @@ export default {
             self.holiday.title = null;
             self.holiday.color = null;
             self.holiday.start_date = new Date();
-            self.holiday.end_date = new Date();
-            self.holiday.all_day = null
+            self.holiday.end_date = endDate;
+            self.holiday.all_day = true;
             self.edit = false;
         },
 
