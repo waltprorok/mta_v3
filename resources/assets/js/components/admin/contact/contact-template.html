@@ -84,7 +84,7 @@
                             <span class="btn btn-sm btn-default"><i class="fa fa-envelope"></i></span>
                         </td>
                         <td v-show="row.reply">
-                            <span class="btn btn-sm btn-outline-success"><i class="fa fa-reply"></i></span>
+                            <span class="btn btn-sm btn-default"><i class="fa fa-paper-plane"></i></span>
                         </td>
                         <td v-text="row.name"></td>
                         <td><a :href="'mailto:' + row.email + '?subject=' + row.subject + '&body=' + row.message" v-text="row.email" @click="updateReply(row.id)"></a></td>

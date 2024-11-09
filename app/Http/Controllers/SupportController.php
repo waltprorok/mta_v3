@@ -7,6 +7,7 @@ use App\Models\Support;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
@@ -43,6 +44,18 @@ class SupportController extends Controller
     {
         try {
             $support->update($request->all());
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
+        }
+
+        return response()->json();
+    }
+
+    public function updateReply(Request $request, Support $support): JsonResponse
+    {
+        try {
+            $support->update(['reply' => $request->get('reply')]);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             return response()->json([], Response::HTTP_BAD_REQUEST);

@@ -16,6 +16,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         Route::put('reply-contact/{contact}', 'ContactController@updateReply');
         Route::get('students', 'StudentListController@adminStudents');
         Route::resource('support', 'SupportController');
+        Route::patch('reply-support/{support}', 'SupportController@updateReply');
         Route::get('teachers', 'TeacherController@adminTeachers');
         Route::get('users', 'UserController@adminUsers');
         Route::get('billing/plans', 'BillingRateController@billingPlans');

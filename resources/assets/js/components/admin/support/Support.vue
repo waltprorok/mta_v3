@@ -157,7 +157,7 @@ export default {
         updateSupport: function (id) {
             let self = this;
             let params = Object.assign({}, self.support);
-            axios.put('/web/support/' + id, params)
+            axios.patch('/web/support/' + id, params)
                 .then(() => {
                     self.clearSupportData();
                     self.clearErrorData();
@@ -187,7 +187,7 @@ export default {
             self.support.id = id;
             self.support.reply = true;
             let params = Object.assign({}, self.support);
-            axios.put('/web/reply-support/' + id, params)
+            axios.patch('/web/reply-support/' + id, params)
                 .then(() => {
                     self.fetchSupportList();
                 })
