@@ -2,51 +2,67 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ContactForm;
-use App\Mail\SupportEmail;
-use App\Models\Contact;
+use App\Http\Requests\StoreSupportRequest;
+use App\Models\Support;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 
 class SupportController extends Controller
 {
     public function index()
     {
-        return view('webapp.support.index');
+        return Support ::query()
+            ->select('id', 'name', 'email', 'subject', 'message', 'reply', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
 
-    public function store(Request $request): RedirectResponse
+    public function show(Support $support): JsonResponse
     {
-        $request->validate([
-            'subject' => 'required|min:3',
-            'message' => 'required|min:3',
-            'attach' => 'mimes:jpg,jpeg,png,pdf,doc,docx,txt,csv|max:7024|nullable',
-        ]);
+        return response()->json($support);
+    }
 
-
-        $request['name'] = Auth::user()->getFullNameAttribute();
-        $request['email'] = Auth::user()->email;
-        $request['support'] = true;
-        $request['attach'] = $request->get('attach');
-
+    public function store(StoreSupportRequest $request): RedirectResponse
+    {
         try {
-            Contact::query()->create([
-                'name' => $request['name'],
-                'email' => $request['email'],
-                'subject' => 'SUPPORT: ' . $request->get('subject'),
-                'message' => $request->get('message'),
-            ]);
+            Support::query()->create($request->all());
 
-            Mail::to('waltprorok@gmail.com')->send(new ContactForm($request));
-            Mail::to($request['email'])->queue(new SupportEmail($request));
+//            Mail::to('waltprorok@gmail.com')->send(new ContactForm($request));
+//            Mail::to($request['email'])->queue(new SupportEmail($request));
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }
 
         return redirect()->route('support')->with('success', 'The contact form was sent successfully');
+    }
+
+    public function update(StoreSupportRequest $request, Support $support): JsonResponse
+    {
+        try {
+            $support->update($request->all());
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
+        }
+
+        return response()->json();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function destroy(Support $support): JsonResponse
+    {
+        try {
+            $support->delete();
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
+        }
+
+        return response()->json();
     }
 }

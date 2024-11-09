@@ -11,49 +11,48 @@
                             <i class="fa fa-newspaper-o"></i>Blog
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ route('contact.index') }}"
                            class="nav-link {{ Route::currentRouteName() == 'contact.index' ? 'active' : '' }}">
                             <i class="fa fa-paper-plane"></i>Contact Us
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ route('complete.lessons') }}"
                            class="nav-link {{ Route::currentRouteName() == 'complete.lessons' ? 'active' : '' }}">
                             <i class="fa fa-music"></i>Lessons
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ route('message.index') }}"
                            class="nav-link {{ Route::currentRouteName() == 'message.index' ? 'active' : '' }}">
                             <i class="fa fa-envelope"></i>Messages
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ route('admin.student.index') }}"
                            class="nav-link {{ Route::currentRouteName() == 'admin.student.index' ? 'active' : '' }}">
                             <i class="fa fa-id-card"></i>Students
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ route('teacher.index') }}"
                            class="nav-link {{ Route::currentRouteName() == 'teacher.index' ? 'active' : '' }}">
                             <i class="fa fa-address-book"></i>Teachers
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ route('admin.users') }}"
                            class="nav-link {{ Route::currentRouteName() == 'admin.users' ? 'active' : '' }}">
                             <i class="fa fa-users"></i>Users
                         </a>
                     </li>
-
+                    <li class="nav-item">
+                        <a href="{{ route('admin.support.index') }}"
+                           class="nav-link {{ Route::currentRouteName() == 'admin.support.index' ? 'active' : '' }}">
+                            <i class="fa fa-life-saver"></i>Support
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('admin.billing.plan.list') }}"
                            class="nav-link {{ Route::currentRouteName() == 'admin.billing.plan.list' ? 'active' : '' }}">
@@ -69,21 +68,18 @@
                             <i class="fa fa-group"></i>Household
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ route('parent.calendar') }}"
                            class="nav-link {{ Route::currentRouteName() == 'parent.calendar' ? 'active' : '' }}">
                             <i class="fa fa-calendar"></i>Calendar
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ route('message.index') }}"
                            class="nav-link {{ Route::currentRouteName() == 'message.index' ? 'active' : '' }}">
                             <i class="fa fa-envelope"></i>Messages
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ route('payment.index') }}"
                            class="nav-link {{ Route::currentRouteName() == 'payment.index' ? 'active' : '' }}">
@@ -99,21 +95,18 @@
                             <i class="fa fa-calendar"></i>Calendar
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="#"
                            class="nav-link {{ Route::currentRouteName() == '#' ? 'active' : '' }}">
                             <i class="fa fa-music"></i>Sheet Music
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ route('payment.index') }}"
                            class="nav-link {{ Route::currentRouteName() == 'payment.index' ? 'active' : '' }}">
                             <i class="fa fa-credit-card"></i>Payments
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ route('message.index') }}"
                            class="nav-link {{ Route::currentRouteName() == 'message.index' ? 'active' : '' }}">
@@ -129,12 +122,10 @@
                             <i class="icon icon-speedometer"></i>Dashboard
                         </a>
                     </li>
-
                     <li class="nav-item nav-dropdown">
                         <a href="#students" class="nav-link nav-dropdown-toggle">
                             <i class="fa fa-users"></i>Students<i class="fa fa-caret-left"></i>
                         </a>
-
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
                                 <a href="{{ route('student.index') }}"
@@ -142,7 +133,6 @@
                                     <i class="fa fa-list ml-3" aria-hidden="true"></i>List
                                 </a>
                             </li>
-
                             <li class="nav-item">
                                 <a href="{{ route('complete.lessons') }}" class="nav-link {{ Route::currentRouteName() == 'complete.lessons' ? 'active' : '' }}">
                                     <i class="fa fa-music ml-3" aria-hidden="true"></i>Lessons
@@ -174,26 +164,22 @@
                             {{--                            </li>--}}
                         </ul>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ route('calendar.index') }}"
                            class="nav-link {{ Route::currentRouteName() == 'calendar.index' ? 'active' : '' }}">
                             <i class="fa fa-calendar"></i>Calendar
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ route('message.index') }}"
                            class="nav-link {{ Route::currentRouteName() == 'message.index' ? 'active' : '' }}">
                             <i class="fa fa-envelope"></i>Messages
                         </a>
                     </li>
-
                     <li class="nav-item nav-dropdown" id="#billing">
                         <a href="#billing" class="nav-link nav-dropdown-toggle {{ Route::currentRouteName() == '#' ? 'active' : '' }}">
                             <i class="fa fa-credit-card"></i>Billing<i class="fa fa-caret-left"></i>
                         </a>
-
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
                                 <a href="{{ route('invoice.index') }}" class="nav-link {{ Route::currentRouteName() == 'invoice.index' ? 'active' : '' }}">
@@ -212,13 +198,11 @@
                             {{--                                    <i class="fa fa-money ml-3"></i>Payments Received--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}
-
                             <li class="nav-item">
                                 <a href="{{ route('invoice.list_of_payments') }}" class="nav-link {{ Route::currentRouteName() == 'invoice.list_of_payments' ? 'active' : '' }}">
                                     <i class="fa fa-list-alt ml-3"></i>List Payments
                                 </a>
                             </li>
-
                             {{--                            <li class="nav-item">--}}
                             {{--                                <a href="#" class="nav-link">--}}
                             {{--                                    <i class="fa fa-keyboard-o ml-3"></i>Enter a Payment--}}
@@ -268,20 +252,17 @@
                         <a href="#reports" class="nav-link nav-dropdown-toggle">
                             <i class="fa fa-pie-chart"></i>Reports<i class="fa fa-caret-left"></i>
                         </a>
-
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
                                 <a href="{{ route('reports.index') }}" class="nav-link {{ Route::currentRouteName() == 'reports.index' ? 'active' : '' }}">
                                     <i class="fa fa-area-chart ml-3"></i>Student Status
                                 </a>
                             </li>
-
                             {{--                            <li class="nav-item">--}}
                             {{--                                <a href="#" class="nav-link">--}}
                             {{--                                    <i class="fa fa-line-chart"></i> Financial Reports--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}
-
                         </ul>
                     </li>
                 @endif

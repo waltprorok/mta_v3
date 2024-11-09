@@ -15,6 +15,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         Route::resource('contacts', 'ContactController');
         Route::put('reply-contact/{contact}', 'ContactController@updateReply');
         Route::get('students', 'StudentListController@adminStudents');
+        Route::resource('support', 'SupportController');
         Route::get('teachers', 'TeacherController@adminTeachers');
         Route::get('users', 'UserController@adminUsers');
         Route::get('billing/plans', 'BillingRateController@billingPlans');
@@ -27,6 +28,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         Route::view('blog/{id}/edit', 'webapp.admin.blog.edit')->name('admin.blog.edit');
         Route::view('contacts', 'webapp.admin.contact.index')->name('contact.index');
         Route::view('students', 'webapp.admin.student.index')->name('admin.student.index');
+        Route::view('support', 'webapp.admin.support.index')->name('admin.support.index');
         Route::view('teachers', 'webapp.admin.teacher.index')->name('teacher.index');
         Route::view('users', 'webapp.admin.user.index')->name('admin.users');
     });
