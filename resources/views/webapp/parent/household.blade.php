@@ -1,3 +1,4 @@
+@php use App\Models\Student; @endphp
 @extends('layouts.webapp')
 @section('title', 'Household')
 @section('content')
@@ -8,7 +9,6 @@
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item active">Household</li>
-            <li class="breadcrumb-item"></li>
         </ul>
         @endif
 
@@ -28,6 +28,11 @@
                                 @endif
                                 <div class="mt-3">
                                     <h5>{{ $student->full_name }}</h5>
+                                    @if($student->status)
+                                        @if($student->status == Student::ACTIVE) <p class="mb-1">Active</p>@endif
+                                        @if($student->status == Student::WAITLIST) <p class="mb-1">Waitlist</p>@endif
+                                        @if($student->status == Student::INACTIVE) <p class="mb-1">Inactive</p>@endif
+                                    @endif
                                     @if($student->instrument)
                                         <p class="mb-1">{{ $student->instrument }}</p>
                                     @endif
@@ -56,15 +61,6 @@
                 @foreach($parent->parentOfStudents as $student)
                     <div class="card mb-3">
                         <div class="card-body">
-{{--                            <div class="row">--}}
-{{--                                <div class="col-sm-3">--}}
-{{--                                    <h6 class="mb-0">Name</h6>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-sm-9">--}}
-{{--                                    {{ $student->first_name }}&nbsp;{{ $student->last_name }}--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <hr>--}}
                             <div class="row">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Email</h6>

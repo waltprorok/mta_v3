@@ -16,7 +16,11 @@
             <div class="card-body p-0">
                 <div class="row p-5">
                     <div class="col-md-6">
-                        <img src="{{ asset('webapp/img/logo-mta1.png') }}" alt="mta logo">
+                        @if ($invoice->student->getTeacher->logo)
+                            <img src="{{ asset('storage/teacher/'. $invoice->student->getTeacher->logo) }}" alt="business logo" width="180px">
+                        @else
+                            <img src="{{ asset('webapp/img/logo-mta1.png') }}" alt="mta logo">
+                        @endif
                     </div>
 
                     <div class="col-md-6 text-right">
@@ -31,7 +35,7 @@
 
                     <div class="col-md-6 text-left">
                         <p class="font-weight-bold mb-4">Billed By:</p>
-                        <p class="mb-1"><span class="text-muted"></span><strong>{{ $invoice->student->getTeacher->studio_name}}</strong></p>
+                        <p class="mb-1"><span class="text-muted"></span><strong>{{ $invoice->student->getTeacher->studio_name }}</strong></p>
                         <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->getTeacher->first_name }} {{ $invoice->student->getTeacher->last_name }}</p>
                         <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->getTeacher->address }} {{ $invoice->student->getTeacher->address_2 }}
                             <br>{{ $invoice->student->getTeacher->city }}, {{ $invoice->student->getTeacher->state }} {{ $invoice->student->getTeacher->zip }}</p>

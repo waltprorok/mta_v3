@@ -127,8 +127,10 @@
             <template v-slot="{ columns, row }">
                 <tr>
                     <td>{{ row.title | capitalising }}</td>
-                    <td>{{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
-                    <td>{{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
+                    <td v-if="row.all_day">{{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY') }}</td>
+                    <td v-else>{{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
+                    <td v-if="row.all_day">{{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY') }}</td>
+                    <td v-else>{{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                     <td v-if="row.all_day"><i class="fa fa-gift" aria-hidden="true"></i></td>
                     <td v-else><i class="fa fa-calendar" aria-hidden="true"></i></td>
                     <td class="text-nowrap">
