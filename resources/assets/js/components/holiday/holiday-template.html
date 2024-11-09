@@ -1,0 +1,186 @@
+<div class="card" v-on:keydown.esc="cancelForm()">
+    <div v-if="showForm">
+        <!-- modal create read edit -->
+        <transition name="modal">
+            <div class="modal-mask">
+                <div class="modal-wrapper">
+                    <div class="modal-dialog modal-md" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" v-show="edit">Edit Date </h5>
+                                <h5 class="modal-title" v-show="!edit">Create a Holiday / Day Off</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" @click="cancelForm()">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal" action="#" @submit.prevent="edit ? updateHoliday(holiday.id) : createHoliday()">
+                                    <div class="row">
+                                        <div class="col-md-10 offset-1">
+                                            <div class="form-group">
+                                                <div class="input-group mb-3">
+                                                    <input id="description"
+                                                           class="form-control"
+                                                           v-model="holiday.title"
+                                                           placeholder="Add a title"
+                                                           type="text"
+                                                           required
+                                                           v-on:keydown.enter.prevent>
+                                                </div>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <label for="start_date" class="control-label p-1"></label>
+                                                <v-date-picker v-if="holiday.all_day" v-model="holiday.start_date" mode="date" :minute-increment="5">
+                                                    <template v-slot="{ inputValue, inputEvents }">
+                                                        <input
+                                                                class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
+                                                                :value="inputValue"
+                                                                v-on="inputEvents"
+                                                        />
+                                                    </template>
+                                                </v-date-picker>
+                                                <v-date-picker v-else v-model="holiday.start_date" mode="dateTime" :minute-increment="5">
+                                                    <template v-slot="{ inputValue, inputEvents }">
+                                                        <input
+                                                                class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
+                                                                :value="inputValue"
+                                                                v-on="inputEvents"
+                                                        />
+                                                    </template>
+                                                </v-date-picker>
+                                                <label for="end_date" class="control-label p-1">To</label>
+                                                <v-date-picker v-if="holiday.all_day" v-model="holiday.end_date" mode="date" :minute-increment="5">
+                                                    <template v-slot="{ inputValue, inputEvents }">
+                                                        <input
+                                                                class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
+                                                                :value="inputValue"
+                                                                v-on="inputEvents"
+                                                        />
+                                                    </template>
+                                                </v-date-picker>
+                                                <v-date-picker v-else v-model="holiday.end_date" mode="dateTime" :minute-increment="5">
+                                                    <template v-slot="{ inputValue, inputEvents }">
+                                                        <input
+                                                                class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
+                                                                :value="inputValue"
+                                                                v-on="inputEvents"
+                                                        />
+                                                    </template>
+                                                </v-date-picker>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group mb-3">
+                                                    <div class="toggle-switch" data-ts-color="primary">
+                                                        <label for="all_day" class="ts-label">All Day</label>
+                                                        <input id="all_day" type="checkbox" hidden="hidden" v-model="holiday.all_day">
+                                                        <label for="all_day" class="ts-helper"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group mb-3">
+                                                    <div class="form-group">
+                                                        <label for="color">Color</label>
+                                                        <select id="color" class="form-control" v-model="holiday.color">
+                                                            <option v-for="color in colors" :value="color.code" :key="color.id" :selected="holiday.color">
+                                                                {{ color.name }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="form-group pull-right">
+                                        <button @click="cancelForm()" class="btn btn-default">Cancel</button>
+                                        <button v-show="!edit" type="submit" class="btn btn-primary">Save</button>
+                                        <button v-show="edit" type="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+        <!-- end of modal create read edit -->
+    </div>
+
+    <div class="card-header bg-light">Holidays and Time Off</div>
+    <!-- vue js data table -->
+    <div class="form-control" v-cloak>
+        <div class="form-group pull-left">
+            <div class="form-group">
+                <select id="single-select" v-model="per_page" class="form-control">
+                    <option v-for="page in pages" :value="page">{{ page }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group pull-right">
+            <button type="button" class="btn btn-primary" @click="showForm=true" v-show="!showForm">Create Holiday</button>
+        </div>
+        <div class="form-group pull-right pr-2">
+            <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
+        </div>
+        <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
+            <template v-slot="{ columns, row }">
+                <tr>
+                    <td>{{ row.title | capitalising }}</td>
+                    <td v-if="row.all_day">{{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY') }}</td>
+                    <td v-else>{{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
+                    <td v-if="row.all_day">{{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY') }}</td>
+                    <td v-else>{{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
+                    <td v-if="row.all_day"><i class="fa fa-gift" aria-hidden="true"></i></td>
+                    <td v-else><i class="fa fa-calendar" aria-hidden="true"></i></td>
+                    <td class="text-nowrap">
+                        <button @click="showHoliday(row.id)"
+                                class="btn btn-outline-primary btn-sm"
+                                title="edit">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button @click="showModalDelete(row.id)"
+                                class="btn btn-outline-danger btn-sm"
+                                title="delete">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+            </template>
+        </datatable>
+        <total-entries v-bind:list="list"></total-entries>
+        <div class="pull-right">
+            <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
+        </div>
+    </div>
+    <!-- end of vue js data table -->
+
+    <!-- modal delete holiday -->
+    <div v-if="showModal">
+        <transition name="modal">
+            <div class="modal-mask">
+                <div class="modal-wrapper">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Delete Holiday</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" @click="showModal=false">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Do you want to delete this holiday?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" @click="showModal = false">Cancel</button>
+                                <button type="button" @click="deleteHoliday(id)" class="btn btn-danger">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+    </div>
+    <!-- end of modal delete contact -->
+    <notifications position="bottom right"/>
+</div>

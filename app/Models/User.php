@@ -107,6 +107,11 @@ class User extends Authenticatable
         return $this->teacher && $this->teacher !== null;
     }
 
+    public function holidays(): HasMany
+    {
+        return $this->hasMany(Holiday::class, 'teacher_id');
+    }
+
     public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class, 'teacher_id');

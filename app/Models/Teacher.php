@@ -69,6 +69,11 @@ class Teacher extends Model
         return $this->phoneNumberService->getPhoneNumberFormat($this->phone);
     }
 
+    public function holidays(): HasMany
+    {
+        return $this->hasMany(Holiday::class, 'teacher_id');
+    }
+
     public function invoice(): HasOne
     {
         return $this->hasOne(Invoice::class, 'teacher_id');

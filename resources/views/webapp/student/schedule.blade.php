@@ -21,7 +21,7 @@
                         <form class="form-horizontal" method="post" action="{{ route('student.schedule.save') }}">
                             @csrf
                             <div class="row">
-                                <div class="col-sm-9">
+                                <div class="col-sm-6">
                                     <div class="card mb-3">
                                         <div class="card-body">
                                             <div class="row">
@@ -69,8 +69,8 @@
                                                     </div>
                                                 @endif
                                             </div>
-                                            <hr>
                                             @if($studentScheduled)
+                                                <hr>
                                                 <div class="row">
                                                     <div class="col-sm-3">
                                                         <h6 class="mb-0">Last Lesson</h6>
@@ -78,7 +78,7 @@
                                                     <div class="col-sm-9">
                                                         @foreach($lastLesson as $lesson)
                                                             @if(isset($lesson->hasOneLesson->start_date))
-                                                                <i class="fa fa-clock-o"></i>&nbsp;{{ \Carbon\Carbon::parse($lesson->hasOneLesson->start_date)->format('F j, Y | l | g:i:s A ') }}
+                                                                <i class="fa fa-clock-o"></i>&nbsp;{{ \Carbon\Carbon::parse($lesson->hasOneLesson->start_date)->format('M j, Y | l | g:i A ') }}
                                                             @endif
                                                         @endforeach
                                                     </div>
@@ -89,7 +89,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr/>
                             <div class="row">
                                 <div class="col-sm-3">
                                     <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
@@ -146,8 +145,8 @@
                                         <label for="end_time" class="control-label">Recurrence</label>
                                         <select class="form-control" id="recurrence" name="recurrence">
                                             <option value="{{ old('recurrence') }}">{{ old('recurrence') }}</option>
-                                            <option value="one">One Time</option>
-                                            <option value="month">One Month</option>
+                                            <option value="{{ \App\Models\Lesson::RECURRENCE[0] }}">One Time</option>
+                                            <option value="{{ \App\Models\Lesson::RECURRENCE[1] }}">{{ \App\Models\Lesson::RECURRENCE[1] }}</option>
                                         </select>
                                         @if ($errors->has('recurrence'))
                                             <span class="help-block">

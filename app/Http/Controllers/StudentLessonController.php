@@ -104,7 +104,7 @@ class StudentLessonController extends Controller
         $endOfMonth = Carbon::parse($begin)->endOfMonth();
         $diffInDays = $begin->diffInDays($endOfMonth);
         $duration = date('H:i:s', strtotime($request->get('start_time') . ' +' . $request->get('end_time') . ' minutes'));
-        $recurrence = $request->get('recurrence') == 'one' ? 1 : $diffInDays;
+        $recurrence = $request->get('recurrence') == Lesson::RECURRENCE[0] ? 1 : $diffInDays;
         $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
         $student = Student::query()->with('getTeacher')->with('parent')->findOrFail($request->get('student_id')); // needed for email
 
@@ -120,7 +120,7 @@ class StudentLessonController extends Controller
             $lesson->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
             $lesson->end_date = $i->format('Y-m-d') . ' ' . $duration;
             $lesson->interval = (int)$request->get('end_time');
-            $lesson->recurrence = $request->get('recurrence') == 'one' ? 'Once' : 'Monthly';
+            $lesson->recurrence = $request->get('recurrence') == Lesson::RECURRENCE[0] ? Lesson::RECURRENCE[0] : Lesson::RECURRENCE[1];
             $lesson->save();
             $lessons[] = $lesson;
         }

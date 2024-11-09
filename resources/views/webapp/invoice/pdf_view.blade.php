@@ -11,7 +11,11 @@
 <table class="w-full">
     <tr>
         <td class="w-half">
-            <img src="{{ public_path('/webapp/img/logo-mta1.png') }}" alt="mta" width="180"/>
+            @if ($invoice->student->getTeacher->logo)
+                <img src="{{ public_path('/storage/teacher/'. $invoice->student->getTeacher->logo) }}" alt="business logo" width="180px">
+            @else
+                <img src="{{ public_path('webapp/img/logo-mta1.png') }}" alt="mta logo">
+            @endif
         </td>
         <td class="w-half">
             <h4 style="text-align: right;">Invoice: {{ $invoice->id }}</h4>
