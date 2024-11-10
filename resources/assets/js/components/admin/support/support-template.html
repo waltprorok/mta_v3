@@ -19,10 +19,11 @@
                                     <p>From: {{ support.name }}</p>
                                     <p>Email: {{ support.email }}</p>
                                     <p>Subject: {{ support.subject }}</p>
-                                    <textarea class="form-control" rows="24" disabled>{{ support.message }}</textarea>
+                                    <p v-if="support.attachment">Attachment: <a :href="'/storage/support/' + support.attachment">{{ support.attachment }}</a></p>
+                                    <textarea class="form-control" rows="12" disabled>{{ support.message }}</textarea>
                                     <hr/>
                                     <div class="form-group pull-right">
-                                        <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Cancel</button>
+                                        <button v-show="showForm" @click="cancelForm()" class="btn btn-default">Close</button>
                                     </div>
                                 </div>
                                 <div class="modal-body" v-show="!read">
@@ -44,7 +45,7 @@
                                         </div>
                                         <div class="form-group" :class="error_message && classError">
                                             <label for="message">Message</label>
-                                            <textarea id="message" v-model.trim="support.message" class="form-control" rows="15"></textarea>
+                                            <textarea id="message" v-model.trim="support.message" class="form-control" rows="12"></textarea>
                                             <small>{{ error_message }}</small>
                                         </div>
                                         <div class="form-group pull-right">

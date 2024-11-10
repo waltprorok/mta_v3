@@ -33,6 +33,7 @@ export default {
                 email: null,
                 subject: null,
                 message: null,
+                attachment: null,
                 reply: false,
                 created_at: null,
             },
@@ -62,6 +63,7 @@ export default {
             self.support.email = null;
             self.support.subject = null;
             self.support.message = null;
+            self.support.attachment = null;
             self.edit = false;
             self.clearErrorData();
         },
@@ -79,6 +81,7 @@ export default {
             self.error_email = '';
             self.error_subject = '';
             self.error_message = '';
+            self.error_attachment = '';
         },
 
         clearSupportData: function () {
@@ -87,6 +90,7 @@ export default {
             self.support.email = null;
             self.support.subject = null;
             self.support.message = null;
+            self.support.attachment = null;
             self.edit = false;
             self.showForm = false;
         },
@@ -149,6 +153,7 @@ export default {
                     self.support.email = response.data.email;
                     self.support.subject = response.data.subject;
                     self.support.message = response.data.message;
+                    self.support.attachment = response.data.attachment;
                     self.support.reply = response.data.reply;
                 })
             self.edit = true;

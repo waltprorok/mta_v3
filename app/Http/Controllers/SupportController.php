@@ -16,7 +16,7 @@ class SupportController extends Controller
     public function index()
     {
         return Support ::query()
-            ->select('id', 'name', 'email', 'subject', 'message', 'reply', 'created_at')
+            ->select('id', 'name', 'email', 'subject', 'message', 'attachment', 'reply', 'created_at')
             ->orderBy('created_at', 'desc')
             ->get();
     }
@@ -37,7 +37,7 @@ class SupportController extends Controller
             Log::info($exception->getMessage());
         }
 
-        return redirect()->route('support')->with('success', 'The contact form was sent successfully');
+        return redirect()->route('support')->with('success', 'The support request was sent successfully');
     }
 
     public function update(StoreSupportRequest $request, Support $support): JsonResponse

@@ -15,7 +15,7 @@ class ContactForm extends Mailable
     public $support = false;
     public $subject;
     public $message;
-    public $attach;
+    public $attachment;
 
     /**
      * Create a new message instance.
@@ -29,7 +29,7 @@ class ContactForm extends Mailable
         $this->support = $request->support;
         $this->subject = $request->subject;
         $this->message = $request->message;
-        $this->attach = $request->attach;
+        $this->attachment = $request->attachment;
     }
 
     /**
@@ -39,13 +39,13 @@ class ContactForm extends Mailable
      */
     public function build(): ContactForm
     {
-        if ($this->attach)
+        if ($this->attachment)
             return $this->from($this->email, $this->name)
                 ->subject($this->subject)
                 ->markdown('emails.contact.contact')
-                ->attach($this->attach->getRealPath(), [
-                    'as' => $this->attach->getClientOriginalName(),
-                    'mime' => $this->attach->getMimeType(),
+                ->attach($this->attachment->getRealPath(), [
+                    'as' => $this->attachment->getClientOriginalName(),
+                    'mime' => $this->attachment->getMimeType(),
                 ]);
         else {
             return $this->from($this->email, $this->name)
