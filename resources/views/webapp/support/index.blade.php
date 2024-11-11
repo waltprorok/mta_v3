@@ -42,12 +42,12 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="form-group {{ $errors->has('attach') ? ' has-error' : '' }}">
-                                <label for="attach" class="control-label">Attach a file</label>
-                                <input name="attach" type="file" class="form-control"/>
-                                @if ($errors->has('attach'))
+                            <div class="form-group {{ $errors->has('attachment') ? ' has-error' : '' }}">
+                                <label for="attachment" class="control-label">Attach a file</label>
+                                <input name="attachment" type="file" class="form-control"/>
+                                @if ($errors->has('attachment'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('attach') }}</strong>
+                                        <strong>{{ $errors->first('attachment') }}</strong>
                                     </span>
                                 @endif
                             </div>

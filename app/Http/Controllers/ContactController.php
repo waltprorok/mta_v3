@@ -61,9 +61,6 @@ class ContactController extends Controller
         return response()->json();
     }
 
-    /**
-     * @throws Exception
-     */
     public function destroy(Contact $contact): JsonResponse
     {
         try {

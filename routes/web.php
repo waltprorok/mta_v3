@@ -82,8 +82,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/invoice/show/{id}', 'InvoiceController@show')->name('payments.show');
     });
 
-    Route::get('support', 'SupportController@index')->name('support');
-    Route::post('support', 'SupportController@store')->middleware(ProtectAgainstSpam::class);
+    Route::get('support', 'SupportUserController@index')->name('support');
+    Route::post('support', 'SupportUserController@store')->middleware(ProtectAgainstSpam::class);
 
     Route::group(['middleware' => ['household']], function () {
         Route::get('household', 'ParentController@household')->name('parent.household');

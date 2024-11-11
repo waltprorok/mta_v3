@@ -7,7 +7,7 @@
     <meta name="description" content="Music Teachers Aid is an automated studio for music teachers. Start your 30-day free trial today!">
     <meta name="author" content="Walter Prorok">
     <meta name="keywords" content="music teacher software, music teacher web app, automated music teacher studio">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-image-preview:standard">
     <meta name="google-site-verification" content="IV3PI1a4frdf1GVIKurcc_lOg6awG8gqqOoRkWrugDI"/>
 
     <!-- CSRF Token -->
