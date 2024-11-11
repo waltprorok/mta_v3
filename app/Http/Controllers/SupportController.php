@@ -64,9 +64,6 @@ class SupportController extends Controller
         return response()->json();
     }
 
-    /**
-     * @throws Exception
-     */
     public function destroy(Support $support): JsonResponse
     {
         try {
