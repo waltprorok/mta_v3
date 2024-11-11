@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSupportRequest;
+use App\Mail\SupportEmail;
 use App\Models\Support;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -10,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class SupportController extends Controller
 {
@@ -30,9 +32,7 @@ class SupportController extends Controller
     {
         try {
             Support::query()->create($request->all());
-
-//            Mail::to('waltprorok@gmail.com')->send(new ContactForm($request));
-//            Mail::to($request['email'])->queue(new SupportEmail($request));
+            Mail::to($request['email'])->queue(new SupportEmail($request));
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }
