@@ -31,19 +31,19 @@
                         @foreach($hours as $hour)
                             <tr>
                                 @if($hour->day == 0)
-                                    <th scope="row">Monday</th>
-                                @elseif($hour->day == 1)
-                                    <th scope="row">Tuesday</th>
-                                @elseif($hour->day == 2)
-                                    <th scope="row">Wednesday</th>
-                                @elseif($hour->day == 3)
-                                    <th scope="row">Thursday</th>
-                                @elseif($hour->day == 4)
-                                    <th scope="row">Friday</th>
-                                @elseif($hour->day == 5)
-                                    <th scope="row">Saturday</th>
-                                @elseif($hour->day == 6)
                                     <th scope="row">Sunday</th>
+                                @elseif($hour->day == 1)
+                                    <th scope="row">Monday</th>
+                                @elseif($hour->day == 2)
+                                    <th scope="row">Tuesday</th>
+                                @elseif($hour->day == 3)
+                                    <th scope="row">Wednesday</th>
+                                @elseif($hour->day == 4)
+                                    <th scope="row">Thursday</th>
+                                @elseif($hour->day == 5)
+                                    <th scope="row">Friday</th>
+                                @elseif($hour->day == 6)
+                                    <th scope="row">Saturday</th>
                                 @endif
 
                                 <input name="rows[{{ $hour->day }}][day]" type="hidden" value="{{ $hour->day }}">

@@ -27,7 +27,7 @@
                         <tbody>
 
                         <tr>
-                            <th scope="row">Monday</th>
+                            <th scope="row">Sunday</th>
                             <input name="rows[0][day]" type="hidden" value="0">
                             <td>
                                 <div class="toggle-switch" data-ts-color="primary">
@@ -55,7 +55,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">Tuesday</th>
+                            <th scope="row">Monday</th>
                             <input name="rows[1][day]" type="hidden" value="1">
                             <td>
                                 <div class="toggle-switch" data-ts-color="primary">
@@ -83,7 +83,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">Wednesday</th>
+                            <th scope="row">Tuesday</th>
                             <input name="rows[2][day]" type="hidden" value="2">
                             <td>
                                 <div class="toggle-switch" data-ts-color="primary">
@@ -111,7 +111,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">Thursday</th>
+                            <th scope="row">Wednesday</th>
                             <input name="rows[3][day]" type="hidden" value="3">
                             <td>
                                 <div class="toggle-switch" data-ts-color="primary">
@@ -139,7 +139,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">Friday</th>
+                            <th scope="row">Thursday</th>
                             <input name="rows[4][day]" type="hidden" value="4">
                             <td>
                                 <div class="toggle-switch" data-ts-color="primary">
@@ -167,7 +167,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">Saturday</th>
+                            <th scope="row">Friday</th>
                             <input name="rows[5][day]" type="hidden" value="5">
                             <td>
                                 <div class="toggle-switch" data-ts-color="primary">
@@ -195,7 +195,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">Sunday</th>
+                            <th scope="row">Saturday</th>
                             <input name="rows[6][day]" type="hidden" value="6">
                             <td>
                                 <div class="toggle-switch" data-ts-color="primary">

@@ -1,7 +1,7 @@
 <template src="./profile-template.html"></template>
 
 <script>
-import PhoneNumberFormat from "../PhoneNumberFormat";
+import PhoneNumberFormat from "../../PhoneNumberFormat";
 import {dateParse} from "@vuejs-community/vue-filter-date-parse";
 import {dateFormat} from "vue-filter-date-format";
 

@@ -95,12 +95,12 @@
                             <i class="fa fa-calendar"></i>Calendar
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#"
-                           class="nav-link {{ Route::currentRouteName() == '#' ? 'active' : '' }}">
-                            <i class="fa fa-music"></i>Sheet Music
-                        </a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="#"--}}
+{{--                           class="nav-link {{ Route::currentRouteName() == '#' ? 'active' : '' }}">--}}
+{{--                            <i class="fa fa-music"></i>Sheet Music--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
                     <li class="nav-item">
                         <a href="{{ route('payment.index') }}"
                            class="nav-link {{ Route::currentRouteName() == 'payment.index' ? 'active' : '' }}">
