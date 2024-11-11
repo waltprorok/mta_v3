@@ -1,7 +1,7 @@
 <template src="./invoice-create-template.html"></template>
 
 <script>
-import PhoneNumberFormat from "../PhoneNumberFormat.vue";
+import PhoneNumberFormat from "../../PhoneNumberFormat.vue";
 
 let today = new Date();
 const month = today.toLocaleString('default', { month: 'long' });
