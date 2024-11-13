@@ -462,6 +462,7 @@ class StudentLessonController extends Controller
                         unset($allTimes[$allTimeKey]);
                         unset($allTimes[$allTimeKey + 1]);
                         unset($allTimes[$allTimeKey + 2]);
+                        unset($allTimes[$allTimeKey + 3]);
                     }
 
                     if ($allTime == $lessonEndTime) {

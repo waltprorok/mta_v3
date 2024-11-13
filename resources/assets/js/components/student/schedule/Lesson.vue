@@ -66,10 +66,9 @@
                     <div class="col-md-3">
                         <div class="form-group" :class="error_start_date && classError">
                             <label for="start_date" class="control-label">Start Date</label>
-                            <v-date-picker v-model="startDate" mode="date" :disabled-dates='[{ weekdays: closedDay }, {
-      start: new Date(2024, 10, 18),
-      end: new Date(2024, 10, 22)
-    },  ]'
+                            <v-date-picker v-model="startDate"
+                                           mode="date"
+                                           :disabled-dates='closed'
                                            :model-config="modelConfig">
                                 <template v-slot="{ inputValue, inputEvents }">
                                     <input
@@ -86,7 +85,6 @@
                         <div class="form-group" :class="error_start_time && classError">
                             <label for="start_time" class="control-label">Start Time</label>
                             <select class="form-control" id="start_time" v-model="lesson.start_time" @change="checkDurationTimes($event)" v-on:keydown.enter.prevent>
-                                <option>-- Select Time --</option>
                                 <option v-for="time in allTimes" :value="time" :key="time.id" :selected="time.id === 1">
                                     {{ time | dateParse('HH:mm:ss') | dateFormat('h:mm a') }}
                                 </option>
@@ -157,7 +155,10 @@
 import PhoneNumberFormat from "../../PhoneNumberFormat";
 
 let today = new Date();
-let startDate = today.toISOString().slice(0, 10); // TODO: fix timezone issue
+const year = today.getFullYear();
+const month = String(today.getMonth() + 1).padStart(2, '0'); // January is 0
+const day = String(today.getDate()).padStart(2, '0');
+const startDate = `${year}-${month}-${day}`; // Output: "2024-11-13"
 
 export default {
     data() {
@@ -173,7 +174,7 @@ export default {
             allTimes: [],
             billingRates: [],
             businessHours: [],
-            closedDay: [],
+            closed: [],
             colors: [
                 {name: 'Blue', code: '#5499C7'},
                 {name: 'Red', code: '#CD6155'},
@@ -189,7 +190,7 @@ export default {
                 {name: '45 minutes', value: "45"},
                 {name: '60 minutes', value: "60"},
             ],
-            holidays: [],
+
             lesson: {
                 student_id: null,
                 billing_rate_id: null,
@@ -244,7 +245,6 @@ export default {
         startDate: {
             handler: function () {
                 this.getData();
-                // this.checkStartTimeWithHolidays();
             },
             deep: true,
         },
@@ -256,12 +256,9 @@ export default {
 
     methods: {
         getTimeDifference: function getTimeDifference(startTime, endTime) {
-            // Convert both times to Date objects
             const start = new Date('1970-01-01T' + startTime);
             const end = new Date('1970-01-01T' + endTime);
-            // Calculate the difference in milliseconds
             const diff = end.getTime() - start.getTime();
-            // Convert to hours, minutes, and seconds
             const hours = Math.floor(diff / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             // const seconds = Math.floor((diff % (1000 * 60)) / 1000);
@@ -270,15 +267,15 @@ export default {
         },
 
         getDuration: function (diff) {
-           let totalTime = diff.hours + '.' + diff.minutes;
+            let totalTime = diff.hours + '.' + diff.minutes;
             console.log(totalTime);
             switch (totalTime) {
                 case '0.15':
                     this.duration = [
                         {name: '15 minutes', value: "15"},
                         {name: '30 minutes', value: "30"},
-                        // {name: '45 minutes', value: "45"},
-                        // {name: '60 minutes', value: "60"},
+                        {name: '45 minutes', value: "45"},
+                        {name: '60 minutes', value: "60"},
 
                     ];
                     break;
@@ -298,11 +295,22 @@ export default {
                 case '1.0':
                     this.duration = [
                         {name: '15 minutes', value: "15"},
+                        {name: '30 minutes', value: "30"},
+                        {name: '45 minutes', value: "45"},
+                        {name: '60 minutes', value: "60"},
+                    ];
+                    break;
+                case '1.15':
+                    this.duration = [
+                        {name: '15 minutes', value: "15"},
+                        {name: '30 minutes', value: "30"},
+                        {name: '45 minutes', value: "45"},
+                        {name: '60 minutes', value: "60"},
                     ];
                     break;
                 default:
                     this.duration = [
-                        // {name: '15 minutes', value: "15"},
+                        {name: '15 minutes', value: "15"},
                     ];
             }
         },
@@ -350,7 +358,6 @@ export default {
         },
         getData: function () {
             let self = this;
-            console.log(startDate);
             let parameters = this.$route.fullPath;
             let id = parameters.split('/').pop();
             axios.get('/web/student/lesson/' + id + '/' + self.startDate)
@@ -378,18 +385,14 @@ export default {
         closedDays: function () {
             this.businessHours.forEach((row) => {
                 if (row.active === false) {
-                    this.closedDay.push(row.day + 1);
+                    this.closed.push({'weekdays': row.day + 1});
                 }
             });
-            // this.holidays.forEach((day) => {
-            //     this.
-            // })
-        },
 
-        checkStartTimeWithHolidays: function () {
             this.holidays.forEach((day) => {
-                // console.log(day);
-                // console.log(this.lesson.start_date);
+                if (day.all_day === true) {
+                    this.closed.push({'start': new Date(day.start_date), 'end': new Date(day.end_date)});
+                }
             });
         },
 
