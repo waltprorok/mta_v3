@@ -43,7 +43,8 @@
                 <template v-slot="{ columns, row }">
                     <tr>
                         <td>
-                            <button class="btn btn-rounded btn-outline-secondary" v-if="!row.complete" @click="updateLesson(row.id, row.complete)" :disabled="isCancelled(row)">Click to Complete</button>
+                            <button class="btn btn-rounded btn-outline-secondary" v-if="!row.complete" @click="updateLesson(row.id, row.complete)" :disabled="isCancelled(row)">Click to Complete
+                            </button>
                             <button class="btn btn-rounded btn-primary" v-if="row.complete" @click="updateLesson(row.id, row.complete)" :disabled="isCancelled(row)">Completed</button>
                         </td>
                         <td>{{ row.status }}</td>
@@ -183,9 +184,8 @@ export default {
         },
 
         resetDates: function () {
-            let today = new Date();
-            this.dateStart.fromDate = new Date(today.getFullYear(), today.getMonth(), 1).toDateString();
-            this.dateEnd.toDate = new Date(today.getFullYear(), today.getMonth() + 1, 0).toDateString();
+            this.dateStart.fromDate = firstDay;
+            this.dateEnd.toDate = lastDay;
         },
 
         updateLesson: function (id, complete) {

@@ -6,16 +6,20 @@ use App\Http\Requests\ScheduleUpdateRequest;
 use App\Http\Requests\StoreScheduleApptRequest;
 use App\Models\BillingRate;
 use App\Models\BusinessHours;
+use App\Models\Holiday;
 use App\Models\Lesson;
 use App\Models\Student;
 use App\Services\StudentLessonService;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class StudentLessonController extends Controller
@@ -31,27 +35,52 @@ class StudentLessonController extends Controller
         $this->studentLessonService = $studentLessonService;
     }
 
-    public function index(int $id, $day = null)
+    public function index($id)
     {
-        $students = Student::query()->where('id', $id)->where('teacher_id', Auth::id())->get();
-        $businessHours = BusinessHours::query()->where('teacher_id', Auth::id())->get();
-        $billingRates = BillingRate::query()->where('teacher_id', Auth::id())->where('active', true)->orderBy('default', 'desc')->get();
-        $lessons = Lesson::query()->where('teacher_id', Auth::id())->whereDate('start_date', $day)->orderBy('start_date')->get();
-        $lastLesson = Student::with('hasOneLesson')->where(['id' => $id, 'teacher_id' => Auth::id(), 'status' => Student::ACTIVE])->get();
+        $student = Student::query()->where('id', $id)->where('teacher_id', Auth::id())->firstOrFail();
+
+        return view('webapp.student.schedule', compact('student'));
+    }
+
+    public function getStudent(int $id, $day = null)
+    {
+        $student = Student::query()
+            ->with('hasOneLesson')
+            ->where(['id' => $id, 'teacher_id' => Auth::id()])
+            ->first();
+        $businessHours = BusinessHours::query()
+            ->where('teacher_id', Auth::id())
+            ->get();
+        $billingRates = BillingRate::query()
+            ->where('teacher_id', Auth::id())
+            ->where('active', true)
+            ->orderBy('default', 'desc')
+            ->get();
+        $holidays = Holiday::query()
+            ->where('teacher_id', Auth::id())
+            ->whereBetween('start_date', [now()->subWeeks(52), now()->addWeeks(52)])
+            ->get();
+        $lessons = Lesson::query()
+            ->where('teacher_id', Auth::id())
+            ->whereDate('start_date', $day)
+            ->orderBy('start_date')
+            ->get();
         $startDate = $day;
+
         $day = is_null($day) ? date('l') : Carbon::parse($day)->format('l');
+
         $allTimes = $this->getAllTimes($day, $businessHours);
 
         list($studentScheduled, $allTimes) = $this->getTimes($lessons, $id, $startDate, $day, $allTimes);
 
-        return view('webapp.student.schedule')
-            ->with('students', $students)
-            ->with('businessHours', $businessHours)
-            ->with('allTimes', $allTimes)
-            ->with('startDate', $startDate)
-            ->with('studentScheduled', $studentScheduled)
-            ->with('lastLesson', $lastLesson)
-            ->with('billingRates', $billingRates);
+        return response()->json([
+            'student' => $student,
+            'businessHours' => $businessHours,
+            'billingRates' => $billingRates,
+            'holidays' => $holidays,
+            'studentScheduled' => $studentScheduled,
+            'allTimes' => $allTimes,
+        ]);
     }
 
     /**
@@ -98,7 +127,7 @@ class StudentLessonController extends Controller
             ->with('billingRates', $billingRates);
     }
 
-    public function store(StoreScheduleApptRequest $request): RedirectResponse
+    public function store(StoreScheduleApptRequest $request): JsonResponse
     {
         $begin = Carbon::parse($request->get('start_date'));
         $endOfMonth = Carbon::parse($begin)->endOfMonth();
@@ -110,24 +139,29 @@ class StudentLessonController extends Controller
 
         $lessons = collect();
 
-        for ($i = $begin; $i <= $end; $i->modify('+7 day')) {
-            $lesson = new Lesson();
-            $lesson->student_id = $request->get('student_id');
-            $lesson->teacher_id = Auth::id();
-            $lesson->billing_rate_id = $request->get('billing_rate_id');
-            $lesson->title = $request->get('title');
-            $lesson->color = $request->get('color');
-            $lesson->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
-            $lesson->end_date = $i->format('Y-m-d') . ' ' . $duration;
-            $lesson->interval = (int)$request->get('end_time');
-            $lesson->recurrence = $request->get('recurrence') == Lesson::RECURRENCE[0] ? Lesson::RECURRENCE[0] : Lesson::RECURRENCE[1];
-            $lesson->save();
-            $lessons[] = $lesson;
+        try {
+            for ($i = $begin; $i <= $end; $i->modify('+7 day')) {
+                $lesson = new Lesson();
+                $lesson->student_id = $request->get('student_id');
+                $lesson->teacher_id = Auth::id();
+                $lesson->billing_rate_id = $request->get('billing_rate_id');
+                $lesson->title = $request->get('title');
+                $lesson->color = $request->get('color');
+                $lesson->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
+                $lesson->end_date = $i->format('Y-m-d') . ' ' . $duration;
+                $lesson->interval = (int)$request->get('end_time');
+                $lesson->recurrence = $request->get('recurrence') == Lesson::RECURRENCE[0] ? Lesson::RECURRENCE[0] : Lesson::RECURRENCE[1];
+                $lesson->save();
+                $lessons[] = $lesson;
+            }
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
-        $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
+        //        $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
 
-        return redirect()->back()->with('success', ' The student has been scheduled successfully.');
+        return response()->json([], Response::HTTP_CREATED);
     }
 
     public function update(ScheduleUpdateRequest $request): ?RedirectResponse
@@ -263,7 +297,6 @@ class StudentLessonController extends Controller
     private function destroyOne(Lesson $lesson): void
     {
         $this->studentLessonService->deleteUnPaidCreatedInvoices($lesson);
-
         $lesson->delete();
     }
 
