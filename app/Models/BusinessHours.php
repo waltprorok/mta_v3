@@ -20,6 +20,11 @@ class BusinessHours extends Model
         'close_time',
     ];
 
+    protected $casts = [
+        'active' => 'boolean',
+        'day' => 'integer'
+    ];
+
     /**
      * @param DateTimeInterface $date
      * @return string
