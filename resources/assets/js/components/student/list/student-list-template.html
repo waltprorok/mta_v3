@@ -160,7 +160,7 @@
                     <td v-text="row.instrument"></td>
                     <td class="text-nowrap">
                         <a :href="`/students/${row.id}/edit`" class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
-                        <a :href="`/students/${row.id}/schedule`" class="btn btn-sm btn-outline-secondary" role="button" title="schedule"><i class="fa fa-calendar"></i></a>
+                        <a :href="`/students/schedule/${row.id}`" class="btn btn-sm btn-outline-secondary" role="button" title="schedule"><i class="fa fa-calendar"></i></a>
                         <a :href="`/students/profile/${row.id}`" class="btn btn-sm btn-outline-success" role="button" title="profile"><i class="fa fa-user"></i></a>
                     </td>
                 </tr>

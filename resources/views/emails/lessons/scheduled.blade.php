@@ -2,23 +2,29 @@
 
 @component('mail::panel')
 
-Greetings {{$student->first_name }},
+Greetings {{ $student->first_name }},
 
 Your teacher {{ $teacher->first_name }} {{ $teacher->last_name }} has scheduled your {{ $student->instrument }} lessons for the following day(s).
 
+<ul>
 @foreach($lessons as $lesson)
-* {{ date('l M d, Y | g:ia', strtotime($lesson->start_date)) }} - {{ date('g:ia', strtotime($lesson->end_date)) }}
+    @if (isset($lesson['all_day']) && $lesson['all_day'] == true)
+    <li>Closed - {{ date('l M d, Y', strtotime($lesson['start_date'])) }} | {{ $lesson['title'] }}</li>
+    @else
+    <li> {{ date('l M d, Y | g:ia', strtotime($lesson->start_date)) }} - {{ date('g:ia', strtotime($lesson->end_date)) }}</li>
+    @endif
 @endforeach
+</ul>
 
 @if($student->at_studio)
-Where:<br />
+<strong>Where:</strong><br />
 {{ $teacher->studio_name }} <br />
 {{ $teacher->address }} {{ $teacher->address_2 }} <br />
 {{ $teacher->city }}, {{ $teacher->state }} {{ $teacher->zip }}
 @endif
 
 @if($student->at_home)
-Where:<br />
+<strong>Where:</strong><br />
 {{ $student->address }} {{ $student->address_2 }} <br />
 {{ $student->city }}, {{ $student->state }} {{ $student->zip }}
 @endif

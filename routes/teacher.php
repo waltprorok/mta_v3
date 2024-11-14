@@ -25,6 +25,8 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::post('student-save', 'StudentController@store');
         Route::get('status', 'ReportController@status');
         Route::get('payment-types', 'InvoiceController@getPaymentTypes');
+        Route::get('student/lesson/{id}/{day?}', 'StudentLessonController@getStudent');
+        Route::post('student/lessons', 'StudentLessonController@store');
     });
 
     Route::prefix('invoice')->group(function () {
@@ -37,11 +39,11 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
 
     Route::prefix('students')->group(function () {
         Route::view('/', 'webapp.student.index')->name('student.index');
+        Route::get('schedule/{id}', 'StudentLessonController@index')->name('student.schedule');
         Route::get('{id}/profile', 'StudentController@index')->name('student.profile'); // TODO route name
         Route::view('profile/{id}', 'webapp.student.profile')->name('student.profiles'); // TODO check route name
         Route::post('update', 'StudentController@update')->name('student.update');
         Route::get('{id}/edit', 'StudentController@show')->name('student.edit');
-        Route::get('{id}/schedule/{day?}', 'StudentLessonController@index')->name('student.schedule');
         Route::post('schedule/add', 'StudentLessonController@store')->name('student.schedule.save');
         Route::put('schedule/update', 'StudentLessonController@update')->name('student.schedule.update');
         Route::get('schedule/{student_id}/edit/{id}/{day?}', 'StudentLessonController@show')->name('student.schedule.edit');

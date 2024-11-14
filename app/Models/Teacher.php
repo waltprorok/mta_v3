@@ -84,10 +84,6 @@ class Teacher extends Model
         return $this->hasMany(Invoice::class, 'teacher_id');
     }
 
-    /**
-     * @param $query
-     * @return mixed
-     */
     public function scopeFirstNameAsc($query)
     {
         return $query->orderBy('first_name', 'asc');

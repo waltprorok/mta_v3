@@ -1,8 +1,8 @@
 <template src="./student-list-template.html"></template>
 
 <script>
-import TotalEntries from "../TotalEntries";
-import PhoneNumberFormat from "../PhoneNumberFormat";
+import TotalEntries from "../../TotalEntries";
+import PhoneNumberFormat from "../../PhoneNumberFormat";
 
 export default {
     data: function () {

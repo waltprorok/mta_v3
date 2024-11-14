@@ -143,10 +143,6 @@ class Student extends Model
         return '1' . $this->phone;
     }
 
-    /**
-     * @param $query
-     * @return mixed
-     */
     public function scopeFirstNameAsc($query)
     {
         return $query->orderBy('first_name', 'asc');

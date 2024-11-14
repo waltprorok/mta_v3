@@ -3,7 +3,10 @@
 namespace Tests\Feature\Http\Requests;
 
 use App\Http\Requests\StoreScheduleApptRequest;
+use App\Models\BillingRate;
+use App\Models\Student;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
@@ -11,6 +14,7 @@ use Tests\TestCase;
 class StoreScheduleApptRequestTest extends TestCase
 {
     use WithFaker;
+    use RefreshDatabase;
 
     public $request;
 
@@ -29,10 +33,16 @@ class StoreScheduleApptRequestTest extends TestCase
 
     public function test_request_pass()
     {
+        factory(User::class)->create(["teacher" => true]);
+        factory(User::class)->create(["student" => true]);
+        $billingRate = factory(BillingRate::class)->create();
+        $student = factory(Student::class)->create();
+
         $validator = Validator::make([
-            'student_id' => $this->faker->text,
-            'billing_rate_id' => $this->faker->text,
+            'student_id' => $student->id,
+            'billing_rate_id' => $billingRate->id,
             'title' => $this->faker->text,
+            'color' => $this->faker->text,
             'start_date' => $this->faker->dateTime->format('Y-m-d'),
             'start_time' => $this->faker->dateTime->format('h:i:s'),
             'end_time' => $this->faker->dateTime->format('h:i:s'),
