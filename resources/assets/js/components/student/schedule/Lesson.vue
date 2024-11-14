@@ -142,7 +142,7 @@
                 </div>
                 <hr/>
                 <div class="pull-left">
-                    <button v-show="allTimes" type="submit" class="btn btn-primary">Save</button>
+                    <button v-show="allTimes" type="submit" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
                     <button type="button" class="btn btn-outline-secondary" @click="cancelLessonForm">Cancel</button>
                 </div>
             </form>
@@ -190,7 +190,7 @@ export default {
                 {name: '45 minutes', value: "45"},
                 {name: '60 minutes', value: "60"},
             ],
-
+            disableSaveButton: false,
             lesson: {
                 student_id: null,
                 billing_rate_id: null,
@@ -268,7 +268,7 @@ export default {
 
         getDuration: function (diff) {
             let totalTime = diff.hours + '.' + diff.minutes;
-            console.log(totalTime);
+            // console.log(totalTime);
             switch (totalTime) {
                 case '0.15':
                     this.duration = [
@@ -409,6 +409,7 @@ export default {
         },
 
         saveLessons: function () {
+            this.disableSaveButton = true;
             let self = this;
             self.lesson.student_id = this.student.id;
             self.lesson.title = this.student.first_name + ' ' + this.student.last_name;
@@ -420,6 +421,7 @@ export default {
                     self.clearLessonData();
                     self.clearErrorData();
                     self.getData();
+                    this.disableSaveButton = false;
                     this.$notify({
                         type: 'success',
                         title: 'Success',

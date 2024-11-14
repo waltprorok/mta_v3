@@ -87,19 +87,11 @@ class Blog extends Model
         return $imageUrl;
     }
 
-    /**
-     * @param $query
-     * @return mixed
-     */
     public function scopeLatestFirst($query)
     {
         return $query->orderBy('released_on', 'desc');
     }
 
-    /**
-     * @param $query
-     * @return mixed
-     */
     public function scopePublished($query)
     {
         return $query->where('released_on', '<=', Carbon::now());

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @mixin Builder
@@ -46,6 +47,11 @@ class BillingRate extends Model
     public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class, 'billing_rate_id', 'id');
+    }
+
+    public function scopeGetTeacherActiveRates($query)
+    {
+        return $query->where('teacher_id', Auth::id())->where('active', true)->orderBy('default', 'desc');
     }
 
     public function teacher(): BelongsTo

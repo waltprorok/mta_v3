@@ -3,9 +3,14 @@
 namespace App\Models;
 
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Auth;
 
+/**
+ * @mixin Builder
+ */
 class Holiday extends Model
 {
     protected $fillable = [
@@ -33,5 +38,11 @@ class Holiday extends Model
     public function teacher(): HasOne
     {
         return $this->hasOne(Teacher::class, 'teacher_id', 'teacher_id');
+    }
+
+    public function scopeGetTeacherHolidaysForTwoYears($query)
+    {
+        return $query->where('teacher_id', Auth::id())
+            ->whereBetween('start_date', [now()->subWeeks(52), now()->addWeeks(52)]);
     }
 }

@@ -42,7 +42,7 @@ class StudentLessonController extends Controller
         return view('webapp.student.schedule', compact('student'));
     }
 
-    public function getStudent(int $id, $day = null)
+    public function getStudent(int $id, $day = null): JsonResponse
     {
         $student = Student::query()
             ->with('hasOneLesson')
@@ -51,26 +51,17 @@ class StudentLessonController extends Controller
         $businessHours = BusinessHours::query()
             ->where('teacher_id', Auth::id())
             ->get();
-        $billingRates = BillingRate::query()
-            ->where('teacher_id', Auth::id())
-            ->where('active', true)
-            ->orderBy('default', 'desc')
-            ->get();
-        $holidays = Holiday::query()
-            ->where('teacher_id', Auth::id())
-            ->whereBetween('start_date', [now()->subWeeks(52), now()->addWeeks(52)])
-            ->get();
+        $billingRates = BillingRate::getTeacherActiveRates()->get();
+        $holidays = Holiday::getTeacherHolidaysForTwoYears()->get();
         $lessons = Lesson::query()
             ->where('teacher_id', Auth::id())
             ->whereDate('start_date', $day)
             ->orderBy('start_date')
             ->get();
+
         $startDate = $day;
-
         $day = is_null($day) ? date('l') : Carbon::parse($day)->format('l');
-
         $allTimes = $this->getAllTimes($day, $businessHours);
-
         list($studentScheduled, $allTimes) = $this->getTimes($lessons, $id, $startDate, $day, $allTimes);
 
         return response()->json([
@@ -93,12 +84,12 @@ class StudentLessonController extends Controller
     {
         $student = Student::query()->where(['id' => $student_id, 'teacher_id' => Auth::id()])->first();
         $businessHours = BusinessHours::query()->where('teacher_id', Auth::id())->get();
-        $lessons = Lesson::query()->where(['student_id' => $student_id, 'id' => $id, 'teacher_id' => Auth::id()])->orderBy('start_date')->with('billingRate')->get();
-        $billingRates = BillingRate::query()->where('teacher_id', Auth::id())
-            ->where('active', true)
-            ->orderBy('default', 'desc')
+        $lessons = Lesson::query()
+            ->where(['student_id' => $student_id, 'id' => $id, 'teacher_id' => Auth::id()])
+            ->orderBy('start_date')
+            ->with('billingRate')
             ->get();
-
+        $billingRates = BillingRate::getTeacherActiveRates()->get();
         $startDate = $day;
 
         if ($day == null) {
@@ -114,9 +105,7 @@ class StudentLessonController extends Controller
         }
 
         $allTimes = $this->getAllTimes($day, $businessHours);
-
         $lessonTimes = $this->getLessonTimes($allLessons, $lessons, $startDate);
-
         $allAvailableTimes = array_diff($allTimes, $lessonTimes);
 
         return view('webapp.student.scheduleEdit')
@@ -135,8 +124,11 @@ class StudentLessonController extends Controller
         $duration = date('H:i:s', strtotime($request->get('start_time') . ' +' . $request->get('end_time') . ' minutes'));
         $recurrence = $request->get('recurrence') == Lesson::RECURRENCE[0] ? 1 : $diffInDays;
         $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
-        $student = Student::query()->with('getTeacher')->with('parent')->findOrFail($request->get('student_id')); // needed for email
-
+        $student = Student::query()
+            ->with('getTeacher')
+            ->with('parent')
+            ->findOrFail($request->get('student_id')); // needed for email
+        $holidays = Holiday::getTeacherHolidaysForTwoYears()->get();
         $lessons = collect();
 
         try {
@@ -148,6 +140,12 @@ class StudentLessonController extends Controller
                 $lesson->title = $request->get('title');
                 $lesson->color = $request->get('color');
                 $lesson->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
+                $holiday = $holidays->where('all_day', true)
+                    ->whereBetween('start_date', [Carbon::parse($lesson->start_date)->startOfDay(), Carbon::parse($lesson->start_date)->endOfDay()])->first();
+                if (! is_null($holiday)) {
+                    $lessons[] = $holiday->toArray();
+                    continue;
+                }
                 $lesson->end_date = $i->format('Y-m-d') . ' ' . $duration;
                 $lesson->interval = (int)$request->get('end_time');
                 $lesson->recurrence = $request->get('recurrence') == Lesson::RECURRENCE[0] ? Lesson::RECURRENCE[0] : Lesson::RECURRENCE[1];
@@ -159,7 +157,7 @@ class StudentLessonController extends Controller
             return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
-        //        $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
+        $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
 
         return response()->json([], Response::HTTP_CREATED);
     }
