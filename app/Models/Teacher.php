@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @mixin Builder
@@ -45,7 +46,7 @@ class Teacher extends Model
      */
     protected function serializeDate(DateTimeInterface $date): string
     {
-        return $date->format('Y-m-d H:i:s');
+        return $date->timezone(Auth::user()->getTimeZone())->format('Y-m-d H:i:s');
     }
 
     /**
@@ -71,17 +72,17 @@ class Teacher extends Model
 
     public function holidays(): HasMany
     {
-        return $this->hasMany(Holiday::class, 'teacher_id');
+        return $this->hasMany(Holiday::class, 'teacher_id', 'teacher_id');
     }
 
     public function invoice(): HasOne
     {
-        return $this->hasOne(Invoice::class, 'teacher_id');
+        return $this->hasOne(Invoice::class, 'teacher_id', 'teacher_id');
     }
 
     public function invoices(): HasMany
     {
-        return $this->hasMany(Invoice::class, 'teacher_id');
+        return $this->hasMany(Invoice::class, 'teacher_id', 'teacher_id');
     }
 
     public function scopeFirstNameAsc($query)

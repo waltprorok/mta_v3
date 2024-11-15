@@ -6,6 +6,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @mixin Builder
@@ -20,7 +21,7 @@ class Instrument extends Model
      */
     protected function serializeDate(DateTimeInterface $date): string
     {
-        return $date->format('Y-m-d H:i:s');
+        return $date->timezone(Auth::user()->getTimeZone())->format('Y-m-d H:i:s');
     }
 
     public function instrument(): BelongsTo

@@ -69,6 +69,35 @@
 
                     <div class="row mt-5">
                         <div class="col-md-4 mb-4">
+                            <div>Update Timezone</div>
+                            <div class="text-muted small">
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group {{ $errors->has('timezone') ? 'has-error' : '' }}">
+                                        <label class="control-label">Time Zone</label>
+                                        <select class="form-control" name="timezone">
+                                            @foreach($timezones as $value)
+                                                <option value="{{ $value }}" {{ Auth::user()->getTimeZone() === $value ? 'selected' : '' }}>{{ $value }}</option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('timezone'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('timezone') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row mt-5">
+                        <div class="col-md-4 mb-4">
                             <div>Update Password</div>
                             <div class="text-muted small">Leave credentials fields empty if you don't wish to change the password.
                             </div>

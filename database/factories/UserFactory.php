@@ -30,6 +30,7 @@ $factory->define(User::class, function (Faker $faker) {
         'teacher' => false,
         'parent' => false,
         'terms' => true,
+        'timezone' => 'America/New_York',
         'remember_token' => str_random(10),
     ];
 });
