@@ -59,15 +59,21 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    const TIMEZONES = [
+        "America/New_York",
+        "America/Chicago",
+        "America/Denver",
+        "America/Los_Angeles",
+        "America/Anchorage",
+        "Pacific/Honolulu",
+    ];
+
     /**
      * @param DateTimeInterface $date
      * @return string
      */
     protected function serializeDate(DateTimeInterface $date): string
     {
-        if (Auth::user()) {
-            return $date->timezone(Auth::user()->getTimeZone())->format('Y-m-d H:i:s');
-        }
         return $date->format('Y-m-d H:i:s');
     }
 

@@ -172,14 +172,7 @@ class SubscriptionController extends Controller
 
     public function profile(): View
     {
-        $timezones = [
-            "America/New_York",
-            "America/Chicago",
-            "America/Denver",
-            "America/Los_Angeles",
-            "America/Anchorage",
-            "Pacific/Honolulu",
-        ];
+        $timezones = User::TIMEZONES;
 
         return view('webapp.account.profile', compact('timezones'));
     }

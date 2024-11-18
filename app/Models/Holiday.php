@@ -32,7 +32,7 @@ class Holiday extends Model
      */
     protected function serializeDate(DateTimeInterface $date): string
     {
-        return $date->timezone(Auth::user()->getTimeZone())->format('Y-m-d H:i:s');
+        return $date->format('Y-m-d H:i:s');
     }
 
     public function teacher(): HasOne

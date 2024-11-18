@@ -56,15 +56,16 @@ class ScheduleMonthlyLessons extends Command
                 $query->where('recurrence', 'Monthly');
             })
             ->with('lessons')
-            ->with('getTeacher')
+            ->with('getTeacher.holidays')
             ->with('parent')
             ->chunk(50, function ($students) {
                 foreach ($students as $student) {
-                    $startDate = Carbon::parse($student->lessons->last()->start_date);
-                    $endDate = Carbon::parse($student->lessons->last()->end_date);
+                    $startDate = Carbon::parse($student->lessons->last()->start_date, 'America/New_York');
+                    $endDate = Carbon::parse($student->lessons->last()->end_date, 'America/New_York');
                     $nextMonth = $startDate->addMonth();
-                    $dayOfWeek = $startDate->dayOfWeek + 1;
+                    $dayOfWeek = $startDate->dayOfWeek -1; // TODO: this is an issue
                     $firstLesson = $nextMonth->day($dayOfWeek);
+                    dd([$firstLesson, $endDate, $student->first_name]);
                     $endOfMonth = Carbon::parse($nextMonth)->endOfMonth();
                     $diffInDays = $nextMonth->diffInDays($endOfMonth);
                     $end = Carbon::parse($nextMonth)->addDays($diffInDays);
@@ -80,6 +81,13 @@ class ScheduleMonthlyLessons extends Command
                             $lesson->title = $student->lessons->last()->title;
                             $lesson->color = $student->lessons->last()->color;
                             $lesson->start_date = $i->format('Y-m-d') . ' ' . $startDate->format('H:i:s');
+                            $holiday = $student->getTeacher->holidays->where('all_day', true) // only gets all day for the day, not the range
+                            ->whereBetween('start_date', [Carbon::parse($lesson->start_date)->startOfDay(), Carbon::parse($lesson->start_date)->endOfDay()])
+                                ->first();
+                            if (! is_null($holiday)) {
+                                $lessons[] = $holiday->toArray();
+                                continue;
+                            }
                             $lesson->end_date = $i->format('Y-m-d') . ' ' . $endDate->format('H:i:s');
                             $lesson->interval = $minutes;
                             $lesson->recurrence = $student->lessons->last()->recurrence;
@@ -92,6 +100,7 @@ class ScheduleMonthlyLessons extends Command
                     } catch (\Exception $exception) {
                         Log::info($exception->getMessage());
                     }
+
                 }
             });
     }

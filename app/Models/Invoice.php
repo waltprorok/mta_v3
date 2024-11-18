@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * @mixin Builder
@@ -35,7 +34,7 @@ class Invoice extends Model
     protected $casts = [
         'balance_due' => 'integer',
         'is_paid' => 'boolean',
-        'payment_type_id' => 'integer'
+        'payment_type_id' => 'integer',
     ];
 
     /**
@@ -44,7 +43,7 @@ class Invoice extends Model
      */
     protected function serializeDate(DateTimeInterface $date): string
     {
-        return $date->timezone(Auth::user()->getTimeZone())->format('Y-m-d H:i:s');
+        return $date->format('Y-m-d H:i:s');
     }
 
     public function lessons(): HasMany

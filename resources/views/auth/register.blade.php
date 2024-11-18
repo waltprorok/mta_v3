@@ -74,23 +74,6 @@
                                 </div>
                             </div>
 
-                            <div class="form-group {{ $errors->has('timezone') ? 'has-error' : '' }}">
-                                <div class="col-md-10 col-md-offset-1">
-                                    <label for="timezone" class="control-label">Time Zone</label>
-                                    <select class="form-control" name="timezone">
-                                        @foreach($timezones as $value)
-                                            <option value="{{ $value }}" {{ old('timezone') === $value ? 'selected' : '' }}>{{ $value }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    @if ($errors->has('timezone'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('timezone') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
                             <div class="form-check {{ $errors->has('terms') ? 'has-error' : '' }}">
                                 <div class="col-md-10 col-md-offset-1">
                                     <label for="terms" class="form-check-label">

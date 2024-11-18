@@ -7,13 +7,11 @@ use App\Events\RegisterUserEvent;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Carbon\Carbon;
-use DateTimeZone;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class RegisterController extends Controller
@@ -50,17 +48,7 @@ class RegisterController extends Controller
 
     public function showRegistrationForm(): View
     {
-        // TODO:  make a const
-        $timezones = [
-            "America/New_York",
-            "America/Chicago",
-            "America/Denver",
-            "America/Los_Angeles",
-            "America/Anchorage",
-            "Pacific/Honolulu",
-        ];
-
-        return view('auth.register', compact('timezones'));
+        return view('auth.register');
     }
 
     /**
@@ -71,15 +59,12 @@ class RegisterController extends Controller
      */
     protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
     {
-        $timezones = timezone_identifiers_list(DateTimeZone::AMERICA, 'US');
-
         return Validator::make($data, [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'terms' => 'required|int:1',
-            'timezone' => 'required|string', Rule::in($timezones),
         ]);
     }
 
@@ -100,7 +85,6 @@ class RegisterController extends Controller
             'teacher' => true,
             'trial_ends_at' => Carbon::now()->addDays(30),
             'terms' => $data['terms'],
-            'timezone' => $data['timezone'],
         ]);
 
         Event::dispatch(new RegisterUserEvent($data, $user));

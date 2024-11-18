@@ -48,7 +48,6 @@ class UserLogInTest extends TestCase
             'password' => $user->password,
             'password_confirmation' => $user->password,
             'terms' => 1,
-            'timezone' => 'America/New_York',
         ])->assertStatus(302);
 
         $response->assertRedirect('/dashboard');

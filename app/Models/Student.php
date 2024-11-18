@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * @mixin Builder
@@ -71,7 +70,7 @@ class Student extends Model
      */
     protected function serializeDate(DateTimeInterface $date): string
     {
-        return $date->timezone(Auth::user()->getTimeZone())->format('Y-m-d H:i:s');
+        return $date->format('Y-m-d H:i:s');
     }
 
     /**
