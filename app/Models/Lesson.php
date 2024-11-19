@@ -21,7 +21,9 @@ class Lesson extends Model
         'billing_rate_id' => 'integer',
         'complete' => 'boolean',
         'invoice_id' => 'integer',
-        'student_id' => 'integer'
+        'student_id' => 'integer',
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
     ];
 
     protected $fillable = [

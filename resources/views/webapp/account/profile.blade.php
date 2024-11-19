@@ -70,8 +70,7 @@
                     <div class="row mt-5">
                         <div class="col-md-4 mb-4">
                             <div>Time zone</div>
-                            <div class="text-muted small">Set time zone.
-                            </div>
+                            <div class="text-muted small">Set time zone.</div>
                         </div>
                         <div class="col-md-8">
                             <div class="row">

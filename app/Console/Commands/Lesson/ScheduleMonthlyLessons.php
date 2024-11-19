@@ -6,8 +6,8 @@ use App\Models\Lesson;
 use App\Models\Student;
 use App\Services\StudentLessonService;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
 
 class ScheduleMonthlyLessons extends Command
@@ -48,59 +48,83 @@ class ScheduleMonthlyLessons extends Command
      */
     public function handle()
     {
-        Student::where('status', 1) // active
-        ->where('auto_schedule', true)
-            ->whereHas('lessons', function (Builder $query) {
-                $query->whereBetween('start_date', [now()->startOfMonth(), now()->endOfMonth()]);
+        $start = now()->startOfMonth()->toDateTimeString();
+        $end = now()->endOfMonth()->toDateTimeString();
+
+        Student::query()
+            ->where('status', Student::ACTIVE)
+            ->where('auto_schedule', true)
+            ->with(['lessons' => function ($query) use ($start, $end) {
+                $query->whereBetween('start_date', [$start, $end]);
                 $query->where('status', 'Scheduled');
                 $query->where('recurrence', 'Monthly');
-            })
-            ->with('lessons')
-            ->with('getTeacher.holidays')
-            ->with('parent')
-            ->chunk(50, function ($students) {
+            }])
+            ->with(['getTeacher.holidays' => function ($query) {
+                $query->whereBetween('start_date', [
+                        now()->addMonth()->startOfMonth()->toDateString(),
+                        now()->addMonth()->endOfMonth()->toDateString()]
+                );
+                $query->where('all_day', true);
+            }])
+            ->with('parent:email')
+            ->chunk(50, function ($students) use ($start, $end) {
                 foreach ($students as $student) {
-                    $startDate = Carbon::parse($student->lessons->last()->start_date, 'America/New_York');
-                    $endDate = Carbon::parse($student->lessons->last()->end_date, 'America/New_York');
-                    $nextMonth = $startDate->addMonth();
-                    $dayOfWeek = $startDate->dayOfWeek -1; // TODO: this is an issue
-                    $firstLesson = $nextMonth->day($dayOfWeek);
-                    dd([$firstLesson, $endDate, $student->first_name]);
-                    $endOfMonth = Carbon::parse($nextMonth)->endOfMonth();
-                    $diffInDays = $nextMonth->diffInDays($endOfMonth);
-                    $end = Carbon::parse($nextMonth)->addDays($diffInDays);
-                    $minutes = $endDate->diffInMinutes($startDate);
-                    $lessons = collect();
+                    if ($student->lessons->isNotEmpty()) {
+                        $startDateFirst = Carbon::parse($student->lessons->first()->start_date);
+                        $endDateFirst = Carbon::parse($student->lessons->first()->end_date);
 
-                    try {
-                        for ($i = $firstLesson; $i <= $end; $i->modify('+7 day')) {
-                            $lesson = new Lesson();
-                            $lesson->student_id = $student->lessons->last()->student_id;
-                            $lesson->teacher_id = $student->teacher_id;
-                            $lesson->billing_rate_id = $student->lessons->last()->billing_rate_id;
-                            $lesson->title = $student->lessons->last()->title;
-                            $lesson->color = $student->lessons->last()->color;
-                            $lesson->start_date = $i->format('Y-m-d') . ' ' . $startDate->format('H:i:s');
-                            $holiday = $student->getTeacher->holidays->where('all_day', true) // only gets all day for the day, not the range
-                            ->whereBetween('start_date', [Carbon::parse($lesson->start_date)->startOfDay(), Carbon::parse($lesson->start_date)->endOfDay()])
-                                ->first();
-                            if (! is_null($holiday)) {
-                                $lessons[] = $holiday->toArray();
-                                continue;
+                        $startDateLast = Carbon::parse($student->lessons->last()->start_date);
+                        $endDateLast = Carbon::parse($student->lessons->last()->end_date);
+
+                        $firstLesson = $startDateLast->addWeek();
+                        $end = $endDateLast->addMonth();
+
+                        $minutes = $endDateFirst->diffInMinutes($startDateFirst);
+                        $lessons = collect();
+
+                        try {
+                            for ($i = $firstLesson; $i <= $end; $i->modify('+7 day')) {
+                                $lesson = new Lesson();
+                                $lesson->student_id = $student->lessons->first()->student_id;
+                                $lesson->teacher_id = $student->teacher_id;
+                                $lesson->billing_rate_id = $student->lessons->first()->billing_rate_id;
+                                $lesson->title = $student->lessons->first()->title;
+                                $lesson->color = $student->lessons->first()->color;
+                                $lesson->start_date = $i->format('Y-m-d') . ' ' . $startDateFirst->format('H:i:s');
+
+                                $holidays = $student->getTeacher->holidays->all();
+
+                                $skipOverSave = false;
+
+                                foreach ($holidays as $holiday) {
+                                    $holidayDates = CarbonPeriod::create($holiday->start_date, $holiday->end_date);
+
+                                    foreach ($holidayDates->toArray() as $date) {
+                                        if (! is_null($date) && $date->toDateString() == $lesson->start_date->toDateString()) {
+                                            $holiday['start_date'] = $i->format('Y-m-d');
+                                            $lessons[] = $holiday->toArray();
+                                            $skipOverSave = true;
+                                        }
+                                    }
+                                }
+
+                                if ($skipOverSave) {
+                                    continue;
+                                }
+
+                                $lesson->end_date = $i->format('Y-m-d') . ' ' . $endDateFirst->format('H:i:s');
+                                $lesson->interval = $minutes;
+                                $lesson->recurrence = $student->lessons->last()->recurrence;
+                                $lesson->save();
+                                $lessons[] = $lesson;
+
+                                Log::channel('lessons')->info($lesson->start_date . ' - ' . $lesson->end_date . ' - ' . $lesson->title);
                             }
-                            $lesson->end_date = $i->format('Y-m-d') . ' ' . $endDate->format('H:i:s');
-                            $lesson->interval = $minutes;
-                            $lesson->recurrence = $student->lessons->last()->recurrence;
-                            $lesson->save();
-                            $lessons[] = $lesson;
-
-                            Log::channel('lessons')->info($lesson->start_date . ' - ' . $lesson->end_date . ' - ' . $lesson->title);
+                            $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
+                        } catch (\Exception $exception) {
+                            Log::info($exception->getMessage());
                         }
-                        $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
-                    } catch (\Exception $exception) {
-                        Log::info($exception->getMessage());
                     }
-
                 }
             });
     }
