@@ -10,8 +10,10 @@
             <li class="breadcrumb-item active">Profile</li>
         </ul>
 
+        @include('partials.studentTabs', $data = ['id' => $student->id])
+
         <div id="app">
-            <profile></profile>
+            <profile v-bind:student="{{ $studentJson }}"></profile>
         </div>
     </div>
 
