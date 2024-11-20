@@ -30,7 +30,6 @@ class HolidayController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-
         $start_date = Carbon::parse($request->get('start_date'))->tz('America/New_York')->format('Y-m-d H:i:s');
         $end_date = Carbon::parse($request->get('end_date'))->tz('America/New_York')->format('Y-m-d H:i:s');
 
