@@ -15,7 +15,7 @@
                         <form class="form-horizontal" method="POST" action="{{ route('register') }}">
                             @csrf
                             @honeypot
-                            <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
+                            <div class="form-group {{ $errors->has('first_name') ? 'has-error' : '' }}">
                                 <div class="col-md-10 col-md-offset-1">
                                     <label for="first_name" class="control-label">First Name</label>
                                     <input id="first_name" type="text" class="form-control" name="first_name" placeholder="First name" value="{{ old('first_name') }}" autofocus>
@@ -28,7 +28,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
+                            <div class="form-group {{ $errors->has('last_name') ? 'has-error' : '' }}">
                                 <div class="col-md-10 col-md-offset-1">
                                     <label for="last_name" class="control-label">Last Name</label>
                                     <input id="last_name" type="text" class="form-control" name="last_name" placeholder="Last name" value="{{ old('last_name') }}">
@@ -41,7 +41,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                            <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                                 <div class="col-md-10 col-md-offset-1">
                                     <label for="email" class="control-label">E-Mail Address</label>
                                     <input id="email" type="email" class="form-control" name="email" placeholder="email@example.com" value="{{ old('email') }}">
@@ -54,7 +54,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                                 <div class="col-md-10 col-md-offset-1">
                                     <label for="password" class="control-label">Password</label>
                                     <input id="password" type="password" class="form-control" name="password" placeholder="Password">
@@ -74,7 +74,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-check{{ $errors->has('terms') ? ' has-error' : '' }}">
+                            <div class="form-check {{ $errors->has('terms') ? 'has-error' : '' }}">
                                 <div class="col-md-10 col-md-offset-1">
                                     <label for="terms" class="form-check-label">
                                         <input type="checkbox" name="terms" value="1" id="terms" class="form-check-input">

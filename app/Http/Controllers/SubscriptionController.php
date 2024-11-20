@@ -172,7 +172,9 @@ class SubscriptionController extends Controller
 
     public function profile(): View
     {
-        return view('webapp.account.profile');
+        $timezones = User::TIMEZONES;
+
+        return view('webapp.account.profile', compact('timezones'));
     }
 
     public function resume(): RedirectResponse
@@ -210,6 +212,7 @@ class SubscriptionController extends Controller
         $user = Auth::user();
         $user->first_name = $request->get('first_name');
         $user->last_name = $request->get('last_name');
+        $user->timezone = $request->get('timezone');
 
         if ($request->get('email') !== $user->email) {
             $user->email = $request->get('email');

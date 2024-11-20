@@ -212,7 +212,8 @@ class StudentController extends Controller
                         'email' => $request->get('parent_email'),
                         'password' => Hash::make(Str::random(10)),
                         'parent' => true,
-                        'terms' => true]
+                        'terms' => true,
+                    ]
                 );
 
                 $user = $this->createUserStudentEmail($request);

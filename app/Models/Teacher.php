@@ -71,17 +71,17 @@ class Teacher extends Model
 
     public function holidays(): HasMany
     {
-        return $this->hasMany(Holiday::class, 'teacher_id');
+        return $this->hasMany(Holiday::class, 'teacher_id', 'teacher_id');
     }
 
     public function invoice(): HasOne
     {
-        return $this->hasOne(Invoice::class, 'teacher_id');
+        return $this->hasOne(Invoice::class, 'teacher_id', 'teacher_id');
     }
 
     public function invoices(): HasMany
     {
-        return $this->hasMany(Invoice::class, 'teacher_id');
+        return $this->hasMany(Invoice::class, 'teacher_id', 'teacher_id');
     }
 
     public function scopeFirstNameAsc($query)

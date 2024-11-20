@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 
 class RegisterController extends Controller
 {
@@ -45,6 +46,11 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showRegistrationForm(): View
+    {
+        return view('auth.register');
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -70,6 +76,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
         $user = User::query()->create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
@@ -80,9 +87,8 @@ class RegisterController extends Controller
             'terms' => $data['terms'],
         ]);
 
-
         Event::dispatch(new RegisterUserEvent($data, $user));
 
-       return $user;
+        return $user;
     }
 }

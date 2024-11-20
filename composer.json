@@ -20,7 +20,7 @@
     "laravel/tinker": "~2.0",
     "laravel/ui": "^2.0",
     "qlick/laravel-full-calendar": "~1.0",
-    "spatie/laravel-honeypot": "2.0.0",
+    "spatie/laravel-honeypot": "^2.0.0",
     "spatie/laravel-newsletter": "^4.8"
   },
   "require-dev": {

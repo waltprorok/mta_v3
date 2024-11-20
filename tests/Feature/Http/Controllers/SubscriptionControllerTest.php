@@ -61,10 +61,11 @@ class SubscriptionControllerTest extends TestCase
     {
         $this->actingAs($this->user);
 
-        $this->post('/account/updateProfile', [
+        $this->post('/account/update-profile', [
             'first_name' => $this->user->first_name,
             'last_name' => $this->user->last_name,
             'email' => $this->user->email,
+            'timezone' => $this->user->getTimezone(),
         ])->assertStatus(302);
 
         Mail::to($this->user->email)->queue(new UserEmailChangedMail($this->user));

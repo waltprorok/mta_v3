@@ -10,6 +10,7 @@ use App\Models\Holiday;
 use App\Models\Lesson;
 use App\Models\Student;
 use App\Services\StudentLessonService;
+use Carbon\CarbonPeriod;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -140,12 +141,24 @@ class StudentLessonController extends Controller
                 $lesson->title = $request->get('title');
                 $lesson->color = $request->get('color');
                 $lesson->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
-                $holiday = $holidays->where('all_day', true)
-                    ->whereBetween('start_date', [Carbon::parse($lesson->start_date)->startOfDay(), Carbon::parse($lesson->start_date)->endOfDay()])->first();
-                if (! is_null($holiday)) {
-                    $lessons[] = $holiday->toArray();
+
+                $skipOverSave = false;
+
+                foreach ($holidays as $holiday) {
+                    $holidayDates = CarbonPeriod::create($holiday->start_date, $holiday->end_date);
+                    foreach ($holidayDates->toArray() as $date) {
+                        if (! is_null($date) && $date->toDateString() == $lesson->start_date->toDateString()) {
+                            $holiday['start_date'] = $i->format('Y-m-d');
+                            $lessons[] = $holiday->toArray();
+                            $skipOverSave = true;
+                        }
+                    }
+                }
+
+                if ($skipOverSave) {
                     continue;
                 }
+
                 $lesson->end_date = $i->format('Y-m-d') . ' ' . $duration;
                 $lesson->interval = (int)$request->get('end_time');
                 $lesson->recurrence = $request->get('recurrence') == Lesson::RECURRENCE[0] ? Lesson::RECURRENCE[0] : Lesson::RECURRENCE[1];

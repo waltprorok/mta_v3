@@ -33,10 +33,10 @@ class StoreScheduleApptRequestTest extends TestCase
 
     public function test_request_pass()
     {
-        factory(User::class)->create(["teacher" => true]);
-        factory(User::class)->create(["student" => true]);
+        $teacher = factory(User::class)->create(['teacher' => true, "student" => false]);
+        $student = factory(User::class)->create(['student' => true]);
         $billingRate = factory(BillingRate::class)->create();
-        $student = factory(Student::class)->create();
+        $student = factory(Student::class)->create(['student_id' => $student->id, 'teacher_id' => $teacher->id]);
 
         $validator = Validator::make([
             'student_id' => $student->id,

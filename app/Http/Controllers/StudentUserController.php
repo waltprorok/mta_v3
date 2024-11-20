@@ -39,8 +39,8 @@ class StudentUserController extends Controller
                 $dates[] = Calendar::event(
                     $value->title,
                     false,
-                    Carbon::parse($value->start_date),
-                    Carbon::parse($value->end_date),
+                    $value->start_date,
+                    $value->end_date,
                     $value->id,
                     [
                         'color' => $value->color,

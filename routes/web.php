@@ -50,7 +50,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('subscription/change-plan', 'SubscriptionController@listPlanChange')->name('subscription.change');
         Route::post('subscription/changed', 'SubscriptionController@changePlan')->name('subscription.changed');
         Route::get('profile', 'SubscriptionController@profile')->name('account.profile');
-        Route::post('updateProfile', 'SubscriptionController@updateProfile')->name('account.updateProfile');
+        Route::post('update-profile', 'SubscriptionController@updateProfile')->name('account.updateProfile');
     });
 
     Route::prefix('calendar')->group(function () {

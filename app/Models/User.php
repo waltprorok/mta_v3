@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -38,6 +39,7 @@ class User extends Authenticatable
         'student',
         'parent',
         'terms',
+        'timezone',
         'trial_ends_at',
     ];
 
@@ -56,6 +58,24 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    const TIMEZONES = [
+        "America/New_York",
+        "America/Chicago",
+        "America/Denver",
+        "America/Los_Angeles",
+        "America/Anchorage",
+        "Pacific/Honolulu",
+    ];
+
+    /**
+     * @param DateTimeInterface $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date): string
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 
     public function getBlogs(): HasMany
     {
@@ -105,6 +125,11 @@ class User extends Authenticatable
     public function isTeacher(): bool
     {
         return $this->teacher && $this->teacher !== null;
+    }
+
+    public function getTimeZone(): string
+    {
+        return $this->timezone ?? 'UTC';
     }
 
     public function holidays(): HasMany
