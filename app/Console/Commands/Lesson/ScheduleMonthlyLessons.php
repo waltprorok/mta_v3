@@ -78,8 +78,8 @@ class ScheduleMonthlyLessons extends Command
                         $endDateLast = Carbon::parse($student->lessons->last()->end_date);
 
                         $numberOfWeeks = ($endWeekNumberInMonth - $endDateLast->weekNumberInMonth);
-
-                        $startLesson = $startDateLast->addWeeks($numberOfWeeks);
+                        $weeks = $numberOfWeeks == 0 ? 1 : $numberOfWeeks;
+                        $startLesson = $startDateLast->addWeeks($weeks);
                         $endLesson = $endDateLast->addWeeks($numberOfWeeks)->addMonth();
 
                         $minutes = $endDateFirst->diffInMinutes($startDateFirst);
@@ -123,7 +123,7 @@ class ScheduleMonthlyLessons extends Command
 
                                 Log::channel('lessons')->info($lesson->start_date . ' - ' . $lesson->end_date . ' - ' . $lesson->title);
                             }
-                            $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
+//                            $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
                         } catch (\Exception $exception) {
                             Log::info($exception->getMessage());
                         }
