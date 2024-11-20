@@ -15,3 +15,4 @@ php artisan event:cache
 php artisan config:cache
 php artisan queue:restart
 php artisan up
+sudo supervisorctl status
