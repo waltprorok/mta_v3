@@ -132,11 +132,6 @@ class User extends Authenticatable
         return $this->timezone ?? 'UTC';
     }
 
-    public function getTeacherData()
-    {
-        return $this->getTeacher();
-    }
-
     public function holidays(): HasMany
     {
         return $this->hasMany(Holiday::class, 'teacher_id');
