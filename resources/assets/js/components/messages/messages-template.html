@@ -25,7 +25,7 @@
                                 <div class="chat_people">
                                     <div class="chat_img"><img src="/webapp/img/avatar.jpeg" alt="avatar"></div>
                                     <div class="chat_ib">
-                                        <h5>{{ person.user_from.first_name }} {{ person.user_from.last_name }}<span class="chat_date">{{ person.created_at }}</span></h5>
+                                        <h5>{{ person.user_from.first_name }} {{ person.user_from.last_name }}<span class="chat_date">Joined: {{ person.created_at }}</span></h5>
                                         <p>{{ person.body | short }}</p>
                                     </div>
                                 </div>
@@ -37,7 +37,7 @@
                                     <div class="chat_img"><img src="/webapp/img/avatar.jpeg" alt="avatar"></div>
                                     <div class="chat_ib">
                                         <h5>{{ person.first_name }} {{ person.last_name }}
-                                            <span class="chat_date">{{ person.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</span>
+                                            <span class="chat_date">Joined: {{ person.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</span>
                                         </h5>
                                     </div>
                                 </div>

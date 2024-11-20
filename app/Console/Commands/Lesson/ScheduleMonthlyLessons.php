@@ -63,7 +63,8 @@ class ScheduleMonthlyLessons extends Command
                 $query->where('all_day', true);
                 $query->whereBetween('start_date', [
                         now()->addMonth()->startOfMonth()->toDateString(),
-                        now()->addMonth()->endOfMonth()->toDateString()]
+                        now()->addMonth()->endOfMonth()->toDateString()
+                    ]
                 );
             }])
             ->with('parent:email')
@@ -123,7 +124,7 @@ class ScheduleMonthlyLessons extends Command
 
                                 Log::channel('lessons')->info($lesson->start_date . ' - ' . $lesson->end_date . ' - ' . $lesson->title);
                             }
-//                            $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
+                            $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
                         } catch (\Exception $exception) {
                             Log::info($exception->getMessage());
                         }
