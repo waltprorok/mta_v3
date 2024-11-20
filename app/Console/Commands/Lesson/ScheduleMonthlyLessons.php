@@ -60,14 +60,16 @@ class ScheduleMonthlyLessons extends Command
                 $query->where('recurrence', 'Monthly');
             }])
             ->with(['getTeacher.holidays' => function ($query) {
+                $query->where('all_day', true);
                 $query->whereBetween('start_date', [
                         now()->addMonth()->startOfMonth()->toDateString(),
-                        now()->addMonth()->endOfMonth()->toDateString()]
+                        now()->addMonth()->endOfMonth()->toDateString()
+                    ]
                 );
-                $query->where('all_day', true);
             }])
             ->with('parent:email')
             ->chunk(50, function ($students) use ($start, $end) {
+                $endWeekNumberInMonth = Carbon::parse($end)->weekNumberInMonth;
                 foreach ($students as $student) {
                     if ($student->lessons->isNotEmpty()) {
                         $startDateFirst = Carbon::parse($student->lessons->first()->start_date);
@@ -76,14 +78,16 @@ class ScheduleMonthlyLessons extends Command
                         $startDateLast = Carbon::parse($student->lessons->last()->start_date);
                         $endDateLast = Carbon::parse($student->lessons->last()->end_date);
 
-                        $firstLesson = $startDateLast->addWeek();
-                        $end = $endDateLast->addMonth();
+                        $numberOfWeeks = ($endWeekNumberInMonth - $endDateLast->weekNumberInMonth);
+                        $weeks = $numberOfWeeks == 0 ? 1 : $numberOfWeeks;
+                        $startLesson = $startDateLast->addWeeks($weeks);
+                        $endLesson = $endDateLast->addWeeks($numberOfWeeks)->addMonth();
 
                         $minutes = $endDateFirst->diffInMinutes($startDateFirst);
                         $lessons = collect();
 
                         try {
-                            for ($i = $firstLesson; $i <= $end; $i->modify('+7 day')) {
+                            for ($i = $startLesson; $i <= $endLesson; $i->modify('+7 day')) {
                                 $lesson = new Lesson();
                                 $lesson->student_id = $student->lessons->first()->student_id;
                                 $lesson->teacher_id = $student->teacher_id;
