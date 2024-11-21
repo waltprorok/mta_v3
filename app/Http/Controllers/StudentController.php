@@ -42,7 +42,7 @@ class StudentController extends Controller
     /**
      * Student Profile Page
      */
-    public function index(int $id): JsonResponse
+    public function index(int $id): View
     {
         $student = Student::query()
             ->where(['id' => $id, 'teacher_id' => Auth::id()])
@@ -50,7 +50,9 @@ class StudentController extends Controller
             ->with('parent:id,email')
             ->first();
 
-        return response()->json($student);
+        $studentJson = $student->toJson();
+
+        return view('webapp.student.profile', compact('student', 'studentJson'));
     }
 
     public function store(StoreStudentRequest $request): JsonResponse

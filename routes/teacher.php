@@ -40,8 +40,7 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
     Route::prefix('students')->group(function () {
         Route::view('/', 'webapp.student.index')->name('student.index');
         Route::get('schedule/{id}', 'StudentLessonController@index')->name('student.schedule');
-        Route::get('{id}/profile', 'StudentController@index')->name('student.profile'); // TODO route name
-        Route::view('profile/{id}', 'webapp.student.profile')->name('student.profiles'); // TODO check route name
+        Route::get('profile/{id}', 'StudentController@index')->name('student.profile');
         Route::post('update', 'StudentController@update')->name('student.update');
         Route::get('{id}/edit', 'StudentController@show')->name('student.edit');
         Route::post('schedule/add', 'StudentLessonController@store')->name('student.schedule.save');
