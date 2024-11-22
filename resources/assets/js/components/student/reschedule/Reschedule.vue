@@ -110,34 +110,11 @@ export default {
     },
 
     methods: {
-        clearLessonData: function () {
-            let self = this;
-            self.showModal = false;
-            self.lesson.student_id = null;
-            self.lesson.billing_rate_id = null;
-            self.lesson.title = null;
-            self.lesson.color = null;
-            self.lesson.start_date = '';
-            self.lesson.end_date = '';
-            self.lesson.start_time = '';
-            self.lesson.interval = '';
-            self.lesson.recurrence = null;
-            self.lesson.end_time = null;
-            self.lesson.notes = null;
-            self.lesson.status = null;
-            self.student.first_name = '';
-            self.student.last_name = '';
-            self.student.email = '';
-            self.student.phone = '';
-            self.startDate = startDateNow;
-        },
-
         deleteLesson: function (id) {
             let self = this;
             let params = Object.assign({}, self.lesson);
             axios.delete('/web/lesson/delete/' + id, params)
                 .then(() => {
-                    self.clearLessonData();
                     window.location ='/calendar';
                     this.$notify({
                         type: 'warn',
@@ -324,7 +301,6 @@ export default {
             let params = Object.assign({}, self.lesson);
             axios.patch('/web/lesson/reschedule/update', params)
                 .then(() => {
-                    // self.clearLessonData();
                     self.clearErrorData();
                     self.getData();
                     this.disableUpdateButton = false;
