@@ -27,6 +27,9 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::get('payment-types', 'InvoiceController@getPaymentTypes');
         Route::get('student/lesson/{id}/{day?}', 'StudentLessonController@getStudent');
         Route::post('student/lessons', 'StudentLessonController@store');
+        Route::get('lesson/reschedule/{id}/{day?}', 'StudentLessonController@getLessonReschedule');
+        Route::patch('lesson/reschedule/update', 'StudentLessonController@update');
+        Route::delete('lesson/delete/{id}', 'StudentLessonController@destroy');
     });
 
     Route::prefix('invoice')->group(function () {
@@ -40,13 +43,11 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
     Route::prefix('students')->group(function () {
         Route::view('/', 'webapp.student.index')->name('student.index');
         Route::get('schedule/{id}', 'StudentLessonController@index')->name('student.schedule');
+        Route::get('reschedule/{id}', 'StudentLessonController@show')->name('student.reschedule');
         Route::get('profile/{id}', 'StudentController@index')->name('student.profile');
         Route::post('update', 'StudentController@update')->name('student.update');
         Route::get('{id}/edit', 'StudentController@show')->name('student.edit');
         Route::post('schedule/add', 'StudentLessonController@store')->name('student.schedule.save');
-        Route::put('schedule/update', 'StudentLessonController@update')->name('student.schedule.update');
-        Route::get('schedule/{student_id}/edit/{id}/{day?}', 'StudentLessonController@show')->name('student.schedule.edit');
-        Route::delete('schedule/delete/{id}', 'StudentLessonController@destroy')->name('student.schedule.delete');
         Route::put('lessons/update', 'StudentLessonController@lessonsUpdate')->name('student.lessons.update');
         Route::post('process_date', 'StudentLessonController@ajaxTime');
     });

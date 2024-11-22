@@ -129,7 +129,7 @@
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
                                 <a href="{{ route('student.index') }}"
-                                   class="nav-link {{ Route::currentRouteName() == 'student.index' || Route::currentRouteName() == 'student.schedule.edit'|| Route::currentRouteName() == 'student.schedule' || Route::currentRouteName() == 'student.edit' || Route::currentRouteName() ==  'student.profile' ? 'active' : '' }}">
+                                   class="nav-link {{ Route::currentRouteName() == 'student.index' || Route::currentRouteName() == 'student.reschedule' || Route::currentRouteName() == 'student.schedule' || Route::currentRouteName() == 'student.edit' || Route::currentRouteName() ==  'student.profile' ? 'active' : '' }}">
                                     <i class="fa fa-list ml-3" aria-hidden="true"></i>List
                                 </a>
                             </li>

@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Response;
 
 class ScheduleUpdateRequest extends FormRequest
 {
@@ -24,9 +27,21 @@ class ScheduleUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'student_id' => 'required|integer|exists:students,id',
+            'billing_rate_id' => 'required|integer|exists:billing_rates,id',
             'title' => 'required|string',
+            'color' => 'required|string',
             'start_date' => 'required|string',
-            'end_time' => 'required|string'
+            'start_time' => 'string|nullable',
+            'end_time' => 'string|nullable',
+            'recurrence' => 'required|string'
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()
+            ->json(['error' => $validator->errors()], Response::HTTP_UNAUTHORIZED)
+        );
     }
 }

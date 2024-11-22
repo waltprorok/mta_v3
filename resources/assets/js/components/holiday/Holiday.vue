@@ -171,10 +171,6 @@ export default {
                 });
         },
 
-        isAllDay: function () {
-            return this.holiday.all_day ? 'dateTime' : 'date';
-        },
-
         showModalDelete: function (id) {
             let self = this;
             self.showModal = true;

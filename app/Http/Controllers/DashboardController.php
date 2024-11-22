@@ -96,7 +96,6 @@ class DashboardController extends Controller
     public function getCompletedLessonsData()
     {
         $period = Carbon::now()->subMonths(11)->monthsUntil(now());
-
         $data = [];
 
         foreach ($period as $date) {

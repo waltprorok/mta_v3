@@ -1,4 +1,4 @@
-<template src="./lesson-template.html"></template>
+<template src="./reschedule-template.html"></template>
 
 <script>
 import PhoneNumberFormat from "../../PhoneNumberFormat";
@@ -7,7 +7,7 @@ let today = new Date();
 const year = today.getFullYear();
 const month = String(today.getMonth() + 1).padStart(2, '0'); // January is 0
 const day = String(today.getDate()).padStart(2, '0');
-const startDate = `${year}-${month}-${day}`; // Output: "2024-11-13"
+const startDateNow = `${year}-${month}-${day}`; // Output: "2024-11-13"
 
 export default {
     data() {
@@ -17,7 +17,7 @@ export default {
             error_billing_rate_id: '',
             error_color: '',
             error_end_time: '',
-            error_recurrence: '',
+            error_status: '',
             error_start_date: '',
             error_start_time: '',
             allTimes: [],
@@ -39,14 +39,15 @@ export default {
                 {name: '45 minutes', value: "45"},
                 {name: '60 minutes', value: "60"},
             ],
-            disableSaveButton: false,
+            disableUpdateButton: false,
             lesson: {
                 student_id: null,
                 billing_rate_id: null,
                 title: null,
                 color: null,
-                start_date: null,
-                start_time: null,
+                start_date: '',
+                end_date: '',
+                start_time: '',
                 recurrence: null,
                 end_time: null,
             },
@@ -54,14 +55,19 @@ export default {
                 type: 'string',
                 mask: 'YYYY-MM-DD',
             },
-            startDate: startDate,
+            showModal: false,
+            statuses: [
+                {name: 'Scheduled', value: "Scheduled"},
+                {name: 'Re-Scheduled', value: "Re-Scheduled"},
+                {name: 'Cancelled', value: "Cancelled"},
+            ],
+            startDate: '',
             student: {
                 first_name: '',
                 last_name: '',
                 email: '',
                 phone: ''
             },
-            studentScheduled: false,
         }
     },
 
@@ -93,7 +99,7 @@ export default {
     watch: {
         startDate: {
             handler: function () {
-                this.getData();
+                this.getDates();
             },
             deep: true,
         },
@@ -104,6 +110,30 @@ export default {
     },
 
     methods: {
+        deleteLesson: function (id) {
+            let self = this;
+            let params = Object.assign({}, self.lesson);
+            axios.delete('/web/lesson/delete/' + id, params)
+                .then(() => {
+                    window.location ='/calendar';
+                    this.$notify({
+                        type: 'warn',
+                        title: 'Deleted',
+                        text: 'Date was deleted.',
+                        duration: 10000,
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not delete date.',
+                        duration: 10000,
+                    });
+                });
+        },
+
         getTimeDifference: function getTimeDifference(startTime, endTime) {
             const start = new Date('1970-01-01T' + startTime);
             const end = new Date('1970-01-01T' + endTime);
@@ -124,15 +154,12 @@ export default {
                         {name: '30 minutes', value: "30"},
                         {name: '45 minutes', value: "45"},
                         {name: '60 minutes', value: "60"},
-
                     ];
                     break;
                 case '0.30':
                     this.duration = [
                         {name: '15 minutes', value: "15"},
                         {name: '30 minutes', value: "30"},
-                        // {name: '45 minutes', value: "45"},
-
                     ];
                     break;
                 case '0.45':
@@ -174,12 +201,6 @@ export default {
             this.getDuration(diff);
         },
 
-        cancelLessonForm: function () {
-            let self = this;
-            self.clearErrorData();
-            self.clearLessonData();
-        },
-
         clearErrorData: function () {
             let self = this;
             self.classError = '';
@@ -188,34 +209,43 @@ export default {
             self.error_color = '';
             self.error_start_date = '';
             self.error_end_time = '';
-            self.error_recurrence = '';
+            self.error_status = '';
             self.error_start_time = '';
         },
 
-        clearLessonData: function () {
-            let self = this;
-            self.startDate = startDate;
-            self.lesson.student_id = null;
-            self.lesson.billing_rate_id = null;
-            self.lesson.title = null;
-            self.lesson.color = null;
-            self.lesson.start_date = null;
-            self.lesson.recurrence = null;
-            self.lesson.end_time = null;
-            self.lesson.start_time = null;
-        },
+
         getData: function () {
-            let self = this;
             let parameters = this.$route.fullPath;
             let id = parameters.split('/').pop();
-            axios.get('/web/student/lesson/' + id + '/' + self.startDate)
+            axios.get('/web/lesson/reschedule/' + id)
                 .then((response) => {
-                    this.student = response.data.student;
+                    this.lesson = response.data.lesson;
+                    this.startDate = response.data.lesson.start_date;
+                    this.student = response.data.lesson.student;
                     this.allTimes = response.data.allTimes;
                     this.billingRates = response.data.billingRates;
                     this.businessHours = response.data.businessHours;
                     this.holidays = response.data.holidays;
-                    this.studentScheduled = response.data.studentScheduled;
+                    this.closedDays();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+
+        getDates: function () {
+            let self = this;
+            let parameters = this.$route.fullPath;
+            let id = parameters.split('/').pop();
+            axios.get('/web/lesson/reschedule/' + id + '/' + self.startDate)
+                .then((response) => {
+                    this.lesson = response.data.lesson;
+                    this.startDate = self.startDate;
+                    this.student = response.data.lesson.student;
+                    this.allTimes = response.data.allTimes;
+                    this.billingRates = response.data.billingRates;
+                    this.businessHours = response.data.businessHours;
+                    this.holidays = response.data.holidays;
                     this.closedDays();
                 })
                 .catch((error) => {
@@ -252,33 +282,39 @@ export default {
             self.error_end_time = error.response.data.error.end_time;
             self.error_start_date = error.response.data.error.start_date;
             self.error_start_time = error.response.data.error.start_time;
-            self.error_recurrence = error.response.data.error.recurrence;
+            self.error_status = error.response.data.error.status;
             self.classError = 'has-error';
         },
 
-        saveLessons: function () {
-            this.disableSaveButton = true;
+        showModalDelete: function (id) {
+            let self = this;
+            self.showModal = true;
+            self.id = id;
+        },
+
+        updateLesson: function () {
+            this.disableUpdateButton = true;
             let self = this;
             self.lesson.student_id = this.student.id;
-            self.lesson.title = this.student.first_name + ' ' + this.student.last_name;
+
             self.lesson.start_date = this.startDate;
             let params = Object.assign({}, self.lesson);
-            axios.post('/web/student/lessons', params)
+            axios.patch('/web/lesson/reschedule/update', params)
                 .then(() => {
-                    self.clearLessonData();
                     self.clearErrorData();
                     self.getData();
-                    this.disableSaveButton = false;
+                    this.disableUpdateButton = false;
                     this.$notify({
                         type: 'success',
                         title: 'Success',
-                        text: 'Lesson(s) was saved.',
+                        text: 'Lesson was updated.',
                         duration: 10000,
                     });
                 })
                 .catch((error) => {
+                    console.log(error);
                     self.getErrorMessage(error);
-                    this.disableSaveButton = false;
+                    this.disableUpdateButton = false;
                     // this.$notify({
                     //     type: 'error',
                     //     title: 'Error',
