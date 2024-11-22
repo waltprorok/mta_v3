@@ -44,43 +44,24 @@ class PlanTableDataSeeder extends Seeder
                     'id' => '1',
                     'name' => 'premium',
                     'slug' => 'monthly',
-                    'stripe_plan' => 'plan_ESlBP8bL5WeV0I',
+                    'stripe_plan' => 'price_1K2yoYC8yeL47nHbxowd8PhA',
                     'cost' => '9.95',
                     'description' => 'Monthly Plan',
-                    'created_at' => '2021-12-29 00:00:01',
-                    'updated_at' => '2021-12-29 00:00:01',
+                    'created_at' => '2024-10-01 00:00:01',
+                    'updated_at' => '2024-10-01 00:00:01',
                 ],
                 [
                     'id' => '2',
                     'name' => 'premium',
                     'slug' => 'yearly',
-                    'stripe_plan' => 'plan_GOf0lJeuhZmpqS',
+                    'stripe_plan' => 'plan_GOdnLMq26Y9vFa',
                     'cost' => '99.95',
                     'description' => 'Yearly Plan',
-                    'created_at' => '2021-12-29 00:00:01',
-                    'updated_at' => '2021-12-29 00:00:01',
+                    'created_at' => '2024-10-01 00:00:01',
+                    'updated_at' => '2024-10-01 00:00:01',
                 ]
-// PROD VALUES
-//                [
-//                    'id' => '1',
-//                    'name' => 'premium',
-//                    'slug' => 'monthly',
-//                    'stripe_plan' => 'price_1K2yoYC8yeL47nHbxowd8PhA',
-//                    'cost' => '9.95',
-//                    'description' => 'Monthly Plan',
-//                    'created_at' => '2024-10-01 00:00:01',
-//                    'updated_at' => '2024-10-01 00:00:01',
-//                ],
-//                [
-//                    'id' => '2',
-//                    'name' => 'premium',
-//                    'slug' => 'yearly',
-//                    'stripe_plan' => 'plan_GOdnLMq26Y9vFa',
-//                    'cost' => '99.95',
-//                    'description' => 'Yearly Plan',
-//                    'created_at' => '2024-10-01 00:00:01',
-//                    'updated_at' => '2024-10-01 00:00:01',
-//                ]
+
+
             ]);
         }
     }
