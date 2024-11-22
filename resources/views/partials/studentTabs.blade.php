@@ -10,7 +10,7 @@
         </li>
     @else
         <li class="nav-item">
-            <a class="nav-link {{ Route::currentRouteName() == 'student.schedule.edit' ? 'active' : '' }}" id="schedule"
+            <a class="nav-link {{ Route::currentRouteName() == 'student.reschedule' ? 'active' : '' }}" id="schedule"
                href="{{ route('student.schedule', $data['id']) }}">Schedule</a>
         </li>
     @endif

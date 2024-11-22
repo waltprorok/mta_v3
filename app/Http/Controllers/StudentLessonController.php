@@ -12,16 +12,12 @@ use App\Models\Student;
 use App\Services\StudentLessonService;
 use Carbon\CarbonPeriod;
 use Exception;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\View\View;
 
 class StudentLessonController extends Controller
 {
@@ -75,22 +71,32 @@ class StudentLessonController extends Controller
         ]);
     }
 
+    public function show($id)
+    {
+        $lesson = Lesson::query()->where('id', $id)->where('teacher_id', Auth::id())->firstOrFail();
+        $student = $lesson->student;
+
+        return view('webapp.student.reschedule', compact('student'));
+    }
+
     /**
-     * @param int $student_id
      * @param int $id
      * @param $day
-     * @return Application|Factory|View
+     * @return JsonResponse
      */
-    public function show(int $student_id, int $id, $day = null): View
+    public function getLessonReschedule(int $id, $day = null)
     {
-        $student = Student::query()->where(['id' => $student_id, 'teacher_id' => Auth::id()])->first();
-        $businessHours = BusinessHours::query()->where('teacher_id', Auth::id())->get();
         $lessons = Lesson::query()
-            ->where(['student_id' => $student_id, 'id' => $id, 'teacher_id' => Auth::id()])
+            ->with('student')
+            ->where(['id' => $id, 'teacher_id' => Auth::id()])
             ->orderBy('start_date')
             ->with('billingRate')
             ->get();
+        $businessHours = BusinessHours::query()
+            ->where('teacher_id', Auth::id())
+            ->get();
         $billingRates = BillingRate::getTeacherActiveRates()->get();
+        $holidays = Holiday::getTeacherHolidaysForTwoYears()->get();
         $startDate = $day;
 
         if ($day == null) {
@@ -109,12 +115,16 @@ class StudentLessonController extends Controller
         $lessonTimes = $this->getLessonTimes($allLessons, $lessons, $startDate);
         $allAvailableTimes = array_diff($allTimes, $lessonTimes);
 
-        return view('webapp.student.scheduleEdit')
-            ->with('lessons', $lessons)
-            ->with('student', $student)
-            ->with('allTimes', $allAvailableTimes)
-            ->with('startDate', $startDate)
-            ->with('billingRates', $billingRates);
+        $lesson = $lessons->first();
+
+        return response()->json([
+            'lesson' => $lesson,
+            'allTimes' => $allAvailableTimes,
+            'startDate' => $startDate,
+            'businessHours' => $businessHours,
+            'holidays' => $holidays,
+            'billingRates' => $billingRates,
+        ]);
     }
 
     public function store(StoreScheduleApptRequest $request): JsonResponse
@@ -122,7 +132,8 @@ class StudentLessonController extends Controller
         $begin = Carbon::parse($request->get('start_date'));
         $endOfMonth = Carbon::parse($begin)->endOfMonth();
         $diffInDays = $begin->diffInDays($endOfMonth);
-        $duration = date('H:i:s', strtotime($request->get('start_time') . ' +' . $request->get('end_time') . ' minutes'));
+        $duration = $this->interval($request);
+
         $recurrence = $request->get('recurrence') == Lesson::RECURRENCE[0] ? 1 : $diffInDays;
         $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
         $student = Student::query()
@@ -175,80 +186,72 @@ class StudentLessonController extends Controller
         return response()->json([], Response::HTTP_CREATED);
     }
 
-    public function update(ScheduleUpdateRequest $request): ?RedirectResponse
+    /**
+     * @param ScheduleUpdateRequest $request
+     * @return JsonResponse
+     */
+    public function update(ScheduleUpdateRequest $request): JsonResponse
     {
-        if ($request->input('action') == 'update') {
+        try {
             $this->scheduleUpdate($request);
-            return redirect()->back()->with('success', 'You successfully updated the student\'s lesson.');
+            // TODO: email student / parent of lesson change
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
-        if ($request->input('action') == 'updateRemaining') {
-            $this->scheduleUpdateRemaining($request);
-            return redirect()->back()->with('success', 'You successfully updated all the student\'s lessons.');
-        }
-
-        return null;
+        return response()->json([], Response::HTTP_OK);
     }
 
     /**
-     * @throws Exception
+     * @param Lesson $id
+     * @return JsonResponse
      */
-    public function destroy(Request $request, Lesson $id)
+    public function destroy(Lesson $id): JsonResponse
     {
-        if ($request->input('action') == 'delete') {
+        try {
             $this->destroyOne($id);
-
-            return redirect(route('student.index'))->with('success', 'The scheduled lesson has been deleted.');
+            // TODO: email student / parent of lesson change
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
-        if ($request->input('action') == 'deleteRemaining') {
-            $this->destroyRemaining($id);
-
-            return redirect(route('student.index'))->with('success', 'All the remaining scheduled lessons have been deleted.');
-        }
-
-        if ($request->input('action') == 'deleteAll') {
-            $this->destroyAll($id);
-
-            return redirect(route('student.index'))->with('success', 'All the scheduled lessons have been deleted.');
-        }
-
-        return null;
+        return response()->json([], Response::HTTP_OK);
     }
 
     /**
-     * @param Request $request
+     * @param $request
      * @return string
-     * @deprecated
-     * @deprecated remove function not used
      */
-    private function interval(Request $request)
+    private function interval($request)
     {
-        $start_datetime = new Carbon($request->get('start_time'));
-        $end_datetime = new Carbon($request->get('end_time'));
-
-        return $start_datetime->diff($end_datetime)->format('%i');
+        if ($request->get('start_time') != null && $request->get('end_time') != null) {
+            return Carbon::parse($request->get('start_time'))
+                ->addMinutes($request->get('end_time'))
+                ->format('H:i:s');
+        } else {
+            return null;
+        }
     }
 
     private function scheduleUpdate(Request $request): void
     {
-        $duration = Carbon::parse($request->get('start_time'))
-            ->addMinutes($request->get('end_time'))
-            ->format('H:i:s');
+        $duration = $this->interval($request);
 
         $lesson = Lesson::query()
             ->where([
                 'id' => $request->get('id'),
-                'student_id' => $request->get('student_id'),
                 'teacher_id' => Auth::id(),
-            ])
-            ->first();
+            ])->first();
 
         $lesson->billing_rate_id = $request->get('billing_rate_id');
         $lesson->color = $request->get('color');
-        $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
-        $lesson->end_date = $request->get('start_date') . ' ' . $duration;
-        $lesson->interval = (int)$request->get('end_time');
+        if ($duration != null) {
+            $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
+            $lesson->end_date = $request->get('start_date') . ' ' . $duration;
+            $lesson->interval = (int)$request->get('end_time');
+        }
         $lesson->notes = $request->get('notes');
         $lesson->status = $request->get('status');
         $lesson->status_updated_at = now();

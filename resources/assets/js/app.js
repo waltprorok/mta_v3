@@ -69,6 +69,7 @@ Vue.component('holiday', require('./components/holiday/Holiday.vue').default);
 Vue.component('lessons', require('./components/Lessons.vue').default);
 Vue.component('lesson', require('./components/student/schedule/Lesson.vue').default);
 Vue.component('profile', require('./components/student/profile/Profile.vue').default);
+Vue.component('reschedule', require('./components/student/reschedule/Reschedule.vue').default);
 Vue.component('students', require('./components/admin/student/Students.vue').default);
 Vue.component('support', require('./components/admin/support/Support.vue').default);
 Vue.component('studentList', require('./components/student/list/StudentList.vue').default);
