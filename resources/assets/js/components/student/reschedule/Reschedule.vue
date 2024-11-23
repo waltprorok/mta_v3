@@ -313,8 +313,8 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error);
-                    self.getErrorMessage(error);
                     this.disableUpdateButton = false;
+                    self.getErrorMessage(error);
                     // this.$notify({
                     //     type: 'error',
                     //     title: 'Error',

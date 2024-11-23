@@ -222,9 +222,9 @@ class StudentLessonController extends Controller
 
     /**
      * @param $request
-     * @return string
+     * @return string|null
      */
-    private function interval($request)
+    private function interval($request): ?string
     {
         if ($request->get('start_time') != null && $request->get('end_time') != null) {
             return Carbon::parse($request->get('start_time'))
@@ -233,6 +233,16 @@ class StudentLessonController extends Controller
         } else {
             return null;
         }
+    }
+
+    private function hasStartTimeChanged($request): bool
+    {
+        return $request->get('start_time') != null;
+    }
+
+    private function hasEndTimeChanged($request): bool
+    {
+        return $request->get('end_time') != null;
     }
 
     private function scheduleUpdate(Request $request): void
@@ -247,11 +257,19 @@ class StudentLessonController extends Controller
 
         $lesson->billing_rate_id = $request->get('billing_rate_id');
         $lesson->color = $request->get('color');
-        if ($duration != null) {
+
+        if ($this->hasStartTimeChanged($request) && $this->hasEndTimeChanged($request)) {
             $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
             $lesson->end_date = $request->get('start_date') . ' ' . $duration;
             $lesson->interval = (int)$request->get('end_time');
         }
+
+        if ($this->hasStartTimeChanged($request) && ! $this->hasEndTimeChanged($request)) {
+            $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('interval'))->format('H:i:s');
+            $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
+            $lesson->end_date = $request->get('start_date') . ' ' . $duration;
+        }
+
         $lesson->notes = $request->get('notes');
         $lesson->status = $request->get('status');
         $lesson->status_updated_at = now();
