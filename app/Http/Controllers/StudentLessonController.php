@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Log;
 
 class StudentLessonController extends Controller
 {
-
     /**
      * @var StudentLessonService
      */
@@ -132,7 +131,7 @@ class StudentLessonController extends Controller
         $begin = Carbon::parse($request->get('start_date'));
         $endOfMonth = Carbon::parse($begin)->endOfMonth();
         $diffInDays = $begin->diffInDays($endOfMonth);
-        $duration = $this->interval($request);
+        $duration = $this->interval($request->get('start_date'), $request->get('end_time'));
 
         $recurrence = $request->get('recurrence') == Lesson::RECURRENCE[0] ? 1 : $diffInDays;
         $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
@@ -158,7 +157,7 @@ class StudentLessonController extends Controller
                 foreach ($holidays as $holiday) {
                     $holidayDates = CarbonPeriod::create($holiday->start_date, $holiday->end_date);
                     foreach ($holidayDates->toArray() as $date) {
-                        if (! is_null($date) && $date->toDateString() == $lesson->start_date->toDateString()) {
+                        if (! is_null($date) && $date->toDateString() == Carbon::parse($lesson->start_date)->format('Y-m-d')) {
                             $holiday['start_date'] = $i->format('Y-m-d');
                             $lessons[] = $holiday->toArray();
                             $skipOverSave = true;
@@ -221,18 +220,13 @@ class StudentLessonController extends Controller
     }
 
     /**
-     * @param $request
+     * @param $startTime
+     * @param $endTime
      * @return string|null
      */
-    private function interval($request): ?string
+    private function interval($startTime, $endTime): ?string
     {
-        if ($request->get('start_time') != null && $request->get('end_time') != null) {
-            return Carbon::parse($request->get('start_time'))
-                ->addMinutes($request->get('end_time'))
-                ->format('H:i:s');
-        } else {
-            return null;
-        }
+        return Carbon::parse($startTime)->addMinutes($endTime)->format('H:i:s');
     }
 
     private function hasStartTimeChanged($request): bool
@@ -247,8 +241,6 @@ class StudentLessonController extends Controller
 
     private function scheduleUpdate(Request $request): void
     {
-        $duration = $this->interval($request);
-
         $lesson = Lesson::query()
             ->where([
                 'id' => $request->get('id'),
@@ -259,13 +251,14 @@ class StudentLessonController extends Controller
         $lesson->color = $request->get('color');
 
         if ($this->hasStartTimeChanged($request) && $this->hasEndTimeChanged($request)) {
+            $duration = $this->interval($request->get('start_time'), $request->get('end_time'));
             $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
             $lesson->end_date = $request->get('start_date') . ' ' . $duration;
             $lesson->interval = (int)$request->get('end_time');
         }
 
         if ($this->hasStartTimeChanged($request) && ! $this->hasEndTimeChanged($request)) {
-            $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('interval'))->format('H:i:s');
+            $duration = $this->interval($request->get('start_time'), $request->get('interval'));
             $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
             $lesson->end_date = $request->get('start_date') . ' ' . $duration;
         }
