@@ -34,7 +34,8 @@ class ScheduleUpdateRequest extends FormRequest
             'start_date' => 'required|string',
             'start_time' => 'string|nullable',
             'end_time' => 'string|nullable',
-            'recurrence' => 'required|string'
+            'recurrence' => 'required|string',
+            'notes' => 'string|nullable',
         ];
     }
 
