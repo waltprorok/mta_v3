@@ -57,7 +57,7 @@ class InvoiceController extends Controller
 
     public function index(): JsonResponse
     {
-        $students = Invoice::with('student', 'teacher')
+        $students = Invoice::with('student:id,first_name,last_name,phone,email')
             ->where('teacher_id', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get();

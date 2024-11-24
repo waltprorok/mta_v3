@@ -22,6 +22,7 @@ export default {
                 {label: 'Email', field: 'student.email', sortable: false},
                 {label: 'Balance', field: 'balance_due',},
                 {label: 'Due Date', field: 'due_date',},
+                {label: 'Issued', field: 'created_at',},
                 {label: 'Action', filterable: false},
             ],
             classError: '',
