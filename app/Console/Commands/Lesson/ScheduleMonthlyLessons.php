@@ -104,7 +104,7 @@ class ScheduleMonthlyLessons extends Command
                                     $holidayDates = CarbonPeriod::create($holiday->start_date, $holiday->end_date);
 
                                     foreach ($holidayDates->toArray() as $date) {
-                                        if (! is_null($date) && $date->toDateString() == $lesson->start_date->toDateString()) {
+                                        if (! is_null($date) && $date->toDateString() == Carbon::parse($lesson->start_date)->format('Y-m-d')) {
                                             $holiday['start_date'] = $i->format('Y-m-d');
                                             $lessons[] = $holiday->toArray();
                                             $skipOverSave = true;
