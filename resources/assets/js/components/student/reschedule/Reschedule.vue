@@ -295,8 +295,16 @@ export default {
         updateLesson: function () {
             this.disableUpdateButton = true;
             let self = this;
+            if (self.lesson.end_time && self.lesson.start_time === undefined) {
+                this.disableUpdateButton = false;
+                return this.$notify({
+                    type: 'warn',
+                    title: 'Warning',
+                    text: 'Select start time.',
+                    duration: 10000,
+                });
+            }
             self.lesson.student_id = this.student.id;
-
             self.lesson.start_date = this.startDate;
             let params = Object.assign({}, self.lesson);
             axios.patch('/web/lesson/reschedule/update', params)
