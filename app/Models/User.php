@@ -177,6 +177,11 @@ class User extends Authenticatable
         return $this->hasMany(Student::class, 'student_id');
     }
 
+    public function teacherSetting(): HasOne
+    {
+        return $this->hasOne(TeacherSetting::class, 'teacher_id');
+    }
+
     public static function unreadMessagesCount(): int
     {
         return Auth::user()->messages->where('read', '==', false)->count();
