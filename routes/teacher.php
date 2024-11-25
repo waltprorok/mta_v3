@@ -16,7 +16,7 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::get('dashboard/completed-lessons', 'DashboardController@getCompletedLessonsData');
         Route::resource('instrument', 'InstrumentController');
         Route::get('invoice', 'InvoiceController@index');
-        Route::get('invoice-create', 'InvoiceController@createInvoice');
+        Route::get('invoice-create/{month?}', 'InvoiceController@createInvoice');
         Route::get('invoice/list-of-payments', 'InvoiceController@getListOfPayments');
         Route::post('invoice-post', 'InvoiceController@store');
         Route::put('invoice/update/{invoice}', 'InvoiceController@update');

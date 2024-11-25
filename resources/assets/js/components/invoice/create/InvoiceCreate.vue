@@ -218,7 +218,7 @@ export default {
         },
 
         fetchInvoiceData: function () {
-            axios.get('/web/invoice-create/')
+            axios.get('/web/invoice-create/' + this.month)
                 .then((response) => {
                     let self = this;
                     self.list = response.data;

@@ -89,17 +89,29 @@ class InvoiceController extends Controller
         return response()->json(['lessons' => $filteredLessons, 'studentTeacher' => $studentTeacher, 'lastInvoice' => $lastInvoice]);
     }
 
-    public function createInvoice()
+    public function createInvoice(string $month = null)
     {
-        $student = Student::query()
+        $month = Carbon::parse($month);
+        $start = $month->startOfMonth()->toDateTimeString();
+        $end = $month->endOfMonth()->toDateTimeString();
+
+        $students = Student::query()
             ->where('status', Student::ACTIVE)
             ->where('teacher_id', Auth::id())
-            ->with(['lessons:id,student_id,teacher_id,billing_rate_id,start_date,end_date,complete'])
-            ->has('lessons') // TODO: check month to month lessons
+            ->with(['lessons' => function ($query) use ($start, $end) {
+                $query->whereBetween('lessons.start_date', [$start, $end]);
+                $query->where('lessons.invoice_id', null);
+            }])
             ->orderBy('first_name')
             ->get();
 
-        return response()->json($student);
+        foreach ($students as $key => $student) {
+            if ($student->lessons->isEmpty()) {
+                $students->forget($key);
+            }
+        }
+
+        return response()->json($students);
     }
 
     public function show(int $id): View
