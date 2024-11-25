@@ -60,7 +60,7 @@ class LessonController extends Controller
                 'firstDay' => 0,
                 'editable' => false,
                 'selectable' => true,
-                'defaultView' => 'month', // 'month' for full calendar 'listWeek'
+                'defaultView' => Auth::user()->teacherSetting->calendar ?? 'month', // 'month' for full calendar 'listWeek', 'agendaWeek', 'agendaDay'
                 'minTime' => '08:00:00',
                 'maxTime' => '22:00:00',
                 'fixedWeekCount' => false,

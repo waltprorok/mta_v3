@@ -6,6 +6,7 @@ import {dateParse} from "@vuejs-community/vue-filter-date-parse";
 import {dateFormat} from "vue-filter-date-format";
 
 export default {
+    name: 'Profile',
     props: ['student'],
     data() {
         return {

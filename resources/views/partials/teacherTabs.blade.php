@@ -19,4 +19,8 @@
         <a class="nav-link {{ Route::currentRouteName() == 'teacher.holidays' ? 'active' : '' }}" id="holidays"
            href="{{ route('teacher.holidays') }}">Holidays</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{ Route::currentRouteName() == 'teacher.settings' ? 'active' : '' }}" id="settings"
+           href="{{ route('teacher.settings') }}">Settings</a>
+    </li>
 </ul>

@@ -64,9 +64,6 @@ class StudentController extends Controller
         return response()->json([], Response::HTTP_CREATED);
     }
 
-    /**
-     * Edit Student Record
-     */
     public function show(int $id): View
     {
         $student = Student::query()
@@ -192,9 +189,9 @@ class StudentController extends Controller
         }
     }
 
-    private function isStatusActive($request)
+    private function isStatusActive($request): bool
     {
-        return $request->get('status') == 1;
+        return Auth::user()->teacherSetting->auto_schedule_new_active_students && $request->get('status') == 1;
     }
 
     /**
