@@ -96,7 +96,6 @@ class InvoiceController extends Controller
         $end = $month->endOfMonth()->toDateTimeString();
 
         $students = Student::query()
-            ->where('status', Student::ACTIVE)
             ->where('teacher_id', Auth::id())
             ->with(['lessons' => function ($query) use ($start, $end) {
                 $query->whereBetween('lessons.start_date', [$start, $end]);
