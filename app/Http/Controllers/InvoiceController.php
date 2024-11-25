@@ -79,6 +79,7 @@ class InvoiceController extends Controller
             ->first();
 
         $selectedMonth = Carbon::parse($month);
+
         $filteredLessons = $student->lessons->filter(function ($lesson) use ($selectedMonth) {
             return is_null($lesson->invoice) && $lesson->start_date >= $selectedMonth->startOfMonth() && $lesson->end_date <= $selectedMonth->endOfMonth();
         })->values();
