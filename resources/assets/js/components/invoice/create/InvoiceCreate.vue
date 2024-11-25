@@ -6,24 +6,29 @@ import PhoneNumberFormat from "../../PhoneNumberFormat.vue";
 let today = new Date();
 const month = today.toLocaleString('default', { month: 'long' });
 
+function generatePastMonths() {
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    const result = [];
+    const today = new Date();
+
+    for (let i = 0; i < 12; i++) {
+        const date = new Date(today);
+        date.setMonth(today.getMonth() - i);
+        result.push(`${months[date.getMonth()]} ${date.getFullYear()}`);
+    }
+
+    return result;
+}
+
 export default {
     data() {
         return {
             month: month,
-            months: [
-                'January',
-                'February',
-                'March',
-                'April',
-                'May',
-                'June',
-                'July',
-                'August',
-                'September',
-                'October',
-                'November',
-                'December',
-            ],
+            months: generatePastMonths(),
             list: [],
             student: [],
             lessons: [],
@@ -213,7 +218,7 @@ export default {
         },
 
         fetchInvoiceData: function () {
-            axios.get('/web/invoice-create/')
+            axios.get('/web/invoice-create/' + this.month)
                 .then((response) => {
                     let self = this;
                     self.list = response.data;
