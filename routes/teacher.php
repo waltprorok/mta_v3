@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::post('student-save', 'StudentController@store');
         Route::get('status', 'ReportController@status');
         Route::get('payment-types', 'InvoiceController@getPaymentTypes');
+        Route::resource('teacher-settings', 'TeacherSettingsController');
         Route::get('student/lesson/{id}/{day?}', 'StudentLessonController@getStudent');
         Route::post('student/lessons', 'StudentLessonController@store');
         Route::get('lesson/reschedule/{id}/{day?}', 'StudentLessonController@getLessonReschedule');
@@ -58,6 +59,7 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::post('store', 'TeacherController@store')->name('save.studioSettings');
         Route::get('profile', 'TeacherController@profile')->name('teacher.profile');
         Route::view('rates', 'webapp.teacher.billing')->name('teacher.billing');
+        Route::view('settings', 'webapp.teacher.settings')->name('teacher.settings');
         Route::view('holidays', 'webapp.teacher.holiday')->name('teacher.holidays');
         Route::view('instruments', 'webapp.teacher.instrument')->name('teacher.instruments');
         Route::get('hours', 'BusinessHourController@index')->name('teacher.hours');

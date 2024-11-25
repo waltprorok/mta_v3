@@ -55,7 +55,7 @@ const router = new VueRouter({
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('billingRate', require('./components/teacher/BillingRate.vue').default);
+Vue.component('billingRate', require('./components/billing/BillingRate.vue').default);
 Vue.component('blogs', require('./components/admin/blog/Blogs.vue').default);
 Vue.component('createBlog', require('./components/admin/blog/Create.vue').default);
 Vue.component('editBlog', require('./components/admin/blog/Edit.vue').default);
@@ -70,6 +70,7 @@ Vue.component('lessons', require('./components/Lessons.vue').default);
 Vue.component('lesson', require('./components/student/schedule/Lesson.vue').default);
 Vue.component('profile', require('./components/student/profile/Profile.vue').default);
 Vue.component('reschedule', require('./components/student/reschedule/Reschedule.vue').default);
+Vue.component('settings', require('./components/settings/Settings.vue').default);
 Vue.component('students', require('./components/admin/student/Students.vue').default);
 Vue.component('support', require('./components/admin/support/Support.vue').default);
 Vue.component('studentList', require('./components/student/list/StudentList.vue').default);
@@ -78,7 +79,7 @@ Vue.component('users', require('./components/admin/user/Users.vue').default);
 Vue.component('reportCompletedLessonsLine', require('./components/reports/CompletedLessonsLine.vue').default);
 Vue.component('reportStudentStatusBar', require('./components/reports/StudentStatusBar.vue').default);
 Vue.component('messages', require('./components/messages/Index.vue').default);
-Vue.component('plans', require('./components/admin/billing/Plans.vue').default);
+Vue.component('plans', require('./components/admin/plan/Plans.vue').default);
 Vue.component('payments', require('./components/payments/Payments.vue').default);
 
 

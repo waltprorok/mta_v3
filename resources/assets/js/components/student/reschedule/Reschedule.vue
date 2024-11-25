@@ -10,6 +10,7 @@ const day = String(today.getDate()).padStart(2, '0');
 const startDateNow = `${year}-${month}-${day}`; // Output: "2024-11-13"
 
 export default {
+    name: 'Reschedule',
     data() {
         return {
             classError: '',

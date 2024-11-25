@@ -5,6 +5,7 @@ import TotalEntries from "../../TotalEntries";
 import PhoneNumberFormat from "../../PhoneNumberFormat";
 
 export default {
+    name: 'StudentList',
     data: function () {
         return {
             class_error: '',
