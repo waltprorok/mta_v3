@@ -131,8 +131,7 @@ class StudentLessonController extends Controller
         $begin = Carbon::parse($request->get('start_date'));
         $endOfMonth = Carbon::parse($begin)->endOfMonth();
         $diffInDays = $begin->diffInDays($endOfMonth);
-        $duration = $this->interval($request->get('start_date'), $request->get('end_time'));
-
+        $duration = $this->interval($request->get('start_time'), $request->get('end_time'));
         $recurrence = $request->get('recurrence') == Lesson::RECURRENCE[0] ? 1 : $diffInDays;
         $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
         $student = Student::query()
@@ -217,153 +216,6 @@ class StudentLessonController extends Controller
         }
 
         return response()->json([], Response::HTTP_OK);
-    }
-
-    /**
-     * @param $startTime
-     * @param $endTime
-     * @return string|null
-     */
-    private function interval($startTime, $endTime): ?string
-    {
-        return Carbon::parse($startTime)->addMinutes($endTime)->format('H:i:s');
-    }
-
-    private function hasStartTimeChanged($request): bool
-    {
-        return $request->get('start_time') != null;
-    }
-
-    private function hasEndTimeChanged($request): bool
-    {
-        return $request->get('end_time') != null;
-    }
-
-    private function scheduleUpdate(Request $request): void
-    {
-        $lesson = Lesson::query()
-            ->where([
-                'id' => $request->get('id'),
-                'teacher_id' => Auth::id(),
-            ])->first();
-
-        $lesson->billing_rate_id = $request->get('billing_rate_id');
-        $lesson->color = $request->get('color');
-
-        if ($this->hasStartTimeChanged($request) && $this->hasEndTimeChanged($request)) {
-            $duration = $this->interval($request->get('start_time'), $request->get('end_time'));
-            $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
-            $lesson->end_date = $request->get('start_date') . ' ' . $duration;
-            $lesson->interval = (int)$request->get('end_time');
-        }
-
-        if ($this->hasStartTimeChanged($request) && ! $this->hasEndTimeChanged($request)) {
-            $duration = $this->interval($request->get('start_time'), $request->get('interval'));
-            $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
-            $lesson->end_date = $request->get('start_date') . ' ' . $duration;
-        }
-
-        $lesson->notes = $request->get('notes');
-        $lesson->status = $request->get('status');
-        $lesson->status_updated_at = now();
-
-        $lesson->update();
-
-        if (
-            ($this->hasStartTimeChanged($request) && $this->hasEndTimeChanged($request))
-            || ($this->hasStartTimeChanged($request) && ! $this->hasEndTimeChanged($request))
-        ) {
-            // email student and parents
-            $lessons = collect();
-            $lessons[] = $lesson;
-            $student = Student::query()->with('getTeacher')->with('parent')->findOrFail($lesson->student->id); // needed for email
-            $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
-        }
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function scheduleUpdateRemaining(Request $request): void
-    {
-        $getLesson = Lesson::where('id', $request->get('id'))->get();
-        $lessonDate = Carbon::parse($request->get('start_date'));
-        $endOfMonth = Carbon::parse($lessonDate)->endOfMonth();
-        $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
-
-        // keep to email parents and students
-        // $student = Student::query()->with('getTeacher')->with('parent')->findOrFail($request->get('student_id')); // needed for email
-
-        $lessonsToBeUpdated = Lesson::query()
-            ->where('student_id', $request->get('student_id'))
-            ->where('teacher_id', Auth::id())
-            ->whereBetween('start_date', [$lessonDate, $endOfMonth])
-            ->withTrashed()
-            ->get();
-
-        $updateTheseLessons = $getLesson->merge($lessonsToBeUpdated);
-
-        $modifyDate = Carbon::parse($request->get('start_date'));
-
-        foreach ($updateTheseLessons as $lesson) {
-            $lesson->billing_rate_id = $request->get('billing_rate_id');
-            $lesson->color = $request->get('color');
-            $lesson->start_date = $modifyDate->format('Y-m-d') . ' ' . $request->get('start_time');
-            $lesson->end_date = $modifyDate->format('Y-m-d') . ' ' . $duration;
-            $lesson->interval = (int)$request->get('end_time');
-
-            $modifyDate = $modifyDate->modify('+7 day');
-
-            if ($lesson->deleted_at != null) {
-                $lesson->restore();
-            }
-
-            if ($lesson->end_date > $endOfMonth) {
-                $lesson->delete();
-            } else {
-                $lesson->update();
-            }
-        }
-    }
-
-    /**
-     * @param Lesson $lesson
-     * @return void
-     * @throws Exception
-     */
-    private function destroyOne(Lesson $lesson): void
-    {
-        $this->studentLessonService->deleteUnPaidCreatedInvoices($lesson);
-        $lesson->delete();
-    }
-
-    /**
-     * @param Lesson $lesson
-     * @return void
-     * @throws Exception
-     */
-    private function destroyAll(Lesson $lesson): void
-    {
-        $this->studentLessonService->deleteUnPaidCreatedInvoices($lesson);
-
-        Lesson::query()
-            ->where(['student_id' => $lesson->student_id, 'teacher_id' => Auth::id()])
-            ->delete();
-    }
-
-    /**
-     * @param $lesson
-     * @return void
-     * @throws Exception
-     */
-    private function destroyRemaining($lesson): void
-    {
-        $this->studentLessonService->deleteUnPaidCreatedInvoices($lesson);
-
-        Lesson::query()->where('student_id', $lesson->student_id)
-            ->where('teacher_id', Auth::id())
-            ->whereDate('start_date', '>=', $lesson->start_date)
-            ->delete();
     }
 
     /**
@@ -511,5 +363,154 @@ class StudentLessonController extends Controller
         }
 
         return array($studentScheduled, $allTimes);
+    }
+
+    private function hasStartTimeChanged($request): bool
+    {
+        return $request->get('start_time') != null;
+    }
+
+    private function hasEndTimeChanged($request): bool
+    {
+        return $request->get('end_time') != null;
+    }
+
+    /**
+     * @param $startTime
+     * @param $endTime
+     * @return string|null
+     */
+    private function interval($startTime, $endTime): ?string
+    {
+        return Carbon::parse($startTime)->addMinutes($endTime)->format('H:i:s');
+    }
+
+    private function scheduleUpdate(Request $request): void
+    {
+        $lesson = Lesson::query()
+            ->where([
+                'id' => $request->get('id'),
+                'teacher_id' => Auth::id(),
+            ])->first();
+
+        $lesson->billing_rate_id = $request->get('billing_rate_id');
+        $lesson->color = $request->get('color');
+
+        if ($this->hasStartTimeChanged($request) && $this->hasEndTimeChanged($request)) {
+            $duration = $this->interval($request->get('start_time'), $request->get('end_time'));
+            $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
+            $lesson->end_date = $request->get('start_date') . ' ' . $duration;
+            $lesson->interval = (int)$request->get('end_time');
+        }
+
+        if ($this->hasStartTimeChanged($request) && ! $this->hasEndTimeChanged($request)) {
+            $duration = $this->interval($request->get('start_time'), $request->get('interval'));
+            $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
+            $lesson->end_date = $request->get('start_date') . ' ' . $duration;
+        }
+
+        $lesson->notes = $request->get('notes');
+        $lesson->status = $request->get('status');
+        $lesson->status_updated_at = now();
+
+        $lesson->update();
+
+        if (
+            ($this->hasStartTimeChanged($request) && $this->hasEndTimeChanged($request))
+            || ($this->hasStartTimeChanged($request) && ! $this->hasEndTimeChanged($request))
+            || ($request->get('status') === Lesson::STATUS[1])
+            || ($request->get('status') === Lesson::STATUS[2]) // TODO: pass status to email
+        ) {
+            // email student and parents
+            $lessons = collect();
+            $lessons[] = $lesson;
+            $student = Student::query()->with('getTeacher')->with('parent')->findOrFail($lesson->student->id); // needed for email
+            $this->studentLessonService->emailLessonsToStudentParent($student, $lessons, $request->get('status'));
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function scheduleUpdateRemaining(Request $request): void
+    {
+        $getLesson = Lesson::where('id', $request->get('id'))->get();
+        $lessonDate = Carbon::parse($request->get('start_date'));
+        $endOfMonth = Carbon::parse($lessonDate)->endOfMonth();
+        $duration = Carbon::parse($request->get('start_time'))->addMinutes($request->get('end_time'))->format('H:i:s');
+
+        // keep to email parents and students
+        // $student = Student::query()->with('getTeacher')->with('parent')->findOrFail($request->get('student_id')); // needed for email
+
+        $lessonsToBeUpdated = Lesson::query()
+            ->where('student_id', $request->get('student_id'))
+            ->where('teacher_id', Auth::id())
+            ->whereBetween('start_date', [$lessonDate, $endOfMonth])
+            ->withTrashed()
+            ->get();
+
+        $updateTheseLessons = $getLesson->merge($lessonsToBeUpdated);
+
+        $modifyDate = Carbon::parse($request->get('start_date'));
+
+        foreach ($updateTheseLessons as $lesson) {
+            $lesson->billing_rate_id = $request->get('billing_rate_id');
+            $lesson->color = $request->get('color');
+            $lesson->start_date = $modifyDate->format('Y-m-d') . ' ' . $request->get('start_time');
+            $lesson->end_date = $modifyDate->format('Y-m-d') . ' ' . $duration;
+            $lesson->interval = (int)$request->get('end_time');
+
+            $modifyDate = $modifyDate->modify('+7 day');
+
+            if ($lesson->deleted_at != null) {
+                $lesson->restore();
+            }
+
+            if ($lesson->end_date > $endOfMonth) {
+                $lesson->delete();
+            } else {
+                $lesson->update();
+            }
+        }
+    }
+
+    /**
+     * @param Lesson $lesson
+     * @return void
+     * @throws Exception
+     */
+    private function destroyOne(Lesson $lesson): void
+    {
+        $this->studentLessonService->deleteUnPaidCreatedInvoices($lesson);
+        $lesson->delete();
+    }
+
+    /**
+     * @param Lesson $lesson
+     * @return void
+     * @throws Exception
+     */
+    private function destroyAll(Lesson $lesson): void
+    {
+        $this->studentLessonService->deleteUnPaidCreatedInvoices($lesson);
+
+        Lesson::query()
+            ->where(['student_id' => $lesson->student_id, 'teacher_id' => Auth::id()])
+            ->delete();
+    }
+
+    /**
+     * @param $lesson
+     * @return void
+     * @throws Exception
+     */
+    private function destroyRemaining($lesson): void
+    {
+        $this->studentLessonService->deleteUnPaidCreatedInvoices($lesson);
+
+        Lesson::query()->where('student_id', $lesson->student_id)
+            ->where('teacher_id', Auth::id())
+            ->whereDate('start_date', '>=', $lesson->start_date)
+            ->delete();
     }
 }
