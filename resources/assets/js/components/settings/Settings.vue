@@ -1,10 +1,10 @@
 <template>
     <div class="card">
+        <div class="card-header bg-light">Application Settings</div>
         <div class="card-body">
             <form class="form-horizontal" action="#">
-                <h5>Application Settings</h5>
                 <div class="row">
-                    <div class="col-md-3 pt-4">
+                    <div class="col-md-3 pt-2">
                         <p>Calendar</p>
                         <div class="form-group">
                             <label for="calendar-display">Default Calendar Display</label>
@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 pt-2">
                         <p>Scheduling</p>
                         <div class="card">
                             <div class="card-header">
