@@ -65,18 +65,20 @@
 <div class="margin-top">
     <table class="products">
         <tr>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Quantity</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Interval</th>
             <th>Billing Rate</th>
         </tr>
         @foreach($invoice['lessons'] as $item)
             <tr class="items">
+                <td>{{ $item->status }}</td>
                 <td>
-                    {{ Carbon\Carbon::parse($item->start_date)->format('Y-m-d g:i a') }}
+                    {{ Carbon\Carbon::parse($item->start_date)->format('D, d M Y') }}
                 </td>
                 <td>
-                    {{ Carbon\Carbon::parse($item->end_date)->format('Y-m-d g:i a') }}
+                    {{ Carbon\Carbon::parse($item->start_date)->format('g:i a') }} - {{ Carbon\Carbon::parse($item->end_date)->format('g:i a') }}
                 </td>
                 <td>
                     {{ $item->interval }} minutes
