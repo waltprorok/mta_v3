@@ -22,39 +22,6 @@ use Illuminate\View\View;
 
 class InvoiceController extends Controller
 {
-    public function downloadPDF(Invoice $id)
-    {
-        $invoice = $this->getInvoiceStudentTeacherBillingRate($id);
-
-        if (is_null($invoice)) {
-            return null;
-        }
-
-        $pdf = app(PDF::class);
-        $pdf->setPaper('A4');
-        $pdfFileExists = Storage::disk('invoice')->exists('Invoice_MTA_' . $invoice->id . '.pdf');
-        $pdfFile = $pdf->loadView('webapp.invoice.pdf_view', ['invoice' => $invoice]);
-
-        if (! $pdfFileExists) {
-            Storage::disk('invoice')->put('Invoice_MTA_' . $invoice->id . '.pdf', $pdfFile->output());
-        }
-
-        return $pdfFile->download('Invoice_MTA_' . $invoice->id . '.pdf');
-    }
-
-    public function storePDF(Invoice $id)
-    {
-        $invoice = $this->getInvoiceStudentTeacherBillingRate($id);
-
-        $pdf = app(PDF::class);
-        $pdf->setPaper('A4');
-        $pdf->loadView('webapp.invoice.pdf_view', ['invoice' => $invoice]);
-
-        Storage::disk('invoice')->put('Invoice_MTA_' . $invoice->id . '.pdf', $pdf->output());
-
-        return $invoice;
-    }
-
     public function index(): JsonResponse
     {
         $students = Invoice::with('student:id,first_name,last_name,phone,email')
@@ -251,6 +218,39 @@ class InvoiceController extends Controller
         }
 
         return response()->json();
+    }
+
+    public function downloadPDF(Invoice $id)
+    {
+        $invoice = $this->getInvoiceStudentTeacherBillingRate($id);
+
+        if (is_null($invoice)) {
+            return null;
+        }
+
+        $pdf = app(PDF::class);
+        $pdf->setPaper('A4');
+        $pdfFileExists = Storage::disk('invoice')->exists('Invoice_MTA_' . $invoice->id . '.pdf');
+        $pdfFile = $pdf->loadView('webapp.invoice.pdf_view', ['invoice' => $invoice]);
+
+        if (! $pdfFileExists) {
+            Storage::disk('invoice')->put('Invoice_MTA_' . $invoice->id . '.pdf', $pdfFile->output());
+        }
+
+        return $pdfFile->download('Invoice_MTA_' . $invoice->id . '.pdf');
+    }
+
+    public function storePDF(Invoice $id)
+    {
+        $invoice = $this->getInvoiceStudentTeacherBillingRate($id);
+
+        $pdf = app(PDF::class);
+        $pdf->setPaper('A4');
+        $pdf->loadView('webapp.invoice.pdf_view', ['invoice' => $invoice]);
+
+        Storage::disk('invoice')->put('Invoice_MTA_' . $invoice->id . '.pdf', $pdf->output());
+
+        return $invoice;
     }
 
     private function getInvoiceStudentTeacherBillingRate(Invoice $invoice)

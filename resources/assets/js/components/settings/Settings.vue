@@ -2,26 +2,37 @@
     <div class="card">
         <div class="card-body">
             <form class="form-horizontal" action="#">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="calendar-display">Default Calendar Display</label>
-                    <select id="calendar-display" class="form-control" v-model="settings.calendar" v-on:keydown.enter.prevent
-                    @change="updatedSetting(settings.id)">
-                        <option v-for="setting in calendar" :key="setting.id" :value="setting.value">
-                            {{ setting.name }}
-                        </option>
-                    </select>
+                <h5>Application Settings</h5>
+                <div class="row">
+                    <div class="col-md-3 pt-4">
+                        <p>Calendar</p>
+                        <div class="form-group">
+                            <label for="calendar-display">Default Calendar Display</label>
+                            <select id="calendar-display" class="form-control" v-model="settings.calendar" v-on:keydown.enter.prevent
+                                    @change="updatedSetting(settings.id)">
+                                <option v-for="setting in calendar" :key="setting.id" :value="setting.value">
+                                    {{ setting.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-md-3">
-                <div class="toggle-switch" data-ts-color="primary">
-                    <label for="ts2" class="ts-label">Auto Schedule New Active Students</label>
-                    <input id="ts2" type="checkbox" hidden="hidden" v-model="settings.auto_schedule_new_active_students"
-                    @change="updatedSetting(settings.id)">
-                    <label for="ts2" class="ts-helper"></label>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>Scheduling</p>
+                        <div class="card">
+                            <div class="card-header">
+                                Auto Schedule On For New Active Students
+                                <div class="toggle-switch pull-right" data-ts-color="primary">
+                                    <input id="auto_schedule_new_active_students" type="checkbox" hidden="hidden" v-model="settings.auto_schedule_new_active_students"
+                                           @change="updatedSetting(settings.id)">
+                                    <label for="auto_schedule_new_active_students" class="ts-helper"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
             </form>
         </div>
         <notifications position="bottom right"/>
@@ -40,7 +51,6 @@ export default {
                 'auto_schedule_new_active_students': false,
             },
             calendar: [
-                // 'month', 'listWeek', 'agendaWeek', 'agendaDay']
                 {value: 'month', name: 'Month'},
                 {value: 'listWeek', name: 'List Week'},
                 {value: 'agendaWeek', name: 'Agenda Week'},
@@ -96,7 +106,7 @@ export default {
                     this.$notify({
                         type: 'success',
                         title: 'Success',
-                        text: 'Settings created.',
+                        text: 'Saved setting.',
                         duration: 10000,
                     });
                 })
@@ -120,7 +130,7 @@ export default {
                     this.$notify({
                         type: 'success',
                         title: 'Success',
-                        text: 'Updated teacher settings.',
+                        text: 'Updated setting.',
                         duration: 10000,
                     });
                 })

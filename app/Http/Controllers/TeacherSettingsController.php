@@ -28,13 +28,11 @@ class TeacherSettingsController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        
         try {
             TeacherSetting::query()->create([
                 'teacher_id' => Auth::id(),
                 'calendar' => $request->get('calendar') ?? 'Month',
                 'auto_schedule_new_active_students' => $request->get('auto_schedule_new_active_students') ?? false,
-
             ]);
 
         } catch (Exception $exception) {
