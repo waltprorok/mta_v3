@@ -14,12 +14,12 @@ class TeacherSetting extends Model
 {
     protected $fillable = [
         'teacher_id',
+        'calendar',
         'auto_schedule_new_active_students',
-        'calendar'
     ];
 
     protected $casts = [
-        'auto_schedule_new_active_students' => 'boolean'
+        'auto_schedule_new_active_students' => 'boolean',
     ];
 
     /**
