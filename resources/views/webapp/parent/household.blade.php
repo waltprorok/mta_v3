@@ -18,7 +18,6 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-
                                 @if($student->photo !== null)
                                     <img src="/storage/student/{{ $student->photo }}" alt="{{ $student->photo }}"
                                          class="rounded-circle" width="120">
@@ -36,14 +35,6 @@
                                     @if($student->instrument)
                                         <p class="mb-1">{{ $student->instrument }}</p>
                                     @endif
-                                    {{-- TODO: fix reply to teacher link in controller --}}
-{{--                                    @if($teacher != null)--}}
-{{--                                        <a href="{{ route('message.reply', ['id' => $teacher->teacher_id, 'subject' => $student->first_name . ' ' . $student->last_name, 'new' => true]) }}"--}}
-{{--                                           class="btn btn-sm btn-outline-primary">Message Teacher</a>--}}
-{{--                                    @endif--}}
-
-                                    {{--<button class="btn btn-primary">Follow</button>--}}
-                                    {{--<button class="btn btn-outline-primary">Message</button>--}}
                                 </div>
                             </div>
                         </div>
@@ -78,17 +69,17 @@
                                     {{ $student->phone_number }}
                                 </div>
                             </div>
-{{--                            <hr>--}}
-{{--                            <div class="row">--}}
-{{--                                <div class="col-sm-3">--}}
-{{--                                    <h6 class="mb-0">Birthday</h6>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-sm-9">--}}
-{{--                                    @if($student->date_of_birth != null)--}}
-{{--                                        {{ date('F d, Y', strtotime($student->date_of_birth)) }}--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Birthday</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    @if($student->date_of_birth != null)
+                                        {{ date('F d, Y', strtotime($student->date_of_birth)) }}
+                                    @endif
+                                </div>
+                            </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">

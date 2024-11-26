@@ -266,7 +266,19 @@ class StudentLessonController extends Controller
         $lesson->notes = $request->get('notes');
         $lesson->status = $request->get('status');
         $lesson->status_updated_at = now();
+
         $lesson->update();
+
+        if (
+            ($this->hasStartTimeChanged($request) && $this->hasEndTimeChanged($request))
+            || ($this->hasStartTimeChanged($request) && ! $this->hasEndTimeChanged($request))
+        ) {
+            // email student and parents
+            $lessons = collect();
+            $lessons[] = $lesson;
+            $student = Student::query()->with('getTeacher')->with('parent')->findOrFail($lesson->student->id); // needed for email
+            $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
+        }
     }
 
     /**
