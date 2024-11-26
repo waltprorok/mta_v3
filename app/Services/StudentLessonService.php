@@ -8,6 +8,7 @@ use App\Models\Lesson;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class StudentLessonService
@@ -34,27 +35,32 @@ class StudentLessonService
     /**
      * @param $student
      * @param Collection $lessons
+     * @param null $status
      * @return void
      */
-    public function emailLessonsToStudentParent($student, Collection $lessons): void
+    public function emailLessonsToStudentParent($student, Collection $lessons, $status = null): void
     {
-        // student has an email and parent has an email
-        if ($student->email && $student->parent) {
-            if ($student->parent->email) {
-                Mail::to($student->email)->cc($student->parent->email)->queue(new LessonsScheduled($student, $lessons));
+        try {
+            // student has an email and parent has an email
+            if ($student->email && $student->parent) {
+                if ($student->parent->email) {
+                    Mail::to($student->email)->cc($student->parent->email)->queue(new LessonsScheduled($student, $lessons, $status));
+                }
             }
-        }
 
-        // student does NOT have an email and parent has an email
-        if ($student->email == null && $student->parent) {
-            if ($student->parent->email) {
-                Mail::to($student->parent->email)->queue(new LessonsScheduled($student, $lessons));
+            // student does NOT have an email and parent has an email
+            if ($student->email == null && $student->parent) {
+                if ($student->parent->email) {
+                    Mail::to($student->parent->email)->queue(new LessonsScheduled($student, $lessons, $status));
+                }
             }
-        }
 
-        // student has an email and parent does not have an email
-        if ($student->email && $student->parent == null) {
-            Mail::to($student->email)->queue(new LessonsScheduled($student, $lessons));
+            // student has an email and parent does not have an email
+            if ($student->email && $student->parent == null) {
+                Mail::to($student->email)->queue(new LessonsScheduled($student, $lessons, $status));
+            }
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
         }
     }
 }

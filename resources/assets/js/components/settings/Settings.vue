@@ -23,7 +23,7 @@
                         <p>Scheduling</p>
                         <div class="card">
                             <div class="card-header">
-                                Auto Schedule On For New Active Students
+                                Auto Schedule On For New (Active) Students
                                 <div class="toggle-switch pull-right" data-ts-color="primary">
                                     <input id="auto_schedule_new_active_students" type="checkbox" hidden="hidden" v-model="settings.auto_schedule_new_active_students"
                                            @change="updatedSetting(settings.id)">
