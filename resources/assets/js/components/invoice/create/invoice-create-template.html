@@ -62,9 +62,10 @@
                             <thead>
                             <tr>
                                 <th class="border-0 text-uppercase small font-weight-bold">Completed</th>
-                                <th class="border-0 text-uppercase small font-weight-bold">Start Date</th>
-                                <th class="border-0 text-uppercase small font-weight-bold">End Date</th>
-                                <th class="border-0 text-uppercase small font-weight-bold">Quantity</th>
+                                <th class="border-0 text-uppercase small font-weight-bold">Status</th>
+                                <th class="border-0 text-uppercase small font-weight-bold">Date</th>
+                                <th class="border-0 text-uppercase small font-weight-bold">Time</th>
+                                <th class="border-0 text-uppercase small font-weight-bold">Interval</th>
                                 <th class="border-0 text-uppercase small font-weight-bold">Billing Rate</th>
                                 <th class="border-0 text-uppercase small font-weight-bold">Amount</th>
                             </tr>
@@ -81,8 +82,9 @@
                                         </option>
                                     </select>
                                 </td>
-                                <td>{{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
-                                <td>{{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
+                                <td>{{ lesson.status }}</td>
+                                <td>{{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY') }}</td>
+                                <td>{{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }} - {{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }}</td>
                                 <td>{{ lesson.interval }} minutes</td>
                                 <td>{{ '$' + lesson.billing_rate.amount }} {{ lesson.billing_rate.description ? '| ' + lesson.billing_rate.description : '' }}</td>
                                 <td>{{ calculateLessonAmount(lesson) | toCurrency }}</td>

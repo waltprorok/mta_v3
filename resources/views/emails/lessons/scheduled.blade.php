@@ -4,14 +4,14 @@
 
 Greetings {{ $student->first_name }},
 
-Your music teacher {{ $teacher->first_name }} {{ $teacher->last_name }} has <strong>{{ is_null($status) ? 'Scheduled' : $status  }}</strong> your {{ $student->instrument }} lessons for the following day(s).
+Your music teacher {{ $teacher->first_name }} {{ $teacher->last_name }} has <strong>{{ is_null($status) ? 'Scheduled' : $status }}</strong> your {{ $student->instrument }} lessons for the following day(s).
 
 <ul>
 @foreach($lessons as $lesson)
     @if (isset($lesson['all_day']) && $lesson['all_day'] == true)
-    <li>Closed - {{ date('l M d, Y', strtotime($lesson['start_date'])) }} | {{ $lesson['title'] }}</li>
+    <li>Closed - {{ date('D M d, Y', strtotime($lesson['start_date'])) }} | {{ $lesson['title'] }}</li>
     @else
-    <li> {{ date('l M d, Y | g:ia', strtotime($lesson->start_date)) }} - {{ date('g:ia', strtotime($lesson->end_date)) }}</li>
+    <li> {{ date('D M d, Y | g:ia', strtotime($lesson->start_date)) }} - {{ date('g:ia', strtotime($lesson->end_date)) }}</li>
     @endif
 @endforeach
 </ul>
