@@ -75,11 +75,11 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th class="border-0 text-uppercase small font-weight-bold">Complete</th>
-                                <th class="border-0 text-uppercase small font-weight-bold">Title</th>
-                                <th class="border-0 text-uppercase small font-weight-bold">Start Date</th>
-                                <th class="border-0 text-uppercase small font-weight-bold">End Date</th>
-                                <th class="border-0 text-uppercase small font-weight-bold">Quantity</th>
+                                <th class="border-0 text-uppercase small font-weight-bold">Status</th>
+                                <th class="border-0 text-uppercase small font-weight-bold">Name</th>
+                                <th class="border-0 text-uppercase small font-weight-bold">Date</th>
+                                <th class="border-0 text-uppercase small font-weight-bold">Time</th>
+                                <th class="border-0 text-uppercase small font-weight-bold">Interval</th>
                                 <th class="border-0 text-uppercase small font-weight-bold">Billing Rate</th>
                                 <th class="border-0 text-uppercase small font-weight-bold">Amount</th>
                             </tr>
@@ -87,14 +87,15 @@
                             <tbody>
                             @foreach($lessons as $lesson)
                                 <tr>
-                                    <td>@if($lesson->complete)
-                                            <i class="fa fa-check ml-4" aria-hidden="true"></i>
-                                        @else
-                                            <i class="fa fa-times ml-4" aria-hidden="true"></i>
-                                        @endif</td>
+                                    <td>{{ $lesson->status }}</td>
+{{--                                    <td>@if($lesson->complete)--}}
+{{--                                            <i class="fa fa-check ml-4" aria-hidden="true"></i>--}}
+{{--                                        @else--}}
+{{--                                            <i class="fa fa-times ml-4" aria-hidden="true"></i>--}}
+{{--                                        @endif</td>--}}
                                     <td>{{ $lesson->title }}</td>
-                                    <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('m-d-Y g:i a') }}</td>
-                                    <td>{{ Carbon\Carbon::parse($lesson->end_date)->format('m-d-Y g:i a') }}</td>
+                                    <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('D, d M Y') }}</td>
+                                    <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('g:i a') }} - {{ Carbon\Carbon::parse($lesson->end_date)->format('g:i a') }}</td>
                                     <td>{{ $lesson->interval }} minutes</td>
                                     <td>{{ ucfirst($lesson->billingRate->type) }}</td>
                                     <td>${{ number_format($lesson->billingRate->amount, 2) }}</td>
