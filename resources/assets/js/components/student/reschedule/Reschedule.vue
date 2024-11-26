@@ -51,6 +51,7 @@ export default {
                 start_time: '',
                 recurrence: null,
                 end_time: null,
+                status: null,
             },
             modelConfig: {
                 type: 'string',
@@ -192,6 +193,7 @@ export default {
         },
 
         checkDurationTimes: function (event) {
+            this.lesson.status = 'Re-Scheduled';
             const allTimesArray = [];
             for (const key in this.allTimes) {
                 allTimesArray.push(this.allTimes[key]);
@@ -213,7 +215,6 @@ export default {
             self.error_status = '';
             self.error_start_time = '';
         },
-
 
         getData: function () {
             let parameters = this.$route.fullPath;

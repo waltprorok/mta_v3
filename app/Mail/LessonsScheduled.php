@@ -11,6 +11,7 @@ class LessonsScheduled extends Mailable
     use Queueable, SerializesModels;
 
     public $student;
+    public $status;
     public $teacher;
     public $lessons;
 
@@ -19,9 +20,10 @@ class LessonsScheduled extends Mailable
      *
      * @return void
      */
-    public function __construct($student, $lessons)
+    public function __construct($student, $lessons, $status = null)
     {
         $this->student = $student;
+        $this->status = $status;
         $this->teacher = $student->getTeacher;
         $this->lessons = $lessons;
     }

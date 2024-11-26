@@ -137,7 +137,7 @@
                 <div class="col-sm-3">
                     <div class="form-group" :class="error_status && classError">
                         <label for="status" class="control-label">Status</label>
-                        <select class="form-control" id="recurrence" v-model="lesson.status" v-on:keydown.enter.prevent>
+                        <select class="form-control" id="status" v-model="lesson.status" v-on:keydown.enter.prevent>
                             <option v-for="status in statuses" :value="status.value" :key="status.id">
                                 {{ status.name }}
                             </option>
