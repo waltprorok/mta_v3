@@ -17,7 +17,8 @@ class ScheduleMonthlyLessons extends Command
      *
      * @var string
      */
-    protected $signature = 'lessons:schedule-monthly';
+    protected $signature = 'lessons:schedule-monthly 
+                            {--month : Input prompt which month of lessons to auto schedule}';
 
     /**
      * The console command description.
@@ -48,28 +49,46 @@ class ScheduleMonthlyLessons extends Command
      */
     public function handle()
     {
-        $start = now()->startOfMonth()->toDateTimeString();
-        $end = now()->endOfMonth()->toDateTimeString();
+        $hasMonth = $this->option('month');
+
+        if ($hasMonth) {
+            $monthName = $this->anticipate('Which month of lesson to schedule?', [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December',
+            ]);
+        }
+
+        $lessonsStart = $hasMonth ? Carbon::parse($monthName)->startOfMonth()->toDateTimeString() : now()->startOfMonth()->toDateTimeString();
+        $lessonsEnd = $hasMonth ? Carbon::parse($monthName)->endOfMonth()->toDateTimeString() : now()->endOfMonth()->toDateTimeString();
+
+        $holidaysStart = $hasMonth ? Carbon::parse($monthName)->addMonth()->startOfMonth()->toDateTimeString() : now()->addMonth()->startOfMonth()->toDateTimeString();
+        $holidaysEnd = $hasMonth ? Carbon::parse($monthName)->addMonth()->endOfMonth()->toDateTimeString() : now()->addMonth()->endOfMonth()->toDateTimeString();
 
         Student::query()
             ->where('status', Student::ACTIVE)
             ->where('auto_schedule', true)
-            ->with(['lessons' => function ($query) use ($start, $end) {
-                $query->whereBetween('start_date', [$start, $end]);
+            ->with(['lessons' => function ($query) use ($lessonsStart, $lessonsEnd) {
+                $query->whereBetween('start_date', [$lessonsStart, $lessonsEnd]);
                 $query->where('status', 'Scheduled');
                 $query->where('recurrence', 'Monthly');
             }])
-            ->with(['getTeacher.holidays' => function ($query) {
+            ->with(['getTeacher.holidays' => function ($query) use ($holidaysStart, $holidaysEnd) {
                 $query->where('all_day', true);
-                $query->whereBetween('start_date', [
-                        now()->addMonth()->startOfMonth()->toDateString(),
-                        now()->addMonth()->endOfMonth()->toDateString()
-                    ]
-                );
+                $query->whereBetween('start_date', [$holidaysStart, $holidaysEnd]);
             }])
             ->with('parent:email')
-            ->chunk(50, function ($students) use ($start, $end) {
-                $endWeekNumberInMonth = Carbon::parse($end)->weekNumberInMonth;
+            ->chunk(50, function ($students) use ($lessonsEnd) {
+                $endWeekNumberInMonth = Carbon::parse($lessonsEnd)->weekNumberInMonth;
                 foreach ($students as $student) {
                     if ($student->lessons->isNotEmpty()) {
                         $startDateFirst = Carbon::parse($student->lessons->first()->start_date);
