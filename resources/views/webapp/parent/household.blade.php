@@ -5,18 +5,18 @@
 
     <div class="col-12">
         @if (Auth::user()->isTeacher())
-        <h4>Household</h4>
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">Household</li>
-        </ul>
+            <h4>Household</h4>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Household</li>
+            </ul>
         @endif
 
         <div class="row gutters-sm">
-            <div class="col-md-4 mb-3">
-                @forelse($parent->parentOfStudents as $student)
+            @forelse($parent->parentOfStudents as $student)
+                <div class="col-md-4 mb-3">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-header bg-light">
                             <div class="d-flex flex-column align-items-center text-center">
                                 @if($student->photo !== null)
                                     <img src="/storage/student/{{ $student->photo }}" alt="{{ $student->photo }}"
@@ -27,81 +27,75 @@
                                 @endif
                                 <div class="mt-3">
                                     <h5>{{ $student->full_name }}</h5>
-                                    @if($student->status)
-                                        @if($student->status == Student::ACTIVE) <p class="mb-1">Active</p>@endif
-                                        @if($student->status == Student::WAITLIST) <p class="mb-1">Waitlist</p>@endif
-                                        @if($student->status == Student::INACTIVE) <p class="mb-1">Inactive</p>@endif
-                                    @endif
-                                    @if($student->instrument)
-                                        <p class="mb-1">{{ $student->instrument }}</p>
-                                    @endif
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @empty
-                    <div class="card text-center">
                         <div class="card-body">
-                            <p>There are no students in your household.</p>
-                        </div>
-                    </div>
-                @endforelse
-            </div>
+                            <div class="row p-1">
+                                <div class="col-sm-12">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    <span class="pl-3">
+                                        <a href="mailto:{{ $student->email }}">{{ $student->email }}</a>&nbsp;<small class="text-secondary">&nbsp;<em>&#8226;</em>&nbsp;Student</small>
+                                    </span>
+                                </div>
+                            </div>
 
-            <div class="col-md-8">
-                @foreach($parent->parentOfStudents as $student)
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Email</h6>
-                                </div>
-                                <div class="col-sm-9">
-                                    <a href="mailto:{{ $student->email }}">{{ $student->email }}</a>
+                            <div class="row p-1">
+                                <div class="col-sm-12">
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                    <span class="pl-3">
+                                        {{ $student->phone_number }}
+                                    </span>
                                 </div>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Phone</h6>
-                                </div>
-                                <div class="col-sm-9">
-                                    {{ $student->phone_number }}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Birthday</h6>
-                                </div>
-                                <div class="col-sm-9">
-                                    @if($student->date_of_birth != null)
-                                        {{ date('F d, Y', strtotime($student->date_of_birth)) }}
-                                    @endif
+
+                            <div class="row p-1">
+                                <div class="col-sm-12">
+                                    <i class="fa fa-music" aria-hidden="true"></i>
+                                    <span class="pl-3">
+                                        {{ $student->instrument }}
+                                    </span>
                                 </div>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Parent Email</h6>
-                                </div>
-                                <div class="col-sm-9">
-                                    <a href="mailto:{{ $student->parent->email }}">{{ $student->parent->email }}</a>
+
+                            <div class="row p-1">
+                                <div class="col-sm-12">
+                                    <i class="fa fa-birthday-cake" aria-hidden="true"></i>
+                                    <span class="pl-3">
+                                        @if($student->date_of_birth != null)
+                                            {{ date('F d, Y', strtotime($student->date_of_birth)) }}
+                                        @endif
+                                    </span>
                                 </div>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Parent Phone</h6>
+
+                            <div class="row p-1">
+                                <div class="col-sm-12">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    <span class="pl-3">
+                                        <a href="mailto:{{ $student->parent->email }}">{{ $student->parent->email }}</a>&nbsp;<small class="text-secondary">&nbsp;<em>&#8226;</em>&nbsp;Parent</small>
+                                    </span>
                                 </div>
-                                <div class="col-sm-9">
-                                    <a href="mailto:{{ $student->parent_phone }}">{{ $student->parent_phone }}</a>
+                            </div>
+
+                            <div class="row p-1">
+                                <div class="col-sm-12">
+                                    <i class="fa fa-phone-square" aria-hidden="true"></i>
+                                    <span class="pl-3">
+                                        <a href="mailto:{{ $student->parent_phone }}">{{ $student->parent_phone }}</a>
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                @endforeach
-            </div>
+                </div>
+            @empty
+                <div class="card text-center">
+                    <div class="card-body">
+                        <p>There are no students in your household.</p>
+                    </div>
+                </div>
+            @endforelse
         </div>
     </div>
 

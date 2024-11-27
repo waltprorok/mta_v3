@@ -44,13 +44,17 @@
             </td>
 
             <td class="w-half">
-                <div>{{ $invoice->student->first_name }}&nbsp;{{ $invoice->student->last_name }}</div>
+                @if ($invoice->student->parent)
+                    <div>{{ $invoice->student->parent->first_name }} {{ $invoice->student->parent->last_name }}</div>
+                @else
+                    <div>{{ $invoice->student->first_name }}&nbsp;{{ $invoice->student->last_name }}</div>
+                @endif
                 @if ($invoice->student->address)
                     <div>{{ $invoice->student->address }}</div>
                     <div>{{ $invoice->student->city }}, {{ $invoice->student->state }} {{ $invoice->student->zip }}</div>
                 @endif
                 <br>
-                <div>{{ $invoice->student->email }} </div>
+                <div>{{ $invoice->student->email }}</div>
                 @if ($invoice->student->parent)
                     <div>{{ $invoice->student->parent->email }} </div>
                 @endif
@@ -61,11 +65,11 @@
 
 <hr>
 
-
 <div class="margin-top">
     <table class="products">
         <tr>
             <th>Status</th>
+            <th>Name</th>
             <th>Date</th>
             <th>Time</th>
             <th>Interval</th>
@@ -74,18 +78,11 @@
         @foreach($invoice['lessons'] as $item)
             <tr class="items">
                 <td>{{ $item->status }}</td>
-                <td>
-                    {{ Carbon\Carbon::parse($item->start_date)->format('D, d M Y') }}
-                </td>
-                <td>
-                    {{ Carbon\Carbon::parse($item->start_date)->format('g:i a') }} - {{ Carbon\Carbon::parse($item->end_date)->format('g:i a') }}
-                </td>
-                <td>
-                    {{ $item->interval }} minutes
-                </td>
-                <td>
-                    {{ ucfirst($item->billingRate->type) }}
-                </td>
+                <td>{{ $item->title }}</td>
+                <td>{{ Carbon\Carbon::parse($item->start_date)->format('D, d M Y') }}</td>
+                <td>{{ Carbon\Carbon::parse($item->start_date)->format('g:i a') }} - {{ Carbon\Carbon::parse($item->end_date)->format('g:i a') }}</td>
+                <td>{{ $item->interval }} minutes</td>
+                <td>{{ ucfirst($item->billingRate->type) }}</td>
             </tr>
         @endforeach
     </table>
