@@ -88,11 +88,6 @@
                             @foreach($lessons as $lesson)
                                 <tr>
                                     <td>{{ $lesson->status }}</td>
-{{--                                    <td>@if($lesson->complete)--}}
-{{--                                            <i class="fa fa-check ml-4" aria-hidden="true"></i>--}}
-{{--                                        @else--}}
-{{--                                            <i class="fa fa-times ml-4" aria-hidden="true"></i>--}}
-{{--                                        @endif</td>--}}
                                     <td>{{ $lesson->title }}</td>
                                     <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('D, d M Y') }}</td>
                                     <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('g:i a') }} - {{ Carbon\Carbon::parse($lesson->end_date)->format('g:i a') }}</td>
