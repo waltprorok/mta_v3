@@ -82,7 +82,7 @@
                                 <div class="col-sm-12">
                                     <i class="fa fa-phone-square" aria-hidden="true"></i>
                                     <span class="pl-3">
-                                        <a href="mailto:{{ $student->parent_phone }}">{{ $student->parent_phone }}</a>
+                                       {{ $student->parent_phone_number }}
                                     </span>
                                 </div>
                             </div>
