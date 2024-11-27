@@ -46,9 +46,11 @@
 
                     <div class="col-md-6">
                         <p class="font-weight-bold mb-4">Billed To:</p>
-                        <p class="mb-1">@if ($invoice->student->first_name)
+                        <p class="mb-1">@if ($invoice->student->parent)
+                                {{ $invoice->student->parent->first_name }} {{ $invoice->student->parent->last_name }}
+                            @else
                                 {{ $invoice->student->first_name }} {{ $invoice->student->last_name }}
-                            @else @endif</p>
+                            @endif</p>
                         <p class="mb-1">@if ($invoice->student->address)
                                 {{ $invoice->student->address }} {{ $invoice->student->address_2 }}
                             @else @endif</p>

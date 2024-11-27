@@ -67,6 +67,7 @@ hr {
     text-align: right;
 }
 .paid {
+    font-size: 1.0rem;
     float: right;
     text-align: right;
     margin-top: 1rem;
