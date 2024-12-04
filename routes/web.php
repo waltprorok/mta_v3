@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('calendar')->group(function () {
         Route::get('/', 'LessonController@index')->name('calendar.index');
         Route::get('student', 'StudentUserController@calendar')->name('student.calendar');
+        Route::view('lesson/get/{id}', 'webapp.lesson.cancel')->name('lesson.cancel');
     });
 
     Route::prefix('lessons')->group(function () {
@@ -74,6 +75,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('messages/status/{status?}', 'MessagesController@status');
         Route::post('messages/store', 'MessagesController@store');
         Route::get('payments', 'PaymentController@index');
+        Route::get('lesson/get/{id}', 'ParentController@getLesson');
+        Route::patch('lesson/cancel', 'ParentController@cancelLesson');
 
     });
     Route::prefix('payments')->group(function () {
@@ -88,6 +91,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['household']], function () {
         Route::get('household', 'ParentController@household')->name('parent.household');
         Route::get('household/calendar', 'ParentController@calendar')->name('parent.calendar');
+        Route::view('household/lesson/get/{id}', 'webapp.lesson.cancel')->name('lesson.cancel');
     });
 });
 

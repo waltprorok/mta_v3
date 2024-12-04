@@ -8,7 +8,11 @@ use App\Models\Teacher;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use LaravelFullCalendar\Facades\Calendar;
 
@@ -22,6 +26,7 @@ class ParentController extends Controller
         $dates = [];
         $studentIds = [];
         $teacherIds = [];
+
         $parent = User::query()
             ->with('parentOfStudents')
             ->where('id', Auth::user()->id)
@@ -33,6 +38,7 @@ class ParentController extends Controller
         }
 
         $lessons = Lesson::query()->whereIn('student_id', $studentIds)->get();
+//        $scheduled = Lesson::query()->whereIn('teacher_id', $teacherIds)->whereNotIn('student_id', $studentIds)->get();
         $holidays = Holiday::query()->whereIn('teacher_id', $teacherIds)->get();
 
         if ($lessons->count()) {
@@ -45,11 +51,26 @@ class ParentController extends Controller
                     $value->id,
                     [
                         'color' => $value->color,
-//                        'url' => 'students/schedule/' . $value->student_id . '/edit/' . $value->id
+                        'url' => 'lesson/get/' . $value->id
                     ]
                 );
             }
         }
+
+//        if ($scheduled->count()) {
+//            foreach ($scheduled as $value) {
+//                $dates[] = Calendar::event(
+//                   'Scheduled',
+//                    false,
+//                    $value->start_date,
+//                    $value->end_date,
+//                    $value->id,
+//                    [
+//                        'color' => '#85929E',
+//                    ]
+//                );
+//            }
+//        }
 
         if ($holidays->count()) {
             foreach ($holidays as $value) {
@@ -84,7 +105,6 @@ class ParentController extends Controller
     public function household(): View
     {
         $parent = User::with('parentOfStudents')->findOrFail(Auth::id());
-//        $students = $parent->parentOfStudents()->get();
         $teacher = [];
 
         foreach ($parent->parentOfStudents as $student) {
@@ -98,5 +118,33 @@ class ParentController extends Controller
             ->with('teacher', $teacher);
     }
 
+    public function getLesson(int $id): JsonResponse
+    {
+        $data = Lesson::query()->with('student')->findOrFail($id);
 
+        if ($data->student->parent_id == Auth::id() || $data->student->student_id == Auth::id()) {
+            return response()->json(['lesson' => $data]);
+        }
+
+        return response()->json([], Response::HTTP_UNAUTHORIZED);
+    }
+
+    public function cancelLesson(Request $request): JsonResponse
+    {
+        $lesson = Lesson::query()
+            ->where(['id' => $request->get('id')])
+            ->first();
+
+        try {
+            $lesson->update([
+                'status' => $request->get('status'),
+                'status_updated_at' => now()
+                ]);
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
+        }
+
+        return response()->json();
+    }
 }

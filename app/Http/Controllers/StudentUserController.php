@@ -44,7 +44,7 @@ class StudentUserController extends Controller
                     $value->id,
                     [
                         'color' => $value->color,
-//                        'url' => 'students/schedule/' . $value->student_id . '/edit/' . $value->id
+                        'url' => 'lesson/get/' . $value->id
                     ]
                 );
             }
