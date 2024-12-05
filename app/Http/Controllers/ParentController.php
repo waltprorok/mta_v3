@@ -143,7 +143,7 @@ class ParentController extends Controller
                 ]);
 
             $body = 'Lesson for ' . $lesson->title . ' has been '
-                . $lesson->status . ' from '
+                . $lesson->status . ' for this date: '
                 . Carbon::parse($lesson->start_date)->format(' D Y-m-d g:i a')
                 . ' to ' . Carbon::parse($lesson->end_date)->format('g:i a') . '.';
 
