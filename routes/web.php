@@ -91,7 +91,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['household']], function () {
         Route::get('household', 'ParentController@household')->name('parent.household');
         Route::get('household/calendar', 'ParentController@calendar')->name('parent.calendar');
-        Route::view('household/lesson/get/{id}', 'webapp.lesson.cancel')->name('lesson.cancel');
+        Route::view('household/lesson/get/{id}', 'webapp.lesson.cancel')->name('household.lesson.cancel');
     });
 });
 
