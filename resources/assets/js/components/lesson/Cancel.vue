@@ -63,7 +63,7 @@ export default {
         },
 
         cancelLesson: function () {
-            if (this.lesson.status === CANCELLED) {
+            if (this.lesson.status === CANCELLED && this.lesson.status_updated_at !== null) {
                 return this.$notify({
                     type: 'warn',
                     title: 'Warning',
