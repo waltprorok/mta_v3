@@ -70,7 +70,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('parent.calendar') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'parent.calendar' ? 'active' : '' }}">
+                           class="nav-link {{ Route::currentRouteName() == 'parent.calendar' || Route::currentRouteName() == 'household.lesson.cancel' ? 'active' : '' }}">
                             <i class="fa fa-calendar"></i>Calendar
                         </a>
                     </li>
@@ -91,7 +91,7 @@
                 @if(Auth::user()->student)
                     <li class="nav-item">
                         <a href="{{ route('student.calendar') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'student.calendar' ? 'active' : '' }}">
+                           class="nav-link {{ Route::currentRouteName() == 'student.calendar' || Route::currentRouteName() == 'lesson.cancel' ? 'active' : '' }}">
                             <i class="fa fa-calendar"></i>Calendar
                         </a>
                     </li>

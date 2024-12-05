@@ -5,9 +5,6 @@
     <div class="col-12">
         <h4>Student Lesson</h4>
         <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('parent.calendar') }}">Calendar</a></li>
-            <li class="breadcrumb-item active">Lesson</li>
         </ul>
 
         <div id="app">
