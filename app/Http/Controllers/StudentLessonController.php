@@ -104,10 +104,15 @@ class StudentLessonController extends Controller
                 $day = Carbon::parse($lesson->start_date)->format('l');
                 $lessonStartDate = Carbon::parse($lesson->start_date)->format('Y-m-d');
             }
-            $allLessons = Lesson::query()->where('teacher_id', Auth::id())->whereDate('start_date', $lessonStartDate)->orderBy('start_date')->get();
+
+            $allLessons = Lesson::query()->where('teacher_id', Auth::id())
+                ->where('status', '!=', Lesson::STATUS[2])->whereDate('start_date', $lessonStartDate)
+                ->orderBy('start_date')->get();
         } else {
             $day = Carbon::parse($day)->format('l');
-            $allLessons = Lesson::query()->where('teacher_id', Auth::id())->whereDate('start_date', $startDate)->orderBy('start_date')->get();
+            $allLessons = Lesson::query()->where('teacher_id', Auth::id())
+                ->where('status', '!=', Lesson::STATUS[2])->whereDate('start_date', $startDate)
+                ->orderBy('start_date')->get();
         }
 
         $allTimes = $this->getAllTimes($day, $businessHours);
