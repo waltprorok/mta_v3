@@ -9,7 +9,9 @@
             <li class="breadcrumb-item"><a href="{{ route('student.index') }}">Students</a></li>
             <li class="breadcrumb-item active">Edit</li>
         </ul>
+
         @include('partials.studentTabs', $data = ['id' => $student->id])
+
         <div class="card">
             <div class="card-body">
                 @if($student == null)
