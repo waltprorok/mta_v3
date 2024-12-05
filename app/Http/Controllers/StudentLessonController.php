@@ -335,10 +335,6 @@ class StudentLessonController extends Controller
                 continue;
             }
 
-            if ($lesson->status == Lesson::STATUS[2]) {
-                continue;
-            }
-
             if ($lessonDay == $day && $lessonStartDate) {
                 // remove time for a lesson that is already booked from all times
                 foreach ($allTimes as $allTimeKey => $allTime) {
