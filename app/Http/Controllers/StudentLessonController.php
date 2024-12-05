@@ -319,7 +319,6 @@ class StudentLessonController extends Controller
         $studentScheduled = false;
 
         foreach ($lessons as $lesson) {
-
             $lessonDay = Carbon::parse($lesson->start_date)->format('l');
             $lessonStartDate = $lesson->start_date;
             $lessonStartTime = Carbon::parse($lesson->start_date)->format('H:i:s');
