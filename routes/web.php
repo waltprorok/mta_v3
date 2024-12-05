@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('update-profile', 'SubscriptionController@updateProfile')->name('account.updateProfile');
     });
 
+    // student calendar
     Route::prefix('calendar')->group(function () {
         Route::get('/', 'LessonController@index')->name('calendar.index');
         Route::get('student', 'StudentUserController@calendar')->name('student.calendar');
@@ -79,6 +80,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::patch('lesson/cancel', 'ParentController@cancelLesson');
 
     });
+
+    // parent or student
     Route::prefix('payments')->group(function () {
         Route::view('/', 'webapp.payments.payments')->name('payment.index');
         Route::get('/download/pdf/{id}', 'InvoiceController@downloadPDF')->name('payments.download.pdf');
@@ -88,6 +91,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('support', 'SupportUserController@index')->name('support');
     Route::post('support', 'SupportUserController@store')->middleware(ProtectAgainstSpam::class);
 
+    // parent
     Route::group(['middleware' => ['household']], function () {
         Route::get('household', 'ParentController@household')->name('parent.household');
         Route::get('household/calendar', 'ParentController@calendar')->name('parent.calendar');

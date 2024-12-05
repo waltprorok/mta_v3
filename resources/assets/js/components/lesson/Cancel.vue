@@ -4,6 +4,7 @@
 import PhoneNumberFormat from "../PhoneNumberFormat";
 import {dateFormat} from "vue-filter-date-format";
 import {dateParse} from "@vuejs-community/vue-filter-date-parse";
+const CANCELLED = 'Cancelled';
 
 export default {
     name: 'Cancel',
@@ -17,10 +18,10 @@ export default {
                 start_time: '',
                 end_time: null,
                 status: null,
+                status_updated_at: '',
             },
             statuses: [
-                {name: 'Scheduled', value: "Scheduled"},
-                {name: 'Cancelled', value: "Cancelled"},
+                {name: CANCELLED, value: CANCELLED},
             ],
             student: {
                 first_name: '',
@@ -62,6 +63,14 @@ export default {
         },
 
         cancelLesson: function () {
+            if (this.lesson.status === CANCELLED) {
+                return this.$notify({
+                    type: 'warn',
+                    title: 'Warning',
+                    text: 'Can not update cancelled lesson.',
+                    duration: 10000,
+                });
+            }
             this.disableUpdateButton = true;
             let self = this;
             let params = Object.assign({}, self.lesson);
@@ -86,6 +95,10 @@ export default {
                         duration: 10000,
                     });
                 });
+        },
+
+        isCancelSelected: function () {
+            return this.lesson.status !== CANCELLED;
         },
     }
 }

@@ -5,6 +5,9 @@
     <div class="col-12">
         <h4>Student Lesson</h4>
         <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ Auth::user()->isParent() ? route('parent.calendar') : route('student.calendar') }}">Calendar</a></li>
+            <li class="breadcrumb-item active">Lesson</li>
+
         </ul>
 
         <div id="app">
