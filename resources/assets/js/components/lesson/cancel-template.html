@@ -4,7 +4,7 @@
             <div class="col-md-6">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <div class="row ">
+                        <div class="row">
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Name</h6>
                             </div>
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row ">
+                        <div class="row">
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Appointment Start</h6>
                             </div>
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row ">
+                        <div class="row">
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Appointment End</h6>
                             </div>
@@ -49,12 +49,24 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row ">
+                        <div class="row">
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Duration</h6>
                             </div>
                             <div class="col-sm-9">
                                {{ lesson.interval }} minutes
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Status</h6>
+                            </div>
+                            <div class="col-sm-9" v-if="lesson.status === 'Cancelled'">
+                                {{ lesson.status }} on {{ lesson.status_updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}
+                            </div>
+                            <div class="col-sm-9" v-else>
+                                {{ lesson.status }}
                             </div>
                         </div>
                     </div>
@@ -64,7 +76,7 @@
                 <div class="card-body">
                     <div class="row">
                         <label for="notes" class="control-label">Lesson Notes</label>
-                        <textarea class="form-control" rows="13" disabled>{{ lesson.notes }}</textarea>
+                        <textarea class="form-control" rows="15" disabled>{{ lesson.notes }}</textarea>
                     </div>
                 </div>
             </div>
@@ -84,7 +96,7 @@
             </div>
             <hr/>
             <div class="pull-left">
-                <button type="submit" class="btn btn-primary" :disabled="disableUpdateButton">Save</button>
+                <button type="submit" class="btn btn-primary" :disabled="disableUpdateButton || isCancelSelected()">Save</button>
 <!--                <a href="/household/calendar" type="button" class="btn btn-outline-secondary">Cancel</a>-->
             </div>
         </form>

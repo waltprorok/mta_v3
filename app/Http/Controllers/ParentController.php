@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Holiday;
 use App\Models\Lesson;
+use App\Models\Message;
 use App\Models\Teacher;
 use App\Models\User;
 use Carbon\Carbon;
@@ -140,6 +141,20 @@ class ParentController extends Controller
                 'status' => $request->get('status'),
                 'status_updated_at' => now()
                 ]);
+
+            $body = 'Lesson for ' . $lesson->title . ' has been '
+                . $lesson->status . ' from '
+                . Carbon::parse($lesson->start_date)->format(' D Y-m-d g:i a')
+                . ' to ' . Carbon::parse($lesson->end_date)->format('g:i a') . '.';
+
+            Message::query()->create([
+                'user_id_from' => Auth::id(),
+                'user_id_to' => $lesson->teacher_id,
+                'body' => $body,
+                'read' => 0,
+                'deleted' => 0,
+            ]);
+
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             return response()->json([], Response::HTTP_BAD_REQUEST);
