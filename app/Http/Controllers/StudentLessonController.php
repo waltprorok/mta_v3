@@ -319,6 +319,7 @@ class StudentLessonController extends Controller
         $studentScheduled = false;
 
         foreach ($lessons as $lesson) {
+
             $lessonDay = Carbon::parse($lesson->start_date)->format('l');
             $lessonStartDate = $lesson->start_date;
             $lessonStartTime = Carbon::parse($lesson->start_date)->format('H:i:s');
@@ -331,6 +332,10 @@ class StudentLessonController extends Controller
             }
 
             if ($startDate != $studentLessonStart) {
+                continue;
+            }
+
+            if ($lesson->status == Lesson::STATUS[2]) {
                 continue;
             }
 
