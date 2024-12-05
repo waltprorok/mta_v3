@@ -139,6 +139,10 @@ export default {
                     });
                 });
         },
+
+        isDisabled: function () {
+            return this.message.body === null || this.message.body === '';
+        },
     }
 }
 </script>

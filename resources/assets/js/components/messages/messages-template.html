@@ -73,7 +73,7 @@
                         <div class="type_msg">
                             <div class="input_msg_write">
                                 <textarea class="form-control" rows="3" v-model="message.body" placeholder="Write a message..."></textarea>
-                                <button class="btn btn-rounded btn-primary pull-right mt-2" type="submit" :class="{disabled: message.body === null}">Send</button>
+                                <button class="btn btn-rounded btn-primary pull-right mt-2" type="submit" :disabled="isDisabled()">Send</button>
                             </div>
                         </div>
                     </form>
