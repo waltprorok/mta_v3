@@ -37,14 +37,14 @@ class StudentUserController extends Controller
         if ($lessons->count()) {
             foreach ($lessons as $value) {
                 $dates[] = Calendar::event(
-                    $value->title,
+                    $value->status == 'Cancelled' ? 'Cancelled | ' . $value->title : $value->title,
                     false,
                     $value->start_date,
                     $value->end_date,
                     $value->id,
                     [
-                        'color' => $value->color,
-//                        'url' => 'students/schedule/' . $value->student_id . '/edit/' . $value->id
+                        'color' => $value->status == 'Cancelled' ? '#CD6155' : $value->color,
+                        'url' => 'lesson/get/' . $value->id
                     ]
                 );
             }

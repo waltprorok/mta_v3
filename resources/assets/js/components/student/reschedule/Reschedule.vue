@@ -2,6 +2,8 @@
 
 <script>
 import PhoneNumberFormat from "../../PhoneNumberFormat";
+import {dateFormat} from "vue-filter-date-format";
+import {dateParse} from "@vuejs-community/vue-filter-date-parse";
 
 let today = new Date();
 const year = today.getFullYear();
@@ -112,6 +114,8 @@ export default {
     },
 
     methods: {
+        dateFormat,
+        dateParse,
         deleteLesson: function (id) {
             let self = this;
             let params = Object.assign({}, self.lesson);
@@ -121,7 +125,7 @@ export default {
                     this.$notify({
                         type: 'warn',
                         title: 'Deleted',
-                        text: 'Date was deleted.',
+                        text: 'Lesson was deleted.',
                         duration: 10000,
                     });
                 })
@@ -130,7 +134,7 @@ export default {
                     this.$notify({
                         type: 'error',
                         title: 'Error',
-                        text: 'Could not delete date.',
+                        text: 'Could not delete lesson.',
                         duration: 10000,
                     });
                 });
