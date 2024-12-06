@@ -90,14 +90,19 @@ class LessonController extends Controller
         $data = $request->all();
 
         try {
-            foreach ($data as $object) {
+            foreach ($data as $record) {
                 $lesson = Lesson::query()
                     ->where('start_date', '<', now()->startOfDay())
-                    ->find($object['id'], ['id', 'start_date', 'complete']);
+                    ->find($record['id'], ['id', 'start_date', 'complete']);
 
                 if ($lesson == null) {
                     continue;
                 }
+
+                if ($lesson->complete) {
+                    continue;
+                }
+
                 $lesson->update(['complete' => true]);
             }
         } catch (Exception $exception) {
