@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Services\StudentLessonService;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -144,7 +145,7 @@ class ScheduleMonthlyLessons extends Command
                                 Log::channel('lessons')->info($lesson->start_date . ' - ' . $lesson->end_date . ' - ' . $lesson->title);
                             }
                             $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
-                        } catch (\Exception $exception) {
+                        } catch (Exception $exception) {
                             Log::info($exception->getMessage());
                         }
                     }

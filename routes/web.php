@@ -64,6 +64,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::view('/', 'webapp.lessons.index')->name('complete.lessons');
         Route::get('list/{fromDate}/{toDate}', 'LessonController@list');
         Route::patch('update/{lesson}', 'LessonController@update');
+        Route::put('update/past', 'LessonController@completePast');
     });
 
     Route::prefix('messages')->group(function () {

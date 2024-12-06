@@ -10,7 +10,9 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use LaravelFullCalendar\Facades\Calendar;
 
 class LessonController extends Controller
@@ -81,6 +83,34 @@ class LessonController extends Controller
         $lesson->save();
 
         return response()->json($lesson);
+    }
+
+    public function completePast(Request $request): JsonResponse
+    {
+        $data = $request->all();
+
+        try {
+            foreach ($data as $record) {
+                $lesson = Lesson::query()
+                    ->where('start_date', '<', now()->startOfDay())
+                    ->find($record['id'], ['id', 'start_date', 'complete']);
+
+                if ($lesson == null) {
+                    continue;
+                }
+
+                if ($lesson->complete) {
+                    continue;
+                }
+
+                $lesson->update(['complete' => true]);
+            }
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            return response()->json([], Response::HTTP_BAD_REQUEST);
+        }
+
+        return response()->json();
     }
 
     private function getAllLessonsForAdmin(string $fromDate, string $toDate): AnonymousResourceCollection

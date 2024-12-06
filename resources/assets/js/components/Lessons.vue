@@ -1,5 +1,35 @@
 <template>
-    <div class="card">
+    <div class="card" v-on:keydown.esc="showModal=false">
+        <div v-if="showModal">
+            <!-- modal confirm complete -->
+            <transition name="modal">
+                <div class="modal-mask">
+                    <div class="modal-wrapper">
+                        <div class="modal-dialog modal-md" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Complete all past lessons</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" v-on:click="showModal=false">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Complete all past lessons from
+                                    <strong>{{ new Date(this.dateStart.fromDate).toDateString() }}</strong> to <strong>{{ new Date(dateEnd.toDate).toDateString() }}?</strong>
+                                    <hr/>
+                                    <div class="form-group pull-right">
+                                        <button v-on:click="showModal=false" class="btn btn-default">Cancel</button>
+                                        <button v-on:click="completePast()" class="btn btn-primary">Complete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+            <!-- end of modal complete -->
+        </div>
+
         <!-- vue js data table -->
         <div class="form-control">
             <div class="form-group pull-left m-1">
@@ -8,6 +38,9 @@
                         <option v-for="page in pages" :value="page">{{ page }}</option>
                     </select>
                 </div>
+            </div>
+            <div class="form-group pull-left m-1">
+                <button class="btn btn-default btn-rounded" title="complete lessons" v-on:click="showCompleteModal()">Complete Past Lessons</button>
             </div>
             <div class="form-group pull-right m-1">
                 <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
@@ -111,6 +144,7 @@ export default {
                 end_date: null,
                 interval: null,
             },
+            showModal: false,
         }
     },
 
@@ -188,6 +222,10 @@ export default {
             this.dateEnd.toDate = lastDay;
         },
 
+        showCompleteModal: function () {
+            this.showModal = true;
+        },
+
         updateLesson: function (id, complete) {
             let self = this;
             self.lesson.id = id;
@@ -216,6 +254,35 @@ export default {
                     })
                 });
         },
+
+        completePast: function () {
+            let self = this;
+            let params = Object.assign({}, this.list);
+            axios.put('/lessons/update/past', params)
+                .then(() => {
+                    this.showModal = false;
+                    self.fetchLessonList();
+                })
+                .then(() => {
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'The past lessons were completed successfully.',
+                        duration: 10000,
+                    })
+                })
+                .catch((error) => {
+                    this.showModal = false;
+                    self.fetchLessonList();
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'The past lessons failed to complete.',
+                        duration: 10000,
+                    })
+                });
+        }
     },
 }
 </script>
