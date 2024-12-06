@@ -8,7 +8,7 @@
                         <div class="modal-dialog modal-md" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Complete all past lessons</h5>
+                                    <h5 class="modal-title">Complete all past lessons?</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true" v-on:click="showModal=false">&times;</span>
                                     </button>
@@ -76,8 +76,7 @@
                 <template v-slot="{ columns, row }">
                     <tr>
                         <td>
-                            <button class="btn btn-rounded btn-outline-secondary" v-if="!row.complete" @click="updateLesson(row.id, row.complete)" :disabled="isCancelled(row)">Click to Complete
-                            </button>
+                            <button class="btn btn-rounded btn-outline-secondary" v-if="!row.complete" @click="updateLesson(row.id, row.complete)" :disabled="isCancelled(row)">Click to Complete</button>
                             <button class="btn btn-rounded btn-primary" v-if="row.complete" @click="updateLesson(row.id, row.complete)" :disabled="isCancelled(row)">Completed</button>
                         </td>
                         <td>{{ row.status }}</td>
@@ -85,8 +84,7 @@
                         <td v-if="lessonDayStatusToday(row.end_date) && todayLesson"><span class="badge badge-pill badge-primary">Today</span></td>
                         <td v-if="lessonDayStatusUpcoming(row.end_date) && upComing"><span class="badge badge-pill badge-warning">Upcoming</span></td>
                         <td v-text="row.title"></td>
-                        <td>{{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
-                        <td>{{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
+                        <td>{{ new Date(row.start_date).toDateString() }} | {{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm') }} - {{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }}</td>
                         <td v-text="row.interval"></td>
                     </tr>
                 </template>
@@ -125,8 +123,7 @@ export default {
                 {label: 'Status', field: 'status', sortable: false,},
                 {label: 'State', field: 'end_date', sortable: false,},
                 {label: 'Name', field: 'title', sortable: false,},
-                {label: 'Start Date', field: 'start_date', sortable: false,},
-                {label: 'End Date', field: 'end_date', sortable: false,},
+                {label: 'Appointment', field: 'start_date', sortable: false,},
                 {label: 'Duration', field: 'interval', sortable: false,},
             ],
             list: [],
