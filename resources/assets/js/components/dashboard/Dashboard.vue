@@ -36,6 +36,21 @@
                     <div class="card p-4">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <div>
+                                <span class="h4 d-block font-weight-normal mb-2">{{ cancelledLessonsThisWeek }}</span>
+                                <span class="font-weight-light">Cancelled Lessons This Week</span>
+                            </div>
+
+                            <div class="h2 text-muted">
+                                <i class="fa fa-calendar-times-o" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card p-4">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
                                 <span class="h4 d-block font-weight-normal mb-2">{{ openTimeBlocks }}</span>
                                 <span class="font-weight-light">Open Time Blocks</span>
                             </div>
@@ -91,6 +106,7 @@ export default {
             activeStudentCount: 0,
             monthlyIncome: 0,
             lessonsThisWeek: 0,
+            cancelledLessonsThisWeek: 0,
             openTimeBlocks: 0,
             subscriptionType: '',
             subscriptionText: '',
@@ -109,6 +125,7 @@ export default {
                     this.activeStudentCount = response.data.activeStudentCount;
                     this.monthlyIncome = response.data.monthlyIncome;
                     this.lessonsThisWeek = response.data.lessonsThisWeek;
+                    this.cancelledLessonsThisWeek = response.data.cancelledLessonsThisWeek;
                     this.openTimeBlocks = response.data.openTimeBlocks;
                     this.$notify({
                         type: this.subscriptionType = response.data.subscriptionType,
