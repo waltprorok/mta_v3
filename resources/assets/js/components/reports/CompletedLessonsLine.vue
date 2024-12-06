@@ -35,7 +35,7 @@ export default {
                                         backgroundColor: 'rgba(66, 165, 245, 0.5)',
                                         borderColor: '#2196F3',
                                         borderWidth: 1
-                                    }
+                                    },
                                 ]
                             },
                             {
@@ -53,7 +53,8 @@ export default {
                                 }
                             })
                     }
-                }).catch((error) => {
+                })
+                .catch((error) => {
                 console.log(error);
                 this.$notify({
                     type: 'error',
