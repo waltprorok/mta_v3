@@ -93,13 +93,13 @@ class LessonController extends Controller
             foreach ($data as $record) {
                 $lesson = Lesson::query()
                     ->where('start_date', '<', now()->startOfDay())
-                    ->find($record['id'], ['id', 'start_date', 'complete']);
+                    ->find($record['id'], ['id', 'start_date', 'complete', 'status']);
 
                 if ($lesson == null) {
                     continue;
                 }
 
-                if ($lesson->complete) {
+                if ($lesson->complete || $lesson->status == Lesson::STATUS[2]) {
                     continue;
                 }
 

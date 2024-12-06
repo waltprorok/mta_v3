@@ -53,7 +53,7 @@
                             </div>
                             <div class="col-sm-9">
                                 <i class="fa fa-clock-o"></i>
-                                &nbsp;{{ student.has_one_lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}
+                                &nbsp;{{ new Date(student.has_one_lesson.start_date).toDateString() }} | {{ student.has_one_lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }}
                             </div>
                         </div>
                     </div>
