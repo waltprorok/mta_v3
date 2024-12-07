@@ -16,8 +16,8 @@ class DashboardController extends Controller
         $weeklyIncome = $this->getweeklyIncome();
         $monthlyIncome = $this->getMonthlyIncome();
         $yearlyIncome = $this->getYearlyIncome();
-        $lessonsThisWeek = $this->getLessonsThisWeek();
-        $cancelledLessonsThisWeek = $this->getCancelledLessonsThisWeek();
+        $lessonsThisWeek = $this->getLessonsThisWeekCount();
+        $cancelledLessonsThisWeek = $this->getCancelledLessonsThisWeekCount();
         $openTimeBlocks = $this->getOpenTimeBlocks();
         $subscriptionType = $this->getSubscriptionType();
         $subscriptionText = $this->getSubscriptionText();
@@ -103,7 +103,7 @@ class DashboardController extends Controller
 
     public function getCompletedLessonsData()
     {
-        $period = Carbon::now()->subMonths(11)->monthsUntil(now());
+        $period = now()->subMonths(11)->monthsUntil(now());
         $data = [];
 
         foreach ($period as $date) {
@@ -133,7 +133,7 @@ class DashboardController extends Controller
     private function getOpenTimeBlocks(): int
     {
         $minutesInDay = 0;
-        $lessonsInWeek = $this->getLessonsThisWeek() * 30;
+        $lessonsInWeek = $this->getLessonsThisWeekCount() * 30;
         $businessHours = Auth::user()->getBusinessHours->where('active', true);
 
         foreach ($businessHours as $businessHour) {
@@ -145,17 +145,17 @@ class DashboardController extends Controller
         return ($minutesInDay - $lessonsInWeek) / 30 ?? 0;
     }
 
-    private function getLessonsThisWeek(): int
+    private function getLessonsThisWeekCount(): int
     {
-        return Lesson::whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+        return Lesson::whereBetween('start_date', [now()->startOfWeek(), now()->endOfWeek()])
             ->where('status', '!=', Lesson::STATUS[2])
             ->where('teacher_id', Auth::id())
             ->count();
     }
 
-    private function getCancelledLessonsThisWeek(): int
+    private function getCancelledLessonsThisWeekCount(): int
     {
-        return Lesson::whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+        return Lesson::whereBetween('start_date', [now()->startOfWeek(), now()->endOfWeek()])
             ->where('status', Lesson::STATUS[2])
             ->where('teacher_id', Auth::id())
             ->count();
@@ -164,7 +164,7 @@ class DashboardController extends Controller
     private function getLessonsToday()
     {
         return Lesson::with('billingRate:id,type,amount')
-            ->whereBetween('start_date', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])
+            ->whereBetween('start_date', [now()->startOfDay(), now()->endOfDay()])
             ->where('teacher_id', Auth::id())
             ->withTrashed()
             ->get();
@@ -173,7 +173,7 @@ class DashboardController extends Controller
     private function getLessonsThisWeekly()
     {
         return Lesson::with('billingRate:id,type,amount')
-            ->whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->whereBetween('start_date', [now()->startOfWeek(), now()->endOfWeek()])
             ->where('teacher_id', Auth::id())
             ->withTrashed()
             ->get();
@@ -182,7 +182,7 @@ class DashboardController extends Controller
     private function getLessonsThisMonth()
     {
         return Lesson::with('billingRate:id,type,amount')
-            ->whereBetween('start_date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+            ->whereBetween('start_date', [now()->startOfMonth(), now()->endOfMonth()])
             ->where('teacher_id', Auth::id())
             ->withTrashed()
             ->get();
@@ -191,7 +191,7 @@ class DashboardController extends Controller
     private function getLessonsThisYearly()
     {
         return Lesson::with('billingRate:id,type,amount')
-            ->whereBetween('start_date', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])
+            ->whereBetween('start_date', [now()->startOfYear(), now()->endOfYear()])
             ->where('teacher_id', Auth::id())
             ->withTrashed()
             ->get();
@@ -292,12 +292,12 @@ class DashboardController extends Controller
 
     private function isSubscriptionTrialExpired(): bool
     {
-        return (Carbon::now() > Auth::user()->trial_ends_at && ! Auth::user()->subscribed('premium') && ! Auth::user()->admin && ! Auth::user()->parent && ! Auth::user()->student);
+        return (now() > Auth::user()->trial_ends_at && ! Auth::user()->subscribed('premium') && ! Auth::user()->admin && ! Auth::user()->parent && ! Auth::user()->student);
     }
 
     private function isSubscriptionOnFreeTrial(): bool
     {
-        return (Carbon::now() < Auth::user()->trial_ends_at && ! Auth::user()->subscribed('premium') && ! Auth::user()->admin);
+        return (now() < Auth::user()->trial_ends_at && ! Auth::user()->subscribed('premium') && ! Auth::user()->admin);
     }
 
     private function isSubscribed(): bool
