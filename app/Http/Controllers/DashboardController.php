@@ -200,89 +200,25 @@ class DashboardController extends Controller
     private function getTodayIncome(): int
     {
         $lessonsToday = $this->getLessonsToday();
-        $todayAmount = 0;
-
-        foreach ($lessonsToday as $lesson) {
-            if ($lesson->billingRate->type == 'lesson') {
-                $todayAmount += ($lesson->billingRate->amount);
-            }
-
-            if ($lesson->billingRate->type == 'hourly') {
-                $todayAmount += ($lesson->interval / 60 * $lesson->billingRate->amount);
-            }
-
-            if ($lesson->billingRate->type == 'monthly') {
-                $todayAmount += ($lesson->billingRate->amount / 4);
-            }
-        }
-
-        return $todayAmount ?? 0;
+        return $this->calculateLessonTotals($lessonsToday);
     }
 
     private function getWeeklyIncome(): int
     {
         $lessonsInWeek = $this->getLessonsThisWeekly();
-        $weeklyAmount = 0;
-
-        foreach ($lessonsInWeek as $lesson) {
-            if ($lesson->billingRate->type == 'lesson') {
-                $weeklyAmount += ($lesson->billingRate->amount);
-            }
-
-            if ($lesson->billingRate->type == 'hourly') {
-                $weeklyAmount += ($lesson->interval / 60 * $lesson->billingRate->amount);
-            }
-
-            if ($lesson->billingRate->type == 'monthly') {
-                $weeklyAmount += ($lesson->billingRate->amount / 4);
-            }
-        }
-
-        return $weeklyAmount ?? 0;
+        return $this->calculateLessonTotals($lessonsInWeek);
     }
 
     private function getMonthlyIncome(): int
     {
         $lessonsInMonth = $this->getLessonsThisMonth();
-        $monthlyAmount = 0;
-
-        foreach ($lessonsInMonth as $lesson) {
-            if ($lesson->billingRate->type == 'lesson') {
-                $monthlyAmount += ($lesson->billingRate->amount);
-            }
-
-            if ($lesson->billingRate->type == 'hourly') {
-                $monthlyAmount += ($lesson->interval / 60 * $lesson->billingRate->amount);
-            }
-
-            if ($lesson->billingRate->type == 'monthly') {
-                $monthlyAmount += ($lesson->billingRate->amount / 4);
-            }
-        }
-
-        return $monthlyAmount ?? 0;
+        return $this->calculateLessonTotals($lessonsInMonth);
     }
 
     private function getYearlyIncome(): int
     {
         $lessonsInYear = $this->getLessonsThisYearly();
-        $yearlyAmount = 0;
-
-        foreach ($lessonsInYear as $lesson) {
-            if ($lesson->billingRate->type == 'lesson') {
-                $yearlyAmount += ($lesson->billingRate->amount);
-            }
-
-            if ($lesson->billingRate->type == 'hourly') {
-                $yearlyAmount += ($lesson->interval / 60 * $lesson->billingRate->amount);
-            }
-
-            if ($lesson->billingRate->type == 'monthly') {
-                $yearlyAmount += ($lesson->billingRate->amount / 4);
-            }
-        }
-
-        return $yearlyAmount ?? 0;
+        return $this->calculateLessonTotals($lessonsInYear);
     }
 
     private function isSubscriptionCancelled(): bool
@@ -303,5 +239,30 @@ class DashboardController extends Controller
     private function isSubscribed(): bool
     {
         return Auth::user()->subscribed('premium');
+    }
+
+    /**
+     * @param $lessonsInWeek
+     * @return float|int
+     */
+    private function calculateLessonTotals($lessonsInWeek)
+    {
+        $amount = 0;
+
+        foreach ($lessonsInWeek as $lesson) {
+            if ($lesson->billingRate->type == 'lesson') {
+                $amount += ($lesson->billingRate->amount);
+            }
+
+            if ($lesson->billingRate->type == 'hourly') {
+                $amount += ($lesson->interval / 60 * $lesson->billingRate->amount);
+            }
+
+            if ($lesson->billingRate->type == 'monthly') {
+                $amount += ($lesson->billingRate->amount / 4);
+            }
+        }
+
+        return $amount ?? 0;
     }
 }
