@@ -55,14 +55,14 @@ export default {
                     }
                 })
                 .catch((error) => {
-                console.log(error);
-                this.$notify({
-                    type: 'error',
-                    title: 'Error',
-                    text: 'Could not load completed lessons report.',
-                    duration: 10000,
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load completed lessons report.',
+                        duration: 10000,
+                    });
                 });
-            });
         },
     }
 }

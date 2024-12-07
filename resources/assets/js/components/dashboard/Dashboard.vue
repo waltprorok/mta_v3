@@ -66,8 +66,53 @@
                     <div class="card p-4">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <div>
+                                <span class="h4 d-block font-weight-normal mb-2">${{ todayIncome }}</span>
+                                <span class="font-weight-light">Today's Income</span>
+                            </div>
+
+                            <div class="h2 text-muted">
+                                <i class="fa fa-money" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card p-4">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="h4 d-block font-weight-normal mb-2">${{ weeklyIncome }}</span>
+                                <span class="font-weight-light">Weekly Income</span>
+                            </div>
+
+                            <div class="h2 text-muted">
+                                <i class="fa fa-money" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card p-4">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
                                 <span class="h4 d-block font-weight-normal mb-2">${{ monthlyIncome }}</span>
                                 <span class="font-weight-light">Monthly Income</span>
+                            </div>
+
+                            <div class="h2 text-muted">
+                                <i class="fa fa-money" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card p-4">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="h4 d-block font-weight-normal mb-2">${{ yearlyIncome }}</span>
+                                <span class="font-weight-light">Yearly Income</span>
                             </div>
 
                             <div class="h2 text-muted">
@@ -104,10 +149,13 @@ export default {
     data() {
         return {
             activeStudentCount: 0,
-            monthlyIncome: 0,
             lessonsThisWeek: 0,
             cancelledLessonsThisWeek: 0,
             openTimeBlocks: 0,
+            todayIncome: 0,
+            weeklyIncome: 0,
+            monthlyIncome: 0,
+            yearlyIncome: 0,
             subscriptionType: '',
             subscriptionText: '',
             subscriptionMessage: '',
@@ -123,7 +171,10 @@ export default {
             axios.get('/web/dashboard')
                 .then((response) => {
                     this.activeStudentCount = response.data.activeStudentCount;
+                    this.todayIncome = response.data.todayIncome;
+                    this.weeklyIncome = response.data.weeklyIncome;
                     this.monthlyIncome = response.data.monthlyIncome;
+                    this.yearlyIncome = response.data.yearlyIncome;
                     this.lessonsThisWeek = response.data.lessonsThisWeek;
                     this.cancelledLessonsThisWeek = response.data.cancelledLessonsThisWeek;
                     this.openTimeBlocks = response.data.openTimeBlocks;

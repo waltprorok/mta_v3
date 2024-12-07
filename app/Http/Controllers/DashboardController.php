@@ -12,9 +12,12 @@ class DashboardController extends Controller
     public function dashboard()
     {
         $activeStudentCount = $this->getActiveStudentCount();
+        $todayIncome = $this->getTodayIncome();
+        $weeklyIncome = $this->getweeklyIncome();
         $monthlyIncome = $this->getMonthlyIncome();
-        $lessonsThisWeek = $this->getLessonsThisWeek();
-        $cancelledLessonsThisWeek = $this->getCancelledLessonsThisWeek();
+        $yearlyIncome = $this->getYearlyIncome();
+        $lessonsThisWeek = $this->getLessonsThisWeekCount();
+        $cancelledLessonsThisWeek = $this->getCancelledLessonsThisWeekCount();
         $openTimeBlocks = $this->getOpenTimeBlocks();
         $subscriptionType = $this->getSubscriptionType();
         $subscriptionText = $this->getSubscriptionText();
@@ -22,7 +25,10 @@ class DashboardController extends Controller
 
         return response()->json([
             'activeStudentCount' => $activeStudentCount,
+            'todayIncome' => $todayIncome,
+            'weeklyIncome' => $weeklyIncome,
             'monthlyIncome' => $monthlyIncome,
+            'yearlyIncome' => $yearlyIncome,
             'lessonsThisWeek' => $lessonsThisWeek,
             'cancelledLessonsThisWeek' => $cancelledLessonsThisWeek,
             'openTimeBlocks' => $openTimeBlocks,
@@ -97,7 +103,7 @@ class DashboardController extends Controller
 
     public function getCompletedLessonsData()
     {
-        $period = Carbon::now()->subMonths(11)->monthsUntil(now());
+        $period = now()->subMonths(11)->monthsUntil(now());
         $data = [];
 
         foreach ($period as $date) {
@@ -127,7 +133,7 @@ class DashboardController extends Controller
     private function getOpenTimeBlocks(): int
     {
         $minutesInDay = 0;
-        $lessonsInWeek = $this->getLessonsThisWeek() * 30;
+        $lessonsInWeek = $this->getLessonsThisWeekCount() * 30;
         $businessHours = Auth::user()->getBusinessHours->where('active', true);
 
         foreach ($businessHours as $businessHour) {
@@ -139,51 +145,80 @@ class DashboardController extends Controller
         return ($minutesInDay - $lessonsInWeek) / 30 ?? 0;
     }
 
-    private function getLessonsThisWeek(): int
+    private function getLessonsThisWeekCount(): int
     {
-        return Lesson::whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+        return Lesson::whereBetween('start_date', [now()->startOfWeek(), now()->endOfWeek()])
             ->where('status', '!=', Lesson::STATUS[2])
             ->where('teacher_id', Auth::id())
             ->count();
     }
 
-    private function getCancelledLessonsThisWeek(): int
+    private function getCancelledLessonsThisWeekCount(): int
     {
-        return Lesson::whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+        return Lesson::whereBetween('start_date', [now()->startOfWeek(), now()->endOfWeek()])
             ->where('status', Lesson::STATUS[2])
             ->where('teacher_id', Auth::id())
             ->count();
     }
 
-    private function getLessonsThisMonth()
+    private function getLessonsToday()
     {
         return Lesson::with('billingRate:id,type,amount')
-            ->whereBetween('start_date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+            ->whereBetween('start_date', [now()->startOfDay(), now()->endOfDay()])
             ->where('teacher_id', Auth::id())
             ->withTrashed()
             ->get();
     }
 
+    private function getLessonsThisWeekly()
+    {
+        return Lesson::with('billingRate:id,type,amount')
+            ->whereBetween('start_date', [now()->startOfWeek(), now()->endOfWeek()])
+            ->where('teacher_id', Auth::id())
+            ->withTrashed()
+            ->get();
+    }
+
+    private function getLessonsThisMonth()
+    {
+        return Lesson::with('billingRate:id,type,amount')
+            ->whereBetween('start_date', [now()->startOfMonth(), now()->endOfMonth()])
+            ->where('teacher_id', Auth::id())
+            ->withTrashed()
+            ->get();
+    }
+
+    private function getLessonsThisYearly()
+    {
+        return Lesson::with('billingRate:id,type,amount')
+            ->whereBetween('start_date', [now()->startOfYear(), now()->endOfYear()])
+            ->where('teacher_id', Auth::id())
+            ->withTrashed()
+            ->get();
+    }
+
+    private function getTodayIncome(): int
+    {
+        $lessonsToday = $this->getLessonsToday();
+        return $this->calculateLessonTotals($lessonsToday);
+    }
+
+    private function getWeeklyIncome(): int
+    {
+        $lessonsInWeek = $this->getLessonsThisWeekly();
+        return $this->calculateLessonTotals($lessonsInWeek);
+    }
+
     private function getMonthlyIncome(): int
     {
         $lessonsInMonth = $this->getLessonsThisMonth();
-        $monthlyAmount = 0;
+        return $this->calculateLessonTotals($lessonsInMonth);
+    }
 
-        foreach ($lessonsInMonth as $lesson) {
-            if ($lesson->billingRate->type == 'lesson') {
-                $monthlyAmount += ($lesson->billingRate->amount);
-            }
-
-            if ($lesson->billingRate->type == 'hourly') {
-                $monthlyAmount += ($lesson->interval / 60 * $lesson->billingRate->amount);
-            }
-
-            if ($lesson->billingRate->type == 'monthly') {
-                $monthlyAmount += ($lesson->billingRate->amount / 4);
-            }
-        }
-
-        return $monthlyAmount ?? 0;
+    private function getYearlyIncome(): int
+    {
+        $lessonsInYear = $this->getLessonsThisYearly();
+        return $this->calculateLessonTotals($lessonsInYear);
     }
 
     private function isSubscriptionCancelled(): bool
@@ -193,16 +228,41 @@ class DashboardController extends Controller
 
     private function isSubscriptionTrialExpired(): bool
     {
-        return (Carbon::now() > Auth::user()->trial_ends_at && ! Auth::user()->subscribed('premium') && ! Auth::user()->admin && ! Auth::user()->parent && ! Auth::user()->student);
+        return (now() > Auth::user()->trial_ends_at && ! Auth::user()->subscribed('premium') && ! Auth::user()->admin && ! Auth::user()->parent && ! Auth::user()->student);
     }
 
     private function isSubscriptionOnFreeTrial(): bool
     {
-        return (Carbon::now() < Auth::user()->trial_ends_at && ! Auth::user()->subscribed('premium') && ! Auth::user()->admin);
+        return (now() < Auth::user()->trial_ends_at && ! Auth::user()->subscribed('premium') && ! Auth::user()->admin);
     }
 
     private function isSubscribed(): bool
     {
         return Auth::user()->subscribed('premium');
+    }
+
+    /**
+     * @param $lessonsInWeek
+     * @return float|int
+     */
+    private function calculateLessonTotals($lessonsInWeek)
+    {
+        $amount = 0;
+
+        foreach ($lessonsInWeek as $lesson) {
+            if ($lesson->billingRate->type == 'lesson') {
+                $amount += ($lesson->billingRate->amount);
+            }
+
+            if ($lesson->billingRate->type == 'hourly') {
+                $amount += ($lesson->interval / 60 * $lesson->billingRate->amount);
+            }
+
+            if ($lesson->billingRate->type == 'monthly') {
+                $amount += ($lesson->billingRate->amount / 4);
+            }
+        }
+
+        return $amount ?? 0;
     }
 }

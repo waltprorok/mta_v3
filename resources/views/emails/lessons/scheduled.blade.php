@@ -4,7 +4,7 @@
 
 Greetings {{ $student->first_name }},
 
-Your music teacher {{ $teacher->first_name }} {{ $teacher->last_name }} <u>{{ is_null($status) ? 'Scheduled' : $status }}</u> your {{ $student->instrument }} lessons for the following day(s).
+Your music teacher {{ $teacher->first_name }} {{ $teacher->last_name }} <strong>{{ is_null($status) ? 'Scheduled' : $status }}</strong> your {{ $student->instrument }} lessons for the following day(s).
 
 <ul>
 @foreach($lessons as $lesson)
