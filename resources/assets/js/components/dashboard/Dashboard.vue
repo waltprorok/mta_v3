@@ -149,13 +149,13 @@ export default {
     data() {
         return {
             activeStudentCount: 0,
+            lessonsThisWeek: 0,
+            cancelledLessonsThisWeek: 0,
+            openTimeBlocks: 0,
             todayIncome: 0,
             weeklyIncome: 0,
             monthlyIncome: 0,
             yearlyIncome: 0,
-            lessonsThisWeek: 0,
-            cancelledLessonsThisWeek: 0,
-            openTimeBlocks: 0,
             subscriptionType: '',
             subscriptionText: '',
             subscriptionMessage: '',
