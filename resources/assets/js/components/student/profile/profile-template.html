@@ -109,7 +109,7 @@
                             <h6 class="mb-0">Next Lesson</h6>
                         </div>
                         <div class="col-sm-9" v-if="profile.has_one_future_lesson">
-                            {{ profile.has_one_future_lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('dddd | MM-DD-YYYY hh:mm a') }}
+                            {{ new Date(profile.has_one_future_lesson.start_date).toDateString() }} | {{ profile.has_one_future_lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }}
                         </div>
                     </div>
                 </div>

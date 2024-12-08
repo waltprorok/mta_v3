@@ -17,7 +17,7 @@
                     @csrf
                     @method('PUT')
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('studio_name') ? ' has-error' : '' }}">
                                 <label for="studio_name" class="control-label">Studio Name <span class="text-danger">*</span></label>
                                 <input id="studio_name" type="text" class="form-control" name="studio_name" value="{{ $setting->getTeacher->studio_name }}">

@@ -63,8 +63,8 @@ class LessonController extends Controller
                 'editable' => false,
                 'selectable' => true,
                 'defaultView' => Auth::user()->teacherSetting->calendar ?? 'month', // 'month' for full calendar 'listWeek', 'agendaWeek', 'agendaDay'
-                'minTime' => '08:00:00',
-                'maxTime' => '22:00:00',
+                'minTime' => Auth::user()->teacherSetting->calendar_min_time ?? '08:00:00',
+                'maxTime' => Auth::user()->teacherSetting->calendar_max_time ?? '22:00:00',
                 'fixedWeekCount' => false,
                 'height' => 840,
             ]);
