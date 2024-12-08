@@ -25,13 +25,13 @@ class DashboardController extends Controller
 
         return response()->json([
             'activeStudentCount' => $activeStudentCount,
+            'lessonsThisWeek' => $lessonsThisWeek,
+            'cancelledLessonsThisWeek' => $cancelledLessonsThisWeek,
+            'openTimeBlocks' => $openTimeBlocks,
             'todayIncome' => $todayIncome,
             'weeklyIncome' => $weeklyIncome,
             'monthlyIncome' => $monthlyIncome,
             'yearlyIncome' => $yearlyIncome,
-            'lessonsThisWeek' => $lessonsThisWeek,
-            'cancelledLessonsThisWeek' => $cancelledLessonsThisWeek,
-            'openTimeBlocks' => $openTimeBlocks,
             'subscriptionType' => $subscriptionType,
             'subscriptionText' => $subscriptionText,
             'subscriptionMessage' => $subscriptionMessage,

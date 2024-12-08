@@ -50,7 +50,6 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
         Route::get('{id}/edit', 'StudentController@show')->name('student.edit');
         Route::post('schedule/add', 'StudentLessonController@store')->name('student.schedule.save');
         Route::put('lessons/update', 'StudentLessonController@lessonsUpdate')->name('student.lessons.update');
-//        Route::post('process_date', 'StudentLessonController@ajaxTime');
     });
 
     Route::prefix('teacher')->group(function () {

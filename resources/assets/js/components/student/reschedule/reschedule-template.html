@@ -36,7 +36,7 @@
                                 <h6 class="mb-0">Appointment</h6>
                             </div>
                             <div class="col-sm-9">
-                               {{ new Date(lesson.start_date ).toDateString() }} | {{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm') }} - {{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }}
+                               {{ new Date(lesson.start_date).toDateString() }} | {{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm') }} - {{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }}
                             </div>
                         </div>
                         <hr>
