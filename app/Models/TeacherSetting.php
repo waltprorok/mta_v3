@@ -15,6 +15,8 @@ class TeacherSetting extends Model
     protected $fillable = [
         'teacher_id',
         'calendar',
+        'calendar_min_time',
+        'calendar_max_time',
         'auto_schedule_new_active_students',
     ];
 

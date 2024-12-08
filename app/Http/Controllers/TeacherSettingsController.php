@@ -31,10 +31,11 @@ class TeacherSettingsController extends Controller
         try {
             TeacherSetting::query()->create([
                 'teacher_id' => Auth::id(),
-                'calendar' => $request->get('calendar') ?? 'Month',
-                'auto_schedule_new_active_students' => $request->get('auto_schedule_new_active_students') ?? false,
+                'calendar' => $request->has('calendar') ? $request->get('calendar') : 'Month',
+                'calendar_min_time' => $request->has('calendar_min_time') ? $request->get('calendar_min_time') : null,
+                'calendar_max_time' => $request->has('calendar_max_time') ? $request->get('calendar_max_time') : null,
+                'auto_schedule_new_active_students' => $request->has('auto_schedule_new_active_students') ? $request->get('auto_schedule_new_active_students') : false,
             ]);
-
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             return response()->json([], Response::HTTP_BAD_REQUEST);

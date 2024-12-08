@@ -17,8 +17,10 @@ class CreateTeacherSettingsTable extends Migration
             $table->id();
             $table->integer('teacher_id')->unsigned();
             $table->foreign('teacher_id')->references('id')->on('users');
+            $table->enum('calendar', ['month', 'listWeek', 'agendaWeek', 'agendaDay'])->nullable()->default('month');
+            $table->string('calendar_min_time')->nullable();
+            $table->string('calendar_max_time')->nullable();
             $table->boolean('auto_schedule_new_active_students')->default(false);
-            $table->enum('calendar', ['month', 'listWeek', 'agendaWeek', 'agendaDay'])->default('month');
             $table->timestamps();
         });
     }

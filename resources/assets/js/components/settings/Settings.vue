@@ -7,11 +7,27 @@
                     <div class="col-md-3 pt-2">
                         <p>Calendar</p>
                         <div class="form-group">
-                            <label for="calendar-display">Default Calendar Display</label>
+                            <label for="calendar-display">Default Display</label>
                             <select id="calendar-display" class="form-control" v-model="settings.calendar" v-on:keydown.enter.prevent
-                                    @change="updatedSetting(settings.id)">
+                                    v-on:change="updatedSetting(settings.id)">
                                 <option v-for="setting in calendar" :key="setting.id" :value="setting.value">
                                     {{ setting.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="calendar-min-time">Min Time</label>
+                            <select id="calendar-min-time" class="form-control" v-model="settings.calendar_min_time" v-on:keydown.enter.prevent
+                                    v-on:change="updatedSetting(settings.id)">
+                                <option v-for="time in calendarTimes" :key="time.id" :value="time.value">
+                                    {{ time.name }}
+                                </option>
+                            </select>
+                            <label for="calendar-max-time">Max Time</label>
+                            <select id="calendar-max-time" class="form-control" v-model="settings.calendar_max_time" v-on:keydown.enter.prevent
+                                    v-on:change="updatedSetting(settings.id)">
+                                <option v-for="time in calendarTimes" :key="time.id" :value="time.value">
+                                    {{ time.name }}
                                 </option>
                             </select>
                         </div>
@@ -23,10 +39,10 @@
                         <p>Scheduling</p>
                         <div class="card">
                             <div class="card-header">
-                                Auto Schedule On For New (Active) Students
+                                Auto Schedule On | For New (Active) Students
                                 <div class="toggle-switch pull-right" data-ts-color="primary">
-                                    <input id="auto_schedule_new_active_students" type="checkbox" hidden="hidden" v-model="settings.auto_schedule_new_active_students"
-                                           @change="updatedSetting(settings.id)">
+                                    <input id="auto_schedule_new_active_students" type="checkbox" hidden="hidden"
+                                           v-model="settings.auto_schedule_new_active_students" @change="updatedSetting(settings.id)">
                                     <label for="auto_schedule_new_active_students" class="ts-helper"></label>
                                 </div>
                             </div>
@@ -40,14 +56,14 @@
 </template>
 
 <script>
-
 export default {
     name: 'Settings',
     data: function () {
         return {
-            // list: {},
             settings: {
                 'calendar': 'month',
+                'calendar_min_time': '08:00:00',
+                'calendar_max_time': '22:00:00',
                 'auto_schedule_new_active_students': false,
             },
             calendar: [
@@ -55,7 +71,26 @@ export default {
                 {value: 'listWeek', name: 'List Week'},
                 {value: 'agendaWeek', name: 'Agenda Week'},
                 {value: 'agendaDay', name: 'Agenda Day'},
-            ]
+            ],
+            calendarTimes: [
+                {value: '06:00:00', name: '6:00 am'},
+                {value: '07:00:00', name: '7:00 am'},
+                {value: '08:00:00', name: '8:00 am'},
+                {value: '09:00:00', name: '9:00 am'},
+                {value: '10:00:00', name: '10:00 am'},
+                {value: '11:00:00', name: '11:00 am'},
+                {value: '12:00:00', name: '12:00 pm'},
+                {value: '13:00:00', name: '1:00 pm'},
+                {value: '14:00:00', name: '2:00 pm'},
+                {value: '15:00:00', name: '3:00 pm'},
+                {value: '16:00:00', name: '4:00 pm'},
+                {value: '17:00:00', name: '5:00 pm'},
+                {value: '18:00:00', name: '6:00 pm'},
+                {value: '19:00:00', name: '7:00 pm'},
+                {value: '20:00:00', name: '8:00 pm'},
+                {value: '21:00:00', name: '9:00 pm'},
+                {value: '22:00:00', name: '10:00 pm'},
+            ],
         }
     },
 
@@ -80,7 +115,7 @@ export default {
         fetchTeacherSettingsList: function () {
             axios.get('/web/teacher-settings')
                 .then((response) => {
-                    this.settings = response.data;
+                    this.settings = Object.keys(response.data).length === 0 ? this.settings : response.data;
                 })
                 .catch((error) => {
                     console.log(error);
@@ -106,7 +141,7 @@ export default {
                     this.$notify({
                         type: 'success',
                         title: 'Success',
-                        text: 'Saved setting.',
+                        text: 'Saved setting(s).',
                         duration: 10000,
                     });
                 })
@@ -115,7 +150,7 @@ export default {
                     this.$notify({
                         type: 'error',
                         title: 'Error',
-                        text: 'Could not create billing rate.',
+                        text: 'Could not create teacher setting.',
                         duration: 10000,
                     });
                 });
