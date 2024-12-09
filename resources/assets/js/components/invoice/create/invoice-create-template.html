@@ -83,8 +83,8 @@
                                     </select>
                                 </td>
                                 <td>{{ lesson.status }}</td>
-                                <td>{{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY') }}</td>
-                                <td>{{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }} - {{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }}</td>
+                                <td>{{ new Date(lesson.start_date).toDateString() }}</td>
+                                <td>{{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm') }} - {{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }}</td>
                                 <td>{{ lesson.interval }} minutes</td>
                                 <td>{{ '$' + lesson.billing_rate.amount }} {{ lesson.billing_rate.description ? '| ' + lesson.billing_rate.description : '' }}</td>
                                 <td>{{ calculateLessonAmount(lesson) | toCurrency }}</td>
