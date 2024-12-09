@@ -21,7 +21,8 @@
                         <td>{{ row.total | toCurrency }}</td>
                         <td>{{ row.payment | toCurrency }}</td>
                         <td>{{ row.balance_due | toCurrency }}</td>
-                        <td>{{ row.due_date | dateParse('YYYY-MM-DD') | dateFormat('MM-DD-YYYY') }}</td>
+                        <td v-if="row.due_date">{{ row.due_date | dateParse('YYYY-MM-DD') | dateFormat('MM-DD-YYYY') }}</td>
+                        <td v-else></td>
                         <td>{{ row.i_created_at | dateParse('YYYY-MM-DD') | dateFormat('MM-DD-YYYY') }}</td>
                         <td class="text-nowrap">
                             <a :href="`/payments/invoice/show/${row.v_id}`" class="btn btn-sm btn-outline-primary" role="button" title="view"><i class="fa fa-file-pdf-o"></i></a>
@@ -90,6 +91,7 @@ export default {
         fetchPaymentsList: function () {
             axios.get('/web/payments')
                 .then((response) => {
+                    console.log(response.data.invoices);
                     this.list = response.data.invoices;
                 })
                 .catch((error) => {

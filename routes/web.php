@@ -79,14 +79,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('payments', 'PaymentController@index');
         Route::get('lesson/get/{id}', 'ParentController@getLesson');
         Route::patch('lesson/cancel', 'ParentController@cancelLesson');
-
     });
 
     // parent or student
     Route::prefix('payments')->group(function () {
         Route::view('/', 'webapp.payments.payments')->name('payment.index');
-        Route::get('/download/pdf/{id}', 'InvoiceController@downloadPDF')->name('payments.download.pdf');
-        Route::get('/invoice/show/{id}', 'InvoiceController@show')->name('payments.show');
+        Route::get('/download/pdf/{invoice:id}', 'InvoiceController@downloadPDF')->name('payments.download.pdf');
+        Route::get('/invoice/show/{invoice:id}', 'InvoiceController@show')->name('payments.show');
     });
 
     Route::get('support', 'SupportUserController@index')->name('support');
