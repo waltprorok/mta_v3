@@ -91,8 +91,8 @@
                                 <tr>
                                     <td>{{ $lesson->status }}</td>
                                     <td>{{ $lesson->title }}</td>
-                                    <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('D, d M Y') }}</td>
-                                    <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('g:i a') }} - {{ Carbon\Carbon::parse($lesson->end_date)->format('g:i a') }}</td>
+                                    <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('D, M d, Y') }}</td>
+                                    <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('g:i') }} - {{ Carbon\Carbon::parse($lesson->end_date)->format('g:i a') }}</td>
                                     <td>{{ $lesson->interval }} minutes</td>
                                     <td>{{ ucfirst($lesson->billingRate->type) }}</td>
                                     <td>${{ number_format($lesson->billingRate->amount, 2) }}</td>

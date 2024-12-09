@@ -80,11 +80,9 @@ class InvoiceController extends Controller
         return response()->json($students);
     }
 
-    public function show(int $id): View
+    public function show(Invoice $invoice): View
     {
-        $invoice = Invoice::with('student.getTeacher')
-            ->where('id', $id)
-            ->firstOrFail();
+        $invoice = $invoice->with('student.getTeacher')->firstOrFail();
 
         $lessonIds = explode(',', $invoice->lesson_id);
         $lessons = Lesson::whereIn('id', $lessonIds)->withTrashed()->get();
@@ -220,9 +218,9 @@ class InvoiceController extends Controller
         return response()->json();
     }
 
-    public function downloadPDF(Invoice $id)
+    public function downloadPDF(Invoice $invoice)
     {
-        $invoice = $this->getInvoiceStudentTeacherBillingRate($id);
+        $invoice = $this->getInvoiceStudentTeacherBillingRate($invoice);
 
         if (is_null($invoice)) {
             return null;
@@ -240,9 +238,9 @@ class InvoiceController extends Controller
         return $pdfFile->download('Invoice_MTA_' . $invoice->id . '.pdf');
     }
 
-    public function storePDF(Invoice $id)
+    public function storePDF(Invoice $invoice)
     {
-        $invoice = $this->getInvoiceStudentTeacherBillingRate($id);
+        $invoice = $this->getInvoiceStudentTeacherBillingRate($invoice);
 
         $pdf = app(PDF::class);
         $pdf->setPaper('A4');
@@ -255,10 +253,10 @@ class InvoiceController extends Controller
 
     private function getInvoiceStudentTeacherBillingRate(Invoice $invoice)
     {
-        return Invoice::with('student.getTeacher')
+        return $invoice->with('student.getTeacher')
             ->with('lessons.billingRate')
             ->where('teacher_id', $invoice->teacher_id)
-            ->findOrFail($invoice->id);
+            ->firstOrFail();
     }
 
     public function getListOfPayments()

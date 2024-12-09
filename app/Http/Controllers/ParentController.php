@@ -144,7 +144,7 @@ class ParentController extends Controller
 
             $body = 'Lesson for ' . $lesson->title . ' has been '
                 . $lesson->status . ' on this date: '
-                . Carbon::parse($lesson->start_date)->format(' D Y-m-d g:i a')
+                . Carbon::parse($lesson->start_date)->format(' D Y-m-d g:i')
                 . ' to ' . Carbon::parse($lesson->end_date)->format('g:i a') . '.';
 
             Message::query()->create([

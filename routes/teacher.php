@@ -35,10 +35,10 @@ Route::group(['middleware' => ['auth', 'teacher']], function () {
 
     Route::prefix('invoice')->group(function () {
         Route::view('/', 'webapp.invoice.index')->name('invoice.index');
-        Route::get('/show/{id}', 'InvoiceController@show')->name('invoice.show');
+        Route::get('/show/{invoice:id}', 'InvoiceController@show')->name('invoice.show');
         Route::view('/create', 'webapp.invoice.create')->name('invoice.create');
         Route::view('/list-of-payments', 'webapp.invoice.list_of_payments')->name('invoice.list_of_payments');
-        Route::get('/download/pdf/{id}', 'InvoiceController@downloadPDF')->name('invoice.download.pdf');
+        Route::get('/download/pdf/{invoice:id}', 'InvoiceController@downloadPDF')->name('invoice.download.pdf');
     });
 
     Route::prefix('students')->group(function () {
