@@ -82,7 +82,7 @@ class InvoiceController extends Controller
 
     public function show(Invoice $invoice): View
     {
-        $invoice = $invoice->with('student.getTeacher')->firstOrFail();
+        $invoice = $invoice->with('student.getTeacher')->findOrFail($invoice->id);
 
         $lessonIds = explode(',', $invoice->lesson_id);
         $lessons = Lesson::whereIn('id', $lessonIds)->withTrashed()->get();
@@ -243,7 +243,7 @@ class InvoiceController extends Controller
         return $invoice->with('student.getTeacher')
             ->with('lessons.billingRate')
             ->where('teacher_id', $invoice->teacher_id)
-            ->firstOrFail();
+            ->findOrFail($invoice->id);
     }
 
     public function getListOfPayments()

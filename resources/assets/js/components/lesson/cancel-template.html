@@ -33,19 +33,10 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Appointment Start</h6>
+                                <h6 class="mb-0">Appointment</h6>
                             </div>
                             <div class="col-sm-9">
-                                {{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Appointment End</h6>
-                            </div>
-                            <div class="col-sm-9">
-                                {{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}
+                                {{ new Date(lesson.start_date).toDateString() }} | {{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm') }} - {{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }}
                             </div>
                         </div>
                         <hr>
@@ -63,7 +54,7 @@
                                 <h6 class="mb-0">Status</h6>
                             </div>
                             <div class="col-sm-9" v-if="lesson.status === 'Cancelled' && lesson.status_updated_at !== null">
-                                {{ lesson.status }} on {{ lesson.status_updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}
+                                {{ lesson.status }} on {{ new Date(lesson.status_updated_at).toDateString() }} | {{ lesson.status_updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }}
                             </div>
                             <div class="col-sm-9" v-else>
                                 {{ lesson.status }}
@@ -76,7 +67,7 @@
                 <div class="card-body">
                     <div class="row">
                         <label for="notes" class="control-label">Lesson Notes</label>
-                        <textarea class="form-control" rows="15" disabled>{{ lesson.notes }}</textarea>
+                        <textarea class="form-control" rows="13" disabled>{{ lesson.notes }}</textarea>
                     </div>
                 </div>
             </div>
