@@ -35,7 +35,7 @@
                                 <div class="col-sm-12">
                                     <i class="fa fa-envelope" aria-hidden="true"></i>
                                     <span class="pl-3">
-                                        <a href="mailto:{{ $student->email }}">{{ $student->email }}</a>&nbsp;<small class="text-secondary">&nbsp;<em>&#8226;</em>&nbsp;Student</small>
+                                        {{ $student->email }}&nbsp;<small class="text-secondary">&nbsp;<em>&#8226;</em>&nbsp;Student</small>
                                     </span>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                                 <div class="col-sm-12">
                                     <i class="fa fa-envelope" aria-hidden="true"></i>
                                     <span class="pl-3">
-                                        <a href="mailto:{{ $student->parent->email }}">{{ $student->parent->email }}</a>&nbsp;<small class="text-secondary">&nbsp;<em>&#8226;</em>&nbsp;Parent</small>
+                                        {{ $student->parent->email }}&nbsp;<small class="text-secondary">&nbsp;<em>&#8226;</em>&nbsp;Parent</small>
                                     </span>
                                 </div>
                             </div>

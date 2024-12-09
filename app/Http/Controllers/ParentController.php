@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CancelLesson;
 use App\Models\Holiday;
 use App\Models\Lesson;
 use App\Models\Message;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use LaravelFullCalendar\Facades\Calendar;
 
@@ -144,8 +146,8 @@ class ParentController extends Controller
 
             $body = 'Lesson for ' . $lesson->title . ' has been '
                 . $lesson->status . ' on this date: '
-                . Carbon::parse($lesson->start_date)->format(' D Y-m-d g:i')
-                . ' to ' . Carbon::parse($lesson->end_date)->format('g:i a') . '.';
+                . Carbon::parse($lesson->start_date)->format('D, M d, Y g:i')
+                . ' - ' . Carbon::parse($lesson->end_date)->format('g:i a') . '.';
 
             Message::query()->create([
                 'user_id_from' => Auth::id(),
@@ -154,6 +156,9 @@ class ParentController extends Controller
                 'read' => 0,
                 'deleted' => 0,
             ]);
+
+            Mail::to($lesson->student->getTeacher->email)
+                ->queue(new CancelLesson($lesson->student, $lesson));
 
         } catch (Exception $exception) {
             Log::info($exception->getMessage());

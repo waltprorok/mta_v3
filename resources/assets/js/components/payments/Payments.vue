@@ -91,7 +91,6 @@ export default {
         fetchPaymentsList: function () {
             axios.get('/web/payments')
                 .then((response) => {
-                    console.log(response.data.invoices);
                     this.list = response.data.invoices;
                 })
                 .catch((error) => {
