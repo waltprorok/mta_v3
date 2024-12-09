@@ -134,6 +134,14 @@ export default {
 
         saveTeacherSettings: function () {
             let self = this;
+            if (self.settings.calendar_min_time > self.settings.calendar_max_time) {
+                return this.$notify({
+                    type: 'warn',
+                    title: 'Warning',
+                    text: 'Min time can not be greater than max time.',
+                    duration: 10000,
+                });
+            }
             let params = Object.assign({}, self.settings);
             axios.post('/web/teacher-settings', params)
                 .then(() => {
@@ -158,6 +166,14 @@ export default {
 
         updateTeacherSettings: function (id) {
             let self = this;
+            if (self.settings.calendar_min_time > self.settings.calendar_max_time) {
+                return this.$notify({
+                    type: 'warn',
+                    title: 'Warning',
+                    text: 'Min time can not be greater than max time.',
+                    duration: 10000,
+                });
+            }
             let params = Object.assign({}, self.settings);
             axios.patch('/web/teacher-settings/' + id, params)
                 .then(() => {

@@ -19,7 +19,7 @@
                                     <hr/>
                                     <div class="form-group pull-right">
                                         <button v-on:click="showModal=false" class="btn btn-default">Cancel</button>
-                                        <button v-on:click="completePast()" class="btn btn-primary">Complete</button>
+                                        <button v-on:click="completePast()" class="btn btn-primary">Confirm</button>
                                     </div>
                                 </div>
                             </div>

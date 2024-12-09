@@ -79,8 +79,8 @@
             <tr class="items">
                 <td>{{ $item->status }}</td>
                 <td>{{ $item->title }}</td>
-                <td>{{ Carbon\Carbon::parse($item->start_date)->format('D, d M Y') }}</td>
-                <td>{{ Carbon\Carbon::parse($item->start_date)->format('g:i a') }} - {{ Carbon\Carbon::parse($item->end_date)->format('g:i a') }}</td>
+                <td>{{ Carbon\Carbon::parse($item->start_date)->format('D, M d, Y') }}</td>
+                <td>{{ Carbon\Carbon::parse($item->start_date)->format('g:i') }} - {{ Carbon\Carbon::parse($item->end_date)->format('g:i a') }}</td>
                 <td>{{ $item->interval }} minutes</td>
                 <td>{{ ucfirst($item->billingRate->type) }}</td>
             </tr>
