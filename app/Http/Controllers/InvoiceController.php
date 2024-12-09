@@ -82,7 +82,7 @@ class InvoiceController extends Controller
 
     public function show(Invoice $invoice): View
     {
-        $invoice = $invoice->with('student.getTeacher')->firstOrFail();
+        $invoice = $invoice->with('student.getTeacher')->findOrFail($invoice->id);
 
         $lessonIds = explode(',', $invoice->lesson_id);
         $lessons = Lesson::whereIn('id', $lessonIds)->withTrashed()->get();
@@ -156,20 +156,7 @@ class InvoiceController extends Controller
             }
 
             $invoice = $this->storePDF($newInvoice);
-
-            // student does not have email but parent does have email
-            if (is_null($invoice->student->email) && $additionalEmail) {
-                Mail::to($additionalEmail)->queue(new LessonsInvoice($invoice));
-            } // just parent has email
-            elseif ($additionalEmail) {
-                Mail::to($additionalEmail)->queue(new LessonsInvoice($invoice));
-            } // just the student has an email
-            elseif (! is_null($invoice->student->email) && is_null($additionalEmail)) {
-                Mail::to($invoice->student->email)->queue(new LessonsInvoice($invoice));
-            } // student and parent have an email
-            elseif (! is_null($invoice->student->email && ! is_null($additionalEmail))) {
-                Mail::to($invoice->student->email)->cc($additionalEmail)->queue(new LessonsInvoice($invoice));
-            }
+            $this->emailInvoiceToStudentOrParent($invoice, $additionalEmail);
 
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
@@ -256,7 +243,7 @@ class InvoiceController extends Controller
         return $invoice->with('student.getTeacher')
             ->with('lessons.billingRate')
             ->where('teacher_id', $invoice->teacher_id)
-            ->firstOrFail();
+            ->findOrFail($invoice->id);
     }
 
     public function getListOfPayments()
@@ -288,5 +275,27 @@ class InvoiceController extends Controller
         $paymentTypes = PaymentType::query()->get(['id', 'name']);
 
         return response()->json($paymentTypes);
+    }
+
+    /**
+     * @param $invoice
+     * @param $additionalEmail
+     * @return void
+     */
+    private function emailInvoiceToStudentOrParent($invoice, $additionalEmail): void
+    {
+        // student does not have email but parent does have email
+        if (is_null($invoice->student->email) && $additionalEmail) {
+            Mail::to($additionalEmail)->queue(new LessonsInvoice($invoice));
+        } // just parent has email
+        elseif ($additionalEmail) {
+            Mail::to($additionalEmail)->queue(new LessonsInvoice($invoice));
+        } // just the student has an email
+        elseif (! is_null($invoice->student->email) && is_null($additionalEmail)) {
+            Mail::to($invoice->student->email)->queue(new LessonsInvoice($invoice));
+        } // student and parent have an email
+        elseif (! is_null($invoice->student->email && ! is_null($additionalEmail))) {
+            Mail::to($invoice->student->email)->cc($additionalEmail)->queue(new LessonsInvoice($invoice));
+        }
     }
 }

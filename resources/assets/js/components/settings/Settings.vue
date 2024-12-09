@@ -4,7 +4,7 @@
         <div class="card-body">
             <form class="form-horizontal" action="#">
                 <div class="row">
-                    <div class="col-md-3 pt-2">
+                    <div class="col-md-4 pt-2">
                         <p>Calendar</p>
                         <div class="form-group">
                             <label for="calendar-display">Default Display</label>
@@ -32,9 +32,6 @@
                             </select>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
                     <div class="col-md-4 pt-2">
                         <p>Scheduling</p>
                         <div class="card">
@@ -64,7 +61,7 @@ export default {
                 'calendar': 'month',
                 'calendar_min_time': '08:00:00',
                 'calendar_max_time': '22:00:00',
-                'auto_schedule_new_active_students': false,
+                'auto_schedule_new_active_students': true,
             },
             calendar: [
                 {value: 'month', name: 'Month'},
