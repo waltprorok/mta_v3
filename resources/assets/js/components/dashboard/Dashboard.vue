@@ -127,9 +127,8 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            Completed Lessons
+                            Lessons
                         </div>
-
                         <div class="card-body p-0">
                             <div class="p-4">
                                 <report-completed-lessons-line :width="100" :height="20"></report-completed-lessons-line>
