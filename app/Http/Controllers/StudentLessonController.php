@@ -197,7 +197,6 @@ class StudentLessonController extends Controller
     {
         try {
             $this->scheduleUpdate($request);
-            // TODO: email student / parent of lesson change
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             return response()->json([], Response::HTTP_BAD_REQUEST);
@@ -430,6 +429,7 @@ class StudentLessonController extends Controller
             $lessons = collect();
             $lessons[] = $lesson;
             $student = Student::query()->with('getTeacher')->with('parent')->findOrFail($lesson->student->id); // needed for email
+
             $this->studentLessonService->emailLessonsToStudentParent($student, $lessons, $request->get('status'));
         }
     }
