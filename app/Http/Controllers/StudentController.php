@@ -191,7 +191,7 @@ class StudentController extends Controller
 
     private function isStatusActive($request): bool
     {
-        return Auth::user()->teacherSetting->auto_schedule_new_active_students && $request->get('status') == 1;
+        return Auth::user()->teacherSetting->auto_schedule_new_active_students && $request->get('status') == Student::ACTIVE;
     }
 
     /**
