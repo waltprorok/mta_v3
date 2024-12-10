@@ -230,7 +230,7 @@ class StudentController extends Controller
                     'auto_schedule' => $this->isStatusActive($request),
                 ]);
 
-                // send email
+                // send email to new parent user
                 Mail::to($parentUser->email)->queue(new WelcomeNewUserMail($parentUser));
             } catch (\Exception $exception) {
                 Log::info($exception->getMessage());
