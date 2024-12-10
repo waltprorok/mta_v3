@@ -23,6 +23,8 @@
                                     {{ time.name }}
                                 </option>
                             </select>
+                        </div>
+                        <div class="form-group">
                             <label for="calendar-max-time">Max Time</label>
                             <select id="calendar-max-time" class="form-control" v-model="settings.calendar_max_time" v-on:keydown.enter.prevent
                                     v-on:change="updatedSetting(settings.id)">
@@ -33,10 +35,13 @@
                         </div>
                     </div>
                     <div class="col-md-4 pt-2">
-                        <p>Scheduling</p>
+                        <p>Lesson Scheduling</p>
                         <div class="card">
+                            <div class="card-header bg-light">
+                                Auto Schedule On
+                            </div>
                             <div class="card-header">
-                                Auto Schedule On | For New (Active) Students
+                                For New (Active) Students
                                 <div class="toggle-switch pull-right" data-ts-color="primary">
                                     <input id="auto_schedule_new_active_students" type="checkbox" hidden="hidden"
                                            v-model="settings.auto_schedule_new_active_students" @change="updatedSetting(settings.id)">
