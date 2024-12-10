@@ -19,10 +19,10 @@ class CancelLesson extends Mailable
      *
      * @return void
      */
-    public function __construct($student, $lesson)
+    public function __construct($lesson)
     {
-        $this->student = $student;
         $this->lesson = $lesson;
+        $this->student = $lesson->student;
     }
 
     /**
@@ -33,6 +33,7 @@ class CancelLesson extends Mailable
     public function build(): CancelLesson
     {
         $emailFrom = $this->student->email ?? $this->student->parent->email;
+
         $subject = Carbon::parse($this->lesson->start_date)->format('D, M d, Y g:i')
             . ' - ' . Carbon::parse($this->lesson->end_date)->format('g:i a');
 
