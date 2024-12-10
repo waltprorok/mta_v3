@@ -191,7 +191,7 @@ class StudentController extends Controller
 
     private function isStatusActive($request): bool
     {
-        return Auth::user()->teacherSetting->auto_schedule_new_active_students && $request->get('status') == 1;
+        return Auth::user()->teacherSetting->auto_schedule_new_active_students && $request->get('status') == Student::ACTIVE;
     }
 
     /**
@@ -230,7 +230,7 @@ class StudentController extends Controller
                     'auto_schedule' => $this->isStatusActive($request),
                 ]);
 
-                // send email
+                // send email to new parent user
                 Mail::to($parentUser->email)->queue(new WelcomeNewUserMail($parentUser));
             } catch (\Exception $exception) {
                 Log::info($exception->getMessage());
