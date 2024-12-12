@@ -54,31 +54,39 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     // student and teacher calendar routes
-    Route::prefix('calendar')->group(function () {
-        Route::get('/', 'LessonController@index')->name('calendar.index');
-        Route::get('student', 'StudentUserController@calendar')->name('student.calendar');
-        Route::view('lesson/get/{id}', 'webapp.lesson.cancel')->name('lesson.cancel');
+    Route::group(['middleware' => ['subscribed']], function () {
+        Route::prefix('calendar')->group(function () {
+            Route::get('/', 'LessonController@index')->name('calendar.index');
+            Route::get('student', 'StudentUserController@calendar')->name('student.calendar');
+            Route::view('lesson/get/{id}', 'webapp.lesson.cancel')->name('lesson.cancel');
+        });
     });
 
-    Route::prefix('lessons')->group(function () {
-        Route::view('/', 'webapp.lessons.index')->name('complete.lessons');
-        Route::get('list/{fromDate}/{toDate}', 'LessonController@list');
-        Route::patch('update/{lesson}', 'LessonController@update');
-        Route::put('update/past', 'LessonController@completePast');
+    Route::group(['middleware' => ['subscribed']], function () {
+        Route::prefix('lessons')->group(function () {
+            Route::view('/', 'webapp.lessons.index')->name('complete.lessons');
+            Route::get('list/{fromDate}/{toDate}', 'LessonController@list');
+            Route::patch('update/{lesson}', 'LessonController@update');
+            Route::put('update/past', 'LessonController@completePast');
+        });
     });
 
-    Route::prefix('messages')->group(function () {
-        Route::view('/', 'webapp.messages.index')->name('message.index');
+    Route::group(['middleware' => ['subscribed']], function () {
+        Route::prefix('messages')->group(function () {
+            Route::view('/', 'webapp.messages.index')->name('message.index');
+        });
     });
 
-    Route::prefix('web')->group(function () {
-        Route::get('messages/inbox', 'MessagesController@index');
-        Route::get('messages/index/{id}', 'MessagesController@show');
-        Route::get('messages/status/{status?}', 'MessagesController@status');
-        Route::post('messages/store', 'MessagesController@store');
-        Route::get('payments', 'PaymentController@index');
-        Route::get('lesson/get/{id}', 'ParentController@getLesson');
-        Route::patch('lesson/cancel', 'ParentController@cancelLesson');
+    Route::group(['middleware' => ['subscribed']], function () {
+        Route::prefix('web')->group(function () {
+            Route::get('messages/inbox', 'MessagesController@index');
+            Route::get('messages/index/{id}', 'MessagesController@show');
+            Route::get('messages/status/{status?}', 'MessagesController@status');
+            Route::post('messages/store', 'MessagesController@store');
+            Route::get('payments', 'PaymentController@index');
+            Route::get('lesson/get/{id}', 'ParentController@getLesson');
+            Route::patch('lesson/cancel', 'ParentController@cancelLesson');
+        });
     });
 
     // parent or student
@@ -104,5 +112,6 @@ Route::group(['middleware' => ['auth']], function () {
 // middleware guard for subscribed users
 // Route::group(['middleware' => ['subscribed']], function () {
 //// Example of single route with middleware
-// Route::get('/', 'LessonController@index')->name('calendar.index')->middleware('subscribed');
+// Route::get('calendar', 'LessonController@index')->name('calendar.index');
+//// Route::get('calendar', 'LessonController@index')->name('calendar.index')->middleware('subscribed');
 // });

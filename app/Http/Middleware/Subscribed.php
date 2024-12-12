@@ -16,8 +16,11 @@ class Subscribed
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user() && ! $request->user()->subscribed('premium'))
-        {
+        if ($request->user() && $request->user()->isTeacher() && (now() < $request->user()->trial_ends_at)) {
+            return $next($request);
+        }
+
+        if ($request->user() && $request->user()->isTeacher() && (now() > $request->user()->trial_ends_at) && ! $request->user()->subscribed('premium')) {
             return redirect('/account/subscription')
                 ->with('info', 'Please subscribe to enjoy all the benefits of Music Teachers Aid.');
         }
