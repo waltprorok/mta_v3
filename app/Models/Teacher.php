@@ -61,7 +61,7 @@ class Teacher extends Model
 
     public function getFullNameAttribute(): string
     {
-        return "{$this->first_name} {$this->last_name}";
+        return ucwords("{$this->first_name} {$this->last_name}");
     }
 
     public function getPhoneNumberAttribute(): ?string
