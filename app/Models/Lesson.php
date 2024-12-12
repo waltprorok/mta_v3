@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -84,5 +85,15 @@ class Lesson extends Model
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class, 'student_id');
+    }
+
+    public function wasCancelledUnder24Hours(): bool
+    {
+        return $this->status == self::STATUS[2] && (Carbon::parse($this->status_updated_at)->diffInHours(Carbon::parse($this->start_date)) <= 24);
+    }
+
+    public function wasCancelledUnder48Hours(): bool
+    {
+        return $this->status == self::STATUS[2] && (Carbon::parse($this->status_updated_at)->diffInHours(Carbon::parse($this->start_date)) <= 48);
     }
 }

@@ -91,7 +91,7 @@ class ScheduleMonthlyLessons extends Command
             ->chunk(50, function ($students) use ($lessonsEnd) {
                 $endWeekNumberInMonth = Carbon::parse($lessonsEnd)->weekNumberInMonth;
                 foreach ($students as $student) {
-                    if ($student->lessons->isNotEmpty()) {
+                    if ($student->lessons->isNotEmpty() && $student->getTeacher->teacher->isOnTrialOrSubscribed()) {
                         $startDateFirst = Carbon::parse($student->lessons->first()->start_date);
                         $endDateFirst = Carbon::parse($student->lessons->first()->end_date);
 
