@@ -30,12 +30,26 @@ export default {
                                 labels: this.months,
                                 datasets: [
                                     {
-                                        label: 'Lessons',
+                                        label: 'Completed',
                                         data: this.completed,
                                         backgroundColor: 'rgba(66, 165, 245, 0.5)',
                                         borderColor: '#2196F3',
                                         borderWidth: 1
                                     },
+                                    // { WIP: should this data be available?
+                                    //     label: 'Cancelled',
+                                    //     data: [0,1,2,3,2,3,4,2,0,1,1,0],
+                                    //     backgroundColor: 'rgba(244,39,70,0.5)',
+                                    //     borderColor: '#CD6155',
+                                    //     borderWidth: 1
+                                    // },
+                                    // {
+                                    //     label: 'Rescheduled',
+                                    //     data: [3,4,5,2,1,7,2,3,4,0,2,1],
+                                    //     backgroundColor: 'rgba(211,114,39,0.5)',
+                                    //     borderColor: '#E59866',
+                                    //     borderWidth: 1
+                                    // },
                                 ]
                             },
                             {

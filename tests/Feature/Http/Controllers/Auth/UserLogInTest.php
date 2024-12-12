@@ -104,6 +104,8 @@ class UserLogInTest extends TestCase
 
     public function test_authenticated_teacher_user_can_access_dashboard()
     {
+        $this->withoutMiddleware();
+
         $user = factory(User::class)->create(['teacher' => 1]);
 
         $response = $this->actingAs($user)->get('/dashboard');

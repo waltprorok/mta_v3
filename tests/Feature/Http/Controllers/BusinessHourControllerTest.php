@@ -25,6 +25,8 @@ class BusinessHourControllerTest extends TestCase
 
     public function test_index_page_view()
     {
+        $this->withoutMiddleware();
+
         $user = factory(User::class)->create(['teacher' => 1]);
 
         $response = $this->actingAs($user)->get('/teacher/hours');

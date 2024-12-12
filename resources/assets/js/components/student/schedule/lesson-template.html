@@ -121,7 +121,7 @@
                         <label for="billing_rate" class="control-label">Billing Rate</label>
                         <select class="form-control" id="billing_rate" v-model="lesson.billing_rate_id" v-on:keydown.enter.prevent>
                             <option v-for="rate in billingRates" :value="rate.id">
-                                {{ rate.amount | toCurrency }} | {{ rate.type | capitalising }} - {{ rate.description | capitalising }}
+                                {{ rate.amount | toCurrency }} | {{ rate.type | capitalising }}
                             </option>
                         </select>
                         <small>{{ error_billing_rate_id }}</small>

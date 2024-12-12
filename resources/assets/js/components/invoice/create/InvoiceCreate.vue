@@ -220,8 +220,7 @@ export default {
         fetchInvoiceData: function () {
             axios.get('/web/invoice-create/' + this.month)
                 .then((response) => {
-                    let self = this;
-                    self.list = response.data;
+                    this.list = response.data;
                 })
                 .catch((error) => {
                     console.log(error);
