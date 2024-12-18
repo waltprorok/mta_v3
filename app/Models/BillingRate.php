@@ -45,9 +45,9 @@ class BillingRate extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function billingRate(): HasOne
+    public function lesson(): HasOne
     {
-        return $this->hasOne(Lesson::class, 'billing_rate_id', 'id')->where('complete', false);
+        return $this->hasOne(Lesson::class, 'billing_rate_id', 'id');
     }
 
     public function lessons(): HasMany
