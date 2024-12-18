@@ -15,7 +15,7 @@ class TeacherSettingsController extends Controller
     public function index()
     {
         try {
-            $billingRate = TeacherSetting::query()
+            $teacherSettings = TeacherSetting::query()
                 ->where('teacher_id', Auth::id())
                 ->first();
         } catch (Exception $exception) {
@@ -23,7 +23,7 @@ class TeacherSettingsController extends Controller
             return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
-        return response()->json($billingRate);
+        return response()->json($teacherSettings);
     }
 
     public function store(Request $request): JsonResponse

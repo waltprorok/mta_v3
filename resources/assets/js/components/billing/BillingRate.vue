@@ -19,6 +19,7 @@ export default {
                 {label: 'Description', filterable: false, sortable: false},
                 {label: 'Created', filterable: false, sortable: false},
                 {label: 'Default', filterable: false, sortable: false},
+                {label: 'Flat Rate', filterable: false, sortable: false},
                 {label: 'Action', filterable: false, sortable: false},
             ],
             types: ['lesson', 'hourly', 'monthly'],
@@ -38,6 +39,10 @@ export default {
                 description: null,
                 default: false,
                 active: true,
+                flat_rate: false,
+                cancelled_twenty_four_hours: false,
+                cancelled_forty_eight_hours: false,
+                lesson: null,
             },
         }
     },
@@ -96,6 +101,9 @@ export default {
             self.rate.description = null;
             self.rate.default = false;
             self.rate.active = true;
+            self.flat_rate = false;
+            self.cancelled_twenty_four_hours = false;
+            self.cancelled_forty_eight_hours = false;
             self.edit = false;
         },
 
@@ -173,17 +181,29 @@ export default {
                 });
         },
 
+        isMonthlyRate: function () {
+            if (this.rate.type === 'monthly') {
+                this.rate.flat_rate = true;
+                return true;
+            }
+            return false;
+        },
+
         showDefaultIcon: function (row) {
-            return row.default === true && row.active ===true;
+            return row.default === true && row.active === true;
         },
 
         /**
          * @param {Object} row
-         * @property {Object} billing_rate
+         * @property {Object} lesson
          * @returns {boolean}
          */
         showDeleteIcon: function (row) {
-            return row.billing_rate === null;
+            return row.lesson === null;
+        },
+
+        disableInputNoLesson: function () {
+            return this.rate.lesson !== null;
         },
 
         showModalDelete: function (id) {
@@ -205,6 +225,10 @@ export default {
                     self.rate.description = response.data.description;
                     self.rate.default = response.data.default;
                     self.rate.active = response.data.active;
+                    self.rate.flat_rate = response.data.flat_rate;
+                    self.rate.cancelled_twenty_four_hours = response.data.cancelled_twenty_four_hours;
+                    self.rate.cancelled_forty_eight_hours = response.data.cancelled_forty_eight_hours;
+                    self.rate.lesson = response.data.lesson;
                 })
             self.edit = true;
         },

@@ -18,7 +18,7 @@ class BillingRateController extends Controller
         try {
             $billingRate = BillingRate::query()
                 ->where('teacher_id', Auth::id())
-                ->with('billingRate')
+                ->with('lesson:id,billing_rate_id,teacher_id')
                 ->orderBy('active', 'desc')
                 ->get();
         } catch (Exception $exception) {
@@ -31,6 +31,14 @@ class BillingRateController extends Controller
 
     public function show(BillingRate $billingRate): JsonResponse
     {
+        $billingRate = BillingRate::query()
+            ->where('id', $billingRate->id)
+            ->where('teacher_id', Auth::id())
+            ->with(['lesson' => function ($query) {
+                $query->where('teacher_id', Auth::id());
+            }])
+            ->first();
+
         return response()->json($billingRate);
     }
 
@@ -43,7 +51,9 @@ class BillingRateController extends Controller
                 'amount' => $request->get('amount'),
                 'description' => $request->get('description'),
                 'default' => $request->get('default'),
-                'active' => $request->get('active'),
+                'flat_rate' => $request->get('type') == 'monthly' ? true : $request->get('flat_rate'),
+                'cancelled_twenty_four_hours' => $request->get('cancelled_twenty_four_hours'),
+                'cancelled_forty_eight_hours' => $request->get('cancelled_forty_eight_hours'),
             ]);
 
         } catch (Exception $exception) {

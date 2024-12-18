@@ -95,7 +95,11 @@
                                     <td>{{ Carbon\Carbon::parse($lesson->start_date)->format('g:i') }} - {{ Carbon\Carbon::parse($lesson->end_date)->format('g:i a') }}</td>
                                     <td>{{ $lesson->interval }} minutes</td>
                                     <td>{{ ucfirst($lesson->billingRate->type) }}</td>
-                                    <td>${{ number_format($lesson->billingRate->amount, 2) }}</td>
+                                    @if(! $lesson->billingRate->flat_rate)
+                                        <td>${{ number_format($lesson->billingRate->amount, 2) }}</td>
+                                    @else
+                                        <td>Flat Rate</td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>

@@ -94,7 +94,7 @@ class User extends Authenticatable
 
     public function getFullNameAttribute(): string
     {
-        return "{$this->first_name} {$this->last_name}";
+        return ucwords("{$this->first_name} {$this->last_name}");
     }
 
     public function getTeacher(): HasOne
@@ -105,6 +105,16 @@ class User extends Authenticatable
     public function getTeacherPaymentRate(): HasMany
     {
         return $this->hasMany(BillingRate::class, 'teacher_id');
+    }
+
+    public function getTimeZone(): string
+    {
+        return $this->timezone ?? 'UTC';
+    }
+
+    public function holidays(): HasMany
+    {
+        return $this->hasMany(Holiday::class, 'teacher_id');
     }
 
     public function isAdmin(): bool
@@ -127,14 +137,9 @@ class User extends Authenticatable
         return $this->teacher && $this->teacher !== null;
     }
 
-    public function getTimeZone(): string
+    public function isOnTrialOrSubscribed(): bool
     {
-        return $this->timezone ?? 'UTC';
-    }
-
-    public function holidays(): HasMany
-    {
-        return $this->hasMany(Holiday::class, 'teacher_id');
+        return $this->isTeacher() && ((now() < $this->trial_ends_at) || $this->subscribed('premium'));
     }
 
     public function lessons(): HasMany

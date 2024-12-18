@@ -22,12 +22,18 @@ class BillingRate extends Model
         'description',
         'default',
         'active',
+        'flat_rate',
+        'cancelled_twenty_four_hours',
+        'cancelled_forty_eight_hours',
     ];
 
     protected $casts = [
         'amount' => 'decimal:2',
         'default' => 'boolean',
         'active' => 'boolean',
+        'flat_rate' => 'boolean',
+        'cancelled_twenty_four_hours' => 'boolean',
+        'cancelled_forty_eight_hours' => 'boolean',
     ];
 
     /**
@@ -39,9 +45,9 @@ class BillingRate extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function billingRate(): HasOne
+    public function lesson(): HasOne
     {
-        return $this->hasOne(Lesson::class, 'billing_rate_id', 'id')->where('complete', false);
+        return $this->hasOne(Lesson::class, 'billing_rate_id', 'id');
     }
 
     public function lessons(): HasMany

@@ -8,6 +8,7 @@ use App\Models\Invoice;
 use App\Models\Lesson;
 use App\Models\PaymentType;
 use App\Models\Student;
+use App\Services\InvoiceService;
 use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Exception;
@@ -22,6 +23,16 @@ use Illuminate\View\View;
 
 class InvoiceController extends Controller
 {
+    /**
+     * @var StudentLessonService
+     */
+    private $invoiceService;
+
+    public function __construct(InvoiceService $invoiceService)
+    {
+        $this->invoiceService = $invoiceService;
+    }
+
     public function index(): JsonResponse
     {
         $students = Invoice::with('student:id,first_name,last_name,phone,email')
@@ -53,7 +64,11 @@ class InvoiceController extends Controller
 
         $lastInvoice = Invoice::where('student_id', $student->id)->orderBy('created_at', 'desc')->first();
 
-        return response()->json(['lessons' => $filteredLessons, 'studentTeacher' => $studentTeacher, 'lastInvoice' => $lastInvoice]);
+        return response()->json([
+                'lessons' => $filteredLessons,
+                'studentTeacher' => $studentTeacher,
+                'lastInvoice' => $lastInvoice,
+            ]);
     }
 
     public function createInvoice(string $month = null)
@@ -156,7 +171,7 @@ class InvoiceController extends Controller
             }
 
             $invoice = $this->storePDF($newInvoice);
-            $this->emailInvoiceToStudentOrParent($invoice, $additionalEmail);
+            $this->invoiceService->emailInvoiceToStudentOrParent($invoice, $additionalEmail);
 
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
@@ -246,6 +261,7 @@ class InvoiceController extends Controller
             ->findOrFail($invoice->id);
     }
 
+    // web api endpoint
     public function getListOfPayments()
     {
         $payments = Invoice::with('paymentType:id,name')
@@ -270,32 +286,11 @@ class InvoiceController extends Controller
         return response()->json($payments);
     }
 
+    // web api endpoint
     public function getPaymentTypes(): JsonResponse
     {
         $paymentTypes = PaymentType::query()->get(['id', 'name']);
 
         return response()->json($paymentTypes);
-    }
-
-    /**
-     * @param $invoice
-     * @param $additionalEmail
-     * @return void
-     */
-    private function emailInvoiceToStudentOrParent($invoice, $additionalEmail): void
-    {
-        // student does not have email but parent does have email
-        if (is_null($invoice->student->email) && $additionalEmail) {
-            Mail::to($additionalEmail)->queue(new LessonsInvoice($invoice));
-        } // just parent has email
-        elseif ($additionalEmail) {
-            Mail::to($additionalEmail)->queue(new LessonsInvoice($invoice));
-        } // just the student has an email
-        elseif (! is_null($invoice->student->email) && is_null($additionalEmail)) {
-            Mail::to($invoice->student->email)->queue(new LessonsInvoice($invoice));
-        } // student and parent have an email
-        elseif (! is_null($invoice->student->email && ! is_null($additionalEmail))) {
-            Mail::to($invoice->student->email)->cc($additionalEmail)->queue(new LessonsInvoice($invoice));
-        }
     }
 }

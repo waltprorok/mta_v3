@@ -87,7 +87,8 @@
                                 <td>{{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm') }} - {{ lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }}</td>
                                 <td>{{ lesson.interval }} minutes</td>
                                 <td>{{ '$' + lesson.billing_rate.amount }} {{ lesson.billing_rate.description ? '| ' + lesson.billing_rate.description : '' }}</td>
-                                <td>{{ calculateLessonAmount(lesson) | toCurrency }}</td>
+                                <td v-if="! lesson.billing_rate.flat_rate">{{ calculateLessonAmount(lesson) | toCurrency }}</td>
+                                <td v-else>Flat Rate</td>
                             </tr>
                             <tr v-if="selected && lastInvoice !== null && lastInvoice.balance_due !== '0' && lastInvoice.is_paid === false">
                                 <td></td>
