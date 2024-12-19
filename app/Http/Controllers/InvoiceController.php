@@ -12,6 +12,8 @@ use App\Services\InvoiceService;
 use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -20,6 +22,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use LaravelIdea\Helper\App\Models\_IH_Lesson_C;
 
 class InvoiceController extends Controller
 {
@@ -65,10 +68,10 @@ class InvoiceController extends Controller
         $lastInvoice = Invoice::where('student_id', $student->id)->orderBy('created_at', 'desc')->first();
 
         return response()->json([
-                'lessons' => $filteredLessons,
-                'studentTeacher' => $studentTeacher,
-                'lastInvoice' => $lastInvoice,
-            ]);
+            'lessons' => $filteredLessons,
+            'studentTeacher' => $studentTeacher,
+            'lastInvoice' => $lastInvoice,
+        ]);
     }
 
     public function createInvoice(string $month = null)
@@ -99,52 +102,9 @@ class InvoiceController extends Controller
     {
         $invoice = $invoice->with('student.getTeacher')->findOrFail($invoice->id);
 
-        $lessonIds = explode(',', $invoice->lesson_id);
-        $lessons = Lesson::whereIn('id', $lessonIds)->withTrashed()->get();
+        $lessons = $this->getLessons($invoice);
 
-        $subTotal = 0;
-        $discount = $invoice->discount;
-        $total = 0;
-
-        // 1. calculate totals first
-        foreach ($lessons as $lesson) {
-            if ($lesson->billingRate->type == 'lesson') {
-                $subTotal += $lesson->billingRate->amount;
-                $total += $lesson->billingRate->amount;
-            }
-
-            if ($lesson->billingRate->type == 'hourly') {
-                $minutes = $lesson->interval / 60;
-                $subTotal += $lesson->billingRate->amount * $minutes;
-                $total += $lesson->billingRate->amount * $minutes;
-            }
-
-            if ($lesson->billingRate->type == 'monthly') {
-                $subTotal += $lesson->billingRate->amount;
-                $total += $lesson->billingRate->amount;
-                break;
-            }
-        }
-
-        // 2. calculate each lesson amount
-        $lessons->map(function ($lesson) use ($lessons) {
-            if ($lesson->billingRate->type == 'hourly') {
-                $minutes = $lesson->interval / 60;
-                $amount = $lesson->billingRate->amount * $minutes;
-                return [
-                    $lesson->billingRate->amount = $amount,
-                ];
-            }
-
-            if ($lesson->billingRate->type == 'monthly') {
-                $amount = $lesson->billingRate->amount / count($lessons);
-                return [
-                    $lesson->billingRate->amount = $amount,
-                ];
-            }
-
-            return $lesson;
-        });
+        list($subTotal, $discount, $total) = $this->calculateLessonTotals($invoice, $lessons);
 
         $subTotalCalculation = $subTotal * ($discount / 100);
         $total = $total - $subTotalCalculation;
@@ -228,6 +188,8 @@ class InvoiceController extends Controller
             return null;
         }
 
+        $invoice = $this->getCalculatedLessonTotals($invoice);
+
         $pdf = app(PDF::class);
         $pdf->setPaper('A4');
         $pdfFileExists = Storage::disk('invoice')->exists('Invoice_MTA_' . $invoice->id . '.pdf');
@@ -243,6 +205,8 @@ class InvoiceController extends Controller
     public function storePDF(Invoice $invoice)
     {
         $invoice = $this->getInvoiceStudentTeacherBillingRate($invoice);
+        
+        $invoice = $this->getCalculatedLessonTotals($invoice);
 
         $pdf = app(PDF::class);
         $pdf->setPaper('A4');
@@ -292,5 +256,87 @@ class InvoiceController extends Controller
         $paymentTypes = PaymentType::query()->get(['id', 'name']);
 
         return response()->json($paymentTypes);
+    }
+
+    /**
+     * @param $invoice
+     * @param $lessons
+     * @return array
+     */
+    private function calculateLessonTotals($invoice, $lessons): array
+    {
+        $subTotal = 0;
+        $discount = $invoice->discount;
+        $total = 0;
+
+        // 1. calculate totals first
+        foreach ($lessons as $lesson) {
+            if ($lesson->billingRate->type == 'lesson') {
+                $subTotal += $lesson->billingRate->amount;
+                $total += $lesson->billingRate->amount;
+            }
+
+            if ($lesson->billingRate->type == 'hourly') {
+                $minutes = $lesson->interval / 60;
+                $subTotal += $lesson->billingRate->amount * $minutes;
+                $total += $lesson->billingRate->amount * $minutes;
+            }
+
+            if ($lesson->billingRate->type == 'monthly') {
+                $subTotal += $lesson->billingRate->amount;
+                $total += $lesson->billingRate->amount;
+                break;
+            }
+        }
+
+        // 2. calculate each lesson amount
+        $lessons->map(function ($lesson) use ($lessons) {
+            if ($lesson->billingRate->type == 'hourly') {
+                $minutes = $lesson->interval / 60;
+                $amount = $lesson->billingRate->amount * $minutes;
+                return [
+                    $lesson->billingRate->amount = $amount,
+                ];
+            }
+
+            if ($lesson->billingRate->type == 'monthly') {
+                $amount = $lesson->billingRate->amount / count($lessons);
+                return [
+                    $lesson->billingRate->amount = $amount,
+                ];
+            }
+
+            return $lesson;
+        });
+
+        return array($subTotal, $discount, $total);
+    }
+
+    /**
+     * @param $invoice
+     * @return mixed
+     */
+    private function getCalculatedLessonTotals($invoice)
+    {
+        $lessons = $this->getLessons($invoice);
+
+        $this->calculateLessonTotals($invoice, $lessons);
+
+        unset($invoice->lessons);
+
+        $invoice['lessons'] = $lessons;
+
+        return $invoice;
+    }
+
+    /**
+     * @param $invoice
+     * @return Lesson[]|Builder[]|Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection|_IH_Lesson_C
+     */
+    private function getLessons($invoice)
+    {
+        $lessonIds = explode(',', $invoice->lesson_id);
+
+        return Lesson::whereIn('id', $lessonIds)->withTrashed()->get();
     }
 }

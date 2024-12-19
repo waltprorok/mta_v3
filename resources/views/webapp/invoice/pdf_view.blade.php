@@ -41,6 +41,7 @@
                 <div>{{ $invoice->student->getTeacher->city }}, {{ $invoice->student->getTeacher->state }} {{ $invoice->student->getTeacher->zip }}</div>
                 <br>
                 <div>{{ $invoice->student->getTeacher->email }}</div>
+                <div>{{ $invoice->student->getTeacher->phone_number }}</div>
             </td>
 
             <td class="w-half">
@@ -55,6 +56,7 @@
                 @endif
                 <br>
                 <div>{{ $invoice->student->email }}</div>
+                    <div> {{ $invoice->student->phone_number }}</div>
                 @if ($invoice->student->parent)
                     <div>{{ $invoice->student->parent->email }} </div>
                 @endif
@@ -74,6 +76,7 @@
             <th>Time</th>
             <th>Interval</th>
             <th>Billing Rate</th>
+            <th>Amount</th>
         </tr>
         @foreach($invoice['lessons'] as $item)
             <tr class="items">
@@ -83,6 +86,11 @@
                 <td>{{ Carbon\Carbon::parse($item->start_date)->format('g:i') }} - {{ Carbon\Carbon::parse($item->end_date)->format('g:i a') }}</td>
                 <td>{{ $item->interval }} minutes</td>
                 <td>{{ ucfirst($item->billingRate->type) }}</td>
+                @if(! $item->billingRate->flat_rate)
+                    <td>${{ number_format($item->billingRate->amount, 2) }}</td>
+                @else
+                    <td>Flat Rate</td>
+                @endif
             </tr>
         @endforeach
     </table>
