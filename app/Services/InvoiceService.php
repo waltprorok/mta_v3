@@ -3,6 +3,10 @@
 namespace App\Services;
 
 use App\Mail\LessonsInvoice;
+use App\Models\Invoice;
+use App\Models\Lesson;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Mail;
 
 class InvoiceService
@@ -35,4 +39,93 @@ class InvoiceService
         }
     }
 
+    public function getInvoiceStudentTeacherBillingRate(Invoice $invoice)
+    {
+        return $invoice->with('student.getTeacher')
+            ->with('lessons.billingRate')
+            ->where('teacher_id', $invoice->teacher_id)
+            ->findOrFail($invoice->id);
+    }
+
+    /**
+     * @param $invoice
+     * @param $lessons
+     * @return array
+     */
+    public function calculateLessonTotals($invoice, $lessons): array
+    {
+        $subTotal = 0;
+        $discount = $invoice->discount;
+        $total = 0;
+
+        // 1. calculate totals first
+        foreach ($lessons as $lesson) {
+            if ($lesson->billingRate->type == 'lesson') {
+                $subTotal += $lesson->billingRate->amount;
+                $total += $lesson->billingRate->amount;
+            }
+
+            if ($lesson->billingRate->type == 'hourly') {
+                $minutes = $lesson->interval / 60;
+                $subTotal += $lesson->billingRate->amount * $minutes;
+                $total += $lesson->billingRate->amount * $minutes;
+            }
+
+            if ($lesson->billingRate->type == 'monthly') {
+                $subTotal += $lesson->billingRate->amount;
+                $total += $lesson->billingRate->amount;
+                break;
+            }
+        }
+
+        // 2. calculate each lesson amount
+        $lessons->map(function ($lesson) use ($lessons) {
+            if ($lesson->billingRate->type == 'hourly') {
+                $minutes = $lesson->interval / 60;
+                $amount = $lesson->billingRate->amount * $minutes;
+                return [
+                    $lesson->billingRate->amount = $amount,
+                ];
+            }
+
+            if ($lesson->billingRate->type == 'monthly') {
+                $amount = $lesson->billingRate->amount / count($lessons);
+                return [
+                    $lesson->billingRate->amount = $amount,
+                ];
+            }
+
+            return $lesson;
+        });
+
+        return array($subTotal, $discount, $total);
+    }
+
+    /**
+     * @param $invoice
+     * @return mixed
+     */
+    public function getCalculatedLessonTotals($invoice)
+    {
+        $lessons = $this->getLessons($invoice);
+
+        $this->calculateLessonTotals($invoice, $lessons);
+
+        unset($invoice->lessons);
+
+        $invoice['lessons'] = $lessons;
+
+        return $invoice;
+    }
+
+    /**
+     * @param $invoice
+     * @return Lesson[]|Builder[]|Collection
+     */
+    public function getLessons($invoice)
+    {
+        $lessonIds = explode(',', $invoice->lesson_id);
+
+        return Lesson::whereIn('id', $lessonIds)->withTrashed()->get();
+    }
 }
