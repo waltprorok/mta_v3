@@ -12,39 +12,14 @@ use Illuminate\Support\Facades\Mail;
 class InvoiceService
 {
 
+    /**
+     * @var string
+     */
+    private $lessonIds;
+
     public function __construct()
     {
-        //
-    }
-
-    /**
-     * @param $invoice
-     * @param $additionalEmail
-     * @return void
-     */
-    public function emailInvoiceToStudentOrParent($invoice, $additionalEmail): void
-    {
-        // student does not have email but parent does have email
-        if (is_null($invoice->student->email) && $additionalEmail) {
-            Mail::to($additionalEmail)->queue(new LessonsInvoice($invoice));
-        } // just parent has email
-        elseif ($additionalEmail) {
-            Mail::to($additionalEmail)->queue(new LessonsInvoice($invoice));
-        } // just the student has an email
-        elseif (! is_null($invoice->student->email) && is_null($additionalEmail)) {
-            Mail::to($invoice->student->email)->queue(new LessonsInvoice($invoice));
-        } // student and parent have an email
-        elseif (! is_null($invoice->student->email && ! is_null($additionalEmail))) {
-            Mail::to($invoice->student->email)->cc($additionalEmail)->queue(new LessonsInvoice($invoice));
-        }
-    }
-
-    public function getInvoiceStudentTeacherBillingRate(Invoice $invoice)
-    {
-        return $invoice->with('student.getTeacher')
-            ->with('lessons.billingRate')
-            ->where('teacher_id', $invoice->teacher_id)
-            ->findOrFail($invoice->id);
+        $this->lessonIds = '';
     }
 
     /**
@@ -103,6 +78,28 @@ class InvoiceService
 
     /**
      * @param $invoice
+     * @param $additionalEmail
+     * @return void
+     */
+    public function emailInvoiceToStudentOrParent($invoice, $additionalEmail): void
+    {
+        // student does not have email but parent does have email
+        if (is_null($invoice->student->email) && $additionalEmail) {
+            Mail::to($additionalEmail)->queue(new LessonsInvoice($invoice));
+        }  // just the student has an email
+        elseif (! is_null($invoice->student->email) && is_null($additionalEmail)) {
+            Mail::to($invoice->student->email)->queue(new LessonsInvoice($invoice));
+        } // student and parent have an email
+        elseif (! is_null($invoice->student->email) && ! is_null($additionalEmail)) {
+            Mail::to($invoice->student->email)->cc($additionalEmail)->queue(new LessonsInvoice($invoice));
+        } // just parent or additional has email
+        elseif ($additionalEmail) {
+            Mail::to($additionalEmail)->queue(new LessonsInvoice($invoice));
+        }
+    }
+
+    /**
+     * @param $invoice
      * @return mixed
      */
     public function getCalculatedLessonTotals($invoice)
@@ -112,10 +109,17 @@ class InvoiceService
         $this->calculateLessonTotals($invoice, $lessons);
 
         unset($invoice->lessons);
-
         $invoice['lessons'] = $lessons;
 
         return $invoice;
+    }
+
+    public function getInvoiceStudentTeacherBillingRate(Invoice $invoice)
+    {
+        return $invoice->with('student.getTeacher')
+            ->with('lessons.billingRate')
+            ->where('teacher_id', $invoice->teacher_id)
+            ->findOrFail($invoice->id);
     }
 
     /**
@@ -124,8 +128,8 @@ class InvoiceService
      */
     public function getLessons($invoice)
     {
-        $lessonIds = explode(',', $invoice->lesson_id);
+        $this->lessonIds = explode(',', $invoice->lesson_id);
 
-        return Lesson::whereIn('id', $lessonIds)->withTrashed()->get();
+        return Lesson::whereIn('id', $this->lessonIds)->withTrashed()->get();
     }
 }
