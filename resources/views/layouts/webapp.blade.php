@@ -82,7 +82,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a href="{{ route('account.profile') }}" class="dropdown-item">
-                        <i class="fa fa-calculator"></i>Account
+                        <i class="fa fa-user-circle-o"></i>Account
                     </a>
                     @if(Auth::user()->teacher)
                         <a href="{{ route('teacher.studioIndex') }}" class="dropdown-item">
