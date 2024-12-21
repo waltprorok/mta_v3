@@ -86,7 +86,7 @@
                     </a>
                     @if(Auth::user()->teacher)
                         <a href="{{ route('teacher.studioIndex') }}" class="dropdown-item">
-                            <i class="fa fa-wrench"></i>Settings
+                            <i class="fa fa-cog"></i>Settings
                         </a>
                     @endif
                     @if(! Auth::user()->isAdmin())
