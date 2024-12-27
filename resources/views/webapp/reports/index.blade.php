@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header bg-light">Student Status</div>
+                    <div class="card-header bg-light">Students Status</div>
                     <div class="card-body">
                         <div id="app">
                             <report-student-status-bar></report-student-status-bar>

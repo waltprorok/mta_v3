@@ -183,7 +183,7 @@
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
                                 <a href="{{ route('invoice.index') }}" class="nav-link {{ Route::currentRouteName() == 'invoice.index' ? 'active' : '' }}">
-                                    <i class="fa fa-calculator ml-3" aria-hidden="true"></i>Invoices
+                                    <i class="fa fa-file-text-o ml-3" aria-hidden="true"></i>Invoices
                                 </a>
                             </li>
 
@@ -200,7 +200,7 @@
                             {{--                            </li>--}}
                             <li class="nav-item">
                                 <a href="{{ route('invoice.list_of_payments') }}" class="nav-link {{ Route::currentRouteName() == 'invoice.list_of_payments' ? 'active' : '' }}">
-                                    <i class="fa fa-list-alt ml-3"></i>List Payments
+                                    <i class="fa fa-list-alt ml-3"></i>Payments
                                 </a>
                             </li>
                             {{--                            <li class="nav-item">--}}
@@ -255,7 +255,7 @@
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
                                 <a href="{{ route('reports.index') }}" class="nav-link {{ Route::currentRouteName() == 'reports.index' ? 'active' : '' }}">
-                                    <i class="fa fa-area-chart ml-3"></i>Student Status
+                                    <i class="fa fa-area-chart ml-3"></i>Students Status
                                 </a>
                             </li>
                             {{--                            <li class="nav-item">--}}
