@@ -21,7 +21,6 @@ export default {
             axios.get(this.url)
                 .then((response) => {
                     this.data = response.data;
-
                     if (this.data) {
                         this.renderChart({
                             labels: this.labels,
@@ -48,15 +47,16 @@ export default {
                             }
                         })
                     }
-                }).catch((error) => {
-                console.log(error);
-                this.$notify({
-                    type: 'error',
-                    title: 'Error',
-                    text: 'Could not load student statuses report.',
-                    duration: 10000,
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load student statuses report.',
+                        duration: 10000,
+                    });
                 });
-            });
         },
 
     },
