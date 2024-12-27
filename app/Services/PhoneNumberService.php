@@ -10,7 +10,7 @@ class PhoneNumberService
      */
     public function stripPhoneNumber(?string $phoneNumber): ?string
     {
-        if($phoneNumber !== null) {
+        if ($phoneNumber !== null) {
             return preg_replace('/[^[:digit:]]/', '', $phoneNumber);
         } else {
             return null;

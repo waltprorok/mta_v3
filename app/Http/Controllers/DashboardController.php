@@ -38,6 +38,28 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function getCompletedLessonsData()
+    {
+        $period = now()->subMonths(11)->monthsUntil(now());
+        $data = [];
+
+        foreach ($period as $date) {
+            $data[] = [
+                'month' => $date->shortMonthName,
+                'year' => $date->year,
+                'completed' => Lesson::whereBetween('start_date', [
+                    $date->startOfMonth()->format('Y-m-d H:i:s'),
+                    $date->endOfMonth()->format('Y-m-d H:i:s')
+                ])
+                    ->where('complete', true)
+                    ->where('teacher_id', Auth::id())
+                    ->count(),
+            ];
+        }
+
+        return response()->json(['getCompletedLessonsData' => $data]);
+    }
+
     private function getSubscriptionType(): string
     {
         if ($this->isSubscriptionCancelled()) {
@@ -99,28 +121,6 @@ class DashboardController extends Controller
         }
 
         return '';
-    }
-
-    public function getCompletedLessonsData()
-    {
-        $period = now()->subMonths(11)->monthsUntil(now());
-        $data = [];
-
-        foreach ($period as $date) {
-            $data[] = [
-                'month' => $date->shortMonthName,
-                'year' => $date->year,
-                'completed' => Lesson::whereBetween('start_date', [
-                    $date->startOfMonth()->format('Y-m-d H:i:s'),
-                    $date->endOfMonth()->format('Y-m-d H:i:s')
-                ])
-                    ->where('complete', true)
-                    ->where('teacher_id', Auth::id())
-                    ->count(),
-            ];
-        }
-
-        return response()->json(['getCompletedLessonsData' => $data]);
     }
 
     private function getActiveStudentCount()

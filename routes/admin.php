@@ -8,7 +8,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::prefix('web')->group(function () {
         Route::get('blogs', 'BlogController@list');
         Route::post('blog', 'BlogController@store');
-        Route::delete('blog/{id}', 'BlogController@destroy');
+        Route::delete('blog/{blog}', 'BlogController@destroy');
         Route::get('blog/{blog}/edit', 'BlogController@edit');
         Route::put('blog/{blog}', 'BlogController@update');
         Route::patch('blog/image/{blog}', 'BlogController@updateImage');
