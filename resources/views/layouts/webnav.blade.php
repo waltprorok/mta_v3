@@ -255,7 +255,7 @@
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
                                 <a href="{{ route('reports.index') }}" class="nav-link {{ Route::currentRouteName() == 'reports.index' ? 'active' : '' }}">
-                                    <i class="fa fa-area-chart ml-3"></i>Student Status
+                                    <i class="fa fa-area-chart ml-3"></i>Students Status
                                 </a>
                             </li>
                             {{--                            <li class="nav-item">--}}

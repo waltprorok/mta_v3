@@ -204,6 +204,7 @@ export default {
             self.lesson.end_time = null;
             self.lesson.start_time = null;
         },
+
         getData: function () {
             let self = this;
             let parameters = this.$route.fullPath;
