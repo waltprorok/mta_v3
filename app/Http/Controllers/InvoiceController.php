@@ -228,7 +228,6 @@ class InvoiceController extends Controller
     public function getPaymentTypes(): JsonResponse
     {
         $paymentTypes = PaymentType::query()->get(['id', 'name']);
-
         return response()->json($paymentTypes);
     }
 

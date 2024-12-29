@@ -9,12 +9,12 @@ Thank you for your purchase of the **Premium** Subscription with Music Teachers 
 Now you can enjoy all the benefits of the Premium Account:
 
 * Unlimited Students
-* Scheduling Notifications
-* Automatic Payments
+* Lesson Scheduling Email Notifications
+* Auto Schedule Student Lessons Each Month
 
 Under Account click Subscription Tab click **Download Invoices** to view the PDF invoice.
 
-@component('mail::button', ['url' => route('contact')])
+@component('mail::button', ['url' => route('support')])
     Support
 @endcomponent
 

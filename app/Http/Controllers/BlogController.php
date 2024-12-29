@@ -99,9 +99,12 @@ class BlogController extends Controller
         return response()->json(['image' => $blog->image], Response::HTTP_CREATED);
     }
 
-    public function destroy(Blog $id): JsonResponse
+    /**
+     * @throws Exception
+     */
+    public function destroy(Blog $blog): JsonResponse
     {
-        $id->delete();
+        $blog->delete();
 
         return response()->json();
     }

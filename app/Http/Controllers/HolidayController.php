@@ -71,7 +71,6 @@ class HolidayController extends Controller
         return response()->json();
     }
 
-
     /**
      * @throws Exception
      */

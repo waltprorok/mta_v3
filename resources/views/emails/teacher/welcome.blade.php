@@ -12,7 +12,7 @@ We hope that you love our software as much as we do.
 
 If you have any questions or concerns please use the support link after you log in under your profile.
 
-@component('mail::button', ['url' => route('contact')])
+@component('mail::button', ['url' => route('support')])
     Support
 @endcomponent
 
@@ -28,6 +28,7 @@ From the Profile Icon (top right) click Settings
 * Fill out your Studio Information
 * Set your Business Hours
 * Create a Billing Rate(s)
+* App Settings
 
 Thanks!
 
