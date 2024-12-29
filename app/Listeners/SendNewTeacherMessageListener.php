@@ -40,7 +40,7 @@ class SendNewTeacherMessageListener
 <br><div>In the upper right hand corner click the Profile Icon and Select Settings.<br><div>
 <br><div><ol><li>Fill out the&nbsp;<a href="/teacher/studio">Studio Information Page</a>
 </li><li>Set your&nbsp;<a href="/teacher/hours">Business Hours</a></li><li>Create at least one&nbsp;
-<a href="/teacher/rates">Billing Rate</a></li></ol><div>That\'s it!&nbsp;</div>
+<a href="/teacher/rates">Billing Rate</a></li><li><a href="/teacher/settings">Settings</a></li></ol><div>That\'s it!&nbsp;</div>
 <div>Now you can add students and start booking your schedule.</div></div></div></div></div>',
             ]);
         } catch (Exception $exception) {
