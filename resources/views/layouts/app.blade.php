@@ -24,26 +24,19 @@
     <!-- Favicons -->
     <link href="{{ asset('marketing/img/favicon-mta.png') }}" rel="icon">
     <link href="{{ asset('marketing/img/apple-touch-icon-mta.png') }}" rel="apple-touch-icon">
-
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
-
     <!-- Bootstrap -->
     <link type="text/css" rel="stylesheet" href="{{ asset('marketing/css/bootstrap.min.css') }}"/>
-
     <!-- Owl Carousel -->
     <link type="text/css" rel="stylesheet" href="{{ asset('marketing/css/owl.carousel.css') }}"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('marketing/css/owl.theme.default.css') }}"/>
-
     <!-- Magnific Popup -->
     <link type="text/css" rel="stylesheet" href="{{ asset('marketing/css/magnific-popup.css') }}"/>
-
     <!-- Font Awesome Icon -->
     <link rel="stylesheet" href="{{ asset('marketing/css/font-awesome.min.css') }}"/>
-
     <!-- Custom Stylesheet -->
     <link type="text/css" rel="stylesheet" href="{{ asset('marketing/css/style.css') }}"/>
-
     <!-- Styles -->
     {{--<link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
 </head>
