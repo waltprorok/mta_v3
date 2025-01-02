@@ -28,6 +28,7 @@ From the Profile Icon (top right) click Settings
 * Fill out your Studio Information
 * Set your Business Hours
 * Create a Billing Rate(s)
+* Add Holidays/Time Off
 * App Settings
 
 Thanks!
