@@ -69,11 +69,20 @@ class ScheduleMonthlyLessons extends Command
             ]);
         }
 
-        $lessonsStart = $hasMonth ? Carbon::parse($monthName)->startOfMonth()->toDateTimeString() : now()->startOfMonth()->toDateTimeString();
-        $lessonsEnd = $hasMonth ? Carbon::parse($monthName)->endOfMonth()->toDateTimeString() : now()->endOfMonth()->toDateTimeString();
+        //
+        if ($hasMonth && $monthName == 'December') {
+            $lessonsStart = Carbon::parse($monthName)->subYear()->startOfMonth()->toDateTimeString();
+            $lessonsEnd = Carbon::parse($monthName)->subYear()->endOfMonth()->toDateTimeString();
 
-        $holidaysStart = $hasMonth ? Carbon::parse($monthName)->addMonth()->startOfMonth()->toDateTimeString() : now()->addMonth()->startOfMonth()->toDateTimeString();
-        $holidaysEnd = $hasMonth ? Carbon::parse($monthName)->addMonth()->endOfMonth()->toDateTimeString() : now()->addMonth()->endOfMonth()->toDateTimeString();
+            $holidaysStart = Carbon::parse($monthName)->subYear()->startOfMonth()->toDateTimeString();
+            $holidaysEnd = Carbon::parse($monthName)->subYear()->endOfMonth()->toDateTimeString();
+        } else {
+            $lessonsStart = $hasMonth ? Carbon::parse($monthName)->startOfMonth()->toDateTimeString() : now()->startOfMonth()->toDateTimeString();
+            $lessonsEnd = $hasMonth ? Carbon::parse($monthName)->endOfMonth()->toDateTimeString() : now()->endOfMonth()->toDateTimeString();
+
+            $holidaysStart = $hasMonth ? Carbon::parse($monthName)->addMonth()->startOfMonth()->toDateTimeString() : now()->addMonth()->startOfMonth()->toDateTimeString();
+            $holidaysEnd = $hasMonth ? Carbon::parse($monthName)->addMonth()->endOfMonth()->toDateTimeString() : now()->addMonth()->endOfMonth()->toDateTimeString();
+        }
 
         Student::query()
             ->where('status', Student::ACTIVE)
@@ -91,6 +100,7 @@ class ScheduleMonthlyLessons extends Command
             ->chunk(50, function ($students) use ($lessonsEnd) {
                 $endWeekNumberInMonth = Carbon::parse($lessonsEnd)->weekNumberInMonth;
                 foreach ($students as $student) {
+
                     if ($student->lessons->isNotEmpty() && $student->getTeacher->teacher->isOnTrialOrSubscribed()) {
                         $startDateFirst = Carbon::parse($student->lessons->first()->start_date);
                         $endDateFirst = Carbon::parse($student->lessons->first()->end_date);
