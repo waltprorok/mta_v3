@@ -6,7 +6,8 @@
 <b>{{ $name }}</b><br/>
 {{ now()->format('M d, Y, h:iA') }}
 
-{{ $subject }}<br/>
+{{ $subject }}
+
 {{ $message }}
 @endcomponent
 

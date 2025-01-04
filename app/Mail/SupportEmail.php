@@ -39,7 +39,7 @@ class SupportEmail extends Mailable
      */
     public function build(): SupportEmail
     {
-        return $this->from('waltprorok@gmail.com', 'Support Desk')
+        return $this->from(config('mail.from.address'), 'Support Desk')
             ->subject($this->subject)
             ->markdown('emails.support.ticket');
     }
