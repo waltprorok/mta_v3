@@ -69,11 +69,22 @@ class ScheduleMonthlyLessons extends Command
             ]);
         }
 
-        $lessonsStart = $hasMonth ? Carbon::parse($monthName)->startOfMonth()->toDateTimeString() : now()->startOfMonth()->toDateTimeString();
-        $lessonsEnd = $hasMonth ? Carbon::parse($monthName)->endOfMonth()->toDateTimeString() : now()->endOfMonth()->toDateTimeString();
+        // Check if option month is Dec and set it back to last year
+        // This is only for manually setting the month, not to
+        // interfere with the scheduled command
+        if ($hasMonth && $monthName == 'December') {
+            $lessonsStart = Carbon::parse($monthName)->subYear()->startOfMonth()->toDateTimeString();
+            $lessonsEnd = Carbon::parse($monthName)->subYear()->endOfMonth()->toDateTimeString();
 
-        $holidaysStart = $hasMonth ? Carbon::parse($monthName)->addMonth()->startOfMonth()->toDateTimeString() : now()->addMonth()->startOfMonth()->toDateTimeString();
-        $holidaysEnd = $hasMonth ? Carbon::parse($monthName)->addMonth()->endOfMonth()->toDateTimeString() : now()->addMonth()->endOfMonth()->toDateTimeString();
+            $holidaysStart = Carbon::parse($monthName)->subYear()->addMonth()->startOfMonth()->toDateTimeString();
+            $holidaysEnd = Carbon::parse($monthName)->subYear()->addMonth()->endOfMonth()->toDateTimeString();
+        } else {
+            $lessonsStart = $hasMonth ? Carbon::parse($monthName)->startOfMonth()->toDateTimeString() : now()->startOfMonth()->toDateTimeString();
+            $lessonsEnd = $hasMonth ? Carbon::parse($monthName)->endOfMonth()->toDateTimeString() : now()->endOfMonth()->toDateTimeString();
+
+            $holidaysStart = $hasMonth ? Carbon::parse($monthName)->addMonth()->startOfMonth()->toDateTimeString() : now()->addMonth()->startOfMonth()->toDateTimeString();
+            $holidaysEnd = $hasMonth ? Carbon::parse($monthName)->addMonth()->endOfMonth()->toDateTimeString() : now()->addMonth()->endOfMonth()->toDateTimeString();
+        }
 
         Student::query()
             ->where('status', Student::ACTIVE)

@@ -40,27 +40,29 @@ class StudentLessonService
      */
     public function emailLessonsToStudentParent($student, Collection $lessons, $status = null): void
     {
-        try {
-            // student has an email and parent has an email
-            if ($student->email && $student->parent) {
-                if ($student->parent->email) {
-                    Mail::to($student->email)->cc($student->parent->email)->queue(new LessonsScheduled($student, $lessons, $status));
+        if (config('mail.enabled')) {
+            try {
+                // student has an email and parent has an email
+                if ($student->email && $student->parent) {
+                    if ($student->parent->email) {
+                        Mail::to($student->email)->cc($student->parent->email)->queue(new LessonsScheduled($student, $lessons, $status));
+                    }
                 }
-            }
 
-            // student does NOT have an email and parent has an email
-            if ($student->email == null && $student->parent) {
-                if ($student->parent->email) {
-                    Mail::to($student->parent->email)->queue(new LessonsScheduled($student, $lessons, $status));
+                // student does NOT have an email and parent has an email
+                if ($student->email == null && $student->parent) {
+                    if ($student->parent->email) {
+                        Mail::to($student->parent->email)->queue(new LessonsScheduled($student, $lessons, $status));
+                    }
                 }
-            }
 
-            // student has an email and parent does not have an email
-            if ($student->email && $student->parent == null) {
-                Mail::to($student->email)->queue(new LessonsScheduled($student, $lessons, $status));
+                // student has an email and parent does not have an email
+                if ($student->email && $student->parent == null) {
+                    Mail::to($student->email)->queue(new LessonsScheduled($student, $lessons, $status));
+                }
+            } catch (Exception $exception) {
+                Log::info($exception->getMessage());
             }
-        } catch (Exception $exception) {
-            Log::info($exception->getMessage());
         }
     }
 }

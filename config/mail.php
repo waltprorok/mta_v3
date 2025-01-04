@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'waltprorok@gmail.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@musicteachersaid.com'),
         'name' => env('MAIL_FROM_NAME', 'Music Teachers Aid'),
     ],
 
@@ -119,5 +119,10 @@ return [
             resource_path('views/vendor/mail'),
         ],
     ],
+
+    /*
+     * Email can be turned on or off by env file
+     */
+    'enabled' => env('MAIL_ENABLED', true),
 
 ];
