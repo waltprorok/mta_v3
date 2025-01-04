@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BusinessHours;
-use Carbon\Carbon;
-use Carbon\CarbonPeriod;
+use App\Services\BusinessHoursService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -14,6 +13,19 @@ use Illuminate\View\View;
 
 class BusinessHourController extends Controller
 {
+    /**
+     * @var BusinessHoursService
+     */
+    private $businessHoursService;
+
+    /**
+     * @param BusinessHoursService $businessHoursService
+     */
+    public function __construct(BusinessHoursService $businessHoursService)
+    {
+        $this->businessHoursService = $businessHoursService;
+    }
+
     /**
      * @return Application|Factory|View
      */
@@ -29,7 +41,7 @@ class BusinessHourController extends Controller
      */
     public function create()
     {
-        $hours = $this->getSelectHours();
+        $hours = $this->businessHoursService->getSelectHours();
 
         return view('webapp.teacher.hours', compact('hours', $hours));
     }
@@ -67,9 +79,9 @@ class BusinessHourController extends Controller
             ->orderBy('day')
             ->get();
 
-        $totalHours = $this->getTotalHours($hours);
+        $totalHours = $this->businessHoursService->getTotalHours($hours);
 
-        $selectHours = $this->getSelectHours();
+        $selectHours = $this->businessHoursService->getSelectHours();
 
         return view('webapp.teacher.hoursView', compact('hours', $hours, 'totalHours', $totalHours, 'selectHours', $selectHours));
     }
@@ -97,38 +109,5 @@ class BusinessHourController extends Controller
         }
 
         return redirect()->back()->with('success', 'Business hours updated successfully!');
-    }
-
-    private function getSelectHours(): array
-    {
-        $startPeriod = Carbon::parse('8:00');
-        $endPeriod = Carbon::parse('22:00');
-
-        $period = CarbonPeriod::create($startPeriod, '30 minutes', $endPeriod);
-
-        $hours = [];
-
-        foreach ($period as $date) {
-            $hours[] = $date->format('H:i:s');
-        }
-
-        return $hours;
-    }
-
-    /**
-     * @param $hours
-     * @return float|int
-     */
-    private function getTotalHours($hours)
-    {
-        $totalHours = 0;
-
-        foreach ($hours as $hour) {
-            if ($hour->active) {
-                $totalHours += Carbon::createFromTimestamp(strtotime($hour->open_time))->diffInMinutes($hour->close_time);
-            }
-        }
-
-        return $totalHours / 60;
     }
 }
