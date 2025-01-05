@@ -55,7 +55,7 @@ class HomeController extends Controller
                 'message' => $request->get('message'),
             ]);
 
-            Mail::to(config('mail.from.address'))->queue(new ContactForm($request));
+            Mail::to(config('mail.to.address'))->queue(new ContactForm($request));
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }
