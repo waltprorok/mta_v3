@@ -76,10 +76,10 @@ class ScheduleMonthlyLessons extends Command
         // interfere with the scheduled command
         if ($hasMonth && $monthName == 'December') {
             $lessonsStart = $carbonParseMonth->subYear()->startOfMonth()->toDateTimeString();
-            $lessonsEnd = $carbonParseMonth->subYear()->endOfMonth()->toDateTimeString();
+            $lessonsEnd = $carbonParseMonth->endOfMonth()->toDateTimeString();
 
             $holidaysStart = $carbonParseMonth->subYear()->addMonth()->startOfMonth()->toDateTimeString();
-            $holidaysEnd = $carbonParseMonth->subYear()->addMonth()->endOfMonth()->toDateTimeString();
+            $holidaysEnd = $carbonParseMonth->addMonth()->endOfMonth()->toDateTimeString();
         } else {
             $lessonsStart = $hasMonth ? $carbonParseMonth->startOfMonth()->toDateTimeString() : now()->startOfMonth()->toDateTimeString();
             $lessonsEnd = $hasMonth ? $carbonParseMonth->endOfMonth()->toDateTimeString() : now()->endOfMonth()->toDateTimeString();

@@ -62,6 +62,7 @@ return [
 
     'to' => [
         'address' => env('MAIL_TO_ADDRESS', 'admin@musicteachersaid.com'),
+        'name' => env('MAIL_FROM_NAME', 'Music Teachers Aid'),
     ],
 
     /*

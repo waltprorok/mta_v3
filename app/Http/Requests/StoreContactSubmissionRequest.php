@@ -24,7 +24,7 @@ class StoreContactSubmissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'name' => 'required|min:3',
             'email' => 'required|email',
             'subject' => 'required|min:3',
             'message' => 'required|min:3',
