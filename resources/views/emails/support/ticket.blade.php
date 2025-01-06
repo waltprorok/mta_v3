@@ -16,7 +16,8 @@ We look forward to helping you!
 {{ now()->format('M d, Y, h:iA') }}
 
 @component('mail::panel')
-{{ $subject }}<br/>
+{{ $subject }}
+
 {{ $message }}
 @endcomponent
 
