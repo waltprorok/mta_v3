@@ -113,7 +113,7 @@ class HomeControllerTest extends TestCase
         ]);
 
         Mail::assertQueued(ContactForm::class, function ($mail) use ($contact) {
-            return $mail->hasTo('admin@musicteachersaid.com');
+            return $mail->hasTo('waltprorok@gmail.com');
         });
 
         Mail::assertQueued(ContactForm::class, 1);
