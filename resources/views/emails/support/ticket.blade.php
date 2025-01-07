@@ -6,7 +6,7 @@ A human will assist you as soon as possible.
 Future replies will occur through email.
 
 You can expect a response within 2 business days.
-Please whitelist Musicteachersaid.com to keep our response from being captured as S.P.A.M.
+Please whitelist <strong>Musicteachersaid.com</strong> to keep our response from being captured as S.P.A.M.
 
 We look forward to helping you!
 
@@ -15,9 +15,9 @@ We look forward to helping you!
 <b>{{ $name }}</b><br/>
 {{ now()->format('M d, Y, h:iA') }}
 
-@component('mail::panel')
 {{ $subject }}
 
+@component('mail::panel')
 {{ $message }}
 @endcomponent
 
