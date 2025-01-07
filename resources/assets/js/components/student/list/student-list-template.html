@@ -145,7 +145,7 @@
                     <td v-show="! hasOneLesson(row) && ! getStatusData(row)">
                         <span class="btn btn-sm btn-danger"><i class="fa fa-times"></i></span>
                     </td>
-                    <td v-show="hasOneLesson(row) && !getStatusData(row)">
+                    <td v-show="hasOneLesson(row) && ! getStatusData(row)">
                         <span class="btn btn-sm btn-success"><i class="fa fa-check"></i></span>
                     </td>
                     <td v-show="getStatusData(row)">

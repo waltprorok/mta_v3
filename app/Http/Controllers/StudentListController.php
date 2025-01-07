@@ -21,7 +21,7 @@ class StudentListController extends Controller
     {
         $students = Student::query()
             ->select('id', 'teacher_id', 'first_name', 'last_name', 'phone', 'email', 'instrument', 'status')
-            ->with('hasOneFutureLesson')
+            ->with('hasOneFutureLesson:id,student_id,teacher_id,status,start_date')
             ->where(['teacher_id' => Auth::id(), 'status' => Student::ACTIVE])
             ->firstNameAsc()
             ->get();
