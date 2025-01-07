@@ -5,31 +5,29 @@
             <div class="modal-mask">
                 <div class="modal-wrapper">
                     <div class="modal-dialog modal-md" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" v-show="edit">Edit Date</h5>
-                                <h5 class="modal-title" v-show="!edit">Add a Holiday / Day Off</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true" @click="cancelForm()">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form class="form-horizontal" action="#" @submit.prevent="edit ? updateHoliday(holiday.id) : createHoliday()">
+                        <form class="form-horizontal" action="#" @submit.prevent="edit ? updateHoliday(holiday.id) : createHoliday()">
+                            <div class="modal-content" style="height:590px;">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" v-show="edit">Edit Date</h5>
+                                    <h5 class="modal-title" v-show="!edit">Add a Holiday / Day Off</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" @click="cancelForm()">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
                                     <div class="row">
                                         <div class="col-md-10 offset-1">
                                             <div class="form-group">
-                                                <div class="input-group mb-3">
-                                                    <input id="description"
-                                                           class="form-control"
-                                                           v-model="holiday.title"
-                                                           placeholder="Add a title"
-                                                           type="text"
-                                                           required
-                                                           v-on:keydown.enter.prevent>
-                                                </div>
+                                                <input id="description"
+                                                       class="form-control"
+                                                       v-model="holiday.title"
+                                                       placeholder="Add a title"
+                                                       type="text"
+                                                       required
+                                                       v-on:keydown.enter.prevent>
                                             </div>
-                                            <div class="input-group mb-3">
-                                                <label for="start_date" class="control-label p-1"></label>
+                                            <div class="input-group mb-4">
+                                                <label for="start_date" class="control-label pt-4"></label>
                                                 <v-date-picker v-if="holiday.all_day" v-model="holiday.start_date" mode="date">
                                                     <template v-slot="{ inputValue, inputEvents }">
                                                         <input
@@ -69,7 +67,7 @@
                                                 </v-date-picker>
                                             </div>
                                             <div class="form-group">
-                                                <div class="input-group mb-3">
+                                                <div class="input-group mb-4">
                                                     <div class="toggle-switch" data-ts-color="primary">
                                                         <label for="all_day" class="ts-label">All Day</label>
                                                         <input id="all_day" type="checkbox" hidden="hidden" v-model="holiday.all_day">
@@ -77,6 +75,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <hr/>
                                             <div class="form-group">
                                                 <div class="input-group mb-3">
                                                     <div class="form-group">
@@ -91,15 +90,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <hr/>
+                                </div>
+                                <div class="modal-footer">
                                     <div class="form-group pull-right">
                                         <button @click="cancelForm()" class="btn btn-default">Cancel</button>
                                         <button v-show="!edit" type="submit" class="btn btn-primary">Save</button>
                                         <button v-show="edit" type="submit" class="btn btn-primary">Update</button>
                                     </div>
-                                </form>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
