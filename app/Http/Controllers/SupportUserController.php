@@ -51,7 +51,7 @@ class SupportUserController extends Controller
 
             $support->save();
 
-            Mail::to(config('mail.to.address'))->send(new ContactForm($request));
+            Mail::to('waltprorok@gmail.com')->send(new ContactForm($request));
             Mail::to($request['email'])->queue(new SupportEmail($request));
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
