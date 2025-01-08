@@ -128,7 +128,6 @@ export default {
                     this.messages = response.data.messages;
                     this.message.user_id_from = this.user.id;
                     this.message.user_id_to = id;
-                    this.persons = response.data.persons;
                 })
                 .catch((error) => {
                     console.log(error);
