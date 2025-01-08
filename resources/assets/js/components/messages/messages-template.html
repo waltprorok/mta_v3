@@ -27,7 +27,7 @@
                                     <div class="chat_ib">
                                         <h5>{{ person.user_from.first_name }} {{ person.user_from.last_name }}
                                             <span class="chat_date">{{ person.created_at }}</span>
-                                            <span v-if="person.read === false" class="badge badge-pill badge-info p-1">New</span>
+                                            <span v-if="person.read === false" class="badge badge-pill badge-info mr-1">Unread</span>
                                         </h5>
                                         <p>{{ person.body | short }}</p>
 

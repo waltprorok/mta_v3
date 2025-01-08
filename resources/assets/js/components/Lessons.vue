@@ -173,21 +173,21 @@ export default {
         dateParse,
         lessonDayStatusPast: function (endDate) {
             let lessonEndDate = new Date(endDate);
-            if (lessonEndDate < today) {
+            if (lessonEndDate.toDateString() < today.toDateString()) {
                 return this.pastLesson = true;
             }
         },
 
         lessonDayStatusToday: function (endDate) {
             let lessonEndDate = new Date(endDate);
-            if (lessonEndDate === today) {
+            if (lessonEndDate.toDateString() === today.toDateString()) {
                 return this.todayLesson = true;
             }
         },
 
         lessonDayStatusUpcoming: function (endDate) {
             let lessonEndDate = new Date(endDate);
-            if (lessonEndDate > today) {
+            if (lessonEndDate.toDateString() > today.toDateString()) {
                 return this.upComing = true;
             }
         },
