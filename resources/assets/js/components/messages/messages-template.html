@@ -4,12 +4,11 @@
             <div class="inbox_msg">
                 <div class="inbox_people">
                     <div class="headind_srch">
-                        <div class="form-group input-group pull-left col-md-4">
+                        <div class="form-group input-group pull-left col-md-5">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-user"></i></span>
                             </div>
-                            <select id=users class="form-control" @change="getOnChangeList($event)"
-                                    v-on:keydown.enter.prevent v-cloak>
+                            <select id=users class="form-control" @change="getOnChangeList($event)" v-on:keydown.enter.prevent v-cloak>
                                 <option :value="status.inbox" selected>Inbox</option>
                                 <option :value="status.active" v-if="user.teacher">Active</option>
                                 <option :value="status.leads" v-if="user.teacher">Leads</option>
@@ -21,13 +20,17 @@
                         </div>
                     </div>
                     <div class="inbox_chat">
-                        <div v-for="(person, index) in persons" :key="index" v-if="!fromList">
+                        <div v-for="(person, index) in persons" :key="index" v-if="! fromList">
                             <div class="chat_list" @click="fetchConversationMessages(person.user_id_from, index)" :class="{active_chat: active_person_chat_id === index}">
                                 <div class="chat_people">
                                     <div class="chat_img"><img src="/webapp/img/avatar.jpeg" alt="avatar"></div>
                                     <div class="chat_ib">
-                                        <h5>{{ person.user_from.first_name }} {{ person.user_from.last_name }}<span class="chat_date">Joined: {{ person.created_at }}</span></h5>
+                                        <h5>{{ person.user_from.first_name }} {{ person.user_from.last_name }}
+                                            <span class="chat_date">{{ person.created_at }}</span>
+                                            <span v-if="person.read === false" class="badge badge-pill badge-info p-1">New</span>
+                                        </h5>
                                         <p>{{ person.body | short }}</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -38,7 +41,7 @@
                                     <div class="chat_img"><img src="/webapp/img/avatar.jpeg" alt="avatar"></div>
                                     <div class="chat_ib">
                                         <h5>{{ person.first_name }} {{ person.last_name }}
-                                            <span class="chat_date">Joined: {{ person.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</span>
+                                            <span class="chat_date">Joined: {{ person.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY') }}</span>
                                         </h5>
                                     </div>
                                 </div>

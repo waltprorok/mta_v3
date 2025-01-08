@@ -41,9 +41,9 @@ class MessagesController extends Controller
             ->with('userFrom:id,first_name,last_name')
             ->where('user_id_to', $user->id)
             ->notDeleted()
-            ->groupBy(['user_id_from'])
             ->orderByDesc('created_at')
-            ->get();
+            ->get()
+            ->unique('user_id_from');
 
         $messagesA = Message::query()
             ->with('userFrom:id,first_name,last_name,student,teacher,parent')
@@ -64,7 +64,7 @@ class MessagesController extends Controller
         return response()->json(['persons' => $persons, 'messages' => $messages, 'user' => $user]);
     }
 
-    public function show($id): JsonResponse
+    public function show(string $id): JsonResponse
     {
         $user = Auth::user();
 
