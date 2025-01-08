@@ -68,14 +68,6 @@ class MessagesController extends Controller
     {
         $user = Auth::user();
 
-        $persons = Message::query()
-            ->with('userFrom:id,first_name,last_name')
-            ->where('user_id_to', $user->id)
-            ->notDeleted()
-            ->orderByDesc('created_at')
-            ->get()
-            ->unique('user_id_from');
-
         $messagesFromA = Message::query()
             ->with('userFrom:id,first_name,last_name,student,teacher,parent,admin')
             ->where('user_id_from', $user->id)
@@ -98,7 +90,7 @@ class MessagesController extends Controller
 
         $messages->sortByDesc('id');
 
-        return response()->json(['persons' => $persons, 'messages' => $messages, 'user' => $user]);
+        return response()->json(['messages' => $messages, 'user' => $user]);
     }
 
     public function status(int $status = Student::ACTIVE): JsonResponse
