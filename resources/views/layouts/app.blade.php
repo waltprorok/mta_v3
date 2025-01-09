@@ -56,7 +56,6 @@
                     </a>
                 </div>
                 <!-- /Logo -->
-
                 <!-- Collapse nav button -->
                 <div class="nav-collapse">
                     <span></span>
@@ -178,7 +177,8 @@
                 <!-- footer copyright -->
                 <div class="footer-copyright">
                     <p>Copyright &copy; {{ now()->year }}. All Rights Reserved. Designed by
-                        <a href="{{ route('home') }}">Music Teachers Aid, LLC</a></p>
+                        <a href="{{ route('home') }}">Music Teachers Aid, LLC</a>
+                    </p>
                 </div>
                 <!-- /footer copyright -->
             </div>
