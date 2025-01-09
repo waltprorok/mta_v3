@@ -76,15 +76,17 @@
                 <template v-slot="{ columns, row }">
                     <tr>
                         <td>
-                            <button class="btn btn-rounded btn-outline-secondary" v-if="!row.complete" @click="updateLesson(row.id, row.complete)" :disabled="isCancelled(row)">Click to Complete</button>
+                            <button class="btn btn-rounded btn-outline-secondary" v-if="! row.complete" @click="updateLesson(row.id, row.complete)" :disabled="isCancelled(row)">Click to Complete</button>
                             <button class="btn btn-rounded btn-primary" v-if="row.complete" @click="updateLesson(row.id, row.complete)" :disabled="isCancelled(row)">Completed</button>
                         </td>
                         <td>{{ row.status }}</td>
-                        <td v-if="lessonDayStatusPast(row.end_date) && pastLesson"><span class="badge badge-pill badge-danger">Past</span></td>
-                        <td v-if="lessonDayStatusToday(row.end_date) && todayLesson"><span class="badge badge-pill badge-primary">Today</span></td>
-                        <td v-if="lessonDayStatusUpcoming(row.end_date) && upComing"><span class="badge badge-pill badge-warning">Upcoming</span></td>
+                        <td v-if="lessonDayStatusPast(row.end_date)"><span class="badge badge-pill badge-danger">Past</span></td>
+                        <td v-else-if="lessonDayStatusToday(row.end_date)"><span class="badge badge-pill badge-primary">Today</span></td>
+                        <td v-else-if="lessonDayStatusUpcoming(row.end_date)"><span class="badge badge-pill badge-warning">Upcoming</span></td>
                         <td v-text="row.title"></td>
-                        <td>{{ new Date(row.start_date).toDateString() }} | {{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm') }} - {{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }}</td>
+                        <td>{{ new Date(row.start_date).toDateString() }} | {{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm') }} -
+                            {{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }}
+                        </td>
                         <td v-text="row.interval"></td>
                     </tr>
                 </template>
@@ -127,11 +129,8 @@ export default {
                 {label: 'Duration', field: 'interval', sortable: false,},
             ],
             list: [],
-            todayLesson: false,
-            pastLesson: false,
-            upComing: false,
             page: 1,
-            per_page: 10,
+            per_page: 25,
             pages: [10, 25, 50, 100],
             lesson: {
                 id: null,
@@ -142,6 +141,7 @@ export default {
                 interval: null,
             },
             showModal: false,
+            todayGetTime: today.getTime(),
         }
     },
 
@@ -172,24 +172,18 @@ export default {
         dateFormat,
         dateParse,
         lessonDayStatusPast: function (endDate) {
-            let lessonEndDate = new Date(endDate);
-            if (lessonEndDate.toDateString() < today.toDateString()) {
-                return this.pastLesson = true;
-            }
+            let lessonEndDate = new Date(endDate).getTime();
+            return lessonEndDate < this.todayGetTime;
         },
 
         lessonDayStatusToday: function (endDate) {
             let lessonEndDate = new Date(endDate);
-            if (lessonEndDate.toDateString() === today.toDateString()) {
-                return this.todayLesson = true;
-            }
+            return lessonEndDate.toDateString() === today.toDateString();
         },
 
         lessonDayStatusUpcoming: function (endDate) {
-            let lessonEndDate = new Date(endDate);
-            if (lessonEndDate.toDateString() > today.toDateString()) {
-                return this.upComing = true;
-            }
+            let lessonEndDate = new Date(endDate).getTime();
+            return lessonEndDate > this.todayGetTime;
         },
 
         fetchLessonList: function () {
