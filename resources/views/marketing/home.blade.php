@@ -83,6 +83,7 @@
                         <img class="img-responsive" src="{{ asset('marketing/img/monitor-4.png') }}" alt="monitor-screenshot">
                         <img class="img-responsive" src="{{ asset('marketing/img/monitor-5.png') }}" alt="monitor-screenshot">
                         <img class="img-responsive" src="{{ asset('marketing/img/monitor-6.png') }}" alt="monitor-screenshot">
+                        <img class="img-responsive" src="{{ asset('marketing/img/monitor-7.png') }}" alt="monitor-screenshot">
                     </div>
                 </div>
             </div>
