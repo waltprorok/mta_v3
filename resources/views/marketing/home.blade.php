@@ -77,8 +77,12 @@
                 </div>
                 <div class="col-md-7">
                     <div id="about-slider" class="owl-carousel owl-theme">
-                        <img class="img-responsive" src="{{ asset('marketing/img/monitor-4.png') }}" alt="monitor-screenshot">
                         <img class="img-responsive" src="{{ asset('marketing/img/monitor-1.png') }}" alt="monitor-screenshot">
+                        <img class="img-responsive" src="{{ asset('marketing/img/monitor-2.png') }}" alt="monitor-screenshot">
+                        <img class="img-responsive" src="{{ asset('marketing/img/monitor-3.png') }}" alt="monitor-screenshot">
+                        <img class="img-responsive" src="{{ asset('marketing/img/monitor-4.png') }}" alt="monitor-screenshot">
+                        <img class="img-responsive" src="{{ asset('marketing/img/monitor-5.png') }}" alt="monitor-screenshot">
+                        <img class="img-responsive" src="{{ asset('marketing/img/monitor-6.png') }}" alt="monitor-screenshot">
                     </div>
                 </div>
             </div>
