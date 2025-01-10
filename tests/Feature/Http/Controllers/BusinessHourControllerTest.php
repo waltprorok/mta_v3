@@ -18,7 +18,7 @@ class BusinessHourControllerTest extends TestCase
 
     public function test_index_page_redirect()
     {
-        $response = $this->get('/teacher/hours');
+        $response = $this->get(route('teacher.hours'));
 
         $response->assertStatus(302);
     }
@@ -29,7 +29,7 @@ class BusinessHourControllerTest extends TestCase
 
         $user = factory(User::class)->create(['teacher' => 1]);
 
-        $response = $this->actingAs($user)->get('/teacher/hours');
+        $response = $this->actingAs($user)->get(route('teacher.hours'));
 
         $response->assertStatus(200);
     }
