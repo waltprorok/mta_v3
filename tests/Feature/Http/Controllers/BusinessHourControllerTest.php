@@ -16,14 +16,32 @@ class BusinessHourControllerTest extends TestCase
         parent::setUp();
     }
 
-    public function test_index_page_redirect()
+    public function test_index_page_url_redirect()
+    {
+        $response = $this->get('/teacher/hours');
+
+        $response->assertStatus(302);
+    }
+
+    public function test_index_page_route_redirect()
     {
         $response = $this->get(route('teacher.hours'));
 
         $response->assertStatus(302);
     }
 
-    public function test_index_page_view()
+    public function test_index_page_url_view()
+    {
+        $this->withoutMiddleware();
+
+        $user = factory(User::class)->create(['teacher' => 1]);
+
+        $response = $this->actingAs($user)->get('/teacher/hours');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_index_page_route_view()
     {
         $this->withoutMiddleware();
 
@@ -33,6 +51,7 @@ class BusinessHourControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
+
 
     public function test_business_hours_is_not_null()
     {
