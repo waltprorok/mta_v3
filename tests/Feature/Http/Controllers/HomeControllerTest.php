@@ -19,30 +19,58 @@ class HomeControllerTest extends TestCase
         Mail::fake();
     }
 
-    public function test_home_page_200()
+    public function test_home_page_url_200()
     {
         $response = $this->get('/');
 
         $response->assertStatus(200);
     }
 
-    public function test_faq_page_200()
+    public function test_home_page_route_200()
+    {
+        $response = $this->get(route('home'));
+
+        $response->assertStatus(200);
+    }
+
+    public function test_faq_page_url_200()
     {
         $response = $this->get('/faq');
 
         $response->assertStatus(200);
     }
 
-    public function test_contact_page_200()
+    public function test_faq_page_route_200()
+    {
+        $response = $this->get(route('faq'));
+
+        $response->assertStatus(200);
+    }
+
+    public function test_contact_page_url_200()
     {
         $response = $this->get('/contact');
 
         $response->assertStatus(200);
     }
 
-    public function test_blog_page_200()
+    public function test_contact_page_route_200()
+    {
+        $response = $this->get(route('contact'));
+
+        $response->assertStatus(200);
+    }
+
+    public function test_blog_page_url_200()
     {
         $response = $this->get('/blog');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_blog_page_route_200()
+    {
+        $response = $this->get(route('blog.index'));
 
         $response->assertStatus(200);
     }
@@ -56,23 +84,44 @@ class HomeControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_pricing_page_200()
+    public function test_pricing_page_url_200()
     {
         $response = $this->get('/pricing');
 
         $response->assertStatus(200);
     }
 
-    public function test_terms_page_200()
+    public function test_pricing_page_route_200()
+    {
+        $response = $this->get(route('pricing'));
+
+        $response->assertStatus(200);
+    }
+
+    public function test_terms_page_url_200()
     {
         $response = $this->get('/terms');
 
         $response->assertStatus(200);
     }
 
-    public function test_privacy_page_200()
+    public function test_terms_page_route_200()
+    {
+        $response = $this->get(route('terms'));
+
+        $response->assertStatus(200);
+    }
+
+    public function test_privacy_page_url_200()
     {
         $response = $this->get('/privacy');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_privacy_page_route_200()
+    {
+        $response = $this->get(route('privacy'));
 
         $response->assertStatus(200);
     }
