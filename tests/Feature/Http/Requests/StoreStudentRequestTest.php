@@ -11,9 +11,8 @@ use Tests\TestCase;
 
 class StoreStudentRequestTest extends TestCase
 {
-    use RefreshDatabase;
-
     use WithFaker;
+    use RefreshDatabase;
 
     public $request;
 
