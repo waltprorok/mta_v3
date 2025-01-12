@@ -52,7 +52,6 @@ class BusinessHourControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-
     public function test_business_hours_is_not_null()
     {
         $businessHours = factory(BusinessHours::class, 7)->make();
