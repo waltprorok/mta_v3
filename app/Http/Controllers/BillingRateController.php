@@ -91,7 +91,7 @@ class BillingRateController extends Controller
         return response()->json($billingRate);
     }
 
-    public function billingPlans()
+    public function  billingPlans()
     {
         try {
             $plans = Plan::all(['id', 'name', 'slug', 'stripe_plan', 'cost', 'description', 'created_at']);

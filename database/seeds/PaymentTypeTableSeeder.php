@@ -24,6 +24,7 @@ class PaymentTypeTableSeeder extends Seeder
                 ['name' => 'PayPal', 'created_at' => now(), 'updated_at' => now()],
                 ['name' => 'Venmo', 'created_at' => now(), 'updated_at' => now()],
                 ['name' => 'Zelle', 'created_at' => now(), 'updated_at' => now()],
+                ['name' => 'Other', 'created_at' => now(), 'updated_at' => now()],
             ]
         );
     }
