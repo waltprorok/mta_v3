@@ -10,7 +10,7 @@
   "require": {
     "php": "^7.2",
     "advmaker/carbon-period": "^0.2.2",
-    "anhskohbo/no-captcha": "^3.2",
+    "anhskohbo/no-captcha": "^3.6",
     "barryvdh/laravel-dompdf": "^0.8.7",
     "doctrine/dbal": "^2.13",
     "fideloper/proxy": "~4.0",
