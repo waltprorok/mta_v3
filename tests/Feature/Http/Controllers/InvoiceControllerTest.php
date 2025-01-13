@@ -52,17 +52,13 @@ class InvoiceControllerTest extends TestCase
         $this->withoutMiddleware();
 
         $user = factory(User::class)->create(['teacher' => 1, 'admin' => 0]);
-
         $student = factory(Student::class)->create(['teacher_id' => $user->id]);
-
         $paymentType = factory(PaymentType::class)->create();
 
         factory(Invoice::class)->create(['teacher_id' => $user->id, 'student_id' => $student->id, 'payment_type_id' => $paymentType->id]);
 
         $response = $this->actingAs($user)->get('/web/invoice');
-
         $response->assertStatus(200);
-
         $response->assertJson([[
             'id' => 1,
             "student_id" => "1",

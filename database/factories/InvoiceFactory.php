@@ -3,12 +3,10 @@
 /** @var Factory $factory */
 
 use App\Models\Invoice;
-use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factory;
 
-$factory->define(Invoice::class, function (Faker $faker) {
+$factory->define(Invoice::class, function () {
     return [
-        'id' => 1,
         'student_id' => 1,
         'teacher_id' => 3,
         'lesson_id' => '',
@@ -18,6 +16,10 @@ $factory->define(Invoice::class, function (Faker $faker) {
         'balance_due' => 0,
         'payment' => 0,
         'adjustments' => 0,
+        'payment_type_id' => 1,
+        'check_number' => null,
+        'payment_information' => null,
+        'due_date' => null,
         'is_paid' => 0,
     ];
 });
