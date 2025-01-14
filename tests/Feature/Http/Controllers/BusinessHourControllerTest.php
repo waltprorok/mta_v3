@@ -58,5 +58,4 @@ class BusinessHourControllerTest extends TestCase
 
         $this->assertNotNull($businessHours);
     }
-
 }

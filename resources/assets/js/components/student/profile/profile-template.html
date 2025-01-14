@@ -76,7 +76,7 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="row">
+                    <div v-if="profile.parent" class="row">
                         <div class="col-sm-3">
                             <h6 class="mb-0">Parent Email</h6>
                         </div>
@@ -84,7 +84,7 @@
                             <a v-bind:href="'mailto:' + profile.parent.email">{{ profile.parent.email }}</a>
                         </div>
                     </div>
-                    <hr>
+                    <hr v-if="profile.parent" >
                     <div class="row">
                         <div class="col-sm-3">
                             <h6 class="mb-0">Birthday</h6>
