@@ -68,6 +68,22 @@ class ContactControllerTest extends TestCase
         $this->assertDatabaseCount('contacts', 1);
     }
 
+    public function test_contact_update_success()
+    {
+        $user = factory(User::class)->create(['admin' => 1]);
+
+        $contact = factory(Contact::class)->create();
+
+        $response = $this->actingAs($user)->put('/web/contacts/' . $contact->id, [
+            'name' => 'Test Name',
+            'email' => 'test@domain.com',
+            'subject' => 'Test subject line',
+            'message' => 'This is a test message.',
+        ]);
+
+        $response->assertOk();
+    }
+
     public function test_contact_delete_success()
     {
         $user = factory(User::class)->create(['admin' => 1]);
