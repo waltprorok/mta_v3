@@ -5,19 +5,29 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBlogPostRequest;
 use App\Http\Requests\UpdateBlogImageRequest;
 use App\Models\Blog;
-use Carbon\Carbon;
+use App\Services\BlogService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class BlogController extends Controller
 {
     protected $blogLimit = 6;
+
+    /**
+     * @var BlogService
+     */
+    private $blogService;
+
+    /**
+     * @param BlogService $blogService
+     */
+    public function __construct(BlogService $blogService)
+    {
+        $this->blogService = $blogService;
+    }
 
     /**
      * Marketing blog list page
@@ -54,7 +64,7 @@ class BlogController extends Controller
     {
         try {
             $blog = new Blog();
-            $this->saveBlogPost($blog, $request);
+            $this->blogService->saveBlogPost($blog, $request);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             return response()->json([], Response::HTTP_BAD_REQUEST);
@@ -78,7 +88,7 @@ class BlogController extends Controller
     public function update(StoreBlogPostRequest $request, Blog $blog): JsonResponse
     {
         try {
-            $this->saveBlogPost($blog, $request, true);
+            $this->blogService->saveBlogPost($blog, $request, true);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             return response()->json([], Response::HTTP_BAD_REQUEST);
@@ -90,7 +100,7 @@ class BlogController extends Controller
     public function updateImage(UpdateBlogImageRequest $request, Blog $blog): JsonResponse
     {
         try {
-            $blog = $this->updateBlogImage($request, $blog);
+            $blog = $this->blogService->updateBlogImage($request, $blog);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             return response()->json([], Response::HTTP_BAD_REQUEST);
@@ -107,43 +117,5 @@ class BlogController extends Controller
         $blog->delete();
 
         return response()->json();
-    }
-
-    private function updateBlogImage($request, $blog)
-    {
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $fileName = 'MTA_' . date('Ymd_hms') . "." . $file->getClientOriginalExtension();
-            Storage::disk('blog')->put($fileName, File::get($file));
-            $blog->image = $fileName;
-            $blog->update();
-        }
-
-        return $blog;
-    }
-
-    private function saveBlogPost($editBlog, $request, $update = false): void
-    {
-        $this->setBlogPost($editBlog, $request);
-
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $fileName = 'MTA_' . date('Ymd_hms') . "." . $file->getClientOriginalExtension();
-            Storage::disk('blog')->put($fileName, File::get($file));
-            $editBlog->image = $fileName;
-        }
-
-        $update ? $editBlog->update() : $editBlog->save();
-    }
-
-    private function setBlogPost(Blog $blog, $request): void
-    {
-        $releaseDate = Carbon::parse($request->get('released_on'))->format('Y-m-d');
-
-        $blog->author_id = Auth::id();
-        $blog->title = $request->get('title');
-        $blog->slug = $request->get('slug');
-        $blog->body = $request->get('body');
-        $blog->released_on = $releaseDate . ' ' . $request->get('release_time');
     }
 }
