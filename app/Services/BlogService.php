@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class BlogService
 {
-
     public function updateBlogImage($request, $blog)
     {
         if ($request->hasFile('image')) {
