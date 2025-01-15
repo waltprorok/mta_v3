@@ -30,6 +30,7 @@ $factory->define(User::class, function (Faker $faker) {
         'teacher' => false,
         'parent' => false,
         'terms' => true,
+        'trial_ends_at' => now()->addMonth()->format('Y-m-d H:i:s'),
         'timezone' => 'America/New_York',
         'remember_token' => str_random(10),
     ];
