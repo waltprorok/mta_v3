@@ -19,7 +19,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         Route::patch('reply-support/{support}', 'SupportController@updateReply');
         Route::get('teachers', 'TeacherController@adminTeachers');
         Route::get('users', 'UserController@adminUsers');
-        Route::get('billing/plans', 'BillingRateController@billingPlans');
+        Route::get('billing/plans', 'PlanController@index');
     });
 
     Route::prefix('admin')->group(function () {

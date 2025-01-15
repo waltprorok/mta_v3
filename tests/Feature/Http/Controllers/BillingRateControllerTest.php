@@ -3,7 +3,6 @@
 namespace Feature\Http\Controllers;
 
 use App\Models\BillingRate;
-use App\Models\Plan;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -106,27 +105,5 @@ class BillingRateControllerTest extends TestCase
         $response->assertOk();
 
         $this->assertDatabaseCount('billing_rates', 0);
-    }
-
-    public function test_billing_plans_index_view_200()
-    {
-        $response = $this->actingAs($this->admin)->get(route('admin.billing.plan.list'));
-
-        $response->assertOk()
-            ->assertViewIs('webapp.admin.billing.plan');
-    }
-
-    public function test_billing_plans_index_url_200()
-    {
-        $response = $this->actingAs($this->admin)->get('/web/billing/plans');
-
-        $response->assertOk();
-    }
-
-    public function test_billing_plans_factory()
-    {
-        factory(Plan::class)->create();
-
-        $this->assertDatabaseCount('plans', 1);
     }
 }
