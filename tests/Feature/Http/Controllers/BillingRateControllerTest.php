@@ -37,6 +37,15 @@ class BillingRateControllerTest extends TestCase
     {
         factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
 
+        $response = $this->actingAs($this->user)->get('/teacher/rates');
+
+        $response->assertOk();
+    }
+
+    public function test_billing_rate_index_web_url_200()
+    {
+        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+
         $response = $this->actingAs($this->user)->get('/web/billing-rate');
 
         $response->assertOk();

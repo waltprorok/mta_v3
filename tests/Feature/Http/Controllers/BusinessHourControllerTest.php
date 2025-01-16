@@ -38,7 +38,7 @@ class BusinessHourControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get('/teacher/hours');
 
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     public function test_index_page_route_view()
@@ -49,7 +49,7 @@ class BusinessHourControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('teacher.hours'));
 
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     public function test_business_hours_is_not_null()
