@@ -37,7 +37,7 @@ class SubscriptionController extends Controller
             Mail::to($user->email)->queue(new CancelledSubscriptionMail($user));
         }
 
-        return redirect()->back()->with('warning', 'Your subscription account has been cancelled.');
+        return redirect()->back()->with('warning', 'Your subscription has been cancelled.');
     }
 
     public function changePlan(): RedirectResponse
@@ -186,7 +186,7 @@ class SubscriptionController extends Controller
 
         Mail::to($user->email)->queue(new ResumeSubscriptionMail($user));
 
-        return redirect()->back()->with('success', 'Your subscription account has been reinstated.');
+        return redirect()->back()->with('success', 'Your subscription has been reinstated.');
     }
 
     public function subscribed(): View
