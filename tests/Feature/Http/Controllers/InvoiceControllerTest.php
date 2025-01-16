@@ -77,13 +77,24 @@ class InvoiceControllerTest extends TestCase
         ]);
     }
 
-    public function test_index_page_view()
+    public function test_index_page_route_view()
     {
         $this->withoutMiddleware();
 
         $user = factory(User::class)->create(['teacher' => 1]);
 
         $response = $this->actingAs($user)->get(route('invoice.index'));
+        $response->assertOk()
+            ->assertViewIs('webapp.invoice.index');
+    }
+
+    public function test_index_page_url_view()
+    {
+        $this->withoutMiddleware();
+
+        $user = factory(User::class)->create(['teacher' => 1]);
+
+        $response = $this->actingAs($user)->get('/invoice');
         $response->assertOk()
             ->assertViewIs('webapp.invoice.index');
     }

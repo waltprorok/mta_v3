@@ -27,7 +27,14 @@ class SupportControllerTest extends TestCase
             ->assertViewIs('webapp.admin.support.index');
     }
 
-    public function test_contact_index_url_200()
+    public function test_admin_contact_index_url_200()
+    {
+        $response = $this->actingAs($this->user)->get('/admin/support');
+
+        $response->assertOk();
+    }
+
+    public function test_contact_index_web_url_200()
     {
         $response = $this->actingAs($this->user)->get('/web/support');
 
