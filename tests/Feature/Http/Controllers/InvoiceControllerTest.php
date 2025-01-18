@@ -84,6 +84,7 @@ class InvoiceControllerTest extends TestCase
         $user = factory(User::class)->create(['teacher' => 1]);
 
         $response = $this->actingAs($user)->get(route('invoice.index'));
+
         $response->assertOk()
             ->assertViewIs('webapp.invoice.index');
     }
@@ -95,6 +96,7 @@ class InvoiceControllerTest extends TestCase
         $user = factory(User::class)->create(['teacher' => 1]);
 
         $response = $this->actingAs($user)->get('/invoice');
+
         $response->assertOk()
             ->assertViewIs('webapp.invoice.index');
     }

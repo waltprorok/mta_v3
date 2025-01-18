@@ -39,7 +39,8 @@ class BillingRateControllerTest extends TestCase
 
         $response = $this->actingAs($this->user)->get('/teacher/rates');
 
-        $response->assertOk();
+        $response->assertOk()
+            ->assertViewIs('webapp.teacher.billing');
     }
 
     public function test_billing_rate_index_web_url_200()

@@ -27,6 +27,14 @@ class PlanControllerTest extends TestCase
             ->assertViewIs('webapp.admin.billing.plan');
     }
 
+    public function test_billing_plans_index_url_view_200()
+    {
+        $response = $this->actingAs($this->admin)->get('/admin/billing');
+
+        $response->assertOk()
+            ->assertViewIs('webapp.admin.billing.plan');
+    }
+
     public function test_billing_plans_index_url_200()
     {
         $response = $this->actingAs($this->admin)->get('/web/billing/plans');
