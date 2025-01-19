@@ -11,12 +11,31 @@ class StudentListControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    public $admin;
+
     public $user;
 
     public function setUp(): void
     {
         parent::setUp();
+        $this->admin = factory(User::class)->create(['admin' => true, 'student' => false]);
         $this->user = factory(User::class)->create(['id' => 3, 'teacher' => true, 'student' => false]);
+    }
+
+    public function test_admin_student_list_index_view_200()
+    {
+        $response = $this->actingAs($this->admin)->get(route('admin.student.index'));
+
+        $response->assertOk()
+            ->assertViewIs('webapp.admin.student.index');
+    }
+
+    public function test_admin_student_list_index_view_url_200()
+    {
+        $response = $this->actingAs($this->admin)->get('/admin/students');
+
+        $response->assertOk()
+            ->assertViewIs('webapp.admin.student.index');
     }
 
     public function test_student_list_index_view_200()
