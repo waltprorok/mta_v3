@@ -11,9 +11,15 @@ class TeacherControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    public $admin;
+
+    public $user;
+
     public function setUp(): void
     {
         parent::setUp();
+        $this->admin = factory(User::class)->create(['admin' => true, 'student' => false]);
+        $this->user = factory(User::class)->create(['teacher' => true, 'student' => false]);
     }
 
     public function test_index_page_url_redirect()
@@ -32,22 +38,50 @@ class TeacherControllerTest extends TestCase
 
     public function test_get_teacher_is_null()
     {
-        $this->withoutMiddleware();
-
-        $user = factory(User::class)->create(['teacher' => 1]);
+        $user = factory(User::class)->create(['teacher' => true, 'student' => false]);
 
         $this->assertNull($user->getTeacher);
     }
 
     public function test_get_teacher_is_not_null()
     {
-        $this->withoutMiddleware();
+        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
 
-        $user = factory(User::class)->create(['teacher' => 1]);
-
-        factory(Teacher::class)->create(['teacher_id' => $user->id]);
-
-        $this->assertNotNull($user->getTeacher);
+        $this->assertNotNull($this->user->getTeacher);
     }
 
+    public function test_admin_teacher_index_view_200()
+    {
+        $response = $this->actingAs($this->admin)->get(route('teacher.index'));
+
+        $response->assertOk()
+            ->assertViewIs('webapp.admin.teacher.index');
+    }
+
+    public function test_admin_teacher_index_view_url_200()
+    {
+        $response = $this->actingAs($this->admin)->get('/admin/teachers');
+
+        $response->assertOk()
+            ->assertViewIs('webapp.admin.teacher.index');
+    }
+
+    public function test_teacher_settings_store()
+    {
+        $this->actingAs($this->user)->post('/teacher/store', [
+            'teacher_id' => $this->user->id,
+            'studio_name' => 'Studio Name',
+            'first_name' => 'John',
+            'last_name' => 'Snow',
+            'address' => '123 Main St',
+            'address_2' => 'Apt A',
+            'city' => 'Orlando',
+            'state' => 'FL',
+            'zip' => '34712',
+            'email' => 'john_snow@domain.com',
+            'phone' => '1234567890'
+        ]);
+
+        $this->assertDatabaseCount('teachers', 1);
+    }
 }
