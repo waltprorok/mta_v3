@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Http\Controllers;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Contact;
 use App\Models\User;
