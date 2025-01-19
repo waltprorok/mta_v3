@@ -13,11 +13,11 @@
     "anhskohbo/no-captcha": "^3.6",
     "barryvdh/laravel-dompdf": "^0.8.7",
     "doctrine/dbal": "^2.13",
-    "fideloper/proxy": "~4.0",
+    "fideloper/proxy": "^4.4",
     "laravel/cashier": "^12.0",
-    "laravel/framework": "^7.30.7",
+    "laravel/framework": "^7.30",
     "laravel/nexmo-notification-channel": "^2.4",
-    "laravel/tinker": "~2.0",
+    "laravel/tinker": "^2.0",
     "laravel/ui": "^2.0",
     "qlick/laravel-full-calendar": "~1.0",
     "spatie/laravel-honeypot": "^2.0.0",
@@ -25,10 +25,11 @@
   },
   "require-dev": {
     "filp/whoops": "~2.0",
-    "fzaninotto/faker": "~1.4",
+    "fzaninotto/faker": "^1.9.1",
     "laravel/dusk": "^5.0",
     "laravel/telescope": "^3.0",
     "mockery/mockery": "0.9.*",
+    "nunomaduro/collision": "^4.3",
     "phpunit/phpunit": "8.*"
   },
   "autoload": {

@@ -145,6 +145,7 @@ class StudentController extends Controller
         }
 
         $student->save();
+
         $this->createUserStudentEmail($request);
 
         return redirect()->back()->with('success', 'You successfully updated the student.');

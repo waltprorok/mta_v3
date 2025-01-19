@@ -13,13 +13,13 @@
 
         @include('partials.accountTabs')
         <div class="card">
-            <div class="card-header bg-light">Update User Profile Information</div>
+            <div class="card-header bg-light">Account Profile</div>
             <div class="card-body">
                 <form class="form-horizontal" method="POST" action="{{ route('account.updateProfile') }}">
                     @csrf
                     <div class="row mb-5">
                         <div class="col-md-4 mb-4">
-                            <div>User Profile Information</div>
+                            <div>User Profile</div>
                             <div class="text-muted small">Update first name, last name, and email.</div>
                         </div>
 
@@ -69,7 +69,7 @@
 
                     <div class="row mt-5">
                         <div class="col-md-4 mb-4">
-                            <div>Time zone</div>
+                            <div>Time Zone</div>
                             <div class="text-muted small">Set time zone.</div>
                         </div>
                         <div class="col-md-8">
