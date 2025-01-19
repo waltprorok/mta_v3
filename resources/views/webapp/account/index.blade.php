@@ -32,7 +32,7 @@
                                     <input type="hidden" name="payment_method" class="payment-method">
                                 </div>
                                 <div class="form-group">
-                                    <label for="card-element">Cardholder Name</label>
+                                    <label for="card-element">Card Holder Name</label>
                                     <input class="StripeElement mb-3 form-control" name="card_holder_name" placeholder="Full name on card" required>
                                 </div>
                                 <div class="form-group">
