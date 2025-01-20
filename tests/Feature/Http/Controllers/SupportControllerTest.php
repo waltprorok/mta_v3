@@ -2,9 +2,11 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Mail\SupportEmail;
 use App\Models\Support;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class SupportControllerTest extends TestCase
@@ -16,6 +18,7 @@ class SupportControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        Mail::fake();
         $this->user = factory(User::class)->create(['admin' => true, 'student' => false]);
     }
 
@@ -61,14 +64,26 @@ class SupportControllerTest extends TestCase
 
     public function test_support_create_success()
     {
+        $support = factory(Support::class)->make();
+
         $this->actingAs($this->user)->post('/web/support', [
-            'name' => 'Test Name',
-            'email' => 'test@domain.com',
-            'subject' => 'Test Subject',
-            'message' => 'Test Message',
+            'name' => $support->name,
+            'email' => $support->email,
+            'subject' => $support->subject,
+            'message' => $support->message,
         ]);
 
         $this->assertDatabaseCount('supports', 1);
+
+        $this->assertDatabaseHas('supports', [
+            'email' => $support->email,
+        ]);
+
+        Mail::assertQueued(SupportEmail::class, function ($mail) use ($support) {
+            return $mail->hasTo($support->email);
+        });
+
+        Mail::assertQueued(SupportEmail::class, 1);
     }
 
     public function test_support_update_success()
