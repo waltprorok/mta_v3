@@ -70,7 +70,17 @@ class HolidayControllerTest extends TestCase
             'all_day' => true,
         ]);
 
+        $holiday = Holiday::first();
+
         $this->assertDatabaseCount('holidays', 1);
+
+        $this->assertDatabaseHas('holidays', [
+            'title' => $holiday->title,
+            'color' => $holiday->color,
+            'start_date' => $holiday->start_date,
+            'end_date' => $holiday->end_date,
+            'all_day' => $holiday->all_day
+        ]);
     }
 
     public function test_holiday_update_success()
