@@ -12,11 +12,9 @@
         <testsuite name="Feature">
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
-
         <testsuite name="Unit">
             <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
-
 <!--        <testsuite name="Browser">-->
 <!--            <directory suffix="Test.php">./tests/Browser</directory>-->
 <!--        </testsuite>-->
@@ -34,6 +32,8 @@
         <env name="MAIL_TO_ADDRESS" value="admin@musicteachersaid.com"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="TELESCOPE_ENABLED" value="false"/>
+        <env name="DEBUGBAR_ENABLED" value="false"/>
         <env name="NOCAPTCHA_SITEKEY" value="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"/>
         <env name="NOCAPTCHA_SECRET" value="6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"/>
     </php>
