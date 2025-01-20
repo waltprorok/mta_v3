@@ -84,4 +84,54 @@ class TeacherControllerTest extends TestCase
 
         $this->assertDatabaseCount('teachers', 1);
     }
+
+    public function test_teacher_settings_update()
+    {
+        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+
+        $this->actingAs($this->user)->put('/teacher/update', [
+            'teacher_id' => $this->user->id,
+            'studio_name' => 'Studio Name Update',
+            'first_name' => 'Jane',
+            'last_name' => 'Snow',
+            'address' => '321 Main St',
+            'address_2' => 'Apt B',
+            'city' => 'Orlando',
+            'state' => 'FL',
+            'zip' => '34712',
+            'email' => 'jane_snow@domain.com',
+            'phone' => '1234567890'
+        ]);
+
+        $this->assertDatabaseCount('teachers', 1);
+    }
+
+    public function test_teacher_profile_index_view_200()
+    {
+        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+
+        $response = $this->actingAs($this->user)->get(route('teacher.profile'));
+
+        $response->assertOk()
+            ->assertViewIs('webapp.teacher.profile');
+    }
+
+    public function test_teacher_profile_index_url_200()
+    {
+        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+
+        $response = $this->actingAs($this->user)->get('/teacher/profile');
+
+        $response->assertOk()
+            ->assertViewIs('webapp.teacher.profile');
+    }
+
+    public function test_contact_index_web_url_200()
+    {
+        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+
+        $response = $this->actingAs($this->admin)->get('/web/teachers');
+
+        $response->assertOk();
+    }
 }
