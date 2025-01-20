@@ -82,6 +82,26 @@ class TeacherControllerTest extends TestCase
             ->assertViewIs('webapp.teacher.studioIndex');
     }
 
+    public function test_teacher_settings_edit_index_view_200()
+    {
+        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+
+        $response = $this->actingAs($this->user)->get(route('teacher.studioIndex'));
+
+        $response->assertOk()
+            ->assertViewIs('webapp.teacher.studiosettings');
+    }
+
+    public function test_teacher_settings_edit_index_view_url_200()
+    {
+        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+
+        $response = $this->actingAs($this->user)->get('/teacher/studio');
+
+        $response->assertOk()
+            ->assertViewIs('webapp.teacher.studiosettings');
+    }
+
     public function test_teacher_settings_store()
     {
         $this->actingAs($this->user)->post('/teacher/store', [
