@@ -66,6 +66,22 @@ class TeacherControllerTest extends TestCase
             ->assertViewIs('webapp.admin.teacher.index');
     }
 
+    public function test_teacher_settings_create_index_view_200()
+    {
+        $response = $this->actingAs($this->user)->get(route('teacher.studioIndex'));
+
+        $response->assertOk()
+            ->assertViewIs('webapp.teacher.studioIndex');
+    }
+
+    public function test_teacher_settings_create_index_view_url_200()
+    {
+        $response = $this->actingAs($this->user)->get('/teacher/studio');
+
+        $response->assertOk()
+            ->assertViewIs('webapp.teacher.studioIndex');
+    }
+
     public function test_teacher_settings_store()
     {
         $this->actingAs($this->user)->post('/teacher/store', [
