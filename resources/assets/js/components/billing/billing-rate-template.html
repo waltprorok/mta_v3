@@ -14,11 +14,11 @@
                                 </button>
                             </div>
                             <div class="modal-body" v-show="!read">
-                                <form class="form-horizontal" action="#" @submit.prevent="edit ? updateRate(rate.id) : createBillingRate()">
+                                <form class="form-horizontal" action="#" @submit.prevent="edit ? updateBillingRate(rate.id) : createBillingRate()">
                                     <div class="row">
                                         <div class="col-md-10 offset-1">
                                             <div class="form-group" :class="error_type && classError">
-                                                <label for="single-select">Rate Types</label>
+                                                <label for="single-select">Rate Type</label>
                                                 <select id="single-select" class="form-control" v-model="rate.type"
                                                         v-on:keydown.enter.prevent :disabled="disableInputNoLesson()">
                                                     <option v-for="type in types" :value="type">{{ type | capitalising }}</option>
@@ -77,7 +77,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-<!--                                            <div class="row p-2" v-if="! rate.flat_rate">-->
+<!--                                            <div class="row p-2" v-if="! isMonthlyRate()">-->
 <!--                                                <div class="col-md-10">-->
 <!--                                                    <div class="toggle-switch" data-ts-color="primary">-->
 <!--                                                        <label for="cancelled_twenty_four_hours" class="ts-label">Charge Cancelled Lesson Under 24 Hours</label>-->
@@ -86,7 +86,7 @@
 <!--                                                    </div>-->
 <!--                                                </div>-->
 <!--                                            </div>-->
-<!--                                            <div class="row p-2" v-if="! rate.flat_rate">-->
+<!--                                            <div class="row p-2" v-if="! isMonthlyRate()">-->
 <!--                                                <div class="col-md-10">-->
 <!--                                                    <div class="toggle-switch" data-ts-color="primary">-->
 <!--                                                        <label for="cancelled_forty_eight_hours" class="ts-label">Charge Cancelled Lesson Under 48 Hours</label>-->
@@ -163,7 +163,7 @@
                         </button>
                     </td>
                     <td class="text-nowrap">
-                        <button @click="showRate(row.id, false)"
+                        <button @click="showBillingRate(row.id, false)"
                                 class="btn btn-outline-primary btn-sm"
                                 title="edit">
                             <i class="fa fa-edit"></i>

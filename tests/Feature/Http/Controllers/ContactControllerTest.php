@@ -68,7 +68,16 @@ class ContactControllerTest extends TestCase
             'message' => 'Test Message',
         ]);
 
+        $contact = Contact::first();
+
         $this->assertDatabaseCount('contacts', 1);
+
+        $this->assertDatabaseHas('contacts', [
+            'name' => $contact->name,
+            'email' => $contact->email,
+            'subject' => $contact->subject,
+            'message' => $contact->message,
+        ]);
     }
 
     public function test_contact_update_success()
