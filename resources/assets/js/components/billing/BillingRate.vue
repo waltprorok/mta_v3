@@ -212,7 +212,7 @@ export default {
             self.id = id;
         },
 
-        showRate: function (id, read) {
+        showBillingRate: function (id, read) {
             let self = this;
             self.showForm = true;
             self.read = read;
@@ -233,7 +233,7 @@ export default {
             self.edit = true;
         },
 
-        updateRate: function (id) {
+        updateBillingRate: function (id) {
             let self = this;
             let params = Object.assign({}, self.rate);
             axios.patch('/web/billing-rate/' + id, params)
