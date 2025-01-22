@@ -24,6 +24,7 @@ Route::group(['middleware' => ['auth', 'teacher', 'subscribed']], function () {
         Route::resource('holiday', 'HolidayController');
         Route::post('student-save', 'StudentController@store');
         Route::get('status', 'ReportController@status');
+        Route::get('payments', 'ReportController@payments');
         Route::get('payment-types', 'PaymentTypeController@index');
         Route::resource('teacher-settings', 'TeacherSettingsController');
         Route::get('student/lesson/{id}/{day?}', 'StudentLessonController@getStudent');
@@ -68,5 +69,6 @@ Route::group(['middleware' => ['auth', 'teacher', 'subscribed']], function () {
 
     Route::prefix('reports')->group(function () {
         Route::view('status', 'webapp.reports.index')->name('reports.index');
+        Route::view('payments', 'webapp.reports.payments')->name('reports.payments');
     });
 });

@@ -79,6 +79,7 @@ Vue.component('teachers', require('./components/admin/teacher/Teachers.vue').def
 Vue.component('users', require('./components/admin/user/Users.vue').default);
 Vue.component('reportCompletedLessonsLine', require('./components/reports/CompletedLessonsLine.vue').default);
 Vue.component('reportStudentStatusBar', require('./components/reports/StudentStatusBar.vue').default);
+Vue.component('reportInvoicePaymentsBar', require('./components/reports/InvoicePaymentsBar.vue').default);
 Vue.component('messages', require('./components/messages/Index.vue').default);
 Vue.component('plans', require('./components/admin/plan/Plans.vue').default);
 Vue.component('payments', require('./components/payments/Payments.vue').default);
