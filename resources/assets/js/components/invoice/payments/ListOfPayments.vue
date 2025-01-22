@@ -8,9 +8,6 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group pull-right">
-                <a :href="`/invoice/create`" class="btn btn-primary" role="button" title="create invoice">Create Invoice</a>
-            </div>
             <div class="form-group pull-right pr-2">
                 <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
             </div>
