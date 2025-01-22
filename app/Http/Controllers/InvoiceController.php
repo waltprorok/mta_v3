@@ -7,7 +7,6 @@ use App\Jobs\StoreInvoicePDFJob;
 use App\Mail\LessonsInvoice;
 use App\Models\Invoice;
 use App\Models\Lesson;
-use App\Models\PaymentType;
 use App\Models\Student;
 use App\Services\InvoiceService;
 use Barryvdh\DomPDF\PDF;
@@ -222,13 +221,6 @@ class InvoiceController extends Controller
             ]);
 
         return response()->json($payments);
-    }
-
-    // web api endpoint
-    public function getPaymentTypes(): JsonResponse
-    {
-        $paymentTypes = PaymentType::query()->get(['id', 'name']);
-        return response()->json($paymentTypes);
     }
 
 }
