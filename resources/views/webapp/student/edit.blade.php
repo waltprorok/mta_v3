@@ -276,7 +276,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('at_home') ? 'has-error' : '' }}">
-                                    <label for="at_home" class="control-label">Lessons At Home</label>
+                                    <label for="at_home" class="control-label">Lessons At Student Home</label>
                                     <div class="col-md-6">
                                         <div class="toggle-switch mt-2" data-ts-color="primary">
                                             <input id="at_home" type="checkbox" hidden="hidden" name="at_home"
