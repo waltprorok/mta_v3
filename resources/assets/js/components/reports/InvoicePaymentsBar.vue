@@ -6,7 +6,7 @@ export default {
     data() {
         return {
             url: '/web/payments',
-            backgroundColor: ['green', 'blue', 'orange', 'purple', 'beige', 'grey', 'yellow', 'brown', 'pink', 'red', 'black'],
+            backgroundColor: ['green', 'purple', 'blue', 'orange', 'beige', 'grey', 'yellow', 'brown', 'pink', 'red', 'black'],
             data: [],
             labels: [],
         }

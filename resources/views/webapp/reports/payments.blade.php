@@ -11,7 +11,7 @@
         </ul>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header bg-light">Payment Totals</div>
                     <div class="card-body">
