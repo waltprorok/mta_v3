@@ -6,7 +6,7 @@ export default {
     data() {
         return {
             url: '/web/payments',
-            backgroundColor: ['green', 'blue', 'red', 'orange', 'white', 'grey', 'purple', 'yellow', 'brown', 'pink' , 'black'],
+            backgroundColor: ['green', 'blue', 'orange', 'purple', 'beige', 'grey', 'yellow', 'brown', 'pink', 'red', 'black'],
             data: [],
             labels: [],
         }
@@ -42,7 +42,7 @@ export default {
                                 yAxes: [{
                                     ticks: {
                                         beginAtZero: true,
-                                        stepSize: 20,
+                                        stepSize: 25,
                                     }
                                 }]
                             }

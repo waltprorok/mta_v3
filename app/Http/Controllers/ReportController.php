@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invoice;
-use App\Models\PaymentType;
 use App\Models\Student;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -41,28 +40,30 @@ class ReportController extends Controller
             ]);
     }
 
+    // TODO: update with option to change per month or year
     public function payments(): JsonResponse
     {
-        $invoicePayments = Invoice::query()
-            ->with('paymentType:id,name,created_at')
-            ->where('teacher_id', Auth::id())
-            ->where('payment', '>', '0')
-            ->get(['id', 'teacher_id', 'payment_type_id', 'payment']);
+        $invoicePayments = DB::table('invoices')
+            ->leftJoin('payment_types', 'invoices.payment_type_id', '=', 'payment_types.id')
+            ->select('invoices.id',
+                'invoices.payment_type_id',
+                'invoices.teacher_id',
+                'invoices.payment',
+                'payment_types.id',
+                'payment_types.name',
+                DB::raw('SUM(invoices.payment) as amount')
+            )
+            ->where('invoices.payment', '>', '0')
+            ->where('invoices.teacher_id', Auth::id())
+            ->groupBy('payment_types.name')
+            ->get();
 
-        $payments = [];
-
-        foreach (PaymentType::all() as $type) {
-            foreach ($invoicePayments as $invoice) {
-                if ($invoice->payment_type_id == $type->id) {
-                    $payments[] = ['type' => $type->name, 'amount' => $invoice->payment];
-                }
-            }
-        }
+        $payments = collect($invoicePayments);
 
         return response()
             ->json([
-                'paymentTypes' => collect($payments)->pluck('type'),
-                'payments' => collect($payments)->pluck('amount'),
+                'paymentTypes' => $payments->pluck('name'),
+                'payments' => $payments->pluck('amount'),
             ]);
     }
 }
