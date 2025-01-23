@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -36,6 +37,33 @@ class ReportController extends Controller
                 $studentInActiveCount,
                 $studentLeadCount,
                 $studentWaitlistCount
+            ]);
+    }
+
+    // TODO: update with option to change per month or year
+    public function payments(): JsonResponse
+    {
+        $invoicePayments = DB::table('invoices')
+            ->leftJoin('payment_types', 'invoices.payment_type_id', '=', 'payment_types.id')
+            ->select('invoices.id',
+                'invoices.payment_type_id',
+                'invoices.teacher_id',
+                'invoices.payment',
+                'payment_types.id',
+                'payment_types.name',
+                DB::raw('SUM(invoices.payment) as amount')
+            )
+            ->where('invoices.payment', '>', '0')
+            ->where('invoices.teacher_id', Auth::id())
+            ->groupBy('payment_types.name')
+            ->get();
+
+        $payments = collect($invoicePayments);
+
+        return response()
+            ->json([
+                'paymentTypes' => $payments->pluck('name'),
+                'payments' => $payments->pluck('amount'),
             ]);
     }
 }

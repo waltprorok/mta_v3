@@ -257,6 +257,9 @@
                                 <a href="{{ route('reports.index') }}" class="nav-link {{ Route::currentRouteName() == 'reports.index' ? 'active' : '' }}">
                                     <i class="fa fa-area-chart ml-3"></i>Students Status
                                 </a>
+                                <a href="{{ route('reports.payments') }}" class="nav-link {{ Route::currentRouteName() == 'reports.payments' ? 'active' : '' }}">
+                                    <i class="fa fa-dollar ml-3"></i>Invoice Payments
+                                </a>
                             </li>
                             {{--                            <li class="nav-item">--}}
                             {{--                                <a href="#" class="nav-link">--}}
