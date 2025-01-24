@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\BusinessHours;
+use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -11,16 +12,12 @@ class BusinessHourControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    public $user;
+
     public function setUp(): void
     {
         parent::setUp();
-    }
-
-    public function test_index_page_url_redirect()
-    {
-        $response = $this->get('/teacher/hours');
-
-        $response->assertStatus(302);
+        $this->user = factory(User::class)->create(['teacher' => true, 'student' => false]);
     }
 
     public function test_index_page_route_redirect()
@@ -30,13 +27,18 @@ class BusinessHourControllerTest extends TestCase
         $response->assertStatus(302);
     }
 
+    public function test_index_page_url_redirect()
+    {
+        $response = $this->get('/teacher/hours');
+
+        $response->assertStatus(302);
+    }
+
     public function test_index_page_url_view()
     {
-        $this->withoutMiddleware();
+        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
 
-        $user = factory(User::class)->create(['teacher' => 1]);
-
-        $response = $this->actingAs($user)->get('/teacher/hours');
+        $response = $this->actingAs($this->user)->get('/teacher/hours');
 
         $response->assertOk()
             ->assertViewIs('webapp.teacher.hours');
@@ -44,11 +46,9 @@ class BusinessHourControllerTest extends TestCase
 
     public function test_index_page_route_view()
     {
-        $this->withoutMiddleware();
+        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
 
-        $user = factory(User::class)->create(['teacher' => 1]);
-
-        $response = $this->actingAs($user)->get(route('teacher.hours'));
+        $response = $this->actingAs($this->user)->get(route('teacher.hours'));
 
         $response->assertOk()
             ->assertViewIs('webapp.teacher.hours');
