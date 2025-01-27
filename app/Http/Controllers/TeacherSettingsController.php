@@ -28,7 +28,6 @@ class TeacherSettingsController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-
         try {
             TeacherSetting::query()->create([
                 'teacher_id' => Auth::id(),
