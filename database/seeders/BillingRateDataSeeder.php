@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\BillingRate;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;

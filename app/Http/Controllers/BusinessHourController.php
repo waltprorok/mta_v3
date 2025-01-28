@@ -16,7 +16,7 @@ class BusinessHourController extends Controller
     /**
      * @var BusinessHoursService
      */
-    private $businessHoursService;
+    private BusinessHoursService $businessHoursService;
 
     /**
      * @param BusinessHoursService $businessHoursService
@@ -43,7 +43,7 @@ class BusinessHourController extends Controller
     {
         $hours = $this->businessHoursService->getSelectHours();
 
-        return view('webapp.teacher.hours', compact('hours', $hours));
+        return view('webapp.teacher.hours', compact('hours'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -83,7 +83,7 @@ class BusinessHourController extends Controller
 
         $selectHours = $this->businessHoursService->getSelectHours();
 
-        return view('webapp.teacher.hoursView', compact('hours', $hours, 'totalHours', $totalHours, 'selectHours', $selectHours));
+        return view('webapp.teacher.hoursView', compact('hours',  'totalHours', 'selectHours'));
     }
 
     public function update(Request $request): RedirectResponse

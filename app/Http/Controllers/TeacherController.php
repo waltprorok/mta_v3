@@ -80,7 +80,7 @@ class TeacherController extends Controller
     {
         $setting = User::with('getTeacher')->findOrFail(Auth::id());
 
-        return view('webapp.teacher.studiosettings', compact('setting', $setting));
+        return view('webapp.teacher.studiosettings', compact('setting'));
     }
 
     public function update(StoreTeacherSettingsRequest $request): RedirectResponse

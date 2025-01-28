@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -32,8 +34,8 @@ class UsersTableDataSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'stripe_id' => null,
-                'card_brand' => null,
-                'card_last_four' => null,
+                'pm_type' => null,
+                'pm_last_four' => null,
                 'trial_ends_at' => null,
             ],
             [
@@ -53,8 +55,8 @@ class UsersTableDataSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'stripe_id' => null,
-                'card_brand' => null,
-                'card_last_four' => null,
+                'pm_type' => null,
+                'pm_last_four' => null,
                 'trial_ends_at' => null,
             ],
             [
@@ -74,8 +76,8 @@ class UsersTableDataSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'stripe_id' => null,
-                'card_brand' => null,
-                'card_last_four' => null,
+                'pm_type' => null,
+                'pm_last_four' => null,
                 'trial_ends_at' => Carbon::now()->addDays(30),
             ],
             [
@@ -95,8 +97,8 @@ class UsersTableDataSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'stripe_id' => null,
-                'card_brand' => null,
-                'card_last_four' => null,
+                'pm_type' => null,
+                'pm_last_four' => null,
                 'trial_ends_at' => Carbon::now()->addDays(30),
             ],
             [
@@ -116,8 +118,8 @@ class UsersTableDataSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'stripe_id' => null,
-                'card_brand' => null,
-                'card_last_four' => null,
+                'pm_type' => null,
+                'pm_last_four' => null,
                 'trial_ends_at' => Carbon::now()->addDays(30),
             ],
             [
@@ -137,8 +139,8 @@ class UsersTableDataSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'stripe_id' => null,
-                'card_brand' => null,
-                'card_last_four' => null,
+                'pm_type' => null,
+                'pm_last_four' => null,
                 'trial_ends_at' => null,
             ],
             [
@@ -158,8 +160,8 @@ class UsersTableDataSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'stripe_id' => null,
-                'card_brand' => null,
-                'card_last_four' => null,
+                'pm_type' => null,
+                'pm_last_four' => null,
                 'trial_ends_at' => null,
             ]
         ]);

@@ -16,8 +16,8 @@
                 <div class="row">
                     <div class="col-md-6">
                         <ul class="list-group">
-                            <li class="list-group-item"><i class="fa fa-credit-card" aria-hidden="true" style="padding-right: 12px;"></i>{{ ucfirst(Auth::user()->card_brand) }}
-                                <span class="float-right">**** **** **** {{ Auth::user()->card_last_four }}</span></li>
+                            <li class="list-group-item"><i class="fa fa-credit-card" aria-hidden="true" style="padding-right: 12px;"></i>{{ ucfirst(Auth::user()->pm_type) }}
+                                <span class="float-right">**** **** **** {{ Auth::user()->pm_last_four }}</span></li>
                             <li class="list-group-item"><i class="fa fa-download" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.invoices') }}">Download Invoices</a></li>
                             <li class="list-group-item"><i class="fa fa-keyboard-o" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.card') }}">Updated Credit Card</a></li>
                             <li class="list-group-item"><i class="fa fa-calendar" aria-hidden="true" style="padding-right: 12px;"></i><a href="{{ route('subscription.change') }}">Change Subscription Billing Plan</a></li>
