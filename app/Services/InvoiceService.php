@@ -11,11 +11,7 @@ use Illuminate\Support\Facades\Mail;
 
 class InvoiceService
 {
-
-    /**
-     * @var string
-     */
-    private string $lessonIds;
+    private $lessonIds;
 
     public function __construct()
     {
