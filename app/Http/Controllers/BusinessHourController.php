@@ -83,7 +83,7 @@ class BusinessHourController extends Controller
 
         $selectHours = $this->businessHoursService->getSelectHours();
 
-        return view('webapp.teacher.hoursView', compact('hours', $hours, 'totalHours', $totalHours, 'selectHours', $selectHours));
+        return view('webapp.teacher.hoursView', compact('hours',  'totalHours', 'selectHours'));
     }
 
     public function update(Request $request): RedirectResponse
