@@ -20,7 +20,6 @@ export default {
         getReportInvoicePayments: function () {
             axios.get(this.url)
                 .then((response) => {
-                    console.log(response.data.paymentTypes.length);
                     this.labels = response.data.paymentTypes.length !== 0 ? response.data.paymentTypes : ['Cash'];
                     this.data = response.data.payments.length !== 0 ? response.data.payments : [0];
                     if (this.data) {
