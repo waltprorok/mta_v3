@@ -15,7 +15,7 @@ class InvoiceService
     /**
      * @var string
      */
-    private $lessonIds;
+    private string $lessonIds;
 
     public function __construct()
     {
