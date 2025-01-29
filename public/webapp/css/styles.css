@@ -7419,7 +7419,7 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 }
 
 .ml-4, .mx-4 {
-    margin-left: 1.5rem !important
+    margin-left: 1.8rem !important
 }
 
 .m-5 {
@@ -8951,7 +8951,7 @@ a.text-dark:focus, a.text-dark:hover {
 .sidebar .nav-link {
     display: block;
     text-decoration: none;
-    padding: 16px 24px;
+    padding: 13px 24px;
     color: #9d9d9d
 }
 
@@ -8997,9 +8997,13 @@ a.text-dark:focus, a.text-dark:hover {
     transform: rotate(270deg)
 }
 
+.sidebar .nav-dropdown.open .nav-dropdown-items .nav-item:hover {
+    background-color: #1163d3;
+}
+
 .sidebar .nav-dropdown-items {
     padding: 0;
-    margin: 4px;
+    margin: 0;
     overflow: hidden;
     max-height: 0 !important;
     /* MTA-175 commented out transition animation */
