@@ -91,7 +91,7 @@
                 @if(Auth::user()->student)
                     <li class="nav-item">
                         <a href="{{ route('student.calendar') }}"
-                           class="nav-link {{ Route::currentRouteName() == 'student.calendar' || Route::currentRouteName() == 'lesson.cancel' ? 'active' : '' }}">
+                           class="nav-link ml-4 {{ Route::currentRouteName() == 'student.calendar' || Route::currentRouteName() == 'lesson.cancel' ? 'active' : '' }}">
                             <i class="fa fa-calendar"></i>Calendar
                         </a>
                     </li>
@@ -129,36 +129,36 @@
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
                                 <a href="{{ route('student.index') }}"
-                                   class="nav-link {{ Route::currentRouteName() == 'student.index' || Route::currentRouteName() == 'student.reschedule' || Route::currentRouteName() == 'student.schedule' || Route::currentRouteName() == 'student.edit' || Route::currentRouteName() ==  'student.profile' ? 'active' : '' }}">
-                                    <i class="fa fa-list ml-3" aria-hidden="true"></i>List
+                                   class="nav-link ml-4 {{ Route::currentRouteName() == 'student.index' || Route::currentRouteName() == 'student.reschedule' || Route::currentRouteName() == 'student.schedule' || Route::currentRouteName() == 'student.edit' || Route::currentRouteName() ==  'student.profile' ? 'active' : '' }}">
+                                    List
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('complete.lessons') }}" class="nav-link {{ Route::currentRouteName() == 'complete.lessons' ? 'active' : '' }}">
-                                    <i class="fa fa-music ml-3" aria-hidden="true"></i>Lessons
+                                <a href="{{ route('complete.lessons') }}" class="nav-link ml-4 {{ Route::currentRouteName() == 'complete.lessons' ? 'active' : '' }}">
+                                    Lessons
                                 </a>
                             </li>
 
                             {{--                            <li class="nav-item">--}}
-                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                <a href="#" class="nav-link ml-4">--}}
                             {{--                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Practice Log--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}
 
                             {{--                            <li class="nav-item">--}}
-                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                <a href="#" class="nav-link ml-4">--}}
                             {{--                                    <i class="fa fa-book" aria-hidden="true"></i> Lending Library--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}
 
                             {{--                            <li class="nav-item">--}}
-                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                <a href="#" class="nav-link ml-4">--}}
                             {{--                                    <i class="fa fa-pencil" aria-hidden="true"></i> Repertoire Tracker--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}
 
                             {{--                            <li class="nav-item">--}}
-                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                <a href="#" class="nav-link ml-4">--}}
                             {{--                                    <i class="fa fa-bullhorn" aria-hidden="true"></i> Push Announcements--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}
@@ -182,65 +182,65 @@
                         </a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="{{ route('invoice.index') }}" class="nav-link {{ Route::currentRouteName() == 'invoice.index' ? 'active' : '' }}">
-                                    <i class="fa fa-file-text-o ml-3" aria-hidden="true"></i>Invoices
+                                <a href="{{ route('invoice.index') }}" class="nav-link ml-4 {{ Route::currentRouteName() == 'invoice.index' ? 'active' : '' }}">
+                                    Invoices
                                 </a>
                             </li>
 
                             {{--                            <li class="nav-item">--}}
-                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                <a href="#" class="nav-link ml-4">--}}
                             {{--                                    <i class="fa fa-pencil ml-3"></i>Transaction Log--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}
 
                             {{--                            <li class="nav-item">--}}
-                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                <a href="#" class="nav-link ml-4">--}}
                             {{--                                    <i class="fa fa-money ml-3"></i>Payments Received--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}
                             <li class="nav-item">
-                                <a href="{{ route('invoice.list_of_payments') }}" class="nav-link {{ Route::currentRouteName() == 'invoice.list_of_payments' ? 'active' : '' }}">
-                                    <i class="fa fa-list-alt ml-3"></i>Payments
+                                <a href="{{ route('invoice.list_of_payments') }}" class="nav-link ml-4 {{ Route::currentRouteName() == 'invoice.list_of_payments' ? 'active' : '' }}">
+                                   Payments
                                 </a>
                             </li>
                             {{--                            <li class="nav-item">--}}
-                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                <a href="#" class="nav-link ml-4">--}}
                             {{--                                    <i class="fa fa-keyboard-o ml-3"></i>Enter a Payment--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}
 
                             {{--                            <li class="nav-item">--}}
-                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                <a href="#" class="nav-link ml-4">--}}
                             {{--                                    <i class="fa fa-check-square-o ml-3"></i>Fees &amp; Credits--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}
 
                             {{--                            <li class="nav-item">--}}
-                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                <a href="#" class="nav-link ml-4">--}}
                             {{--                                    <i class="fa fa-list-ul"></i> List Fees &amp; Credits--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}
 
                             {{--                            <li class="nav-item">--}}
-                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                <a href="#" class="nav-link ml-4">--}}
                             {{--                                    <i class="fa fa-plus-square"></i> Change Fee / Issue Credit--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}
 
                             {{--                            <li class="nav-item">--}}
-                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                <a href="#" class="nav-link ml-4">--}}
                             {{--                                    <i class="fa fa-exchange"></i> Expenses &amp; Other Income--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}
 
                             {{--                            <li class="nav-item">--}}
-                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                <a href="#" class="nav-link ml-4">--}}
                             {{--                                    <i class="fa fa-envelope"></i> Invoicing--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}
 
                             {{--                            <li class="nav-item">--}}
-                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                <a href="#" class="nav-link ml-4">--}}
                             {{--                                    <i class="fa fa-car"></i> Mileage Tracker--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}
@@ -254,15 +254,15 @@
                         </a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="{{ route('reports.index') }}" class="nav-link {{ Route::currentRouteName() == 'reports.index' ? 'active' : '' }}">
-                                    <i class="fa fa-area-chart ml-3"></i>Students Status
+                                <a href="{{ route('reports.index') }}" class="nav-link ml-4 {{ Route::currentRouteName() == 'reports.index' ? 'active' : '' }}">
+                                    Students Status
                                 </a>
-                                <a href="{{ route('reports.payments') }}" class="nav-link {{ Route::currentRouteName() == 'reports.payments' ? 'active' : '' }}">
-                                    <i class="fa fa-dollar ml-3"></i>Invoice Payments
+                                <a href="{{ route('reports.payments') }}" class="nav-link ml-4 {{ Route::currentRouteName() == 'reports.payments' ? 'active' : '' }}">
+                                    Invoice Payments
                                 </a>
                             </li>
                             {{--                            <li class="nav-item">--}}
-                            {{--                                <a href="#" class="nav-link">--}}
+                            {{--                                <a href="#" class="nav-link ml-4">--}}
                             {{--                                    <i class="fa fa-line-chart"></i> Financial Reports--}}
                             {{--                                </a>--}}
                             {{--                            </li>--}}

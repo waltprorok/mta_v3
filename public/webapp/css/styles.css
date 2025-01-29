@@ -8999,7 +8999,7 @@ a.text-dark:focus, a.text-dark:hover {
 
 .sidebar .nav-dropdown-items {
     padding: 0;
-    margin: 0;
+    margin: 4px;
     overflow: hidden;
     max-height: 0 !important;
     /* MTA-175 commented out transition animation */
