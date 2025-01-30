@@ -60,4 +60,16 @@ class BusinessHourControllerTest extends TestCase
 
         $this->assertNotNull($businessHours);
     }
+
+    public function test_business_hours_show_view()
+    {
+        factory(BusinessHours::class)->create(['teacher_id' => $this->user->id]);
+
+        $response = $this->actingAs($this->user)->get(route('teacher.hours'));
+
+        $this->assertDatabaseCount('business_hours', 1);
+
+        $response->assertOk()
+            ->assertViewIs('webapp.teacher.hoursView');
+    }
 }
