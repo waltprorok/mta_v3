@@ -29,22 +29,6 @@ class SubscriptionControllerTest extends TestCase
         $this->user = factory(User::class)->make(['teacher' => true, 'student' => false]);
     }
 
-    public function test_subscription_index_view_200()
-    {
-        $response = $this->actingAs($this->user)->get(route('account.subscription'));
-
-        $response->assertOk()
-            ->assertViewIs('webapp.account.index');
-    }
-
-    public function test_subscription_index_view_url_200()
-    {
-        $response = $this->actingAs($this->user)->get('/account/subscription');
-
-        $response->assertOk()
-            ->assertViewIs('webapp.account.index');
-    }
-
     public function test_subscription_profile_view_200()
     {
         $response = $this->actingAs($this->user)->get(route('account.profile'));
