@@ -39,7 +39,7 @@ class SubscriptionControllerTest extends TestCase
 
     public function test_subscription_index_view_url_200()
     {
-        $response = $this->actingAs($this->user)->get('account/subscription'    );
+        $response = $this->actingAs($this->user)->get('/account/subscription');
 
         $response->assertOk()
             ->assertViewIs('webapp.account.index');
