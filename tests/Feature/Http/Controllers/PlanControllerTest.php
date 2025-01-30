@@ -11,7 +11,7 @@ class PlanControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public $admin;
+    public mixed $admin;
 
     public function setUp(): void
     {

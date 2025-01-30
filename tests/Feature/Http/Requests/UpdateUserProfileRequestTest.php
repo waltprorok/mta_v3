@@ -12,7 +12,7 @@ class UpdateUserProfileRequestTest extends TestCase
 {
     use WithFaker;
 
-    public $request;
+    public UpdateUserProfileRequest $request;
 
     public function setUp(): void
     {

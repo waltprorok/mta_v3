@@ -11,12 +11,12 @@ class ContactControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public $user;
+    public mixed $user;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = factory(User::class)->create(['admin' => true, 'student' => false]);
+        $this->user = factory(User::class)->make(['admin' => true, 'student' => false]);
     }
 
     public function test_contact_index_view_200()

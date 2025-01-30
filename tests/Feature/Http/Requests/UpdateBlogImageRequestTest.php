@@ -12,7 +12,7 @@ class UpdateBlogImageRequestTest extends TestCase
 {
     use WithFaker;
 
-    public $request;
+    public UpdateBlogImageRequest $request;
 
     public function setUp(): void
     {

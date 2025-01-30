@@ -12,7 +12,7 @@ class StoreTeacherSettingsRequestTest extends TestCase
 {
     use WithFaker;
 
-    public $request;
+    public StoreTeacherSettingsRequest $request;
 
     public function setUp(): void
     {

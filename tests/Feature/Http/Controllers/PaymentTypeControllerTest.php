@@ -3,15 +3,15 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\User;
+use Database\Seeders\PaymentTypeTableSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use PaymentTypeTableSeeder;
 use Tests\TestCase;
 
 class PaymentTypeControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public $user;
+    public mixed $user;
 
     public function setUp(): void
     {

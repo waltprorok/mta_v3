@@ -10,7 +10,7 @@ class UserControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public $user;
+    public mixed $user;
 
     public function setUp(): void
     {

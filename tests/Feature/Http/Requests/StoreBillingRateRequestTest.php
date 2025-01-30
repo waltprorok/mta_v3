@@ -12,7 +12,7 @@ class StoreBillingRateRequestTest extends TestCase
 {
     use WithFaker;
 
-    public $request;
+    public StoreBillingRateRequest $request;
 
     public function setUp(): void
     {

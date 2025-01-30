@@ -15,8 +15,8 @@ class InvoicePaymentRequestTest extends TestCase
     use WithFaker;
     use RefreshDatabase;
 
-    public $payment_type;
-    public $request;
+    public mixed $payment_type;
+    public InvoicePaymentRequest $request;
 
     public function setUp(): void
     {

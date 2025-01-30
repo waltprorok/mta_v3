@@ -16,7 +16,7 @@ class ScheduleUpdateRequestTest extends TestCase
     use WithFaker;
     use RefreshDatabase;
 
-    public $request;
+    public ScheduleUpdateRequest $request;
 
     public function setUp(): void
     {
