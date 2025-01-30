@@ -12,7 +12,7 @@ class StoreBlogPostRequestTest extends TestCase
 {
     use WithFaker;
 
-    public $request;
+    public StoreBlogPostRequest $request;
 
     public function setUp(): void
     {

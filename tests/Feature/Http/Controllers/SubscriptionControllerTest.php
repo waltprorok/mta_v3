@@ -20,13 +20,21 @@ class SubscriptionControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public $user;
+    public mixed $user;
 
     public function setUp(): void
     {
         parent::setUp();
         Mail::fake();
-        $this->user = factory(User::class)->make();
+        $this->user = factory(User::class)->make(['teacher' => true, 'student' => false]);
+    }
+
+    public function test_subscription_profile_view_200()
+    {
+        $response = $this->actingAs($this->user)->get(route('account.profile'));
+
+        $response->assertOk()
+            ->assertViewIs('webapp.account.profile');
     }
 
     public function test_cancel_subscription_email()

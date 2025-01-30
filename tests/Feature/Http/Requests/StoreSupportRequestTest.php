@@ -12,7 +12,7 @@ class StoreSupportRequestTest extends TestCase
 {
     use WithFaker;
 
-    public $request;
+    public StoreSupportRequest $request;
 
     public function setUp(): void
     {

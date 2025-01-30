@@ -26,6 +26,7 @@ class BillingRateDataSeeder extends Seeder
                     'description' => 'Monthly Rate',
                     'default' => '1',
                     'active' => '1',
+                    'flat_rate' => '1',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ],

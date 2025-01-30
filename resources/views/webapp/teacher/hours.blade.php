@@ -25,7 +25,6 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         <tr>
                             <th scope="row">Sunday</th>
                             <input name="rows[0][day]" type="hidden" value="0">
@@ -224,12 +223,9 @@
                         </tr>
                         </tbody>
                     </table>
-
                     <hr/>
-
                     <button type="submit" class="btn btn-primary">Save</button>
                     <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
-
                 </form>
             </div>
         </div>

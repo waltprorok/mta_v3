@@ -16,7 +16,7 @@ class StoreScheduleApptRequestTest extends TestCase
     use WithFaker;
     use RefreshDatabase;
 
-    public $request;
+    public StoreScheduleApptRequest $request;
 
     public function setUp(): void
     {

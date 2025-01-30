@@ -12,7 +12,7 @@ class UpdateStudentRequestTest extends TestCase
 {
     use WithFaker;
 
-    public $request;
+    public UpdateStudentRequest $request;
 
     public function setUp(): void
     {

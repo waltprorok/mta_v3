@@ -9001,6 +9001,10 @@ a.text-dark:focus, a.text-dark:hover {
     background-color: #0751ae;
 }
 
+.nav-dropdown.open .active {
+    font-weight: bold;
+ }
+
 .sidebar .nav-dropdown-items {
     padding: 0;
     margin: 0;

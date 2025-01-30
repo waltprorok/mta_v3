@@ -12,7 +12,7 @@ class BusinessHourControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public $user;
+    public mixed $user;
 
     public function setUp(): void
     {
@@ -59,5 +59,17 @@ class BusinessHourControllerTest extends TestCase
         $businessHours = factory(BusinessHours::class, 7)->make();
 
         $this->assertNotNull($businessHours);
+    }
+
+    public function test_business_hours_show_view()
+    {
+        factory(BusinessHours::class)->create(['teacher_id' => $this->user->id]);
+
+        $response = $this->actingAs($this->user)->get(route('teacher.hours'));
+
+        $this->assertDatabaseCount('business_hours', 1);
+
+        $response->assertOk()
+            ->assertViewIs('webapp.teacher.hoursView');
     }
 }

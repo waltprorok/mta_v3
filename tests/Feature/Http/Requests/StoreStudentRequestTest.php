@@ -14,7 +14,7 @@ class StoreStudentRequestTest extends TestCase
     use WithFaker;
     use RefreshDatabase;
 
-    public $request;
+    public StoreStudentRequest $request;
 
     public function setUp(): void
     {

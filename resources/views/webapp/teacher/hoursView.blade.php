@@ -1,7 +1,6 @@
 @extends('layouts.webapp')
 @section('title', 'Business Hours')
 @section('content')
-    @inject('carbon', 'Carbon\Carbon')
 
     <div class="col-12">
         <h4>Studio Settings</h4>
@@ -76,7 +75,7 @@
                                 </td>
                                 <td>
                                     @if ($hour->active)
-                                        <strong>{{ $carbon::createFromTimestamp(strtotime($hour->open_time))->diff($hour->close_time)->format('%h:%I') }}</strong>
+                                        <strong>{{ \Carbon\Carbon::createFromTimestamp(strtotime($hour->open_time))->diff($hour->close_time)->format('%h:%I') }}</strong>
                                     @else
                                         0:00
                                     @endif

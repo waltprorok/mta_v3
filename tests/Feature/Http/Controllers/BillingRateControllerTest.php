@@ -12,9 +12,9 @@ class BillingRateControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public $admin;
+    public mixed $admin;
 
-    public $user;
+    public mixed $user;
 
     public function setUp(): void
     {
