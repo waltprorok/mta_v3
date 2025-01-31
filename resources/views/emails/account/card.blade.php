@@ -6,8 +6,8 @@ Hello {{ $user['first_name'] }},
 
 Your credit card on file was recently changed to:
 
-* Brand: **{{ $user['card_brand'] }}**
-* Last 4 digits: **{{ $user['card_last_four'] }}**
+* Brand: **{{ $user['pm_type'] }}**
+* Last 4 digits: **{{ $user['pm_last_four'] }}**
 
 This message is a confirmation of recent changes to your account.
 

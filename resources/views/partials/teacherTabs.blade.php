@@ -8,12 +8,12 @@
            href="{{ route('teacher.hours') }}">Hours</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{ Route::currentRouteName() == 'teacher.instruments' ? 'active' : '' }}" id="instruments"
-           href="{{ route('teacher.instruments') }}">Instruments</a>
-    </li>
-    <li class="nav-item">
         <a class="nav-link {{ Route::currentRouteName() == 'teacher.billing' ? 'active' : '' }}" id="billing"
            href="{{ route('teacher.billing') }}">Billing</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ Route::currentRouteName() == 'teacher.instruments' ? 'active' : '' }}" id="instruments"
+           href="{{ route('teacher.instruments') }}">Instruments</a>
     </li>
     <li class="nav-item">
         <a class="nav-link {{ Route::currentRouteName() == 'teacher.holidays' ? 'active' : '' }}" id="holidays"
