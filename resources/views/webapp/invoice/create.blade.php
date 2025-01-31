@@ -7,7 +7,7 @@
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ route('invoice.index') }}">Billing</a></li>
-            <li class="breadcrumb-item "><a href="{{ route('invoice.index') }}">Invoices</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('invoice.index') }}">Invoices</a></li>
             <li class="breadcrumb-item active">Create</li>
         </ul>
 
