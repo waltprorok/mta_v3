@@ -1,16 +1,31 @@
 <?php
 
-/** @var Factory $factory */
+namespace Database\Factories;
 
 use App\Models\Plan;
-use Faker\Generator as Faker;
-use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Plan::class, function (Faker $faker) {
-    return [
-        'name' => 'premium',
-        'slug' => 'monthly',
-        'stripe_plan' => $faker->text,
-        'cost' => '9.95',
-    ];
-});
+class PlanFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Plan::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition(): array
+    {
+        return [
+            'name' => 'premium',
+            'slug' => 'monthly',
+            'stripe_plan' => $this->faker->text,
+            'cost' => '9.95',
+        ];
+    }
+}

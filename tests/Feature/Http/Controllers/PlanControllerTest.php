@@ -44,7 +44,7 @@ class PlanControllerTest extends TestCase
 
     public function test_billing_plans_factory()
     {
-        factory(Plan::class)->create();
+        Plan::factory()->create();
 
         $this->assertDatabaseCount('plans', 1);
     }

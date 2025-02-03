@@ -50,7 +50,7 @@ class InvoiceControllerTest extends TestCase
         $student = factory(Student::class)->create(['teacher_id' => $user->id]);
         $paymentType = factory(PaymentType::class)->create();
 
-        factory(Invoice::class)->create(['teacher_id' => $user->id, 'student_id' => $student->id, 'payment_type_id' => $paymentType->id]);
+        Invoice::factory()->create(['teacher_id' => $user->id, 'student_id' => $student->id, 'payment_type_id' => $paymentType->id]);
 
         $response = $this->actingAs($user)->get('/web/invoice');
 
