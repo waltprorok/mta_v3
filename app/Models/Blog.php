@@ -16,8 +16,7 @@ use Illuminate\Support\Str;
  */
 class Blog extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $dates = ['released_on'];
 

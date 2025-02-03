@@ -32,7 +32,7 @@ class StoreInvoicePDFJob implements ShouldQueue
     /**
      * @return mixed
      */
-    public function handle()
+    public function handle(): mixed
     {
         $invoiceWithRelations = $this->invoiceService->getInvoiceStudentTeacherBillingRate($this->invoice);
 

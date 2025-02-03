@@ -17,8 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Teacher extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $casts = [
         'teacher_id' => 'integer'
