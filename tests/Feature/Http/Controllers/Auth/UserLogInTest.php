@@ -36,9 +36,9 @@ class UserLogInTest extends TestCase
     {
         config()->set('honeypot.enabled', false);
 
-        factory(User::class)->create(['id' => 2, 'first_name' => 'Admin', 'last_name' => 'User']);
+        User::factory()->create(['id' => 2, 'first_name' => 'Admin', 'last_name' => 'User']);
 
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
 
         $response = $this->post('/register', [
             'first_name' => $user->first_name,
@@ -67,7 +67,7 @@ class UserLogInTest extends TestCase
 
     public function test_users_can_not_authenticate_with_invalid_password()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->post('/login', [
             'email' => $user->email,
@@ -86,7 +86,7 @@ class UserLogInTest extends TestCase
 
     public function test_visitor_is_able_to_login()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $hasUser = (bool)$user;
 
@@ -106,7 +106,7 @@ class UserLogInTest extends TestCase
     {
         $this->withoutMiddleware();
 
-        $user = factory(User::class)->create(['teacher' => 1]);
+        $user = User::factory()->create(['teacher' => 1]);
 
         $response = $this->actingAs($user)->get('/dashboard');
 
@@ -115,7 +115,7 @@ class UserLogInTest extends TestCase
 
     public function test_authenticated_student_user_can_access_calendar_student()
     {
-        $user = factory(User::class)->create(['student' => 1]);
+        $user = User::factory()->create(['student' => 1]);
 
         $response = $this->actingAs($user)->get('/calendar/student');
 
@@ -124,7 +124,7 @@ class UserLogInTest extends TestCase
 
     public function test_authenticated_parent_user_can_access_household()
     {
-        $user = factory(User::class)->create(['parent' => 1]);
+        $user = User::factory()->create(['parent' => 1]);
 
         $response = $this->actingAs($user)->get('/household');
 
@@ -133,7 +133,7 @@ class UserLogInTest extends TestCase
 
     public function test_authenticated_admin_user_can_access_admin_blog()
     {
-        $user = factory(User::class)->create(['admin' => 1]);
+        $user = User::factory()->create(['admin' => 1]);
 
         $response = $this->actingAs($user)->get('/admin/blog');
 

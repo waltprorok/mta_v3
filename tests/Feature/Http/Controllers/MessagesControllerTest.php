@@ -15,7 +15,7 @@ class MessagesControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = factory(User::class)->create(['teacher' => true, 'student' => false]);
+        $this->user = User::factory()->create(['teacher' => true, 'student' => false]);
     }
 
     public function test_messages_index_view_200()

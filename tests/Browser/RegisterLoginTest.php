@@ -16,7 +16,7 @@ class RegisterLoginTest extends DuskTestCase
      */
     public function test_user_can_register_correctly()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->browse(function ($browser) use ($user) {
             $browser->visit('/register')

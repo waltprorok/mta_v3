@@ -146,7 +146,7 @@ class HomeControllerTest extends TestCase
 
         self::assertTrue($mockNoCaptcha->verifyResponse($mockRecaptchaResponse));
 
-        $contact = factory(Contact::class)->make();
+        $contact = Contact::factory()->make();
 
         $response = $this->post('/contact', [
             'name' => $contact->name,

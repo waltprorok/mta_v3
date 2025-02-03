@@ -6,6 +6,7 @@ use App\Services\PhoneNumberService;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,7 +19,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class Student extends Model
 {
-    use Notifiable, SoftDeletes;
+    use Notifiable, HasFactory, SoftDeletes;
 
     const ACTIVE = 1;
     const WAITLIST = 2;

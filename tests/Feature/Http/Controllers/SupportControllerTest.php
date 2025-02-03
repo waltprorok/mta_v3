@@ -19,7 +19,7 @@ class SupportControllerTest extends TestCase
     {
         parent::setUp();
         Mail::fake();
-        $this->user = factory(User::class)->create(['admin' => true, 'student' => false]);
+        $this->user = User::factory()->create(['admin' => true, 'student' => false]);
     }
 
     public function test_support_index_view_200()
@@ -47,14 +47,14 @@ class SupportControllerTest extends TestCase
 
     public function test_support_factory()
     {
-        factory(Support::class, 5)->create();
+        Support::factory()->count(5)->create();
 
         $this->assertDatabaseCount('supports', 5);
     }
 
     public function test_support_show()
     {
-        $support = factory(Support::class)->create();
+        $support = Support::factory()->create();
 
         $response = $this->actingAs($this->user)->get('/web/support/' . $support->id);
 
@@ -64,7 +64,7 @@ class SupportControllerTest extends TestCase
 
     public function test_support_create_success()
     {
-        $support = factory(Support::class)->make();
+        $support = Support::factory()->make();
 
         $this->actingAs($this->user)->post('/web/support', [
             'name' => $support->name,
@@ -88,7 +88,7 @@ class SupportControllerTest extends TestCase
 
     public function test_support_update_success()
     {
-        $support = factory(Support::class)->create();
+        $support = Support::factory()->create();
 
         $response = $this->actingAs($this->user)->put('/web/support/' . $support->id, [
             'name' => 'Test Name',
@@ -102,7 +102,7 @@ class SupportControllerTest extends TestCase
 
     public function test_support_delete_success()
     {
-        $support = factory(Support::class)->create();
+        $support = Support::factory()->create();
 
         $response = $this->actingAs($this->user)->delete('/web/support/' . $support->id);
 

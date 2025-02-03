@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Plan;
+use App\Models\TeacherSetting;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PlanFactory extends Factory
+class TeacherSettingFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Plan::class;
+    protected $model = TeacherSetting::class;
 
     /**
      * Define the model's default state.
@@ -22,10 +22,11 @@ class PlanFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'premium',
-            'slug' => 'monthly',
-            'stripe_plan' => $this->faker->text,
-            'cost' => '9.95',
+            'teacher_id' => 1,
+            'calendar' => 'month',
+            'calendar_min_time' => '08:00:00',
+            'calendar_max_time' => '22:00:00',
+            'auto_schedule_new_active_students' => false,
         ];
     }
 }

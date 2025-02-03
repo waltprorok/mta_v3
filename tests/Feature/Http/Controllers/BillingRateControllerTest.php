@@ -19,13 +19,13 @@ class BillingRateControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->admin = factory(User::class)->create(['admin' => true, 'student' => false]);
-        $this->user = factory(User::class)->create(['teacher' => true, 'student' => false]);
+        $this->admin = User::factory()->create(['admin' => true, 'student' => false]);
+        $this->user = User::factory()->create(['teacher' => true, 'student' => false]);
     }
 
     public function test_billing_rate_index_view_200()
     {
-        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+        Teacher::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->get(route('teacher.billing'));
 
@@ -35,7 +35,7 @@ class BillingRateControllerTest extends TestCase
 
     public function test_billing_rate_index_url_200()
     {
-        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+        Teacher::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->get('/teacher/rates');
 
@@ -45,7 +45,7 @@ class BillingRateControllerTest extends TestCase
 
     public function test_billing_rate_index_web_url_200()
     {
-        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+        Teacher::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->get('/web/billing-rate');
 
@@ -54,14 +54,14 @@ class BillingRateControllerTest extends TestCase
 
     public function test_billing_rate_factory()
     {
-        factory(BillingRate::class)->create(['teacher_id' => $this->user->id]);
+        BillingRate::factory()->create(['teacher_id' => $this->user->id]);
 
         $this->assertDatabaseCount('billing_rates', 1);
     }
 
     public function test_billing_rate_show()
     {
-        $billingRate = factory(BillingRate::class)->create(['teacher_id' => $this->user->id]);
+        $billingRate = BillingRate::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->get('/web/billing-rate/' . $billingRate->id);
 
@@ -89,7 +89,7 @@ class BillingRateControllerTest extends TestCase
 
     public function test_billing_rate_update_success()
     {
-        $billingRate = factory(BillingRate::class)->create(['teacher_id' => $this->user->id]);
+        $billingRate = BillingRate::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->put('/web/billing-rate/' . $billingRate->id, [
             'type' => 'monthly',
@@ -108,7 +108,7 @@ class BillingRateControllerTest extends TestCase
 
     public function test_billing_rate_delete_success()
     {
-        $billingRate = factory(BillingRate::class)->create(['teacher_id' => $this->user->id]);
+        $billingRate = BillingRate::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->delete('/web/billing-rate/' . $billingRate->id);
 

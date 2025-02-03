@@ -16,7 +16,7 @@ class PlanControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->admin = factory(User::class)->create(['admin' => true, 'student' => false]);
+        $this->admin = User::factory()->create(['admin' => true, 'student' => false]);
     }
 
     public function test_billing_plans_index_view_200()
@@ -44,7 +44,7 @@ class PlanControllerTest extends TestCase
 
     public function test_billing_plans_factory()
     {
-        factory(Plan::class)->create();
+        Plan::factory()->create();
 
         $this->assertDatabaseCount('plans', 1);
     }

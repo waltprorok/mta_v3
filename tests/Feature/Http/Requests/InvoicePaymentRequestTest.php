@@ -22,12 +22,12 @@ class InvoicePaymentRequestTest extends TestCase
     {
         parent::setUp();
         $this->request = new InvoicePaymentRequest();
-        $this->payment_type = factory(PaymentType::class)->create();
+        $this->payment_type = PaymentType::factory()->create();
     }
 
     public function test_verifies_authorized()
     {
-        $user = factory(User::class)->make(["teacher" => true]);
+        $user = User::factory()->make(["teacher" => true]);
 
         $this->actingAs($user)->assertTrue($this->request->authorize());
     }

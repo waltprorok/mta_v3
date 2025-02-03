@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Plan;
+use App\Models\PaymentType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PlanFactory extends Factory
+class PaymentTypeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Plan::class;
+    protected $model = PaymentType::class;
 
     /**
      * Define the model's default state.
@@ -22,10 +22,8 @@ class PlanFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'premium',
-            'slug' => 'monthly',
-            'stripe_plan' => $this->faker->text,
-            'cost' => '9.95',
+            'id' => 1,
+            'name' => 'Cash'
         ];
     }
 }

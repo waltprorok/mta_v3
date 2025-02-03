@@ -26,17 +26,17 @@ class ScheduleUpdateRequestTest extends TestCase
 
     public function test_verifies_authorized()
     {
-        $user = factory(User::class)->make(["teacher" => true]);
+        $user = User::factory()->make(["teacher" => true]);
 
         $this->actingAs($user)->assertTrue($this->request->authorize());
     }
 
     public function test_request_pass()
     {
-        $teacher = factory(User::class)->create(['teacher' => true, "student" => false]);
-        $student = factory(User::class)->create(['student' => true]);
-        $billingRate = factory(BillingRate::class)->create();
-        $student = factory(Student::class)->create(['student_id' => $student->id, 'teacher_id' => $teacher->id]);
+        $teacher = User::factory()->create(['teacher' => true, "student" => false]);
+        $student = User::factory()->create(['student' => true]);
+        $billingRate = BillingRate::factory()->create();
+        $student = Student::factory()->create(['student_id' => $student->id, 'teacher_id' => $teacher->id]);
 
         $validator = Validator::make([
             'student_id' => $student->id,

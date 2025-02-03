@@ -17,7 +17,7 @@ class BusinessHourControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = factory(User::class)->create(['teacher' => true, 'student' => false]);
+        $this->user = User::factory()->create(['teacher' => true, 'student' => false]);
     }
 
     public function test_index_page_route_redirect()
@@ -36,7 +36,7 @@ class BusinessHourControllerTest extends TestCase
 
     public function test_index_page_url_view()
     {
-        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+        Teacher::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->get('/teacher/hours');
 
@@ -46,7 +46,7 @@ class BusinessHourControllerTest extends TestCase
 
     public function test_index_page_route_view()
     {
-        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+        Teacher::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->get(route('teacher.hours'));
 
@@ -56,14 +56,14 @@ class BusinessHourControllerTest extends TestCase
 
     public function test_business_hours_is_not_null()
     {
-        $businessHours = factory(BusinessHours::class, 7)->make();
+        $businessHours = BusinessHours::factory()->count(7)->make();
 
         $this->assertNotNull($businessHours);
     }
 
     public function test_business_hours_show_view()
     {
-        factory(BusinessHours::class)->create(['teacher_id' => $this->user->id]);
+        BusinessHours::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->get(route('teacher.hours'));
 

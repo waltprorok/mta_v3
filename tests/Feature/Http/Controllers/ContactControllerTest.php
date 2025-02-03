@@ -16,7 +16,7 @@ class ContactControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = factory(User::class)->make(['admin' => true, 'student' => false]);
+        $this->user = User::factory()->make(['admin' => true, 'student' => false]);
     }
 
     public function test_contact_index_view_200()
@@ -44,14 +44,14 @@ class ContactControllerTest extends TestCase
 
     public function test_contact_factory()
     {
-        factory(Contact::class, 5)->create();
+        Contact::factory()->count(5)->create();
 
         $this->assertDatabaseCount('contacts', 5);
     }
 
     public function test_contact_show()
     {
-        $contact = factory(Contact::class)->create();
+        $contact = Contact::factory()->create();
 
         $response = $this->actingAs($this->user)->get('/web/contacts/' . $contact->id);
 
@@ -82,7 +82,7 @@ class ContactControllerTest extends TestCase
 
     public function test_contact_update_success()
     {
-        $contact = factory(Contact::class)->create();
+        $contact = Contact::factory()->create();
 
         $response = $this->actingAs($this->user)->put('/web/contacts/' . $contact->id, [
             'name' => 'Test Name',
@@ -96,7 +96,7 @@ class ContactControllerTest extends TestCase
 
     public function test_contact_delete_success()
     {
-        $contact = factory(Contact::class)->create();
+        $contact = Contact::factory()->create();
 
         $response = $this->actingAs($this->user)->delete('/web/contacts/' . $contact->id);
 

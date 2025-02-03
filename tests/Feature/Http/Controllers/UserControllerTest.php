@@ -15,7 +15,7 @@ class UserControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = factory(User::class)->create(['admin' => true, 'student' => false]);
+        $this->user = User::factory()->create(['admin' => true, 'student' => false]);
     }
 
     public function test_user_index_view_200()
@@ -43,7 +43,7 @@ class UserControllerTest extends TestCase
 
     public function test_user_factory()
     {
-        factory(User::class, 5)->create(['teacher' => true, 'student' => true]);
+        User::factory()->count(5)->create(['teacher' => true, 'student' => true]);
 
         $this->assertDatabaseCount('users', 6);
     }
