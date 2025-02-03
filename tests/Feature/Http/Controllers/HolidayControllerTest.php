@@ -44,14 +44,14 @@ class HolidayControllerTest extends TestCase
 
     public function test_holiday_factory()
     {
-        factory(Holiday::class, 1)->create();
+        Holiday::factory()->create();
 
         $this->assertDatabaseCount('holidays', 1);
     }
 
     public function test_holiday_show()
     {
-        $holiday = factory(Holiday::class)->create();
+        $holiday = Holiday::factory()->create();
 
         $response = $this->actingAs($this->user)->get('/web/holiday/' . $holiday->id);
 
@@ -85,7 +85,7 @@ class HolidayControllerTest extends TestCase
 
     public function test_holiday_update_success()
     {
-        $holiday = factory(Holiday::class)->create();
+        $holiday = Holiday::factory()->create();
 
         $response = $this->actingAs($this->user)->put('/web/holiday/' . $holiday->id, [
             'title' => 'New Years Eve',
@@ -100,7 +100,7 @@ class HolidayControllerTest extends TestCase
 
     public function test_holiday_delete_success()
     {
-        $holiday = factory(Holiday::class)->create();
+        $holiday = Holiday::factory()->create();
 
         $response = $this->actingAs($this->user)->delete('/web/holiday/' . $holiday->id);
 

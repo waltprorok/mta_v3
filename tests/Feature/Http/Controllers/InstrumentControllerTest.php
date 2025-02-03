@@ -44,14 +44,14 @@ class InstrumentControllerTest extends TestCase
 
     public function test_instrument_factory()
     {
-        factory(Instrument::class, 1)->create();
+        Instrument::factory()->create();
 
         $this->assertDatabaseCount('instruments', 1);
     }
 
     public function test_instrument_show()
     {
-        $instrument = factory(Instrument::class)->create();
+        $instrument = Instrument::factory()->create();
 
         $response = $this->actingAs($this->user)->get('/web/instrument/' . $instrument->id);
 
@@ -71,7 +71,7 @@ class InstrumentControllerTest extends TestCase
 
     public function test_instrument_update_success()
     {
-        $instrument = factory(instrument::class)->create();
+        $instrument = Instrument::factory()->create();
 
         $response = $this->actingAs($this->user)->put('/web/instrument/' . $instrument->id, [
            'name' => 'Vocals'
@@ -82,7 +82,7 @@ class InstrumentControllerTest extends TestCase
 
     public function test_instrument_delete_success()
     {
-        $instrument = factory(Instrument::class)->create();
+        $instrument = Instrument::factory()->create();
 
         $response = $this->actingAs($this->user)->delete('/web/instrument/' . $instrument->id);
 

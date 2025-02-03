@@ -35,7 +35,7 @@ class ScheduleUpdateRequestTest extends TestCase
     {
         $teacher = factory(User::class)->create(['teacher' => true, "student" => false]);
         $student = factory(User::class)->create(['student' => true]);
-        $billingRate = factory(BillingRate::class)->create();
+        $billingRate = BillingRate::factory()->create();
         $student = factory(Student::class)->create(['student_id' => $student->id, 'teacher_id' => $teacher->id]);
 
         $validator = Validator::make([

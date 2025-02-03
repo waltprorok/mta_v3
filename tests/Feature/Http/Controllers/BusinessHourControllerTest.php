@@ -56,14 +56,14 @@ class BusinessHourControllerTest extends TestCase
 
     public function test_business_hours_is_not_null()
     {
-        $businessHours = factory(BusinessHours::class, 7)->make();
+        $businessHours = BusinessHours::factory()->count(7)->make();
 
         $this->assertNotNull($businessHours);
     }
 
     public function test_business_hours_show_view()
     {
-        factory(BusinessHours::class)->create(['teacher_id' => $this->user->id]);
+        BusinessHours::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->get(route('teacher.hours'));
 
