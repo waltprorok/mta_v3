@@ -18,8 +18,8 @@ class TeacherControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->admin = factory(User::class)->create(['admin' => true, 'student' => false]);
-        $this->user = factory(User::class)->create(['teacher' => true, 'student' => false]);
+        $this->admin = User::factory()->create(['admin' => true, 'student' => false]);
+        $this->user = User::factory()->create(['teacher' => true, 'student' => false]);
     }
 
     public function test_index_page_url_redirect()
@@ -38,14 +38,14 @@ class TeacherControllerTest extends TestCase
 
     public function test_get_teacher_is_null()
     {
-        $user = factory(User::class)->create(['teacher' => true, 'student' => false]);
+        $user = User::factory()->create(['teacher' => true, 'student' => false]);
 
         $this->assertNull($user->getTeacher);
     }
 
     public function test_get_teacher_is_not_null()
     {
-        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+        Teacher::factory()->create(['teacher_id' => $this->user->id]);
 
         $this->assertNotNull($this->user->getTeacher);
     }
@@ -84,7 +84,7 @@ class TeacherControllerTest extends TestCase
 
     public function test_teacher_settings_edit_index_view_200()
     {
-        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+        Teacher::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->get(route('teacher.studioIndex'));
 
@@ -94,7 +94,7 @@ class TeacherControllerTest extends TestCase
 
     public function test_teacher_settings_edit_index_view_url_200()
     {
-        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+        Teacher::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->get('/teacher/studio');
 
@@ -123,7 +123,7 @@ class TeacherControllerTest extends TestCase
 
     public function test_teacher_settings_update()
     {
-        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+        Teacher::factory()->create(['teacher_id' => $this->user->id]);
 
         $this->actingAs($this->user)->put('/teacher/update', [
             'teacher_id' => $this->user->id,
@@ -144,7 +144,7 @@ class TeacherControllerTest extends TestCase
 
     public function test_teacher_profile_index_view_200()
     {
-        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+        Teacher::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->get(route('teacher.profile'));
 
@@ -154,7 +154,7 @@ class TeacherControllerTest extends TestCase
 
     public function test_teacher_profile_index_url_200()
     {
-        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+        Teacher::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->get('/teacher/profile');
 
@@ -164,7 +164,7 @@ class TeacherControllerTest extends TestCase
 
     public function test_contact_index_web_url_200()
     {
-        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+        Teacher::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->admin)->get('/web/teachers');
 

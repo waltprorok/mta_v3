@@ -16,13 +16,13 @@ class StudentControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->student = factory(User::class)->create();
-        $this->teacher = factory(User::class)->create(['teacher' => true, 'student' => false]);
+        $this->student = User::factory()->create();
+        $this->teacher = User::factory()->create(['teacher' => true, 'student' => false]);
     }
 
     public function test_profile_index_view_200()
     {
-        $studentUser = factory(Student::class)->create(['student_id' => $this->student->id, 'teacher_id' => $this->teacher->id]);
+        $studentUser = Student::factory()->create(['student_id' => $this->student->id, 'teacher_id' => $this->teacher->id]);
         $response = $this->actingAs($this->teacher)->get(route('student.profile', ['id' => $studentUser->id]));
 
         $response->assertOk()
@@ -31,7 +31,7 @@ class StudentControllerTest extends TestCase
 
     public function test_profile_index_view_web_200()
     {
-        $studentUser = factory(Student::class)->create(['student_id' => $this->student->id, 'teacher_id' => $this->teacher->id]);
+        $studentUser = Student::factory()->create(['student_id' => $this->student->id, 'teacher_id' => $this->teacher->id]);
         $response = $this->actingAs($this->teacher)->get('/students/profile/'. $studentUser->id);
 
         $response->assertOk()
@@ -40,7 +40,7 @@ class StudentControllerTest extends TestCase
 
     public function test_profile_show_view_200()
     {
-        $studentUser = factory(Student::class)->create(['student_id' => $this->student->id, 'teacher_id' => $this->teacher->id]);
+        $studentUser = Student::factory()->create(['student_id' => $this->student->id, 'teacher_id' => $this->teacher->id]);
         $response = $this->actingAs($this->teacher)->get(route('student.edit', ['id' => $studentUser->id]));
 
         $response->assertOk()

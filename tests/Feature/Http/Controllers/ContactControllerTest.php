@@ -16,7 +16,7 @@ class ContactControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = factory(User::class)->make(['admin' => true, 'student' => false]);
+        $this->user = User::factory()->make(['admin' => true, 'student' => false]);
     }
 
     public function test_contact_index_view_200()

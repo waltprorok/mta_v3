@@ -22,7 +22,7 @@ class InvoiceControllerTest extends TestCase
     {
         $this->withoutMiddleware();
 
-        $user = factory(User::class)->create(['teacher' => 1]);
+        $user = User::factory()->create(['teacher' => 1]);
 
         $response = $this->actingAs($user)->get(route('invoice.index'));
 
@@ -34,7 +34,7 @@ class InvoiceControllerTest extends TestCase
     {
         $this->withoutMiddleware();
 
-        $user = factory(User::class)->create(['teacher' => 1]);
+        $user = User::factory()->create(['teacher' => 1]);
 
         $response = $this->actingAs($user)->get('/invoice');
 
@@ -46,9 +46,9 @@ class InvoiceControllerTest extends TestCase
     {
         $this->withoutMiddleware();
 
-        $user = factory(User::class)->create(['teacher' => 1]);
-        $student = factory(Student::class)->create(['teacher_id' => $user->id]);
-        $paymentType = factory(PaymentType::class)->create();
+        $user = User::factory()->create(['teacher' => 1]);
+        $student = Student::factory()->create(['teacher_id' => $user->id]);
+        $paymentType = PaymentType::factory()->create();
 
         Invoice::factory()->create(['teacher_id' => $user->id, 'student_id' => $student->id, 'payment_type_id' => $paymentType->id]);
 

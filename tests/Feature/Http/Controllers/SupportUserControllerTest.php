@@ -19,7 +19,7 @@ class SupportUserControllerTest extends TestCase
     {
         parent::setUp();
         Mail::fake();
-        $this->user = factory(User::class)->create(['teacher' => true, 'student' => false]);
+        $this->user = User::factory()->create(['teacher' => true, 'student' => false]);
     }
 
     public function test_support_index_view_200()

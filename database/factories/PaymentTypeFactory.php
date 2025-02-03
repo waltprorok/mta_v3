@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\PaymentType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PaymentTypesFactory extends Factory
+class PaymentTypeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

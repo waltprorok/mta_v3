@@ -4,6 +4,7 @@ namespace App\Models;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,7 +17,7 @@ use Laravel\Cashier\Billable;
  */
 class User extends Authenticatable
 {
-    use Billable, SoftDeletes;
+    use Billable, HasFactory, SoftDeletes;
 
     protected $casts = [
         'admin' => 'boolean',

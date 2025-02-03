@@ -22,7 +22,7 @@ class UpdateStudentRequestTest extends TestCase
 
     public function test_verifies_authorized()
     {
-        $user = factory(User::class)->make(["teacher" => true]);
+        $user = User::factory()->make(["teacher" => true]);
 
         $this->actingAs($user)->assertTrue($this->request->authorize());
     }

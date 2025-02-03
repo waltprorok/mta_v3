@@ -19,13 +19,13 @@ class BillingRateControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->admin = factory(User::class)->create(['admin' => true, 'student' => false]);
-        $this->user = factory(User::class)->create(['teacher' => true, 'student' => false]);
+        $this->admin = User::factory()->create(['admin' => true, 'student' => false]);
+        $this->user = User::factory()->create(['teacher' => true, 'student' => false]);
     }
 
     public function test_billing_rate_index_view_200()
     {
-        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+        Teacher::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->get(route('teacher.billing'));
 
@@ -35,7 +35,7 @@ class BillingRateControllerTest extends TestCase
 
     public function test_billing_rate_index_url_200()
     {
-        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+        Teacher::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->get('/teacher/rates');
 
@@ -45,7 +45,7 @@ class BillingRateControllerTest extends TestCase
 
     public function test_billing_rate_index_web_url_200()
     {
-        factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+        Teacher::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->get('/web/billing-rate');
 

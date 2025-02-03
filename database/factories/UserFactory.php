@@ -1,37 +1,41 @@
 <?php
 
+namespace Database\Factories;
+
 use App\Models\User;
-use Faker\Generator as Faker;
-use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-/** @var Factory $factory */
+class UserFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = User::class;
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition(): array
+    {
+        static $password;
 
-$factory->define(User::class, function (Faker $faker) {
-    static $password;
-
-    return [
-        'first_name' => $faker->firstName,
-        'last_name' => $faker->lastName,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'admin' => false,
-        'student' => true,
-        'teacher' => false,
-        'parent' => false,
-        'terms' => true,
-        'trial_ends_at' => now()->addMonth()->format('Y-m-d H:i:s'),
-        'timezone' => 'America/New_York',
-        'remember_token' => str_random(10),
-    ];
-});
+        return [
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => $password ?: $password = bcrypt('secret'),
+            'admin' => false,
+            'student' => true,
+            'teacher' => false,
+            'parent' => false,
+            'terms' => true,
+            'trial_ends_at' => now()->addMonth()->format('Y-m-d H:i:s'),
+            'timezone' => 'America/New_York',
+            'remember_token' => str_random(10),
+        ];
+    }
+}

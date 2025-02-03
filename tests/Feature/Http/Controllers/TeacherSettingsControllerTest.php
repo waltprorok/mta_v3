@@ -17,8 +17,8 @@ class TeacherSettingsControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = factory(User::class)->create(['teacher' => true, 'student' => false]);
-        $this->teacher = factory(Teacher::class)->create(['teacher_id' => $this->user->id]);
+        $this->user = User::factory()->create(['teacher' => true, 'student' => false]);
+        $this->teacher = Teacher::factory()->create(['teacher_id' => $this->user->id]);
     }
 
     public function test_teacher_settings_index_view_200()

@@ -16,7 +16,7 @@ class PlanControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->admin = factory(User::class)->create(['admin' => true, 'student' => false]);
+        $this->admin = User::factory()->create(['admin' => true, 'student' => false]);
     }
 
     public function test_billing_plans_index_view_200()

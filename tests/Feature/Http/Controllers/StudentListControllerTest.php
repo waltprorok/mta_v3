@@ -18,8 +18,8 @@ class StudentListControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->admin = factory(User::class)->create(['admin' => true, 'student' => false]);
-        $this->user = factory(User::class)->create(['id' => 3, 'teacher' => true, 'student' => false]);
+        $this->admin = User::factory()->create(['admin' => true, 'student' => false]);
+        $this->user = User::factory()->create(['id' => 3, 'teacher' => true, 'student' => false]);
     }
 
     public function test_admin_student_list_index_view_200()
@@ -56,14 +56,14 @@ class StudentListControllerTest extends TestCase
 
     public function test_student_factory()
     {
-        factory(Student::class, 5)->create();
+        Student::factory()->count(5)->create();
 
         $this->assertDatabaseCount('students', 5);
     }
 
     public function test_student_list_active_200()
     {
-        factory(Student::class)->create(['teacher_id' => $this->user->id, 'status' => 1]);
+        Student::factory()->create(['teacher_id' => $this->user->id, 'status' => 1]);
 
         $response = $this->actingAs($this->user)->get('/web/active');
 
@@ -73,7 +73,7 @@ class StudentListControllerTest extends TestCase
 
     public function test_student_list_waitlist_200()
     {
-        factory(Student::class)->create(['teacher_id' => $this->user->id, 'status' => 2]);
+        Student::factory()->create(['teacher_id' => $this->user->id, 'status' => 2]);
 
         $response = $this->actingAs($this->user)->get('/web/waitlist');
 
@@ -83,7 +83,7 @@ class StudentListControllerTest extends TestCase
 
     public function test_student_list_lead_200()
     {
-        factory(Student::class)->create(['teacher_id' => $this->user->id, 'status' => 3]);
+        Student::factory()->create(['teacher_id' => $this->user->id, 'status' => 3]);
 
         $response = $this->actingAs($this->user)->get('/web/leads');
 
@@ -93,7 +93,7 @@ class StudentListControllerTest extends TestCase
 
     public function test_student_list_inactive_200()
     {
-        factory(Student::class)->create(['teacher_id' => $this->user->id, 'status' => 4]);
+        Student::factory()->create(['teacher_id' => $this->user->id, 'status' => 4]);
 
         $response = $this->actingAs($this->user)->get('/web/inactive');
 

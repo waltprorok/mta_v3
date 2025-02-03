@@ -26,7 +26,7 @@ class SubscriptionControllerTest extends TestCase
     {
         parent::setUp();
         Mail::fake();
-        $this->user = factory(User::class)->make(['teacher' => true, 'student' => false]);
+        $this->user = User::factory()->make(['teacher' => true, 'student' => false]);
     }
 
     public function test_subscription_profile_view_200()
@@ -46,7 +46,7 @@ class SubscriptionControllerTest extends TestCase
 
     public function test_change_subscription_email()
     {
-        $newPlan = factory(Plan::class)->make();
+        $newPlan = Plan::factory()->make();
 
         Mail::to($this->user->email)->queue(new ChangedSubscriptionMail($this->user, $newPlan));
 
