@@ -1,18 +1,34 @@
 <?php
 
-/** @var Factory $factory */
+namespace Database\Factories;
 
 use App\Models\Blog;
-use Faker\Generator as Faker;
-use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Blog::class, function (Faker $faker) {
-    return [
-        'author_id' => 1,
-        'title' => 'Test Blog',
-        'slug' => 'test-blog',
-        'body' => $faker->text(250),
-        'image' => null,
-        'released_on' => now()->subWeek()->format('Y-m-d H:i:s'),
-    ];
-});
+class BlogFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Blog::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition(): array
+    {
+        return [
+            'author_id' => 1,
+            'title' => 'Test Blog',
+            'slug' => 'test-blog',
+            'body' => $this->faker->text(250),
+            'image' => null,
+            'released_on' => now()->subWeek()->format('Y-m-d H:i:s'),
+        ];
+    }
+}
+

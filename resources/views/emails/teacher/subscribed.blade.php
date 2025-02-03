@@ -11,7 +11,7 @@ Now you can enjoy all the benefits of the Premium Account:
 * Unlimited Students
 * Lesson Scheduling Email Notifications
 * Auto Schedule Student Lessons Each Month
-* Invoicing and Payment Tracking
+* Professional Invoicing and Payment Tracking
 
 Under Account click Subscription Tab click **Download Invoices** to view the PDF invoice.
 

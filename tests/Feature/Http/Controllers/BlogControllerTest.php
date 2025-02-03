@@ -44,7 +44,7 @@ class BlogControllerTest extends TestCase
 
     public function test_blog_factory()
     {
-        factory(Blog::class)->create();
+        Blog::factory()->create();
 
         $this->assertDatabaseCount('blogs', 1);
     }
@@ -77,7 +77,7 @@ class BlogControllerTest extends TestCase
 
     public function test_blog_edit()
     {
-        $blog = factory(Blog::class)->create();
+        $blog = Blog::factory()->create();
 
         $response = $this->actingAs($this->user)->get('/web/blog/' . $blog->id . '/edit');
 
@@ -87,7 +87,7 @@ class BlogControllerTest extends TestCase
 
     public function test_blog_update_success()
     {
-        $blog = factory(Blog::class)->create();
+        $blog = Blog::factory()->create();
 
         $response = $this->actingAs($this->user)->put('/web/blog/' . $blog->id, [
             'author_id' => $this->user->id,
@@ -104,7 +104,7 @@ class BlogControllerTest extends TestCase
 
     public function test_blog_delete_success()
     {
-        $blog = factory(Blog::class)->create();
+        $blog = Blog::factory()->create();
 
         $response = $this->actingAs($this->user)->delete('/web/blog/' . $blog->id);
 
