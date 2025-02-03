@@ -14,14 +14,6 @@ h4 {
 .margin-top {
     margin-top: 1.25rem;
 }
-.footer {
-    font-size: 0.775rem;
-    padding: 1rem;
-    background-color: rgb(241 245 249);
-    position: fixed;
-    width: 80%;
-    bottom: 10px;
-}
 table {
     width: 100%;
     border-spacing: 0;
@@ -40,7 +32,7 @@ table.products th {
 }
 table tr.items {
     text-align: center;
-    background-color: rgb(241 245 249);
+    background-color: rgb(248, 247, 247);
 }
 table tr.items td {
     /*border: 1px solid #b6b3b3;*/
@@ -55,12 +47,12 @@ hr {
 }
 .total {
     float: right;
-    width: 180px;
+    width: 280px;
+    padding: 2px;
     text-align: right;
     margin-top: 2rem;
-    margin-right: 4rem;
     font-size: 0.775rem;
-    background-color: rgb(241 245 249);
+    background-color: rgb(248, 247, 247);
 }
 
 .total table tr {
@@ -70,12 +62,20 @@ hr {
     font-size: 1.0rem;
     float: right;
     text-align: right;
-    margin-top: 1rem;
-    margin-right: 6rem;
+    margin-top: .5rem;
+    margin-right: 3rem;
 }
 .paid p {
     color:red;
 }
 .notes {
     width: 400px;
+}
+.footer {
+    font-size: 0.775rem;
+    padding: 1rem;
+    background-color: rgb(248, 247, 247);
+    position: fixed;
+    width: 95%;
+    bottom: 10px;
 }

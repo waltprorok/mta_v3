@@ -51,15 +51,11 @@ class MessageService
 
     public function getUsers(int $status)
     {
-        switch (true) {
-            case Auth::user()->teacher:
-                return $this->getStudentUsers($status);
-            case Auth::user()->student:
-                return $this->getStudentTeacher();
-            case Auth::user()->parent:
-                return $this->getParentTeacher();
-            default:
-                return null;
-        }
+        return match (true) {
+            Auth::user()->teacher => $this->getStudentUsers($status),
+            Auth::user()->student => $this->getStudentTeacher(),
+            Auth::user()->parent => $this->getParentTeacher(),
+            default => null,
+        };
     }
 }

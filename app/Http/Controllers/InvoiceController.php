@@ -23,10 +23,7 @@ use Illuminate\View\View;
 
 class InvoiceController extends Controller
 {
-    /**
-     * @var StudentLessonService
-     */
-    private $invoiceService;
+    private InvoiceService $invoiceService;
 
     public function __construct(InvoiceService $invoiceService)
     {

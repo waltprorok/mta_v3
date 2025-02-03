@@ -16,11 +16,11 @@ class StoreInvoicePDFJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $additionalEmail;
+    protected ?string $additionalEmail;
 
-    protected $invoice;
+    protected Invoice $invoice;
 
-    protected $invoiceService;
+    protected InvoiceService $invoiceService;
 
     public function __construct(Invoice $invoice, $additionalEmail = null)
     {
@@ -30,13 +30,10 @@ class StoreInvoicePDFJob implements ShouldQueue
     }
 
     /**
-     * Execute the job.
-     *
-     * @return void
+     * @return mixed
      */
-    public function handle()
+    public function handle(): mixed
     {
-
         $invoiceWithRelations = $this->invoiceService->getInvoiceStudentTeacherBillingRate($this->invoice);
 
         $invoice = $this->invoiceService->getCalculatedLessonTotals($invoiceWithRelations);
