@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-
 use App\Models\Teacher;
 use App\Models\TeacherSetting;
 use App\Models\User;
@@ -60,7 +59,7 @@ class TeacherSettingsControllerTest extends TestCase
 
     public function test_teacher_settings_update_web_url_200()
     {
-        $teacherSettings = factory(TeacherSetting::class)->create(['teacher_id' => $this->user->id]);
+        $teacherSettings = TeacherSetting::factory()->create(['teacher_id' => $this->user->id]);
 
         $response = $this->actingAs($this->user)->put('/web/teacher-settings/' . $teacherSettings->id, [
             'teacher_id' => $this->user->id,
