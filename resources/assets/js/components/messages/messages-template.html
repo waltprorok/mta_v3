@@ -43,7 +43,6 @@
                                         <h5>{{ person.first_name }} {{ person.last_name }}
                                             <span class="chat_date">Joined: {{ person.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY') }}</span>
                                         </h5>
-                                        <p class="small">{{person.instrument}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +61,6 @@
                                     <span class="time_date">{{ message.user_from.first_name }}</span>
                                     <p v-html="message.body"></p>
                                     <span class="time_date">{{ message.created_at }}<span v-if="message.read">&nbsp;|&nbsp;<strong>Read</strong></span></span>
-
                                 </div>
                             </div>
                         </div>
