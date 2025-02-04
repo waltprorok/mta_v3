@@ -6,6 +6,7 @@ use App\Models\Student;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MessageService
 {
@@ -30,11 +31,13 @@ class MessageService
                 ->get(['id', 'first_name', 'last_name', 'created_at', 'teacher', 'student', 'parent']);
         }
 
-        return User::whereHas('studentUsers', function ($query) use ($status) {
-            $query->where('teacher_id', Auth::id())->where('status', $status);
-        })
-            ->firstNameAsc()
-            ->get(['id', 'first_name', 'last_name', 'created_at', 'teacher', 'student', 'parent']);
+        return DB::table('users')
+            ->leftJoin('students', 'users.id', '=', 'students.student_id')
+            ->select(['users.id as id', 'users.teacher', 'users.student', 'users.parent', 'users.created_at',
+                'students.first_name', 'students.last_name', 'students.status', 'students.instrument'])
+            ->where('students.teacher_id', '=', Auth::id())
+            ->where('students.status', '=', $status)
+            ->get();
     }
 
     public function getUsers(int $status)
@@ -58,6 +61,4 @@ class MessageService
             ->firstNameAsc()
             ->get(['id', 'first_name', 'last_name', 'created_at', 'teacher', 'student', 'parent']);
     }
-
-
 }

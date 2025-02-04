@@ -13,10 +13,7 @@ use Illuminate\Support\Facades\Log;
 
 class MessagesController extends Controller
 {
-    /**
-     * @var MessageService
-     */
-    private $messageService;
+    private MessageService $messageService;
 
     public function __construct(MessageService $messageService)
     {
