@@ -37,6 +37,16 @@ class MessageService
             ->get(['id', 'first_name', 'last_name', 'created_at', 'teacher', 'student', 'parent']);
     }
 
+    public function getUsers(int $status)
+    {
+        return match (true) {
+            Auth::user()->teacher => $this->getStudentUsers($status),
+            Auth::user()->student => $this->getStudentTeacher(),
+            Auth::user()->parent => $this->getParentTeacher(),
+            default => null,
+        };
+    }
+
     private function getParentTeacher(): Collection
     {
         $students = User::with('parentOfStudent:id,student_id,teacher_id,parent_id')
@@ -49,13 +59,5 @@ class MessageService
             ->get(['id', 'first_name', 'last_name', 'created_at', 'teacher', 'student', 'parent']);
     }
 
-    public function getUsers(int $status)
-    {
-        return match (true) {
-            Auth::user()->teacher => $this->getStudentUsers($status),
-            Auth::user()->student => $this->getStudentTeacher(),
-            Auth::user()->parent => $this->getParentTeacher(),
-            default => null,
-        };
-    }
+
 }
