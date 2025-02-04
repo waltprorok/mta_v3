@@ -13,10 +13,7 @@ use Illuminate\Support\Facades\Log;
 
 class MessagesController extends Controller
 {
-    /**
-     * @var MessageService
-     */
-    private $messageService;
+    private MessageService $messageService;
 
     public function __construct(MessageService $messageService)
     {
@@ -116,9 +113,6 @@ class MessagesController extends Controller
                 'read' => 0,
                 'deleted' => 0,
             ]);
-
-//            $toUser = User::query()->find($request->get('to'));
-//            Mail::to($toUser->email)->queue(new MessageTo($request, $toUser));
 
         } catch (\Exception $exception) {
             Log::info($exception->getMessage());
