@@ -114,9 +114,6 @@ class MessagesController extends Controller
                 'deleted' => 0,
             ]);
 
-//            $toUser = User::query()->find($request->get('to'));
-//            Mail::to($toUser->email)->queue(new MessageTo($request, $toUser));
-
         } catch (\Exception $exception) {
             Log::info($exception->getMessage());
             return response()->json([], Response::HTTP_BAD_REQUEST);
