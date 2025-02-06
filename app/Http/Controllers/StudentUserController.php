@@ -6,9 +6,9 @@ use App\Models\Holiday;
 use App\Models\Lesson;
 use App\Models\Student;
 use Carbon\Carbon;
+use Dhonions\LaravelCalendar\Calendar;
 use Exception;
 use Illuminate\Support\Facades\Auth;
-use LaravelFullCalendar\Facades\Calendar;
 
 class StudentUserController extends Controller
 {
@@ -65,14 +65,21 @@ class StudentUserController extends Controller
             }
         }
 
-        $calendar = Calendar::addEvents($dates)
+        $calendar = new Calendar();
+        $calendar->addEvents($dates)
             ->setOptions([
                 'firstDay' => 0,
                 'editable' => false,
                 'selectable' => true,
-                'defaultView' => 'month', // 'month' for full calendar 'listWeek'
-                'minTime' => '08:00:00',
-                'maxTime' => '22:00:00',
+                'initialView' => 'dayGridMonth', // 'month' for full calendar 'listWeek', 'agendaWeek', 'agendaDay'
+//                'initialView' => 'timeGridWeek', // 'month' for full calendar 'dayGridMonth', 'dayGridWeek', 'timeGridDay', 'listWeek'
+                'headerToolbar' => [
+//                    'left' => 'prev,next today myCustomButton',
+//                    'center' => 'title',
+                    'right' => 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                ],
+                'slotMinTime' => '08:00:00',
+                'slotMaxTime' => '22:00:00',
                 'fixedWeekCount' => false,
                 'height' => 760,
             ]);

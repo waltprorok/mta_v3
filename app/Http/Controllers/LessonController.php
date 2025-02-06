@@ -6,6 +6,7 @@ use App\Http\Resources\LessonResource;
 use App\Models\Holiday;
 use App\Models\Lesson;
 use Carbon\Carbon;
+use Dhonions\LaravelCalendar\Calendar;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,7 +14,6 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use LaravelFullCalendar\Facades\Calendar;
 
 class LessonController extends Controller
 {
@@ -57,14 +57,21 @@ class LessonController extends Controller
             }
         }
 
-        $calendar = Calendar::addEvents($dates)
+        $calendar = new Calendar();
+        $calendar->addEvents($dates)
             ->setOptions([
                 'firstDay' => 0,
                 'editable' => false,
                 'selectable' => true,
-                'defaultView' => Auth::user()->teacherSetting->calendar ?? 'month', // 'month' for full calendar 'listWeek', 'agendaWeek', 'agendaDay'
-                'minTime' => Auth::user()->teacherSetting->calendar_min_time ?? '08:00:00',
-                'maxTime' => Auth::user()->teacherSetting->calendar_max_time ?? '22:00:00',
+                'initialView' => Auth::user()->teacherSetting->calendar ?? 'dayGridMonth', // 'month' for full calendar 'listWeek', 'agendaWeek', 'agendaDay'
+//                'initialView' => 'timeGridWeek', // 'month' for full calendar 'dayGridMonth', 'dayGridWeek', 'timeGridDay', 'listWeek'
+                'headerToolbar' => [
+//                    'left' => 'prev,next today myCustomButton',
+//                    'center' => 'title',
+                    'right' => 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                ],
+                'slotMinTime' => Auth::user()->teacherSetting->calendar_min_time ?? '08:00:00',
+                'slotMaxTime' => Auth::user()->teacherSetting->calendar_max_time ?? '22:00:00',
                 'fixedWeekCount' => false,
                 'height' => 840,
             ]);
