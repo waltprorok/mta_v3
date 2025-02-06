@@ -17,7 +17,7 @@ class BusinessHoursTableDataSeeder extends Seeder
     {
         if (App::environment('local')) {
             // Create 7 business hour records Mon through Sun.
-            factory(BusinessHours::class, 7)->create();
+            BusinessHours::factory()->count(7)->create();
         }
     }
 }

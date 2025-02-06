@@ -49,17 +49,12 @@ class LoginController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        switch (true) {
-            case $user->isAdmin();
-                return '/admin/blog';
-            case $user->isTeacher();
-                return '/dashboard';
-            case $user->isStudent();
-                return '/calendar/student';
-            case $user->isParent();
-                return '/household';
-            default:
-                return 'dashboard';
-        }
+        return match (true) {
+            $user->isAdmin() => '/admin/blog',
+            $user->isTeacher() => '/dashboard',
+            $user->isStudent() => '/calendar/student',
+            $user->isParent() => '/household',
+            default => 'dashboard',
+        };
     }
 }
