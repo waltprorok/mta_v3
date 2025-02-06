@@ -48,7 +48,7 @@ class TeacherSettingsControllerTest extends TestCase
     {
         $response = $this->actingAs($this->user)->post('/web/teacher-settings', [
             'teacher_id' => $this->user->id,
-            'calendar' => 'month',
+            'calendar' => 'dayGridMonth',
             'calendar_min_time' => '14:00:00',
             'calendar_max_time' => '19:00:00',
             'auto_schedule_new_active_students' => true,
@@ -63,7 +63,7 @@ class TeacherSettingsControllerTest extends TestCase
 
         $response = $this->actingAs($this->user)->put('/web/teacher-settings/' . $teacherSettings->id, [
             'teacher_id' => $this->user->id,
-            'calendar' => 'agendaWeek',
+            'calendar' => 'dayGridWeek',
             'calendar_min_time' => '16:00:00',
             'calendar_max_time' => '20:00:00',
             'auto_schedule_new_active_students' => true,

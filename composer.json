@@ -12,28 +12,26 @@
     "advmaker/carbon-period": "^0.2.2",
     "anhskohbo/no-captcha": "^3.6",
     "barryvdh/laravel-dompdf": "^1.0.0",
+    "dhonions/laravel-calendar": "*",
     "doctrine/dbal": "^2.13",
-    "fideloper/proxy": "^4.4",
-    "fruitcake/laravel-cors": "^3.0",
     "guzzlehttp/guzzle": "^7.9",
     "laravel/cashier": "^13.17",
-    "laravel/framework": "^8.0",
-    "laravel/nexmo-notification-channel": "^2.4",
+    "laravel/framework": "^9.0",
+    "laravel/helpers": "^1.0",
+    "laravel/sanctum": "^3.0",
     "laravel/tinker": "^2.10",
     "laravel/ui": "^3.0",
-    "qlick/laravel-full-calendar": "~1.0",
     "spatie/laravel-honeypot": "^4.5",
     "spatie/laravel-newsletter": "^4.11"
   },
   "require-dev": {
-    "facade/ignition": "^2.17",
-    "filp/whoops": "~2.0",
-    "fzaninotto/faker": "^1.9.1",
+    "fakerphp/faker": "*",
     "laravel/dusk": "^6.0",
-    "laravel/telescope": "^5.3",
+    "laravel/telescope": "^5.4",
     "mockery/mockery": "^1.4.4",
-    "nunomaduro/collision": "^5.0",
-    "phpunit/phpunit": "^9.0"
+    "nunomaduro/collision": "^6.1",
+    "phpunit/phpunit": "^9.5.10",
+    "spatie/laravel-ignition": "^1.0"
   },
   "autoload": {
     "classmap": [
@@ -57,7 +55,8 @@
   "extra": {
     "laravel": {
       "dont-discover": [
-        "laravel/telescope"
+        "laravel/telescope",
+        "laravel/dusk"
       ]
     }
   },

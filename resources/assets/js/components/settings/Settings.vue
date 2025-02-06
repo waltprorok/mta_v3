@@ -63,16 +63,16 @@ export default {
     data: function () {
         return {
             settings: {
-                'calendar': 'month',
+                'calendar': 'dayGridMonth',
                 'calendar_min_time': '08:00:00',
                 'calendar_max_time': '22:00:00',
                 'auto_schedule_new_active_students': false,
             },
             calendar: [
-                {value: 'month', name: 'Month'},
+                {value: 'dayGridMonth', name: 'Month'}, // 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                 {value: 'listWeek', name: 'List Week'},
-                {value: 'agendaWeek', name: 'Agenda Week'},
-                {value: 'agendaDay', name: 'Agenda Day'},
+                {value: 'timeGridWeek', name: 'Agenda Week'},
+                {value: 'timeGridDay', name: 'Agenda Day'},
             ],
             calendarTimes: [
                 {value: '06:00:00', name: '6:00 am'},
