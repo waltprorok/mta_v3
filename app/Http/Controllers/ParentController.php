@@ -94,11 +94,10 @@ class ParentController extends Controller
                 'firstDay' => 0,
                 'editable' => false,
                 'selectable' => true,
-                'initialView' => 'dayGridMonth', // 'month' for full calendar 'listWeek', 'agendaWeek', 'agendaDay'
-//                'initialView' => 'timeGridWeek', // 'month' for full calendar 'dayGridMonth', 'dayGridWeek', 'timeGridDay', 'listWeek'
+                'initialView' => 'dayGridMonth',
                 'headerToolbar' => [
-//                    'left' => 'prev,next today myCustomButton',
-//                    'center' => 'title',
+                    'left' => 'prev,next today',
+                    'center' => 'title',
                     'right' => 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                 ],
                 'slotMinTime' => '08:00:00',
