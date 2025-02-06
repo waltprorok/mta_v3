@@ -17,7 +17,7 @@ class ContactTableDataSeeder extends Seeder
     {
         if (App::environment('local')) {
             // Create 100 contacts.
-            factory(Contact::class, 100)->create();
+            Contact::factory(100)->create();
         }
     }
 }
