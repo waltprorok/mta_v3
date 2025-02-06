@@ -63,12 +63,11 @@ class LessonController extends Controller
                 'firstDay' => 0,
                 'editable' => false,
                 'selectable' => true,
-                'initialView' => Auth::user()->teacherSetting->calendar ?? 'dayGridMonth', // 'month' for full calendar 'listWeek', 'agendaWeek', 'agendaDay'
-//                'initialView' => 'timeGridWeek', // 'month' for full calendar 'dayGridMonth', 'dayGridWeek', 'timeGridDay', 'listWeek'
+                'initialView' => Auth::user()->teacherSetting->calendar ?? 'dayGridMonth',
                 'headerToolbar' => [
-//                    'left' => 'prev,next today myCustomButton',
-//                    'center' => 'title',
-                    'right' => 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                    'left' => 'prev,next today',
+                    'center' => 'title',
+                    'right' => 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
                 ],
                 'slotMinTime' => Auth::user()->teacherSetting->calendar_min_time ?? '08:00:00',
                 'slotMaxTime' => Auth::user()->teacherSetting->calendar_max_time ?? '22:00:00',
