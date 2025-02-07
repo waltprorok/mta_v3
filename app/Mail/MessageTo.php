@@ -39,14 +39,10 @@ class MessageTo extends Mailable
 
     private function fromUserEmail()
     {
-        switch (true) {
-            case Auth::user()->isTeacher():
-                return Auth::user()->getTeacher()->get(['email', 'first_name', 'last_name'])->first();
-            case Auth::user()->isStudent():
-                return Auth::user()->student()->get(['email', 'first_name', 'last_name'])->first();
-            case Auth::user()->isParent():
-                return Auth::user();
-
-        }
+        return match (true) {
+            Auth::user()->isTeacher() => Auth::user()->getTeacher()->get(['email', 'first_name', 'last_name'])->first(),
+            Auth::user()->isStudent() => Auth::user()->student()->get(['email', 'first_name', 'last_name'])->first(),
+            Auth::user()->isParent() => Auth::user()
+        };
     }
 }
