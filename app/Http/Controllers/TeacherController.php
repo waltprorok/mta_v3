@@ -15,7 +15,7 @@ use Illuminate\View\View;
 
 class TeacherController extends Controller
 {
-    private $phoneNumberService;
+    private PhoneNumberService $phoneNumberService;
 
     /**
      * @param PhoneNumberService $phoneNumberService
