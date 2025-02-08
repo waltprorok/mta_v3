@@ -11,8 +11,20 @@
 {{ $message }}
 @endcomponent
 
+@if($support)
+@component('mail::button', ['url' => route('admin.support.index')])
+    Reply to this Email
+@endcomponent
+@else
 @component('mail::button', ['url' => route('contact.index')])
     Reply to this Email
 @endcomponent
+@endif
+
+{{--@if(! $support)--}}
+{{--@component('mail::button', ['url' => route('contact.index')])--}}
+{{--    Reply to this Email--}}
+{{--@endcomponent--}}
+{{--@endif--}}
 
 @endcomponent
