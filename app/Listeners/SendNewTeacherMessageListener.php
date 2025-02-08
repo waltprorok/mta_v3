@@ -23,10 +23,10 @@ class SendNewTeacherMessageListener
     /**
      * Handle the event.
      *
-     * @param  RegisterUserEvent  $event
+     * @param RegisterUserEvent $event
      * @return void
      */
-    public function handle(RegisterUserEvent $event)
+    public function handle(RegisterUserEvent $event): void
     {
         $user = $event->getUser();
 

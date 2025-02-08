@@ -29,7 +29,7 @@ class CreateTeacherListener
      * @param RegisterUserEvent $event
      * @return void
      */
-    public function handle(RegisterUserEvent $event)
+    public function handle(RegisterUserEvent $event): void
     {
         $data = $event->getAttributes();
         $user = $event->getUser();

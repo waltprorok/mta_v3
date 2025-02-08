@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Holiday;
-use Auth;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class HolidayController extends Controller
