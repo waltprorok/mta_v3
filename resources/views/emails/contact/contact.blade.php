@@ -21,10 +21,4 @@
 @endcomponent
 @endif
 
-{{--@if(! $support)--}}
-{{--@component('mail::button', ['url' => route('contact.index')])--}}
-{{--    Reply to this Email--}}
-{{--@endcomponent--}}
-{{--@endif--}}
-
 @endcomponent
