@@ -47,7 +47,7 @@ class UserLogInTest extends TestCase
             'teacher' => true,
             'password' => $user->password,
             'password_confirmation' => $user->password,
-            'terms' => 1,
+            'terms' => true,
         ])->assertStatus(302);
 
         $response->assertRedirect('/dashboard');
@@ -106,7 +106,7 @@ class UserLogInTest extends TestCase
     {
         $this->withoutMiddleware();
 
-        $user = User::factory()->create(['teacher' => 1]);
+        $user = User::factory()->create(['teacher' => true]);
 
         $response = $this->actingAs($user)->get('/dashboard');
 
@@ -115,7 +115,7 @@ class UserLogInTest extends TestCase
 
     public function test_authenticated_student_user_can_access_calendar_student()
     {
-        $user = User::factory()->create(['student' => 1]);
+        $user = User::factory()->create(['student' => true]);
 
         $response = $this->actingAs($user)->get('/calendar/student');
 
@@ -124,7 +124,7 @@ class UserLogInTest extends TestCase
 
     public function test_authenticated_parent_user_can_access_household()
     {
-        $user = User::factory()->create(['parent' => 1]);
+        $user = User::factory()->create(['parent' => true]);
 
         $response = $this->actingAs($user)->get('/household');
 
@@ -133,7 +133,7 @@ class UserLogInTest extends TestCase
 
     public function test_authenticated_admin_user_can_access_admin_blog()
     {
-        $user = User::factory()->create(['admin' => 1]);
+        $user = User::factory()->create(['admin' => true]);
 
         $response = $this->actingAs($user)->get('/admin/blog');
 
