@@ -16,7 +16,7 @@ class StudentControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->student = User::factory()->create();
+        $this->student = User::factory()->create(['student' => true]);
         $this->teacher = User::factory()->create(['teacher' => true]);
     }
 
