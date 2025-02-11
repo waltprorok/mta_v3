@@ -16,7 +16,7 @@ class BlogControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = User::factory()->create(['admin' => true, 'student' => false]);
+        $this->user = User::factory()->create(['admin' => true]);
     }
 
     public function test_admin_blog_list_view_200()

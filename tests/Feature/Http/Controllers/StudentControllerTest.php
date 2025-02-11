@@ -17,7 +17,7 @@ class StudentControllerTest extends TestCase
     {
         parent::setUp();
         $this->student = User::factory()->create();
-        $this->teacher = User::factory()->create(['teacher' => true, 'student' => false]);
+        $this->teacher = User::factory()->create(['teacher' => true]);
     }
 
     public function test_profile_index_view_200()

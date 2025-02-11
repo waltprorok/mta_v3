@@ -26,7 +26,7 @@ class SubscriptionControllerTest extends TestCase
     {
         parent::setUp();
         Mail::fake();
-        $this->user = User::factory()->make(['teacher' => true, 'student' => false]);
+        $this->user = User::factory()->make(['teacher' => true]);
     }
 
     public function test_subscription_profile_view_200()

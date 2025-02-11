@@ -24,6 +24,7 @@ class User extends Authenticatable
         'student' => 'boolean',
         'teacher' => 'boolean',
         'parent' => 'boolean',
+        'is_active' => 'boolean',
     ];
 
     /**
@@ -40,6 +41,7 @@ class User extends Authenticatable
         'student',
         'parent',
         'terms',
+        'is_active',
         'timezone',
         'trial_ends_at',
     ];

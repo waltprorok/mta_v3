@@ -19,8 +19,8 @@ class BillingRateControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->admin = User::factory()->create(['admin' => true, 'student' => false]);
-        $this->user = User::factory()->create(['teacher' => true, 'student' => false]);
+        $this->admin = User::factory()->create(['admin' => true]);
+        $this->user = User::factory()->create(['teacher' => true]);
     }
 
     public function test_billing_rate_index_view_200()
@@ -78,8 +78,8 @@ class BillingRateControllerTest extends TestCase
             'type' => 'monthly',
             'amount' => 100,
             'description' => 'Monthly Rate',
-            'default' => 1,
-            'flat_rate' => 1,
+            'default' => true,
+            'flat_rate' => true,
             'cancelled_twenty_four_hours' => 0,
             'cancelled_forty_eight_hours' => 0,
         ]);
