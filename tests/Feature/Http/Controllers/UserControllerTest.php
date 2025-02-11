@@ -15,7 +15,7 @@ class UserControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = User::factory()->create(['admin' => true, 'student' => false]);
+        $this->user = User::factory()->create(['admin' => true]);
     }
 
     public function test_user_index_view_200()

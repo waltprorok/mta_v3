@@ -16,7 +16,7 @@ class InstrumentControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = User::factory()->create(['teacher' => true, 'student' => false]);
+        $this->user = User::factory()->create(['teacher' => true]);
     }
 
     public function test_instrument_index_view_200()

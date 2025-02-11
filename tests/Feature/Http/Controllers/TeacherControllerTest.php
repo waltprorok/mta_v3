@@ -18,8 +18,8 @@ class TeacherControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->admin = User::factory()->create(['admin' => true, 'student' => false]);
-        $this->user = User::factory()->create(['teacher' => true, 'student' => false]);
+        $this->admin = User::factory()->create(['admin' => true]);
+        $this->user = User::factory()->create(['teacher' => true]);
     }
 
     public function test_index_page_url_redirect()
@@ -38,7 +38,7 @@ class TeacherControllerTest extends TestCase
 
     public function test_get_teacher_is_null()
     {
-        $user = User::factory()->create(['teacher' => true, 'student' => false]);
+        $user = User::factory()->create(['teacher' => true]);
 
         $this->assertNull($user->getTeacher);
     }

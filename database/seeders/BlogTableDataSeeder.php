@@ -12,7 +12,7 @@ class BlogTableDataSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         Blog::query()->insert([
             [

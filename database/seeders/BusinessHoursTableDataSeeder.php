@@ -13,7 +13,7 @@ class BusinessHoursTableDataSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         if (App::environment('local')) {
             // Create 7 business hour records Mon through Sun.

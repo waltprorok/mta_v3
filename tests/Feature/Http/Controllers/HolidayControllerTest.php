@@ -16,7 +16,7 @@ class HolidayControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = User::factory()->create(['teacher' => true, 'student' => false]);
+        $this->user = User::factory()->create(['teacher' => true]);
     }
 
     public function test_holiday_index_view_200()

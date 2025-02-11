@@ -12,7 +12,7 @@ class PaymentTypeTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         PaymentType::query()->insert(
             [

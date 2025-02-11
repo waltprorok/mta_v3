@@ -14,7 +14,7 @@ class BillingRateDataSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         if (App::environment('local')) {
             BillingRate::query()->insert([

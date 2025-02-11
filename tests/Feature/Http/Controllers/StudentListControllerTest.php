@@ -18,8 +18,8 @@ class StudentListControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->admin = User::factory()->create(['admin' => true, 'student' => false]);
-        $this->user = User::factory()->create(['id' => 3, 'teacher' => true, 'student' => false]);
+        $this->admin = User::factory()->create(['admin' => true]);
+        $this->user = User::factory()->create(['id' => 3, 'teacher' => true]);
     }
 
     public function test_admin_student_list_index_view_200()

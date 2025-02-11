@@ -13,7 +13,7 @@ class ContactTableDataSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         if (App::environment('local')) {
             // Create 100 contacts.

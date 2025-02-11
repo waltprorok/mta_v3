@@ -16,7 +16,7 @@ class PaymentTypeControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = User::factory()->create(['teacher' => true, 'student' => false]);
+        $this->user = User::factory()->create(['teacher' => true]);
     }
 
     public function test_payment_type_index_web_url_200()

@@ -13,7 +13,7 @@ class PlanTableDataSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         if (App::environment('local')) {
             Plan::insert([
@@ -62,8 +62,6 @@ class PlanTableDataSeeder extends Seeder
                     'created_at' => '2024-10-01 00:00:01',
                     'updated_at' => '2024-10-01 00:00:01',
                 ]
-
-
             ]);
         }
     }
