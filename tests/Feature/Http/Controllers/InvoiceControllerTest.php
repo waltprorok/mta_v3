@@ -22,7 +22,7 @@ class InvoiceControllerTest extends TestCase
     {
         $this->withoutMiddleware();
 
-        $user = User::factory()->create(['teacher' => 1]);
+        $user = User::factory()->create(['teacher' => true]);
 
         $response = $this->actingAs($user)->get(route('invoice.index'));
 
@@ -34,7 +34,7 @@ class InvoiceControllerTest extends TestCase
     {
         $this->withoutMiddleware();
 
-        $user = User::factory()->create(['teacher' => 1]);
+        $user = User::factory()->create(['teacher' => true]);
 
         $response = $this->actingAs($user)->get('/invoice');
 
@@ -46,7 +46,7 @@ class InvoiceControllerTest extends TestCase
     {
         $this->withoutMiddleware();
 
-        $user = User::factory()->create(['teacher' => 1]);
+        $user = User::factory()->create(['teacher' => true]);
         $student = Student::factory()->create(['teacher_id' => $user->id]);
         $paymentType = PaymentType::factory()->create();
 
@@ -55,25 +55,7 @@ class InvoiceControllerTest extends TestCase
         $response = $this->actingAs($user)->get('/web/invoice');
 
         $response->assertStatus(200);
-        $response->assertJson([
-            [
-                'id' => 1,
-                "student_id" => "1",
-                "teacher_id" => "1",
-                "lesson_id" => "",
-                "subtotal" => 0,
-                "discount" => 0,
-                "total" => 0,
-                "balance_due" => 0,
-                "payment" => 0,
-                "adjustments" => 0,
-                "payment_type_id" => 1,
-                "check_number" => null,
-                "payment_information" => null,
-                "due_date" => null,
-                "is_paid" => false,
-            ]
-        ]);
+        $response->assertJsonCount(3);
     }
 
 

@@ -37,7 +37,14 @@ class InvoiceController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return response()->json($students);
+        $paid = $students->where('is_paid', true)->count();
+        $notPaid = $students->where('is_paid', false)->count();
+
+        return response()->json([
+            'students' => $students,
+            'paid' => $paid,
+            'notPaid' => $notPaid
+        ]);
     }
 
     public function getStudentSelected(int $id, string $month): JsonResponse
@@ -89,7 +96,7 @@ class InvoiceController extends Controller
             }
         }
 
-        return response()->json($students);
+        return response()->json(['students' => $students, 'create' => $students->count()]);
     }
 
     public function show(Invoice $invoice): View

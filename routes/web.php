@@ -36,7 +36,7 @@ Route::prefix('blog')->group(function () {
 });
 
 // Routes for authorized users
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', 'active']], function () {
     Route::prefix('account')->group(function () {
         Route::get('subscription', 'SubscriptionController@index')->name('account.subscription');
         Route::get('subscription/invoices', 'SubscriptionController@invoices')->name('subscription.invoices');

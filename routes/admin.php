@@ -3,7 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => ['auth', 'admin']], function () {
+Route::group(['middleware' => ['auth', 'admin', 'active']], function () {
     // web API endpoints for admin
     Route::prefix('web')->group(function () {
         Route::get('blogs', 'BlogController@list');
