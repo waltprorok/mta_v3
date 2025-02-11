@@ -9,6 +9,8 @@ import {dateFormat} from "vue-filter-date-format";
 export default {
     data: function () {
         return {
+            paid: 0,
+            notPaid: 0,
             filter: '',
             list: [],
             page: 1,
@@ -120,7 +122,9 @@ export default {
         fetchInvoiceList: function () {
             axios.get('/web/invoice')
                 .then((response) => {
-                    this.list = response.data;
+                    this.list = response.data.students;
+                    this.paid = response.data.paid;
+                    this.notPaid = response.data.notPaid;
                 })
                 .catch((error) => {
                     console.log(error);
