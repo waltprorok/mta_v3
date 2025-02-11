@@ -3,7 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => ['auth', 'teacher', 'subscribed']], function () {
+Route::group(['middleware' => ['auth', 'teacher', 'subscribed', 'active']], function () {
     Route::view('dashboard', 'webapp.index')->name('dashboard');
     // web API endpoints for teacher
     Route::prefix('web')->group(function () {
