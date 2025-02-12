@@ -96,7 +96,7 @@ class InvoiceController extends Controller
             }
         }
 
-        return response()->json(['students' => $students, 'create' => $students->count()]);
+        return response()->json(['students' => $students, 'needInvoicedCount' => $students->count()]);
     }
 
     public function show(Invoice $invoice): View
