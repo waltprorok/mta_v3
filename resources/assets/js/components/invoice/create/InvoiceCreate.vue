@@ -1,10 +1,11 @@
 <template src="./invoice-create-template.html"></template>
 
 <script>
+import InvoiceCreateCount from "../components/InvoiceCreateCount.vue";
 import PhoneNumberFormat from "../../PhoneNumberFormat.vue";
 
 let today = new Date();
-const month = today.toLocaleString('default', { month: 'long' });
+const month = today.toLocaleString('default', {month: 'long'});
 
 function generatePastMonths() {
     const months = [
@@ -67,7 +68,8 @@ export default {
     },
 
     components: {
-        PhoneNumberFormat
+        InvoiceCreateCount,
+        PhoneNumberFormat,
     },
 
     mounted: function () {

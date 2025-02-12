@@ -1,10 +1,11 @@
 <template src="./invoice-list-template.html"></template>
 
 <script>
-import TotalEntries from "../../TotalEntries";
-import PhoneNumberFormat from "../../PhoneNumberFormat";
 import {dateParse} from "@vuejs-community/vue-filter-date-parse";
 import {dateFormat} from "vue-filter-date-format";
+import InvoicePaidTiles from "../components/InvoicePaidTiles.vue";
+import PhoneNumberFormat from "../../PhoneNumberFormat";
+import TotalEntries from "../../TotalEntries";
 
 export default {
     data: function () {
@@ -69,6 +70,7 @@ export default {
     },
 
     components: {
+        InvoicePaidTiles,
         TotalEntries,
         PhoneNumberFormat,
     },
