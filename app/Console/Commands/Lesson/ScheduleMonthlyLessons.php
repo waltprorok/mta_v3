@@ -31,7 +31,7 @@ class ScheduleMonthlyLessons extends Command
     /**
      * @var StudentLessonService
      */
-    private $studentLessonService;
+    private StudentLessonService $studentLessonService;
 
     /**
      * Create a new command instance.
@@ -48,7 +48,7 @@ class ScheduleMonthlyLessons extends Command
      * Execute the console command.
      *
      */
-    public function handle()
+    public function handle(): void
     {
         $hasMonth = $this->option('month');
 
@@ -71,10 +71,10 @@ class ScheduleMonthlyLessons extends Command
             $carbonParseMonth = Carbon::parse($monthName);
         }
 
-        // Check if option month is Dec and set it back to last year
+        // Check if option month is greater than now and set it back to last year
         // This is only for manually setting the month, not to
         // interfere with the scheduled command
-        if ($hasMonth && $monthName == 'December') {
+        if ($hasMonth && $carbonParseMonth > now()) {
             $lessonsStart = $carbonParseMonth->subYear()->startOfMonth()->toDateTimeString();
             $lessonsEnd = $carbonParseMonth->endOfMonth()->toDateTimeString();
 
