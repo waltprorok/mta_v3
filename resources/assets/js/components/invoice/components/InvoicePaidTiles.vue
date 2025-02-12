@@ -35,8 +35,20 @@
 export default {
     name: 'InvoicePaidTiles',
     props: {
-        paid: Number,
-        notPaid: Number,
+        paid: {
+            type: Number,
+            required: true,
+            validator: (value) => {
+                return Number.isInteger(value);
+            }
+        },
+        notPaid: {
+            type: Number,
+            required: true,
+            validator: (value) => {
+                return Number.isInteger(value);
+            }
+        },
     },
 
 }

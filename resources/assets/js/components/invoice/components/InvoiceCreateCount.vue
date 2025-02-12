@@ -19,8 +19,13 @@
 export default {
     name: 'InvoiceCreateCount',
     props: {
-        needInvoicedCount: Number,
-    },
-
+        needInvoicedCount: {
+            type: Number,
+            required: true,
+            validator: (value) => {
+                return Number.isInteger(value);
+            }
+        }
+    }
 }
 </script>
