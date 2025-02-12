@@ -27,7 +27,6 @@ function generatePastMonths() {
 export default {
     data() {
         return {
-            createCount: 0,
             month: month,
             months: generatePastMonths(),
             list: [],
@@ -36,6 +35,7 @@ export default {
             disableSaveButton: false,
             selected: false,
             showStudent: false,
+            needInvoicedCount: 0,
             lesson: {
                 id: null,
                 complete: false,
@@ -222,7 +222,7 @@ export default {
             axios.get('/web/invoice-create/' + this.month)
                 .then((response) => {
                     this.list = response.data.students;
-                    this.createCount = response.data.create;
+                    this.needInvoicedCount = response.data.needInvoicedCount;
                 })
                 .catch((error) => {
                     console.log(error);
