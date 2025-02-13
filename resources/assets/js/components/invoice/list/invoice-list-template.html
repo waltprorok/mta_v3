@@ -111,7 +111,7 @@
                         <td>{{ row.student.first_name }}</td>
                         <td>{{ row.student.last_name }}</td>
                         <td>
-                            <phone-number-format v-bind:data="row.student"></phone-number-format>
+                            <phone-number-format :data="row.student"></phone-number-format>
                         </td>
                         <td>{{ row.student.email }}</td>
                         <td>{{ row.balance_due | toCurrency }}</td>
@@ -131,7 +131,7 @@
                     </tr>
                 </template>
             </datatable>
-            <total-entries v-bind:list="list"></total-entries>
+            <total-entries :list="list"></total-entries>
             <div class="pull-right">
                 <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
             </div>

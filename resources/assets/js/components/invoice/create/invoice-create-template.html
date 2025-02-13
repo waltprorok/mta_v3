@@ -43,7 +43,7 @@
                             <br/>
                             <p class="mb-1"><span class="text-muted"></span>{{ student.get_teacher.email }}</p>
                             <p class="mb-1"><span class="text-muted"></span>
-                                <phone-number-format v-bind:data="student.get_teacher"></phone-number-format>
+                                <phone-number-format :data="student.get_teacher"></phone-number-format>
                             </p>
                         </div>
 
@@ -51,7 +51,7 @@
                             <p class="font-weight-bold mb-4">Billed To:</p>
                             <p class="mb-1">{{ student.first_name }} {{ student.last_name }}</p>
                             <p class="mb-1" v-if="selected">
-                                <phone-number-format v-bind:data="student"></phone-number-format>
+                                <phone-number-format :data="student"></phone-number-format>
                             </p>
                             <p class="mb-1">{{ student.email }}</p>
                             <p class="mb-1" v-if="student.parent">{{ student.parent.email }}</p>
