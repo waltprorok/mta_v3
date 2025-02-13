@@ -1,6 +1,6 @@
 <div>
     <div class="row" v-show="! selected">
-        <invoice-create-count v-bind:needInvoicedCount="needInvoicedCount"></invoice-create-count>
+        <card :count="needInvoicedCount" :title="`Need Invoiced`" :icon="`fa fa-file-text`"></card>
     </div>
 
     <div class="card">
