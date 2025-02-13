@@ -89,7 +89,7 @@
                             <div class="form-group" :class="error_release_time && classError">
                                 <label for="release_time" class="control-label">Publish Time</label>
                                 <select class="form-control" id="release_time" v-model="release_time">
-                                    <option v-for="option in options" v-bind:value="option.value">
+                                    <option v-for="option in options" :value="option.value">
                                         {{ option.text }}
                                     </option>
                                 </select>
