@@ -1,7 +1,7 @@
 <div>
     <div class="row">
-        <card v-bind:count="paid" v-bind:title="`Paid`" v-bind:icon="`fa fa-money`"></card>
-        <card v-bind:count="notPaid" v-bind:title="`Not Paid`" v-bind:icon="`fa fa-bank`"></card>
+        <card :count="paid" :title="`Paid`" :icon="`fa fa-money`"></card>
+        <card :count="notPaid" :title="`Not Paid`" :icon="`fa fa-bank`"></card>
     </div>
 
     <div class="card" v-on:keydown.esc="cancelForm()">
