@@ -9,7 +9,7 @@
                             <h5>{{ profile.first_name }}&nbsp;{{ profile.last_name }}</h5>
                             <p class="mb-1">{{ profile.instrument }}</p>
                             <p class="mb-1">{{ profile.level }}</p>
-                            <!--                        <a v-bind:href="'/messages/reply/' + profile.student_id" class="btn btn-outline-primary">Message</a>-->
+                            <!--                        <a :href="'/messages/reply/' + profile.student_id" class="btn btn-outline-primary">Message</a>-->
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                             <h6 class="mb-0">Phone</h6>
                         </div>
                         <div class="col-sm-9">
-                            <phone-number-format v-bind:data="profile"></phone-number-format>
+                            <phone-number-format :data="profile"></phone-number-format>
                         </div>
                     </div>
                     <hr>
@@ -72,7 +72,7 @@
                             <h6 class="mb-0">Email</h6>
                         </div>
                         <div class="col-sm-9">
-                            <a v-bind:href="'mailto:' + profile.email">{{ profile.email }}</a>
+                            <a :href="'mailto:' + profile.email">{{ profile.email }}</a>
                         </div>
                     </div>
                     <hr>
@@ -81,7 +81,7 @@
                             <h6 class="mb-0">Parent Email</h6>
                         </div>
                         <div class="col-sm-9" v-if="profile.parent">
-                            <a v-bind:href="'mailto:' + profile.parent.email">{{ profile.parent.email }}</a>
+                            <a :href="'mailto:' + profile.parent.email">{{ profile.parent.email }}</a>
                         </div>
                     </div>
                     <hr v-if="profile.parent" >

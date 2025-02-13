@@ -22,13 +22,13 @@
                     <td v-text="row.state"></td>
                     <td v-text="row.zip"></td>
                     <td>
-                        <phone-number-format v-bind:data="row"></phone-number-format>
+                        <phone-number-format :data="row"></phone-number-format>
                     </td>
                     <td v-text="row.email"></td>
                 </tr>
             </template>
         </datatable>
-        <total-entries v-bind:list="list"></total-entries>
+        <total-entries :list="list"></total-entries>
         <div class="pull-right">
             <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
         </div>

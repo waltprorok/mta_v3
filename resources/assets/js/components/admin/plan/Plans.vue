@@ -17,7 +17,7 @@
                     </tr>
                 </template>
             </datatable>
-            <total-entries v-bind:list="list"></total-entries>
+            <total-entries :list="list"></total-entries>
             <notifications position="bottom right"/>
         </div>
     </div>

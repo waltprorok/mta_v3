@@ -13,7 +13,7 @@
         @include('partials.studentTabs', $data = ['id' => $student->id])
 
         <div id="app">
-            <profile v-bind:student="{{ $studentJson }}"></profile>
+            <profile :student="{{ $studentJson }}"></profile>
         </div>
     </div>
 
