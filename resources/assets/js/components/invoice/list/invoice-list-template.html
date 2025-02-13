@@ -1,5 +1,8 @@
 <div>
-    <invoice-paid-tiles v-bind:paid="paid" v-bind:not-paid="notPaid"></invoice-paid-tiles>
+    <div class="row">
+        <card v-bind:count="paid" v-bind:title="`Paid`" v-bind:icon="`fa fa-money`"></card>
+        <card v-bind:count="notPaid" v-bind:title="`Not Paid`" v-bind:icon="`fa fa-bank`"></card>
+    </div>
 
     <div class="card" v-on:keydown.esc="cancelForm()">
         <div v-if="showModal">

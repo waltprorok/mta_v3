@@ -1,7 +1,7 @@
 <template src="./invoice-create-template.html"></template>
 
 <script>
-import InvoiceCreateCount from "../components/InvoiceCreateCount.vue";
+import Card from "../../Card.vue";
 import PhoneNumberFormat from "../../PhoneNumberFormat.vue";
 
 let today = new Date();
@@ -68,7 +68,7 @@ export default {
     },
 
     components: {
-        InvoiceCreateCount,
+        Card,
         PhoneNumberFormat,
     },
 
