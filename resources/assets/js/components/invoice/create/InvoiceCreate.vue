@@ -1,7 +1,7 @@
 <template src="./invoice-create-template.html"></template>
 
 <script>
-import Card from "../../Card.vue";
+import Card from "../../card/Card.vue";
 import PhoneNumberFormat from "../../PhoneNumberFormat.vue";
 
 let today = new Date();

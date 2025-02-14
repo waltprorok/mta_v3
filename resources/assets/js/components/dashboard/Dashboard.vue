@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import Card from "../Card.vue";
+import Card from "../card/Card.vue";
 
 export default {
     components: {Card},

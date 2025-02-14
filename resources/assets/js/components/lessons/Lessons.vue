@@ -102,7 +102,7 @@
 </template>
 
 <script>
-import TotalEntries from "./TotalEntries";
+import TotalEntries from "./../TotalEntries";
 import {dateParse} from "@vuejs-community/vue-filter-date-parse";
 import {dateFormat} from "vue-filter-date-format";
 
