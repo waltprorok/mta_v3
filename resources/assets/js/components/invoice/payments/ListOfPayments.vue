@@ -36,36 +36,7 @@
         <!-- end of vue js data table -->
         <!-- modal payment -->
         <div v-if="showModalPayment">
-            <transition name="modal">
-                <div class="modal-mask">
-                    <div class="modal-wrapper">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Invoice Payment Information</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true" @click="showModalPayment=false">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Invoice ID: {{ row.id }}</p>
-                                    <p>Payment Type: {{ row.payment_type.name }}</p>
-                                    <p v-if="row.check_number">Check Number: {{ row.check_number }}</p>
-                                    <p>Payment Information: {{ row.payment_information }}</p>
-                                    <hr />
-                                    <p>Invoice Amount: {{ row.total | toCurrency  }}</p>
-                                    <p>Discount: {{ row.discount | toCurrency  }}</p>
-                                    <p>Amount Paid: {{ row.payment | toCurrency }}</p>
-                                    <p>Date: {{ row.updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-secondary" @click="showModalPayment=false">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </transition>
+            <payment-modal :row="row" @closeModal="handleModalClose"></payment-modal>
         </div>
         <!-- end of modal -->
         <notifications position="bottom right"/>
@@ -75,6 +46,7 @@
 
 <script>
 import TotalEntries from "../../TotalEntries";
+import PaymentModal from "../../modals/invoice/PaymentModal.vue";
 import PhoneNumberFormat from "../../PhoneNumberFormat";
 import {dateParse} from "@vuejs-community/vue-filter-date-parse";
 import {dateFormat} from "vue-filter-date-format";
@@ -105,6 +77,7 @@ export default {
     },
 
     components: {
+        PaymentModal,
         TotalEntries,
         PhoneNumberFormat,
     },
@@ -123,6 +96,10 @@ export default {
     methods: {
         dateFormat,
         dateParse,
+        handleModalClose(value) {
+            let self = this;
+            self.showModalPayment = value;
+        },
         fetchListOfPayments: function () {
             axios.get('/web/invoice/list-of-payments')
                 .then((response) => {
