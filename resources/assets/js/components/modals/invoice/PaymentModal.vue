@@ -14,7 +14,7 @@
                             <p>Invoice ID: {{ row.id }}</p>
                             <p>Payment Type: {{ row.payment_type.name }}</p>
                             <p v-if="row.check_number">Check Number: {{ row.check_number }}</p>
-                            <p>Payment Information: {{ row.payment_information }}</p>
+                            <p v-if="row.payment_information">Payment Information: {{ row.payment_information }}</p>
                             <hr />
                             <p>Invoice Amount: {{ row.total | toCurrency }}</p>
                             <p>Discount: {{ row.discount | toCurrency }}</p>
