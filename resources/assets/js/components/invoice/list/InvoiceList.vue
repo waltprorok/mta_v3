@@ -3,7 +3,7 @@
 <script>
 import {dateParse} from "@vuejs-community/vue-filter-date-parse";
 import {dateFormat} from "vue-filter-date-format";
-import Card from "../../Card.vue";
+import Card from "../../cards/Card.vue";
 import PhoneNumberFormat from "../../PhoneNumberFormat";
 import TotalEntries from "../../TotalEntries";
 

@@ -1,80 +1,9 @@
-<template>
-    <div class="card" v-on:keydown.esc="showModalPayment=false">
-        <div class="form-control">
-            <div class="form-group pull-left">
-                <div class="form-group">
-                    <select id="single-select" v-model="per_page" class="form-control">
-                        <option v-for="page in pages" :value="page">{{ page }}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group pull-right pr-2">
-                <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
-            </div>
-            <datatable class="table table-responsive-md table-hover" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
-                <template v-slot="{ columns, row }">
-                    <tr>
-                        <td>{{ row.id }}</td>
-                        <td>{{ row.updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
-                        <td>{{ row.payment_type.name }}</td>
-                        <td>{{ row.total | toCurrency }}</td>
-                        <td>{{ row.payment | toCurrency }}</td>
-                        <td>{{ row.balance_due | toCurrency }}</td>
-                        <td class="text-nowrap">
-                            <a :href="`/invoice/show/${row.id}`" class="btn btn-sm btn-outline-primary" role="button" title="view"><i class="fa fa-file-pdf-o"></i></a>
-                            <a :href="`/invoice/download/pdf/${row.id}`" class="btn btn-sm btn-outline-secondary" role="button" title="download invoice"><i class="fa fa-download"></i></a>
-                            <button @click="showModal(row)" class="btn btn-outline-info btn-sm" title="click to show"><i class="fa fa-folder-open-o" aria-hidden="true"></i></button>
-                        </td>
-                    </tr>
-                </template>
-            </datatable>
-            <total-entries :list="list"></total-entries>
-            <div class="pull-right">
-                <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
-            </div>
-        </div>
-        <!-- end of vue js data table -->
-        <!-- modal payment -->
-        <div v-if="showModalPayment">
-            <transition name="modal">
-                <div class="modal-mask">
-                    <div class="modal-wrapper">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Invoice Payment Information</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true" @click="showModalPayment=false">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Invoice ID: {{ row.id }}</p>
-                                    <p>Payment Type: {{ row.payment_type.name }}</p>
-                                    <p v-if="row.check_number">Check Number: {{ row.check_number }}</p>
-                                    <p>Payment Information: {{ row.payment_information }}</p>
-                                    <hr />
-                                    <p>Invoice Amount: {{ row.total | toCurrency  }}</p>
-                                    <p>Discount: {{ row.discount | toCurrency  }}</p>
-                                    <p>Amount Paid: {{ row.payment | toCurrency }}</p>
-                                    <p>Date: {{ row.updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-secondary" @click="showModalPayment=false">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </transition>
-        </div>
-        <!-- end of modal -->
-        <notifications position="bottom right"/>
-    </div>
-</template>
+<template src="./list-of-payment-template.html"></template>
 
 
 <script>
 import TotalEntries from "../../TotalEntries";
+import PaymentModal from "../../modals/invoice/PaymentModal.vue";
 import PhoneNumberFormat from "../../PhoneNumberFormat";
 import {dateParse} from "@vuejs-community/vue-filter-date-parse";
 import {dateFormat} from "vue-filter-date-format";
@@ -105,6 +34,7 @@ export default {
     },
 
     components: {
+        PaymentModal,
         TotalEntries,
         PhoneNumberFormat,
     },
@@ -123,6 +53,10 @@ export default {
     methods: {
         dateFormat,
         dateParse,
+        handleModalClose(value) {
+            let self = this;
+            self.showModalPayment = value;
+        },
         fetchListOfPayments: function () {
             axios.get('/web/invoice/list-of-payments')
                 .then((response) => {

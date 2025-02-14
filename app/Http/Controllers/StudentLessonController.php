@@ -21,10 +21,7 @@ use Illuminate\Support\Facades\Log;
 
 class StudentLessonController extends Controller
 {
-    /**
-     * @var StudentLessonService
-     */
-    private $studentLessonService;
+    private StudentLessonService $studentLessonService;
 
     public function __construct(StudentLessonService $studentLessonService)
     {
@@ -46,6 +43,7 @@ class StudentLessonController extends Controller
             ->first();
         $businessHours = BusinessHours::query()
             ->where('teacher_id', Auth::id())
+            ->orderBy('day')
             ->get();
         $billingRates = BillingRate::getTeacherActiveRates()->get();
         $holidays = Holiday::getTeacherHolidaysForTwoYears()->get();
