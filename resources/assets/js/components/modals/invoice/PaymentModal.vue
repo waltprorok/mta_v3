@@ -42,7 +42,6 @@ export default {
             this.$emit('closeModal', false);
         }
     },
-
     filters: {
         toCurrency: function (value) {
             let formatter = new Intl.NumberFormat('en-US', {
