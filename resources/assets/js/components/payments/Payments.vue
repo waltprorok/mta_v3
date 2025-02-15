@@ -1,45 +1,4 @@
-<template>
-    <div class="card">
-        <div class="form-control" v-cloak>
-            <div class="form-group pull-left">
-                <div class="form-group">
-                    <select id="single-select" v-model="per_page" class="form-control">
-                        <option v-for="page in pages" :value="page">{{ page }}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group pull-right pr-2">
-                <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
-            </div>
-            <datatable class="table table-responsive-md table-hover" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
-                <template v-slot="{ columns, row }">
-                    <tr>
-                        <td>{{ row.v_id }}</td>
-
-                        <td v-if="row.is_paid === '1'">{{ row.name }}</td>
-                        <td v-else>--</td>
-                        <td>{{ row.total | toCurrency }}</td>
-                        <td>{{ row.payment | toCurrency }}</td>
-                        <td>{{ row.balance_due | toCurrency }}</td>
-                        <td v-if="row.due_date">{{ row.due_date | dateParse('YYYY-MM-DD') | dateFormat('MM-DD-YYYY') }}</td>
-                        <td v-else></td>
-                        <td>{{ row.i_created_at | dateParse('YYYY-MM-DD') | dateFormat('MM-DD-YYYY') }}</td>
-                        <td class="text-nowrap">
-                            <a :href="`/payments/invoice/show/${row.v_id}`" class="btn btn-sm btn-outline-primary" role="button" title="view"><i class="fa fa-file-pdf-o"></i></a>
-                            <a :href="`/payments/download/pdf/${row.v_id}`" class="btn btn-sm btn-outline-secondary" role="button" title="download invoice"><i class="fa fa-download"></i></a>
-                        </td>
-                    </tr>
-                </template>
-            </datatable>
-
-            <total-entries :list="list"></total-entries>
-            <div class="pull-right">
-                <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
-            </div>
-        </div>
-        <notifications position="bottom right"/>
-    </div>
-</template>
+<template src="./payments-template.html"></template>
 
 <script>
 import TotalEntries from "../TotalEntries";

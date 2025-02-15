@@ -11,7 +11,6 @@ export default {
     props: {
         data: Object,
     },
-
     methods: {
         formatPhoneNumber: function () {
             if (this.data.phone && this.data.phone.length === 10) {

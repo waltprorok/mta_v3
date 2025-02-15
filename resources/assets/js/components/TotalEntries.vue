@@ -13,7 +13,6 @@ export default {
     props: {
         list: Array,
     },
-
     computed: {
         hasListData() {
             return this.list ? this.list.length > 0 : false;
