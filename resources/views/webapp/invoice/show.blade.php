@@ -18,10 +18,10 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="row p-5">
+                        <div class="row p-4">
                             <div class="col-md-6">
                                 @if ($invoice->student->getTeacher->logo)
-                                    <img src="{{ asset('storage/teacher/'. $invoice->student->getTeacher->logo) }}" alt="business logo" width="180px">
+                                    <img src="{{ asset('storage/teacher/'. $invoice->student->getTeacher->logo) }}" alt="business logo" width="200px">
                                 @else
                                     <img src="{{ asset('webapp/img/logo-mta1.png') }}" alt="mta logo">
                                 @endif
@@ -37,8 +37,8 @@
                                     <span class="{{ $invoice->is_paid ? 'font-weight-bold' : 'badge-danger' }}">{{ $invoice->is_paid ? 'Paid' : 'Not Paid' }}</span></p>
                             </div>
 
-                            <div class="col-md-6 text-left">
-                                <p class="font-weight-bold mb-4">Billed By:</p>
+                            <div class="col-md-6 text-left mt-4">
+                                <p class="font-weight-bold mb-2">Billed By:</p>
                                 <p class="mb-1"><span class="text-muted"></span><strong>{{ $invoice->student->getTeacher->studio_name }}</strong></p>
                                 <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->getTeacher->first_name }} {{ $invoice->student->getTeacher->last_name }}</p>
                                 <p class="mb-1"><span class="text-muted"></span>{{ $invoice->student->getTeacher->address }} {{ $invoice->student->getTeacher->address_2 }}
@@ -49,7 +49,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <p class="font-weight-bold mb-4">Billed To:</p>
+                                <p class="font-weight-bold mb-1 mt-4">Billed To:</p>
                                 <p class="mb-1">@if ($invoice->student->parent)
                                         {{ $invoice->student->parent->first_name }} {{ $invoice->student->parent->last_name }}
                                     @else
@@ -76,7 +76,7 @@
 
                         <hr class="my-1">
 
-                        <div class="row p-5">
+                        <div class="row p-4">
                             <div class="col-md-12">
                                 <table class="table table-responsive-md">
                                     <thead>
