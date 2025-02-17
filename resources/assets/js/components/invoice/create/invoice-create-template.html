@@ -2,7 +2,7 @@
     <div class="row">
         <card :count="needInvoicedCount" :title="`Students Need Invoiced`" :icon="`fa fa-file-text`"></card>
 
-        <div class="col-3">
+        <div class="col-md-3">
             <div class="card">
                 <div class="row pl-4 pt-2">
                     <div class="col-11">
@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div v-show="showStudent">
-                    <div class="row pl-4 pt-1">
+                    <div class="row pl-4 pt-2">
                         <div class="col-11">
                             <div class="form-group">
                                 <select id="single-select" class="form-control" @change="getSelectedStudent($event)">
