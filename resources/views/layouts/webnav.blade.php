@@ -182,7 +182,7 @@
                         </a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="{{ route('invoice.index') }}" class="nav-link ml-4 {{ Route::currentRouteName() == 'invoice.index' ? 'active' : '' }}">
+                                <a href="{{ route('invoice.index') }}" class="nav-link ml-4 {{ Route::currentRouteName() == 'invoice.index' || Route::currentRouteName() == 'invoice.create'  ? 'active' : '' }}">
                                     Invoices
                                 </a>
                             </li>
