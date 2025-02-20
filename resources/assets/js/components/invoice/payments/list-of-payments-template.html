@@ -1,4 +1,9 @@
 <div class="card" v-on:keydown.esc="showModalPayment=false">
+    <!-- modal payment -->
+    <div v-if="showModalPayment">
+        <payment-modal :row="row" @closeModal="handleModalClose"></payment-modal>
+    </div>
+    <!-- end of modal -->
     <!-- start of vue js data table -->
     <div class="form-control">
         <div class="form-group pull-left">
@@ -34,10 +39,5 @@
         </div>
     </div>
     <!-- end of vue js data table -->
-    <!-- modal payment -->
-    <div v-if="showModalPayment">
-        <payment-modal :row="row" @closeModal="handleModalClose"></payment-modal>
-    </div>
-    <!-- end of modal -->
     <notifications position="bottom right"/>
 </div>

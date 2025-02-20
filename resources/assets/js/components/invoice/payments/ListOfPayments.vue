@@ -1,5 +1,4 @@
-<template src="./list-of-payment-template.html"></template>
-
+<template src="./list-of-payments-template.html"></template>
 
 <script>
 import TotalEntries from "../../TotalEntries";
@@ -53,10 +52,6 @@ export default {
     methods: {
         dateFormat,
         dateParse,
-        handleModalClose(value) {
-            let self = this;
-            self.showModalPayment = value;
-        },
         fetchListOfPayments: function () {
             axios.get('/web/invoice/list-of-payments')
                 .then((response) => {
@@ -72,7 +67,10 @@ export default {
                     });
                 });
         },
-
+        handleModalClose(value) {
+            let self = this;
+            self.showModalPayment = value;
+        },
         showModal: function (row) {
             let self = this;
             self.showModalPayment = true;
