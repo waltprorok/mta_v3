@@ -91,7 +91,7 @@
                 @if(Auth::user()->student)
                     <li class="nav-item">
                         <a href="{{ route('student.calendar') }}"
-                           class="nav-link ml-4 {{ Route::currentRouteName() == 'student.calendar' || Route::currentRouteName() == 'lesson.cancel' ? 'active' : '' }}">
+                           class="nav-link {{ Route::currentRouteName() == 'student.calendar' || Route::currentRouteName() == 'lesson.cancel' ? 'active' : '' }}">
                             <i class="fa fa-calendar"></i>Calendar
                         </a>
                     </li>

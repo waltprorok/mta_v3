@@ -90,9 +90,14 @@
                     </div>
                 </div>
             @empty
-                <div class="card text-center">
-                    <div class="card-body">
-                        <p>There are no students in your household.</p>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            Household
+                        </div>
+                        <div class="card-body text-center">
+                            <p>There are no students in your household.</p>
+                        </div>
                     </div>
                 </div>
             @endforelse
