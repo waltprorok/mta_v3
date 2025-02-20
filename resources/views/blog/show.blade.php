@@ -29,7 +29,6 @@
                     <div class="blog-content">
                         <br/>
                         <p>{!! $blog->body !!}</p>
-                        <br/>
                     </div>
                 </div>
             </main>
