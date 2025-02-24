@@ -38,7 +38,7 @@ class Teacher extends Model
         'logo'
     ];
 
-    private $phoneNumberService;
+    private PhoneNumberService $phoneNumberService;
 
     /**
      * @param DateTimeInterface $date

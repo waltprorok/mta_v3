@@ -29,7 +29,7 @@ class StudentController extends Controller
     /**
      * @var PhoneNumberService
      */
-    private $phoneNumberService;
+    private PhoneNumberService $phoneNumberService;
 
     /**
      * @param PhoneNumberService $phoneNumberService
