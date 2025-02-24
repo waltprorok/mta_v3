@@ -30,7 +30,7 @@ class BusinessHoursService
      * @param $hours
      * @return float|int
      */
-    public function getTotalHours($hours)
+    public function getTotalHours($hours): float|int
     {
         $totalHours = 0;
 

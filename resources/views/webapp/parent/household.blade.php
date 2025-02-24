@@ -51,6 +51,15 @@
 
                             <div class="row p-1">
                                 <div class="col-sm-12">
+                                    <i class="fa fa-id-badge" aria-hidden="true"></i>
+                                    <span class="pl-3">
+                                        {{ $student->status_name }}&nbsp;<small class="text-secondary">&nbsp;<em>&#8226;</em>&nbsp;Status</small>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row p-1">
+                                <div class="col-sm-12">
                                     <i class="fa fa-music" aria-hidden="true"></i>
                                     <span class="pl-3">
                                         {{ $student->instrument }}
@@ -63,7 +72,7 @@
                                     <i class="fa fa-birthday-cake" aria-hidden="true"></i>
                                     <span class="pl-3">
                                         @if($student->date_of_birth != null)
-                                            {{ date('F d, Y', strtotime($student->date_of_birth)) }}
+                                            {{ date('M d, Y', strtotime($student->date_of_birth)) }}
                                         @endif
                                     </span>
                                 </div>
@@ -96,7 +105,7 @@
                             Household
                         </div>
                         <div class="card-body text-center">
-                            <p>There are no students in your household.</p>
+                            <p>There are no student(s) in your household.</p>
                         </div>
                     </div>
                 </div>

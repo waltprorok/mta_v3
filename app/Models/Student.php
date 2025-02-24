@@ -63,7 +63,7 @@ class Student extends Model
 
     protected $touches = ['studentUsers'];
 
-    private $phoneNumberService;
+    private PhoneNumberService $phoneNumberService;
 
     /**
      * @param DateTimeInterface $date
@@ -98,6 +98,17 @@ class Student extends Model
     public function getParentPhoneNumberAttribute(): ?string
     {
         return $this->phoneNumberService->getPhoneNumberFormat($this->parent_phone);
+    }
+
+    public function getStatusNameAttribute(): string
+    {
+        return match ($this->status) {
+            1 => 'Active',
+            2 => 'Waitlist',
+            3 => 'Lead',
+            4 => 'Inactive',
+            default => '',
+        };
     }
 
     public function getTeacher(): HasOne
