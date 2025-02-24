@@ -18,10 +18,10 @@ class PhoneNumberService
     }
 
     /**
-     * @param $phoneNumber
+     * @param string|null $phoneNumber
      * @return string|null
      */
-    public function getPhoneNumberFormat($phoneNumber): ?string
+    public function getPhoneNumberFormat(?string $phoneNumber): ?string
     {
         if ($phoneNumber !== null) {
             $cleaned = $this->stripPhoneNumber($phoneNumber);
