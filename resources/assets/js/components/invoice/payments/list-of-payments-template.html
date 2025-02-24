@@ -1,6 +1,6 @@
 <div class="card" v-on:keydown.esc="showModalPayment=false">
     <!-- modal payment -->
-    <div v-if="showModalPayment">
+    <div v-show="showModalPayment">
         <payment-modal :row="row" @closeModal="handleModalClose"></payment-modal>
     </div>
     <!-- end of modal -->
