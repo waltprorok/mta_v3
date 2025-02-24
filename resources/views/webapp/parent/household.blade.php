@@ -105,7 +105,7 @@
                             Household
                         </div>
                         <div class="card-body text-center">
-                            <p>There are no students in your household.</p>
+                            <p>There are no student(s) in your household.</p>
                         </div>
                     </div>
                 </div>
