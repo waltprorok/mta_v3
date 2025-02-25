@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Http\Controllers\InstrumentController;
 use App\Models\Instrument;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -11,12 +12,14 @@ class InstrumentControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public mixed $user;
+    protected User $user;
+    protected InstrumentController $instrumentController;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->user = User::factory()->create(['teacher' => true]);
+        $this->instrumentController = new InstrumentController();
     }
 
     public function test_instrument_index_view_200()
@@ -89,5 +92,24 @@ class InstrumentControllerTest extends TestCase
         $response->assertOk();
 
         $this->assertDatabaseCount('instruments', 0);
+    }
+
+    public function test_destroy_method_success()
+    {
+        $mockInstrument = $this->createMock(Instrument::class);
+        $mockInstrument->id = 1;
+        $mockInstrument->name = 'Drums';
+
+        $mockController = $this->getMockBuilder(InstrumentController::class)
+            ->onlyMethods(['destroy'])
+            ->getMock();
+
+        $mockController->method('destroy')->willThrowException(new \Exception());
+
+        $this->app->instance(InstrumentController::class, $mockController);
+
+        $result = $this->instrumentController->destroy($mockInstrument);
+
+        $this->assertEquals(200, $result->status());
     }
 }
