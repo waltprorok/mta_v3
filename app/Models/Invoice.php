@@ -29,6 +29,7 @@ class Invoice extends Model
         'adjustments',
         'payment_type_id',
         'check_number',
+        'message',
         'payment_information',
         'due_date',
         'is_paid',

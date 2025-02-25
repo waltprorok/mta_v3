@@ -56,7 +56,7 @@
                 @endif
                 <br>
                 <div>{{ $invoice->student->email }}</div>
-                    <div> {{ $invoice->student->phone_number }}</div>
+                <div> {{ $invoice->student->phone_number }}</div>
                 @if ($invoice->student->parent)
                     <div>{{ $invoice->student->parent->email }} </div>
                 @endif
@@ -126,6 +126,10 @@
 
 <div class="notes">
     <p>Thank you for your business.</p>
+</div>
+
+<div class="message">
+    {{ $invoice->message }}
 </div>
 
 <div class="footer margin-top">

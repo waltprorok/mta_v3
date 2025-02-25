@@ -108,7 +108,11 @@
                                     @endforeach
                                     </tbody>
                                 </table>
-                                <p class="pt-2 text-left">Thank you for your business.</p>
+                                <hr />
+                                <div class="col-md-8">
+                                    <p class="pt-2 text-left">Thank you for your business.</p>
+                                    <p class="pt-0 text-left">{{ $invoice->message }}</p>
+                                </div>
                             </div>
                         </div>
 
