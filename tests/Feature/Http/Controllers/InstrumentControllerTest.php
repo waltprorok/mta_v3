@@ -100,13 +100,13 @@ class InstrumentControllerTest extends TestCase
         $mockInstrument->id = 1;
         $mockInstrument->name = 'Drums';
 
-        $controller = $this->getMockBuilder(InstrumentController::class)
+        $mockController = $this->getMockBuilder(InstrumentController::class)
             ->onlyMethods(['destroy'])
             ->getMock();
 
-        $controller->method('destroy')->willThrowException(new \Exception());
+        $mockController->method('destroy')->willThrowException(new \Exception());
 
-        $this->app->instance(InstrumentController::class, $controller);
+        $this->app->instance(InstrumentController::class, $mockController);
 
         $result = $this->instrumentController->destroy($mockInstrument);
 
