@@ -57,6 +57,7 @@ export default {
                 payment_type_id: 1,
                 due_date: null,
                 additional_email: '',
+                message: null,
             },
         }
     },
@@ -216,6 +217,7 @@ export default {
             self.invoice.total = null;
             self.invoice.balance_due = null;
             self.invoice.additional_email = null;
+            self.invoice.message = null;
             self.disableSaveButton = false;
             this.fetchInvoiceData();
         },
