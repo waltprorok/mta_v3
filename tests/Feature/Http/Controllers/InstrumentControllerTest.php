@@ -94,7 +94,7 @@ class InstrumentControllerTest extends TestCase
         $this->assertDatabaseCount('instruments', 0);
     }
 
-    public function test_destroy_method()
+    public function test_destroy_method_success()
     {
         $mockInstrument = $this->createMock(Instrument::class);
         $mockInstrument->id = 1;
