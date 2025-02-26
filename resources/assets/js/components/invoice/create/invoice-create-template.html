@@ -1,7 +1,6 @@
 <div>
     <div class="row">
         <card :count="needInvoicedCount" :title="`Students Need Invoiced`" :icon="`fa fa-file-text`"></card>
-
         <div class="col-md-3">
             <div class="card">
                 <div class="row pl-4 pt-2">
@@ -33,203 +32,203 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <div v-show="selected" class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="form-control">
-                            <form action="#" @submit.prevent>
-                                <div v-if="selected">
-                                    <div class="col-md-6 p-3">
-                                        <img v-if="student.get_teacher.logo" :src="'/storage/teacher/' + student.get_teacher.logo" alt="business logo" width="180px">
-                                        <img v-else src="/webapp/img/logo-mta1.png" alt="mta logo">
-                                    </div>
-                                    <div class="row pl-4 pt-4 pb-4">
-                                        <div class="col-md-6 text-left" v-if="selected">
-                                            <p class="font-weight-bold mb-4">Billed By:</p>
-                                            <p class="mb-1"><span class="text-muted"></span><strong>{{ student.get_teacher.studio_name }}</strong></p>
-                                            <p class="mb-1"><span class="text-muted"></span>{{ student.get_teacher.first_name }} {{ student.get_teacher.last_name }}</p>
-                                            <p class="mb-1"><span class="text-muted"></span>{{ student.get_teacher.address }} {{ student.get_teacher.address_2 }}
-                                                <br>{{ student.get_teacher.city }}, {{ student.get_teacher.state }} {{ student.get_teacher.zip }}</p>
-                                            <br/>
-                                            <p class="mb-1"><span class="text-muted"></span>{{ student.get_teacher.email }}</p>
-                                            <p class="mb-1"><span class="text-muted"></span>
-                                                <phone-number-format :data="student.get_teacher"></phone-number-format>
-                                            </p>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <p class="font-weight-bold mb-4">Billed To:</p>
-                                            <p class="mb-1">{{ student.first_name }} {{ student.last_name }}</p>
-                                            <p class="mb-1" v-if="selected">
-                                                <phone-number-format :data="student"></phone-number-format>
-                                            </p>
-                                            <p class="mb-1">{{ student.email }}</p>
-                                            <p class="mb-1" v-if="student.parent">{{ student.parent.email }}</p>
-                                            <p class="mb-1" v-if="student.instrument ">{{ student.instrument }} Lessons</p>
-                                        </div>
+    <div v-show="selected" class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body p-0">
+                        <form action="#" @submit.prevent>
+                            <div v-if="selected">
+                                <div class="col-md-6 p-3">
+                                    <img v-if="student.get_teacher.logo" :src="'/storage/teacher/' + student.get_teacher.logo" alt="business logo" width="180px">
+                                    <img v-else src="/webapp/img/logo-mta1.png" alt="mta logo">
+                                </div>
+                                <div class="row pl-4 pt-4 pb-4">
+                                    <div class="col-md-6 text-left" v-if="selected">
+                                        <p class="font-weight-bold mb-4">Billed By:</p>
+                                        <p class="mb-1"><span class="text-muted"></span><strong>{{ student.get_teacher.studio_name }}</strong></p>
+                                        <p class="mb-1"><span class="text-muted"></span>{{ student.get_teacher.first_name }} {{ student.get_teacher.last_name }}</p>
+                                        <p class="mb-1"><span class="text-muted"></span>{{ student.get_teacher.address }} {{ student.get_teacher.address_2 }}
+                                            <br>{{ student.get_teacher.city }}, {{ student.get_teacher.state }} {{ student.get_teacher.zip }}</p>
+                                        <br/>
+                                        <p class="mb-1"><span class="text-muted"></span>{{ student.get_teacher.email }}</p>
+                                        <p class="mb-1"><span class="text-muted"></span>
+                                            <phone-number-format :data="student.get_teacher"></phone-number-format>
+                                        </p>
                                     </div>
 
-                                    <hr class="my-1">
+                                    <div class="col-md-6">
+                                        <p class="font-weight-bold mb-4">Billed To:</p>
+                                        <p class="mb-1">{{ student.first_name }} {{ student.last_name }}</p>
+                                        <p class="mb-1" v-if="selected">
+                                            <phone-number-format :data="student"></phone-number-format>
+                                        </p>
+                                        <p class="mb-1">{{ student.email }}</p>
+                                        <p class="mb-1" v-if="student.parent">{{ student.parent.email }}</p>
+                                        <p class="mb-1" v-if="student.instrument ">{{ student.instrument }} Lessons</p>
+                                    </div>
+                                </div>
 
-                                    <div class="row pl-4">
-                                        <div class="col-md-12">
-                                            <table class="table table-responsive-md">
-                                                <thead>
-                                                <tr>
-                                                    <th class="border-0 text-uppercase small font-weight-bold">Completed</th>
-                                                    <th class="border-0 text-uppercase small font-weight-bold">Status</th>
-                                                    <th class="border-0 text-uppercase small font-weight-bold">Date</th>
-                                                    <th class="border-0 text-uppercase small font-weight-bold">Time</th>
-                                                    <th class="border-0 text-uppercase small font-weight-bold">Interval</th>
-                                                    <th class="border-0 text-uppercase small font-weight-bold">Billing Rate</th>
-                                                    <th class="border-0 text-uppercase small font-weight-bold">Amount</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr v-for="lesson in lessons" :key="lesson.id">
-                                                    <td>
-                                                        <select id="single-select" class="form-control" @change="updateLesson(lesson.id, $event)">
-                                                            <option :value="lesson.complete" v-model="lesson.complete">
-                                                                {{ lesson.complete ? "Yes" : "No" }}
-                                                            </option>
-                                                            <option :value="!lesson.complete" v-model="!lesson.complete">
-                                                                {{ lesson.complete ? "No" : "Yes" }}
-                                                            </option>
-                                                        </select>
-                                                    </td>
-                                                    <td>{{ lesson.status }}</td>
-                                                    <td>{{ new Date(lesson.start_date).toDateString() }}</td>
-                                                    <td>{{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm') }} - {{
-                                                            lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a')
-                                                        }}
-                                                    </td>
-                                                    <td>{{ lesson.interval }} minutes</td>
-                                                    <td>{{ '$' + lesson.billing_rate.amount }} {{ lesson.billing_rate.description ? '| ' + lesson.billing_rate.description : '' }}</td>
-                                                    <td v-if="! lesson.billing_rate.flat_rate">{{ calculateLessonAmount(lesson) | toCurrency }}</td>
-                                                    <td v-else>Flat Rate</td>
-                                                </tr>
-                                                <tr v-if="selected && lastInvoice !== null && lastInvoice.balance_due !== '0' && lastInvoice.is_paid === false">
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td>Previous Balance</td>
-                                                    <td>{{ lastInvoice.balance_due | toCurrency }}</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            <div class="text-center pb-4" v-if="student?.lessons?.length === 0">No Lesson</div>
+                                <hr class="my-1">
+
+                                <div class="row pl-4">
+                                    <div class="col-md-12">
+                                        <table class="table table-responsive-md">
+                                            <thead>
+                                            <tr>
+                                                <th class="border-0 text-uppercase small font-weight-bold">Completed</th>
+                                                <th class="border-0 text-uppercase small font-weight-bold">Status</th>
+                                                <th class="border-0 text-uppercase small font-weight-bold">Date</th>
+                                                <th class="border-0 text-uppercase small font-weight-bold">Time</th>
+                                                <th class="border-0 text-uppercase small font-weight-bold">Interval</th>
+                                                <th class="border-0 text-uppercase small font-weight-bold">Billing Rate</th>
+                                                <th class="border-0 text-uppercase small font-weight-bold">Amount</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="lesson in lessons" :key="lesson.id">
+                                                <td>
+                                                    <select id="single-select" class="form-control" @change="updateLesson(lesson.id, $event)">
+                                                        <option :value="lesson.complete" v-model="lesson.complete">
+                                                            {{ lesson.complete ? "Yes" : "No" }}
+                                                        </option>
+                                                        <option :value="!lesson.complete" v-model="!lesson.complete">
+                                                            {{ lesson.complete ? "No" : "Yes" }}
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td>{{ lesson.status }}</td>
+                                                <td>{{ new Date(lesson.start_date).toDateString() }}</td>
+                                                <td>{{ lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm') }} - {{
+                                                        lesson.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a')
+                                                    }}
+                                                </td>
+                                                <td>{{ lesson.interval }} minutes</td>
+                                                <td>{{ '$' + lesson.billing_rate.amount }} {{ lesson.billing_rate.description ? '| ' + lesson.billing_rate.description : '' }}</td>
+                                                <td v-if="! lesson.billing_rate.flat_rate">{{ calculateLessonAmount(lesson) | toCurrency }}</td>
+                                                <td v-else>Flat Rate</td>
+                                            </tr>
+                                            <tr v-if="selected && lastInvoice !== null && lastInvoice.balance_due !== '0' && lastInvoice.is_paid === false">
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>Previous Balance</td>
+                                                <td>{{ lastInvoice.balance_due | toCurrency }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center pb-4" v-if="student?.lessons?.length === 0">No Lesson</div>
+                                    </div>
+                                </div>
+
+                                <div class="row pl-4 pt-2 pb-4">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="normal-input" class="form-control-label">Due Date</label>
+                                            <input id="normal-input"
+                                                   class="form-control"
+                                                   type="date"
+                                                   v-model.trim="invoice.due_date"
+                                                   v-on:keydown.enter.prevent>
                                         </div>
                                     </div>
 
-                                    <div class="row pl-4 pt-2 pb-4">
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="normal-input" class="form-control-label">Due Date</label>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="normal-input" class="form-control-label">Send to Email</label>
+                                            <div class="input-group mb-3">
                                                 <input id="normal-input"
                                                        class="form-control"
-                                                       type="date"
-                                                       v-model.trim="invoice.due_date"
+                                                       type="email"
+                                                       v-model.trim="invoice.additional_email"
+                                                       placeholder="Send additional copy to this email"
                                                        v-on:keydown.enter.prevent>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="normal-input" class="form-control-label">Send to Email</label>
-                                                <div class="input-group mb-3">
-                                                    <input id="normal-input"
-                                                           class="form-control"
-                                                           type="email"
-                                                           v-model.trim="invoice.additional_email"
-                                                           placeholder="Send additional copy to this email"
-                                                           v-on:keydown.enter.prevent>
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-                                                    </div>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div class="col-md-5">
-                                            <div class="form-group">
-                                                <label for="normal-input" class="form-control-label">Add a message</label>
-                                                <div class="input-group mb-3">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="normal-input" class="form-control-label">Add a message</label>
+                                            <div class="input-group mb-4">
                                                     <textarea id="normal-input"
                                                               class="form-control"
-                                                              rows="3"
+                                                              rows="4"
                                                               placeholder="Type in a message."
                                                               v-model.trim="invoice.message"
                                                               v-on:keydown.enter.prevent>
                                                     </textarea>
-                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="row d-flex flex-row bg-dark text-white p-4">
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="discount" class="form-control-label">Discount</label>
-                                                <div class="input-group mb-3">
-                                                    <input id="discount"
-                                                           class="form-control"
-                                                           type="number"
-                                                           min="0"
-                                                           max="100"
-                                                           v-model="invoice.discount"
-                                                           @input="updateTotal()"
-                                                           v-on:keydown.enter.prevent>
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">%</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label for="subtotal" class="form-control-label">Sub Total</label>
-                                                <p class="form-control-plaintext h4">{{ invoice.subtotal | toCurrency }}</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label for="total" class="form-control-label">Total</label>
-                                                <p class="form-control-plaintext h4">{{ invoice.total | toCurrency }}</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <div class="form-group" v-if="selected && lastInvoice !== null && lastInvoice.balance_due !== '0' && lastInvoice.is_paid === false">
-                                                <label for="total" class="form-control-label">Previous Balance</label>
-                                                <p class="form-control-plaintext h4">{{ lastInvoice.balance_due | toCurrency }}</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="balance-due" class="form-control-label">Balance Due</label>
-                                                <p class="form-control-plaintext h4">{{ invoice.balance_due | toCurrency }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group pull-left pt-4 pr-md-4">
-                                        <button @click="createInvoice()"
-                                                class="btn btn-primary"
-                                                type="submit"
-                                                :disabled="isDisabled">Save
-                                        </button>
-                                        <button @click="clearForm()" class="btn btn-default">Cancel</button>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+
+                                <div class="d-flex flex-row bg-dark text-white p-4">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="discount" class="form-control-label">Discount</label>
+                                            <div class="input-group mb-3">
+                                                <input id="discount"
+                                                       class="form-control"
+                                                       type="number"
+                                                       min="0"
+                                                       max="100"
+                                                       v-model="invoice.discount"
+                                                       @input="updateTotal()"
+                                                       v-on:keydown.enter.prevent>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="subtotal" class="form-control-label">Sub Total</label>
+                                            <p class="form-control-plaintext h4">{{ invoice.subtotal | toCurrency }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="total" class="form-control-label">Total</label>
+                                            <p class="form-control-plaintext h4">{{ invoice.total | toCurrency }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group" v-if="selected && lastInvoice !== null && lastInvoice.balance_due !== '0' && lastInvoice.is_paid === false">
+                                            <label for="total" class="form-control-label">Previous Balance</label>
+                                            <p class="form-control-plaintext h4">{{ lastInvoice.balance_due | toCurrency }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="balance-due" class="form-control-label">Balance Due</label>
+                                            <p class="form-control-plaintext h4">{{ invoice.balance_due | toCurrency }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group pull-left p-4 pr-md-4">
+                                    <button @click="createInvoice()"
+                                            class="btn btn-primary"
+                                            type="submit"
+                                            :disabled="isDisabled">Save
+                                    </button>
+                                    <button @click="clearForm()" class="btn btn-default">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
