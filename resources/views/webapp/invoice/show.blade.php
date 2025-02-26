@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body p-0">
                         <div class="row p-4">
                             <div class="col-md-6">
                                 @if ($invoice->student->getTeacher->logo)
@@ -122,7 +122,7 @@
                             </div>
                         @endif
 
-                        <div class="row d-flex flex-row-reverse bg-dark text-white p-4">
+                        <div class="d-flex flex-row-reverse bg-dark text-white p-4">
                             <div class="py-3 px-5 text-right">
                                 <div class="mb-2"><strong>Balance Due</strong></div>
                                 <div class="h2 font-weight-light">${{ number_format($balanceDue, 2) }}</div>
