@@ -108,39 +108,48 @@
                                     @endforeach
                                     </tbody>
                                 </table>
-                                <hr />
-                                <div class="col-md-8">
-                                    <p class="pt-2 text-left">Thank you for your business.</p>
-                                    <p class="pt-0 text-left">{{ $invoice->message }}</p>
-                                </div>
+                                <hr/>
                             </div>
                         </div>
 
-                        @if($invoice->is_paid && $balanceDue == 0)
-                            <div class="px-5 mr-5 col-md-12">
-                                <h3 class="text-danger text-right">-- PAID --</h3>
-                            </div>
-                        @endif
-
-                        <div class="d-flex flex-row-reverse bg-dark text-white p-4">
-                            <div class="py-3 px-5 text-right">
-                                <div class="mb-2"><strong>Balance Due</strong></div>
-                                <div class="h2 font-weight-light">${{ number_format($balanceDue, 2) }}</div>
+                        <div class="row pl-4">
+                            <div class="col-md-8 pull-left">
+                                <p class="pt-2 text-left">Thank you for your business.</p>
+                                <p class="pt-0 text-left">{{ $invoice->message }}</p>
                             </div>
 
-                            <div class="py-3 px-5 text-right">
-                                <div class="mb-2">Total</div>
-                                <div class="h2 font-weight-light">${{ number_format($total, 2) }}</div>
+                            <div class="col-md-4 pull-right pb-5 pr-2">
+                                <div class="pb-3 pr-5">
+                                    <table class="table table-sm table-condensed table-striped">
+                                        <tr>
+                                            <td>Subtotal</td>
+                                            <td>${{ number_format($subTotal, 2) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Discount</td>
+                                            <td>${{ number_format($discount, 2) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Total</strong></td>
+                                            <td><strong>${{ number_format($total, 2) }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Balance Due</td>
+                                            <td>${{ number_format($balanceDue, 2) }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                @if($invoice->is_paid && $balanceDue == 0)
+                                    <div class="pr-5 mr-5">
+                                        <h3 class="text-danger text-right">-- PAID --</h3>
+                                    </div>
+                                @endif
                             </div>
+                        </div>
 
-                            <div class="py-3 px-5 text-right">
-                                <div class="mb-2">Discount</div>
-                                <div class="h2 font-weight-light">{{ $discount }}%</div>
-                            </div>
-
-                            <div class="py-3 px-5 text-right">
-                                <div class="mb-2">Sub - Total amount</div>
-                                <div class="h2 font-weight-light">${{ number_format($subTotal, 2) }}</div>
+                        <div class="d-flex bg-light p-2">
+                            <div class="py-3 px-5 text-left">
+                                <div class="mb-2">&copy; MusicTeachersAid.com</div>
                             </div>
                         </div>
                     </div>
