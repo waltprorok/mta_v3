@@ -167,6 +167,21 @@
                                                     </textarea>
                                             </div>
                                         </div>
+
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label for="normal-input" class="form-control-label">Add a message</label>
+                                                <div class="input-group mb-3">
+                                                    <textarea id="normal-input"
+                                                              class="form-control"
+                                                              rows="3"
+                                                              placeholder="Type in a message."
+                                                              v-model.trim="invoice.message"
+                                                              v-on:keydown.enter.prevent>
+                                                    </textarea>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
