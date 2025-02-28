@@ -25,6 +25,7 @@ class User extends Authenticatable
         'teacher' => 'boolean',
         'parent' => 'boolean',
         'is_active' => 'boolean',
+        'trial_ends_at' => 'datetime',
     ];
 
     /**
