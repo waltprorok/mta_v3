@@ -1,4 +1,3 @@
-<!--suppress JSUnresolvedReference -->
 <div class="card">
     <!-- vue js data table -->
     <div class="form-control">
@@ -22,7 +21,11 @@
                     <td v-html="isUserType(row.teacher)"></td>
                     <td v-html="isUserType(row.student)"></td>
                     <td v-html="isUserType(row.parent)"></td>
+                    <td v-html="isActiveIcon(row.is_active)"></td>
                     <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
+                    <td class="text-nowrap">
+                        <a :href="`/admin/user/${row.id}/edit`" class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
+                    </td>
                 </tr>
             </template>
         </datatable>

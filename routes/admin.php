@@ -18,7 +18,9 @@ Route::group(['middleware' => ['auth', 'admin', 'active']], function () {
         Route::resource('support', 'SupportController');
         Route::patch('reply-support/{support}', 'SupportController@updateReply');
         Route::get('teachers', 'TeacherController@adminTeachers');
-        Route::get('users', 'UserController@adminUsers');
+        Route::get('users', 'UserController@index');
+        Route::get('user/{id}/edit', 'UserController@show');
+        Route::patch('user/edit/{user}', 'UserController@update');
         Route::get('billing/plans', 'PlanController@index');
     });
 
@@ -32,6 +34,7 @@ Route::group(['middleware' => ['auth', 'admin', 'active']], function () {
         Route::view('support', 'webapp.admin.support.index')->name('admin.support.index');
         Route::view('teachers', 'webapp.admin.teacher.index')->name('teacher.index');
         Route::view('users', 'webapp.admin.user.index')->name('admin.users');
+        Route::view('user/{id}/edit', 'webapp.admin.user.edit')->name('admin.users.edit');
     });
 });
 

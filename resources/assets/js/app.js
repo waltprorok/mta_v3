@@ -21,7 +21,7 @@ window.Vue = require('vue').default;
 
 Vue.use(wysiwyg, {
     // { [module]: boolean (set true to hide) }
-    hideModules: { 'image': true, 'underline': true, 'code': true, },
+    hideModules: { 'image': true, 'underline': false, 'code': true, },
     forcePlainTextOnPaste: true,
     // you can override icons too, if desired
     // just keep in mind that you may need custom styles in your application to get everything to align
@@ -76,7 +76,8 @@ Vue.component('students', require('./components/admin/student/Students.vue').def
 Vue.component('support', require('./components/admin/support/Support.vue').default);
 Vue.component('studentList', require('./components/student/list/StudentList.vue').default);
 Vue.component('teachers', require('./components/admin/teacher/Teachers.vue').default);
-Vue.component('users', require('./components/admin/user/Users.vue').default);
+Vue.component('users', require('./components/admin/user/list/Users.vue').default);
+Vue.component('userEdit', require('./components/admin/user/edit/UserEdit.vue').default);
 Vue.component('reportCompletedLessonsLine', require('./components/reports/CompletedLessonsLine.vue').default);
 Vue.component('reportStudentStatusBar', require('./components/reports/StudentStatusBar.vue').default);
 Vue.component('reportInvoicePaymentsBar', require('./components/reports/InvoicePaymentsBar.vue').default);

@@ -251,13 +251,13 @@
                         </a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="{{ route('reports.index') }}" class="nav-link ml-4 {{ Route::currentRouteName() == 'reports.index' ? 'active' : '' }}">
-                                    Students Status
+                                <a href="{{ route('reports.payments') }}" class="nav-link ml-4 {{ Route::currentRouteName() == 'reports.payments' ? 'active' : '' }}">
+                                    Invoice Payments
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('reports.payments') }}" class="nav-link ml-4 {{ Route::currentRouteName() == 'reports.payments' ? 'active' : '' }}">
-                                    Invoice Payments
+                                <a href="{{ route('reports.index') }}" class="nav-link ml-4 {{ Route::currentRouteName() == 'reports.index' ? 'active' : '' }}">
+                                    Students Status
                                 </a>
                             </li>
 {{--                            <li class="nav-item">--}}

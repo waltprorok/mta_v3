@@ -1,7 +1,7 @@
 <template src="./user-template.html"></template>
 
 <script>
-import TotalEntries from "../../TotalEntries";
+import TotalEntries from "../../../TotalEntries";
 import {dateParse} from "@vuejs-community/vue-filter-date-parse";
 import {dateFormat} from "vue-filter-date-format";
 
@@ -21,7 +21,9 @@ export default {
                 {label: 'Teacher', field: 'teacher',},
                 {label: 'Student', field: 'student',},
                 {label: 'Parent', field: 'parent',},
+                {label: 'Active', field: 'is_active',},
                 {label: 'Created At', field: 'created_at',},
+                {label: 'Action', filterable: false},
             ],
             user: {
                 id: null,
@@ -33,6 +35,7 @@ export default {
                 student: null,
                 parent: null,
                 terms: null,
+                is_active: null,
             },
         }
     },
@@ -62,26 +65,12 @@ export default {
                 });
             });
         },
-
+        isActiveIcon: function (row) {
+            return row ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>';
+        },
         isUserType: function (row) {
             return row ? '<i class="fa fa-check"></i>' : '';
-        }
-
-        // updateUser: function (id, complete) {
-        //     let self = this;
-        //     self.lesson.id = id;
-        //     self.lesson.complete = !complete;
-        //     let params = Object.assign({}, self.lesson);
-        //
-        //     axios.patch('lessons/update/' + id, params)
-        //         .then(function () {
-        //             self.fetchLessonList();
-        //         })
-        //         .catch(function (error) {
-        //             self.fetchLessonList();
-        //             console.log(error);
-        //         });
-        // },
+        },
     },
 }
 </script>
