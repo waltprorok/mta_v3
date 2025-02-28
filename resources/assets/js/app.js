@@ -21,7 +21,7 @@ window.Vue = require('vue').default;
 
 Vue.use(wysiwyg, {
     // { [module]: boolean (set true to hide) }
-    hideModules: { 'image': true, 'underline': true, 'code': true, },
+    hideModules: { 'image': true, 'underline': false, 'code': true, },
     forcePlainTextOnPaste: true,
     // you can override icons too, if desired
     // just keep in mind that you may need custom styles in your application to get everything to align
