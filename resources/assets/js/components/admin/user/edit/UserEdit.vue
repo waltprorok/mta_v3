@@ -8,6 +8,18 @@ import {dateFormat} from "vue-filter-date-format";
 export default {
     data: function () {
         return {
+            statuses: [
+                {type: 'Yes', value: 1},
+                {type: 'No', value: 0},
+            ],
+            timezones: [
+                {name: 'America/New_York', value: 'America/New_York'},
+                {name: 'America/Chicago', value: 'America/Chicago'},
+                {name: 'America/Denver', value: 'America/Denver'},
+                {name: 'America/Los_Angeles', value: 'America/Los_Angeles'},
+                {name: 'America/Anchorage', value: 'America/Anchorage'},
+                {name: 'Pacific/Honolulu', value: 'Pacific/Honolulu'},
+            ],
             user: {
                 id: null,
                 first_name: null,
@@ -24,13 +36,19 @@ export default {
             },
             modelConfig: {
                 type: 'string',
-                mask: 'YYYY-MM-DD HH:MM:SS',
+                mask: 'YYYY-MM-DD HH:mm:ss',
             },
         }
     },
 
     mounted: function () {
         this.fetchEditUser();
+    },
+
+    computed: {
+        formatDate() {
+            return this.user.trial_ends_at ? new Date(this.user.trial_ends_at) : null
+        },
     },
 
     methods: {
@@ -42,15 +60,16 @@ export default {
             axios.get('/web/user/' + id + '/edit')
                 .then((response) => {
                     this.user = response.data;
-                }).catch((error) => {
-                console.log(error);
-                this.$notify({
-                    type: 'error',
-                    title: 'Error',
-                    text: 'Could not load user.',
-                    duration: 10000,
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load user.',
+                        duration: 10000,
+                    });
                 });
-            });
         },
         getUserType: function () {
             if (this.user.admin) {
@@ -64,8 +83,7 @@ export default {
             }
             if (this.user.parent) {
                 return 'Parent';
-            }
-            else {
+            } else {
                 return 'Needs Assigned';
             }
         },
