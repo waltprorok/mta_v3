@@ -1,0 +1,98 @@
+<div class="card">
+    <div class="card-header bg-light">
+        User Data
+    </div>
+    <div class="card-body">
+        <form action="#" @submit.prevent="updateUser()">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <input id="first_name" v-model.trim="user.first_name" type="text" class="form-control" v-on:keydown.enter.prevent>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input id="last_name" v-model.trim="user.last_name" type="text" class="form-control" v-on:keydown.enter.prevent>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input id="email" v-model.trim="user.email" type="email" class="form-control" v-on:keydown.enter.prevent>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="is_active">Active</label>
+                        <select id="is_active" class="form-control" v-model="user.is_active">
+                            <option :value="user.is_active">{{ user.is_active ? 'Yes' : 'No' }}</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="type">Type</label>
+                        <p class="form-control-plaintext border pl-2">{{ getUserType() }}</p>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="timezone">Time Zone</label>
+                        <select class="form-control" v-model="user.timezone">
+                            <option :value="user.timezone">{{ user.timezone }}</option>
+                            <option value="America/New_York">America/New_York</option>
+                            <option value="America/Chicago">America/Chicago</option>
+                            <option value="America/Denver">America/Denver</option>
+                            <option value="America/Los_Angeles">America/Los_Angeles</option>
+                            <option value="America/Anchorage">America/Anchorage</option>
+                            <option value="Pacific/Honolulu">Pacific/Honolulu</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="trail_ends_at">Trial Ends At</label>
+                        <v-date-picker v-model="user.trial_ends_at"
+                                       mode="datetime"
+                                       :model-config="modelConfig">
+                            <template v-slot="{ inputValue, inputEvents }">
+                                <input class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
+                                        :value="inputValue"
+                                        v-on="inputEvents"
+                                />
+                            </template>
+                        </v-date-picker>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="created_at">Created At</label>
+                        <input id="created_at" v-model.trim="user.created_at" type="text" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="updated_at">Updated At</label>
+                        <input id="updated_at" v-model.trim="user.updated_at" type="text" class="form-control" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group pt-4">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a href="/admin/users" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+    <notifications position="bottom right"/>
+</div>
