@@ -78,13 +78,13 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="created_at">Created At</label>
-                        <input id="created_at" v-model.trim="user.created_at" type="text" class="form-control" readonly>
+                        <p class="form-control-plaintext border pl-2">{{ user.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM/DD/YYYY h:mm a') }}</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="updated_at">Updated At</label>
-                        <input id="updated_at" v-model.trim="user.updated_at" type="text" class="form-control" readonly>
+                        <p class="form-control-plaintext border pl-2">{{ user.updated_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM/DD/YYYY h:mm a') }}</p>
                     </div>
                 </div>
             </div>
