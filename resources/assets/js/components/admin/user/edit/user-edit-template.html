@@ -87,6 +87,28 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="pm_type">Payment Type</label>
+                        <p class="form-control-plaintext border pl-2">{{ user.pm_type ?? '&nbsp;' }}</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="pm_last_four">Payment Last 4 Digits</label>
+                        <p class="form-control-plaintext border pl-2">{{ user.pm_last_four ?? '&nbsp;' }}</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="stripe_id">Stripe ID</label>
+                        <p class="form-control-plaintext border pl-2">{{ user.stripe_id ?? '&nbsp;' }}</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group pt-4">
                 <button type="submit" class="btn btn-primary">Update</button>
                 <a href="/admin/users" class="btn btn-outline-secondary">Cancel</a>
