@@ -33,6 +33,9 @@ export default {
                 trial_ends_at: null,
                 timezone: null,
                 is_active: null,
+                pm_type: null,
+                pm_last_four: null,
+                stripe_id: null,
             },
             modelConfig: {
                 type: 'string',
