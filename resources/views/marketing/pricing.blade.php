@@ -7,8 +7,7 @@
             <div class="row">
                 <div class="section-header text-center">
                     <h2 class="title">Simple, fixed pricing</h2>
-{{--                    <h3>Music Teacher's Aid automates scheduling and billing so you can focus on your students.</h3>--}}
-                    <h3>Get started with a free trial!</h3>
+                    <h3>Get started with a 30 Day Free Trial.</h3>
                 </div>
 
                 <div class="col-md-4 col-md-offset-0">
