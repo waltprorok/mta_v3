@@ -942,9 +942,9 @@ header {
 
 .pricing .price {
     position: relative;
-    width: 140px;
-    height: 140px;
-    line-height: 140px;
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
     text-align: center;
     margin: auto;
     border-radius: 50%;
@@ -967,8 +967,18 @@ header {
 
 .pricing .duration {
     display: block;
-    font-size: 14px;
+    font-size: 15px;
     text-transform: uppercase;
+    color: #10161A;
+    -webkit-transition: 0.2s color;
+    transition: 0.2s color;
+}
+
+.pricing .break-down {
+    padding-top: 6px;
+    display: block;
+    font-size: 10px;
+    text-transform: lowercase;
     color: #10161A;
     -webkit-transition: 0.2s color;
     transition: 0.2s color;
