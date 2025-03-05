@@ -15,7 +15,7 @@
                         <div class="price-head">
                             <span class="price-title">FREEMIUM</span>
                             <div class="price">
-                                <h3>FREE<span class="duration"></span></h3>
+                                <h3>FREE<span class="duration">30 Days</span></h3>
                             </div>
                         </div>
                         <ul class="price-content">
@@ -51,7 +51,9 @@
                             <div class="price-head">
                                 <span class="price-title">{{ $plan->name }}</span>
                                 <div class="price">
-                                    <h3>${{ number_format($plan->cost, 2) }}<span class="duration">/ {{ $plan->slug }}</span></h3>
+                                    <h3>${{ number_format($plan->cost, 2) }}
+                                        <span class="duration">{{ $plan->slug }}</span>
+                                    </h3>
                                 </div>
                             </div>
                             <ul class="price-content">
