@@ -6,8 +6,9 @@
         <div class="container">
             <div class="row">
                 <div class="section-header text-center">
-                    <h2 class="title">Pricing Table</h2>
-                    <h3>Music Teacher's Aid automates scheduling and billing so you can focus on your students.</h3>
+                    <h2 class="title">Simple, fixed pricing</h2>
+{{--                    <h3>Music Teacher's Aid automates scheduling and billing so you can focus on your students.</h3>--}}
+                    <h3>Get started with a free trial!</h3>
                 </div>
 
                 <div class="col-md-4 col-md-offset-0">
@@ -15,7 +16,7 @@
                         <div class="price-head">
                             <span class="price-title">FREEMIUM</span>
                             <div class="price">
-                                <h3>FREE<span class="duration"></span></h3>
+                                <h3>FREE<span class="duration">30 Days</span></h3>
                             </div>
                         </div>
                         <ul class="price-content">
@@ -51,7 +52,9 @@
                             <div class="price-head">
                                 <span class="price-title">{{ $plan->name }}</span>
                                 <div class="price">
-                                    <h3>${{ number_format($plan->cost, 2) }}<span class="duration">/ {{ $plan->slug }}</span></h3>
+                                    <h3>${{ number_format($plan->cost, 2) }}
+                                        <span class="duration">{{ $plan->slug }}</span>
+                                    </h3>
                                 </div>
                             </div>
                             <ul class="price-content">
