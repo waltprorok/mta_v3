@@ -14,7 +14,7 @@
             @if ($invoice->student->getTeacher->logo)
                 <img src="{{ public_path('/storage/teacher/'. $invoice->student->getTeacher->logo) }}" alt="business logo" width="180px">
             @else
-                <img src="{{ public_path('webapp/img/logo-mta1.png') }}" alt="mta logo">
+                <img src="{{ public_path('webapp/img/logo-mta1.png') }}" alt="mta logo" width="160px">
             @endif
         </td>
         <td class="w-half">
