@@ -54,7 +54,7 @@
                                     <h3>${{ number_format($plan->cost, 2) }}
                                         <span class="duration">{{ $plan->slug }}</span>
                                         @if($plan->slug == 'yearly')
-                                            <span class="break-down">$8.33 / month</span>
+                                            <span class="break-down">${{ number_format($plan->cost / 12, 2) }} / month</span>
                                         @endif
                                     </h3>
                                 </div>
