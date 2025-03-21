@@ -12,7 +12,7 @@
     "advmaker/carbon-period": "^0.2.2",
     "anhskohbo/no-captcha": "^3.7",
     "barryvdh/laravel-dompdf": "^1.0",
-    "dhonions/laravel-calendar": "*",
+    "dhonions/laravel-calendar": "dev-master",
     "doctrine/dbal": "^2.13",
     "guzzlehttp/guzzle": "^7.9",
     "laravel/cashier": "^13.17",
