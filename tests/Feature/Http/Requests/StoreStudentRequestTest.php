@@ -45,7 +45,7 @@ class StoreStudentRequestTest extends TestCase
     /**
      * @return array[]
      */
-    public function requestDataProvider(): array
+    public static function requestDataProvider(): array
     {
         return [
             'First name fail' =>

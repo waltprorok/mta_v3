@@ -6,7 +6,7 @@ use App\Http\Resources\LessonResource;
 use App\Models\Holiday;
 use App\Models\Lesson;
 use Carbon\Carbon;
-use Dhonions\LaravelCalendar\Calendar;
+use CustodiaForks\Laravel10FullCalendar\Calendar;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

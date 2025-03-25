@@ -39,7 +39,7 @@ class UpdateBlogImageRequestTest extends TestCase
     /**
      * @return array[]
      */
-    public function requestDataProvider(): array
+    public static function requestDataProvider(): array
     {
         return [
             'Image fail extension doc' =>

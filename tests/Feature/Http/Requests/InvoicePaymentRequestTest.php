@@ -46,7 +46,7 @@ class InvoicePaymentRequestTest extends TestCase
     /**
      * @return array[]
      */
-    public function requestDataProvider(): array
+    public static function requestDataProvider(): array
     {
         return [
             'Payment Type null fail' =>

@@ -6,7 +6,7 @@ use App\Models\Holiday;
 use App\Models\Lesson;
 use App\Models\Student;
 use Carbon\Carbon;
-use Dhonions\LaravelCalendar\Calendar;
+use CustodiaForks\Laravel10FullCalendar\Calendar;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 

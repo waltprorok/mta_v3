@@ -8,7 +8,7 @@ use App\Models\Lesson;
 use App\Models\Teacher;
 use App\Models\User;
 use Carbon\Carbon;
-use Dhonions\LaravelCalendar\Calendar;
+use CustodiaForks\Laravel10FullCalendar\Calendar;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
