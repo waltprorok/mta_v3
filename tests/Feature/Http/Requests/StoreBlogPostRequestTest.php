@@ -42,7 +42,7 @@ class StoreBlogPostRequestTest extends TestCase
     /**
      * @return array[]
      */
-    public function requestDataProvider(): array
+    public static function requestDataProvider(): array
     {
         return [
             'Slug null fail' =>

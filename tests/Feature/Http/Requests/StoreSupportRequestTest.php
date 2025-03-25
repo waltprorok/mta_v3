@@ -42,7 +42,7 @@ class StoreSupportRequestTest extends TestCase
     /**
      * @return array[]
      */
-    public function requestDataProvider(): array
+    public static function requestDataProvider(): array
     {
         return [
             'Not Email fail' =>

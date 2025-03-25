@@ -57,7 +57,7 @@ class StoreTeacherSettingsRequestTest extends TestCase
     /**
      * @return array[]
      */
-    public function requestDataProvider(): array
+    public static function requestDataProvider(): array
     {
         return [
             'Studio name required fail' =>
