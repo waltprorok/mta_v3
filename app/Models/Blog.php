@@ -18,7 +18,9 @@ class Blog extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $dates = ['released_on'];
+    protected $casts = [
+        'released_on' => 'datetime',
+    ];
 
     protected $fillable = [
         'author_id',
