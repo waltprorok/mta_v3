@@ -223,7 +223,7 @@ class DashboardController extends Controller
 
     private function isSubscriptionCancelled(): bool
     {
-        return (Auth::user()->subscription('premium') != null && Auth::user()->subscription('premium')->cancelled());
+        return (Auth::user()->subscription('premium') != null && Auth::user()->subscription('premium')->canceled());
     }
 
     private function isSubscriptionTrialExpired(): bool
