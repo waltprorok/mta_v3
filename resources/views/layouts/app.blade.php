@@ -120,7 +120,7 @@
     <!-- Container -->
     <div class="container">
         <div class="row">
-            <div class="col-xl-3 col-lg-2 col-md-2 col-md-offset-1 col-sm-4 col-sm-offset-1 col-6">
+            <div class="col-xl-3 col-lg-3 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-1 col-6">
                 <div class="footer-widget ">
                     <div class="footer-title">Company</div>
                     <ul class="list-unstyled">
@@ -130,7 +130,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-2 col-md-2 col-sm-4 col-6">
+            <div class="col-xl-3 col-lg-3 col-md-2 col-sm-4 col-6">
                 <div class="footer-widget ">
                     <div class="footer-title">Quick Links</div>
                     <ul class="list-unstyled">
@@ -150,7 +150,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6">
+            <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6 col-6">
                 <div class="footer-widget ">
                     <h3 class="footer-title">Subscribe to Our News Letter</h3>
                     <form method="post" action="{{ route('newsletter') }}">
