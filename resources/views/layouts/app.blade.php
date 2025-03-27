@@ -121,7 +121,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-3 col-lg-3 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-1 col-6">
-                <div class="footer-widget ">
+                <div class="footer-widget">
                     <div class="footer-title">Company</div>
                     <ul class="list-unstyled">
                         <li><a href="{{ route('contact') }}">Contact Us</a></li>
@@ -131,7 +131,7 @@
                 </div>
             </div>
             <div class="col-xl-3 col-lg-3 col-md-2 col-sm-4 col-6">
-                <div class="footer-widget ">
+                <div class="footer-widget">
                     <div class="footer-title">Quick Links</div>
                     <ul class="list-unstyled">
                         <li><a href="{{ route('blog.index') }}">Blog</a></li>
@@ -140,7 +140,7 @@
                 </div>
             </div>
             <div class="col-xl-3 col-lg-2 col-md-2 col-sm-3 col-6">
-                <div class="footer-widget ">
+                <div class="footer-widget">
                     <div class="footer-title">Social</div>
                     <ul class="list-unstyled">
                         {{--<li><a href="#">Facebook</a></li>--}}
@@ -153,8 +153,8 @@
                 </div>
             </div>
             <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6 col-6">
-                <div class="footer-widget ">
-                    <h3 class="footer-title">Subscribe to Our News Letter</h3>
+                <div class="footer-widget">
+                    <div class="footer-title">Subscribe to Our News Letter</div>
                     <form method="post" action="{{ route('newsletter') }}">
                         @csrf
                         @honeypot
