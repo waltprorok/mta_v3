@@ -13,7 +13,7 @@
             <div class="card-body">
                 <form class="form-horizontal" action="{{ route('support') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <x-honeypot />
+                    @honeypot
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group {{ $errors->has('subject') ? ' has-error' : '' }}">
