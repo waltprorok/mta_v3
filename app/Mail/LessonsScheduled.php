@@ -2,18 +2,21 @@
 
 namespace App\Mail;
 
+use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 
 class LessonsScheduled extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $student;
-    public $status;
-    public $teacher;
-    public $lessons;
+    public Student $student;
+    public ?string $status;
+    public Teacher $teacher;
+    public Collection $lessons;
 
     /**
      * Create a new message instance.
@@ -40,7 +43,7 @@ class LessonsScheduled extends Mailable
             ->markdown('emails.lessons.scheduled');
     }
 
-    private function getLessonMonthName()
+    private function getLessonMonthName(): string
     {
         $month = $this->lessons->first();
         return date('F Y', strtotime($month->start_date));

@@ -28,7 +28,7 @@
                     @endif
                     <div class="blog-content">
                         <br/>
-                        <p>{!! $blog->body !!}</p>
+                        {!! $blog->body !!}
                     </div>
                 </div>
             </main>
@@ -46,7 +46,7 @@
                     <!-- Section header -->
                     <div class="section-header text-center">
                         <h2 class="title">Subscribe to Our News Letter</h2>
-                        <h3>Subscribe to stay up to date with the latest and greatest news and releases.</h3>
+                        <h3>Stay up to date with the latest news.</h3>
                     </div>
                     <!-- /Section header -->
                     <!-- blog -->

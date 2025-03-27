@@ -18,10 +18,6 @@ class Blog extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $casts = [
-        'released_on' => 'datetime',
-    ];
-
     protected $fillable = [
         'author_id',
         'title',
@@ -29,6 +25,10 @@ class Blog extends Model
         'body',
         'image',
         'released_on',
+    ];
+
+    protected $casts = [
+        'released_on' => 'datetime',
     ];
 
     /**
@@ -60,17 +60,17 @@ class Blog extends Model
 
     public function getDateTimeAttribute(): string
     {
-        return is_null($this->released_on) ? '' : date('F j, Y', strtotime($this->released_on));
+        return is_null($this->released_on) ? '' : $this->released_on->format('F j, Y');
     }
 
     public function getDateBlogRawAttribute(): string
     {
-        return is_null($this->released_on) ? '' : date('H:i:s', strtotime($this->released_on));
+        return is_null($this->released_on) ? '' : $this->released_on->format('H:i:s');
     }
 
     public function getDateHourMinAttribute(): string
     {
-        return is_null($this->released_on) ? '' : date('h:i A', strtotime($this->released_on));
+        return is_null($this->released_on) ? '' : $this->released_on->format('h:i A');
     }
 
     public function getImageUrlAttribute(): string
