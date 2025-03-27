@@ -50,7 +50,6 @@
                                     </span>
                             @endif
                         </div>
-
                         <div class="form-group {{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
                             {!! app('captcha')->display(['data-theme' => 'dark']) !!}
                             @if ($errors->has('g-recaptcha-response'))
@@ -59,7 +58,6 @@
                                     </span>
                             @endif
                         </div>
-
                         <button class="main-btn" type="submit">Send message</button>
                     </form>
                 </div>
