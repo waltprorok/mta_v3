@@ -20,6 +20,7 @@ class User extends Authenticatable
     use Billable, HasFactory, SoftDeletes;
 
     protected $casts = [
+        'email_verified_at' => 'datetime',
         'admin' => 'boolean',
         'student' => 'boolean',
         'teacher' => 'boolean',
