@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SupportUserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Spatie\Honeypot\ProtectAgainstSpam;
@@ -100,8 +101,10 @@ Route::group(['middleware' => ['auth', 'active']], function () {
         Route::get('/invoice/show/{invoice:id}', 'InvoiceController@show')->name('payments.show');
     });
 
-    Route::get('support', 'SupportUserController@index')->name('support');
-    Route::post('support', 'SupportUserController@store')->middleware(ProtectAgainstSpam::class);
+    Route::controller(SupportUserController::class)->group(function () {
+        Route::get('support', 'index')->name('support');
+        Route::post('support', 'store')->middleware(ProtectAgainstSpam::class);
+    });
 
     // parent 
     Route::group(['middleware' => ['household']], function () {
@@ -112,10 +115,3 @@ Route::group(['middleware' => ['auth', 'active']], function () {
         });
     });
 });
-
-// middleware guard for subscribed users
-// Route::group(['middleware' => ['subscribed']], function () {
-//// Example of single route with middleware
-// Route::get('calendar', 'LessonController@index')->name('calendar.index');
-//// Route::get('calendar', 'LessonController@index')->name('calendar.index')->middleware('subscribed');
-// });
