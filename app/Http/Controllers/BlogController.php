@@ -73,10 +73,8 @@ class BlogController extends Controller
         return response()->json([], Response::HTTP_CREATED);
     }
 
-    public function show(string $slug): View
+    public function show(Blog $blog): View
     {
-        $blog = Blog::query()->where('slug', $slug)->firstOrFail();
-
         return view('blog.show', compact('blog'));
     }
 
