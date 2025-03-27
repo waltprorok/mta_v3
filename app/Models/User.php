@@ -19,16 +19,6 @@ class User extends Authenticatable
 {
     use Billable, HasFactory, SoftDeletes;
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'admin' => 'boolean',
-        'student' => 'boolean',
-        'teacher' => 'boolean',
-        'parent' => 'boolean',
-        'is_active' => 'boolean',
-        'trial_ends_at' => 'datetime',
-    ];
-
     /**
      * The attributes that are mass assignable.
      *
@@ -46,6 +36,16 @@ class User extends Authenticatable
         'is_active',
         'timezone',
         'trial_ends_at',
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'admin' => 'boolean',
+        'student' => 'boolean',
+        'teacher' => 'boolean',
+        'parent' => 'boolean',
+        'is_active' => 'boolean',
+        'trial_ends_at' => 'datetime',
     ];
 
     protected $guarded = [

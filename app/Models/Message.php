@@ -12,18 +12,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Message extends Model
 {
-    protected $casts = [
-        'read' => 'boolean',
-        'deleted' => 'boolean',
-        'created_at' => 'datetime:g:i a | M d D',
-    ];
-
     protected $fillable = [
         'user_id_from',
         'user_id_to',
         'body',
         'read',
         'deleted'
+    ];
+
+    protected $casts = [
+        'read' => 'boolean',
+        'deleted' => 'boolean',
+        'created_at' => 'datetime:g:i a | M d D',
     ];
 
     /**
