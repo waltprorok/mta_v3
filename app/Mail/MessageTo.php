@@ -2,7 +2,9 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
+use Illuminate\Http\Request;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
@@ -11,8 +13,8 @@ class MessageTo extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $request;
-    public $user;
+    public Request $request;
+    public User $user;
 
     /**
      * Create a new message instance.

@@ -10,12 +10,11 @@ class SupportEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $email;
-    public $name;
-    public $support = false;
+    public string $email;
+    public string $name;
+    public ?bool $support = false;
     public $subject;
-    public $message;
-    public $attach;
+    public string $message;
 
     /**
      * Create a new message instance.
@@ -29,7 +28,6 @@ class SupportEmail extends Mailable
         $this->support = $request->support;
         $this->subject = $request->subject;
         $this->message = $request->message;
-        $this->attach = $request->attach;
     }
 
     /**

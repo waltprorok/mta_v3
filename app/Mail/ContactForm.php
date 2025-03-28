@@ -10,11 +10,11 @@ class ContactForm extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $email;
-    public $name;
-    public $support = false;
+    public string $email;
+    public string $name;
+    public ?bool $support = false;
     public $subject;
-    public $message;
+    public string $message;
     public $attachment;
 
     /**
