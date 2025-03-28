@@ -27,12 +27,6 @@ class Student extends Model
     const INACTIVE = 4;
     const PARENT = 5;
 
-    protected $casts = [
-        'student_id' => 'integer',
-        'status' => 'integer',
-        'auto_schedule' => 'boolean',
-    ];
-
     protected $fillable = [
         'student_id',
         'teacher_id',
@@ -55,6 +49,12 @@ class Student extends Model
         'at_studio',
         'status',
         'photo',
+    ];
+
+    protected $casts = [
+        'student_id' => 'integer',
+        'status' => 'integer',
+        'auto_schedule' => 'boolean',
     ];
 
     protected $hidden = [

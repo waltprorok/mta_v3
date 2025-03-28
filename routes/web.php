@@ -11,8 +11,6 @@
 |
 */
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\SupportUserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Spatie\Honeypot\ProtectAgainstSpam;
@@ -22,15 +20,13 @@ Route::middleware(ProtectAgainstSpam::class)->group(function () {
 });
 
 // Routes for marketing
-Route::controller(HomeController::class)->group(function () {
-    Route::get('/', 'index')->name('home');
-    Route::get('pricing', 'pricing')->name('pricing');
-    Route::get('contact', 'contact')->name('contact');
-    Route::post('contact', 'createContact')->middleware(ProtectAgainstSpam::class);
-    Route::get('privacy', 'privacy')->name('privacy');
-    Route::get('faq', 'faq')->name('faq');
-    Route::get('terms', 'terms')->name('terms');
-});
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('pricing', 'HomeController@pricing')->name('pricing');
+Route::get('contact', 'HomeController@contact')->name('contact');
+Route::post('contact', 'HomeController@createContact')->middleware(ProtectAgainstSpam::class);
+Route::get('privacy', 'HomeController@privacy')->name('privacy');
+Route::get('faq', 'HomeController@faq')->name('faq');
+Route::get('terms', 'HomeController@terms')->name('terms');
 
 Route::post('newsletter', 'NewsletterController@store')->name('newsletter')->middleware(ProtectAgainstSpam::class);
 
@@ -101,10 +97,9 @@ Route::group(['middleware' => ['auth', 'active']], function () {
         Route::get('/invoice/show/{invoice:id}', 'InvoiceController@show')->name('payments.show');
     });
 
-    Route::controller(SupportUserController::class)->group(function () {
-        Route::get('support', 'index')->name('support');
-        Route::post('support', 'store')->middleware(ProtectAgainstSpam::class);
-    });
+    Route::get('support', 'SupportUserController@index')->name('support');
+    Route::post('support', 'SupportUserController@store')->middleware(ProtectAgainstSpam::class);
+
 
     // parent 
     Route::group(['middleware' => ['household']], function () {

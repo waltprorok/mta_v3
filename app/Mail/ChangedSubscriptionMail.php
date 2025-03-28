@@ -2,6 +2,8 @@
 
 namespace App\Mail;
 
+use App\Models\Plan;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -10,9 +12,8 @@ class ChangedSubscriptionMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
-
-    public $plan;
+    public User $user;
+    public Plan $plan;
 
     /**
      * Create a new message instance.

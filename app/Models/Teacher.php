@@ -19,10 +19,6 @@ class Teacher extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $casts = [
-        'teacher_id' => 'integer'
-    ];
-
     protected $fillable = [
         'teacher_id',
         'studio_name',
@@ -36,6 +32,10 @@ class Teacher extends Model
         'email',
         'phone',
         'logo'
+    ];
+
+    protected $casts = [
+        'teacher_id' => 'integer'
     ];
 
     private PhoneNumberService $phoneNumberService;

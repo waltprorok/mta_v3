@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Invoice;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,7 +15,7 @@ class LessonsInvoice extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $invoice;
+    public Invoice $invoice;
 
     /**
      * Create a new message instance.

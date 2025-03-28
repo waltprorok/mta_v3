@@ -18,13 +18,6 @@ class Lesson extends Model
 {
     use SoftDeletes;
 
-    protected $casts = [
-        'billing_rate_id' => 'integer',
-        'complete' => 'boolean',
-        'invoice_id' => 'integer',
-        'student_id' => 'integer',
-    ];
-
     protected $fillable = [
         'billing_rate_id',
         'invoice_id',
@@ -40,6 +33,14 @@ class Lesson extends Model
         'teacher_id',
         'status',
         'status_updated_at',
+    ];
+
+    protected $casts = [
+        'billing_rate_id' => 'integer',
+        'complete' => 'boolean',
+        'invoice_id' => 'integer',
+        'student_id' => 'integer',
+        'status_updated_at' => 'datetime'
     ];
 
     const STATUS = [
