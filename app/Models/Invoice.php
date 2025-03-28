@@ -39,7 +39,7 @@ class Invoice extends Model
         'balance_due' => 'integer',
         'is_paid' => 'boolean',
         'payment_type_id' => 'integer',
-        'due_date' => 'date'
+        'due_date' => 'datetime'
     ];
 
     /**
@@ -48,7 +48,7 @@ class Invoice extends Model
      */
     protected function serializeDate(DateTimeInterface $date): string
     {
-        return $date->format('Y-m-d');
+        return $date->format('Y-m-d H:i:s');
     }
 
     public function lessons(): HasMany

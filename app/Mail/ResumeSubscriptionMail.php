@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -10,7 +11,7 @@ class ResumeSubscriptionMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
+    public User $user;
 
     /**
      * Create a new message instance.
