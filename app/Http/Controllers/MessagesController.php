@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use App\Models\Student;
 use App\Services\MessageService;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -114,7 +115,7 @@ class MessagesController extends Controller
                 'deleted' => 0,
             ]);
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             Log::info($exception->getMessage());
             return response()->json([], Response::HTTP_BAD_REQUEST);
         }

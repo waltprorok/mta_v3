@@ -9,6 +9,7 @@ use App\Models\Instrument;
 use App\Models\Student;
 use App\Models\User;
 use App\Services\PhoneNumberService;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -111,7 +112,7 @@ class StudentController extends Controller
                 $student->save();
 
                 Mail::to($parentUser->email)->queue(new WelcomeNewUserMail($parentUser));
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 Log::info($exception->getMessage());
             }
         }
@@ -184,7 +185,7 @@ class StudentController extends Controller
                 ]);
                 // send email
                 Mail::to($studentUser->email)->queue(new WelcomeNewUserMail($studentUser));
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 Log::info($exception->getMessage());
             }
         }
@@ -233,7 +234,7 @@ class StudentController extends Controller
 
                 // send email to new parent user
                 Mail::to($parentUser->email)->queue(new WelcomeNewUserMail($parentUser));
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 Log::info($exception->getMessage());
             }
         }

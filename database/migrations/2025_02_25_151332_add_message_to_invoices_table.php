@@ -16,7 +16,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table(self::TABLE_NAME, function (Blueprint $table) {
-            $table->text('message')->after('check_number')->nullable();;
+            $table->text('message')->after('check_number')->nullable();
         });
     }
 
