@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use App\Http\Controllers\InstrumentController;
 use App\Models\Instrument;
 use App\Models\User;
+use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -104,7 +105,7 @@ class InstrumentControllerTest extends TestCase
             ->onlyMethods(['destroy'])
             ->getMock();
 
-        $mockController->method('destroy')->willThrowException(new \Exception());
+        $mockController->method('destroy')->willThrowException(new Exception());
 
         $this->app->instance(InstrumentController::class, $mockController);
 
