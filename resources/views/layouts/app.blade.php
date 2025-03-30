@@ -76,7 +76,7 @@
                 @else
                     <li class="has-dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"
-                           aria-haspopup="true" v-pre>Account
+                           aria-haspopup="true">Account
                         </a>
                         <ul class="dropdown">
                             @if(Auth::user()->admin)
@@ -154,14 +154,14 @@
             </div>
             <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6 col-6">
                 <div class="footer-widget">
-                    <div class="footer-title">Subscribe to Our News Letter</div>
+                    <div class="footer-title">Sign Up For Our Newsletter</div>
                     <form method="post" action="{{ route('newsletter') }}">
                         @csrf
                         @honeypot
                         <div class="newsletter-form input-group">
-                            <input class="form-control" name="email" placeholder="Enter Your Email Address" type="text">
+                            <input class="form-control" name="email" placeholder="Enter your email address" type="text">
                             <span class="input-group-btn">
-                               <button class="btn btn-primary" type="submit">Submit</button>
+                               <button class="btn btn-primary" type="submit">Subscribe</button>
                             </span>
                         </div>
                     </form>

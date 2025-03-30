@@ -45,7 +45,7 @@
                 <div class="row">
                     <!-- Section header -->
                     <div class="section-header text-center">
-                        <h2 class="title">Subscribe to Our News Letter</h2>
+                        <h2 class="title">Sign Up For Our Newsletter</h2>
                         <h3>Stay up to date with the latest news.</h3>
                     </div>
                     <!-- /Section header -->
@@ -55,9 +55,9 @@
                             @csrf
                             @honeypot
                             <div class="input-group">
-                                <input class="form-control" name="email" placeholder="Enter Your Email Address" type="text">
+                                <input class="form-control" name="email" placeholder="Enter your email address" type="text">
                                 <span class="input-group-btn">
-                               <button class="btn btn-primary" type="submit">Submit</button>
+                               <button class="btn btn-primary" type="submit">Subscribe</button>
                             </span>
                             </div>
                         </form>
