@@ -28,7 +28,7 @@
                     @endif
                     <div class="blog-content">
                         <br/>
-                        {!! $blog->body !!}
+                        <p>{!! $blog->body !!}</p>
                     </div>
                 </div>
             </main>
