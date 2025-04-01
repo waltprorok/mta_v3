@@ -15,7 +15,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('marketing.home');
+        $plans = Plan::all(['id', 'name', 'slug', 'cost']);
+
+        return view('marketing.home')->with('plans', $plans);
     }
 
     public function pricing()

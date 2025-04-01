@@ -69,7 +69,7 @@
                 <li><a href="{{ url('/#features') }}">Features</a></li>
                 <li><a href="{{ url('/#testimonials') }}">Testimonials</a></li>
                 <li><a href="{{ route('blog.index') }}">Blog</a></li>
-                <li><a href="{{ route('pricing') }}">Pricing</a></li>
+                <li><a href="{{ url('/#pricing') }}">Pricing</a></li>
                 @guest
                     <li><a href="{{ route('login') }}">Login</a></li>
                     <li class="active"><a href="{{ route('register') }}">Sign Up Today!</a></li>

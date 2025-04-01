@@ -90,6 +90,93 @@
         </div>
     </div>
 
+    <div id="pricing" class="section md-padding">
+        <div class="container">
+            <div class="row">
+                <div class="section-header text-center">
+                    <h2 class="title">Simple, fixed pricing</h2>
+                    <h3>Get started with a 30 Day Free Trial.</h3>
+                </div>
+
+                <div class="col-md-4 col-md-offset-0">
+                    <div class="pricing">
+                        <div class="price-head">
+                            <span class="price-title">FREEMIUM</span>
+                            <div class="price">
+                                <h3>FREE<span class="duration">30 Days</span></h3>
+                            </div>
+                        </div>
+                        <ul class="price-content">
+                            <li>
+                                <p>Unlimited Students</p>
+                            </li>
+                            <li>
+                                <p>Automatic Scheduling</p>
+                            </li>
+                            <li>
+                                <p>Professional Invoicing</p>
+                            </li>
+                            <li>
+                                <p>Track Payments</p>
+                            </li>
+                            <li>
+                                <p>Upgrade Anytime</p>
+                            </li>
+                            <li>
+                                <p>30 Day Free Trial</p>
+                            </li>
+                        </ul>
+
+                        <div class="price-btn">
+                            <a href="{{ route('register') }}" class="outline-btn">Start Free Trial</a>
+                        </div>
+                    </div>
+                </div>
+
+                @foreach($plans as $plan)
+                    <div class="col-md-4">
+                        <div class="pricing">
+                            <div class="price-head">
+                                <span class="price-title">{{ $plan->name }}</span>
+                                <div class="price">
+                                    <h3>${{ number_format($plan->cost, 2) }}
+                                        <span class="duration">{{ $plan->slug }}</span>
+                                        @if($plan->slug == 'yearly')
+                                            <span class="break-down">${{ number_format($plan->cost / 12, 2) }} / month</span>
+                                        @endif
+                                    </h3>
+                                </div>
+                            </div>
+                            <ul class="price-content">
+                                <li>
+                                    <p>Unlimited Students</p>
+                                </li>
+                                <li>
+                                    <p>Automatic Scheduling</p>
+                                </li>
+                                <li>
+                                    <p>Professional Invoicing</p>
+                                </li>
+                                <li>
+                                    <p>Track Payments</p>
+                                </li>
+                                <li>
+                                    <p>Student Portal for Families</p>
+                                </li>
+                                <li>
+                                    <p>Cancel Anytime</p>
+                                </li>
+                            </ul>
+                            <div class="price-btn">
+                                <a href="{{ route('register') }}" class="outline-btn">Get Started</a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
     <div id="tiles" class="section md-padding">
         <div class="container">
             <div class="row">
@@ -166,7 +253,7 @@
                                 <h3 class="white-text">Micheal</h3>
                                 <span>Bass Teacher</span>
                             </div>
-                            <p class="white-text">MTA has increased my business by 30%. I don't know how I managed all
+                            <p class="white-text">Music Teachers Aid has increased my business by 30%. I don't know how I managed all
                                 my students before using the service.</p>
                         </div>
                         <div class="testimonial">
@@ -175,7 +262,23 @@
                                 <h3 class="white-text">Arron</h3>
                                 <span>Guitar Teacher</span>
                             </div>
-                            <p class="white-text">The best part of MTA is how easy it is to use.</p>
+                            <p class="white-text">The best part of Music Teachers Aid is how easy it is to use.</p>
+                        </div>
+                        <div class="testimonial">
+                            <div class="testimonial-meta">
+                                <img src="{{ asset('marketing/img/perso3.jpeg') }}" alt="">
+                                <h3 class="white-text">Beth</h3>
+                                <span>Piano Teacher</span>
+                            </div>
+                            <p class="white-text">Auto-scheduling has improved efficiency, allowing me to focus on student success rather than administrative headaches.</p>
+                        </div>
+                        <div class="testimonial">
+                            <div class="testimonial-meta">
+                                <img src="{{  asset('marketing/img/perso4.jpeg') }}" alt="">
+                                <h3 class="white-text">Prachi</h3>
+                                <span>Teacher</span>
+                            </div>
+                            <p class="white-text">Since switching to a system that generates professional-looking invoices, my business has seen a noticeable improvement in client trust and payment turnaround.</p>
                         </div>
                     </div>
                 </div>
