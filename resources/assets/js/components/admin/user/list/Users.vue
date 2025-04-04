@@ -68,14 +68,8 @@ export default {
         isActiveIcon: function (is_active) {
             return is_active ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>';
         },
-        isTrialActiveIcon: function (trial_ends_at) {
-            console.log(trial_ends_at);
-            console.log(new Date() );
-            console.log();
-            return trial_ends_at > new Date() ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>';
-        },
-        isUserType: function (type) {
-            return type ? '<i class="fa fa-check"></i>' : '';
+        isUserType: function (userType) {
+            return userType ? '<i class="fa fa-check"></i>' : '';
         },
     },
 }
