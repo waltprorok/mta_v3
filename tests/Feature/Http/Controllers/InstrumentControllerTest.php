@@ -95,6 +95,9 @@ class InstrumentControllerTest extends TestCase
         $this->assertDatabaseCount('instruments', 0);
     }
 
+    /**
+     * @throws \PHPUnit\Framework\MockObject\Exception
+     */
     public function test_destroy_method_success()
     {
         $mockInstrument = $this->createMock(Instrument::class);
