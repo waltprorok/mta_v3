@@ -7,6 +7,8 @@ use App\Mail\ContactForm;
 use App\Models\Contact;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
+use JsonException;
+use PHPUnit\Framework\MockObject\Exception;
 use Tests\TestCase;
 
 class HomeControllerTest extends TestCase
@@ -128,6 +130,8 @@ class HomeControllerTest extends TestCase
 
     /**
      * @return void
+     * @throws JsonException
+     * @throws Exception
      */
     public function test_new_contact_submitted()
     {

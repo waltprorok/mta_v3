@@ -65,11 +65,11 @@ export default {
                 });
             });
         },
-        isActiveIcon: function (row) {
-            return row ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>';
+        isActiveIcon: function (is_active) {
+            return is_active ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>';
         },
-        isUserType: function (row) {
-            return row ? '<i class="fa fa-check"></i>' : '';
+        isUserType: function (userType) {
+            return userType ? '<i class="fa fa-check"></i>' : '';
         },
     },
 }
