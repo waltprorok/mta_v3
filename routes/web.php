@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Spatie\Honeypot\ProtectAgainstSpam;
 
+// Auth routes
 Route::middleware(ProtectAgainstSpam::class)->group(function () {
     Auth::routes();
 });
@@ -27,7 +28,6 @@ Route::post('contact', 'HomeController@createContact')->middleware(ProtectAgains
 Route::get('privacy', 'HomeController@privacy')->name('privacy');
 Route::get('faq', 'HomeController@faq')->name('faq');
 Route::get('terms', 'HomeController@terms')->name('terms');
-
 Route::post('newsletter', 'NewsletterController@store')->name('newsletter')->middleware(ProtectAgainstSpam::class);
 
 // Routes for blog
@@ -36,7 +36,7 @@ Route::prefix('blog')->group(function () {
     Route::get('{blog:slug}', 'BlogController@show')->name('blog.show');
 });
 
-// Routes for authorized users
+// Routes for authorized active users
 Route::group(['middleware' => ['auth', 'active']], function () {
     Route::prefix('account')->group(function () {
         Route::get('subscription', 'SubscriptionController@index')->name('account.subscription');
@@ -53,32 +53,20 @@ Route::group(['middleware' => ['auth', 'active']], function () {
         Route::get('profile', 'SubscriptionController@profile')->name('account.profile');
         Route::post('update-profile', 'SubscriptionController@updateProfile')->name('account.updateProfile');
     });
-
-    // student and teacher calendar routes
+    // Subscribed teacher users
     Route::group(['middleware' => ['subscribed']], function () {
-        Route::prefix('calendar')->group(function () {
-            Route::get('/', 'LessonController@index')->name('calendar.index');
-            Route::get('student', 'StudentUserController@calendar')->name('student.calendar');
-            Route::view('lesson/get/{id}', 'webapp.lesson.cancel')->name('lesson.cancel');
-        });
-    });
-
-    Route::group(['middleware' => ['subscribed']], function () {
+        // lessons
         Route::prefix('lessons')->group(function () {
             Route::view('/', 'webapp.lessons.index')->name('complete.lessons');
             Route::get('list/{fromDate}/{toDate}', 'LessonController@list');
             Route::patch('update/{lesson}', 'LessonController@update');
             Route::put('update/past', 'LessonController@completePast');
         });
-    });
-
-    Route::group(['middleware' => ['subscribed']], function () {
+        // messages
         Route::prefix('messages')->group(function () {
             Route::view('/', 'webapp.messages.index')->name('message.index');
         });
-    });
-
-    Route::group(['middleware' => ['subscribed']], function () {
+        // web api endpoints
         Route::prefix('web')->group(function () {
             Route::get('messages/inbox', 'MessagesController@index');
             Route::get('messages/index/{id}', 'MessagesController@show');
@@ -89,19 +77,21 @@ Route::group(['middleware' => ['auth', 'active']], function () {
             Route::patch('lesson/cancel', 'ParentController@cancelLesson');
         });
     });
-
     // parent or student
     Route::prefix('payments')->group(function () {
         Route::view('/', 'webapp.payments.payments')->name('payment.index');
         Route::get('/download/pdf/{invoice:id}', 'InvoiceController@downloadPDF')->name('payments.download.pdf');
         Route::get('/invoice/show/{invoice:id}', 'InvoiceController@show')->name('payments.show');
     });
-
+    // student calendar lesson
+    Route::prefix('calendar')->group(function () {
+        Route::get('student', 'StudentUserController@calendar')->name('student.calendar');
+        Route::view('lesson/get/{id}', 'webapp.lesson.cancel')->name('lesson.cancel');
+    });
+    // support
     Route::get('support', 'SupportUserController@index')->name('support');
     Route::post('support', 'SupportUserController@store')->middleware(ProtectAgainstSpam::class);
-
-
-    // parent 
+    // parent household
     Route::group(['middleware' => ['household']], function () {
         Route::prefix('household')->group(function () {
             Route::get('/', 'ParentController@household')->name('parent.household');

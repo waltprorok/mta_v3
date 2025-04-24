@@ -207,8 +207,9 @@ export default {
         },
 
         showCheckInput: function (event) {
-            this.showCheckField = event.target.value === '2';
-            if (event.target.value !== '2') {
+            const paymentTypeCheckId = '2';
+            this.showCheckField = event.target.value === paymentTypeCheckId;
+            if (event.target.value !== paymentTypeCheckId) {
                 this.invoice.check_number = null;
             }
         },
