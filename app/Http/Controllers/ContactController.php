@@ -15,7 +15,7 @@ class ContactController extends Controller
     public function index()
     {
         return Contact::query()
-            ->select('id', 'name', 'email', 'subject', 'message', 'reply', 'created_at')
+            ->select(['id', 'name', 'email', 'subject', 'message', 'reply', 'created_at'])
             ->orderBy('created_at', 'desc')
             ->get();
     }

@@ -17,7 +17,7 @@ class HolidayController extends Controller
     public function index()
     {
         return Holiday::query()
-            ->select('id', 'title', 'start_date', 'end_date', 'color', 'all_day')
+            ->select(['id', 'title', 'start_date', 'end_date', 'color', 'all_day'])
             ->where('teacher_id', Auth::user()->id)
             ->orderBy('start_date', 'desc')
             ->get();
