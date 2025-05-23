@@ -20,7 +20,7 @@ class StudentListController extends Controller
     public function active(): JsonResponse
     {
         $students = Student::query()
-            ->select('id', 'teacher_id', 'first_name', 'last_name', 'phone', 'email', 'instrument', 'status')
+            ->select(['id', 'teacher_id', 'first_name', 'last_name', 'phone', 'email', 'instrument', 'status'])
             ->with('hasOneFutureLesson:id,student_id,teacher_id,status,start_date')
             ->where(['teacher_id' => Auth::id(), 'status' => Student::ACTIVE])
             ->firstNameAsc()
@@ -32,7 +32,7 @@ class StudentListController extends Controller
     public function waitlist(): JsonResponse
     {
         $waitlists = Student::query()
-            ->select('id', 'teacher_id', 'first_name', 'last_name', 'phone', 'email', 'instrument', 'status')
+            ->select(['id', 'teacher_id', 'first_name', 'last_name', 'phone', 'email', 'instrument', 'status'])
             ->where(['teacher_id' => Auth::id(), 'status' => Student::WAITLIST])
             ->firstNameAsc()
             ->get();
@@ -43,7 +43,7 @@ class StudentListController extends Controller
     public function leads(): JsonResponse
     {
         $leads = Student::query()
-            ->select('id', 'teacher_id', 'first_name', 'last_name', 'phone', 'email', 'instrument', 'status')
+            ->select(['id', 'teacher_id', 'first_name', 'last_name', 'phone', 'email', 'instrument', 'status'])
             ->where(['teacher_id' => Auth::id(), 'status' => Student::LEAD])
             ->firstNameAsc()
             ->get();
@@ -54,7 +54,7 @@ class StudentListController extends Controller
     public function inactive(): JsonResponse
     {
         $inactives = Student::query()
-            ->select('id', 'teacher_id', 'first_name', 'last_name', 'phone', 'email', 'instrument', 'status')
+            ->select(['id', 'teacher_id', 'first_name', 'last_name', 'phone', 'email', 'instrument', 'status'])
             ->where(['teacher_id' => Auth::id(), 'status' => Student::INACTIVE])
             ->firstNameAsc()
             ->get();

@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         return User::query()
-            ->select('id',
+            ->select(['id',
                 'first_name',
                 'last_name',
                 'email',
@@ -23,7 +23,7 @@ class UserController extends Controller
                 'student',
                 'parent',
                 'is_active',
-                'created_at')
+                'created_at'])
             ->orderBy('first_name')
             ->get();
     }

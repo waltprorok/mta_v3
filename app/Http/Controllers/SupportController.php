@@ -18,7 +18,7 @@ class SupportController extends Controller
     public function index()
     {
         return Support ::query()
-            ->select('id', 'name', 'email', 'subject', 'message', 'attachment', 'reply', 'created_at')
+            ->select(['id', 'name', 'email', 'subject', 'message', 'attachment', 'reply', 'created_at'])
             ->orderBy('created_at', 'desc')
             ->get();
     }
