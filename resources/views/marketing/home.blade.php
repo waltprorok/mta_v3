@@ -275,7 +275,7 @@
                         <div class="testimonial">
                             <div class="testimonial-meta">
                                 <img src="{{  asset('marketing/img/perso4.jpeg') }}" alt="">
-                                <h3 class="white-text">Prachi</h3>
+                                <h3 class="white-text">Ava</h3>
                                 <span>Music Teacher</span>
                             </div>
                             <p class="white-text">Since switching to a system that generates professional-looking invoices, my business has seen a noticeable improvement in client trust and payment turnaround.</p>
