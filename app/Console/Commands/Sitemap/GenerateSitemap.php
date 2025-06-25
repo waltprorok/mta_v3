@@ -24,9 +24,9 @@ class GenerateSitemap extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
-        SitemapGenerator::create('https://musicteachersaid.com/')
+        SitemapGenerator::create('https://musicteachersaid.com')
             ->writeToFile(public_path('sitemap.xml'));
     }
 }
