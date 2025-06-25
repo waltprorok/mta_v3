@@ -22,11 +22,12 @@ class Kernel extends ConsoleKernel
      * @param Schedule $schedule
      * @return void
      */
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
         $schedule->command('lessons:schedule-monthly')
             ->timezone('America/New_York')
             ->monthlyOn(26, '02:00');
+        $schedule->command('app:generate-sitemap')->mondays();
     }
 
     /**
@@ -34,7 +35,7 @@ class Kernel extends ConsoleKernel
      *
      * @return void
      */
-    protected function commands()
+    protected function commands(): void
     {
         $this->load(__DIR__ . '/Commands');
 
