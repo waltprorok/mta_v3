@@ -64,7 +64,7 @@
                     </div>
                     <div class="feature">
                         <i class="fa fa-check"></i>
-                        <p>Easily track payments.</p>
+                        <p>Easily create professional looking invoices.</p>
                     </div>
                     <div class="feature">
                         <i class="fa fa-check"></i>
