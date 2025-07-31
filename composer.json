@@ -12,6 +12,7 @@
     "advmaker/carbon-period": "^0.2.2",
     "anhskohbo/no-captcha": "^3.7",
     "barryvdh/laravel-dompdf": "^2.2",
+    "cmixin/business-day": "^1.20",
     "doctrine/dbal": "^3.0",
     "gocustodia/laravel-10-full-calendar": "^1.0",
     "guzzlehttp/guzzle": "^7.9",
