@@ -132,8 +132,8 @@
                                                     <li class="list-group-item" v-for="holiday in holidays">{{ holiday.name }}
                                                         <div class="toggle-switch pull-right" data-ts-color="primary">
                                                             <label class="ts-label"></label>
-                                                            <input :id="holiday.id" type="checkbox" hidden="hidden" v-model="holiday.set" v-on:change="createUsHoliday(holiday)">
-                                                            <label :for="holiday.id" class="ts-helper"></label>
+                                                            <input :id="holiday.short_name" type="checkbox" hidden="hidden" v-model="holiday.set" v-on:change="setUsHoliday(holiday)">
+                                                            <label :for="holiday.short_name" class="ts-helper"></label>
                                                         </div>
                                                         <span class="pull-right">{{ holiday.date }}</span>
                                                     </li>

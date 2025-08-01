@@ -49,9 +49,10 @@ export default {
                 all_day: true,
             },
             usHoliday: {
-              id: null,
-              name: null,
-              date: '',
+                id: null,
+                name: null,
+                date: '',
+                short_name: null,
             },
             error_name: '',
         }
@@ -162,14 +163,19 @@ export default {
                 });
         },
 
-        createUsHoliday: function (holiday) {
-            if (! holiday.set) {
+        setUsHoliday: function (holiday) {
+            if (! holiday.set && holiday.id != null) {
                 return this.deleteUsHoliday(holiday);
+            } else {
+                return this.createUsHoliday(holiday);
             }
+        },
 
+        createUsHoliday: function (holiday) {
             this.usHoliday.id = holiday.id;
             this.usHoliday.name = holiday.name;
             this.usHoliday.date = holiday.date;
+            this.usHoliday.short_name = holiday.short_name;
 
             let self = this;
 

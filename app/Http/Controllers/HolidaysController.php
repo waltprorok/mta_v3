@@ -20,7 +20,7 @@ class HolidaysController extends Controller
     {
         $userHolidays = Holiday::where('teacher_id', Auth::id())
             ->whereYear('start_date', Carbon::now()->year)
-            ->get(['id', 'teacher_id', 'title', 'start_date']);
+            ->get(['id', 'teacher_id', 'title', 'start_date', 'short_name']);
 
         BusinessDay::enable('Carbon\Carbon');
         Carbon::setHolidaysRegion('us');
@@ -28,11 +28,11 @@ class HolidaysController extends Controller
         $holidays = collect();
 
         foreach (Carbon::getYearHolidays() as $id => $holiday) {
-            if ($userHolidays->contains('title', $holiday->getHolidayName())) {
-                $usHoliday = $userHolidays->where('title', $holiday->getHolidayName())->first();
-                $holidays->push(['id' => $usHoliday->id, 'name' => $holiday->getHolidayName(), 'date' => $holiday->format('M j, Y'), 'set' => true]);
+            if ($userHolidays->contains('short_name', $id)) {
+                $usHoliday = $userHolidays->where('short_name', $id)->first();
+                $holidays->push(['id' => $usHoliday->id, 'short_name' => $id, 'name' => $holiday->getHolidayName(), 'date' => $holiday->format('M j, Y'), 'set' => true]);
             } else {
-                $holidays->push(['id' => $id, 'name' => $holiday->getHolidayName(), 'date' => $holiday->format('M j, Y'), 'set' => false]);
+                $holidays->push(['id' => null, 'short_name' => $id, 'name' => $holiday->getHolidayName(), 'date' => $holiday->format('M j, Y'), 'set' => false]);
             }
         }
 
@@ -63,6 +63,7 @@ class HolidaysController extends Controller
             $holiday->start_date = $start_date;
             $holiday->end_date = $end_date;
             $holiday->all_day = true;
+            $holiday->short_name = $request->get('short_name');
             $holiday->save();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());

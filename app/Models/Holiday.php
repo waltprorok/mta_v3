@@ -23,6 +23,7 @@ class Holiday extends Model
         'start_date',
         'end_date',
         'all_day',
+        'short_name',
     ];
 
     protected $casts = [
