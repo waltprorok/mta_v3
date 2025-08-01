@@ -196,7 +196,7 @@ export default {
                     this.$notify({
                         type: 'error',
                         title: 'Error',
-                        text: 'Could not save setting.',
+                        text: 'Could not save settings.',
                         duration: 10000,
                     });
                 });
@@ -212,8 +212,8 @@ export default {
                     self.fetchHolidayList();
                     self.fetchHolidaysList();
                     this.$notify({
-                        type: 'warn',
-                        title: 'Deleted',
+                        type: 'success',
+                        title: 'Success',
                         text: 'Your settings have been saved.',
                         duration: 10000,
                     });
@@ -223,7 +223,7 @@ export default {
                     this.$notify({
                         type: 'error',
                         title: 'Error',
-                        text: 'Could not save setting.',
+                        text: 'Could not save settings.',
                         duration: 10000,
                     });
                 });
