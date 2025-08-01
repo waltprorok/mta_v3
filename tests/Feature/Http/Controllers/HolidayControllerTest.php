@@ -56,7 +56,7 @@ class HolidayControllerTest extends TestCase
         $response = $this->actingAs($this->user)->get('/web/holiday/' . $holiday->id);
 
         $response->assertOk();
-        $response->assertJsonCount(9);
+        $response->assertJsonCount(10);
     }
 
     public function test_holiday_create_success()
