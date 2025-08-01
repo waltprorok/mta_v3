@@ -23,6 +23,7 @@ Route::group(['middleware' => ['auth', 'teacher', 'subscribed', 'active']], func
         Route::put('invoice/update/{invoice}', 'InvoiceController@update');
         Route::get('invoice-get-student/{id}/{month}', 'InvoiceController@getStudentSelected');
         Route::resource('holiday', 'HolidayController');
+        Route::resource('holidays', 'HolidaysController');
         Route::post('student-save', 'StudentController@store');
         Route::get('status', 'ReportController@status');
         Route::get('payments', 'ReportController@payments');

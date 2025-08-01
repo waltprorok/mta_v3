@@ -13,7 +13,7 @@ class CreateContactsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->increments('id');
@@ -31,7 +31,7 @@ class CreateContactsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists(self::TABLE_NAME);
     }

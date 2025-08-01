@@ -11,7 +11,7 @@ class AddRecurrenceToLessonsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('lessons', function (Blueprint $table) {
             $table->enum('recurrence', ['Monthly', 'Once'])->nullable()->after('interval');
@@ -23,7 +23,7 @@ class AddRecurrenceToLessonsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('lessons', function (Blueprint $table) {
             $table->dropColumn('recurrence');

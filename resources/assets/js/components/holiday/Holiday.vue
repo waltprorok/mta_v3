@@ -31,8 +31,10 @@ export default {
                 {name: 'Grey', code: '#85929E'},
             ],
             edit: false,
+            holidays: [],
             id: null,
             showForm: false,
+            showHolidayForm: false,
             showModal: false,
             list: [],
             page: 1,
@@ -45,6 +47,12 @@ export default {
                 start_date: new Date(),
                 end_date: endDate,
                 all_day: true,
+            },
+            usHoliday: {
+                id: null,
+                name: null,
+                date: '',
+                short_name: null,
             },
             error_name: '',
         }
@@ -69,6 +77,7 @@ export default {
 
     mounted: function () {
         this.fetchHolidayList();
+        this.fetchHolidaysList();
     },
 
     methods: {
@@ -78,6 +87,11 @@ export default {
             let self = this;
             self.clearErrorData();
             self.clearData();
+        },
+
+        cancelHolidayForm: function () {
+            let self = this;
+            self.showHolidayForm = false;
         },
 
         clearErrorData: function () {
@@ -149,6 +163,72 @@ export default {
                 });
         },
 
+        setUsHoliday: function (holiday) {
+            if (! holiday.set && holiday.id != null) {
+                return this.deleteUsHoliday(holiday);
+            } else {
+                return this.createUsHoliday(holiday);
+            }
+        },
+
+        createUsHoliday: function (holiday) {
+            this.usHoliday.id = holiday.id;
+            this.usHoliday.name = holiday.name;
+            this.usHoliday.date = holiday.date;
+            this.usHoliday.short_name = holiday.short_name;
+
+            let self = this;
+
+            let params = Object.assign({}, self.usHoliday);
+            axios.post('/web/holidays', params)
+                .then(() => {
+                    self.fetchHolidayList();
+                    self.fetchHolidaysList();
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'Your settings have been saved.',
+                        duration: 10000,
+                    });
+                })
+                .catch((error) => {
+                    self.getErrorMessage(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not save settings.',
+                        duration: 10000,
+                    });
+                });
+        },
+
+        deleteUsHoliday: function (holiday) {
+            let id = holiday.id;
+            this.usHoliday.id = holiday.id;
+            let self = this;
+            let params = Object.assign({}, self.holiday);
+            axios.delete('/web/holidays/' + id, params)
+                .then(() => {
+                    self.fetchHolidayList();
+                    self.fetchHolidaysList();
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'Your settings have been saved.',
+                        duration: 10000,
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not save settings.',
+                        duration: 10000,
+                    });
+                });
+        },
+
         getErrorMessage: function (error) {
             let self = this;
             self.error_title = error.response.data.error.title;
@@ -159,6 +239,22 @@ export default {
             axios.get('/web/holiday')
                 .then((response) => {
                     this.list = response.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load dates.',
+                        duration: 10000,
+                    });
+                });
+        },
+
+        fetchHolidaysList: function () {
+            axios.get('/web/holidays')
+                .then((response) => {
+                    this.holidays = response.data;
                 })
                 .catch((error) => {
                     console.log(error);

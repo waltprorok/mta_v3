@@ -107,6 +107,49 @@
         <!-- end of modal create read edit -->
     </div>
 
+    <div class="card" v-on:keydown.esc="cancelHolidayForm()">
+        <div v-if="showHolidayForm">
+            <!-- modal create read edit -->
+            <transition name="modal">
+                <div class="modal-mask">
+                    <div class="modal-wrapper">
+                        <div class="modal-dialog modal-md" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Holiday Schedule</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" @click="cancelHolidayForm()">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-header bg-light">
+                                                    United States
+                                                </div>
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item" v-for="holiday in holidays">{{ holiday.name }}
+                                                        <div class="toggle-switch pull-right" data-ts-color="primary">
+                                                            <label class="ts-label"></label>
+                                                            <input :id="holiday.short_name" type="checkbox" hidden="hidden" v-model="holiday.set" v-on:change="setUsHoliday(holiday)">
+                                                            <label :for="holiday.short_name" class="ts-helper"></label>
+                                                        </div>
+                                                        <span class="pull-right">{{ holiday.date }}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+        </div>
+    </div>
+
     <div class="card-header bg-light">Holidays and Time Off</div>
     <!-- vue js data table -->
     <div class="form-control" v-cloak>
@@ -118,7 +161,8 @@
             </div>
         </div>
         <div class="form-group pull-right">
-            <button type="button" class="btn btn-primary" @click="showForm=true" v-show="!showForm">Add Holiday</button>
+            <button type="button" class="btn btn-primary" @click="showHolidayForm=true">Add Holiday</button>
+            <button type="button" class="btn btn-primary" @click="showForm=true">Add Time Off</button>
         </div>
         <div class="form-group pull-right pr-2">
             <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
