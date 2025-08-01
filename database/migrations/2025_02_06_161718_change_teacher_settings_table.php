@@ -10,7 +10,7 @@ return new class extends Migration {
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('teacher_settings', function (Blueprint $table) {
             $table->string('calendar', 40)->nullable()->change();
@@ -22,7 +22,7 @@ return new class extends Migration {
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('teacher_settings', function (Blueprint $table) {
             $table->enum('calendar', ['month', 'listWeek', 'agendaWeek', 'agendaDay'])->nullable()->default('month')->change();

@@ -11,7 +11,7 @@ class AddReplyToContactsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('contacts', function (Blueprint $table) {
             $table->boolean('reply')->default(false)->after('message');
@@ -23,7 +23,7 @@ class AddReplyToContactsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('contacts', function (Blueprint $table) {
             $table->dropColumn('reply');

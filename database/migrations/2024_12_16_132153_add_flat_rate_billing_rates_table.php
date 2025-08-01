@@ -11,7 +11,7 @@ class AddFlatRateBillingRatesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('billing_rates', function (Blueprint $table) {
             $table->boolean('flat_rate')->default(false)->after('active');
@@ -25,7 +25,7 @@ class AddFlatRateBillingRatesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('billing_rates', function (Blueprint $table) {
             $table->dropColumn(['flat_rate', 'cancelled_twenty_four_hours', 'cancelled_forty_eight_hours']);
