@@ -6,6 +6,7 @@ use App\Http\Requests\StoreTeacherSettingsRequest;
 use App\Models\Teacher;
 use App\Models\User;
 use App\Services\PhoneNumberService;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +46,7 @@ class TeacherController extends Controller
     /**
      * @param StoreTeacherSettingsRequest $request
      * @return RedirectResponse
+     * @throws FileNotFoundException
      */
     public function store(StoreTeacherSettingsRequest $request): RedirectResponse
     {
