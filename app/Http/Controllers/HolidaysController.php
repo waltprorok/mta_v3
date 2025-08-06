@@ -23,7 +23,7 @@ class HolidaysController extends Controller
             ->get(['id', 'teacher_id', 'title', 'start_date', 'short_name']);
 
         BusinessDay::enable('Carbon\Carbon');
-        Carbon::setHolidaysRegion('us');
+        Carbon::setHolidaysRegion('us-national');
 
         $holidays = collect();
 

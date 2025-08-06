@@ -65,7 +65,7 @@
             <template v-slot="{ columns, row }">
                 <tr>
                     <td>{{ row.name | capitalising }}</td>
-                    <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
+                    <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY') }}</td>
                     <td class="text-nowrap">
                         <button @click="showInstrument(row.id)"
                                 class="btn btn-outline-primary btn-sm"
