@@ -85,6 +85,8 @@ export default {
         dateParse,
         cancelForm: function () {
             let self = this;
+            self.showModal = false;
+            self.cancelHolidayForm();
             self.clearErrorData();
             self.clearData();
         },
