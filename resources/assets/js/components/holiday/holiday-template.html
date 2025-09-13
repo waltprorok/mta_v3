@@ -148,53 +148,51 @@
         </transition>
     </div>
 
-    <div v-on:keydown.esc="cancelForm()">
-        <div class="card-header bg-light">Holidays and Time Off</div>
-        <!-- vue js data table -->
-        <div class="form-control" v-cloak>
-            <div class="form-group pull-left">
-                <div class="form-group">
-                    <select id="single-select" v-model="per_page" class="form-control">
-                        <option v-for="page in pages" :value="page">{{ page }}</option>
-                    </select>
-                </div>
+    <div class="card-header bg-light">Holidays and Time Off</div>
+    <!-- vue js data table -->
+    <div class="form-control" v-cloak v-on:keydown.esc="cancelForm()">
+        <div class="form-group pull-left">
+            <div class="form-group">
+                <select id="single-select" v-model="per_page" class="form-control">
+                    <option v-for="page in pages" :value="page">{{ page }}</option>
+                </select>
             </div>
-            <div class="form-group pull-right">
-                <button type="button" class="btn btn-primary" @click="showHolidayForm=true">Add Holiday</button>
-                <button type="button" class="btn btn-primary" @click="showForm=true">Add Time Off</button>
-            </div>
-            <div class="form-group pull-right pr-2">
-                <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
-            </div>
-            <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
-                <template v-slot="{ columns, row }">
-                    <tr>
-                        <td>{{ row.title | capitalising }}</td>
-                        <td v-if="row.all_day">{{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY') }}</td>
-                        <td v-else>{{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
-                        <td v-if="row.all_day">{{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY') }}</td>
-                        <td v-else>{{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
-                        <td v-if="row.all_day"><i class="fa fa-gift" aria-hidden="true"></i></td>
-                        <td v-else><i class="fa fa-calendar" aria-hidden="true"></i></td>
-                        <td class="text-nowrap">
-                            <button @click="showHoliday(row.id)"
-                                    class="btn btn-outline-primary btn-sm"
-                                    title="edit">
-                                <i class="fa fa-edit"></i>
-                            </button>
-                            <button @click="showModalDelete(row.id)"
-                                    class="btn btn-outline-danger btn-sm"
-                                    title="delete">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </template>
-            </datatable>
-            <total-entries :list="list"></total-entries>
-            <div class="pull-right">
-                <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
-            </div>
+        </div>
+        <div class="form-group pull-right">
+            <button type="button" class="btn btn-primary" @click="showHolidayForm=true">Add Holiday</button>
+            <button type="button" class="btn btn-primary" @click="showForm=true">Add Time Off</button>
+        </div>
+        <div class="form-group pull-right pr-2">
+            <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
+        </div>
+        <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
+            <template v-slot="{ columns, row }">
+                <tr>
+                    <td>{{ row.title | capitalising }}</td>
+                    <td v-if="row.all_day">{{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY') }}</td>
+                    <td v-else>{{ row.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
+                    <td v-if="row.all_day">{{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY') }}</td>
+                    <td v-else>{{ row.end_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
+                    <td v-if="row.all_day"><i class="fa fa-gift" aria-hidden="true"></i></td>
+                    <td v-else><i class="fa fa-calendar" aria-hidden="true"></i></td>
+                    <td class="text-nowrap">
+                        <button @click="showHoliday(row.id)"
+                                class="btn btn-outline-primary btn-sm"
+                                title="edit">
+                            <i class="fa fa-edit" aria-hidden="true"></i>
+                        </button>
+                        <button @click="showModalDelete(row.id)"
+                                class="btn btn-outline-danger btn-sm"
+                                title="delete">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+            </template>
+        </datatable>
+        <total-entries :list="list"></total-entries>
+        <div class="pull-right">
+            <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
         </div>
     </div>
     <!-- end of vue js data table -->
