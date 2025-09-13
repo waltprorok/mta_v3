@@ -1,5 +1,5 @@
 #!/bin/bash
-php artisan down
+#php artisan down
 git reset --hard
 git pull
 php artisan migrate
@@ -14,5 +14,5 @@ php artisan view:cache
 php artisan event:cache
 php artisan config:cache
 php artisan queue:restart
-php artisan up
+#php artisan up
 sudo supervisorctl status
