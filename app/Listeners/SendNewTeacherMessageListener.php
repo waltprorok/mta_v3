@@ -32,7 +32,7 @@ class SendNewTeacherMessageListener
 
         // create a message for new teacher
         try {
-            Message::query()->create([
+            Message::create([
                 'user_id_from' => User::ADMIN_ID,
                 'user_id_to' => $user->id,
                 'body' => 'There are a couple of things to do before running your studio.<div>
