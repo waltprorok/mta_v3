@@ -17,14 +17,20 @@ let mix = require('laravel-mix');
 mix.js('resources/assets/js/app.js', 'public/js')
     .vue()
     .sass('resources/assets/sass/app.scss', 'public/css')
-    .sourceMaps();
+    .options({
+        processCssUrls: false,
+        terser: {
+            extractComments: false
+        }
+    })
 
 mix.webpackConfig({
-    stats: {
-        children: true,
-    },
+    stats: 'minimal',
 });
 
 if (mix.inProduction()) {
+    mix.sourceMaps(false);
     mix.version();
+} else {
+    mix.sourceMaps();
 }
