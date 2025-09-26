@@ -7,7 +7,8 @@ return [
      * You may use "log" or "null" to prevent calling the
      * API directly from your environment.
      */
-    'driver' => env('MAILCHIMP_DRIVER', 'api'),
+    // 'driver' => env('MAILCHIMP_DRIVER', 'api'),
+    'driver' => Spatie\Newsletter\Drivers\MailChimpDriver::class,
 
     /*
      * The API key of a MailChimp account. You can find yours at
