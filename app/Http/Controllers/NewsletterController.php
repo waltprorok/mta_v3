@@ -20,7 +20,7 @@ class NewsletterController extends Controller
 
         try {
             if (! Newsletter::isSubscribed($email)) {
-                Newsletter::subscribePending($email);
+                Newsletter::subscribe($email);
 
                 return back()->with('success', 'Thank you for subscribing to the newsletter!');
             }
