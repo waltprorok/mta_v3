@@ -47,6 +47,6 @@ return [
     /*
      * If you're having trouble with https connections, set this to false.
      */
-    'ssl' => true,
+    'ssl' => false,
 
 ];
