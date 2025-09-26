@@ -26,5 +26,6 @@ mix.webpackConfig({
 });
 
 if (mix.inProduction()) {
+    mix.sourceMaps(false);
     mix.version();
 }
