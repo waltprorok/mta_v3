@@ -20,11 +20,6 @@ Route::middleware(ProtectAgainstSpam::class)->group(function () {
     Auth::routes();
 });
 
-Route::get('/newsletter-test', function () {
-    $mailchimp = Spatie\Newsletter\Facades\Newsletter::getApi();
-    dd($mailchimp);
-});
-
 // Routes for marketing
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('pricing', 'HomeController@pricing')->name('pricing');
