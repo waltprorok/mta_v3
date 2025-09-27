@@ -56,7 +56,12 @@ class CreateTeacherListener
         if (App::environment('production')) {
             // sign new user up for newsletter
             try {
-                Newsletter::subscribe($data['email']);
+                Newsletter::subscribe($data['email'],
+                    [
+                        'FNAME' => $data['first_name'],
+                        'LNAME' => $data['last_name']
+                    ]
+                );
             } catch (Exception $exception) {
                 Log::warning($exception->getMessage());
             }
