@@ -140,7 +140,8 @@
             <hr/>
             <div class="pull-left">
                 <button v-show="allTimes" type="submit" class="btn btn-primary" :disabled="disableUpdateButton">Update</button>
-                <button type="button" class="btn btn-outline-secondary" @click="getDates">Cancel</button>
+                <button type="button" class="btn btn-outline-secondary" @click="getDates">Reset</button>
+                <button type="button" class="btn btn-outline-secondary" @click="cancel">Cancel</button>
             </div>
             <div class="pull-right">
                 <button type="button" @click="showModalDelete(lesson.id)" class="btn btn-outline-danger pull-right">Delete</button>

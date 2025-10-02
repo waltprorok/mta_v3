@@ -121,7 +121,7 @@ export default {
             let params = Object.assign({}, self.lesson);
             axios.delete('/web/lesson/delete/' + id, params)
                 .then(() => {
-                    window.location ='/calendar';
+                    window.location = '/calendar';
                     this.$notify({
                         type: 'warn',
                         title: 'Deleted',
@@ -239,6 +239,10 @@ export default {
                 });
         },
 
+        cancel: function () {
+            window.location ='/calendar';
+        },
+
         getDates: function () {
             let self = this;
             let parameters = this.$route.fullPath;
@@ -256,13 +260,13 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error);
-                    // self.getErrorMessage(error);
-                    // this.$notify({
-                    //     type: 'error',
-                    //     title: 'Error',
-                    //     text: 'Could not load data.',
-                    //     duration: 10000,
-                    // });
+                    self.getErrorMessage(error);
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load lesson.',
+                        duration: 10000,
+                    });
                 });
         },
 
@@ -329,12 +333,12 @@ export default {
                     console.log(error);
                     this.disableUpdateButton = false;
                     self.getErrorMessage(error);
-                    // this.$notify({
-                    //     type: 'error',
-                    //     title: 'Error',
-                    //     text: 'Could not save lesson(s).',
-                    //     duration: 10000,
-                    // });
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not update lesson.',
+                        duration: 10000,
+                    });
                 });
         },
     }
