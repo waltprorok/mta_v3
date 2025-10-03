@@ -2,19 +2,19 @@
 
 namespace App\Mail;
 
+use App\Models\Lesson;
 use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Collection;
 
 class CancelLesson extends Mailable
 {
     use Queueable, SerializesModels;
 
     public Student $student;
-    public Collection $lesson;
+    public Lesson $lesson;
 
     /**
      * Create a new message instance.
