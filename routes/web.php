@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Spatie\Honeypot\ProtectAgainstSpam;
 
-// Auth routes
 Route::middleware(ProtectAgainstSpam::class)->group(function () {
     Auth::routes();
 });
