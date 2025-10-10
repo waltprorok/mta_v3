@@ -63,5 +63,6 @@ class Kernel extends HttpKernel
         'teacher' => \App\Http\Middleware\Teacher::class,
         'student' => \App\Http\Middleware\Student::class,
         'household' => \App\Http\Middleware\Household::class,
+        'honeypot' => \Spatie\Honeypot\ProtectAgainstSpam::class,
     ];
 }
