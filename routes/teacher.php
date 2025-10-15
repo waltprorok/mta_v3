@@ -26,7 +26,7 @@ Route::group(['middleware' => ['auth', 'teacher', 'subscribed', 'active']], func
         Route::resource('holidays', 'HolidaysController')->only(['index', 'store', 'destroy']);
         Route::post('student-save', 'StudentController@store');
         Route::get('status', 'ReportController@status');
-        Route::get('payments', 'ReportController@payments');
+        Route::get('/invoice/payments', 'ReportController@payments');
         Route::get('payment-types', 'PaymentTypeController@index');
         Route::resource('teacher-settings', 'TeacherSettingsController');
         Route::get('student/lesson/{id}/{day?}', 'StudentLessonController@getStudent');

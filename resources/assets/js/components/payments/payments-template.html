@@ -14,7 +14,7 @@
             <template v-slot="{ columns, row }">
                 <tr>
                     <td>{{ row.v_id }}</td>
-                    <td v-if="row.is_paid === '1'">{{ row.name }}</td>
+                    <td v-if="row.is_paid == '1'">{{ row.name }}</td>
                     <td v-else>--</td>
                     <td>{{ row.total | toCurrency }}</td>
                     <td>{{ row.payment | toCurrency }}</td>

@@ -5,7 +5,7 @@ export default {
     extends: Bar,
     data() {
         return {
-            url: '/web/payments',
+            url: '/web/report/payments',
             backgroundColor: [
                 'green',
                 'midnightblue',

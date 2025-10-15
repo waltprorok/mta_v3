@@ -18,11 +18,12 @@ class PaymentController extends Controller
                 'invoices.created_at as i_created_at',
                 'invoices.created_at as i_updated_at',
                 'students.parent_id',
-                'students.student_id as s_id',
+                'students.student_id',
                 'payment_types.*')
-//            ->where('payment', '>', 0)
-            ->where('parent_id', Auth::user()->id)
-            ->orWhere('s_id', Auth::user()->id)
+            ->where(function ($query) {
+                $query->where('students.parent_id', Auth::user()->id)
+                    ->orWhere('students.student_id', Auth::user()->id);
+            })
             ->orderBy('invoices.id', 'desc')
             ->get();
 
