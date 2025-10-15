@@ -96,7 +96,7 @@ class DashboardController extends Controller
         }
 
         if ($this->isSubscribed()) {
-            return 'Enjoy your subscription.';
+            return 'Subscription activate.';
         }
 
         return '';
