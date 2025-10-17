@@ -58,15 +58,17 @@
                         </div>
                     </div>
                     <hr>
+
                     <div class="row">
                         <div class="col-sm-3">
                             <h6 class="mb-0">Phone</h6>
                         </div>
                         <div class="col-sm-9">
-                            <phone-number-format :data="profile"></phone-number-format>
+                            <phone-number-format :data="profile.phone"></phone-number-format>
                         </div>
                     </div>
                     <hr>
+
                     <div class="row">
                         <div class="col-sm-3">
                             <h6 class="mb-0">Email</h6>
@@ -76,16 +78,28 @@
                         </div>
                     </div>
                     <hr>
+
                     <div v-if="profile.parent" class="row">
                         <div class="col-sm-3">
                             <h6 class="mb-0">Parent Email</h6>
                         </div>
-                        <div class="col-sm-9" v-if="profile.parent">
+                        <div class="col-sm-9" v-if="profile.parent.email">
                             <a :href="'mailto:' + profile.parent.email">{{ profile.parent.email }}</a>
                         </div>
                     </div>
-                    <hr v-if="profile.parent" >
-                    <div class="row">
+                    <hr v-if="profile.parent">
+
+                    <div v-if="profile.parent_phone" class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Parent Phone</h6>
+                        </div>
+                        <div class="col-sm-9" v-if="profile.parent">
+                            <phone-number-format :data="profile.parent_phone"></phone-number-format>
+                        </div>
+                    </div>
+                    <hr v-if="profile.parent_phone">
+
+                    <div v-if="profile.date_of_birth" class="row">
                         <div class="col-sm-3">
                             <h6 class="mb-0">Birthday</h6>
                         </div>
@@ -93,8 +107,9 @@
                             {{ profile.date_of_birth | dateParse('YYYY-MM-DD') | dateFormat('MMMM DD, YYYY') }}
                         </div>
                     </div>
-                    <hr>
-                    <div class="row">
+                    <hr v-if="profile.date_of_birth">
+
+                    <div v-if="profile.address" class="row">
                         <div class="col-sm-3">
                             <h6 class="mb-0">Address</h6>
                         </div>
@@ -103,7 +118,8 @@
                             {{ profile.city }}, {{ profile.state }} {{ profile.zip }}
                         </div>
                     </div>
-                    <hr>
+                    <hr v-if="profile?.address">
+
                     <div class="row">
                         <div class="col-sm-3">
                             <h6 class="mb-0">Next Lesson</h6>

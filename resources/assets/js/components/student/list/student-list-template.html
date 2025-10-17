@@ -156,7 +156,7 @@
                     <td v-text="row.first_name"></td>
                     <td v-text="row.last_name"></td>
                     <td>
-                        <phone-number-format :data="row"></phone-number-format>
+                        <phone-number-format :data="row.phone"></phone-number-format>
                     </td>
                     <td><a :href="'mailto:' + row.email" v-text="row.email"></a></td>
                     <td v-text="row.instrument"></td>
