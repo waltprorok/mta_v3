@@ -1,7 +1,5 @@
 <template>
-    <div>
-        {{ formatPhoneNumber() }}
-    </div>
+    <span>{{ formatPhoneNumber }}</span>
 </template>
 
 
@@ -9,10 +7,10 @@
 export default {
     name: 'PhoneNumberFormat',
     props: {
-        data: String,
-        required: true,
+        data: [String, Number],
+        required: true
     },
-    methods: {
+    computed: {
         formatPhoneNumber: function () {
             if (! this.data) return '';
 
@@ -22,9 +20,9 @@ export default {
                 return digits.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
             } else if (digits.length === 11) {
                 return digits.replace(/(\d{1})(\d{3})(\d{3})(\d{4})/, '$1-$2-$3-$4');
-            } else {
-                return this.data.phone;
             }
+
+            return this.data.phone;
         },
     },
 }
