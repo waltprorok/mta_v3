@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -11,17 +11,17 @@ class SubscribedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public Teacher $teacher;
+    public User $user;
 
     /**
      * Create a new message instance.
      *
-     * @param $teacher
+     * @param $user
      * @return void
      */
-    public function __construct($teacher)
+    public function __construct($user)
     {
-        $this->teacher = $teacher;
+        $this->user = $user;
     }
 
     /**

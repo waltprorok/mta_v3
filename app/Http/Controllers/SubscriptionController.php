@@ -69,6 +69,7 @@ class SubscriptionController extends Controller
 
     public function create(Request $request): RedirectResponse
     {
+        $user = Auth::user();
         $teacher = Auth::user()->getTeacher()->first();
         $plan = Plan::query()->findOrFail($request->get('plan_id'));
         $paymentMethod = $request->get('payment_method');
@@ -88,7 +89,7 @@ class SubscriptionController extends Controller
                 'phone' => $teacher->phone,
             ]);
 
-        Mail::to($teacher->email)->queue(new SubscribedMail($teacher));
+        Mail::to($user->email)->queue(new SubscribedMail($user));
 
         return redirect()->back()->with('success', 'Thank you for subscribing to our service.');
     }
