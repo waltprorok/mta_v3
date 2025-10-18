@@ -11,7 +11,7 @@
 export default {
     name: 'TotalEntries',
     props: {
-        data: Array,
+        list: Array,
         required: true,
     },
     computed: {
