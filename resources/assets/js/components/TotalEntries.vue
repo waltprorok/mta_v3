@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="text-center pb-4" v-show="!hasListData">No Data</div>
+        <div class="text-center pb-4" v-show="! hasListData">No Data</div>
         <div class="pull-left" v-show="hasListData">
             Total: {{ list.length }} entries
         </div>
@@ -12,6 +12,7 @@ export default {
     name: 'TotalEntries',
     props: {
         list: Array,
+        required: true,
     },
     computed: {
         hasListData() {
