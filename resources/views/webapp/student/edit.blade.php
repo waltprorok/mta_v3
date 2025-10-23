@@ -13,7 +13,7 @@
         @include('partials.studentTabs', $data = ['id' => $student->id])
 
         <div class="card">
-            <div class="card-body">
+            <div class="card-body col-10">
                 @if($student == null)
                     <div class="text-center">
                         <p>That student record does not exist.</p>
@@ -21,7 +21,7 @@
                 @else
                     <form class="form-horizontal" method="POST" action="{{ route('student.update') }}" enctype="multipart/form-data">
                         @csrf
-                        <div class="row">
+                        <div class="row pt-2">
                             <div class="col-sm-6">
                                 <div class="form-group {{ $errors->has('first_name') ? ' has-error' : '' }}">
                                     <label for="first_name" class="control-label">First Name <span class="text-danger">*</span></label>
@@ -292,132 +292,137 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
-                                    <label for="address" class="control-label">Address</label>
-                                    <input id="address" type="text" class="form-control" name="address" value="{{ $student->address ?? old('address') }}">
-                                    @if ($errors->has('address'))
-                                        <span class="help-block">
+                        <div id="studentHomeAddress">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
+                                        <label for="address" class="control-label">Address</label>
+                                        <input id="address" type="text" class="form-control" name="address" value="{{ $student->address ?? old('address') }}">
+                                        @if ($errors->has('address'))
+                                            <span class="help-block">
                                         <strong>{{ $errors->first('address') }}</strong>
                                     </span>
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group {{ $errors->has('address_2') ? 'has-error' : '' }}">
-                                    <label for="address_2" class="control-label">Address 2</label>
-                                    <input id="address_2" type="text" class="form-control" placeholder="Apt 34, Suite 123, Building H" name="address_2" value="{{ $student->address_2 ?? old('address_2') }}">
-                                    @if ($errors->has('address_2'))
-                                        <span class="help-block">
+                                <div class="col-sm-6">
+                                    <div class="form-group {{ $errors->has('address_2') ? 'has-error' : '' }}">
+                                        <label for="address_2" class="control-label">Address 2</label>
+                                        <input id="address_2" type="text" class="form-control" placeholder="Apt 34, Suite 123, Building H" name="address_2"
+                                               value="{{ $student->address_2 ?? old('address_2') }}">
+                                        @if ($errors->has('address_2'))
+                                            <span class="help-block">
                                         <strong>{{ $errors->first('address_2') }}</strong>
                                     </span>
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group {{ $errors->has('city') ? 'has-error' : '' }}">
-                                    <label for="city" class="control-label">City</label>
-                                    <input id="city" type="text" class="form-control" name="city" value="{{ $student->city ?? old('city') }}">
-                                    @if ($errors->has('city'))
-                                        <span class="help-block">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group {{ $errors->has('city') ? 'has-error' : '' }}">
+                                        <label for="city" class="control-label">City</label>
+                                        <input id="city" type="text" class="form-control" name="city" value="{{ $student->city ?? old('city') }}">
+                                        @if ($errors->has('city'))
+                                            <span class="help-block">
                                         <strong>{{ $errors->first('city') }}</strong>
                                     </span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group {{ $errors->has('state') ? 'has-error' : '' }}">
-                                    <label for="state" class="control-label">State</label>
-                                    <select class="form-control" id="state" name="state">
-                                        @if ($student->state)
-                                            <option value="{{ $student->state ?? old('state') }}">{{ $student->state }}</option>
-                                        @else
-                                            <option value="" selected="selected">Select a State</option>
                                         @endif
-                                        <option value="AL">Alabama</option>
-                                        <option value="AK">Alaska</option>
-                                        <option value="AZ">Arizona</option>
-                                        <option value="AR">Arkansas</option>
-                                        <option value="CA">California</option>
-                                        <option value="CO">Colorado</option>
-                                        <option value="CT">Connecticut</option>
-                                        <option value="DE">Delaware</option>
-                                        <option value="FL">Florida</option>
-                                        <option value="GA">Georgia</option>
-                                        <option value="HI">Hawaii</option>
-                                        <option value="ID">Idaho</option>
-                                        <option value="IL">Illinois</option>
-                                        <option value="IN">Indiana</option>
-                                        <option value="IA">Iowa</option>
-                                        <option value="KS">Kansas</option>
-                                        <option value="KY">Kentucky</option>
-                                        <option value="LA">Louisiana</option>
-                                        <option value="ME">Maine</option>
-                                        <option value="MD">Maryland</option>
-                                        <option value="MA">Massachusetts</option>
-                                        <option value="MI">Michigan</option>
-                                        <option value="MN">Minnesota</option>
-                                        <option value="MS">Mississippi</option>
-                                        <option value="MO">Missouri</option>
-                                        <option value="MT">Montana</option>
-                                        <option value="NE">Nebraska</option>
-                                        <option value="NV">Nevada</option>
-                                        <option value="NH">New Hampshire</option>
-                                        <option value="NJ">New Jersey</option>
-                                        <option value="NM">New Mexico</option>
-                                        <option value="NY">New York</option>
-                                        <option value="NC">North Carolina</option>
-                                        <option value="ND">North Dakota</option>
-                                        <option value="OH">Ohio</option>
-                                        <option value="OK">Oklahoma</option>
-                                        <option value="OR">Oregon</option>
-                                        <option value="PA">Pennsylvania</option>
-                                        <option value="RI">Rhode Island</option>
-                                        <option value="SC">South Carolina</option>
-                                        <option value="SD">South Dakota</option>
-                                        <option value="TN">Tennessee</option>
-                                        <option value="TX">Texas</option>
-                                        <option value="UT">Utah</option>
-                                        <option value="VT">Vermont</option>
-                                        <option value="VA">Virginia</option>
-                                        <option value="WA">Washington</option>
-                                        <option value="WV">West Virginia</option>
-                                        <option value="WI">Wisconsin</option>
-                                        <option value="WY">Wyoming</option>
-                                    </select>
-                                    @if ($errors->has('state'))
-                                        <span class="help-block"><strong>{{ $errors->first('state') }}</strong></span>
-                                    @endif
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group {{ $errors->has('zip') ? 'has-error' : '' }}">
-                                    <label for="zip" class="control-label">Zip Code</label>
-                                    <input id="zip" type="text" class="form-control" name="zip" value="{{ $student->zip ?? old('zip') }}">
-                                    @if ($errors->has('zip'))
-                                        <span class="help-block"><strong>{{ $errors->first('zip') }}</strong></span>
-                                    @endif
+                                <div class="col-sm-4">
+                                    <div class="form-group {{ $errors->has('state') ? 'has-error' : '' }}">
+                                        <label for="state" class="control-label">State</label>
+                                        <select class="form-control" id="state" name="state">
+                                            @if ($student->state)
+                                                <option value="{{ $student->state ?? old('state') }}">{{ $student->state }}</option>
+                                            @else
+                                                <option value="" selected="selected">Select a State</option>
+                                            @endif
+                                            <option value="AL">Alabama</option>
+                                            <option value="AK">Alaska</option>
+                                            <option value="AZ">Arizona</option>
+                                            <option value="AR">Arkansas</option>
+                                            <option value="CA">California</option>
+                                            <option value="CO">Colorado</option>
+                                            <option value="CT">Connecticut</option>
+                                            <option value="DE">Delaware</option>
+                                            <option value="FL">Florida</option>
+                                            <option value="GA">Georgia</option>
+                                            <option value="HI">Hawaii</option>
+                                            <option value="ID">Idaho</option>
+                                            <option value="IL">Illinois</option>
+                                            <option value="IN">Indiana</option>
+                                            <option value="IA">Iowa</option>
+                                            <option value="KS">Kansas</option>
+                                            <option value="KY">Kentucky</option>
+                                            <option value="LA">Louisiana</option>
+                                            <option value="ME">Maine</option>
+                                            <option value="MD">Maryland</option>
+                                            <option value="MA">Massachusetts</option>
+                                            <option value="MI">Michigan</option>
+                                            <option value="MN">Minnesota</option>
+                                            <option value="MS">Mississippi</option>
+                                            <option value="MO">Missouri</option>
+                                            <option value="MT">Montana</option>
+                                            <option value="NE">Nebraska</option>
+                                            <option value="NV">Nevada</option>
+                                            <option value="NH">New Hampshire</option>
+                                            <option value="NJ">New Jersey</option>
+                                            <option value="NM">New Mexico</option>
+                                            <option value="NY">New York</option>
+                                            <option value="NC">North Carolina</option>
+                                            <option value="ND">North Dakota</option>
+                                            <option value="OH">Ohio</option>
+                                            <option value="OK">Oklahoma</option>
+                                            <option value="OR">Oregon</option>
+                                            <option value="PA">Pennsylvania</option>
+                                            <option value="RI">Rhode Island</option>
+                                            <option value="SC">South Carolina</option>
+                                            <option value="SD">South Dakota</option>
+                                            <option value="TN">Tennessee</option>
+                                            <option value="TX">Texas</option>
+                                            <option value="UT">Utah</option>
+                                            <option value="VT">Vermont</option>
+                                            <option value="VA">Virginia</option>
+                                            <option value="WA">Washington</option>
+                                            <option value="WV">West Virginia</option>
+                                            <option value="WI">Wisconsin</option>
+                                            <option value="WY">Wyoming</option>
+                                        </select>
+                                        @if ($errors->has('state'))
+                                            <span class="help-block"><strong>{{ $errors->first('state') }}</strong></span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group {{ $errors->has('zip') ? 'has-error' : '' }}">
+                                        <label for="zip" class="control-label">Zip Code</label>
+                                        <input id="zip" type="text" class="form-control" name="zip" value="{{ $student->zip ?? old('zip') }}">
+                                        @if ($errors->has('zip'))
+                                            <span class="help-block"><strong>{{ $errors->first('zip') }}</strong></span>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <hr/>
                         <div class="row">
                             <div class="col-sm-6">
+                                @if ($student->photo != null)
+                                    <div class="col-sm-4 col-md-offset-0">
+                                        <div class="form-group">
+                                            <label for="photo" class="control-label">Profile Picture</label>
+                                            <img class="form-control text-center" src="/storage/student/{{ $student->photo }}" alt="{{ $student->photo }}">
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="form-group">
                                     <label for="photo" class="control-label">Add Picture</label>
                                     <input id="photo" type="file" class="form-control" name="photo">
                                 </div>
                             </div>
-                            @if ($student->photo != null)
-                                <div class="col-sm-3 col-md-offset-3">
-                                    <div class="form-group">
-                                        <label for="photo" class="control-label">Profile Picture</label>
-                                        <img class="form-control text-center" src="/storage/student/{{ $student->photo }}" alt="{{ $student->photo }}">
-                                    </div>
-                                </div>
-                            @endif
+
                         </div>
                         <hr/>
                         <div class="pull-left">

@@ -39,17 +39,26 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group pull-left m-1">
-                <button class="btn btn-default btn-rounded" title="complete lessons" v-on:click="showCompleteModal()">Complete Past Lessons</button>
-            </div>
             <div class="form-group pull-right m-1">
                 <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
             </div>
             <div class="form-group pull-right m-1">
-                <button class="btn btn-link" title="reset calendar" v-on:click="resetDates"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                <button class="btn btn-default btn-rounded" title="complete lessons" v-on:click="showCompleteModal()">Complete Past Lessons</button>
             </div>
-            <div class="form-group pull-right form-inline p-1">
-                <label for="end date" class="control-label p-1">To</label>
+            <div class="form-group pull-left form-inline p-1">
+                <label for="start date" class="control-label pl-1 pr-1">From</label>
+                <v-date-picker v-model="dateStart.fromDate" mode="date">
+                    <template v-slot="{ inputValue, inputEvents }">
+                        <input
+                            class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
+                            :value="inputValue"
+                            v-on="inputEvents"
+                        />
+                    </template>
+                </v-date-picker>
+            </div>
+            <div class="form-group pull-left form-inline p-1">
+                <label for="end date" class="control-label pr-1">To</label>
                 <v-date-picker v-model="dateEnd.toDate" mode="date">
                     <template v-slot="{ inputValue, inputEvents }">
                         <input
@@ -60,17 +69,8 @@
                     </template>
                 </v-date-picker>
             </div>
-            <div class="form-group pull-right form-inline p-1">
-                <label for="start date" class="control-label p-1">From</label>
-                <v-date-picker v-model="dateStart.fromDate" mode="date">
-                    <template v-slot="{ inputValue, inputEvents }">
-                        <input
-                            class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
-                            :value="inputValue"
-                            v-on="inputEvents"
-                        />
-                    </template>
-                </v-date-picker>
+            <div class="form-group pull-left form-inline">
+                <button class="btn btn-link" title="reset calendar" v-on:click="resetDates"><i class="fa fa-calendar" aria-hidden="true"></i></button>
             </div>
             <datatable class="table table-responsive-md table-condensed" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
@@ -220,7 +220,7 @@ export default {
         updateLesson: function (id, complete) {
             let self = this;
             self.lesson.id = id;
-            self.lesson.complete = !complete;
+            self.lesson.complete = ! complete;
             let params = Object.assign({}, self.lesson);
             axios.patch('lessons/update/' + id, params)
                 .then(() => {

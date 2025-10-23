@@ -12,7 +12,7 @@
         @include('partials.teacherTabs')
         <div class="card">
             <div class="card-header bg-light">Studio Information</div>
-            <div class="card-body">
+            <div class="card-body col-10">
                 <form class="form-horizontal" method="POST" action="{{ route('teacher.studioUpdate') }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -225,7 +225,7 @@
                         @if ($setting->getTeacher->logo != null)
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label for="logo" class="control-label">Current Logo</label>
+                                    <label for="logo" class="control-label">Current Logo <small>*For Invoices</small></label>
                                     <img class="form-control text-center" src="/storage/teacher/{{ $setting->getTeacher->logo }}" alt="{{ $setting->getTeacher->logo }}">
                                 </div>
                             </div>
@@ -233,7 +233,7 @@
 
                             <div class="col-sm-8">
                             <div class="form-group">
-                                <label for="logo" class="control-label">Update Logo</label>
+                                <label for="logo" class="control-label">Logo <small>*For Invoices</small></label>
                                 <input id="logo" type="file" class="form-control" name="logo">
                             </div>
                         </div>
