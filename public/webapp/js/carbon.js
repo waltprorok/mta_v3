@@ -51,15 +51,19 @@ $(document).ready(function ($) {
     //     $('[name="slug"]').val(title);
     // });
 
+    $("#studentHomeAddress").hide();
+
     $("#at_home").change(function() {
         if ($(this).is(":checked")) {
             $("#at_studio").prop("checked", false);
+            $("#studentHomeAddress").show();
         }
     });
 
     $("#at_studio").change(function() {
         if ($(this).is(":checked")) {
             $("#at_home").prop("checked", false);
+            $("#studentHomeAddress").hide();
         }
     });
 

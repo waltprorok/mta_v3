@@ -34,8 +34,15 @@ export default {
                                         data: this.completed,
                                         backgroundColor: 'rgba(66, 165, 245, 0.5)',
                                         borderColor: '#2196F3',
-                                        borderWidth: 1
+                                        borderWidth: 2,
+                                        tension: 0,
+                                        pointRadius: 4,
+                                        pointBackgroundColor: '#2196F3',
+                                        pointBorderColor: '#fff',
+                                        pointHoverRadius: 6,      // enlarge on hover
+                                        fill: true,
                                     },
+
                                     // { WIP: should this data be available?
                                     //     label: 'Cancelled',
                                     //     data: [0,1,2,3,2,3,4,2,0,1,1,0],

@@ -11,12 +11,9 @@
 
         @include('partials.teacherTabs')
         <div class="card">
-            <div class="card-header bg-light">
-                Studio Information
-            </div>
-            <div class="card-body">
-                <form class="form-horizontal" method="POST" action="{{ route('save.studioSettings') }}"
-                      enctype="multipart/form-data">
+            <div class="card-header bg-light">Studio Information</div>
+            <div class="card-body col-10">
+                <form class="form-horizontal" method="POST" action="{{ route('save.studioSettings') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-sm-6">
@@ -210,13 +207,13 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group{{ $errors->has('logo') ? ' has-error' : '' }}">
-                                <label for="logo" class="control-label">Logo</label>
+                                <label for="logo" class="control-label">Studio Logo <small>*For Invoices</small></label>
                                 <input id="logo" type="file" class="form-control" name="logo" value="{{ old('logo') }}">
                             </div>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Save Settings</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                     <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
                 </form>
             </div>
