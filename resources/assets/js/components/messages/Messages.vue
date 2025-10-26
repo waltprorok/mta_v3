@@ -38,7 +38,7 @@ export default {
 
     filters: {
         short: function (value) {
-            return value.substr(0, 90) + '...';
+            return value.substr(0, 48) + '...';
         }
     },
 

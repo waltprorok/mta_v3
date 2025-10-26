@@ -63,6 +63,7 @@ class LessonController extends Controller
                 'firstDay' => 0,
                 'editable' => false,
                 'selectable' => true,
+                'aspectRatio' => 1.2,
                 'initialView' => Auth::user()->teacherSetting->calendar ?? 'dayGridMonth',
                 'headerToolbar' => [
                     'left' => 'prev,next today',
