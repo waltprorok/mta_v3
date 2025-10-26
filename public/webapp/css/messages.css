@@ -19,7 +19,7 @@ img {
     background: #f8f8f8 none repeat scroll 0 0;
     float: left;
     overflow: hidden;
-    width: 40%;
+    width: 34%;
     border-right: 1px solid #c4c4c4;
 }
 
@@ -174,7 +174,7 @@ img {
 .mesgs {
     float: left;
     padding: 30px 15px 0 25px;
-    width: 60%;
+    width: 64%;
     height: 550px;
     overflow-y: scroll;
 }
