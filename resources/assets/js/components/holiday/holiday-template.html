@@ -158,12 +158,12 @@
                 </select>
             </div>
         </div>
+        <div class="form-group pull-right pl-2">
+            <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
+        </div>
         <div class="form-group pull-right">
             <button type="button" class="btn btn-primary" @click="showHolidayForm=true">Add Holiday</button>
             <button type="button" class="btn btn-primary" @click="showForm=true">Add Time Off</button>
-        </div>
-        <div class="form-group pull-right pr-2">
-            <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
         </div>
         <datatable class="table table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
             <template v-slot="{ columns, row }">
