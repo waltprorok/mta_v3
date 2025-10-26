@@ -2,7 +2,7 @@
     <div class="card">
         <!-- vue js data table -->
         <div class="form-control" v-cloak>
-            <div class="form-group pull-right pr-2">
+            <div class="form-group pull-right">
                 <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
             </div>
             <datatable class="table table-hover table-responsive-md" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
