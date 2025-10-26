@@ -12,7 +12,7 @@
         @include('partials.accountTabs')
         <div class="card-header bg-light">Download Invoices</div>
         <div class="card">
-            <table class="table table-striped">
+            <table class="table table-responsive-md table-striped">
                 <thead class="thead">
                 <tr>
                     <th>Date</th>
