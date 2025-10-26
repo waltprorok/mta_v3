@@ -13,7 +13,7 @@
         @include('partials.studentTabs', $data = ['id' => $student->id])
 
         <div class="card">
-            <div class="card-body col-10">
+            <div class="card-body col-md-10 col-sm-12">
                 @if($student == null)
                     <div class="text-center">
                         <p>That student record does not exist.</p>

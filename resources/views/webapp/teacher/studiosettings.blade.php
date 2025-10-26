@@ -12,7 +12,7 @@
         @include('partials.teacherTabs')
         <div class="card">
             <div class="card-header bg-light">Studio Information</div>
-            <div class="card-body col-10">
+            <div class="card-body col-md-10 col-sm-12">
                 <form class="form-horizontal" method="POST" action="{{ route('teacher.studioUpdate') }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')

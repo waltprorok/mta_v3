@@ -47,10 +47,10 @@
             </div>
             <div class="form-group pull-left form-inline p-1">
                 <label for="start date" class="control-label pl-1 pr-1">From</label>
-                <v-date-picker v-model="dateStart.fromDate" mode="date">
+                <v-date-picker v-model="dateStart.fromDate" mode="date" :popover="{ placement: 'bottom-start', autoHide: false, visibility: 'focus' }">
                     <template v-slot="{ inputValue, inputEvents }">
                         <input
-                            class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
+                            class="form-control px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
                             :value="inputValue"
                             v-on="inputEvents"
                         />
@@ -59,10 +59,10 @@
             </div>
             <div class="form-group pull-left form-inline p-1">
                 <label for="end date" class="control-label pr-1">To</label>
-                <v-date-picker v-model="dateEnd.toDate" mode="date">
+                <v-date-picker v-model="dateEnd.toDate" mode="date" :popover="{ placement: 'bottom-start', autoHide: false, visibility: 'focus' }">
                     <template v-slot="{ inputValue, inputEvents }">
                         <input
-                            class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
+                            class="form-control px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
                             :value="inputValue"
                             v-on="inputEvents"
                         />
