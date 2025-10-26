@@ -128,7 +128,7 @@ img {
 
 .incoming_msg_img {
     display: inline-block;
-    width: 6%;
+    width: 5%;
 }
 
 .received_msg {
@@ -159,6 +159,18 @@ img {
     width: 57%;
 }
 
+@media (max-width: 992px) {
+    .received_withd_msg {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .received_withd_msg {
+        width: 100% !important;
+    }
+}
+
 .mesgs {
     float: left;
     padding: 30px 15px 0 25px;
@@ -185,6 +197,18 @@ img {
 .sent_msg {
     float: right;
     width: 46%;
+}
+
+@media (max-width: 992px) {
+    .sent_msg {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .my-element {
+        width: 100% !important;
+    }
 }
 
 .input_msg_write input {
