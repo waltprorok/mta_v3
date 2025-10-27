@@ -117,7 +117,7 @@
 
     <!-- vue js data table -->
     <div class="form-control" v-cloak>
-        <div class="form-group pull-left">
+        <div class="form-group pull-left pr-2">
             <select id="single-select" v-model="per_page" class="form-control">
                 <option v-for="page in pages" :value="page">{{ page }}</option>
             </select>
@@ -125,11 +125,8 @@
         <div class="form-group pull-right pr-1 pl-2">
             <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
         </div>
-        <div class="input-group pull-left col-md-2 pb-2">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-group"></i></span>
-            </div>
-            <select id="students" class="form-control col-md-6" @change="getOnChangeList($event)">
+        <div class="form-group pull-left">
+            <select id="students" class="form-control" @change="getOnChangeList($event)">
                 <option value="active" selected>Active</option>
                 <option value="leads">Leads</option>
                 <option value="waitlist">Wait List</option>
