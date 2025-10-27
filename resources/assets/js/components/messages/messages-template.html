@@ -25,11 +25,11 @@
                                 <div class="chat_img mr-1">
                                     <img src="/webapp/img/avatar.jpeg" alt="avatar" class="rounded-circle" :width="40">
                                 </div>
-                                <div class="chat_ib flex-grow-1">
-                                    <h5 class="font-weight-bold mb-1">
+                                <div class="chat_ib flex-grow-2">
+                                    <h5 class="font-weight-bold mb-2">
                                         {{ person.user_from.first_name }} {{ person.user_from.last_name }}
                                         <span class="chat_date float-right">{{ person.created_at }}</span>
-                                        <span v-if="person.read === false" class="badge badge-info ml-2">Unread</span>
+                                        <span v-if="person.read === false" class="badge badge-info mr-2">Unread</span>
                                     </h5>
                                     <p class="mb-0">{{ person.body | short }}</p>
                                 </div>
