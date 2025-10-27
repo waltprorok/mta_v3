@@ -23,7 +23,7 @@
                         <div class="col-sm-3">
                             <div class="form-group" :class="error_released_on && classError">
                                 <label for="released_on">Publish Date</label>
-                                <v-date-picker v-model="blog.released_on" mode="date">
+                                <v-date-picker v-model="blog.released_on" mode="date" :popover="{ placement: 'bottom-start', autoHide: false, visibility: 'focus' }">
                                     <template v-slot="{ inputValue, inputEvents }">
                                         <input
                                             class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"

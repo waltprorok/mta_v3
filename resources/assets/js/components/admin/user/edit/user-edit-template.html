@@ -63,6 +63,7 @@
                         <v-date-picker :value="formatDate"
                                        v-model="user.trial_ends_at"
                                        mode="datetime"
+                                       :popover="{ placement: 'bottom-start', autoHide: false, visibility: 'focus' }"
                                        :minute-increment="30"
                                        :model-config="modelConfig">
                             <template v-slot="{ inputValue, inputEvents }">
