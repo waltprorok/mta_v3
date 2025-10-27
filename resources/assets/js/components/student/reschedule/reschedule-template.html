@@ -67,6 +67,7 @@
                         <label for="start_date" class="control-label">Start Date</label>
                         <v-date-picker v-model="startDate"
                                        mode="date"
+                                       :popover="{ placement: 'bottom-start', autoHide: false, visibility: 'focus' }"
                                        :disabled-dates='closed'
                                        :model-config="modelConfig">
                             <template v-slot="{ inputValue, inputEvents }">

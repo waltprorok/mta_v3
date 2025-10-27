@@ -43,7 +43,7 @@
                 <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
             </div>
             <div class="form-group pull-right m-1">
-                <button class="btn btn-default btn-rounded" title="complete lessons" v-on:click="showCompleteModal()">Complete Past Lessons</button>
+                <button class="btn btn-default" title="complete all lessons in date range" v-on:click="showCompleteModal()">Complete Past Lessons</button>
             </div>
             <div class="form-group pull-left form-inline p-1">
                 <label for="start date" class="control-label pl-1 pr-1">From</label>
@@ -69,15 +69,15 @@
                     </template>
                 </v-date-picker>
             </div>
-            <div class="form-group pull-left form-inline">
-                <button class="btn btn-link" title="reset calendar" v-on:click="resetDates"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+            <div class="form-group pull-left form-inline p-1">
+                <button class="btn btn-sm btn-default" title="reset calendar" v-on:click="resetDates">Reset</button>
             </div>
             <datatable class="table table-responsive-md table-condensed" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
                     <tr>
                         <td>
-                            <button class="btn btn-rounded btn-outline-secondary" v-if="! row.complete" @click="updateLesson(row.id, row.complete)" :disabled="isCancelled(row)">Click to Complete</button>
-                            <button class="btn btn-rounded btn-primary" v-if="row.complete" @click="updateLesson(row.id, row.complete)" :disabled="isCancelled(row)">Completed</button>
+                            <button class="btn btn-sm btn-rounded btn-outline-secondary" v-if="! row.complete" @click="updateLesson(row.id, row.complete)" :disabled="isCancelled(row)">Click to Complete</button>
+                            <button class="btn btn-sm btn-rounded btn-primary" v-if="row.complete" @click="updateLesson(row.id, row.complete)" :disabled="isCancelled(row)">Completed</button>
                         </td>
                         <td>{{ row.status }}</td>
                         <td v-if="lessonDayStatusPast(row.end_date)"><span class="badge badge-pill badge-danger">Past</span></td>

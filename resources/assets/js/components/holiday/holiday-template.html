@@ -28,7 +28,7 @@
                                             </div>
                                             <div class="input-group mb-4">
                                                 <label for="start_date" class="control-label pt-4"></label>
-                                                <v-date-picker v-if="holiday.all_day" v-model="holiday.start_date" mode="date">
+                                                <v-date-picker v-if="holiday.all_day" v-model="holiday.start_date" mode="date" :popover="{ placement: 'bottom-start', autoHide: false, visibility: 'focus' }">
                                                     <template v-slot="{ inputValue, inputEvents }">
                                                         <input
                                                                 class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
@@ -37,7 +37,7 @@
                                                         />
                                                     </template>
                                                 </v-date-picker>
-                                                <v-date-picker v-else v-model="holiday.start_date" mode="dateTime" :minute-increment="5">
+                                                <v-date-picker v-else v-model="holiday.start_date" mode="dateTime" :minute-increment="5" :popover="{ placement: 'bottom-start', autoHide: false, visibility: 'focus' }">
                                                     <template v-slot="{ inputValue, inputEvents }">
                                                         <input
                                                                 class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
@@ -47,7 +47,7 @@
                                                     </template>
                                                 </v-date-picker>
                                                 <label for="end_date" class="control-label p-1">To</label>
-                                                <v-date-picker v-if="holiday.all_day" v-model="holiday.end_date" mode="date">
+                                                <v-date-picker v-if="holiday.all_day" v-model="holiday.end_date" mode="date" :popover="{ placement: 'bottom-start', autoHide: false, visibility: 'focus' }">
                                                     <template v-slot="{ inputValue, inputEvents }">
                                                         <input
                                                                 class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
@@ -56,7 +56,7 @@
                                                         />
                                                     </template>
                                                 </v-date-picker>
-                                                <v-date-picker v-else v-model="holiday.end_date" mode="dateTime" :minute-increment="5">
+                                                <v-date-picker v-else v-model="holiday.end_date" mode="dateTime" :minute-increment="5" :popover="{ placement: 'bottom-start', autoHide: false, visibility: 'focus' }">
                                                     <template v-slot="{ inputValue, inputEvents }">
                                                         <input
                                                                 class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300 form-control"
