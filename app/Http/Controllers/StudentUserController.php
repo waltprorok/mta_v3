@@ -81,6 +81,22 @@ class StudentUserController extends Controller
                 'slotMaxTime' => '22:00:00',
                 'fixedWeekCount' => false,
                 'height' => 760,
+            ])->setCallbacks([
+                // On first render, switch to list view if on a small screen
+                'datesSet' => 'function() {
+                const mobile = window.matchMedia("(max-width: 576px)").matches;
+                if (mobile && this.view.type !== "listWeek") this.changeView("listWeek");
+                this.setOption("headerToolbar", mobile
+                    ? { left: "title", center: "today", right: "prev,next" }
+                    : { left: "today prev,next", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek" }
+                    );
+            }',
+                // On resize, toggle between compact and full views
+                'windowResize' => 'function() {
+                const mobile = window.matchMedia("(max-width: 576px)").matches;
+                const target = mobile ? "listWeek" : "dayGridMonth";
+                if (this.view.type !== target) this.changeView(target);
+            }',
             ]);
 
         return view('webapp.calendar.index')->with('calendar', $calendar);

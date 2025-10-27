@@ -68,12 +68,29 @@ class LessonController extends Controller
                 'headerToolbar' => [
                     'left' => 'prev,next today',
                     'center' => 'title',
-                    'right' => 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
+                    'right' => 'dayGridMonth,timeGridWeek,timeGridDay',
                 ],
+
                 'slotMinTime' => Auth::user()->teacherSetting->calendar_min_time ?? '08:00:00',
                 'slotMaxTime' => Auth::user()->teacherSetting->calendar_max_time ?? '22:00:00',
                 'fixedWeekCount' => false,
                 'height' => 840,
+            ])->setCallbacks([
+                // On first render, switch to list view if on a small screen
+                'datesSet' => 'function() {
+                const mobile = window.matchMedia("(max-width: 576px)").matches;
+                if (mobile && this.view.type !== "listWeek") this.changeView("listWeek");
+                this.setOption("headerToolbar", mobile
+                    ? { left: "title", center: "today", right: "prev,next" }
+                    : { left: "today prev,next", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek" }
+                    );
+            }',
+                // On resize, toggle between compact and full views
+                'windowResize' => 'function() {
+                const mobile = window.matchMedia("(max-width: 576px)").matches;
+                const target = mobile ? "listWeek" : "dayGridMonth";
+                if (this.view.type !== target) this.changeView(target);
+            }',
             ]);
 
         return view('webapp.calendar.index')->with('calendar', $calendar);
