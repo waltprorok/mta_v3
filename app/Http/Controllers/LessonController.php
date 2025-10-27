@@ -90,6 +90,10 @@ class LessonController extends Controller
                 const mobile = window.matchMedia("(max-width: 576px)").matches;
                 const target = mobile ? "listWeek" : "dayGridMonth";
                 if (this.view.type !== target) this.changeView(target);
+                  this.setOption("headerToolbar", mobile
+                    ? { left: "title", center: "today", right: "prev,next"  }
+                    : { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek" }
+                );
             }',
             ]);
 
