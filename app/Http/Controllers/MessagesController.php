@@ -25,6 +25,11 @@ class MessagesController extends Controller
     {
         $user = Auth::user();
 
+        if ($user->isAdmin()) {
+            $persons = $this->messageService->getUsers(Student::ACTIVE);
+            return response()->json(['persons' => $persons, 'messages' => [], 'user' => $user, ]);
+        }
+
         $checkMessages = Message::query()
             ->with('userFrom:id,first_name,last_name')
             ->where('user_id_to', $user->id)

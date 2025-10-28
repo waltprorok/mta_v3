@@ -20,6 +20,7 @@ export default {
             },
             users: [],
             user: {
+                admin: false,
                 teacher: false,
                 student: false,
                 parent: false,
@@ -38,7 +39,7 @@ export default {
 
     filters: {
         short: function (value) {
-            return value.substr(0, 48) + '...';
+            return value.substr(0, 50) + '...';
         }
     },
 
@@ -108,6 +109,9 @@ export default {
                     if (this.persons) {
                         this.message.user_id_to = this.persons[0].user_id_from;
                     }
+                    if (this.user.admin) {
+                        this.fromList = true;
+                    }
                 })
                 .catch((error) => {
                     console.log(error);
@@ -143,6 +147,12 @@ export default {
         isDisabled: function () {
             return this.message.body === null || this.message.body === '';
         },
+
+        handleKeydownSend: function (e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                this.createMessage()
+            }
+        }
     }
 }
 </script>

@@ -153,6 +153,11 @@ class User extends Authenticatable
         return $this->hasMany(Lesson::class, 'teacher_id');
     }
 
+    public function message(): HasOne
+    {
+        return $this->hasOne(Message::class, 'user_id_to');
+    }
+
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class, 'user_id_to');

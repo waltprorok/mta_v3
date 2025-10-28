@@ -17,19 +17,19 @@
                 </div>
 
                 <!-- Chat People List -->
-                <div class="inbox_chat px-3">
+                <div class="inbox_chat">
                     <div v-for="(person, index) in persons" :key="index" v-if="!fromList">
-                        <div class="chat_list py-2" @click="fetchConversationMessages(person.user_id_from, index)"
+                        <div class="chat_list" @click="fetchConversationMessages(person.user_id_from, index)"
                              :class="{active_chat: active_person_chat_id === index}">
                             <div class="d-flex">
-                                <div class="chat_img mr-1">
-                                    <img src="/webapp/img/avatar.jpeg" alt="avatar" class="rounded-circle" :width="40">
+                                <div class="chat_img">
+                                    <img src="/webapp/img/avatar.jpeg" alt="avatar" class="rounded-circle" :width="34">
                                 </div>
                                 <div class="chat_ib flex-grow-2">
                                     <h5 class="font-weight-bold mb-2">
                                         {{ person.user_from.first_name }} {{ person.user_from.last_name }}
                                         <span class="chat_date float-right">{{ person.created_at }}</span>
-                                        <span v-if="person.read === false" class="badge badge-info mr-2">Unread</span>
+                                        <span v-if="person.read === false" class="badge badge-info mr-2 mb-2">Unread</span>
                                     </h5>
                                     <p class="mb-0">{{ person.body | short }}</p>
                                 </div>
@@ -38,17 +38,18 @@
                     </div>
 
                     <div v-for="(person, index) in persons" :key="index" v-if="fromList">
-                        <div class="chat_list py-2" @click="fetchConversationMessages(person.id, index)"
+                        <div class="chat_list" @click="fetchConversationMessages(person.id, index)"
                              :class="{active_chat: active_person_chat_id === index}">
                             <div class="d-flex">
-                                <div class="chat_img mr-1">
-                                    <img src="/webapp/img/avatar.jpeg" alt="avatar" class="rounded-circle" :width="40">
+                                <div class="chat_img">
+                                    <img src="/webapp/img/avatar.jpeg" alt="avatar" class="rounded-circle" :width="34">
                                 </div>
                                 <div class="chat_ib flex-grow-1">
                                     <h5 class="font-weight-bold mb-1">
                                         {{ person.first_name }} {{ person.last_name }}
                                         <span class="chat_date float-right">
-                                            Joined: {{ person.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY') }}
+                                            <span class="chat_date float-right">Joined: {{ person.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY') }}</span>
+                                            <span v-if="user.admin && person.messages.length > 0 && person.messages[0].read === false" class="badge badge-info mr-2 mb-2">Unread</span>
                                         </span>
                                     </h5>
                                 </div>
@@ -94,7 +95,7 @@
                     </div>
                 </div>
                 <!-- Message Input -->
-                <form action="#" @submit.prevent="createMessage()">
+                <form action="#" @submit.prevent="createMessage" @keydown="handleKeydownSend">
                     <div class="type_msg">
                         <div class="input_msg_write">
                             <textarea class="form-control mb-2" rows="3" v-model="message.body" placeholder="Write a message..."></textarea>
