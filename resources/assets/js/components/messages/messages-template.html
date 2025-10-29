@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="col-md-10 col-sm-12">
     <div class="card">
         <div class="row no-gutters">
             <div class="col-md-4 col-12 border-right inbox_people">
@@ -23,10 +23,10 @@
                              :class="{active_chat: active_person_chat_id === index}">
                             <div class="d-flex">
                                 <div class="chat_img">
-                                    <img src="/webapp/img/avatar.jpeg" alt="avatar" class="rounded-circle" :width="34">
+                                    <img src="/webapp/img/avatar.jpeg" alt="avatar" class="rounded-circle img-fluid">
                                 </div>
                                 <div class="chat_ib flex-grow-2">
-                                    <h5 class="font-weight-bold mb-2">
+                                    <h5 class="font-weight-bold mb-1">
                                         {{ person.user_from.first_name }} {{ person.user_from.last_name }}
                                         <span class="chat_date float-right">{{ person.created_at }}</span>
                                         <span v-if="person.read === false" class="badge badge-info mr-2 mb-2">Unread</span>
@@ -42,7 +42,7 @@
                              :class="{active_chat: active_person_chat_id === index}">
                             <div class="d-flex">
                                 <div class="chat_img">
-                                    <img src="/webapp/img/avatar.jpeg" alt="avatar" class="rounded-circle" :width="34">
+                                    <img src="/webapp/img/avatar.jpeg" alt="avatar" class="rounded-circle img-fluid">
                                 </div>
                                 <div class="chat_ib flex-grow-1">
                                     <h5 class="font-weight-bold mb-1">
@@ -63,7 +63,7 @@
                 </div>
             </div>
             <!-- Messages Panel -->
-            <div class="col-md-6 col-12 mesgs p-3 pb-2" v-chat-scroll>
+            <div class="col-md-8 col-12 mesgs p-3 pb-2" v-chat-scroll>
                 <!-- Message History -->
                 <div class="msg_history">
                     <div v-for="message in messages">
@@ -71,7 +71,7 @@
                         <div class="incoming_msg mb-3" v-show="message.user_from.parent || message.user_from.student || message.user_from.admin">
                             <div class="d-flex">
 <!--                                <div class="incoming_msg_img mr-1">-->
-<!--                                    <img src="/webapp/img/avatar.jpeg" alt="avatar" class="rounded-circle" :width="40">-->
+<!--                                    <img src="/webapp/img/avatar.jpeg" alt="avatar" class="rounded-circle img-fluid">-->
 <!--                                </div>-->
                                 <div class="received_msg">
                                     <div class="received_withd_msg">

@@ -100,7 +100,7 @@ img {
 
 .chat_ib {
     float: left;
-    padding: 0 0 0 15px;
+    padding: 0 0 0 6px;
     width: 88%;
 }
 
@@ -156,18 +156,19 @@ img {
 }
 
 .received_withd_msg {
-    width: 57%;
+    float: left;
+    max-width: 75%;
 }
 
 @media (max-width: 992px) {
     .received_withd_msg {
-        width: 100% !important;
+        max-width: 100% !important;
     }
 }
 
 @media (max-width: 576px) {
     .received_withd_msg {
-        width: 100% !important;
+        max-width: 100% !important;
     }
 }
 
@@ -196,18 +197,18 @@ img {
 
 .sent_msg {
     float: right;
-    width: 46%;
+    max-width: 75%;
 }
 
 @media (max-width: 992px) {
     .sent_msg {
-        width: 100% !important;
+        max-width: 100% !important;
     }
 }
 
 @media (max-width: 576px) {
-    .my-element {
-        width: 100% !important;
+    .sent_msg {
+        max-width: 100% !important;
     }
 }
 

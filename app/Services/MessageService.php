@@ -52,7 +52,7 @@ class MessageService
     {
         return User::with(['messages' => function ($query) {
             $query->where(['user_id_from' => Auth::id(), 'read' => false])
-                ->orderBy('id', 'desc');
+                ->latest();
         }])
             ->where(['is_active' => true, 'teacher' => true])
             ->orderBy('first_name')
