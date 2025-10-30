@@ -70,7 +70,10 @@ class StudentLessonController extends Controller
 
     public function show($id)
     {
-        $lesson = Lesson::query()->where('id', $id)->where('teacher_id', Auth::id())->firstOrFail();
+        $lesson = Lesson::query()
+            ->where(['id' => $id, 'teacher_id' => Auth::id()])
+            ->firstOrFail();
+
         $student = $lesson->student;
 
         return view('webapp.student.reschedule', compact('student'));
@@ -398,17 +401,23 @@ class StudentLessonController extends Controller
         $lesson->billing_rate_id = $request->get('billing_rate_id');
         $lesson->color = $request->get('color');
 
-        if ($this->hasStartTimeChanged($request) && $this->hasEndTimeChanged($request)) {
-            $duration = $this->interval($request->get('start_time'), $request->get('end_time'));
-            $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
-            $lesson->end_date = $request->get('start_date') . ' ' . $duration;
-            $lesson->interval = (int)$request->get('end_time');
-        }
+        $startTime = $request->get('start_time');
+        $endTime = $request->get('end_time');
+        $interval = $request->get('interval');
+        $startDate = $request->get('start_date');
 
-        if ($this->hasStartTimeChanged($request) && ! $this->hasEndTimeChanged($request)) {
-            $duration = $this->interval($request->get('start_time'), $request->get('interval'));
-            $lesson->start_date = $request->get('start_date') . ' ' . $request->get('start_time');
-            $lesson->end_date = $request->get('start_date') . ' ' . $duration;
+        if ($this->hasStartTimeChanged($request)) {
+            // Determine which end/interval value to use
+            $endValue = $this->hasEndTimeChanged($request) ? $endTime : $interval;
+
+            $duration = $this->interval($startTime, $endValue);
+
+            $lesson->start_date = "{$startDate} {$startTime}";
+            $lesson->end_date = "{$startDate} {$duration}";
+
+            if ($this->hasEndTimeChanged($request)) {
+                $lesson->interval = (int) $endTime;
+            }
         }
 
         $lesson->notes = $request->get('notes');
