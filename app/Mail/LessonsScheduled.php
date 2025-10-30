@@ -26,7 +26,7 @@ class LessonsScheduled extends Mailable
     public function __construct($student, $lessons, $status = null)
     {
         $this->student = $student;
-        $this->status = $status;
+        $this->status  = $status;
         $this->teacher = $student->getTeacher;
         $this->lessons = $lessons;
     }

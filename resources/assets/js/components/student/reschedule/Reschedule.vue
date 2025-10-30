@@ -122,21 +122,11 @@ export default {
             axios.delete('/web/lesson/delete/' + id, params)
                 .then(() => {
                     window.location = '/calendar';
-                    this.$notify({
-                        type: 'warn',
-                        title: 'Deleted',
-                        text: 'Lesson was deleted.',
-                        duration: 10000,
-                    });
+                    this.notifyWarning('Lesson was deleted.')
                 })
                 .catch((error) => {
                     console.log(error);
-                    this.$notify({
-                        type: 'error',
-                        title: 'Error',
-                        text: 'Could not delete lesson.',
-                        duration: 10000,
-                    });
+                    this.notifyError('Could not delete lesson.')
                 });
         },
 
@@ -240,7 +230,7 @@ export default {
         },
 
         cancel: function () {
-            window.location ='/calendar';
+            window.location = '/calendar';
         },
 
         getDates: function () {
@@ -249,6 +239,7 @@ export default {
             let id = parameters.split('/').pop();
             axios.get('/web/lesson/reschedule/' + id + '/' + self.startDate)
                 .then((response) => {
+                    this.clearErrorData();
                     this.lesson = response.data.lesson;
                     this.startDate = self.startDate;
                     this.student = response.data.lesson.student;
@@ -261,12 +252,7 @@ export default {
                 .catch((error) => {
                     console.log(error);
                     self.getErrorMessage(error);
-                    this.$notify({
-                        type: 'error',
-                        title: 'Error',
-                        text: 'Could not load lesson.',
-                        duration: 10000,
-                    });
+                    this.notifyError('Could not load lesson.');
                 });
         },
 
@@ -302,45 +288,67 @@ export default {
             self.id = id;
         },
 
-        updateLesson: function () {
+        updateLesson() {
             this.disableUpdateButton = true;
-            let self = this;
-            if (self.lesson.end_time && self.lesson.start_time === undefined) {
-                this.disableUpdateButton = false;
-                return this.$notify({
-                    type: 'warn',
-                    title: 'Warning',
-                    text: 'Select start time.',
-                    duration: 10000,
-                });
+            const { lesson, student, startDate } = this;
+            if (lesson.status === 'Re-Scheduled') {
+                if (! lesson.start_time) {
+                    this.notifyWarning('Select start time.');
+                    return;
+                }
+
+                if (! lesson.end_time) {
+                    this.notifyWarning('Select a duration.');
+                    return;
+                }
+
+                lesson.student_id = student.id;
+                lesson.start_date = startDate;
             }
-            self.lesson.student_id = this.student.id;
-            self.lesson.start_date = this.startDate;
-            let params = Object.assign({}, self.lesson);
+
+            const params = { ...lesson };
+
             axios.patch('/web/lesson/reschedule/update', params)
                 .then(() => {
-                    self.clearErrorData();
-                    self.getData();
-                    this.disableUpdateButton = false;
-                    this.$notify({
-                        type: 'success',
-                        title: 'Success',
-                        text: 'Lesson was updated.',
-                        duration: 10000,
-                    });
+                    this.clearErrorData();
+                    this.getData();
+                    this.notifySuccess('Lesson was updated.');
                 })
                 .catch((error) => {
-                    console.log(error);
+                    console.error(error);
+                    this.getErrorMessage(error);
+                    this.notifyError('Could not update lesson.');
+                })
+                .finally(() => {
                     this.disableUpdateButton = false;
-                    self.getErrorMessage(error);
-                    this.$notify({
-                        type: 'error',
-                        title: 'Error',
-                        text: 'Could not update lesson.',
-                        duration: 10000,
-                    });
                 });
         },
+
+        notifyWarning(message) {
+            this.disableUpdateButton = false;
+            this.$notify({
+                type: 'warn',
+                title: 'Warning',
+                text: message,
+                duration: 6000,
+            });
+        },
+        notifySuccess(message) {
+            this.$notify({
+                type: 'success',
+                title: 'Success',
+                text: message,
+                duration: 6000,
+            });
+        },
+        notifyError(message) {
+            this.$notify({
+                type: 'error',
+                title: 'Error',
+                text: message,
+                duration: 6000,
+            });
+        }
     }
 }
 </script>
