@@ -53,18 +53,36 @@ $(document).ready(function ($) {
 
     $("#studentHomeAddress").hide();
 
-    $("#at_home").change(function() {
-        if ($(this).is(":checked")) {
-            $("#at_studio").prop("checked", false);
-            $("#studentHomeAddress").show();
+    // Ensure only one switch can be selected at a time
+    function syncToggles(changed) {
+        const atHome = $("#at_home");
+        const atStudio = $("#at_studio");
+
+        if (changed === "home") {
+            if (atHome.is(":checked")) {
+                atStudio.prop("checked", false);
+                $("#studentHomeAddress").show();
+            } else {
+                atStudio.prop("checked", true);
+                $("#studentHomeAddress").hide();
+            }
+        } else if (changed === "studio") {
+            if (atStudio.is(":checked")) {
+                atHome.prop("checked", false);
+                $("#studentHomeAddress").hide();
+            } else {
+                atHome.prop("checked", true);
+                $("#studentHomeAddress").show();
+            }
         }
+    }
+
+    $("#at_home").change(function () {
+        syncToggles("home");
     });
 
-    $("#at_studio").change(function() {
-        if ($(this).is(":checked")) {
-            $("#at_home").prop("checked", false);
-            $("#studentHomeAddress").hide();
-        }
+    $("#at_studio").change(function () {
+        syncToggles("studio");
     });
 
     $(".table-row").click(function () {

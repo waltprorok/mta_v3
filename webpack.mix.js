@@ -24,8 +24,15 @@ mix.js('resources/assets/js/app.js', 'public/js')
         }
     })
 
+const path = require('path');
+
 mix.webpackConfig({
     stats: 'minimal',
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, 'resources/assets/js'),
+        },
+    },
 });
 
 if (mix.inProduction()) {
@@ -34,3 +41,6 @@ if (mix.inProduction()) {
 } else {
     mix.sourceMaps();
 }
+
+
+
