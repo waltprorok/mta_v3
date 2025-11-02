@@ -4,6 +4,7 @@
 import PhoneNumberFormat from "../../PhoneNumberFormat";
 import {dateFormat} from "vue-filter-date-format";
 import {dateParse} from "@vuejs-community/vue-filter-date-parse";
+import notificationService from '@/services/notificationService';
 
 let today = new Date();
 const year = today.getFullYear();
@@ -252,7 +253,7 @@ export default {
                 .catch((error) => {
                     console.log(error);
                     self.getErrorMessage(error);
-                    this.notifyError('Could not load lesson.');
+                    notificationService.notifyWarning(this, 'Could not load lesson.');
                 });
         },
 
@@ -290,15 +291,17 @@ export default {
 
         updateLesson() {
             this.disableUpdateButton = true;
-            const { lesson, student, startDate } = this;
+            const {lesson, student, startDate} = this;
             if (lesson.status === 'Re-Scheduled') {
                 if (! lesson.start_time) {
-                    this.notifyWarning('Select start time.');
+                    this.disableUpdateButton = false;
+                    notificationService.notifyWarning(this, 'Select start time.')
                     return;
                 }
 
                 if (! lesson.end_time) {
-                    this.notifyWarning('Select a duration.');
+                    this.disableUpdateButton = false;
+                    notificationService.notifyWarning(this, 'Select a duration.')
                     return;
                 }
 
@@ -306,49 +309,23 @@ export default {
                 lesson.start_date = startDate;
             }
 
-            const params = { ...lesson };
+            const params = {...lesson};
 
             axios.patch('/web/lesson/reschedule/update', params)
                 .then(() => {
                     this.clearErrorData();
                     this.getData();
-                    this.notifySuccess('Lesson was updated.');
+                    notificationService.notifySuccess(this, 'Lesson was updated.');
                 })
                 .catch((error) => {
                     console.error(error);
                     this.getErrorMessage(error);
-                    this.notifyError('Could not update lesson.');
+                    notificationService.notifyError(this, 'Could not update lesson.');
                 })
                 .finally(() => {
                     this.disableUpdateButton = false;
                 });
         },
-
-        notifyWarning(message) {
-            this.disableUpdateButton = false;
-            this.$notify({
-                type: 'warn',
-                title: 'Warning',
-                text: message,
-                duration: 6000,
-            });
-        },
-        notifySuccess(message) {
-            this.$notify({
-                type: 'success',
-                title: 'Success',
-                text: message,
-                duration: 6000,
-            });
-        },
-        notifyError(message) {
-            this.$notify({
-                type: 'error',
-                title: 'Error',
-                text: message,
-                duration: 6000,
-            });
-        }
     }
 }
 </script>
