@@ -22,6 +22,7 @@ class DashboardController extends Controller
         $subscriptionType = $this->getSubscriptionType();
         $subscriptionText = $this->getSubscriptionText();
         $subscriptionMessage = $this->getSubscriptionMessage();
+        $weeklyDates = now()->startOfWeek()->format('M d - ') . now()->endOfWeek()->format('M d');
 
         return response()->json([
             'activeStudentCount' => $activeStudentCount,
@@ -35,6 +36,7 @@ class DashboardController extends Controller
             'subscriptionType' => $subscriptionType,
             'subscriptionText' => $subscriptionText,
             'subscriptionMessage' => $subscriptionMessage,
+            'weeklyDates' => $weeklyDates,
         ]);
     }
 

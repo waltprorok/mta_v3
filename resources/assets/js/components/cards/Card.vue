@@ -1,14 +1,18 @@
 <template>
-    <div class="col-md-3">
-        <div class="card p-4">
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm p-3 h-100">
             <div class="card-body d-flex justify-content-between align-items-center">
-                <div>
-                    <span class="h4 d-block font-weight-normal mb-2">{{ count }}</span>
-                    <span class="font-weight-light">{{ title }}</span>
+
+                <div class="d-flex flex-column justify-content-center">
+                    <div class="h4 font-weight-bold mb-1">{{ count }}</div>
+                    <div class="text-muted">{{ title }}</div>
                 </div>
 
-                <div class="h2 text-muted">
-                    <i :class="icon" aria-hidden="true"></i>
+                <div class="d-flex flex-column align-items-center text-muted">
+                    <div class="h2 text-muted mb-1">
+                        <i :class="icon" aria-hidden="true"></i>
+                    </div>
+                    <div class="small">{{ dates }}</div>
                 </div>
             </div>
         </div>
@@ -33,6 +37,10 @@ export default {
         icon: {
             type: String,
             required: true,
+        },
+        dates: {
+            type: String,
+            default: null,
         }
     }
 }
