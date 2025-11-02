@@ -3,9 +3,9 @@
         <div class="col-12">
             <div class="row">
                 <card :count="activeStudentCount" :title="`Active Students`" :icon="`fa fa-users`"></card>
-                <card :count="lessonsThisWeek" :title="`Lessons This Week`" :icon="`fa fa-calendar`"></card>
-                <card :count="cancelledLessonsThisWeek" :title="`Cancelled Lessons This Week`" :icon="`fa fa-calendar-times-o`"></card>
-                <card :count="openTimeBlocks" :title="`Open Time Blocks This Week`" :icon="`fa fa-clock-o`"></card>
+                <card :count="lessonsThisWeek" :title="`Lessons`" :icon="`fa fa-calendar`" :dates="weeklyDates"></card>
+                <card :count="cancelledLessonsThisWeek" :title="`Cancelled Lessons`" :icon="`fa fa-calendar-times-o`" :dates="weeklyDates"></card>
+                <card :count="openTimeBlocks" :title="`Open Time Blocks`" :icon="`fa fa-clock-o`" :dates="weeklyDates"></card>
                 <card :count="todayIncome" :title="`Today's Income`" :icon="`fa fa-money`"></card>
                 <card :count="weeklyIncome" :title="`Weekly Income`" :icon="`fa fa-money`"></card>
                 <card :count="monthlyIncome" :title="`Monthly Income`" :icon="`fa fa-money`"></card>
@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header bg-light">
                             Completed Lessons
                         </div>
                         <div class="card-body p-0">
@@ -49,6 +49,7 @@ export default {
             subscriptionType: '',
             subscriptionText: '',
             subscriptionMessage: '',
+            weeklyDates: '',
         }
     },
 
@@ -68,6 +69,7 @@ export default {
                     this.lessonsThisWeek = response.data.lessonsThisWeek;
                     this.cancelledLessonsThisWeek = response.data.cancelledLessonsThisWeek;
                     this.openTimeBlocks = response.data.openTimeBlocks;
+                    this.weeklyDates = response.data.weeklyDates;
                     this.$notify({
                         type: this.subscriptionType = response.data.subscriptionType,
                         title: this.subscriptionText = response.data.subscriptionText,
