@@ -199,25 +199,25 @@ class DashboardController extends Controller
             ->get();
     }
 
-    private function getTodayIncome(): int
+    private function getTodayIncome(): string
     {
         $lessonsToday = $this->getLessonsToday();
         return $this->calculateLessonTotals($lessonsToday);
     }
 
-    private function getWeeklyIncome(): int
+    private function getWeeklyIncome(): string
     {
         $lessonsInWeek = $this->getLessonsThisWeekly();
         return $this->calculateLessonTotals($lessonsInWeek);
     }
 
-    private function getMonthlyIncome(): int
+    private function getMonthlyIncome(): string
     {
         $lessonsInMonth = $this->getLessonsThisMonth();
         return $this->calculateLessonTotals($lessonsInMonth);
     }
 
-    private function getYearlyIncome(): int
+    private function getYearlyIncome(): string
     {
         $lessonsInYear = $this->getLessonsThisYearly();
         return $this->calculateLessonTotals($lessonsInYear);
@@ -265,6 +265,8 @@ class DashboardController extends Controller
             }
         }
 
-        return $amount ?? 0;
+        $formattedAmount = '$' . number_format($amount, 2);
+
+        return $formattedAmount;
     }
 }

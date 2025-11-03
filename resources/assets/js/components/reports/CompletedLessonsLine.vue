@@ -81,7 +81,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load completed lessons report.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },

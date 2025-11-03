@@ -67,7 +67,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load invoice payments report.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },

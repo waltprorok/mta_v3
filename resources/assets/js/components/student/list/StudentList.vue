@@ -117,7 +117,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'The student was added.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .then(() => {
@@ -157,7 +157,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load student list.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -173,7 +173,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load student list.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },

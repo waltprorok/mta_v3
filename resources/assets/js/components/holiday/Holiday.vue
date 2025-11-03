@@ -126,7 +126,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'Date was created.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -135,7 +135,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not create date.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -151,7 +151,7 @@ export default {
                         type: 'warn',
                         title: 'Deleted',
                         text: 'Date was deleted.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -160,7 +160,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not delete date.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -190,7 +190,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'Your settings have been saved.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -199,7 +199,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not save settings.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -217,7 +217,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'Your settings have been saved.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -226,7 +226,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not save settings.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -248,7 +248,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load dates.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -264,7 +264,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load dates.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -294,7 +294,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not show date.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -311,7 +311,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'Updated date.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -320,7 +320,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not update date.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },

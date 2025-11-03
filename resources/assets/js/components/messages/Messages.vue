@@ -68,7 +68,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not save message.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -94,7 +94,7 @@ export default {
                     type: 'error',
                     title: 'Error',
                     text: 'Could not load users list.',
-                    duration: 10000,
+                    duration: 6000,
                 });
             });
         },
@@ -119,7 +119,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load messages.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -139,7 +139,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load messages.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },

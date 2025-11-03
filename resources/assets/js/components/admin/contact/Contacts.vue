@@ -111,7 +111,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load contacts.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -130,7 +130,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'The contact was created.',
-                        duration: 10000,
+                        duration: 6000,
                     })
                 })
                 .catch((error) => {
@@ -168,7 +168,7 @@ export default {
                         type: 'warn',
                         title: 'Updated',
                         text: 'The contact record was updated.',
-                        duration: 10000,
+                        duration: 6000,
                     })
                 })
                 .catch((error) => {
@@ -177,7 +177,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not update contact record.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -196,7 +196,7 @@ export default {
                         type: 'success',
                         title: 'Updated',
                         text: 'The contact reply was updated.',
-                        duration: 10000,
+                        duration: 6000,
                     })
                 })
                 .catch((error) => {
@@ -205,7 +205,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not update contact record.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -223,7 +223,7 @@ export default {
                         type: 'warn',
                         title: 'Deleted',
                         text: 'The contact was deleted.',
-                        duration: 10000,
+                        duration: 6000,
                     })
                 })
                 .catch((error) => {
@@ -232,7 +232,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not delete contact.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },

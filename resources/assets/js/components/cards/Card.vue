@@ -24,10 +24,13 @@ export default {
     name: 'Card',
     props: {
         count: {
-            type: Number,
+            type: [Number, String],
             required: true,
             validator: (value) => {
-                return Number.isInteger(value);
+                return (
+                    typeof value === 'string' ||
+                    (typeof value === 'number' && Number.isInteger(value))
+                );
             }
         },
         title: {

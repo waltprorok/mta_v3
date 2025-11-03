@@ -199,7 +199,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load lessons list.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -231,7 +231,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'The lesson was updated.',
-                        duration: 10000,
+                        duration: 6000,
                     })
                 })
                 .catch((error) => {
@@ -241,7 +241,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'The lesson failed to update.',
-                        duration: 10000,
+                        duration: 6000,
                     })
                 });
         },
@@ -259,7 +259,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'The past lessons were completed successfully.',
-                        duration: 10000,
+                        duration: 6000,
                     })
                 })
                 .catch((error) => {
@@ -270,7 +270,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'The past lessons failed to complete.',
-                        duration: 10000,
+                        duration: 6000,
                     })
                 });
         }

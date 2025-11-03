@@ -68,7 +68,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load teacher settings.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -84,7 +84,7 @@ export default {
                     type: 'warn',
                     title: 'Warning',
                     text: 'Min time can not be greater than max time.',
-                    duration: 10000,
+                    duration: 6000,
                 });
             }
             let params = Object.assign({}, self.settings);
@@ -95,7 +95,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'Saved setting(s).',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -104,7 +104,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not create teacher setting.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -116,7 +116,7 @@ export default {
                     type: 'warn',
                     title: 'Warning',
                     text: 'Min time can not be greater than max time.',
-                    duration: 10000,
+                    duration: 6000,
                 });
             }
             let params = Object.assign({}, self.settings);
@@ -127,7 +127,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'Updated setting.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -136,7 +136,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not update teacher settings.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
