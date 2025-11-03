@@ -136,7 +136,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'The blog post was created.',
-                        duration: 10000,
+                        duration: 6000,
                     })
                 })
                 .catch((error) => {

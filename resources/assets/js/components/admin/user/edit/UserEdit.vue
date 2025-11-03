@@ -70,7 +70,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load user.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -99,7 +99,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'Updated user.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -108,7 +108,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not update user.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },

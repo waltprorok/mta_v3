@@ -54,7 +54,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load student statuses report.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },

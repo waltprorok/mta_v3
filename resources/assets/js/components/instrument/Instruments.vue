@@ -87,7 +87,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'Instrument was created.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -96,7 +96,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not create instrument.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -112,7 +112,7 @@ export default {
                         type: 'warn',
                         title: 'Deleted',
                         text: 'Instrument was deleted.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -121,7 +121,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not delete instrument.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -143,7 +143,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load instruments.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -169,7 +169,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not show instrument.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -186,7 +186,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'Updated instrument.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -195,7 +195,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not update instrument.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },

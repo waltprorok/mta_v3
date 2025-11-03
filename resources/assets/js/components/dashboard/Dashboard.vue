@@ -3,8 +3,8 @@
         <div class="col-12">
             <div class="row">
                 <card :count="activeStudentCount" :title="`Active Students`" :icon="`fa fa-users`"></card>
-                <card :count="lessonsThisWeek" :title="`Lessons`" :icon="`fa fa-calendar`" :dates="weeklyDates"></card>
-                <card :count="cancelledLessonsThisWeek" :title="`Cancelled Lessons`" :icon="`fa fa-calendar-times-o`" :dates="weeklyDates"></card>
+                <card :count="lessonsThisWeek" :title="`Lesson(s)`" :icon="`fa fa-calendar`" :dates="weeklyDates"></card>
+                <card :count="cancelledLessonsThisWeek" :title="`Cancelled Lesson(s)`" :icon="`fa fa-calendar-times-o`" :dates="weeklyDates"></card>
                 <card :count="openTimeBlocks" :title="`Open Time Blocks`" :icon="`fa fa-clock-o`" :dates="weeklyDates"></card>
                 <card :count="todayIncome" :title="`Today's Income`" :icon="`fa fa-money`"></card>
                 <card :count="weeklyIncome" :title="`Weekly Income`" :icon="`fa fa-money`"></card>
@@ -83,7 +83,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load dashboard data.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },

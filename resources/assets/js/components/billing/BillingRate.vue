@@ -119,7 +119,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'Billing rate created.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -128,7 +128,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not create billing rate.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -144,7 +144,7 @@ export default {
                         type: 'warn',
                         title: 'Deleted',
                         text: 'Billing rate was deleted.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -153,7 +153,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not delete billing rate.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -176,7 +176,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load billing rates.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -245,7 +245,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'Updated billing rate.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -254,7 +254,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not update billing rate.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },

@@ -226,7 +226,7 @@ export default {
                     //     type: 'error',
                     //     title: 'Error',
                     //     text: 'Could not load data.',
-                    //     duration: 10000,
+                    //     duration: 6000,
                     // });
                 });
         },
@@ -274,7 +274,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'Lesson(s) was saved.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -284,7 +284,7 @@ export default {
                     //     type: 'error',
                     //     title: 'Error',
                     //     text: 'Could not save lesson(s).',
-                    //     duration: 10000,
+                    //     duration: 6000,
                     // });
                 });
         },

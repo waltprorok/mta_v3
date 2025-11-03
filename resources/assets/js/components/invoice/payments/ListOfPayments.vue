@@ -63,7 +63,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load list of payments list.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },

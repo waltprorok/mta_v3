@@ -115,7 +115,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load support.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -134,7 +134,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'The support was created.',
-                        duration: 10000,
+                        duration: 6000,
                     })
                 })
                 .catch((error) => {
@@ -173,7 +173,7 @@ export default {
                         type: 'warn',
                         title: 'Updated',
                         text: 'The support record was updated.',
-                        duration: 10000,
+                        duration: 6000,
                     })
                 })
                 .catch((error) => {
@@ -182,7 +182,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not update support record.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -201,7 +201,7 @@ export default {
                         type: 'success',
                         title: 'Updated',
                         text: 'The support reply was updated.',
-                        duration: 10000,
+                        duration: 6000,
                     })
                 })
                 .catch((error) => {
@@ -210,7 +210,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not update support record.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -228,7 +228,7 @@ export default {
                         type: 'warn',
                         title: 'Deleted',
                         text: 'The support was deleted.',
-                        duration: 10000,
+                        duration: 6000,
                     })
                 })
                 .catch((error) => {
@@ -237,7 +237,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not delete support.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },

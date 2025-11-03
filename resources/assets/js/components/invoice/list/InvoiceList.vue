@@ -135,7 +135,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load invoice list.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -162,7 +162,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'Invoice payment successful.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -171,7 +171,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not save payment.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },

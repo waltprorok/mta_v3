@@ -90,7 +90,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not load billing plan list.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },

@@ -57,7 +57,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Not authorized.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
@@ -68,7 +68,7 @@ export default {
                     type: 'warn',
                     title: 'Warning',
                     text: 'Can not update cancelled lesson.',
-                    duration: 10000,
+                    duration: 6000,
                 });
             }
             this.disableUpdateButton = true;
@@ -82,7 +82,7 @@ export default {
                         type: 'success',
                         title: 'Success',
                         text: 'Lesson status was saved.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 })
                 .catch((error) => {
@@ -92,7 +92,7 @@ export default {
                         type: 'error',
                         title: 'Error',
                         text: 'Could not update status.',
-                        duration: 10000,
+                        duration: 6000,
                     });
                 });
         },
