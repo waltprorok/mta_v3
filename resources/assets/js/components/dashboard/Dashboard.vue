@@ -13,6 +13,12 @@
             </div>
 
             <div class="row">
+                <div class="col-md-6">
+                    <lessons-card :lessons="dailyLessons"></lessons-card>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bg-light">
@@ -33,9 +39,10 @@
 
 <script>
 import Card from "../cards/Card.vue";
+import LessonsCard from "../cards/LessonsCard.vue";
 
 export default {
-    components: {Card},
+    components: {LessonsCard, Card},
     data() {
         return {
             activeStudentCount: 0,
@@ -50,6 +57,7 @@ export default {
             subscriptionText: '',
             subscriptionMessage: '',
             weeklyDates: '',
+            dailyLessons: [],
         }
     },
 
@@ -70,6 +78,7 @@ export default {
                     this.cancelledLessonsThisWeek = response.data.cancelledLessonsThisWeek;
                     this.openTimeBlocks = response.data.openTimeBlocks;
                     this.weeklyDates = response.data.weeklyDates;
+                    this.dailyLessons = response.data.dailyLessons;
                     this.$notify({
                         type: this.subscriptionType = response.data.subscriptionType,
                         title: this.subscriptionText = response.data.subscriptionText,
