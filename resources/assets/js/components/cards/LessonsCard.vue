@@ -11,8 +11,7 @@
                     >
                         <span>
                             <a :href="`/students/reschedule/${lesson.id}`"
-                               class="d-flex justify-content-between w-100 text-decoration-none text-dark"
-                            >
+                               class="d-flex justify-content-between w-100 text-decoration-none text-dark">
                                 {{ lesson.title }}
                             </a>
                         </span>
