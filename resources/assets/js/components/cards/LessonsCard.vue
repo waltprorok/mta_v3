@@ -1,8 +1,12 @@
 <template>
     <div class="card">
-        <div class="card-header font-weight-bold bg-light">Lesson(s) Today</div>
+        <div class="card-header font-weight-bold bg-light">Today's Lessons</div>
         <div class="list-group list-group-flush">
+            <div v-if="lessons.length === 0" class="list-group-item text-muted text-center">
+                No lessons scheduled.
+            </div>
             <a
+                v-else
                 v-for="(lesson, index) in lessons"
                 :key="index"
                 :href="`/students/reschedule/${lesson.id}`"
@@ -29,8 +33,6 @@
         </div>
     </div>
 </template>
-
-
 
 <script>
 export default {
