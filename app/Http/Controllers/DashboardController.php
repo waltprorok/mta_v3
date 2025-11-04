@@ -23,6 +23,7 @@ class DashboardController extends Controller
         $subscriptionText = $this->getSubscriptionText();
         $subscriptionMessage = $this->getSubscriptionMessage();
         $weeklyDates = now()->startOfWeek()->format('M d - ') . now()->endOfWeek()->format('M d');
+        $dailyLessons = $this->getLessonsToday();
 
         return response()->json([
             'activeStudentCount' => $activeStudentCount,
@@ -37,6 +38,7 @@ class DashboardController extends Controller
             'subscriptionText' => $subscriptionText,
             'subscriptionMessage' => $subscriptionMessage,
             'weeklyDates' => $weeklyDates,
+            'dailyLessons' => $dailyLessons,
         ]);
     }
 
@@ -172,7 +174,7 @@ class DashboardController extends Controller
             ->get();
     }
 
-    private function getLessonsThisWeekly()
+    private function getLessonsThisWeek()
     {
         return Lesson::with('billingRate:id,type,amount')
             ->whereBetween('start_date', [now()->startOfWeek(), now()->endOfWeek()])
@@ -207,7 +209,7 @@ class DashboardController extends Controller
 
     private function getWeeklyIncome(): string
     {
-        $lessonsInWeek = $this->getLessonsThisWeekly();
+        $lessonsInWeek = $this->getLessonsThisWeek();
         return $this->calculateLessonTotals($lessonsInWeek);
     }
 
@@ -245,7 +247,7 @@ class DashboardController extends Controller
 
     /**
      * @param $lessonsInWeek
-     * @return float|int
+     * @return string
      */
     private function calculateLessonTotals($lessonsInWeek)
     {
@@ -265,8 +267,6 @@ class DashboardController extends Controller
             }
         }
 
-        $formattedAmount = '$' . number_format($amount, 2);
-
-        return $formattedAmount;
+        return '$' . number_format($amount, 2);
     }
 }
