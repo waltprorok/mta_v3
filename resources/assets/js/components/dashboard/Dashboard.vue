@@ -79,7 +79,6 @@ export default {
                     this.openTimeBlocks = response.data.openTimeBlocks;
                     this.weeklyDates = response.data.weeklyDates;
                     this.dailyLessons = response.data.dailyLessons;
-                    console.log(this.weeklyLessons);
                     this.$notify({
                         type: this.subscriptionType = response.data.subscriptionType,
                         title: this.subscriptionText = response.data.subscriptionText,
