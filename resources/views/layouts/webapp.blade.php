@@ -62,56 +62,23 @@
             {{--                </div>--}}
             {{--            </li>--}}
             <li class="nav-item dropdown">
-                <a class="nav-link" href="#" role="button" title="Messages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a href="{{ route('message.index') }}">
                     <i class="fa fa-commenting"></i>
                     <span class="badge badge-pill badge-danger">{{ \App\Models\User::unreadMessagesCount() }}</span>
-                    <span class="small ml-1 d-md-down-none"></span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="{{ route('message.index') }}" class="dropdown-item">
-                        <i class="fa fa-commenting"></i>
-                        @if (\App\Models\User::unreadMessagesCount() > 0)
-                            You Got Messages
-                        @else
-                            No Messages Today
-                        @endif
-                    </a>
-                </div>
             </li>
             @if(Auth::user()->isAdmin())
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="#" role="button" title="Messages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a href="{{ route('contact.index') }}">
                         <i class="fa fa-envelope"></i>
                         <span class="badge badge-pill badge-danger">{{ \App\Models\Contact::unreadContactsCount() }}</span>
-                        <span class="small ml-1 d-md-down-none"></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a href="{{ route('contact.index') }}" class="dropdown-item">
-                            <i class="fa fa-envelope"></i>
-                            @if (\App\Models\Contact::unreadContactsCount() > 0)
-                                New Contacts
-                            @else
-                                No New Contacts
-                            @endif
-                        </a>
-                    </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="#" role="button" title="Messages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a href="{{ route('admin.support.index') }}">
                         <i class="fa fa-life-saver"></i>
                         <span class="badge badge-pill badge-danger">{{ \App\Models\Support::unreadSupportsCount() }}</span>
-                        <span class="small ml-1 d-md-down-none"></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a href="{{ route('admin.support.index') }}" class="dropdown-item">
-                            <i class="fa fa-life-saver"></i>
-                            @if (\App\Models\Support::unreadSupportsCount() > 0)
-                                New Support Tickets
-                            @else
-                                No New Support Tickets
-                            @endif
-                        </a>
-                    </div>
                 </li>
             @endif
 
