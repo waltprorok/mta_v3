@@ -13,20 +13,21 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4">
-                    <lessons-card :lessons="dailyLessons"></lessons-card>
-                </div>
+
             </div>
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-4">
+                    <lessons-card :lessons="dailyLessons"></lessons-card>
+                </div>
+                <div class="col-md-8">
                     <div class="card">
                         <div class="card-header bg-light">
                             Completed Lessons
                         </div>
                         <div class="card-body p-0">
-                            <div class="p-4">
-                                <report-completed-lessons-line :width="100" :height="22"></report-completed-lessons-line>
+                            <div class="p-2">
+                                <report-completed-lessons-line :width="100" :height="32"></report-completed-lessons-line>
                             </div>
                         </div>
                     </div>
