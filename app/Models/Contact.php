@@ -35,4 +35,9 @@ class Contact extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public static function unreadContactsCount(): int
+    {
+        return Contact::where('reply', '==', false)->count();
+    }
 }

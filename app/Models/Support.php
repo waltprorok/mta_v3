@@ -36,4 +36,9 @@ class Support extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public static function unreadSupportsCount(): int
+    {
+        return Support::where('reply', '==', false)->count();
+    }
 }
