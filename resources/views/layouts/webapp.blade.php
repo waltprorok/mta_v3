@@ -67,21 +67,6 @@
                     <span class="badge badge-pill badge-danger">{{ \App\Models\User::unreadMessagesCount() }}</span>
                 </a>
             </li>
-            @if(Auth::user()->isAdmin())
-                <li class="nav-item dropdown">
-                    <a href="{{ route('contact.index') }}">
-                        <i class="fa fa-envelope"></i>
-                        <span class="badge badge-pill badge-danger">{{ \App\Models\Contact::unreadContactsCount() }}</span>
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a href="{{ route('admin.support.index') }}">
-                        <i class="fa fa-life-saver"></i>
-                        <span class="badge badge-pill badge-danger">{{ \App\Models\Support::unreadSupportsCount() }}</span>
-                    </a>
-                </li>
-            @endif
-
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" title="Account and Settings" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-user fa-lg" aria-hidden="true"></i>
