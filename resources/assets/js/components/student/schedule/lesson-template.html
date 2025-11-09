@@ -59,6 +59,9 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <lessons-card :title="`Scheduled Lessons`" :lessons='lessons'></lessons-card>
+            </div>
         </div>
         <form action="#" @submit.prevent="saveLessons()">
             <div class="row">

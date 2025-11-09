@@ -18,7 +18,7 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    <lessons-card :lessons="dailyLessons"></lessons-card>
+                    <lessons-card title="Today's Lessons" :lessons="dailyLessons"></lessons-card>
                 </div>
                 <div class="col-md-8">
                     <div class="card">
