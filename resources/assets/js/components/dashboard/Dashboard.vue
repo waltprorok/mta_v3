@@ -13,10 +13,6 @@
             </div>
 
             <div class="row">
-
-            </div>
-
-            <div class="row">
                 <div class="col-md-4">
                     <lessons-card :title="`Today's Lessons`" :lessons="dailyLessons"></lessons-card>
                 </div>
@@ -39,11 +35,7 @@
 </template>
 
 <script>
-import Card from "../cards/Card.vue";
-import LessonsCard from "../cards/LessonsCard.vue";
-
 export default {
-    components: {LessonsCard, Card},
     data() {
         return {
             activeStudentCount: 0,
