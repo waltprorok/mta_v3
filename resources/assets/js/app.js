@@ -57,6 +57,7 @@ const router = new VueRouter({
 
 Vue.component('billingRate', require('./components/billing/BillingRate.vue').default);
 Vue.component('blogs', require('./components/admin/blog/Blogs.vue').default);
+Vue.component('card', require('./components/cards/Card.vue').default);
 Vue.component('createBlog', require('./components/admin/blog/Create.vue').default);
 Vue.component('editBlog', require('./components/admin/blog/Edit.vue').default);
 Vue.component('contacts', require('./components/admin/contact/Contacts.vue').default);
