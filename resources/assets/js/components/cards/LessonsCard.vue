@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <div class="card-header font-weight-bold bg-light">{{ title }}</div>
+        <div class="card-header bg-light">{{ title }}</div>
         <div class="list-group list-group-flush">
             <div v-if="lessons.length === 0" class="list-group-item text-muted text-center">
                 No lessons scheduled.
