@@ -4,12 +4,6 @@ dev:
 list:
 	php artisan route:list --except-vendor
 
-migrate:
-	php artisan migrate
-
-test:
-	php artisan test
-
 clear:
 	php artisan queue:clear
 
@@ -18,6 +12,15 @@ flush:
 
 work:
 	php artisan queue:work
+
+log:
+	php artisan log:clear
+
+migrate:
+	php artisan migrate
+
+test:
+	php artisan test
 
 prune:
 	php artisan telescope:prune --hours=0

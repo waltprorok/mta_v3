@@ -50,6 +50,7 @@ export default {
                 recurrence: null,
                 end_time: null,
             },
+            lessons: [],
             modelConfig: {
                 type: 'string',
                 mask: 'YYYY-MM-DD',
@@ -217,17 +218,18 @@ export default {
                     this.businessHours = response.data.businessHours;
                     this.holidays = response.data.holidays;
                     this.studentScheduled = response.data.studentScheduled;
+                    this.lessons = response.data.lessons;
                     this.closedDays();
                 })
                 .catch((error) => {
                     console.log(error);
                     // self.getErrorMessage(error);
-                    // this.$notify({
-                    //     type: 'error',
-                    //     title: 'Error',
-                    //     text: 'Could not load data.',
-                    //     duration: 6000,
-                    // });
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load data.',
+                        duration: 6000,
+                    });
                 });
         },
 

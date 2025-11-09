@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <div class="card-header font-weight-bold bg-light">Today's Lessons</div>
+        <div class="card-header font-weight-bold bg-light">{{ title }}</div>
         <div class="list-group list-group-flush">
             <div v-if="lessons.length === 0" class="list-group-item text-muted text-center">
                 No lessons scheduled.
@@ -36,7 +36,12 @@
 
 <script>
 export default {
+    name: 'LessonsCard',
     props: {
+        title: {
+            type: String,
+            required: true,
+        },
         lessons: {
             type: Array,
             default: () => []

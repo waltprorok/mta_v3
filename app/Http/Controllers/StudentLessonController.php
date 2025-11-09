@@ -41,6 +41,7 @@ class StudentLessonController extends Controller
             ->with('hasOneLesson')
             ->where(['id' => $id, 'teacher_id' => Auth::id()])
             ->first();
+        $pastLessons = $student->lessons()->orderByDesc('id')->limit(4)->get();
         $businessHours = BusinessHours::query()
             ->where('teacher_id', Auth::id())
             ->orderBy('day')
@@ -65,6 +66,7 @@ class StudentLessonController extends Controller
             'holidays' => $holidays,
             'studentScheduled' => $studentScheduled,
             'allTimes' => $allTimes,
+            'lessons' => $pastLessons,
         ]);
     }
 
