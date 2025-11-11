@@ -92,7 +92,7 @@
                             </div>
 
                             <div class="form-group {{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
-                                <div class="col-md-6 col-md-offset-1">
+                                <div class="col-md-10 col-md-offset-1">
                                     {!! app('captcha')->display() !!}
                                     @if ($errors->has('g-recaptcha-response'))
                                         <span class="help-block">
