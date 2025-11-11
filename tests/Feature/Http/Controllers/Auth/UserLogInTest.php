@@ -48,6 +48,7 @@ class UserLogInTest extends TestCase
             'password' => $user->password,
             'password_confirmation' => $user->password,
             'terms' => true,
+            'g-recaptcha-response' => '1',
         ])->assertStatus(302);
 
         $response->assertRedirect('/dashboard');
