@@ -91,6 +91,17 @@
                                 </div>
                             </div>
 
+                            <div class="form-group {{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+                                <div class="col-md-6 col-md-offset-1">
+                                    {!! app('captcha')->display() !!}
+                                    @if ($errors->has('g-recaptcha-response'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <div class="col-md-10 col-md-offset-1" style="margin-top: 16px;">
                                     <button type="submit" id="signup" class="btn btn-primary btn-block" disabled>Register</button>
@@ -102,5 +113,7 @@
             </div>
         </div>
     </div>
+
+    {!! NoCaptcha::renderJs() !!}
 
 @endsection
