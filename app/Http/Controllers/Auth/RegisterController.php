@@ -64,7 +64,6 @@ class RegisterController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'terms' => 'required|int:1',
             'g-recaptcha-response' => 'required|captcha',
         ]);
     }
@@ -84,7 +83,7 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'teacher' => true,
             'trial_ends_at' => Carbon::now()->addDays(30),
-            'terms' => $data['terms'],
+            'terms' => true,
         ]);
 
         Event::dispatch(new RegisterUserEvent($data, $user));

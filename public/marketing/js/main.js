@@ -68,14 +68,14 @@
 
     ///////////////////////////
     // Disable Register Button
-    $("#terms").click(function () {
-        var checked_status = this.checked;
-        if (checked_status == true) {
-            $("#signup").removeAttr("disabled");
-        } else {
-            $("#signup").attr("disabled", "disabled");
-        }
-    });
+    // $("#terms").click(function () {
+    //     var checked_status = this.checked;
+    //     if (checked_status == true) {
+    //         $("#signup").removeAttr("disabled");
+    //     } else {
+    //         $("#signup").attr("disabled", "disabled");
+    //     }
+    // });
 
     ///////////////////////////
     // Owl Carousel
