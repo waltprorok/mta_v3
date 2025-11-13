@@ -16,15 +16,13 @@
                 <tr>
                     <td v-text="row.first_name"></td>
                     <td v-text="row.last_name"></td>
+                    <td v-text="row.email"></td>
+                    <td><phone-number-format :data="row.phone"></phone-number-format></td>
                     <td v-text="row.address"></td>
                     <td v-text="row.address_2"></td>
                     <td v-text="row.city"></td>
                     <td v-text="row.state"></td>
                     <td v-text="row.zip"></td>
-                    <td>
-                        <phone-number-format :data="row.phone"></phone-number-format>
-                    </td>
-                    <td v-text="row.email"></td>
                 </tr>
             </template>
         </datatable>

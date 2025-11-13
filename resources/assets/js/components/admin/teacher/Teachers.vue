@@ -15,13 +15,13 @@ export default {
             columns: [
                 {label: 'First Name', field: 'first_name',},
                 {label: 'Last Name', field: 'last_name',},
+                {label: 'Email', field: 'email', sortable: false},
+                {label: 'Phone', field: 'phone', sortable: false},
                 {label: 'Address', field: 'address', sortable: false},
-                {label: 'Address 2', field: 'address_2', sortable: false},
+                {label: 'Apt', field: 'address_2', sortable: false},
                 {label: 'City', field: 'city',},
                 {label: 'State', field: 'state',},
                 {label: 'Zip', field: 'zip', sortable: false},
-                {label: 'Phone', field: 'phone', sortable: false},
-                {label: 'Email', field: 'email', sortable: false},
             ],
             teacher: {
                 id: null,

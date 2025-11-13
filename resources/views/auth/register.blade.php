@@ -43,7 +43,7 @@
 
                             <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                                 <div class="col-md-10 col-md-offset-1">
-                                    <label for="email" class="control-label">E-Mail Address</label>
+                                    <label for="email" class="control-label">Email Address</label>
                                     <input id="email" type="email" class="form-control" name="email" placeholder="email@example.com" value="{{ old('email') }}">
 
                                     @if ($errors->has('email'))
@@ -74,25 +74,8 @@
                                 </div>
                             </div>
 
-                            <div class="form-check {{ $errors->has('terms') ? 'has-error' : '' }}">
-                                <div class="col-md-10 col-md-offset-1">
-                                    <label for="terms" class="form-check-label">
-                                        <input type="checkbox" name="terms" value="1" id="terms" class="form-check-input">
-                                        &nbsp;&nbsp;I agree to the
-                                        <a href="{{ route('terms') }}" target="_blank" style="text-decoration: underline;">Terms of Service</a> and
-                                        <a href="{{ route('privacy') }}" target="_blank" style="text-decoration: underline;">Privacy Policy</a>.
-                                    </label>
-
-                                    @if ($errors->has('terms'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('terms') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group {{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
-                                <div class="col-md-10 col-md-offset-1">
+                            <div class="form-check {{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+                                <div class="col-md-8 col-md-offset-2">
                                     {!! app('captcha')->display() !!}
                                     @if ($errors->has('g-recaptcha-response'))
                                         <span class="help-block">
@@ -104,7 +87,18 @@
 
                             <div class="form-group">
                                 <div class="col-md-10 col-md-offset-1" style="margin-top: 16px;">
-                                    <button type="submit" id="signup" class="btn btn-primary btn-block" disabled>Register</button>
+                                    <button type="submit" id="signup" class="btn btn-primary btn-block">Register</button>
+                                </div>
+                            </div>
+
+                            <div class="form-check">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <label for="terms" class="form-check-label text-center">
+                                        <span class="small">By creating an account you agree to our
+                                        <a href="{{ route('terms') }}" target="_blank" style="text-decoration: underline;">Terms of Service</a> and
+                                        <a href="{{ route('privacy') }}" target="_blank" style="text-decoration: underline;">Privacy Policy</a>
+                                        </span>
+                                    </label>
                                 </div>
                             </div>
                         </form>
