@@ -50,14 +50,13 @@
                     </div>
                     <!-- /Section header -->
                     <!-- blog -->
-                    <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-4 col-md-offset-4">
                         <form method="post" action="{{ route('newsletter') }}">
                             @csrf
                             @honeypot
                             <div class="input-group">
-                                <input class="form-control" name="email" placeholder="Enter your email address" type="text">
-                                <span class="input-group-btn">
-                               <button class="btn btn-primary" type="submit">Subscribe</button>
+                                <input class="form-control" name="email" placeholder="Enter your email address" type="email">
+                                <span class="input-group-btn"><button class="btn btn-primary" type="submit">Subscribe</button>
                             </span>
                             </div>
                         </form>

@@ -159,7 +159,7 @@
                         @csrf
                         @honeypot
                         <div class="newsletter-form input-group">
-                            <input class="form-control" name="email" placeholder="Enter your email address" type="text">
+                            <input class="form-control" name="email" placeholder="Enter your email address" type="email">
                             <span class="input-group-btn">
                                <button class="btn btn-primary" type="submit">Subscribe</button>
                             </span>
