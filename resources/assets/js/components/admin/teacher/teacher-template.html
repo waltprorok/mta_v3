@@ -14,8 +14,7 @@
         <datatable class="table table-responsive-md table-hover" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
             <template v-slot="{ columns, row }">
                 <tr>
-                    <td v-text="row.first_name"></td>
-                    <td v-text="row.last_name"></td>
+                    <td v-text="row.first_name + ' ' + row.last_name"></td>
                     <td v-text="row.email"></td>
                     <td><phone-number-format :data="row.phone"></phone-number-format></td>
                     <td v-text="row.address"></td>

@@ -14,13 +14,9 @@
         <datatable class="table table-responsive-md table-hover" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
             <template v-slot="{ columns, row }">
                 <tr>
-                    <td v-text="row.first_name"></td>
-                    <td v-text="row.last_name"></td>
+                    <td v-text="row.first_name + ' ' + row.last_name"></td>
                     <td v-text="row.email"></td>
-                    <td v-html="isUserType(row.admin)"></td>
-                    <td v-html="isUserType(row.teacher)"></td>
-                    <td v-html="isUserType(row.student)"></td>
-                    <td v-html="isUserType(row.parent)"></td>
+                    <td v-html="getRoleBadges(row)"></td>
                     <td v-html="isActiveIcon(row.is_active)"></td>
                     <td>{{ row.created_at | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MM-DD-YYYY h:mm a') }}</td>
                     <td class="text-nowrap">
@@ -34,5 +30,4 @@
             <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
         </div>
     </div>
-    <!-- end of vue js data table -->
 </div>

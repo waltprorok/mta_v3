@@ -14,15 +14,11 @@ export default {
             per_page: 10,
             pages: [10, 25, 50, 100],
             columns: [
-                {label: 'First Name', field: 'first_name',},
-                {label: 'Last Name', field: 'last_name',},
-                {label: 'Email', field: 'email',},
-                {label: 'Admin', field: 'admin',},
-                {label: 'Teacher', field: 'teacher',},
-                {label: 'Student', field: 'student',},
-                {label: 'Parent', field: 'parent',},
+                {label: 'Name', field: 'first_name',},
+                {label: 'Email', field: 'email', sortable: false},
+                {label: 'Role', field: 'role', sortable: false},
                 {label: 'Active', field: 'is_active',},
-                {label: 'Created At', field: 'created_at',},
+                {label: 'Created', field: 'created_at', sortable: false},
                 {label: 'Action', filterable: false},
             ],
             user: {
@@ -68,9 +64,24 @@ export default {
         isActiveIcon: function (is_active) {
             return is_active ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>';
         },
-        isUserType: function (userType) {
-            return userType ? '<i class="fa fa-check"></i>' : '';
-        },
+        getRoleBadges(user) {
+            const roles = [];
+
+            if (user.admin) {
+                roles.push('<span class="badge bg-danger text-white p-1">Admin</span>');
+            }
+            if (user.teacher) {
+                roles.push('<span class="badge bg-primary text-white p-1">Teacher</span>');
+            }
+            if (user.student) {
+                roles.push('<span class="badge bg-success text-white p-1">Student</span>');
+            }
+            if (user.parent) {
+                roles.push('<span class="badge bg-warning text-white p-1">Parent</span>');
+            }
+
+            return roles.join(' ');
+        }
     },
 }
 </script>
