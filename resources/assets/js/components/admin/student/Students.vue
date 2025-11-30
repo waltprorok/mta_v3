@@ -14,8 +14,7 @@ export default {
             pages: [10, 25, 50, 100],
             columns: [
                 {label: 'Photo', field: 'photo', sortable: false,},
-                {label: 'First Name', field: 'first_name',},
-                {label: 'Last Name', field: 'last_name',},
+                {label: 'Name', field: 'first_name',},
                 {label: 'Phone', field: 'phone', sortable: false,},
                 {label: 'Email', field: 'email', sortable: false,},
                 {label: 'Instrument', field: 'instrument', sortable: false,},

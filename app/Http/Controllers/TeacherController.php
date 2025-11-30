@@ -28,7 +28,7 @@ class TeacherController extends Controller
 
     public function adminTeachers(): JsonResponse
     {
-        return response()->json(Teacher::all());
+        return response()->json(Teacher::orderBy('first_name')->get());
     }
 
     public function index()
