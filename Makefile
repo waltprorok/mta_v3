@@ -1,6 +1,3 @@
-dev:
-	npm run watch
-
 list:
 	php artisan route:list --except-vendor
 
@@ -25,5 +22,8 @@ test:
 prune:
 	php artisan telescope:prune --hours=0
 
-npm:
+dev:
 	npm run watch
+
+prod:
+	npm run production
