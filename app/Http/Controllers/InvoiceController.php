@@ -99,9 +99,11 @@ class InvoiceController extends Controller
         return response()->json(['students' => $students, 'needInvoicedCount' => $students->count()]);
     }
 
-    public function show(Invoice $invoice): View
+    public function show(int $invoiceId): View
     {
-        $invoice = $invoice->with('student.getTeacher')->findOrFail($invoice->id);
+        $invoice = Invoice::with('student')
+            ->where('teacher_id', auth()->user()->id)
+            ->findOrFail($invoiceId);
 
         $lessons = $this->invoiceService->getLessons($invoice);
 
@@ -116,7 +118,14 @@ class InvoiceController extends Controller
             $balanceDue = $total;
         }
 
-        return view('webapp.invoice.show', compact('invoice', 'lessons', 'subTotal', 'discount', 'total', 'balanceDue'));
+        return view('webapp.invoice.show', compact(
+            'invoice',
+            'lessons',
+            'subTotal',
+            'discount',
+            'total',
+            'balanceDue'
+        ));
     }
 
     public function store(Request $request)
