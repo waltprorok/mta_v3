@@ -12,10 +12,6 @@ We hope that you love our software as much as we do.
 
 If you have any questions or concerns please use the support link after you log in under your profile.
 
-@component('mail::button', ['url' => route('support')])
-    Support
-@endcomponent
-
 Your registered email is **{{ $user['email'] }}**
 
 To unlock the full potential of the software please sign up for a <a href="{{ route('account.subscription') }}" target="_blank">Premium Account</a> to unlock all the system features.
@@ -35,6 +31,10 @@ From the Profile Icon (top right) click Settings
 Thanks!
 
 {{ config('app.name') }}
+
+@component('mail::button', ['url' => route('support')])
+    Support
+@endcomponent
 
 @endcomponent
 
