@@ -7,7 +7,6 @@ import Card from "../../cards/Card.vue";
 import PhoneNumberFormat from "../../PhoneNumberFormat";
 import TotalEntries from "../../TotalEntries";
 
-
 export default {
     data: function () {
         return {
@@ -203,7 +202,7 @@ export default {
 
         hasPaymentAmount: function () {
             let self = this;
-            self.disableSave = !self.invoice.payment;
+            self.disableSave = ! self.invoice.payment;
         },
 
         showCheckInput: function (event) {

@@ -53,7 +53,7 @@ class ScheduleMonthlyLessons extends Command
         $hasMonth = $this->option('month');
 
         if ($hasMonth) {
-            $monthName = $this->anticipate('Which month of lesson to schedule?', [
+            $monthName = $this->anticipate('Which month of lessons to schedule?', [
                 'January',
                 'February',
                 'March',
