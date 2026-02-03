@@ -167,8 +167,12 @@ class InvoiceController extends Controller
                 'check_number' => $request->get('check_number'),
                 'payment_information' => $request->get('payment_information'),
                 'is_paid' => $isPaid,
-
             ]);
+
+            $this->recalculateUnpaidInvoiceBalances(
+                $invoice->student_id,
+                $invoice->teacher_id
+            );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             return response()->json([], Response::HTTP_BAD_REQUEST);
@@ -234,6 +238,27 @@ class InvoiceController extends Controller
             ]);
 
         return response()->json($payments);
+    }
+
+    protected function recalculateUnpaidInvoiceBalances(int $studentId, int $teacherId): void
+    {
+        $unpaidInvoices = Invoice::where('student_id', $studentId)
+            ->where('teacher_id', $teacherId)
+            ->where('is_paid', false)
+            ->orderBy('created_at')
+            ->get();
+
+        foreach ($unpaidInvoices as $invoice) {
+            $balanceDue =
+                ($invoice->total - $invoice->discount)
+                - $invoice->payment
+                + $invoice->adjustments;
+
+            $invoice->update([
+                'balance_due' => max($balanceDue, 0),
+                'is_paid'     => $balanceDue <= 0,
+            ]);
+        }
     }
 
 }

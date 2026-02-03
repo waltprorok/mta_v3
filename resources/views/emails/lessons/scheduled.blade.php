@@ -33,12 +33,12 @@ Your music teacher {{ $teacher->full_name }} <strong>{{ is_null($status) ? 'Sche
 Phone: {{ $teacher->phone }}<br />
 Email: {{ $teacher->email }}
 
+Thanks!<br />
+{{ config('app.name') }}
+
 @component('mail::button', ['url' => route('support')])
     Support
 @endcomponent
-
-Thanks!<br />
-{{ config('app.name') }}
 
 @endcomponent
 

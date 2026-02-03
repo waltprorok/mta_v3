@@ -15,13 +15,13 @@ Now you can enjoy all the benefits of the Premium Account:
 
 Under Account click Subscription Tab click **Download Invoices** to view the PDF invoice.
 
-@component('mail::button', ['url' => route('support')])
-    Support
-@endcomponent
-
 Happy Teaching!
 
 {{ config('app.name') }}
+
+@component('mail::button', ['url' => route('support')])
+    Support
+@endcomponent
 
 @endcomponent
 
