@@ -41,7 +41,7 @@ class StudentLessonController extends Controller
             ->with('hasOneLesson')
             ->where(['id' => $id, 'teacher_id' => Auth::id()])
             ->first();
-        $pastLessons = $student->lessons()->orderByDesc('id')->limit(4)->get();
+        $pastLessons = $student->lessons()->orderByDesc('id')->limit(4)->get()->reverse()->values();
         $businessHours = BusinessHours::query()
             ->where('teacher_id', Auth::id())
             ->orderBy('day')
