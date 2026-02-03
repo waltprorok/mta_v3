@@ -121,26 +121,21 @@ class ScheduleMonthlyLessons extends Command
 
                         try {
                             for ($i = $startLesson; $i <= $endLesson; $i->modify('+7 day')) {
-                                $lesson = new Lesson();
-                                $lesson->student_id = $student->lessons->first()->student_id;
-                                $lesson->teacher_id = $student->teacher_id;
-                                $lesson->billing_rate_id = $student->lessons->first()->billing_rate_id;
-                                $lesson->title = $student->lessons->first()->title;
-                                $lesson->color = $student->lessons->first()->color;
-                                $lesson->start_date = $i->format('Y-m-d') . ' ' . $startDateFirst->format('H:i:s');
-
-                                $holidays = $student->getTeacher->holidays->all();
+                                $startDateTime = $i->format('Y-m-d') . ' ' . $startDateFirst->format('H:i:s');
+                                $endDateTime   = $i->format('Y-m-d') . ' ' . $endDateFirst->format('H:i:s');
 
                                 $skipOverSave = false;
+                                $holidays = $student->getTeacher->holidays;
 
                                 foreach ($holidays as $holiday) {
                                     $holidayDates = CarbonPeriod::create($holiday->start_date, $holiday->end_date);
 
-                                    foreach ($holidayDates->toArray() as $date) {
-                                        if (! is_null($date) && $date->toDateString() == Carbon::parse($lesson->start_date)->format('Y-m-d')) {
+                                    foreach ($holidayDates as $date) {
+                                        if ($date->toDateString() === Carbon::parse($startDateTime)->toDateString()) {
                                             $holiday['start_date'] = $i->format('Y-m-d');
                                             $lessons[] = $holiday->toArray();
                                             $skipOverSave = true;
+                                            break 2;
                                         }
                                     }
                                 }
@@ -149,10 +144,22 @@ class ScheduleMonthlyLessons extends Command
                                     continue;
                                 }
 
-                                $lesson->end_date = $i->format('Y-m-d') . ' ' . $endDateFirst->format('H:i:s');
-                                $lesson->interval = $minutes;
-                                $lesson->recurrence = $student->lessons->last()->recurrence;
-                                $lesson->save();
+                                $lesson = Lesson::updateOrCreate(
+                                    [
+                                        'student_id' => $student->id,
+                                        'start_date' => $startDateTime,
+                                    ],
+                                    [
+                                        'teacher_id'       => $student->teacher_id,
+                                        'billing_rate_id'  => $student->lessons->first()->billing_rate_id,
+                                        'title'            => $student->lessons->first()->title,
+                                        'color'            => $student->lessons->first()->color,
+                                        'end_date'         => $endDateTime,
+                                        'interval'         => $minutes,
+                                        'recurrence'       => $student->lessons->last()->recurrence,
+                                    ]
+                                );
+
                                 $lessons[] = $lesson;
 
                                 Log::channel('lessons')->info($lesson->start_date . ' - ' . $lesson->end_date . ' - ' . $lesson->title);
