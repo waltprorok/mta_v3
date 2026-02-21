@@ -102,8 +102,15 @@ class InvoiceController extends Controller
     public function show(int $invoiceId): View
     {
         $invoice = Invoice::with('student')
-            ->where('teacher_id', auth()->user()->id)
-            ->findOrFail($invoiceId);
+            ->where('id', $invoiceId)
+            ->whereHas('student', function ($query) {
+                $query->where(function ($query) {
+                    $query->where('teacher_id', auth()->id())
+                        ->orWhere('student_id', auth()->id())
+                        ->orWhere('parent_id', auth()->id());
+                });
+            })
+            ->firstOrFail();
 
         $lessons = $this->invoiceService->getLessons($invoice);
 
@@ -256,7 +263,7 @@ class InvoiceController extends Controller
 
             $invoice->update([
                 'balance_due' => max($balanceDue, 0),
-                'is_paid'     => $balanceDue <= 0,
+                'is_paid' => $balanceDue <= 0,
             ]);
         }
     }
