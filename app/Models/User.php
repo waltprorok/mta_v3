@@ -114,6 +114,24 @@ class User extends Authenticatable
         return $this->timezone ?? 'UTC';
     }
 
+    public function hasCancelledPremiumSubscription(): bool
+    {
+        return $this->subscription('premium')?->canceled() ?? false;
+    }
+
+    public function hasTrialExpired(): bool
+    {
+        if (! $this->trial_ends_at) {
+            return false;
+        }
+
+        return now()->gt($this->trial_ends_at)
+            && ! $this->subscribed('premium')
+            && ! $this->admin
+            && ! $this->parent
+            && ! $this->student;
+    }
+
     public function holidays(): HasMany
     {
         return $this->hasMany(Holiday::class, 'teacher_id');
@@ -121,27 +139,39 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return $this->admin && $this->admin !== null;
+        return $this->admin;
     }
 
     public function isParent(): bool
     {
-        return $this->parent && $this->parent !== null;
+        return $this->parent;
     }
 
     public function isStudent(): bool
     {
-        return $this->student && $this->student !== null;
+        return $this->student;
     }
 
     public function isTeacher(): bool
     {
-        return $this->teacher && $this->teacher !== null;
+        return $this->teacher;
+    }
+
+    public function isOnFreeTrial(): bool
+    {
+        return $this->trial_ends_at && now()->lt($this->trial_ends_at) && ! $this->subscribed('premium') && ! $this->admin;
     }
 
     public function isOnTrialOrSubscribed(): bool
     {
-        return $this->isTeacher() && ((now() < $this->trial_ends_at) || $this->subscribed('premium'));
+        if (! $this->isTeacher()) {
+            return false;
+        }
+
+        $onTrial = $this->trial_ends_at && now()->lt($this->trial_ends_at);
+        $subscribed = $this->subscribed('premium');
+
+        return $onTrial || $subscribed;
     }
 
     public function lessons(): HasMany
@@ -171,7 +201,7 @@ class User extends Authenticatable
 
     public function scopeFirstNameAsc($query)
     {
-        return $query->orderBy('first_name', 'asc');
+        return $query->orderBy('first_name');
     }
 
     public function student(): HasOne

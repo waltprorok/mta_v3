@@ -71,19 +71,16 @@ class Blog extends Model
 
     public function getImageUrlAttribute(): string
     {
-        $imageUrl = '';
+        if ($this->image) {
 
-        if (! is_null($this->image)) {
-            $imagePath = public_path('/storage/blog/') . $this->image;
+            $imagePath = public_path('storage/blog/' . $this->image);
 
             if (file_exists($imagePath)) {
-                $imageUrl = asset('storage/blog/' . $this->image);
+                return asset('storage/blog/' . $this->image);
             }
-        } else {
-            $imageUrl = asset('webapp/img/sheet-music.jpg');
         }
 
-        return $imageUrl;
+        return asset('webapp/img/sheet-music.jpg');
     }
 
     public function scopeLatestFirst($query)

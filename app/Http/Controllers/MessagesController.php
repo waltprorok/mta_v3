@@ -9,7 +9,6 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class MessagesController extends Controller
@@ -23,7 +22,7 @@ class MessagesController extends Controller
 
     public function index(): JsonResponse
     {
-        $user = Auth::user();
+        $user = auth()->user();
 
         if ($user->isAdmin()) {
             $persons = $this->messageService->getUsers(Student::ACTIVE);
@@ -69,7 +68,7 @@ class MessagesController extends Controller
 
     public function show(string $id): JsonResponse
     {
-        $user = Auth::user();
+        $user = auth()->user();
 
         $messagesFromA = Message::query()
             ->with('userFrom:id,first_name,last_name,student,teacher,parent,admin')

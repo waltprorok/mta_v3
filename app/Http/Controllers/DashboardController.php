@@ -109,7 +109,7 @@ class DashboardController extends Controller
     private function getSubscriptionMessage(): string
     {
         if ($this->isSubscriptionCancelled()) {
-            return 'Subscription ends at ' . Auth::user()->subscription('premium')->ends_at->format('m/d/Y');
+            return 'Subscription ends at ' . auth()->user()->subscription('premium')->ends_at->format('m/d/Y');
         }
 
         if ($this->isSubscriptionTrialExpired()) {
@@ -138,7 +138,7 @@ class DashboardController extends Controller
     {
         $minutesInDay = 0;
         $lessonsInWeek = $this->getLessonsThisWeekCount() * 30;
-        $businessHours = Auth::user()->getBusinessHours->where('active', true);
+        $businessHours = auth()->user()->getBusinessHours->where('active', true);
 
         foreach ($businessHours as $businessHour) {
             $closeTime = Carbon::createFromFormat('H:i:s', $businessHour->close_time);
@@ -227,43 +227,48 @@ class DashboardController extends Controller
 
     private function isSubscriptionCancelled(): bool
     {
-        return (Auth::user()->subscription('premium') != null && Auth::user()->subscription('premium')->canceled());
+        return auth()->user()?->hasCancelledPremiumSubscription() ?? false;
     }
 
     private function isSubscriptionTrialExpired(): bool
     {
-        return (now() > Auth::user()->trial_ends_at && ! Auth::user()->subscribed('premium') && ! Auth::user()->admin && ! Auth::user()->parent && ! Auth::user()->student);
+        return auth()->user()?->hasTrialExpired() ?? false;
     }
 
     private function isSubscriptionOnFreeTrial(): bool
     {
-        return (now() < Auth::user()->trial_ends_at && ! Auth::user()->subscribed('premium') && ! Auth::user()->admin);
+        return auth()->user()?->isOnFreeTrial() ?? false;
     }
 
     private function isSubscribed(): bool
     {
-        return Auth::user()->subscribed('premium');
+        return auth()->user()->subscribed('premium');
     }
 
-    /**
-     * @param $lessonsInWeek
-     * @return string
-     */
-    private function calculateLessonTotals($lessonsInWeek)
+    private function calculateLessonTotals($lessonsInWeek): string
     {
         $amount = 0;
 
         foreach ($lessonsInWeek as $lesson) {
-            if ($lesson->billingRate->type == 'lesson') {
-                $amount += ($lesson->billingRate->amount);
+
+            $rate = $lesson->billingRate;
+
+            if (! $rate) {
+                continue;
             }
 
-            if ($lesson->billingRate->type == 'hourly') {
-                $amount += ($lesson->interval / 60 * $lesson->billingRate->amount);
-            }
+            switch ($rate->type) {
+                case 'lesson':
+                    $amount += $rate->amount;
+                    break;
 
-            if ($lesson->billingRate->type == 'monthly') {
-                $amount += ($lesson->billingRate->amount / 4);
+                case 'hourly':
+                    $amount += ($lesson->interval / 60) * $rate->amount;
+                    break;
+
+                case 'monthly':
+                    $amount += $rate->amount / 4;
+                    break;
             }
         }
 
