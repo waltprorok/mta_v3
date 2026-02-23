@@ -14,7 +14,6 @@ use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
@@ -28,7 +27,7 @@ class SubscriptionController extends Controller
     public function cancel(): RedirectResponse
     {
         /** @var User $user */
-        $user = Auth::user();
+        $user = auth()->user();
 
         if ($user->subscription(self::PREMIUM)) {
             $subscription = $user->subscription(self::PREMIUM);
@@ -46,7 +45,7 @@ class SubscriptionController extends Controller
         $plans = Plan::all();
 
         /** @var User $user */
-        $user = Auth::user();
+        $user = auth()->user();
 
         foreach ($plans as $plan) {
             if ($plan->stripe_plan == $user->subscription('premium')->stripe_plan) {
@@ -69,8 +68,8 @@ class SubscriptionController extends Controller
 
     public function create(Request $request): RedirectResponse
     {
-        $user = Auth::user();
-        $teacher = Auth::user()->getTeacher()->first();
+        $user = auth()->user();
+        $teacher = auth()->user()->getTeacher()->first();
         $plan = Plan::query()->findOrFail($request->get('plan_id'));
         $paymentMethod = $request->get('payment_method');
 
@@ -97,7 +96,7 @@ class SubscriptionController extends Controller
     public function creditCard(): View
     {
         /** @var User $user */
-        $user = Auth::user();
+        $user = auth()->user();
         $intent = $user->createSetupIntent();
 
         return view('webapp.account.card')
@@ -107,7 +106,7 @@ class SubscriptionController extends Controller
     public function index(): View
     {
         /** @var User $user */
-        $user = Auth::user();
+        $user = auth()->user();
         $intent = $user->createSetupIntent();
 
         if ($user->subscriptions()->first() !== null) {
@@ -123,7 +122,7 @@ class SubscriptionController extends Controller
     public function invoices(): View
     {
         /** @var User $user */
-        $user = Auth::user();
+        $user = auth()->user();
         $invoices = $user->invoices();
 
         return view('webapp.account.invoices')->with('invoices', $invoices);
@@ -135,7 +134,7 @@ class SubscriptionController extends Controller
         $plans = Plan::all();
 
         /** @var User $user */
-        $user = Auth::user();
+        $user = auth()->user();
 
         foreach ($plans as $plan) {
             if ($plan->stripe_plan == $user->subscription(self::PREMIUM)->stripe_plan) {
@@ -162,7 +161,7 @@ class SubscriptionController extends Controller
     public function pdfDownload($invoiceId): Response
     {
         /** @var User $user */
-        $user = Auth::user();
+        $user = auth()->user();
         $subscriptionName = ucfirst($user->subscriptions->first()->name);
 
         return $user->downloadInvoice($invoiceId, [
@@ -181,7 +180,7 @@ class SubscriptionController extends Controller
     public function resume(): RedirectResponse
     {
         /** @var User $user */
-        $user = Auth::user();
+        $user = auth()->user();
         $subscription = $user->subscription(self::PREMIUM);
         $subscription->resume();
 
@@ -198,7 +197,7 @@ class SubscriptionController extends Controller
     public function updateCreditCard(Request $request): RedirectResponse
     {
         /** @var User $user */
-        $user = Auth::user();
+        $user = auth()->user();
         $paymentMethod = $request->get('payment_method');
         $user->updateDefaultPaymentMethod($paymentMethod);
 
@@ -210,7 +209,7 @@ class SubscriptionController extends Controller
     public function updateProfile(UpdateUserProfileRequest $request): RedirectResponse
     {
         /** @var User $user */
-        $user = Auth::user();
+        $user = auth()->user();
         $user->first_name = $request->get('first_name');
         $user->last_name = $request->get('last_name');
         $user->timezone = $request->get('timezone');
@@ -223,7 +222,7 @@ class SubscriptionController extends Controller
         $user->save();
 
         if ($request->get('current_password') !== null) {
-            if (! (Hash::check($request->get('current_password'), Auth::user()->password))) {
+            if (! (Hash::check($request->get('current_password'), auth()->user()->password))) {
                 return redirect()->back()->with('error', 'Your current password does not match with the new password you provided. Please try again.');
             }
 

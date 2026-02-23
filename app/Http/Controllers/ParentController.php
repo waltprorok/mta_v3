@@ -30,7 +30,7 @@ class ParentController extends Controller
 
         $parent = User::query()
             ->with('parentOfStudents')
-            ->where('id', Auth::user()->id)
+            ->where('id', Auth::id())
             ->first();
 
         foreach ($parent->parentOfStudents as $student) {

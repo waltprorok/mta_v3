@@ -12,7 +12,15 @@ class PlanController extends Controller
     public function index()
     {
         try {
-            $plans = Plan::all(['id', 'name', 'slug', 'stripe_plan', 'cost', 'description', 'created_at']);
+            $plans = Plan::select([
+                'id',
+                'name',
+                'slug',
+                'stripe_plan',
+                'cost',
+                'description',
+                'created_at'
+            ])->get();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             return response()->json([], Response::HTTP_BAD_REQUEST);

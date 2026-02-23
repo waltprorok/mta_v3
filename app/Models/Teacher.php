@@ -83,7 +83,7 @@ class Teacher extends Model
 
     public function scopeFirstNameAsc($query)
     {
-        return $query->orderBy('first_name', 'asc');
+        return $query->orderBy('first_name');
     }
 
     public function students(): HasMany

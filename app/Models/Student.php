@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Services\PhoneNumberService;
-use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -114,7 +113,7 @@ class Student extends Model
 
     public function hasOneFutureLesson(): HasOne
     {
-        return $this->hasOne(Lesson::class)->where('start_date', '>', Carbon::now()->format('Y-m-d H:i:s'));
+        return $this->hasOne(Lesson::class)->where('start_date', '>', now()->format('Y-m-d H:i:s'));
     }
 
     public function hasOneLesson(): HasOne
@@ -153,7 +152,7 @@ class Student extends Model
 
     public function scopeFirstNameAsc($query)
     {
-        return $query->orderBy('first_name', 'asc');
+        return $query->orderBy('first_name');
     }
 
     public function studentUsers(): BelongsTo
