@@ -1,17 +1,16 @@
 @component('mail::message')
-
-## New {{ $support ? 'Support' : 'Contact' }} Message
+## New {{ ucfirst($type) }} Message
 
 @component('mail::panel')
-<b>{{ $name }}</b><br/>
+<b>{{ $data->name }}</b><br/>
 {{ now()->format('M d, Y | g:i a') }}
 
-{{ $subject }}
+<strong>Subject:</strong> {{ $data->subject }}
 
-{{ $message }}
+{{ $data->message }}
 @endcomponent
 
-@if($support)
+@if(!empty($data->support))
 @component('mail::button', ['url' => route('admin.support.index')])
     Reply to this Email
 @endcomponent

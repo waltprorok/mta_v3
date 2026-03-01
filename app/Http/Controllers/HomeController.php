@@ -50,14 +50,14 @@ class HomeController extends Controller
     public function createContact(StoreContactSubmissionRequest $request): RedirectResponse
     {
         try {
-            Contact::query()->create([
+            $contact = Contact::create([
                 'name' => $request->get('name'),
                 'email' => $request->get('email'),
                 'subject' => $request->get('subject'),
                 'message' => $request->get('message'),
             ]);
 
-            Mail::to('waltprorok@gmail.com')->queue(new ContactForm($request));
+            Mail::to('waltprorok@gmail.com')->queue(new ContactForm($contact, 'contact'));
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }

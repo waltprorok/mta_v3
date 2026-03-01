@@ -5,52 +5,33 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 
 class ContactForm extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public string $email;
-    public string $name;
-    public ?bool $support = false;
-    public $subject;
-    public string $message;
-    public $attachment;
+    public function __construct(
+        public object $data,
+        public string $type
+    ) {}
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct($request)
+    public function build(): self
     {
-        $this->email = $request->email;
-        $this->name = $request->name;
-        $this->support = $request->support;
-        $this->subject = $request->subject;
-        $this->message = $request->message;
-        $this->attachment = $request->attachment;
-    }
+        $mail = $this->from($this->data->email, $this->data->name)
+            ->subject($this->data->subject)
+            ->markdown('emails.contact.contact')
+            ->with([
+                'data' => $this->data,
+                'type' => $this->type,
+            ]);
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build(): ContactForm
-    {
-        if ($this->attachment)
-            return $this->from($this->email, $this->name)
-                ->subject($this->subject)
-                ->markdown('emails.contact.contact')
-                ->attach($this->attachment->getRealPath(), [
-                    'as' => $this->attachment->getClientOriginalName(),
-                    'mime' => $this->attachment->getMimeType(),
-                ]);
-        else {
-            return $this->from($this->email, $this->name)
-                ->subject($this->subject)
-                ->markdown('emails.contact.contact');
+        if (!empty($this->data->attachment)) {
+            $mail->attach(
+                Storage::disk('support')->path($this->data->attachment)
+            );
         }
+
+        return $mail;
     }
 }

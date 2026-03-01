@@ -30,7 +30,7 @@ class StudentLessonController extends Controller
 
     public function index($id)
     {
-        $student = Student::query()->where('id', $id)->where('teacher_id', Auth::id())->firstOrFail();
+        $student = Student::query()->where(['id' => $id, 'teacher_id' => Auth::id()])->firstOrFail();
 
         return view('webapp.student.schedule', compact('student'));
     }
@@ -41,7 +41,7 @@ class StudentLessonController extends Controller
             ->with('hasOneLesson')
             ->where(['id' => $id, 'teacher_id' => Auth::id()])
             ->first();
-        $pastLessons = $student->lessons()->orderByDesc('id')->limit(4)->get()->reverse()->values();
+        $pastLessons = $student->lessons()->orderByDesc('start_date')->limit(4)->get()->reverse()->values();
         $businessHours = BusinessHours::query()
             ->where('teacher_id', Auth::id())
             ->orderBy('day')
@@ -395,10 +395,8 @@ class StudentLessonController extends Controller
     private function scheduleUpdate(Request $request): void
     {
         $lesson = Lesson::query()
-            ->where([
-                'id' => $request->get('id'),
-                'teacher_id' => Auth::id(),
-            ])->first();
+            ->where(['id' => $request->get('id'), 'teacher_id' => Auth::id()])
+            ->first();
 
         $lesson->billing_rate_id = $request->get('billing_rate_id');
         $lesson->color = $request->get('color');
@@ -418,7 +416,7 @@ class StudentLessonController extends Controller
             $lesson->end_date = "{$startDate} {$duration}";
 
             if ($this->hasEndTimeChanged($request)) {
-                $lesson->interval = (int) $endTime;
+                $lesson->interval = (int)$endTime;
             }
         }
 

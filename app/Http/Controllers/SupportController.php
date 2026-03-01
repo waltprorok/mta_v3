@@ -31,13 +31,15 @@ class SupportController extends Controller
     public function store(StoreSupportRequest $request): RedirectResponse
     {
         try {
-            Support::query()->create($request->all());
-            Mail::to($request['email'])->queue(new SupportEmail($request));
+            $data = $request->validated();
+            Support::create($request->all());
+            Mail::to($request['email'])->queue(new SupportEmail($data));
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }
 
-        return redirect()->route('support')->with('success', 'The support request was sent successfully');
+        return redirect()->route('support')
+            ->with('success', 'The support request was sent successfully');
     }
 
     public function update(StoreSupportRequest $request, Support $support): JsonResponse

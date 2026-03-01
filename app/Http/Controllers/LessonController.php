@@ -102,7 +102,7 @@ class LessonController extends Controller
 
     public function list(string $fromDate, string $toDate): AnonymousResourceCollection
     {
-        return Auth::user()->isAdmin() ? $this->getAllLessonsForAdmin($fromDate, $toDate) : $this->getLessonsForTeacherId($fromDate, $toDate);
+        return auth()->user()->isAdmin() ? $this->getAllLessonsForAdmin($fromDate, $toDate) : $this->getLessonsForTeacherId($fromDate, $toDate);
     }
 
     public function update(Request $request, Lesson $lesson): JsonResponse
