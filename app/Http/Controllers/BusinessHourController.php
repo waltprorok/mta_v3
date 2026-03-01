@@ -31,9 +31,9 @@ class BusinessHourController extends Controller
      */
     public function index()
     {
-        $hours = BusinessHours::query()->where('teacher_id', Auth::id())->first();
+        $hasHours = BusinessHours::query()->where('teacher_id', Auth::id())->exists();
 
-        return $hours == null ? $this->create() : $this->show();
+        return $hasHours == null ? $this->create() : $this->show();
     }
 
     /**
@@ -48,22 +48,20 @@ class BusinessHourController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $input = $request->all();
+        $teacherId = Auth::id();
 
-        foreach ($input['rows'] as $index => $value) {
-            if (! isset($value['active'])) {
-                $active = 0;
-            } else {
-                $active = $value['active'];
-            }
-
-            BusinessHours::query()->create([
-                'teacher_id' => Auth::id(),
-                'day' => $value['day'],
-                'active' => $active,
-                'open_time' => $value['open_time'],
-                'close_time' => $value['close_time'],
-            ]);
+        foreach ($request->input('rows', []) as $row) {
+            BusinessHours::updateOrCreate(
+                [
+                    'teacher_id' => $teacherId,
+                    'day'        => $row['day'],
+                ],
+                [
+                    'active'     => (int) ($row['active'] ?? 0),
+                    'open_time'  => $row['open_time'],
+                    'close_time' => $row['close_time'],
+                ]
+            );
         }
 
         return redirect()->back()->with('success', 'Business hours saved successfully!');
@@ -77,7 +75,7 @@ class BusinessHourController extends Controller
         $hours = BusinessHours::query()
             ->where('teacher_id', Auth::id())
             ->orderBy('day')
-            ->get();
+            ->get(['id', 'teacher_id', 'day', 'active', 'open_time', 'close_time']);
 
         $totalHours = $this->businessHoursService->getTotalHours($hours);
 
@@ -88,24 +86,20 @@ class BusinessHourController extends Controller
 
     public function update(Request $request): RedirectResponse
     {
-        $input = $request->all();
+        $teacherId = Auth::id();
 
-        foreach ($input['rows'] as $index => $value) {
-            if (! isset($value['active'])) {
-                $active = 0;
-            } else {
-                $active = $value['active'];
-            }
-
-            $hours = BusinessHours::query()
-                ->where(['teacher_id' => Auth::id(), 'day' => $value['day']])
-                ->first();
-            $hours->teacher_id = Auth::id();
-            $hours->day = $value['day'];
-            $hours->active = $active;
-            $hours->open_time = $value['open_time'];
-            $hours->close_time = $value['close_time'];
-            $hours->save();
+        foreach ($request->input('rows', []) as $row) {
+            BusinessHours::updateOrCreate(
+                [
+                    'teacher_id' => $teacherId,
+                    'day'        => $row['day'],
+                ],
+                [
+                    'active'     => (int) ($row['active'] ?? 0),
+                    'open_time'  => $row['open_time'],
+                    'close_time' => $row['close_time'],
+                ]
+            );
         }
 
         return redirect()->back()->with('success', 'Business hours updated successfully!');

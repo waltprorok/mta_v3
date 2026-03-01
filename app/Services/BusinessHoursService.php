@@ -12,34 +12,27 @@ class BusinessHoursService
      */
     public function getSelectHours(): array
     {
-        $startPeriod = Carbon::parse('8:00');
-        $endPeriod = Carbon::parse('22:00');
-
-        $period = CarbonPeriod::create($startPeriod, '30 minutes', $endPeriod);
-
-        $hours = [];
-
-        foreach ($period as $date) {
-            $hours[] = $date->format('H:i:s');
-        }
-
-        return $hours;
+        return collect(
+            CarbonPeriod::create('08:00', '30 minutes', '22:00')
+        )
+            ->map(fn($dt) => $dt->format('H:i:s'))
+            ->values()
+            ->all();
     }
 
     /**
      * @param $hours
-     * @return float|int
+     * @return float
      */
-    public function getTotalHours($hours): float|int
+    public function getTotalHours($hours): float
     {
-        $totalHours = 0;
+        $totalMinutes = $hours
+            ->where('active', true)
+            ->sum(function ($hour) {
+                return Carbon::parse($hour->open_time)
+                    ->diffInMinutes(Carbon::parse($hour->close_time));
+            });
 
-        foreach ($hours as $hour) {
-            if ($hour->active) {
-                $totalHours += Carbon::createFromTimestamp(strtotime($hour->open_time))->diffInMinutes($hour->close_time);
-            }
-        }
-
-        return $totalHours / 60;
+        return $totalMinutes / 60;
     }
 }

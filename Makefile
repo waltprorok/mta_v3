@@ -22,8 +22,8 @@ test:
 prune:
 	php artisan telescope:prune --hours=0
 
-dev:
+npm-dev:
 	npm run watch
 
-prod:
+npm-prod:
 	npm run production

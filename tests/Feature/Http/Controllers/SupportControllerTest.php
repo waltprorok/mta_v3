@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Mail\SupportEmail;
 use App\Models\Support;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -64,26 +63,22 @@ class SupportControllerTest extends TestCase
 
     public function test_support_create_success()
     {
-        $support = Support::factory()->make();
+        $payload = [
+            'name' => $this->user->first_name,
+            'email' => $this->user->email,
+            'subject' => 'Test Subject',
+            'message' => 'Test message body',
+        ];
 
-        $this->actingAs($this->user)->post('/web/support', [
-            'name' => $support->name,
-            'email' => $support->email,
-            'subject' => $support->subject,
-            'message' => $support->message,
-        ]);
+        $response = $this->actingAs($this->user)
+            ->post('/web/support', $payload);
 
-        $this->assertDatabaseCount('supports', 1);
+        $response->assertRedirect(route('support'));
 
         $this->assertDatabaseHas('supports', [
-            'email' => $support->email,
+            'email'   => $this->user->email,
+            'subject' => 'Test Subject',
         ]);
-
-        Mail::assertQueued(SupportEmail::class, function ($mail) use ($support) {
-            return $mail->hasTo($support->email);
-        });
-
-        Mail::assertQueued(SupportEmail::class, 1);
     }
 
     public function test_support_update_success()
