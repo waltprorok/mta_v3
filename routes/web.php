@@ -13,6 +13,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Laravel\Cashier\Http\Controllers\WebhookController;
 use Spatie\Honeypot\ProtectAgainstSpam;
 
 Route::middleware(ProtectAgainstSpam::class)->group(function () {
@@ -28,6 +29,9 @@ Route::get('privacy', 'HomeController@privacy')->name('privacy');
 Route::get('faq', 'HomeController@faq')->name('faq');
 Route::get('terms', 'HomeController@terms')->name('terms');
 Route::post('newsletter', 'NewsletterController@store')->name('newsletter')->middleware(ProtectAgainstSpam::class);
+
+// Stripe webhook
+Route::post('/stripe/webhook', [WebhookController::class, 'handleWebhook']);
 
 // Routes for blog
 Route::prefix('blog')->group(function () {
