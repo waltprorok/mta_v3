@@ -32,7 +32,10 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        return response()->json($user);
+        return response()->json([
+            'user' => $user,
+            'stripe_status' => $user->subscription('premium')?->stripe_status,
+        ]);
     }
 
     public function update(Request $request, User $user): JsonResponse
