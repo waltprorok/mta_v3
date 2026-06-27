@@ -37,6 +37,7 @@ export default {
                 pm_last_four: null,
                 stripe_id: null,
             },
+            stripe_status: '',
             modelConfig: {
                 type: 'string',
                 mask: 'YYYY-MM-DD HH:mm:ss',
@@ -49,6 +50,9 @@ export default {
     },
 
     computed: {
+        userEdit() {
+            return userEdit
+        },
         formatDate() {
             return this.user.trial_ends_at ? new Date(this.user.trial_ends_at) : null
         },
@@ -62,7 +66,9 @@ export default {
             let id = parameters.split('/').slice(-2)[0];
             axios.get('/web/user/' + id + '/edit')
                 .then((response) => {
-                    this.user = response.data;
+                    console.log(response.data);
+                    this.user = response.data.user;
+                    this.stripe_status = response.data.stripe_status;
                 })
                 .catch((error) => {
                     console.log(error);
