@@ -43,7 +43,7 @@
                 <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
             </div>
             <div class="form-group pull-right m-1">
-                <button class="btn btn-rounded btn-default" title="complete all lessons in date range" v-on:click="showCompleteModal()">Complete Past Lessons</button>
+                <button class="btn btn-rounded btn-outline-primary" title="complete all lessons in date range" v-on:click="showCompleteModal()">Complete Past Lessons</button>
             </div>
             <div class="form-group pull-left form-inline p-1">
                 <label for="start date" class="control-label pl-1 pr-1">From</label>
@@ -70,7 +70,7 @@
                 </v-date-picker>
             </div>
             <div class="form-group pull-left form-inline p-1">
-                <button class="btn btn-sm btn-default" title="reset calendar" v-on:click="resetDates">Reset</button>
+                <button class="btn btn-sm btn-primary" title="reset calendar" v-on:click="resetDates">Reset</button>
             </div>
             <datatable class="table table-responsive-md table-condensed" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
                 <template v-slot="{ columns, row }">
