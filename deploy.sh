@@ -1,7 +1,7 @@
 #!/bin/bash
 #php artisan down
-git reset --hard
-git pull
+git fetch origin
+git reset --hard origin/master
 php artisan migrate --force
 export COMPOSER_ALLOW_SUPERUSER=1
 composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
