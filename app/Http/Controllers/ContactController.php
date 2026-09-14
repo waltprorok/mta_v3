@@ -14,11 +14,17 @@ class ContactController extends Controller
 {
     public function index()
     {
-        $contacts = Contact::query()->select(['id', 'name', 'email', 'subject', 'message', 'reply', 'created_at'])
+        $contacts = Contact::query()
+            ->select(['id', 'name', 'email', 'subject', 'message', 'reply', 'created_at',])
             ->latest()
             ->get();
 
-        return response()->json($contacts);
+        return response()->json(
+            $contacts,
+            200,
+            [],
+            JSON_INVALID_UTF8_SUBSTITUTE
+        );
     }
 
     public function show(Contact $contact): JsonResponse
