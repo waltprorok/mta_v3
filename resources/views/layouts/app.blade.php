@@ -9,7 +9,22 @@
     <meta name="keywords" content="music teacher software, music teacher web app, automated music teacher studio, independent music teacher">
     <meta name="robots" content="index, follow, max-image-preview:standard">
     <meta name="google-site-verification" content="IV3PI1a4frdf1GVIKurcc_lOg6awG8gqqOoRkWrugDI"/>
-
+    {{-- Open Graph --}}
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Music Teachers Aid">
+    <meta property="og:title" content="Music Teachers Aid">
+    <meta property="og:description" content="Music Teachers Aid is a suite of music lesson tools that helps private music teachers manage in-person music lessons. Start your 30-day free trial today!">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ asset('marketing/img/twitter-og.png') }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Music Teachers Aid">
+    {{-- Twitter / X --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Music Teachers Aid">
+    <meta name="twitter:description" content="Music Teachers Aid is a suite of music lesson tools that helps private music teachers manage in-person music lessons. Start your 30-day free trial today!">
+    <meta name="twitter:image" content="{{ asset('marketing/img/twitter-og.png') }}">
+    <meta name="twitter:image:alt" content="Music Teachers Aid">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 

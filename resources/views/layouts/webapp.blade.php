@@ -9,9 +9,9 @@
 
     <title>
         @if(View::hasSection('title'))
-            @yield('title') | MTA
+            @yield('title') | {{ config('app.name', 'MTA') }}
         @else
-            MTA
+            {{ config('app.name', 'MTA') }}
         @endif
     </title>
 
