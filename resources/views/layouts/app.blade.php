@@ -7,13 +7,16 @@
     <meta name="description" content="Music Teachers Aid is a suite of music lesson tools that helps private music teachers manage in-person music lessons. Start your 30-day free trial today!">
     <meta name="author" content="Walter Prorok">
     <meta name="keywords" content="music teacher software, music teacher web app, automated music teacher studio, independent music teacher">
-    <meta name="robots" content="index, follow, max-image-preview:standard">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="{{ url()->current() }}">
     <meta name="google-site-verification" content="IV3PI1a4frdf1GVIKurcc_lOg6awG8gqqOoRkWrugDI"/>
     {{-- Open Graph --}}
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Music Teachers Aid">
     <meta property="og:title" content="Music Teachers Aid">
     <meta property="og:description" content="Music Teachers Aid is a suite of music lesson tools that helps private music teachers manage in-person music lessons. Start your 30-day free trial today!">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image:type" content="image/png">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:image" content="{{ asset('marketing/img/twitter-og.png') }}">
     <meta property="og:image:width" content="1200">
