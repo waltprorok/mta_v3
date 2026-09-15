@@ -14,8 +14,8 @@ Music Teachers Aid is a web application for private / independent music teachers
     Composer 2
     Laravel  10
     MariaDB  10.6.18 | MySQL | SQLite
-    NodeJS   14.21.3
-    NPM      9.7.1
+    NodeJS   18.20.8
+    NPM      10.8.2
 
 ### Getting started
 
