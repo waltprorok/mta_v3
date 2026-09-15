@@ -8,7 +8,6 @@ Music Teachers Aid is a web application for private / independent music teachers
 * Professional invoices
 * Email reminders
 
-
 ### Requirements
  
     PHP      8.2
