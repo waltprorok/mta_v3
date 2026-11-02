@@ -1,103 +1,110 @@
-$(document).ready(function ($) {
+$(function () {
+    const $body = $('body');
+    const $nav = $('ul.nav');
+    const $home = $('#at_home');
+    const $studio = $('#at_studio');
+    const $homeAddress = $('#studentHomeAddress');
+
+    const NAV_STORAGE_KEY = 'navDropdownToggle';
+
     /**
      * Sidebar Dropdown
      */
     $('.nav-dropdown-toggle').on('click', function (e) {
         e.preventDefault();
-        $(this).parent().toggleClass('open');
 
-        if ($(this).parent().hasClass('open')) {
-            let linkStatus = $(e.target).attr('href')
-            localStorage.setItem('navDropdownToggle', linkStatus);
-        } else {
-            let linkStatus = '#';
-            localStorage.setItem('navDropdownToggle', linkStatus);
-        }
+        const $parent = $(this).parent();
+        const isOpen = $parent.toggleClass('open').hasClass('open');
+
+        localStorage.setItem(
+            NAV_STORAGE_KEY,
+            isOpen ? $(this).attr('href') || '#' : '#'
+        );
     });
 
-    // open sub-menu when an item is active.
-    $('ul.nav').find('a.active').parent().parent().parent().addClass('open');
+    // Open submenu containing the active link
+    $nav.find('a.active').parent().parent().parent().addClass('open');
+
+    // Restore previously opened dropdown
+    const savedDropdown = localStorage.getItem(NAV_STORAGE_KEY);
+
+    if (savedDropdown && savedDropdown !== '#') {
+        $nav.find('a').filter(function () {
+            return $(this).attr('href') === savedDropdown;
+        }).parent().addClass('open');
+    }
 
     /**
-     * Sidebar Toggle
+     * Sidebar Toggles
      */
     $('.sidebar-toggle').on('click', function (e) {
         e.preventDefault();
-        $('body').toggleClass('sidebar-hidden');
+        $body.toggleClass('sidebar-hidden');
     });
 
-    /**
-     * Mobile Sidebar Toggle
-     */
     $('.sidebar-mobile-toggle').on('click', function () {
-        $('body').toggleClass('sidebar-mobile-show');
+        $body.toggleClass('sidebar-mobile-show');
     });
 
     /**
      * Format Phone Number
      */
-    $('#phone').val(function (i, text) {
-        text = text.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
-        return text;
+    const $phone = $('#phone');
+
+    if ($phone.length) {
+        $phone.val(function (_, value) {
+            return value.replace(
+                /^(\d{3})(\d{3})(\d{4})$/,
+                '$1-$2-$3'
+            );
+        });
+    }
+
+    /**
+     * Student Lesson Location
+     */
+    function updateLessonLocation(changed) {
+        const isHome = changed === 'home'
+            ? $home.is(':checked')
+            : !$studio.is(':checked');
+
+        $home.prop('checked', isHome);
+        $studio.prop('checked', !isHome);
+        $homeAddress.toggle(isHome);
+    }
+
+    $home.on('change', function () {
+        updateLessonLocation('home');
+    });
+
+    $studio.on('change', function () {
+        updateLessonLocation('studio');
+    });
+
+    // Initialize based on current selection
+    if ($home.length && $studio.length) {
+        updateLessonLocation($home.is(':checked') ? 'home' : 'studio');
+    }
+
+    /**
+     * Clickable Table Rows
+     */
+    $('.table-row').on('click', function (e) {
+        if ($(e.target).closest('a, button, input, select, textarea').length) {
+            return;
+        }
+
+        const url = $(this).data('href');
+
+        if (url) {
+            window.location.href = url;
+        }
     });
 
     /**
-     * Create Slug Tag
+     * Logout
      */
-    // $('[name="title"]').keyup(function () {
-    //     var title = $(this).val();
-    //     title = title.toLowerCase();
-    //     title = title.replace(/[^a-zA-Z0-9]+/g, '-');
-    //     $('[name="slug"]').val(title);
-    // });
-
-    $("#studentHomeAddress").hide();
-
-    // Ensure only one switch can be selected at a time
-    function syncToggles(changed) {
-        const atHome = $("#at_home");
-        const atStudio = $("#at_studio");
-
-        if (changed === "home") {
-            if (atHome.is(":checked")) {
-                atStudio.prop("checked", false);
-                $("#studentHomeAddress").show();
-            } else {
-                atStudio.prop("checked", true);
-                $("#studentHomeAddress").hide();
-            }
-        } else if (changed === "studio") {
-            if (atStudio.is(":checked")) {
-                atHome.prop("checked", false);
-                $("#studentHomeAddress").hide();
-            } else {
-                atHome.prop("checked", true);
-                $("#studentHomeAddress").show();
-            }
-        }
-    }
-
-    $("#at_home").change(function () {
-        syncToggles("home");
-    });
-
-    $("#at_studio").change(function () {
-        syncToggles("studio");
-    });
-
-    $(".table-row").click(function () {
-        window.document.location = $(this).data("href");
-    });
-
-    let navDropdownToggle = localStorage.getItem('navDropdownToggle');
-
-    if (navDropdownToggle) {
-        $('ul.nav').find('a[href="' + navDropdownToggle + '"]').parent().addClass('open')
-    }
-
-    onchange = "window.location.href=this.value;"
-
-    $('#logout-link').click(function () {
-        window.localStorage.removeItem('navDropdownToggle');
+    $('#logout-link').on('click', function () {
+        localStorage.removeItem(NAV_STORAGE_KEY);
     });
 });

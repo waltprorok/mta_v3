@@ -3,6 +3,8 @@ process.env.DISABLE_WEBPACKBAR = true;
 let mix = require('laravel-mix');
 const path = require('path');
 
+mix.disableNotifications();
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management

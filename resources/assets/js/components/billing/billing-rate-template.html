@@ -69,7 +69,7 @@
                                                         <label for="default" class="ts-helper"></label>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4" v-if="isMonthlyRate()">
+                                                <div class="col-md-4" v-if="isMonthlyRate">
                                                     <div class="toggle-switch" data-ts-color="primary">
                                                         <label for="flat_rate" class="ts-label">Flat Rate</label>
                                                         <input id="flat_rate" type="checkbox" hidden="hidden" v-model="rate.flat_rate" :disabled="isMonthlyRate()">
@@ -77,7 +77,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-<!--                                            <div class="row p-2" v-if="! isMonthlyRate()">-->
+<!--                                            <div class="row p-2" v-if="! isMonthlyRate">-->
 <!--                                                <div class="col-md-10">-->
 <!--                                                    <div class="toggle-switch" data-ts-color="primary">-->
 <!--                                                        <label for="cancelled_twenty_four_hours" class="ts-label">Charge Cancelled Lesson Under 24 Hours</label>-->
@@ -86,7 +86,7 @@
 <!--                                                    </div>-->
 <!--                                                </div>-->
 <!--                                            </div>-->
-<!--                                            <div class="row p-2" v-if="! isMonthlyRate()">-->
+<!--                                            <div class="row p-2" v-if="! isMonthlyRate">-->
 <!--                                                <div class="col-md-10">-->
 <!--                                                    <div class="toggle-switch" data-ts-color="primary">-->
 <!--                                                        <label for="cancelled_forty_eight_hours" class="ts-label">Charge Cancelled Lesson Under 48 Hours</label>-->

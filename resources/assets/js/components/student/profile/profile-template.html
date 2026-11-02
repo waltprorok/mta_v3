@@ -1,103 +1,159 @@
-<div class="card p-4">
-    <div class="row gutters-sm">
-        <div class="col-md-3 col-sm-4 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex flex-column align-items-center text-center" v-cloak>
-                        <img v-if="profile.id || profile.photo" style="width:150px;" :src="getProfileImg()" alt="Student profile picture" loading="eager"/>
-                        <div class="mt-3">
-                            <h5>{{ profile.first_name }}&nbsp;{{ profile.last_name }}</h5>
-                            <p class="mb-1">{{ profile.instrument }}</p>
-                            <p class="mb-1">{{ profile.level }}</p>
-                            <!--                        <a :href="'/messages/reply/' + profile.student_id" class="btn btn-outline-primary">Message</a>-->
-                        </div>
-                    </div>
+<div class="card shadow-sm" v-cloak>
+    <div class="card-body p-4">
+
+        <div class="row">
+
+            <!-- Student Profile -->
+            <div class="col-lg-4 col-md-5 mb-4 mb-md-0">
+
+                <div class="text-center p-3">
+
+                    <img :src="profileImage"
+                         :alt="fullName ? fullName + ' profile photo' : 'Student profile photo'"
+                         class="rounded-circle border mb-3"
+                         style="width: 150px; height: 150px; object-fit: cover;"
+                         loading="eager"
+                    >
+
+                    <h4 class="mb-1">
+                        {{ fullName }}
+                    </h4>
+
+                    <p v-if="profile.instrument" class="text-muted mb-2">
+                        {{ profile.instrument }}
+                    </p>
+
+                    <span v-if="profile.level"
+                          class="badge badge-primary px-3 py-2"
+                    >
+                        {{ profile.level }}
+                    </span>
+
                 </div>
+
             </div>
-        </div>
-        <div class="col-md-5 col-sm-12">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Name</h6>
-                        </div>
-                        <div class="col-sm-9">
-                            {{ profile.first_name }}&nbsp;{{ profile.last_name }}
-                        </div>
-                    </div>
-                    <hr>
 
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Phone</h6>
-                        </div>
-                        <div class="col-sm-9">
-                            <phone-number-format :data="profile.phone"></phone-number-format>
-                        </div>
-                    </div>
-                    <hr>
+            <!-- Student Details -->
+            <div class="col-lg-8 col-md-7">
 
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Email</h6>
-                        </div>
-                        <div class="col-sm-9">
-                            <a :href="'mailto:' + profile.email">{{ profile.email }}</a>
-                        </div>
-                    </div>
-                    <hr>
+                <h5 class="mb-4">
+                    Student Information
+                </h5>
 
-                    <div v-if="profile.parent" class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Parent Email</h6>
-                        </div>
-                        <div class="col-sm-9" v-if="profile.parent.email">
-                            <a :href="'mailto:' + profile.parent.email">{{ profile.parent.email }}</a>
-                        </div>
+                <div class="row mb-3">
+                    <div class="col-sm-4 text-muted">
+                        Name
                     </div>
-                    <hr v-if="profile.parent">
-
-                    <div v-if="profile.parent_phone" class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Parent Phone</h6>
-                        </div>
-                        <div class="col-sm-9" v-if="profile.parent">
-                            <phone-number-format :data="profile.parent_phone"></phone-number-format>
-                        </div>
-                    </div>
-                    <hr v-if="profile.parent_phone">
-
-                    <div v-if="profile.date_of_birth" class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Birthday</h6>
-                        </div>
-                        <div class="col-sm-9" v-if="profile.date_of_birth">
-                            {{ profile.date_of_birth | dateParse('YYYY-MM-DD') | dateFormat('MMMM DD, YYYY') }}
-                        </div>
-                    </div>
-                    <hr v-if="profile.date_of_birth">
-
-                    <div v-if="profile.address" class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Address</h6>
-                        </div>
-                        <div class="col-sm-9" v-if="profile.address">
-                            {{ profile.address }} {{ profile.address_2 }}<br/>
-                            {{ profile.city }}, {{ profile.state }} {{ profile.zip }}
-                        </div>
-                    </div>
-                    <hr v-if="profile?.address">
-
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Next Lesson</h6>
-                        </div>
-                        <div class="col-sm-9" v-if="profile.has_one_future_lesson">
-                            {{ new Date(profile.has_one_future_lesson.start_date).toDateString() }} | {{ profile.has_one_future_lesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }}
-                        </div>
+                    <div class="col-sm-8 font-weight-medium">
+                        {{ fullName || '—' }}
                     </div>
                 </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4 text-muted">
+                        Phone
+                    </div>
+                    <div class="col-sm-8">
+                        <phone-number-format
+                                v-if="profile.phone"
+                                :data="profile.phone"
+                        ></phone-number-format>
+                        <span v-else>—</span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4 text-muted">
+                        Email
+                    </div>
+                    <div class="col-sm-8">
+                        <a v-if="profile.email" :href="'mailto:' + profile.email">
+                            {{ profile.email }}
+                        </a>
+                        <span v-else>—</span>
+                    </div>
+                </div>
+
+                <div v-if="profile.date_of_birth" class="row mb-3">
+                    <div class="col-sm-4 text-muted">
+                        Birthday
+                    </div>
+                    <div class="col-sm-8">
+                        {{ profile.date_of_birth | dateParse('YYYY-MM-DD') | dateFormat('MMMM DD, YYYY') }}
+                    </div>
+                </div>
+
+                <div v-if="profile.address" class="row mb-3">
+                    <div class="col-sm-4 text-muted">
+                        Address
+                    </div>
+                    <div class="col-sm-8">
+                        {{ profile.address }}
+                        <span v-if="profile.address_2">
+                            {{ profile.address_2 }}
+                        </span>
+                        <br>
+                        {{ profile.city }}<span v-if="profile.city && profile.state">,</span>
+                        {{ profile.state }} {{ profile.zip }}
+                    </div>
+                </div>
+
+                <!-- Parent Information -->
+                <template v-if="profile.parent || profile.parent_phone">
+
+                    <hr class="my-4">
+
+                    <h5 class="mb-4">
+                        Parent Information
+                    </h5>
+
+                    <div v-if="profile.parent && profile.parent.email" class="row mb-3">
+                        <div class="col-sm-4 text-muted">
+                            Parent Email
+                        </div>
+                        <div class="col-sm-8">
+                            <a :href="'mailto:' + profile.parent.email">
+                                {{ profile.parent.email }}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div v-if="profile.parent_phone" class="row mb-3">
+                        <div class="col-sm-4 text-muted">
+                            Parent Phone
+                        </div>
+                        <div class="col-sm-8">
+                            <phone-number-format
+                                    :data="profile.parent_phone"
+                            ></phone-number-format>
+                        </div>
+                    </div>
+
+                </template>
+
+                <!-- Upcoming Lesson -->
+                <hr class="my-4">
+
+                <h5 class="mb-4">
+                    Upcoming Lesson
+                </h5>
+
+                <div v-if="nextLesson" class="row">
+                    <div class="col-sm-4 text-muted">
+                        Next Lesson
+                    </div>
+                    <div class="col-sm-8">
+                        <strong>
+                            {{ nextLesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('MMMM DD, YYYY') }}
+                        </strong>
+                        <span class="text-muted mx-2">|</span>
+                        {{ nextLesson.start_date | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('h:mm a') }}
+                    </div>
+                </div>
+
+                <p v-else class="text-muted mb-0">
+                    No upcoming lessons scheduled.
+                </p>
             </div>
         </div>
     </div>

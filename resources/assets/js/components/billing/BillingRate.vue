@@ -51,6 +51,20 @@ export default {
         TotalEntries
     },
 
+    computed: {
+        isMonthlyRate() {
+            return this.rate.type === 'monthly';
+        },
+    },
+
+    watch: {
+        'rate.type'(type) {
+            if (type === 'monthly') {
+                this.rate.flat_rate = true;
+            }
+        },
+    },
+
     filters: {
         capitalising: function (data) {
             let capitalized = [];
@@ -80,6 +94,30 @@ export default {
     methods: {
         dateFormat,
         dateParse,
+
+        defaultRate() {
+            return {
+                id: null,
+                type: null,
+                amount: null,
+                description: null,
+                default: false,
+                active: true,
+                flat_rate: false,
+                cancelled_twenty_four_hours: false,
+                cancelled_forty_eight_hours: false,
+                lesson: null,
+            };
+        },
+
+        clearRateData() {
+            this.showForm = false;
+            this.edit = false;
+            this.read = false;
+            this.rate = this.defaultRate();
+        },
+
+
         cancelForm: function () {
             let self = this;
             self.clearErrorData();
@@ -93,28 +131,13 @@ export default {
             self.error_amount = '';
         },
 
-        clearRateData: function () {
-            let self = this;
-            self.showForm = false;
-            self.rate.type = null;
-            self.rate.amount = null;
-            self.rate.description = null;
-            self.rate.default = false;
-            self.rate.active = true;
-            self.flat_rate = false;
-            self.cancelled_twenty_four_hours = false;
-            self.cancelled_forty_eight_hours = false;
-            self.edit = false;
-        },
-
-        createBillingRate: function () {
-            let self = this;
-            let params = Object.assign({}, self.rate);
-            axios.post('/web/billing-rate', params)
+        createBillingRate() {
+            axios.post('/web/billing-rate', this.rate)
                 .then(() => {
-                    self.clearRateData()
-                    self.clearErrorData();
-                    self.fetchRateList();
+                    this.clearRateData();
+                    this.clearErrorData();
+                    this.fetchRateList();
+
                     this.$notify({
                         type: 'success',
                         title: 'Success',
@@ -122,8 +145,9 @@ export default {
                         duration: 6000,
                     });
                 })
-                .catch((error) => {
-                    self.getErrorMessage(error);
+                .catch(error => {
+                    this.getErrorMessage(error);
+
                     this.$notify({
                         type: 'error',
                         title: 'Error',
@@ -133,13 +157,12 @@ export default {
                 });
         },
 
-        deleteRate: function (id) {
-            let self = this;
-            let params = Object.assign({}, self.rate);
-            axios.delete('/web/billing-rate/' + id, params)
+        deleteRate(id) {
+            axios.delete(`/web/billing-rate/${id}`)
                 .then(() => {
-                    self.showModal = false;
-                    self.fetchRateList();
+                    this.showModal = false;
+                    this.fetchRateList();
+
                     this.$notify({
                         type: 'warn',
                         title: 'Deleted',
@@ -147,8 +170,9 @@ export default {
                         duration: 6000,
                     });
                 })
-                .catch((error) => {
-                    console.log(error);
+                .catch(error => {
+                    console.error(error);
+
                     this.$notify({
                         type: 'error',
                         title: 'Error',
@@ -181,14 +205,6 @@ export default {
                 });
         },
 
-        isMonthlyRate: function () {
-            if (this.rate.type === 'monthly') {
-                this.rate.flat_rate = true;
-                return true;
-            }
-            return false;
-        },
-
         showDefaultIcon: function (row) {
             return row.default === true && row.active === true;
         },
@@ -212,25 +228,28 @@ export default {
             self.id = id;
         },
 
-        showBillingRate: function (id, read) {
-            let self = this;
-            self.showForm = true;
-            self.read = read;
-            self.edit = true;
-            axios.get('/web/billing-rate/' + id)
-                .then((response) => {
-                    self.rate.id = response.data.id;
-                    self.rate.type = response.data.type;
-                    self.rate.amount = response.data.amount;
-                    self.rate.description = response.data.description;
-                    self.rate.default = response.data.default;
-                    self.rate.active = response.data.active;
-                    self.rate.flat_rate = response.data.flat_rate;
-                    self.rate.cancelled_twenty_four_hours = response.data.cancelled_twenty_four_hours;
-                    self.rate.cancelled_forty_eight_hours = response.data.cancelled_forty_eight_hours;
-                    self.rate.lesson = response.data.lesson;
+        showBillingRate(id, read) {
+            this.showForm = true;
+            this.read = read;
+            this.edit = true;
+
+            axios.get(`/web/billing-rate/${id}`)
+                .then(response => {
+                    this.rate = {
+                        ...this.defaultRate(),
+                        ...response.data
+                    };
                 })
-            self.edit = true;
+                .catch(error => {
+                    console.error(error);
+
+                    this.$notify({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Could not load billing rate.',
+                        duration: 6000,
+                    });
+                });
         },
 
         updateBillingRate: function (id) {

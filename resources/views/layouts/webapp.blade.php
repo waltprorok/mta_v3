@@ -77,7 +77,7 @@
                         <i class="fa fa-user-circle-o"></i>Account
                     </a>
                     @if(Auth::user()->teacher)
-                        <a href="{{ route('teacher.studioIndex') }}" class="dropdown-item">
+                        <a href="{{ route('teacher.studio.index') }}" class="dropdown-item">
                             <i class="fa fa-cog"></i>Settings
                         </a>
                     @endif

@@ -31,7 +31,7 @@ class TeacherControllerTest extends TestCase
 
     public function test_index_page_route_redirect()
     {
-        $response = $this->get(route('teacher.studioIndex'));
+        $response = $this->get(route('teacher.studio.index'));
 
         $response->assertStatus(302);
     }
@@ -68,10 +68,10 @@ class TeacherControllerTest extends TestCase
 
     public function test_teacher_settings_create_index_view_200()
     {
-        $response = $this->actingAs($this->user)->get(route('teacher.studioIndex'));
+        $response = $this->actingAs($this->user)->get(route('teacher.studio.index'));
 
         $response->assertOk()
-            ->assertViewIs('webapp.teacher.studioIndex');
+            ->assertViewIs('webapp.teacher.studio');
     }
 
     public function test_teacher_settings_create_index_view_url_200()
@@ -79,17 +79,17 @@ class TeacherControllerTest extends TestCase
         $response = $this->actingAs($this->user)->get('/teacher/studio');
 
         $response->assertOk()
-            ->assertViewIs('webapp.teacher.studioIndex');
+            ->assertViewIs('webapp.teacher.studio');
     }
 
     public function test_teacher_settings_edit_index_view_200()
     {
         Teacher::factory()->create(['teacher_id' => $this->user->id]);
 
-        $response = $this->actingAs($this->user)->get(route('teacher.studioIndex'));
+        $response = $this->actingAs($this->user)->get(route('teacher.studio.index'));
 
         $response->assertOk()
-            ->assertViewIs('webapp.teacher.studiosettings');
+            ->assertViewIs('webapp.teacher.studio');
     }
 
     public function test_teacher_settings_edit_index_view_url_200()
@@ -99,26 +99,36 @@ class TeacherControllerTest extends TestCase
         $response = $this->actingAs($this->user)->get('/teacher/studio');
 
         $response->assertOk()
-            ->assertViewIs('webapp.teacher.studiosettings');
+            ->assertViewIs('webapp.teacher.studio');
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function test_teacher_settings_store()
     {
-        $this->actingAs($this->user)->post('/teacher/store', [
+        $response = $this->actingAs($this->user)
+            ->post(route('teacher.studio.store'), [
+                'studio_name' => 'Studio Name',
+                'first_name' => 'John',
+                'last_name' => 'Snow',
+                'address' => '123 Main St',
+                'address_2' => 'Apt A',
+                'city' => 'Orlando',
+                'state' => 'FL',
+                'zip' => '34712',
+                'email' => 'john_snow@domain.com',
+                'phone' => '1234567890',
+            ]);
+
+        $response->assertSessionHasNoErrors();
+
+        $this->assertDatabaseHas('teachers', [
             'teacher_id' => $this->user->id,
             'studio_name' => 'Studio Name',
             'first_name' => 'John',
             'last_name' => 'Snow',
-            'address' => '123 Main St',
-            'address_2' => 'Apt A',
-            'city' => 'Orlando',
-            'state' => 'FL',
-            'zip' => '34712',
-            'email' => 'john_snow@domain.com',
-            'phone' => '1234567890'
         ]);
-
-        $this->assertDatabaseCount('teachers', 1);
     }
 
     public function test_teacher_settings_update()

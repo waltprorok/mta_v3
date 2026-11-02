@@ -55,18 +55,22 @@ Route::group(['middleware' => ['auth', 'teacher', 'subscribed', 'active']], func
         Route::put('lessons/update', 'StudentLessonController@lessonsUpdate')->name('student.lessons.update');
     });
 
-    Route::prefix('teacher')->group(function () {
-        Route::get('studio', 'TeacherController@index')->name('teacher.studioIndex');
-        Route::put('update', 'TeacherController@update')->name('teacher.studioUpdate');
-        Route::post('store', 'TeacherController@store')->name('save.studioSettings');
-        Route::get('profile', 'TeacherController@profile')->name('teacher.profile');
-        Route::view('rates', 'webapp.teacher.billing')->name('teacher.billing');
-        Route::view('settings', 'webapp.teacher.settings')->name('teacher.settings');
-        Route::view('holidays', 'webapp.teacher.holiday')->name('teacher.holidays');
-        Route::view('instruments', 'webapp.teacher.instrument')->name('teacher.instruments');
-        Route::get('hours', 'BusinessHourController@index')->name('teacher.hours');
-        Route::post('hours', 'BusinessHourController@store')->name('teacher.hoursSave');
-        Route::put('hours/update', 'BusinessHourController@update')->name('teacher.hoursUpdate');
+    Route::prefix('teacher')->name('teacher.')->group(function () {
+        // Studio
+        Route::get('studio', 'TeacherController@index')->name('studio.index');
+        Route::post('studio', 'TeacherController@store')->name('studio.store');
+        Route::put('studio', 'TeacherController@update')->name('studio.update');
+        // Profile
+        Route::get('profile', 'TeacherController@profile')->name('profile');
+        // Settings
+        Route::view('rates', 'webapp.teacher.billing')->name('billing');
+        Route::view('settings', 'webapp.teacher.settings')->name('settings');
+        Route::view('holidays', 'webapp.teacher.holiday')->name('holidays');
+        Route::view('instruments', 'webapp.teacher.instrument')->name('instruments');
+        // Business Hours
+        Route::get('hours', 'BusinessHourController@index')->name('hours');
+        Route::post('hours', 'BusinessHourController@store')->name('hours.store');
+        Route::put('hours/update', 'BusinessHourController@update')->name('hours.update');
     });
 
     Route::prefix('reports')->group(function () {

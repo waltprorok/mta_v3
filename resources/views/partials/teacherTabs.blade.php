@@ -1,7 +1,7 @@
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item">
-        <a class="nav-link {{ Route::currentRouteName() == 'teacher.studioIndex' ? 'active' : '' }}" id="studio"
-           href="{{ route('teacher.studioIndex') }}">Studio</a>
+        <a class="nav-link {{ Route::currentRouteName() == 'teacher.studio.index' ? 'active' : '' }}" id="studio"
+           href="{{ route('teacher.studio.index') }}">Studio</a>
     </li>
     <li class="nav-item">
         <a class="nav-link {{ Route::currentRouteName() == 'teacher.hours' ? 'active' : '' }}" id="hours"

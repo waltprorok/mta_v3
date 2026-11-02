@@ -70,6 +70,6 @@ class BusinessHourControllerTest extends TestCase
         $this->assertDatabaseCount('business_hours', 1);
 
         $response->assertOk()
-            ->assertViewIs('webapp.teacher.hoursView');
+            ->assertViewIs('webapp.teacher.hours');
     }
 }
