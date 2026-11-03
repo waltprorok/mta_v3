@@ -32,6 +32,22 @@ export default {
         this.fetchListOfPayments();
     },
 
+    computed: {
+        totalCollected() {
+            return this.list.reduce((total, row) => {
+                return total + Number(row.payment || 0);
+            }, 0);
+        },
+
+        paymentCount() {
+            return this.list.length;
+        },
+
+        averagePayment() {
+            return this.paymentCount ? this.totalCollected / this.paymentCount : 0;
+        },
+    },
+
     components: {
         PaymentModal,
         TotalEntries,

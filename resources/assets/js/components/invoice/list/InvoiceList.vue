@@ -18,7 +18,7 @@ export default {
             per_page: 10,
             pages: [10, 25, 50, 100],
             columns: [
-                {label: 'Paid', field: 'is_paid',},
+                {label: 'Paid', field: 'full_name'},
                 {label: 'Student', field: 'student.first_name'},
                 {label: 'Phone', field: 'student.phone', sortable: false},
                 {label: 'Email', field: 'student.email', sortable: false},
@@ -139,7 +139,11 @@ export default {
         fetchInvoiceList: function () {
             axios.get('/web/invoice')
                 .then((response) => {
-                    this.list = response.data.students;
+                    this.list = response.data.students.map(invoice => ({
+                        ...invoice,
+                        full_name: `${invoice.student.first_name} ${invoice.student.last_name}`
+                    }));
+
                     this.paid = response.data.paid;
                     this.notPaid = response.data.notPaid;
                 })
