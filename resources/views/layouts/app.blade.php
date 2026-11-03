@@ -135,58 +135,80 @@
 
 <!-- Footer -->
 <footer id="footer" class="sm-padding bg-dark">
-    <!-- Container -->
     <div class="container">
         <div class="row">
-            <div class="col-xl-3 col-lg-3 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-1 col-6">
+            <!-- Brand -->
+            <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="footer-widget">
-                    <div class="footer-title">Company</div>
+
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <img src="{{ asset('marketing/img/apple-touch-icon-mta.png') }}"
+                             alt="Music Teacher's Aid"
+                             width="60"
+                             height="60"
+                             style="margin-right: 15px; border-radius: 8px;">
+
+                        <h4 style="color: #fff; margin: 0; font-size: 20px; font-weight: 600;">
+                            Music Teacher's Aid
+                        </h4>
+                    </div>
+
+                    <p style="margin: 0; line-height: 1.7;">
+                        Spend less time managing your music studio
+                        and more time doing what you love — teaching music.
+                    </p>
+
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                <div class="footer-widget">
+                    <div class="footer-title">Features</div>
+
                     <ul class="list-unstyled">
+                        <li><a href="/#features">Features</a></li>
+                        <li><a href="{{ route('faq') }}">FAQ</a></li>
+                        <li><a href="{{ route('register') }}">Get Started</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                <div class="footer-widget">
+                    <div class="footer-title">Quick Links</div>
+
+                    <ul class="list-unstyled">
+                        <li><a href="{{ route('blog.index') }}">Blog</a></li>
                         <li><a href="{{ route('contact') }}">Contact Us</a></li>
+                        <li>
+                            <a href="https://www.youtube.com/@walterprorok213"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                <i class="fa fa-youtube-play" aria-hidden="true"></i>
+                                YouTube
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Legal -->
+            <div class="col-lg-2 col-md-6 col-sm-6 col-6">
+                <div class="footer-widget">
+                    <div class="footer-title">Legal</div>
+
+                    <ul class="list-unstyled">
                         <li><a href="{{ route('terms') }}">Terms of Service</a></li>
                         <li><a href="{{ route('privacy') }}">Privacy Policy</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-3 col-md-2 col-sm-4 col-6">
-                <div class="footer-widget">
-                    <div class="footer-title">Quick Links</div>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ route('blog.index') }}">Blog</a></li>
-                        <li><a href="{{ route('faq') }}">FAQ</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-2 col-md-2 col-sm-3 col-6">
-                <div class="footer-widget">
-                    <div class="footer-title">Social</div>
-                    <ul class="list-unstyled">
-                        {{--<li><a href="#">Facebook</a></li>--}}
-                        {{--<li><a href="#">Twitter</a></li>--}}
-                        {{--<li><a href="#">LinkedIn</a></li>--}}
-                        <li><a href="https://www.youtube.com/@walterprorok213" target="_blank">
-                                <i class="fa fa-youtube-play" aria-hidden="true"></i>&nbsp;YouTube</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6 col-6">
-                <div class="footer-widget">
-                    <div class="footer-title">Sign Up For Our Newsletter</div>
-                    <form method="post" action="{{ route('newsletter') }}">
-                        @csrf
-                        @honeypot
-                        <div class="newsletter-form input-group">
-                            <input class="form-control" name="email" placeholder="Enter your email address" type="email">
-                            <span class="input-group-btn">
-                               <button class="btn btn-primary" type="submit">Subscribe</button>
-                            </span>
-                        </div>
-                    </form>
-                </div>
-            </div>
+
         </div>
-        <!-- Row -->
+
+        <!-- Copyright -->
         <div class="row">
             <div class="col-md-12">
                 <!-- footer logo -->
@@ -197,15 +219,13 @@
                 <!-- footer copyright -->
                 <div class="footer-copyright">
                     <p>Copyright &copy; {{ now()->year }}. All Rights Reserved. Designed by
-                        <a href="{{ route('home') }}">Music Teachers Aid, LLC</a>
+                        <a href="https://www.linkedin.com/in/walter-prorok/" target="_blank">Music Teachers Aid, LLC</a>
                     </p>
                 </div>
                 <!-- /footer copyright -->
             </div>
         </div>
-        <!-- /Row -->
     </div>
-    <!-- /Container -->
 </footer>
 <!-- /Footer -->
 

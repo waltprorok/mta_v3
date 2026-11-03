@@ -8,7 +8,7 @@
         <!-- Row -->
         <div class="row">
             <!-- Main -->
-            <main id="main" class="col-md-8 col-md-offset-2 sm-padding">
+            <main id="main" class="col-md-8 col-md-offset-2 sm-padding" style="padding-bottom: 80px;">
                 <div class="blog">
                     <div class="blog-content">
                         <h2>{{ $blog->title }}</h2>
@@ -36,37 +36,37 @@
         </div>
         <!-- /Row -->
 
-        <hr>
+{{--        <hr>--}}
 
-        <div id="blog" class="section lg-padding">
-            <!-- Container -->
-            <div class="container">
-                <!-- Row -->
-                <div class="row">
-                    <!-- Section header -->
-                    <div class="section-header text-center">
-                        <h2 class="title">Sign Up For Our Newsletter</h2>
-                        <h3>Stay up to date with the latest news.</h3>
-                    </div>
-                    <!-- /Section header -->
-                    <!-- blog -->
-                    <div class="col-md-4 col-md-offset-4">
-                        <form method="post" action="{{ route('newsletter') }}">
-                            @csrf
-                            @honeypot
-                            <div class="input-group">
-                                <input class="form-control" name="email" placeholder="Enter your email address" type="email">
-                                <span class="input-group-btn"><button class="btn btn-primary" type="submit">Subscribe</button>
-                            </span>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- /blog -->
-                </div>
-                <!-- /Row -->
-            </div>
-            <!-- /Container -->
-        </div>
+{{--        <div id="blog" class="section lg-padding">--}}
+{{--            <!-- Container -->--}}
+{{--            <div class="container">--}}
+{{--                <!-- Row -->--}}
+{{--                <div class="row">--}}
+{{--                    <!-- Section header -->--}}
+{{--                    <div class="section-header text-center">--}}
+{{--                        <h2 class="title">Sign Up For Our Newsletter</h2>--}}
+{{--                        <h3>Stay up to date with the latest news.</h3>--}}
+{{--                    </div>--}}
+{{--                    <!-- /Section header -->--}}
+{{--                    <!-- blog -->--}}
+{{--                    <div class="col-md-4 col-md-offset-4">--}}
+{{--                        <form method="post" action="{{ route('newsletter') }}">--}}
+{{--                            @csrf--}}
+{{--                            @honeypot--}}
+{{--                            <div class="input-group">--}}
+{{--                                <input class="form-control" name="email" placeholder="Enter your email address" type="email">--}}
+{{--                                <span class="input-group-btn"><button class="btn btn-primary" type="submit">Subscribe</button>--}}
+{{--                            </span>--}}
+{{--                            </div>--}}
+{{--                        </form>--}}
+{{--                    </div>--}}
+{{--                    <!-- /blog -->--}}
+{{--                </div>--}}
+{{--                <!-- /Row -->--}}
+{{--            </div>--}}
+{{--            <!-- /Container -->--}}
+{{--        </div>--}}
     </div>
     <!-- /Container -->
     <!-- /Blog -->
