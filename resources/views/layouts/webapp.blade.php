@@ -109,7 +109,7 @@
 @yield('scripts')
 <script src="{{ asset('webapp/js/jquery-ui.js') }}"></script>
 <script type="text/javascript" src="{{ asset('webapp/js/datepicker.js') }}"></script>
-
+@production
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146819127-1"></script>
 <script>
@@ -122,5 +122,6 @@
     gtag('js', new Date());
     gtag('config', 'UA-146819127-1');
 </script>
+@endproduction
 </body>
 </html>

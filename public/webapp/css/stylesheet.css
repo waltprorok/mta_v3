@@ -125,3 +125,27 @@ table thead tr th {
 [v-cloak] {
     display: none;
 }
+
+@media (max-width: 767px) {
+    .page-header {
+        flex-wrap: nowrap !important;
+    }
+
+    .page-header .navbar-brand {
+        margin-right: 10px;
+        min-width: 0;
+    }
+
+    .page-header .navbar-brand img {
+        max-width: 180px;
+        width: 100%;
+        height: auto;
+    }
+
+    .page-header .navbar-nav {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        flex-shrink: 0;
+    }
+}

@@ -46,6 +46,24 @@ export default {
         this.fetchPaymentsList();
     },
 
+    computed: {
+        totalInvoiced() {
+            return this.list.reduce((sum, row) => {
+                return sum + Number(row.total || 0);
+            }, 0);
+        },
+
+        totalPaid() {
+            return this.list.reduce((sum, row) => {
+                return sum + Number(row.payment || 0);
+            }, 0);
+        },
+
+        totalBalance() {
+            return this.totalInvoiced - this.totalPaid;
+        }
+    },
+
     methods: {
         fetchPaymentsList: function () {
             axios.get('/web/payments')
@@ -66,3 +84,21 @@ export default {
     },
 }
 </script>
+
+<style>
+.border-left-primary {
+    border-left: 4px solid #007bff !important;
+}
+
+.border-left-success {
+    border-left: 4px solid #28a745 !important;
+}
+
+.border-left-danger {
+    border-left: 4px solid #dc3545 !important;
+}
+
+.border-left-secondary {
+    border-left: 4px solid #6c757d !important;
+}
+</style>

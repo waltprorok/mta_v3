@@ -19,8 +19,7 @@ export default {
             pages: [10, 25, 50, 100],
             columns: [
                 {label: 'Paid', field: 'is_paid',},
-                {label: 'First Name', field: 'student.first_name',},
-                {label: 'Last Name', field: 'student.last_name',},
+                {label: 'Student', field: 'student.first_name'},
                 {label: 'Phone', field: 'student.phone', sortable: false},
                 {label: 'Email', field: 'student.email', sortable: false},
                 {label: 'Balance', field: 'balance_due',},
@@ -67,6 +66,22 @@ export default {
     mounted: function () {
         this.fetchInvoiceList();
         this.getPaymentTypes();
+    },
+
+    computed: {
+        totalInvoiced() {
+            return this.list.reduce((sum, row) => {
+                return sum + Number(row.total || 0);
+            }, 0);
+        },
+        totalCollected() {
+            return this.list.reduce((sum, row) => {
+                return sum + Number(row.payment || 0);
+            }, 0);
+        },
+        totalBalance() {
+            return this.totalInvoiced - this.totalCollected;
+        }
     },
 
     components: {

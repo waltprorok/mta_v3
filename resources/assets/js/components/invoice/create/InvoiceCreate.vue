@@ -150,47 +150,25 @@ export default {
         },
 
         updateTotal: function () {
-            let subTotal = this.invoice.subtotal;
-            let discount = subTotal * (this.invoice.discount / 100);
+            const subTotal = Number(this.invoice.subtotal) || 0;
+            const discount = subTotal * ((Number(this.invoice.discount) || 0) / 100);
+
             this.invoice.total = subTotal - discount;
-            this.invoice.balance_due = subTotal - discount;
-            if (this.lastInvoice != null && this.lastInvoice.balance_due) {
-                this.invoice.balance_due = Number(this.invoice.balance_due) + Number(this.lastInvoice.balance_due);
-            }
+            this.invoice.balance_due = this.invoice.total;
         },
 
         calculateTotal: function () {
             this.invoice.discount = 0;
-            this.lessons.map((lesson) => {
-                let numberOfLessons = this.lessons.length;
-                if (lesson.billing_rate.type === 'lesson') {
-                    this.invoice.total = lesson.billing_rate.amount * numberOfLessons;
-                    this.invoice.subtotal = lesson.billing_rate.amount * numberOfLessons;
-                    this.invoice.balance_due = lesson.billing_rate.amount * numberOfLessons;
-                    if (this.lastInvoice != null && this.lastInvoice.balance_due) {
-                        this.invoice.balance_due = Number(this.invoice.balance_due) + Number(this.lastInvoice.balance_due);
-                    }
-                }
 
-                if (lesson.billing_rate.type === 'hourly') {
-                    let lessonInterval = (lesson.interval / 60);
-                    this.invoice.total = lesson.billing_rate.amount * lessonInterval * numberOfLessons;
-                    this.invoice.subtotal = lesson.billing_rate.amount * lessonInterval * numberOfLessons;
-                    this.invoice.balance_due = lesson.billing_rate.amount * lessonInterval * numberOfLessons;
-                    if (this.lastInvoice != null && this.lastInvoice.balance_due) {
-                        this.invoice.balance_due = Number(this.invoice.balance_due) + Number(this.lastInvoice.balance_due);
-                    }
-                }
+            let total = 0;
 
-                if (lesson.billing_rate.type === 'monthly') {
-                    this.invoice.total = lesson.billing_rate.amount;
-                    this.invoice.subtotal = lesson.billing_rate.amount;
-                    this.invoice.balance_due = Number(lesson.billing_rate.amount);
-                    if (this.lastInvoice != null && this.lastInvoice.balance_due) {
-                        this.invoice.balance_due = Number(this.invoice.balance_due) + Number(this.lastInvoice.balance_due);
-                    }
-                }
+            this.lessons.forEach((lesson) => {
+                total += Number(this.calculateLessonAmount(lesson)) || 0;
             });
+
+            this.invoice.subtotal = total;
+            this.invoice.total = total;
+            this.invoice.balance_due = total;
         },
 
         clearForm: function () {

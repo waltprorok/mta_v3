@@ -141,7 +141,12 @@ class InvoiceController extends Controller
         $additionalEmail = $request->get('additional_email') ?? null;
 
         try {
-            $newInvoice = Invoice::query()->create($request->all());
+            $data = $request->all();
+
+            $data['balance_due'] =
+                (float) $data['total'] - (float) ($data['payment'] ?? 0) + (float) ($data['adjustments'] ?? 0);
+
+            $newInvoice = Invoice::create($data);
 
             foreach ($lessonIds as $lessonId) {
                 Lesson::query()->findOrFail($lessonId)->update(['invoice_id' => $newInvoice->id]);

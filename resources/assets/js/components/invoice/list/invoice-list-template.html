@@ -1,7 +1,74 @@
 <div>
-    <div class="row">
-        <card :count="paid" :title="`Paid`" :icon="`fa fa-bank`"></card>
-        <card :count="notPaid" :title="`Not Paid`" :icon="`fa fa-money`"></card>
+    <div class="row mb-1">
+        <!-- Total Invoiced -->
+        <div class="col-md-4 mb-2">
+            <div class="card h-100 border-left-primary">
+                <div class="card-body">
+                    <div class="text-muted mb-2">
+                        <i class="fa fa-file-text-o mr-1"></i>
+                        Total Invoiced
+                    </div>
+
+                    <h3 class="mb-1 text-primary">
+                        {{ totalInvoiced | toCurrency }}
+                    </h3>
+
+                    <small class="text-muted">
+                        {{ list.length }} invoices
+                    </small>
+                </div>
+            </div>
+        </div>
+        <!-- Total Collected -->
+        <div class="col-md-4 mb-2">
+            <div class="card h-100 border-left-success">
+                <div class="card-body">
+                    <div class="text-muted mb-2">
+                        <i class="fa fa-check-circle-o mr-1"></i>
+                        Total Collected
+                    </div>
+
+                    <h3 class="mb-1 text-success">
+                        {{ totalCollected | toCurrency }}
+                    </h3>
+
+                    <small class="text-muted">
+                        {{ paid }} paid invoices
+                    </small>
+                </div>
+            </div>
+        </div>
+        <!-- Outstanding Balance -->
+        <div class="col-md-4 mb-2">
+            <div class="card h-100"
+                 :class="{
+                 'border-left-danger': totalBalance > 0,
+                 'border-left-success': totalBalance < 0,
+                 'border-left-secondary': totalBalance === 0
+             }">
+
+                <div class="card-body">
+                    <div class="text-muted mb-2">
+                        <i class="fa fa-balance-scale mr-1"></i>
+                        {{ totalBalance < 0 ? 'Credit Balance' : 'Outstanding Balance' }}
+                    </div>
+
+                    <h3 class="mb-1"
+                        :class="{
+                        'text-danger': totalBalance > 0,
+                        'text-success': totalBalance < 0,
+                        'text-muted': totalBalance === 0
+                    }">
+
+                        {{ Math.abs(totalBalance) | toCurrency }}
+                    </h3>
+
+                    <small class="text-muted">
+                        {{ notPaid }} unpaid invoices
+                    </small>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="card" v-on:keydown.esc="cancelForm()">
@@ -109,13 +176,18 @@
                     <tr>
                         <td v-if="row.is_paid === false"><span class="btn btn-sm btn-danger"><i class="fa fa-times"></i></span></td>
                         <td v-if="row.is_paid === true"><span class="btn btn-sm btn-success"><i class="fa fa-check"></i></span></td>
-                        <td>{{ row.student.first_name }}</td>
-                        <td>{{ row.student.last_name }}</td>
+                        <td>{{ row.student.first_name }} {{ row.student.last_name }}</td>
                         <td><phone-number-format :data="row.student.phone"></phone-number-format></td>
                         <td>{{ row.student.email }}</td>
-                        <td>{{ row.balance_due | toCurrency }}</td>
-                        <td v-if="hasDueDate(row)">{{ row.due_date | dateParse('YYYY-MM-DD') | dateFormat('MM-DD-YYYY') }}</td>
-                        <td v-else></td>
+                        <td :class="{
+                            'font-weight-bold text-danger': Number(row.balance_due) > 0,
+                            'font-weight-bold text-success': Number(row.balance_due) < 0
+                        }">
+                            {{ row.balance_due | toCurrency }}
+                        </td>
+                        <td>
+                            {{ row.due_date ? dateFormat(dateParse(row.due_date, 'YYYY-MM-DD'), 'MM-DD-YYYY') : '--' }}
+                        </td>
                         <td>{{ row.created_at | dateParse('YYYY-MM-DD') | dateFormat('MM-DD-YYYY') }}</td>
                         <td class="text-nowrap">
                             <a :href="`/invoice/show/${row.id}`" class="btn btn-sm btn-outline-primary" role="button" title="view"><i class="fa fa-file-pdf-o"></i></a>

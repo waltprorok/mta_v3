@@ -141,6 +141,34 @@ class LessonController extends Controller
         return response()->json();
     }
 
+    public function bulkUpdate(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'ids' => ['required', 'array', 'min:1'],
+            'ids.*' => ['required', 'integer', 'distinct', 'exists:lessons,id'],
+            'complete' => ['required', 'boolean'],
+        ]);
+
+        $query = Lesson::query()
+            ->whereIn('id', $validated['ids'])
+            ->where('status', '!=', 'Cancelled');
+
+        // Teachers can only update their own lessons.
+        if (! Auth::user()->isAdmin()) {
+            $query->where('teacher_id', Auth::id());
+        }
+
+        $updated = $query->update([
+            'complete' => $validated['complete'],
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => "{$updated} lessons updated successfully.",
+            'updated' => $updated,
+        ]);
+    }
+
     private function getAllLessonsForAdmin(string $fromDate, string $toDate): AnonymousResourceCollection
     {
         $fromDate = Carbon::createFromFormat('D M d Y', $fromDate)->format('Y-m-d');

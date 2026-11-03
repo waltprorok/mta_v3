@@ -64,6 +64,7 @@ Route::group(['middleware' => ['auth', 'active']], function () {
             Route::get('list/{fromDate}/{toDate}', 'LessonController@list');
             Route::patch('update/{lesson}', 'LessonController@update');
             Route::put('update/past', 'LessonController@completePast');
+            Route::patch('bulk-update', 'LessonController@bulkUpdate');
         });
         // messages
         Route::prefix('messages')->group(function () {
