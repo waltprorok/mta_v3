@@ -55,7 +55,8 @@ const router = new VueRouter({
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('billingRate', require('./components/billing/BillingRate.vue').default);
+Vue.component('billing-rate', require('./components/billing/BillingRate.vue').default);
+Vue.component('business-hours', require('./components/hours/BusinessHours.vue').default);
 Vue.component('blogs', require('./components/admin/blog/Blogs.vue').default);
 Vue.component('card', require('./components/cards/Card.vue').default);
 Vue.component('createBlog', require('./components/admin/blog/Create.vue').default);
@@ -86,7 +87,6 @@ Vue.component('reportInvoicePaymentsBar', require('./components/reports/InvoiceP
 Vue.component('messages', require('./components/messages/Messages.vue').default);
 Vue.component('plans', require('./components/admin/plan/Plans.vue').default);
 Vue.component('payments', require('./components/payments/Payments.vue').default);
-
 
 const app = new Vue({
     el: '#app',

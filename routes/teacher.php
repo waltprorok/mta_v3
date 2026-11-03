@@ -69,8 +69,8 @@ Route::group(['middleware' => ['auth', 'teacher', 'subscribed', 'active']], func
         Route::view('instruments', 'webapp.teacher.instrument')->name('instruments');
         // Business Hours
         Route::get('hours', 'BusinessHourController@index')->name('hours');
-        Route::post('hours', 'BusinessHourController@store')->name('hours.store');
-        Route::put('hours/update', 'BusinessHourController@update')->name('hours.update');
+        Route::get('hours/data', 'BusinessHourController@getHours')->name('hours.data');
+        Route::put('hours', 'BusinessHourController@update')->name('hours.update');
     });
 
     Route::prefix('reports')->group(function () {
