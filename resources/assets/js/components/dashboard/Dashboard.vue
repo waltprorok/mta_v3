@@ -18,12 +18,6 @@
 
                 <div class="row">
                     <card
-                        :count="activeStudentCount"
-                        title="Active Students"
-                        icon="fa fa-users"
-                    ></card>
-
-                    <card
                         :count="lessonsThisWeek"
                         title="Lessons This Week"
                         icon="fa fa-calendar"
@@ -42,6 +36,12 @@
                         title="Open Time Blocks"
                         icon="fa fa-clock-o"
                         :dates="weeklyDates"
+                    ></card>
+
+                    <card
+                        :count="activeStudentCount"
+                        title="Active Students"
+                        icon="fa fa-users"
                     ></card>
                 </div>
             </section>
