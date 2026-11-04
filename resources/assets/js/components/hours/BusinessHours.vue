@@ -272,7 +272,7 @@ export default {
             const openMinutes = this.timeToMinutes(row.open_time);
 
             return this.selectHours.filter(time => {
-                return this.timeToMinutes(time) >= openMinutes + 60;
+                return this.timeToMinutes(time) >= openMinutes;
             });
         },
 
