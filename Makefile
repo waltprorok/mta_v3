@@ -4,6 +4,9 @@ list:
 clear:
 	php artisan queue:clear
 
+coverage:
+	php artisan test --without-tty --coverage-html tests/Reports/Coverage
+
 flush:
 	php artisan queue:flush
 

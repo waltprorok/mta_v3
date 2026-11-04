@@ -235,7 +235,7 @@ class SubscriptionController extends Controller
                 'new_password' => 'required|string|min:8|confirmed',
             ]);
 
-            $user->password = bcrypt($request->get('new_password'));
+            $user->password = Hash::make($request->get('new_password'));
             $user->save();
 
             Mail::queue(new UserPasswordUpdatedMail($user));

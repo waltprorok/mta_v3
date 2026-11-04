@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 
 use App\Models\BillingRate;
-use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BillingRateFactory extends Factory
@@ -24,15 +24,14 @@ class BillingRateFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => 1,
-            'teacher_id' => 1,
+            'teacher_id' => User::factory()->state([
+                'teacher' => true,
+            ]),
             'type' => 'monthly',
             'amount' => 100,
             'description' => 'Monthly Rate',
             'default' => false,
             'active' => true,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
         ];
     }
 }

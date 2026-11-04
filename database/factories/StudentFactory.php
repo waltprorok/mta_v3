@@ -26,7 +26,9 @@ class StudentFactory extends Factory
             'student_id' => function () {
                 return User::factory()->create()->id;
             },
-            'teacher_id' => $this->faker->numberBetween(3, 4),
+            'teacher_id' => User::factory()->state([
+                'teacher' => true,
+            ]),
             'first_name' => function ($student) {
                 return User::find($student['student_id'])->first_name;
             },

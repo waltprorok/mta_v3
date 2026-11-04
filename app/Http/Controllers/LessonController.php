@@ -107,8 +107,18 @@ class LessonController extends Controller
 
     public function update(Request $request, Lesson $lesson): JsonResponse
     {
-        $lesson->complete = $request->get('complete');
-        $lesson->save();
+        $validated = $request->validate([
+            'complete' => ['required', 'boolean'],
+        ]);
+
+        abort_unless(
+            Auth::user()->isAdmin() || (int) $lesson->teacher_id === (int) Auth::id(),
+            Response::HTTP_NOT_FOUND
+        );
+
+        $lesson->update([
+            'complete' => $validated['complete'],
+        ]);
 
         return response()->json($lesson);
     }
@@ -119,22 +129,37 @@ class LessonController extends Controller
 
         try {
             foreach ($data as $record) {
-                $lesson = Lesson::query()
-                    ->where('start_date', '<', now()->startOfDay())
-                    ->find($record['id'], ['id', 'start_date', 'complete', 'status']);
+                $query = Lesson::query()
+                    ->where('start_date', '<', now()->startOfDay());
 
-                if ($lesson == null) {
+                // Teachers can only update their own lessons.
+                if (! Auth::user()->isAdmin()) {
+                    $query->where('teacher_id', Auth::id());
+                }
+
+                $lesson = $query->find($record['id'], [
+                    'id',
+                    'start_date',
+                    'complete',
+                    'status',
+                ]);
+
+                if ($lesson === null) {
                     continue;
                 }
 
-                if ($lesson->complete || $lesson->status == Lesson::STATUS[2]) {
+                if ($lesson->complete || $lesson->status === Lesson::STATUS[2]) {
                     continue;
                 }
 
                 $lesson->update(['complete' => true]);
             }
         } catch (Exception $exception) {
-            Log::info($exception->getMessage());
+            Log::error('Failed to complete past lessons', [
+                'user_id' => Auth::id(),
+                'message' => $exception->getMessage(),
+            ]);
+
             return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 

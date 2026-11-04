@@ -45,10 +45,10 @@ class StudentController extends Controller
     public function index(int $id): View
     {
         $student = Student::query()
-            ->where(['id' => $id, 'teacher_id' => Auth::id()])
-            ->with('hasOneFutureLesson')
-            ->with('parent:id,email')
-            ->first();
+            ->where('id', $id)
+            ->where('teacher_id', Auth::id())
+            ->with(['hasOneFutureLesson', 'parent:id,email'])
+            ->firstOrFail();
 
         $studentJson = $student->toJson();
 
@@ -67,9 +67,10 @@ class StudentController extends Controller
     public function show(int $id): View
     {
         $student = Student::query()
+            ->where('id', $id)
+            ->where('teacher_id', Auth::id())
             ->with('parent:id,first_name,last_name,email,parent')
-            ->where(['id' => $id, 'teacher_id' => Auth::id()])
-            ->first();
+            ->firstOrFail();
 
         $instruments = Instrument::query()->where('teacher_id', Auth::id())->get();
 
