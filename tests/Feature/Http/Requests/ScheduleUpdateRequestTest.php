@@ -43,16 +43,10 @@ class ScheduleUpdateRequestTest extends TestCase
             'teacher_id' => $teacher->id,
         ]);
 
-        $lesson = Lesson::create([
+        $lesson = Lesson::factory()->create([
             'student_id' => $student->id,
             'teacher_id' => $teacher->id,
             'billing_rate_id' => $billingRate->id,
-            'title' => 'Test Lesson',
-            'color' => '#5499C7',
-            'start_date' => '2026-11-10 16:00:00',
-            'end_date' => '2026-11-10 16:30:00',
-            'interval' => 30,
-            'recurrence' => 'Monthly',
         ]);
 
         $validator = Validator::make([
@@ -61,7 +55,7 @@ class ScheduleUpdateRequestTest extends TestCase
             'billing_rate_id' => $billingRate->id,
             'title' => $this->faker->text,
             'color' => $this->faker->hexColor,
-            'start_date' => $this->faker->dateTime()->format('Y-m-d'),
+            'start_date' => $lesson->start_date->format('Y-m-d'),
             'start_time' => '16:00:00',
             'end_time' => '30',
             'recurrence' => 'Monthly',
