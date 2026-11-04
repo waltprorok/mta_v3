@@ -29,6 +29,7 @@ export default {
                 email: '',
                 phone: ''
             },
+            selectedStatus: null,
         }
     },
 
@@ -50,6 +51,7 @@ export default {
                 .then((response) => {
                     this.lesson = response.data.lesson;
                     this.student = response.data.lesson.student;
+                    this.selectedStatus = response.data.lesson.status;
                 })
                 .catch((error) => {
                     console.log(error);
@@ -63,42 +65,55 @@ export default {
         },
 
         cancelLesson: function () {
-            if (this.lesson.status === CANCELLED && this.lesson.status_updated_at !== null) {
+            if (this.lesson.status === CANCELLED) {
                 return this.$notify({
                     type: 'warn',
                     title: 'Warning',
-                    text: 'Can not update cancelled lesson.',
+                    text: 'Lesson is already cancelled.',
                     duration: 6000,
                 });
             }
+
+            if (this.selectedStatus !== CANCELLED) {
+                return;
+            }
+
             this.disableUpdateButton = true;
-            let self = this;
-            let params = Object.assign({}, self.lesson);
+
+            const params = {
+                ...this.lesson,
+                status: this.selectedStatus,
+            };
+
             axios.patch('/web/lesson/cancel', params)
                 .then(() => {
-                    self.getData();
-                    this.disableUpdateButton = false;
+                    this.getData();
+
                     this.$notify({
                         type: 'success',
                         title: 'Success',
-                        text: 'Lesson status was saved.',
+                        text: 'Lesson was cancelled.',
                         duration: 6000,
                     });
                 })
                 .catch((error) => {
-                    console.log(error);
-                    this.disableUpdateButton = false;
+                    console.error(error);
+
                     this.$notify({
                         type: 'error',
                         title: 'Error',
-                        text: 'Could not update status.',
+                        text: 'Could not cancel lesson.',
                         duration: 6000,
                     });
+                })
+                .finally(() => {
+                    this.disableUpdateButton = false;
                 });
         },
 
         isCancelSelected: function () {
-            return this.lesson.status !== CANCELLED;
+            return this.selectedStatus !== CANCELLED ||
+                this.lesson.status === CANCELLED;
         },
     }
 }

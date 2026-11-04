@@ -16,7 +16,10 @@
                     <div class="text-left">
                         <div class="font-weight-bold">{{ lesson.title }}</div>
                         <div class="text-muted small">
-                            Scheduled · {{ lesson.interval }} minutes
+                            <span :class="{'text-danger': lesson.status === 'Cancelled'}">
+                                {{ lesson.status }}
+                            </span>
+                            · {{ lesson.interval }} minutes
                         </div>
                     </div>
 

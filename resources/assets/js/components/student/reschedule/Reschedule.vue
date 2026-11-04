@@ -217,7 +217,7 @@ export default {
             axios.get('/web/lesson/reschedule/' + id)
                 .then((response) => {
                     this.lesson = response.data.lesson;
-                    this.startDate = response.data.lesson.start_date;
+                    this.startDate = response.data.lesson.start_date.substring(0, 10);
                     this.student = response.data.lesson.student;
                     this.allTimes = response.data.allTimes;
                     this.billingRates = response.data.billingRates;
@@ -242,7 +242,6 @@ export default {
                 .then((response) => {
                     this.clearErrorData();
                     this.lesson = response.data.lesson;
-                    this.startDate = self.startDate;
                     this.student = response.data.lesson.student;
                     this.allTimes = response.data.allTimes;
                     this.billingRates = response.data.billingRates;
@@ -258,15 +257,27 @@ export default {
         },
 
         closedDays: function () {
-            this.businessHours.forEach((row) => {
-                if (row.active === false) {
-                    this.closed.push({'weekdays': row.day + 1});
-                }
-            });
+            this.closed = [];
 
-            this.holidays.forEach((day) => {
-                if (day.all_day === true) {
-                    this.closed.push({'start': new Date(day.start_date), 'end': new Date(day.end_date)});
+            // Check all seven days (Sunday = 0, Saturday = 6)
+            for (let day = 0; day < 7; day++) {
+                const businessHour = this.businessHours.find(
+                    row => Number(row.day) === day
+                );
+
+                // Disable missing or inactive business hours
+                if (!businessHour || !Boolean(Number(businessHour.active))) {
+                    this.closed.push({weekdays: day + 1});
+                }
+            }
+
+            // Disable all-day holidays
+            this.holidays.forEach((holiday) => {
+                if (Boolean(Number(holiday.all_day))) {
+                    this.closed.push({
+                        start: new Date(holiday.start_date),
+                        end: new Date(holiday.end_date)
+                    });
                 }
             });
         },
@@ -291,25 +302,30 @@ export default {
 
         updateLesson() {
             this.disableUpdateButton = true;
+
             const {lesson, student, startDate} = this;
-            if (lesson.status === 'Re-Scheduled') {
-                if (! lesson.start_time) {
+
+            const params = {
+                ...lesson,
+                student_id: student.id,
+            };
+
+            // Only update the schedule when a new start time is selected
+            if (lesson.start_time) {
+                if (!lesson.end_time) {
                     this.disableUpdateButton = false;
-                    notificationService.notifyWarning(this, 'Select start time.')
+                    notificationService.notifyWarning(this, 'Select a duration.');
                     return;
                 }
 
-                if (! lesson.end_time) {
-                    this.disableUpdateButton = false;
-                    notificationService.notifyWarning(this, 'Select a duration.')
-                    return;
-                }
-
-                lesson.student_id = student.id;
-                lesson.start_date = startDate;
+                params.start_date = startDate;
+                params.status = 'Re-Scheduled';
+            } else {
+                // Preserve the existing appointment date and duration
+                params.start_date = startDate;
+                params.start_time = null;
+                params.end_time = null;
             }
-
-            const params = {...lesson};
 
             axios.patch('/web/lesson/reschedule/update', params)
                 .then(() => {
