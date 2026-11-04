@@ -259,10 +259,20 @@ export default {
         },
 
         updateOpenTime(row) {
-            const closeHours = this.getCloseHours(row);
+            const openMinutes = this.timeToMinutes(row.open_time);
+            const closeMinutes = this.timeToMinutes(row.close_time);
 
-            if (!closeHours.includes(row.close_time)) {
-                row.close_time = closeHours[0] || row.close_time;
+            if (closeMinutes < openMinutes + 60) {
+                const closeTime = this.selectHours.find(time =>
+                    this.timeToMinutes(time) >= openMinutes + 60
+                );
+
+                if (closeTime) {
+                    row.close_time = closeTime;
+                } else {
+                    this.showError('No valid closing time is available.');
+                    return;
+                }
             }
 
             this.saveHours(row);
