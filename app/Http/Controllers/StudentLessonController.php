@@ -10,7 +10,6 @@ use App\Models\Holiday;
 use App\Models\Lesson;
 use App\Models\Student;
 use App\Services\StudentLessonService;
-use Carbon\CarbonPeriod;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -41,6 +40,11 @@ class StudentLessonController extends Controller
             ->with('hasOneLesson')
             ->where(['id' => $id, 'teacher_id' => Auth::id()])
             ->first();
+        $studentScheduled = Lesson::query()
+            ->where('student_id', $student->id)
+            ->where('teacher_id', Auth::id())
+            ->where('start_date', '>=', now())
+            ->exists();
         $pastLessons = $student->lessons()->orderByDesc('start_date')->limit(4)->get()->reverse()->values();
         $businessHours = BusinessHours::query()
             ->where('teacher_id', Auth::id())
@@ -50,6 +54,7 @@ class StudentLessonController extends Controller
         $holidays = Holiday::getTeacherHolidaysForTwoYears()->get();
         $lessons = Lesson::query()
             ->where('teacher_id', Auth::id())
+            ->where('status', '!=', Lesson::STATUS[2])
             ->whereDate('start_date', $day)
             ->orderBy('start_date')
             ->get();
@@ -57,7 +62,13 @@ class StudentLessonController extends Controller
         $startDate = $day;
         $day = is_null($day) ? date('l') : Carbon::parse($day)->format('l');
         $allTimes = $this->getAllTimes($day, $businessHours);
-        list($studentScheduled, $allTimes) = $this->getTimes($lessons, $id, $startDate, $day, $allTimes);
+        [, $allTimes] = $this->getTimes(
+            $lessons,
+            $id,
+            $startDate,
+            $day,
+            $allTimes
+        );
 
         return response()->json([
             'student' => $student,
@@ -136,60 +147,127 @@ class StudentLessonController extends Controller
 
     public function store(StoreScheduleApptRequest $request): JsonResponse
     {
-        $begin = Carbon::parse($request->get('start_date'));
-        $endOfMonth = Carbon::parse($begin)->endOfMonth();
-        $diffInDays = $begin->diffInDays($endOfMonth);
-        $duration = $this->interval($request->get('start_time'), $request->get('end_time'));
-        $recurrence = $request->get('recurrence') == Lesson::RECURRENCE[0] ? 1 : $diffInDays;
-        $end = Carbon::parse($request->get('start_date'))->addDays($recurrence);
+        $teacherId = Auth::id();
+
         $student = Student::query()
-            ->with('getTeacher')
-            ->with('parent')
-            ->findOrFail($request->get('student_id')); // needed for email
+            ->with(['getTeacher', 'parent'])
+            ->where('teacher_id', $teacherId)
+            ->findOrFail($request->get('student_id'));
+
+        $startDate = Carbon::parse($request->get('start_date'));
+        $startTime = $request->get('start_time');
+        $duration = (int) $request->get('end_time');
+        $recurrence = $request->get('recurrence');
+
+        $endDate = $recurrence === Lesson::RECURRENCE[0]
+            ? $startDate->copy()
+            : $startDate->copy()->endOfMonth();
+
         $holidays = Holiday::getTeacherHolidaysForTwoYears()->get();
+
+        $businessHours = BusinessHours::query()
+            ->where('teacher_id', $teacherId)
+            ->where('active', true)
+            ->get();
+
         $lessons = collect();
 
         try {
-            for ($i = $begin; $i <= $end; $i->modify('+7 day')) {
-                $lesson = new Lesson();
-                $lesson->student_id = $request->get('student_id');
-                $lesson->teacher_id = Auth::id();
-                $lesson->billing_rate_id = $request->get('billing_rate_id');
-                $lesson->title = $request->get('title');
-                $lesson->color = $request->get('color');
-                $lesson->start_date = $i->format('Y-m-d') . ' ' . $request->get('start_time');
+            for (
+                $date = $startDate->copy();
+                $date->lessThanOrEqualTo($endDate);
+                $date->addWeek()
+            ) {
+                $lessonStart = Carbon::parse($date->format('Y-m-d') . ' ' . $startTime);
 
-                $skipOverSave = false;
+                $lessonEnd = $lessonStart->copy()->addMinutes($duration);
 
-                foreach ($holidays as $holiday) {
-                    $holidayDates = CarbonPeriod::create($holiday->start_date, $holiday->end_date);
-                    foreach ($holidayDates->toArray() as $date) {
-                        if (! is_null($date) && $date->toDateString() == Carbon::parse($lesson->start_date)->format('Y-m-d')) {
-                            $holiday['start_date'] = $i->format('Y-m-d');
-                            $lessons[] = $holiday->toArray();
-                            $skipOverSave = true;
-                        }
+                // Skip holidays
+                $isHoliday = $holidays->contains(function ($holiday) use ($date) {
+                    if (!$holiday->all_day) {
+                        return false;
                     }
-                }
 
-                if ($skipOverSave) {
+                    return $date->betweenIncluded(
+                        Carbon::parse($holiday->start_date)->startOfDay(),
+                        Carbon::parse($holiday->end_date)->endOfDay()
+                    );
+                });
+
+                if ($isHoliday) {
                     continue;
                 }
 
-                $lesson->end_date = $i->format('Y-m-d') . ' ' . $duration;
-                $lesson->interval = (int)$request->get('end_time');
-                $lesson->recurrence = $request->get('recurrence') == Lesson::RECURRENCE[0] ? Lesson::RECURRENCE[0] : Lesson::RECURRENCE[1];
-                $lesson->save();
-                $lessons[] = $lesson;
+                // Verify business hours
+                $businessHour = $businessHours->firstWhere(
+                    'day',
+                    $date->dayOfWeek
+                );
+
+                if (!$businessHour) {
+                    continue;
+                }
+
+                $openingTime = Carbon::parse($date->format('Y-m-d') . ' ' . $businessHour->open_time);
+
+                $closingTime = Carbon::parse($date->format('Y-m-d') . ' ' . $businessHour->close_time);
+
+                if (
+                    $lessonStart->lessThan($openingTime) ||
+                    $lessonEnd->greaterThan($closingTime)
+                ) {
+                    continue;
+                }
+
+                // Check for overlapping lessons
+                $hasConflict = Lesson::query()
+                    ->where('teacher_id', $teacherId)
+                    ->where('start_date', '<', $lessonEnd)
+                    ->where('end_date', '>', $lessonStart)
+                    ->exists();
+
+                if ($hasConflict) {
+                    continue;
+                }
+
+                // Create lesson
+                $lesson = Lesson::create([
+                    'student_id' => $student->id,
+                    'teacher_id' => $teacherId,
+                    'billing_rate_id' => $request->get('billing_rate_id'),
+                    'title' => $request->get('title'),
+                    'color' => $request->get('color'),
+                    'start_date' => $lessonStart,
+                    'end_date' => $lessonEnd,
+                    'interval' => $duration,
+                    'recurrence' => $recurrence,
+                ]);
+
+                $lessons->push($lesson);
             }
+
+            // Email only when lessons were created
+            if ($lessons->isNotEmpty()) {
+                $this->studentLessonService
+                    ->emailLessonsToStudentParent($student, $lessons);
+            }
+
         } catch (Exception $exception) {
-            Log::info($exception->getMessage());
-            return response()->json([], Response::HTTP_BAD_REQUEST);
+            Log::error('Lesson scheduling failed', [
+                'teacher_id' => $teacherId,
+                'student_id' => $student->id,
+                'message' => $exception->getMessage(),
+            ]);
+
+            return response()->json([
+                'message' => 'Unable to schedule lessons.',
+            ], Response::HTTP_BAD_REQUEST);
         }
 
-        $this->studentLessonService->emailLessonsToStudentParent($student, $lessons);
-
-        return response()->json([], Response::HTTP_CREATED);
+        return response()->json([
+            'message' => 'Lessons scheduled successfully.',
+            'created' => $lessons->count(),
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -234,22 +312,27 @@ class StudentLessonController extends Controller
     {
         $allTimes = [];
         $dayOfWeek = Carbon::parse($day)->dayOfWeek;
-        $amount = -30;
 
         foreach ($businessHours as $businessHour) {
-            if ($businessHour->open_time <= $businessHour->close_time && $dayOfWeek == $businessHour->day) {
-                $diff = Carbon::parse($businessHour->open_time)->diff(Carbon::parse($businessHour->close_time));
-                $amount = $amount + ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
+
+            // Only process active business hours for the selected day
+            if (! $businessHour->active || $businessHour->day != $dayOfWeek) {
+                continue;
             }
 
-            if ($businessHour->active == 1 && $dayOfWeek == $businessHour->day) {
-                $openingTime = Carbon::parse($businessHour->open_time);
-                $allTimes[] = $openingTime->toTimeString();
+            $openingTime = Carbon::parse($businessHour->open_time);
+            $closingTime = Carbon::parse($businessHour->close_time);
 
-                for ($i = 0; $i <= ($amount / 15); $i++) {
-                    $thisOpeningTime = $openingTime->addMinutes(15);
-                    $allTimes[] = $thisOpeningTime->toTimeString();
-                }
+            // Ignore invalid business hours
+            if ($openingTime->greaterThanOrEqualTo($closingTime)) {
+                continue;
+            }
+
+            // Generate available times in 15-minute increments
+            while ($openingTime->lessThan($closingTime)) {
+                $allTimes[] = $openingTime->format('H:i:s');
+
+                $openingTime->addMinutes(15);
             }
         }
 
@@ -319,57 +402,41 @@ class StudentLessonController extends Controller
     private function getTimes($lessons, $id, $startDate, $day, array $allTimes): array
     {
         $studentScheduled = false;
+        $availableTimes = [];
 
         foreach ($lessons as $lesson) {
-            $lessonDay = Carbon::parse($lesson->start_date)->format('l');
-            $lessonStartDate = $lesson->start_date;
-            $lessonStartTime = Carbon::parse($lesson->start_date)->format('H:i:s');
-            $lessonEndTime = Carbon::parse($lesson->end_date)->format('H:i:s');
-            $lessonInterval = $lesson->interval;
-            $studentLessonStart = Carbon::parse($lesson->start_date)->format('Y-m-d');
-
             if ($lesson->student_id == $id) {
                 $studentScheduled = true;
-            }
-
-            if ($startDate != $studentLessonStart) {
-                continue;
-            }
-
-            if ($lessonDay == $day && $lessonStartDate) {
-                // remove time for a lesson that is already booked from all times
-                foreach ($allTimes as $allTimeKey => $allTime) {
-                    if ($allTime == $lessonStartTime && $lessonInterval == 15) {
-                        unset($allTimes[$allTimeKey]);
-                        unset($allTimes[$allTimeKey + 1]);
-                    }
-
-                    if ($allTime == $lessonStartTime && $lessonInterval == 30) {
-                        unset($allTimes[$allTimeKey]);
-                        unset($allTimes[$allTimeKey + 1]);
-                    }
-
-                    if ($allTime == $lessonStartTime && $lessonInterval == 45) {
-                        unset($allTimes[$allTimeKey]);
-                        unset($allTimes[$allTimeKey + 1]);
-                    }
-
-                    if ($allTime == $lessonStartTime && $lessonInterval == 60) {
-                        unset($allTimes[$allTimeKey]);
-                        unset($allTimes[$allTimeKey + 1]);
-                        unset($allTimes[$allTimeKey + 2]);
-                        unset($allTimes[$allTimeKey + 3]);
-                    }
-
-                    if ($allTime == $lessonEndTime) {
-                        $allTimeKey = $allTimeKey - 1;
-                        unset($allTimes[$allTimeKey]);
-                    }
-                }
+                break;
             }
         }
 
-        return array($studentScheduled, $allTimes);
+        foreach ($allTimes as $time) {
+            $available = true;
+
+            $slotStart = Carbon::parse($startDate . ' ' . $time);
+
+            foreach ($lessons as $lesson) {
+                $lessonStart = Carbon::parse($lesson->start_date);
+                $lessonEnd = Carbon::parse($lesson->end_date);
+
+                // A time slot is unavailable if it falls within an existing lesson.
+                // The end time remains available for back-to-back lessons.
+                if (
+                    $slotStart->greaterThanOrEqualTo($lessonStart) &&
+                    $slotStart->lessThan($lessonEnd)
+                ) {
+                    $available = false;
+                    break;
+                }
+            }
+
+            if ($available) {
+                $availableTimes[] = $time;
+            }
+        }
+
+        return [$studentScheduled, $availableTimes];
     }
 
     private function hasStartTimeChanged($request): bool
@@ -392,52 +459,90 @@ class StudentLessonController extends Controller
         return Carbon::parse($startTime)->addMinutes($endTime)->format('H:i:s');
     }
 
+    /**
+     * @throws Exception
+     */
     private function scheduleUpdate(Request $request): void
     {
         $lesson = Lesson::query()
-            ->where(['id' => $request->get('id'), 'teacher_id' => Auth::id()])
-            ->first();
+            ->where('teacher_id', Auth::id())
+            ->findOrFail($request->get('id'));
 
+        // Store original values
+        $originalStart = $lesson->start_date;
+        $originalEnd = $lesson->end_date;
+        $originalStatus = $lesson->status;
+
+        // Update lesson details
         $lesson->billing_rate_id = $request->get('billing_rate_id');
         $lesson->color = $request->get('color');
-
-        $startTime = $request->get('start_time');
-        $endTime = $request->get('end_time');
-        $interval = $request->get('interval');
-        $startDate = $request->get('start_date');
-
-        if ($this->hasStartTimeChanged($request)) {
-            // Determine which end/interval value to use
-            $endValue = $this->hasEndTimeChanged($request) ? $endTime : $interval;
-
-            $duration = $this->interval($startTime, $endValue);
-
-            $lesson->start_date = "{$startDate} {$startTime}";
-            $lesson->end_date = "{$startDate} {$duration}";
-
-            if ($this->hasEndTimeChanged($request)) {
-                $lesson->interval = (int)$endTime;
-            }
-        }
-
         $lesson->notes = $request->get('notes');
         $lesson->status = $request->get('status');
-        $lesson->status_updated_at = now();
 
-        $lesson->update();
+        // Determine new date, time, and duration
+        $startDate = $request->get('start_date')
+            ?: Carbon::parse($lesson->start_date)->format('Y-m-d');
 
-        if (
-            ($this->hasStartTimeChanged($request) && $this->hasEndTimeChanged($request))
-            || ($this->hasStartTimeChanged($request) && ! $this->hasEndTimeChanged($request))
-            || ($request->get('status') === Lesson::STATUS[1])
-            || ($request->get('status') === Lesson::STATUS[2]) // TODO: pass status to email
-        ) {
-            // email student and parents
-            $lessons = collect();
-            $lessons[] = $lesson;
-            $student = Student::query()->with('getTeacher')->with('parent')->findOrFail($lesson->student->id); // needed for email
+        $startTime = $request->get('start_time')
+            ?: Carbon::parse($lesson->start_date)->format('H:i:s');
 
-            $this->studentLessonService->emailLessonsToStudentParent($student, $lessons, $request->get('status'));
+        $duration = (int) (
+        $request->get('end_time')
+            ?: $lesson->interval
+        );
+
+        $lessonStart = Carbon::parse("{$startDate} {$startTime}");
+        $lessonEnd = $lessonStart->copy()->addMinutes($duration);
+
+        // Check whether scheduling changed
+        $scheduleChanged =
+            $lessonStart->ne(Carbon::parse($originalStart)) ||
+            $lessonEnd->ne(Carbon::parse($originalEnd));
+
+        if ($scheduleChanged) {
+
+            // Prevent overlapping lessons
+            $hasConflict = Lesson::query()
+                ->where('teacher_id', Auth::id())
+                ->where('id', '!=', $lesson->id)
+                ->where('start_date', '<', $lessonEnd)
+                ->where('end_date', '>', $lessonStart)
+                ->exists();
+
+            if ($hasConflict) {
+                throw new \Exception(
+                    'The selected time conflicts with another scheduled lesson.'
+                );
+            }
+
+            // Update schedule
+            $lesson->start_date = $lessonStart;
+            $lesson->end_date = $lessonEnd;
+            $lesson->interval = $duration;
+        }
+
+        // Only update status timestamp when status changes
+        $statusChanged = $originalStatus !== $lesson->status;
+
+        if ($statusChanged) {
+            $lesson->status_updated_at = now();
+        }
+
+        $lesson->save();
+
+        // Notify student/parent when schedule or status changes
+        if ($scheduleChanged || $statusChanged) {
+
+            $student = Student::query()
+                ->with(['getTeacher', 'parent'])
+                ->where('teacher_id', Auth::id())
+                ->findOrFail($lesson->student_id);
+
+            $this->studentLessonService->emailLessonsToStudentParent(
+                $student,
+                collect([$lesson]),
+                $lesson->status
+            );
         }
     }
 

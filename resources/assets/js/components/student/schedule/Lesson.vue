@@ -165,14 +165,41 @@ export default {
         },
 
         checkDurationTimes: function (event) {
-            const allTimesArray = [];
-            for (const key in this.allTimes) {
-                allTimesArray.push(this.allTimes[key]);
+            const startTime = event.target.value;
+
+            const selectedDate = new Date(this.startDate + 'T12:00:00');
+            const dayOfWeek = selectedDate.getDay();
+
+            const businessHour = this.businessHours.find(
+                row => Number(row.day) === dayOfWeek && Boolean(row.active)
+            );
+
+            if (!businessHour) {
+                this.duration = [];
+                this.lesson.end_time = null;
+                return;
             }
-            let index = allTimesArray.indexOf(event.target.value);
-            let nextTime = allTimesArray[index + 1];
-            const diff = this.getTimeDifference(event.target.value, nextTime);
-            this.getDuration(diff);
+
+            const toMinutes = (time) => {
+                const [hours, minutes] = time.split(':').map(Number);
+                return hours * 60 + minutes;
+            };
+
+            const remainingMinutes = toMinutes(businessHour.close_time) - toMinutes(startTime);
+
+            const durations = [15, 30, 45, 60];
+
+            this.duration = durations
+                .filter(minutes => minutes <= remainingMinutes)
+                .map(minutes => ({
+                    name: `${minutes} minutes`,
+                    value: String(minutes)
+                }));
+
+            // Reset duration if the previously selected value is no longer valid
+            if (!this.duration.some(item => item.value === this.lesson.end_time)) {
+                this.lesson.end_time = null;
+            }
         },
 
         cancelLessonForm: function () {
@@ -234,15 +261,25 @@ export default {
         },
 
         closedDays: function () {
-            this.businessHours.forEach((row) => {
-                if (row.active === false) {
-                    this.closed.push({'weekdays': row.day + 1});
-                }
-            });
+            this.closed = [];
 
-            this.holidays.forEach((day) => {
-                if (day.all_day === true) {
-                    this.closed.push({'start': new Date(day.start_date), 'end': new Date(day.end_date)});
+            // JavaScript weekdays: Sunday = 1, Saturday = 7
+            for (let day = 0; day < 7; day++) {
+                const businessHour = this.businessHours.find(
+                    row => Number(row.day) === day
+                );
+                // Disable missing or inactive days
+                if (!businessHour || !businessHour.active) {
+                    this.closed.push({weekdays: day + 1});
+                }
+            }
+            // Disable holidays
+            this.holidays.forEach((holiday) => {
+                if (holiday.all_day === true) {
+                    this.closed.push({
+                        start: new Date(holiday.start_date),
+                        end: new Date(holiday.end_date)
+                    });
                 }
             });
         },

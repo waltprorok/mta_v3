@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Requests;
 
 use App\Http\Requests\ScheduleUpdateRequest;
 use App\Models\BillingRate;
+use App\Models\Lesson;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -34,21 +35,42 @@ class ScheduleUpdateRequestTest extends TestCase
     public function test_request_pass()
     {
         $teacher = User::factory()->create(['teacher' => true]);
-        $student = User::factory()->create(['student' => true]);
+        $studentUser = User::factory()->create(['student' => true]);
         $billingRate = BillingRate::factory()->create();
-        $student = Student::factory()->create(['student_id' => $student->id, 'teacher_id' => $teacher->id]);
+
+        $student = Student::factory()->create([
+            'student_id' => $studentUser->id,
+            'teacher_id' => $teacher->id,
+        ]);
+
+        $lesson = Lesson::create([
+            'student_id' => $student->id,
+            'teacher_id' => $teacher->id,
+            'billing_rate_id' => $billingRate->id,
+            'title' => 'Test Lesson',
+            'color' => '#5499C7',
+            'start_date' => '2026-11-10 16:00:00',
+            'end_date' => '2026-11-10 16:30:00',
+            'interval' => 30,
+            'recurrence' => 'Monthly',
+        ]);
 
         $validator = Validator::make([
+            'id' => $lesson->id,
             'student_id' => $student->id,
             'billing_rate_id' => $billingRate->id,
             'title' => $this->faker->text,
             'color' => $this->faker->hexColor,
             'start_date' => $this->faker->dateTime()->format('Y-m-d'),
-            'end_time' => $this->faker->dateTime()->format('H:i:s'),
-            'recurrence' => 'Monthly'
+            'start_time' => '16:00:00',
+            'end_time' => '30',
+            'recurrence' => 'Monthly',
         ], $this->request->rules());
 
-        $this->assertTrue($validator->passes());
+        $this->assertTrue(
+            $validator->passes(),
+            json_encode($validator->errors()->toArray(), JSON_PRETTY_PRINT)
+        );
     }
 
     /**

@@ -39,7 +39,11 @@ export default {
 
     filters: {
         short: function (value) {
-            return value.substr(0, 50) + '...';
+            if (!value) return '';
+
+            return value.length > 50
+                ? value.substring(0, 50) + '...'
+                : value;
         }
     },
 
@@ -85,7 +89,7 @@ export default {
                     this.fromList = true;
                     this.persons = [];
                     this.persons = response.data.persons;
-                    if (this.persons) {
+                    if (this.persons.length > 0) {
                         this.message.user_id_to = this.persons[0].user_id_from ?? this.persons[0].id;
                     }
                 }).catch((error) => {
@@ -106,7 +110,7 @@ export default {
                     this.messages = response.data.messages;
                     this.user = response.data.user;
                     this.message.user_id_from = this.user.id;
-                    if (this.persons) {
+                    if (this.persons.length > 0) {
                         this.message.user_id_to = this.persons[0].user_id_from;
                     }
                     if (this.user.admin) {

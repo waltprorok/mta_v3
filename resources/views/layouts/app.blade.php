@@ -140,7 +140,6 @@
             <!-- Brand -->
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="footer-widget">
-
                     <div style="display: flex; align-items: center; margin-bottom: 20px;">
                         <img src="{{ asset('marketing/img/apple-touch-icon-mta.png') }}"
                              alt="Music Teacher's Aid"
@@ -186,7 +185,6 @@
                             <a href="https://www.youtube.com/@walterprorok213"
                                target="_blank"
                                rel="noopener noreferrer">
-                                <i class="fa fa-youtube-play" aria-hidden="true"></i>
                                 YouTube
                             </a>
                         </li>

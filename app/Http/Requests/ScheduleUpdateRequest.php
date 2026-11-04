@@ -27,22 +27,25 @@ class ScheduleUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'id' => 'required|integer|exists:lessons,id',
             'student_id' => 'required|integer|exists:students,id',
             'billing_rate_id' => 'required|integer|exists:billing_rates,id',
             'title' => 'required|string',
             'color' => 'required|string',
-            'start_date' => 'required|string',
-            'start_time' => 'string|nullable',
-            'end_time' => 'string|nullable',
+            'start_date' => 'required|date_format:Y-m-d',
+            'start_time' => 'nullable|date_format:H:i:s',
+            'end_time' => 'nullable|integer|in:15,30,45,60',
+            'interval' => 'nullable|integer|in:15,30,45,60',
             'recurrence' => 'required|string',
-            'notes' => 'string|nullable',
+            'notes' => 'nullable|string',
+            'status' => 'nullable|string',
         ];
     }
 
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()
-            ->json(['error' => $validator->errors()], Response::HTTP_UNAUTHORIZED)
+            ->json(['error' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY)
         );
     }
 }
