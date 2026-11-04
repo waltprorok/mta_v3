@@ -319,7 +319,7 @@ export default {
                 {label: 'Completed', field: 'complete', sortable: false},
                 {label: 'Status', field: 'status', sortable: false},
                 {label: 'State', field: 'end_date', sortable: false},
-                {label: 'Name', field: 'title', sortable: false},
+                {label: 'Student', field: 'title', sortable: false},
                 {label: 'Appointment', field: 'start_date', sortable: false},
                 {label: 'Duration', field: 'interval', sortable: false},
             ],
