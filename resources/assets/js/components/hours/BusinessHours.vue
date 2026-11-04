@@ -50,10 +50,11 @@
                         </td>
                         <!-- Open -->
                         <td>
-                            <select v-model="row.open_time"
+                            <select
+                                v-model="row.open_time"
                                 class="form-control"
                                 :disabled="!row.active || row.saving"
-                                @change="saveHours(row)"
+                                @change="updateOpenTime(row)"
                             >
                                 <option v-for="time in selectHours"
                                     :key="time"
@@ -63,7 +64,6 @@
                                 </option>
                             </select>
                         </td>
-
                         <!-- Close -->
                         <td>
                             <select
@@ -72,7 +72,8 @@
                                 :disabled="!row.active || row.saving"
                                 @change="saveHours(row)"
                             >
-                                <option v-for="time in selectHours"
+                                <option
+                                    v-for="time in getCloseHours(row)"
                                     :key="time"
                                     :value="time"
                                 >
@@ -176,7 +177,7 @@ export default {
                             : this.selectHours[0],
                         close_time: saved
                             ? saved.close_time
-                            : this.selectHours[0],
+                            : this.selectHours[1],
                         saving: false
                     };
                 });
@@ -203,9 +204,11 @@ export default {
                 this.showSuccess(response.data.message);
 
             } catch (error) {
+                const message = error.response?.data?.errors?.close_time?.[0]
+                    || error.response?.data?.message
+                    || 'Unable to save business hours.';
 
-                this.showError('Unable to save business hours.');
-
+                this.showError(message);
             } finally {
                 row.saving = false;
                 this.saving = this.rows.some(item => item.saving);
@@ -253,6 +256,34 @@ export default {
                 hour: 'numeric',
                 minute: '2-digit'
             });
+        },
+
+        updateOpenTime(row) {
+            const closeHours = this.getCloseHours(row);
+
+            if (!closeHours.includes(row.close_time)) {
+                row.close_time = closeHours[0] || row.close_time;
+            }
+
+            this.saveHours(row);
+        },
+
+        getCloseHours(row) {
+            const openMinutes = this.timeToMinutes(row.open_time);
+
+            return this.selectHours.filter(time => {
+                return this.timeToMinutes(time) >= openMinutes + 60;
+            });
+        },
+
+        timeToMinutes(time) {
+            if (!time) {
+                return 0;
+            }
+
+            const [hours, minutes] = time.split(':');
+
+            return Number(hours) * 60 + Number(minutes);
         },
 
         showSuccess(message) {
