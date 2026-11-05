@@ -11,6 +11,7 @@ use App\Mail\UserEmailChangedMail;
 use App\Mail\UserPasswordUpdatedMail;
 use App\Mail\WelcomeNewUserMail;
 use App\Models\Plan;
+use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
@@ -97,9 +98,12 @@ class SubscriptionControllerTest extends TestCase
         Mail::assertQueued(UserPasswordUpdatedMail::class, 1);
     }
 
-    public function test_welcome_new_user_email()
+    public function test_welcome_new_user_email(): void
     {
-        Mail::to($this->user->email)->queue(new WelcomeNewUserMail($this->user));
+        $teacher = Teacher::factory()->make();
+
+        Mail::to($this->user->email)
+            ->queue(new WelcomeNewUserMail($this->user, $teacher));
 
         Mail::assertQueued(WelcomeNewUserMail::class, 1);
     }

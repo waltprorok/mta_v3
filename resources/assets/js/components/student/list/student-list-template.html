@@ -1,172 +1,272 @@
-<div class="card" v-on:keydown.esc="cancelForm()">
-    <div v-if="show_form">
-        <transition name="modal">
-            <div class="modal-mask">
-                <div class="modal-wrapper">
-                    <div class="modal-dialog modal-md" role="document">
-                        <form class="form-horizontal" action="#" @submit.prevent="createStudent()">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Add Student</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true" @click="cancelForm()">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-md-12 offset-0">
-                                            <div class="form-group" :class="error_first_name && class_error">
-                                                <label for="first_name">First Name <span class="text-danger">*</span></label>
-                                                <input id="first_name" v-model.trim="student.first_name" type="text" class="form-control"
-                                                       v-on:keydown.enter.prevent>
-                                                <small>{{ error_first_name }}</small>
-                                            </div>
-                                            <div class="form-group" :class="error_last_name && class_error">
-                                                <label for="last_name">Last Name <span class="text-danger">*</span></label>
-                                                <input id="last_name" v-model.trim="student.last_name" type="text" class="form-control"
-                                                       v-on:keydown.enter.prevent>
-                                                <small>{{ error_last_name }}</small>
-                                            </div>
-                                            <div class="form-group" :class="error_email && class_error">
-                                                <label for="email">Email</label>
-                                                <input id="email" v-model.trim="student.email" type="text" class="form-control"
-                                                       v-on:keydown.enter.prevent>
-                                                <small>{{ error_email }}</small>
-                                            </div>
-                                            <div class="form-group" :class="error_phone && class_error">
-                                                <label for="phone">Phone
-                                                </label>
-                                                <input id="phone" v-model.trim="student.phone" type="text" class="form-control"
-                                                       v-on:keydown.enter.prevent>
-                                                <small>{{ error_phone }}</small>
-                                            </div>
-                                            <div class="form-group" :class="error_status && class_error">
-                                                <label for="status">Status: </label>
-                                                <div class="form-check-inline">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" :checked="student.status === 1" v-model="student.status" :value="1"
-                                                               v-on:keydown.enter.prevent>Active
-                                                    </label>
-                                                </div>
-                                                <div class="form-check-inline">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" v-model="student.status" :value="3"
-                                                               v-on:keydown.enter.prevent>Lead
-                                                    </label>
-                                                </div>
-                                                <div class="form-check-inline">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" v-model="student.status" :value="2"
-                                                               v-on:keydown.enter.prevent>Waitlist
-                                                    </label>
-                                                </div>
-                                                <small>{{ error_status }}</small>
-                                            </div>
-                                            <hr/>
-                                            <div class="form-group">
-                                                <div class="form-group mt-4 mb-2">
-                                                    <div class="toggle-switch" data-ts-color="primary">
-                                                        <label for="ts2" class="ts-label">Add Parent</label>
-                                                        <input id="ts2" type="checkbox" hidden="hidden" @click="showParent" v-model="student.add_parent">
-                                                        <label for="ts2" class="ts-helper"></label>
-                                                    </div>
+<div>
+    <!-- Student Overview -->
+    <div class="row mb-2">
+        <!-- Active Students -->
+        <div class="col-md-3 col-sm-6 mb-2">
+            <div class="card border-left-success h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="text-muted small">Active Students</div>
+                            <h3 class="mb-0">{{ studentStats.active }}</h3>
+                        </div>
+                        <i class="fa fa-users fa-2x text-success"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Students Not Scheduled -->
+        <div class="col-md-3 col-sm-6 mb-2">
+            <div class="card border-left-danger h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="text-muted small">Not Scheduled</div>
+                            <h3 class="mb-0">{{ studentStats.notScheduled }}</h3>
+                        </div>
+                        <i class="fa fa-calendar-times-o fa-2x text-danger"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Waitlist -->
+        <div class="col-md-3 col-sm-6 mb-2">
+            <div class="card border-left-warning h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="text-muted small">Waitlist</div>
+                            <h3 class="mb-0">{{ studentStats.waitlist }}</h3>
+                        </div>
+                        <i class="fa fa-clock-o fa-2x text-warning"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Leads -->
+        <div class="col-md-3 col-sm-6 mb-2">
+            <div class="card border-left-primary h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="text-muted small">Leads</div>
+                            <h3 class="mb-0">{{ studentStats.leads }}</h3>
+                        </div>
+                        <i class="fa fa-user-plus fa-2x text-primary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" v-on:keydown.esc="cancelForm()">
+        <div v-if="show_form">
+            <transition name="modal">
+                <div class="modal-mask">
+                    <div class="modal-wrapper">
+                        <div class="modal-dialog modal-md" role="document">
+                            <form class="form-horizontal" action="#" @submit.prevent="createStudent()">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Add Student</h5>
+                                        <button type="button" class="close" aria-label="Close" tabindex="-1" @click="cancelForm()">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-12 offset-0">
+                                                <div class="form-group" :class="error_first_name && class_error">
+                                                    <label for="first_name">First Name <span class="text-danger">*</span></label>
+                                                    <input id="first_name" v-model.trim="student.first_name" type="text" class="form-control"
+                                                           tabindex="1" v-on:keydown.enter.prevent>
+                                                    <small>{{ error_first_name }}</small>
                                                 </div>
 
-                                                <div v-if="show_parent">
-                                                    <div class="form-group" :class="error_parent_first_name && class_error">
-                                                        <label for="first_name">Parent First Name
-                                                            <small class="text-secondary"><em> *</em></small>
-                                                            <small class="text-secondary"><em> Or guardian</em></small>
+                                                <div class="form-group" :class="error_last_name && class_error">
+                                                    <label for="last_name">Last Name <span class="text-danger">*</span></label>
+                                                    <input id="last_name" v-model.trim="student.last_name" type="text" class="form-control"
+                                                           tabindex="2" v-on:keydown.enter.prevent>
+                                                    <small>{{ error_last_name }}</small>
+                                                </div>
+
+                                                <div class="form-group" :class="error_email && class_error">
+                                                    <label for="email">Email</label>
+                                                    <input id="email" v-model.trim="student.email" type="text" class="form-control"
+                                                           tabindex="3" v-on:keydown.enter.prevent>
+                                                    <small>{{ error_email }}</small>
+                                                </div>
+
+                                                <div class="form-group" :class="error_phone && class_error">
+                                                    <label for="phone">Phone</label>
+                                                    <input id="phone" v-model.trim="student.phone" type="text" class="form-control"
+                                                           tabindex="4" v-on:keydown.enter.prevent>
+                                                    <small>{{ error_phone }}</small>
+                                                </div>
+
+                                                <div class="form-group" :class="error_status && class_error">
+                                                    <label for="status">Status: </label>
+                                                    <div class="form-check-inline">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input"
+                                                                   :checked="student.status === 1"
+                                                                   v-model="student.status" :value="1"
+                                                                   tabindex="5" v-on:keydown.enter.prevent>Active
                                                         </label>
-                                                        <input id="first_name" v-model.trim="student.parent_first_name" type="text" class="form-control"
-                                                               v-on:keydown.enter.prevent>
-                                                        <small>{{ error_parent_first_name }}</small>
                                                     </div>
-                                                    <div class="form-group" :class="error_parent_last_name && class_error">
-                                                        <label for="last_name">Parent Last Name</label>
-                                                        <input id="last_name" v-model.trim="student.parent_last_name" type="text" class="form-control"
-                                                               v-on:keydown.enter.prevent>
-                                                        <small>{{ error_parent_last_name }}</small>
-                                                    </div>
-                                                    <div class="form-group" :class="error_parent_email && class_error">
-                                                        <label for="email">Parent Email
-                                                            <!--  <small class="text-secondary"><em> *</em></small>-->
+                                                    <div class="form-check-inline">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input"
+                                                                   v-model="student.status" :value="3"
+                                                                   tabindex="6" v-on:keydown.enter.prevent>Lead
                                                         </label>
-                                                        <input id="email" v-model.trim="student.parent_email" type="text" class="form-control"
-                                                               v-on:keydown.enter.prevent>
-                                                        <small>{{ error_parent_email }}</small>
+                                                    </div>
+                                                    <div class="form-check-inline">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input"
+                                                                   v-model="student.status" :value="2"
+                                                                   tabindex="7" v-on:keydown.enter.prevent>Waitlist
+                                                        </label>
+                                                    </div>
+                                                    <small>{{ error_status }}</small>
+                                                </div>
+
+                                                <hr/>
+
+                                                <div class="form-group">
+                                                    <div class="form-group mt-4 mb-2">
+                                                        <div class="toggle-switch" data-ts-color="primary">
+                                                            <label for="ts2" class="ts-label">Add Parent</label>
+                                                            <input id="ts2"
+                                                                   type="checkbox"
+                                                                   v-model="student.add_parent"
+                                                                   tabindex="0"
+                                                                   @keydown.space.stop>
+                                                            <label for="ts2" class="ts-helper"></label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div v-if="student.add_parent">
+                                                        <div class="form-group" :class="error_parent_first_name && class_error">
+                                                            <label for="parent_first_name">Parent First Name
+                                                                <small class="text-secondary"><em> *</em></small>
+                                                                <small class="text-secondary"><em> Or guardian</em></small>
+                                                            </label>
+                                                            <input id="parent_first_name" v-model.trim="student.parent_first_name"
+                                                                   type="text" class="form-control"
+                                                                   tabindex="9" v-on:keydown.enter.prevent>
+                                                            <small>{{ error_parent_first_name }}</small>
+                                                        </div>
+
+                                                        <div class="form-group" :class="error_parent_last_name && class_error">
+                                                            <label for="parent_last_name">Parent Last Name</label>
+                                                            <input id="parent_last_name" v-model.trim="student.parent_last_name"
+                                                                   type="text" class="form-control"
+                                                                   tabindex="10" v-on:keydown.enter.prevent>
+                                                            <small>{{ error_parent_last_name }}</small>
+                                                        </div>
+
+                                                        <div class="form-group" :class="error_parent_email && class_error">
+                                                            <label for="parent_email">Parent Email
+                                                                <!--  <small class="text-secondary"><em> *</em></small>-->
+                                                            </label>
+                                                            <input id="parent_email" v-model.trim="student.parent_email"
+                                                                   type="text" class="form-control"
+                                                                   tabindex="11" v-on:keydown.enter.prevent>
+                                                            <small>{{ error_parent_email }}</small>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <div class="form-group pull-right">
-                                        <button v-show="show_form" @click="cancelForm()" class="btn btn-default">Cancel</button>
-                                        <button type="submit" class="btn btn-primary">Save</button>
+
+                                    <div class="modal-footer">
+                                        <div class="form-group pull-right">
+                                            <button type="button" @click="cancelForm()" class="btn btn-default" tabindex="12">
+                                                Cancel
+                                            </button>
+                                            <button type="submit" class="btn btn-primary" :disabled="saving" tabindex="13">
+                                                <i v-if="saving" class="fa fa-spinner fa-spin mr-1"></i>
+                                                {{ saving ? 'Saving...' : 'Save' }}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </transition>
-    </div>
+            </transition>
+        </div>
 
-    <!-- vue js data table -->
-    <div class="form-control" v-cloak>
-        <div class="form-group pull-left pr-2">
-            <select id="single-select" v-model="per_page" class="form-control">
-                <option v-for="page in pages" :value="page">{{ page }}</option>
-            </select>
+        <!-- vue js data table -->
+        <div class="form-control" v-cloak>
+            <div class="form-group pull-left pr-2">
+                <select id="single-select" v-model="per_page" class="form-control">
+                    <option v-for="page in pages" :value="page">{{ page }}</option>
+                </select>
+            </div>
+            <div class="form-group pull-right pr-1 pl-2">
+                <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
+            </div>
+            <div class="form-group pull-left">
+                <select id="students" class="form-control" @change="getOnChangeList($event)">
+                    <option value="active" selected>Active</option>
+                    <option value="leads">Leads</option>
+                    <option value="waitlist">Wait List</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+            <div class="form-group pull-right">
+                <button type="button" class="form-control btn btn-primary" @click="show_form=true">Add Student</button>
+            </div>
+            <datatable class="table table-responsive-md table-hover" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
+                <template v-slot="{ columns, row }">
+                    <tr>
+                        <td class="text-center" v-show="!hasOneLesson(row) && !getStatusData(row)">
+                            <span class="text-danger"
+                                  title="Not Scheduled"
+                                  aria-label="Not Scheduled">
+                                <i class="fa fa-calendar-times-o fa-lg" aria-hidden="true"></i>
+                            </span>
+                        </td>
+
+                        <td class="text-center" v-show="hasOneLesson(row) && !getStatusData(row)">
+                            <span class="text-success"
+                                  title="Scheduled"
+                                  aria-label="Scheduled">
+                                <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                            </span>
+                        </td>
+
+                        <td class="text-center" v-show="getStatusData(row)">
+                            <span class="text-secondary"
+                                  title="Not Active"
+                                  aria-label="Not Active">
+                                <i class="fa fa-calendar-minus-o fa-lg" aria-hidden="true"></i>
+                            </span>
+                        </td>
+                        <td v-text="row.first_name"></td>
+                        <td v-text="row.last_name"></td>
+                        <td>
+                            <phone-number-format :data="row.phone"></phone-number-format>
+                        </td>
+                        <td><a :href="'mailto:' + row.email" v-text="row.email"></a></td>
+                        <td v-text="row.instrument"></td>
+                        <td class="text-nowrap">
+                            <a :href="`/students/${row.id}/edit`" class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
+                            <a :href="`/students/schedule/${row.id}`" v-if="row.status === 1" class="btn btn-sm btn-outline-secondary" role="button" title="schedule"><i class="fa fa-calendar"></i></a>
+                            <a :href="`/students/profile/${row.id}`" class="btn btn-sm btn-outline-success" role="button" title="profile"><i class="fa fa-user"></i></a>
+                        </td>
+                    </tr>
+                </template>
+            </datatable>
+            <total-entries :list="list"></total-entries>
+            <div class="pull-right">
+                <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
+            </div>
         </div>
-        <div class="form-group pull-right pr-1 pl-2">
-            <input type="text" class="form-control" v-model="filter" placeholder="Search" @keydown="$event.stopImmediatePropagation()">
-        </div>
-        <div class="form-group pull-left">
-            <select id="students" class="form-control" @change="getOnChangeList($event)">
-                <option value="active" selected>Active</option>
-                <option value="leads">Leads</option>
-                <option value="waitlist">Wait List</option>
-                <option value="inactive">Inactive</option>
-            </select>
-        </div>
-        <div class="form-group pull-right">
-            <button type="button" class="form-control btn btn-primary" @click="show_form=true">Add Student</button>
-        </div>
-        <datatable class="table table-responsive-md table-hover" :columns="columns" :data="list" :filter="filter" :per-page="per_page">
-            <template v-slot="{ columns, row }">
-                <tr>
-                    <td v-show="! hasOneLesson(row) && ! getStatusData(row)">
-                        <span class="btn btn-sm btn-danger"><i class="fa fa-times"></i></span>
-                    </td>
-                    <td v-show="hasOneLesson(row) && ! getStatusData(row)">
-                        <span class="btn btn-sm btn-success"><i class="fa fa-check"></i></span>
-                    </td>
-                    <td v-show="getStatusData(row)">
-                        <span class="btn btn-sm btn-default"><i class="fa fa-calendar-minus-o"></i></span>
-                    </td>
-                    <td v-text="row.first_name"></td>
-                    <td v-text="row.last_name"></td>
-                    <td>
-                        <phone-number-format :data="row.phone"></phone-number-format>
-                    </td>
-                    <td><a :href="'mailto:' + row.email" v-text="row.email"></a></td>
-                    <td v-text="row.instrument"></td>
-                    <td class="text-nowrap">
-                        <a :href="`/students/${row.id}/edit`" class="btn btn-sm btn-outline-primary" role="button" title="edit"><i class="fa fa-edit"></i></a>
-                        <a :href="`/students/schedule/${row.id}`" v-if="row.status === 1" class="btn btn-sm btn-outline-secondary" role="button" title="schedule"><i class="fa fa-calendar"></i></a>
-                        <a :href="`/students/profile/${row.id}`" class="btn btn-sm btn-outline-success" role="button" title="profile"><i class="fa fa-user"></i></a>
-                    </td>
-                </tr>
-            </template>
-        </datatable>
-        <total-entries :list="list"></total-entries>
-        <div class="pull-right">
-            <bootstrap-3-datatable-pager class="pagination" v-model="page" type="abbreviated" :per-page="per_page"></bootstrap-3-datatable-pager>
-        </div>
+        <notifications position="bottom right"/>
     </div>
-    <notifications position="bottom right"/>
 </div>

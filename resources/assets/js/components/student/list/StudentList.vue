@@ -22,9 +22,16 @@ export default {
             show_form: false,
             show_parent: false,
             list: [],
+            studentStats: {
+                active: 0,
+                notScheduled: 0,
+                waitlist: 0,
+                leads: 0,
+            },
             page: 1,
             per_page: 10,
             pages: [10, 25, 50, 100],
+            saving: false,
             student: {
                 id: null,
                 has_one_lesson: null,
@@ -57,6 +64,7 @@ export default {
 
     mounted: function () {
         this.fetchStudentList();
+        this.fetchStudentStats();
     },
 
     methods: {
@@ -108,38 +116,69 @@ export default {
             self.show_form = false;
         },
 
-        createStudent: function () {
-            let self = this;
-            let params = Object.assign({}, self.student);
-            axios.post('/web/student-save', params)
-                .then(() => {
+        async createStudent() {
+            if (this.saving) {
+                return;
+            }
+
+            this.saving = true;
+            this.clearErrorData();
+
+            try {
+                const params = Object.assign({}, this.student);
+
+                await axios.post('/web/student-save', params);
+
+                this.$notify({
+                    type: 'success',
+                    title: 'Success',
+                    text: 'The student was added.',
+                    duration: 6000,
+                });
+
+                this.clearStudentData();
+                this.clearErrorData();
+                await this.fetchStudentList();
+                await this.fetchStudentStats();
+            } catch (error) {
+                if (error.response?.data?.error) {
+                    this.getErrorMessage(error);
+                } else {
                     this.$notify({
-                        type: 'success',
-                        title: 'Success',
-                        text: 'The student was added.',
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Unable to add student. Please try again.',
                         duration: 6000,
                     });
-                })
-                .then(() => {
-                    self.clearStudentData()
-                    self.clearErrorData();
-                    self.fetchStudentList();
-                })
-                .catch((error) => {
-                    self.getErrorMessage(error);
-                });
+                }
+            } finally {
+                this.saving = false;
+            }
         },
 
         getErrorMessage: function (error) {
-            let self = this;
-            self.error_first_name = error.response.data.error.first_name;
-            self.error_last_name = error.response.data.error.last_name;
-            self.error_phone = error.response.data.error.phone;
-            self.error_email = error.response.data.error.email;
-            self.error_parent_first_name = error.response.data.error.parent_first_name;
-            self.error_parent_last_name = error.response.data.error.parent_last_name;
-            self.error_parent_email = error.response.data.error.parent_email;
-            self.class_error = 'has-error';
+            const errors = error.response?.data?.error
+                || error.response?.data?.errors
+                || {};
+
+            const message = (field) => {
+                const value = errors[field];
+
+                return Array.isArray(value)
+                    ? value[0] || ''
+                    : value || '';
+            };
+
+            this.error_first_name = message('first_name');
+            this.error_last_name = message('last_name');
+            this.error_phone = message('phone');
+            this.error_email = message('email');
+            this.error_parent_first_name = message('parent_first_name');
+            this.error_parent_last_name = message('parent_last_name');
+            this.error_parent_email = message('parent_email');
+            this.error_status = message('status');
+
+            this.class_error = 'has-error';
         },
 
         getStatusData: function (row) {
@@ -162,7 +201,7 @@ export default {
                 });
         },
 
-        fetchStudentList: function () {
+        fetchStudentList: async function () {
             axios.get('/web/active')
                 .then((response) => {
                     this.list = response.data;
@@ -178,8 +217,29 @@ export default {
                 });
         },
 
+        fetchStudentStats: async function () {
+            try {
+                const [active, waitlist, leads] = await Promise.all([
+                    axios.get('/web/active'),
+                    axios.get('/web/waitlist'),
+                    axios.get('/web/leads'),
+                ]);
+
+                this.studentStats.active = active.data.length;
+                this.studentStats.waitlist = waitlist.data.length;
+                this.studentStats.leads = leads.data.length;
+
+                this.studentStats.notScheduled = active.data.filter((student) => {
+                    return student.has_one_future_lesson === null;
+                }).length;
+
+            } catch (error) {
+                console.error('Unable to load student statistics:', error);
+            }
+        },
+
         showParent: function () {
-            this.show_parent = !this.show_parent;
+            this.show_parent = ! this.show_parent;
             if (this.show_parent === false) {
                 this.student.parent_first_name = null;
                 this.student.parent_last_name = null;

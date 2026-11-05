@@ -38,10 +38,10 @@ class StoreScheduleApptRequest extends FormRequest
         ];
     }
 
-    public function failedValidation(Validator $validator)
+    public function failedValidation(Validator $validator): void
     {
         throw new HttpResponseException(response()
-            ->json(['error' => $validator->errors()], Response::HTTP_UNAUTHORIZED)
+            ->json(['error' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY)
         );
     }
 }

@@ -69,20 +69,27 @@ export default {
         },
 
         clearInstrumentData: function () {
-            let self = this;
-            self.showForm = false;
-            self.instrument.name = null;
-            self.edit = false;
+            this.showForm = false;
+            this.instrument.id = null;
+            this.instrument.name = null;
+            this.edit = false;
         },
 
         createInstrument: function () {
             let self = this;
+
+            if (!self.validateInstrument()) {
+                return;
+            }
+
             let params = Object.assign({}, self.instrument);
+
             axios.post('/web/instrument', params)
                 .then(() => {
                     self.clearInstrumentData();
                     self.clearErrorData();
                     self.fetchInstrumentList();
+
                     this.$notify({
                         type: 'success',
                         title: 'Success',
@@ -92,6 +99,7 @@ export default {
                 })
                 .catch((error) => {
                     self.getErrorMessage(error);
+
                     this.$notify({
                         type: 'error',
                         title: 'Error',
@@ -127,9 +135,21 @@ export default {
         },
 
         getErrorMessage: function (error) {
-            let self = this;
-            self.error_name = error.response.data.error.name;
-            self.classError = 'has-error';
+            this.clearErrorData();
+
+            if (error.response && error.response.status === 422) {
+                const data = error.response.data;
+
+                const errors = data.errors || data.error || {};
+
+                if (errors.name) {
+                    this.error_name = Array.isArray(errors.name)
+                        ? errors.name[0]
+                        : errors.name;
+
+                    this.classError = 'has-error';
+                }
+            }
         },
 
         fetchInstrumentList: function () {
@@ -176,12 +196,19 @@ export default {
 
         updateInstrument: function (id) {
             let self = this;
+
+            if (!self.validateInstrument()) {
+                return;
+            }
+
             let params = Object.assign({}, self.instrument);
+
             axios.patch('/web/instrument/' + id, params)
                 .then(() => {
                     self.clearInstrumentData();
                     self.clearErrorData();
                     self.fetchInstrumentList();
+
                     this.$notify({
                         type: 'success',
                         title: 'Success',
@@ -191,6 +218,7 @@ export default {
                 })
                 .catch((error) => {
                     self.getErrorMessage(error);
+
                     this.$notify({
                         type: 'error',
                         title: 'Error',
@@ -198,6 +226,22 @@ export default {
                         duration: 6000,
                     });
                 });
+        },
+
+        validateInstrument: function () {
+            this.clearErrorData();
+
+            if (!this.instrument.name || !this.instrument.name.trim()) {
+                this.error_name = 'Instrument name is required.';
+                return false;
+            }
+
+            if (this.instrument.name.trim().length > 50) {
+                this.error_name = 'Instrument name cannot exceed 50 characters.';
+                return false;
+            }
+
+            return true;
         },
 
     },

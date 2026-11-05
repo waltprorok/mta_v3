@@ -2,38 +2,29 @@
 
 namespace App\Mail;
 
+use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Auth;
 
 class WelcomeNewUserMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public User $user;
+    public Teacher $teacher;
 
-    /**
-     * Create a new welcome student email.
-     * @param $user
-     */
-    public function __construct($user)
+    public function __construct(User $user, Teacher $teacher)
     {
         $this->user = $user;
+        $this->teacher = $teacher;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build(): WelcomeNewUserMail
     {
-        $teacher = Auth::user()->getTeacher;
-
         return $this->to($this->user->email)
-            ->from($teacher->email, $teacher->full_name)
+            ->from($this->teacher->email, $this->teacher->full_name)
             ->subject('Welcome to Music Teachers Aid')
             ->markdown('emails.user.welcome');
     }

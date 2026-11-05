@@ -98,6 +98,10 @@ export default {
     border-left: 4px solid #dc3545 !important;
 }
 
+.border-left-warning {
+    border-left: 4px solid #ffc107 !important;
+}
+
 .border-left-secondary {
     border-left: 4px solid #6c757d !important;
 }

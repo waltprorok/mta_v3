@@ -321,14 +321,14 @@ class StudentLessonControllerTest extends TestCase
         $response->assertNotFound();
     }
 
-    public function test_store_returns_401_when_validation_fails(): void
+    public function test_store_returns_422_when_validation_fails(): void
     {
         $response = $this->postJson(
             route('student.schedule.save'),
             []
         );
 
-        $response->assertUnauthorized()
+        $response->assertUnprocessable()
             ->assertJsonValidationErrors([
                 'student_id',
                 'billing_rate_id',

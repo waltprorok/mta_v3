@@ -2,10 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Http\Controllers\InstrumentController;
 use App\Models\Instrument;
 use App\Models\User;
-use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,106 +12,239 @@ class InstrumentControllerTest extends TestCase
     use RefreshDatabase;
 
     protected User $user;
-    protected InstrumentController $instrumentController;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
-        $this->user = User::factory()->create(['teacher' => true]);
-        $this->instrumentController = new InstrumentController();
+
+        $this->user = User::factory()->create([
+            'teacher' => true,
+        ]);
     }
 
-    public function test_instrument_index_view_200()
+    /*
+    |--------------------------------------------------------------------------
+    | Instrument Views
+    |--------------------------------------------------------------------------
+    */
+
+    public function test_instrument_index_view_200(): void
     {
-        $response = $this->actingAs($this->user)->get(route('teacher.instruments'));
+        $response = $this->actingAs($this->user)
+            ->get(route('teacher.instruments'));
 
         $response->assertOk()
             ->assertViewIs('webapp.teacher.instrument');
     }
 
-    public function test_instrument_index_url_200()
+    public function test_instrument_index_url_200(): void
     {
-        $response = $this->actingAs($this->user)->get('/teacher/instruments');
+        $response = $this->actingAs($this->user)
+            ->get('/teacher/instruments');
 
         $response->assertOk()
             ->assertViewIs('webapp.teacher.instrument');
     }
 
-    public function test_instrument_index_web_url_200()
+    public function test_instrument_index_web_url_200(): void
     {
-        $response = $this->actingAs($this->user)->get('/web/instrument');
+        $response = $this->actingAs($this->user)
+            ->get('/web/instrument');
 
         $response->assertOk();
     }
 
-    public function test_instrument_factory()
+    /*
+    |--------------------------------------------------------------------------
+    | Instrument Factory
+    |--------------------------------------------------------------------------
+    */
+
+    public function test_instrument_factory(): void
     {
         Instrument::factory()->create();
 
         $this->assertDatabaseCount('instruments', 1);
     }
 
-    public function test_instrument_show()
+    /*
+    |--------------------------------------------------------------------------
+    | Instrument Show
+    |--------------------------------------------------------------------------
+    */
+
+    public function test_instrument_show(): void
     {
-        $instrument = Instrument::factory()->create();
+        $instrument = Instrument::factory()->create([
+            'teacher_id' => $this->user->id,
+        ]);
 
-        $response = $this->actingAs($this->user)->get('/web/instrument/' . $instrument->id);
+        $response = $this->actingAs($this->user)
+            ->get('/web/instrument/' . $instrument->id);
 
-        $response->assertOk();
-        $response->assertJsonCount(5);
+        $response->assertOk()
+            ->assertJsonFragment([
+                'id' => $instrument->id,
+                'name' => $instrument->name,
+            ]);
     }
 
-    public function test_instrument_create_success()
+    /*
+    |--------------------------------------------------------------------------
+    | Instrument Creation
+    |--------------------------------------------------------------------------
+    */
+
+    public function test_instrument_create_success(): void
     {
-        $this->actingAs($this->user)->post('/web/instrument', [
+        $response = $this->actingAs($this->user)
+            ->postJson('/web/instrument', [
+                'name' => 'Drums',
+            ]);
+
+        $response->assertCreated();
+
+        $this->assertDatabaseHas('instruments', [
             'teacher_id' => $this->user->id,
-            'name' => 'Drums'
+            'name' => 'Drums',
         ]);
 
         $this->assertDatabaseCount('instruments', 1);
     }
 
-    public function test_instrument_update_success()
+    public function test_instrument_create_capitalizes_name(): void
     {
-        $instrument = Instrument::factory()->create();
+        $response = $this->actingAs($this->user)
+            ->postJson('/web/instrument', [
+                'name' => 'acoustic guitar',
+            ]);
 
-        $response = $this->actingAs($this->user)->put('/web/instrument/' . $instrument->id, [
-           'name' => 'Vocals'
+        $response->assertCreated();
+
+        $this->assertDatabaseHas('instruments', [
+            'teacher_id' => $this->user->id,
+            'name' => 'Acoustic Guitar',
         ]);
-
-        $response->assertOk();
     }
 
-    public function test_instrument_delete_success()
+    public function test_instrument_create_trims_name(): void
     {
-        $instrument = Instrument::factory()->create();
+        $response = $this->actingAs($this->user)
+            ->postJson('/web/instrument', [
+                'name' => '  Piano  ',
+            ]);
 
-        $response = $this->actingAs($this->user)->delete('/web/instrument/' . $instrument->id);
+        $response->assertCreated();
 
-        $response->assertOk();
+        $this->assertDatabaseHas('instruments', [
+            'teacher_id' => $this->user->id,
+            'name' => 'Piano',
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Instrument Creation Validation
+    |--------------------------------------------------------------------------
+    */
+
+    public function test_instrument_create_requires_name(): void
+    {
+        $response = $this->actingAs($this->user)
+            ->postJson('/web/instrument', []);
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['name']);
 
         $this->assertDatabaseCount('instruments', 0);
     }
 
-    /**
-     * @throws \PHPUnit\Framework\MockObject\Exception
-     */
-    public function test_destroy_method_success()
+    public function test_instrument_create_rejects_empty_name(): void
     {
-        $mockInstrument = $this->createMock(Instrument::class);
-        $mockInstrument->id = 1;
-        $mockInstrument->name = 'Drums';
+        $response = $this->actingAs($this->user)
+            ->postJson('/web/instrument', [
+                'name' => '',
+            ]);
 
-        $mockController = $this->getMockBuilder(InstrumentController::class)
-            ->onlyMethods(['destroy'])
-            ->getMock();
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['name']);
 
-        $mockController->method('destroy')->willThrowException(new Exception());
+        $this->assertDatabaseCount('instruments', 0);
+    }
 
-        $this->app->instance(InstrumentController::class, $mockController);
+    public function test_instrument_create_rejects_name_over_50_characters(): void
+    {
+        $response = $this->actingAs($this->user)
+            ->postJson('/web/instrument', [
+                'name' => str_repeat('A', 51),
+            ]);
 
-        $result = $this->instrumentController->destroy($mockInstrument);
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['name']);
 
-        $this->assertEquals(200, $result->status());
+        $this->assertDatabaseCount('instruments', 0);
+    }
+
+    public function test_instrument_create_rejects_non_string_name(): void
+    {
+        $response = $this->actingAs($this->user)
+            ->postJson('/web/instrument', [
+                'name' => ['Piano'],
+            ]);
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['name']);
+
+        $this->assertDatabaseCount('instruments', 0);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Instrument Update
+    |--------------------------------------------------------------------------
+    */
+
+    public function test_instrument_update_success(): void
+    {
+        $instrument = Instrument::factory()->create([
+            'teacher_id' => $this->user->id,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->patchJson('/web/instrument/' . $instrument->id, [
+                'name' => 'Vocals',
+            ]);
+
+        $response->assertOk();
+
+        $this->assertDatabaseHas('instruments', [
+            'id' => $instrument->id,
+            'teacher_id' => $this->user->id,
+            'name' => 'Vocals',
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Instrument Delete
+    |--------------------------------------------------------------------------
+    */
+
+    public function test_instrument_delete_success(): void
+    {
+        $instrument = Instrument::factory()->create([
+            'teacher_id' => $this->user->id,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->delete('/web/instrument/' . $instrument->id);
+
+        $response->assertOk();
+
+        $this->assertDatabaseMissing('instruments', [
+            'id' => $instrument->id,
+        ]);
+
+        $this->assertDatabaseCount('instruments', 0);
     }
 }

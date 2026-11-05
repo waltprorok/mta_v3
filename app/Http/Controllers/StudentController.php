@@ -55,13 +55,24 @@ class StudentController extends Controller
         return view('webapp.student.profile', compact('student', 'studentJson'));
     }
 
+    /**
+     * @throws Exception
+     */
     public function store(StoreStudentRequest $request): JsonResponse
     {
-        $phoneNumber = $this->phoneNumberService->stripPhoneNumber($request->get('phone'));
-        $this->ifParentOptionIsFalse($request, $phoneNumber);
-        $this->ifCheckParentAndOrEmailIsTrue($request, $phoneNumber);
+        $phoneNumber = $this->phoneNumberService->stripPhoneNumber(
+            $request->get('phone')
+        );
 
-        return response()->json([], Response::HTTP_CREATED);
+        if ($request->boolean('add_parent')) {
+            $this->ifCheckParentAndOrEmailIsTrue($request, $phoneNumber);
+        } else {
+            $this->ifParentOptionIsFalse($request, $phoneNumber);
+        }
+
+        return response()->json([
+            'message' => 'The student was added.',
+        ], Response::HTTP_CREATED);
     }
 
     public function show(int $id): View
@@ -84,7 +95,8 @@ class StudentController extends Controller
         $student = Student::query()
             ->with('parent')
             ->where('id', $request->get('student_id'))
-            ->first();
+            ->where('teacher_id', Auth::id())
+            ->firstOrFail();
 
         if ($student->parent !== null) {
             if ($request->get('parent_email') !== $student->parent->email) {
@@ -111,7 +123,9 @@ class StudentController extends Controller
                 $student->parent_id = $parentUser->id;
                 $student->save();
 
-                Mail::to($parentUser->email)->queue(new WelcomeNewUserMail($parentUser));
+                Mail::to($parentUser->email)->queue(
+                    new WelcomeNewUserMail($parentUser, Auth::user()->getTeacher)
+                );
             } catch (Exception $exception) {
                 Log::info($exception->getMessage());
             }
@@ -156,6 +170,7 @@ class StudentController extends Controller
      * @param StoreStudentRequest $request
      * @param string|null $phoneNumber
      * @return void
+     * @throws Exception
      */
     private function ifParentOptionIsFalse(StoreStudentRequest $request, ?string $phoneNumber): void
     {
@@ -173,20 +188,29 @@ class StudentController extends Controller
                     ]
                 );
                 // create new student
-                Student::create([
-                    'student_id' => $studentUser->id,
-                    'teacher_id' => Auth::id(),
-                    'first_name' => $request->get('first_name'),
-                    'last_name' => $request->get('last_name'),
-                    'phone' => $phoneNumber,
-                    'email' => $request->get('email'),
-                    'status' => $request->get('status'),
-                    'auto_schedule' => $this->isStatusActive($request),
-                ]);
+                Student::firstOrCreate(
+                    ['email' => $request->get('email')],
+                    [
+                        'student_id' => $studentUser->id,
+                        'teacher_id' => Auth::id(),
+                        'first_name' => $request->get('first_name'),
+                        'last_name' => $request->get('last_name'),
+                        'phone' => $phoneNumber,
+                        'status' => $request->get('status'),
+                        'auto_schedule' => $this->isStatusActive($request),
+                    ]
+                );
                 // send email
-                Mail::to($studentUser->email)->queue(new WelcomeNewUserMail($studentUser));
+                Mail::to($studentUser->email)->queue(
+                    new WelcomeNewUserMail($studentUser, Auth::user()->getTeacher)
+                );
             } catch (Exception $exception) {
-                Log::info($exception->getMessage());
+                Log::error('Student creation failed.', [
+                    'message' => $exception->getMessage(),
+                    'exception' => $exception,
+                ]);
+
+                throw $exception;
             }
         }
     }
@@ -200,6 +224,7 @@ class StudentController extends Controller
      * @param StoreStudentRequest $request
      * @param string|null $phoneNumber
      * @return void
+     * @throws Exception
      */
     private function ifCheckParentAndOrEmailIsTrue(StoreStudentRequest $request, ?string $phoneNumber): void
     {
@@ -233,9 +258,16 @@ class StudentController extends Controller
                 ]);
 
                 // send email to new parent user
-                Mail::to($parentUser->email)->queue(new WelcomeNewUserMail($parentUser));
+                Mail::to($parentUser->email)->queue(
+                    new WelcomeNewUserMail($parentUser, Auth::user()->getTeacher)
+                );
             } catch (Exception $exception) {
-                Log::info($exception->getMessage());
+                Log::error('Student creation failed.', [
+                    'message' => $exception->getMessage(),
+                    'exception' => $exception,
+                ]);
+
+                throw $exception;
             }
         }
     }
@@ -266,7 +298,7 @@ class StudentController extends Controller
                 ]
             );
             // send email to new student user
-            Mail::to($user->email)->queue(new WelcomeNewUserMail($user));
+            Mail::to($user->email)->queue(new WelcomeNewUserMail($user, Auth::user()->getTeacher));
         }
 
         return $user;

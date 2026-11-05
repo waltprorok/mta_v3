@@ -34,14 +34,19 @@ class InstrumentController extends Controller
 
     public function store(Request $request): JsonResponse
     {
+        $validated = $request->validate([
+            'name' => 'required|string|max:50',
+        ]);
+
         try {
             Instrument::query()->create([
                 'teacher_id' => Auth::id(),
-                'name' => ucwords($request->get('name')),
+                'name' => ucwords(trim($validated['name'])),
             ]);
 
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
+
             return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
