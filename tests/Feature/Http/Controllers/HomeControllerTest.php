@@ -136,6 +136,7 @@ class HomeControllerTest extends TestCase
     public function test_new_contact_submitted(): void
     {
         config()->set('honeypot.enabled', false);
+        config()->set('mail.admin_notification_email', 'waltprorok@gmail.com');
 
         Mail::fake();
 
