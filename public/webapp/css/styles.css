@@ -9196,7 +9196,7 @@ a.text-dark:focus, a.text-dark:hover {
 
 .alert-success {
     color: #fff;
-    background-color: #319985;
+    background-color: var(--success);
     border-color: var(--success)
 }
 
