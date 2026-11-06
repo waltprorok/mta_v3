@@ -57,11 +57,13 @@ class HomeController extends Controller
                 'message' => $request->get('message'),
             ]);
 
-            Mail::to('waltprorok@gmail.com')->queue(new ContactForm($contact, 'contact'));
+            Mail::to(config('mail.admin_notification_email'))
+                ->queue(new ContactForm($contact, 'contact'));
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
         }
 
-        return redirect()->route('contact')->with('success', 'The contact form was sent successfully');
+        return redirect()->route('contact')
+            ->with('success', 'The contact form was sent successfully');
     }
 }

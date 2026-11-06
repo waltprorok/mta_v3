@@ -4,8 +4,10 @@ namespace Tests\Feature\Http\Controllers\Auth;
 
 use App\Mail\WelcomeMail;
 use App\Models\User;
+use App\Notifications\NewUserRegisteredNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class UserLogInTest extends TestCase
@@ -139,5 +141,28 @@ class UserLogInTest extends TestCase
         $response = $this->actingAs($user)->get('/admin/blog');
 
         $response->assertStatus(200);
+    }
+
+    public function test_admin_receives_new_user_registration_notification(): void
+    {
+        Notification::fake();
+
+        config()->set('mail.admin_notification_email', 'admin@example.com');
+
+        $this->post(route('register'), [
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'email' => 'john@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+            'g-recaptcha-response' => 'test',
+        ]);
+
+        Notification::assertSentOnDemand(
+            NewUserRegisteredNotification::class,
+            function ($notification, $channels, $notifiable) {
+                return $notifiable->routes['mail'] === config('mail.admin_notification_email');
+            }
+        );
     }
 }

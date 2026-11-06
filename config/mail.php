@@ -60,6 +60,8 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Music Teachers Aid'),
     ],
 
+    'admin_notification_email' => env('ADMIN_NOTIFICATION_EMAIL'),
+
     /*
     |--------------------------------------------------------------------------
     | E-Mail Encryption Protocol

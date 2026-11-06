@@ -41,9 +41,16 @@ export default {
         short: function (value) {
             if (!value) return '';
 
-            return value.length > 50
-                ? value.substring(0, 50) + '...'
-                : value;
+            const div = document.createElement('div');
+            div.innerHTML = value;
+
+            const text = (div.textContent || div.innerText || '')
+                .replace(/\s+/g, ' ')
+                .trim();
+
+            return text.length > 82
+                ? text.substring(0, 82) + '...'
+                : text;
         }
     },
 

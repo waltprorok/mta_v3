@@ -6,11 +6,13 @@ namespace App\Http\Controllers\Auth;
 use App\Events\RegisterUserEvent;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\NewUserRegisteredNotification;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
@@ -87,6 +89,11 @@ class RegisterController extends Controller
         ]);
 
         Event::dispatch(new RegisterUserEvent($data, $user));
+
+        if ($email = config('mail.admin_notification_email')) {
+            Notification::route('mail', $email)
+                ->notify(new NewUserRegisteredNotification($user));
+        }
 
         return $user;
     }

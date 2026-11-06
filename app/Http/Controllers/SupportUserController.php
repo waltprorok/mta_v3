@@ -47,7 +47,7 @@ class SupportUserController extends Controller
                 $support->save();
             }
 
-            Mail::to('waltprorok@gmail.com')
+            Mail::to(config('mail.admin_notification_email'))
                 ->queue(new ContactForm($support, 'support'));
 
             Mail::to($support->email)
