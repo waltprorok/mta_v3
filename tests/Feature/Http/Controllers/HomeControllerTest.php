@@ -133,22 +133,20 @@ class HomeControllerTest extends TestCase
      * @throws JsonException
      * @throws Exception
      */
-    public function test_new_contact_submitted()
+    public function test_new_contact_submitted(): void
     {
         config()->set('honeypot.enabled', false);
 
-        $mockNoCaptcha = $this->createMock(NoCaptcha::class);
+        Mail::fake();
 
-        $mockNoCaptcha->method('verifyResponse')
-            ->willReturn(true);
+        $this->mock(NoCaptcha::class, function ($mock) {
+            $mock->shouldReceive('verifyResponse')
+                ->andReturn(true);
 
-        $mockRecaptchaResponse = $this->mock(NoCaptcha::class, function ($mock) {
             $mock->shouldReceive('display')
                 ->zeroOrMoreTimes()
                 ->andReturn('<input type="hidden" name="g-recaptcha-response" value="1" />');
         });
-
-        self::assertTrue($mockNoCaptcha->verifyResponse($mockRecaptchaResponse));
 
         $contact = Contact::factory()->make();
 
@@ -160,15 +158,14 @@ class HomeControllerTest extends TestCase
             'g-recaptcha-response' => '1',
         ]);
 
-        $response->assertSessionHasNoErrors();
-
-        $response->assertRedirect('/contact');
+        $response->assertSessionHasNoErrors()
+            ->assertRedirect('/contact');
 
         $this->assertDatabaseHas('contacts', [
             'email' => $contact->email,
         ]);
 
-        Mail::assertQueued(ContactForm::class, function ($mail) use ($contact) {
+        Mail::assertQueued(ContactForm::class, function ($mail) {
             return $mail->hasTo('waltprorok@gmail.com');
         });
 
